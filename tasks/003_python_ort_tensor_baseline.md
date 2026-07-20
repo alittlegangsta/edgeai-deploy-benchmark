@@ -6,7 +6,7 @@ Establish the Python environment and inspect ONNX Runtime raw tensors.
 
 ## Status
 
-Planned
+Completed
 
 ## Batch
 
@@ -210,4 +210,299 @@ skips, risks, and final Git status with real-versus-static labels.
 
 ## Execution Record
 
-Not started. No runtime I/O, tensor shape, or numeric result has been recorded.
+Started: `2026-07-20T16:13:13+08:00`
+
+Branch: `feature/pc-batch-a-python-baseline`
+
+Starting commit: `cfbb53d`
+
+Starting Git status: clean (`git status --short --untracked-files=all` produced
+no output).
+
+Current step: checking required local runtime providers and the licensed reference
+image. No runtime tensor shape or numeric result has been recorded.
+
+Blocked: `2026-07-20T16:14:01+08:00`
+
+The frozen Task 002 model and manifest were revalidated successfully before the
+stop:
+
+```text
+Task 002 commit: cfbb53d
+ONNX SHA256: 78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121
+Task 002 contract validation: PASS
+```
+
+Required Task 003 input checks failed:
+
+```text
+onnxruntime import: ModuleNotFoundError
+onnxruntime import exit code: 1
+data/samples/images/pc_reference.jpg: missing
+reference-image test exit code: 1
+```
+
+No repair attempt was made because installing a runtime and supplying a licensed
+sample are mandatory human actions, not defects in Allowed Files.
+
+## Blocking Report
+
+```text
+Current Task: Task 003 - Establish the Python ORT tensor baseline
+Current Status: Blocked
+Last Successful Step: Verified the committed Task 002 manifest against the local ONNX graph; contract validation returned PASS.
+Failed Command: python3 -c 'import onnxruntime as ort; print(ort.__version__, ort.get_available_providers())'
+Exit Code: 1
+Relevant Error: ModuleNotFoundError: No module named 'onnxruntime'; the required licensed data/samples/images/pc_reference.jpg is also absent.
+Files Changed: TASKS.md; tasks/003_python_ort_tensor_baseline.md
+Attempts Made: 0 repair attempts; the initial Task 003 dependency/input audit triggered mandatory environment and data stops.
+Why Automatic Recovery Is Unsafe: Recovery requires installing a Python runtime package and obtaining a licensed image; Codex may not install, download, invent, or substitute either input.
+Exact Human Action Required: Approve and install one pinned CPU ONNX Runtime version in the project .venv (onnxruntime 1.18.1 is the proposed Python 3.12/NumPy 1.26 pin), then provide a small licensed reference JPEG at data/samples/images/pc_reference.jpg together with its source and license/provenance.
+Commands to Resume: source .venv/bin/activate; python3 -m pip check; python3 -c 'import onnxruntime as ort; print(ort.__version__); print(ort.get_available_providers())'; test -s data/samples/images/pc_reference.jpg; file data/samples/images/pc_reference.jpg; sha256sum data/samples/images/pc_reference.jpg; git status --short --untracked-files=all
+Git Status: TASKS.md and tasks/003_python_ort_tensor_baseline.md modified; model binaries and Task 002 run log remain ignored.
+```
+
+The following installation command is for the user, not Codex. It modifies only
+the project `.venv`, may access the network, and freezes the proposed CPU runtime:
+
+```bash
+source .venv/bin/activate
+python3 -m pip install --only-binary=:all: "onnxruntime==1.18.1"
+python3 -m pip check
+python3 -c 'import onnxruntime as ort; print(ort.__version__); print(ort.get_available_providers())'
+```
+
+The required provider verification must include `CPUExecutionProvider`. If the
+user chooses another ONNX Runtime version, that version must be explicitly
+approved and recorded rather than silently substituted.
+
+Place an already obtained licensed image without re-encoding it:
+
+```bash
+mkdir -p data/samples/images
+cp /absolute/path/to/licensed/reference.jpg data/samples/images/pc_reference.jpg
+file data/samples/images/pc_reference.jpg
+sha256sum data/samples/images/pc_reference.jpg
+```
+
+The user must provide the image source and license/provenance when resuming. A
+successful import/provider check, nonempty decodable JPEG, real SHA256, and clean
+Allowed Files audit are required before Task 003 can return to `In Progress`.
+
+## Recovery Audit: 2026-07-20T16:55:00+08:00
+
+The previously missing runtime and image now exist, and the exact failed runtime
+command from the first Blocking Report was rerun successfully:
+
+```text
+branch: feature/pc-batch-a-python-baseline
+Task 002 dependency: Completed at commit cfbb53d
+Python executable: /home/dministrator/projects/edgeai-deploy-benchmark/.venv/bin/python
+Python: 3.12.3
+pip check: No broken requirements found.
+torch: 2.2.2+cpu
+torchvision: 0.17.2+cpu
+numpy: 1.26.4
+scipy: 1.12.0
+onnx: 1.16.2
+onnxruntime: 1.18.1
+opencv-python: 4.10.0
+all imported module paths under the project .venv: PASS
+available providers: AzureExecutionProvider, CPUExecutionProvider
+exact failed onnxruntime import/provider command rerun: PASS
+Task 002 ONNX SHA256: 78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121
+Task 002 contract check-only validation: PASS
+reference image OpenCV decode: PASS
+reference image SHA256: c7b3dbbb2e6613b92193ebd9ed4403b19a35872c50e42a9447860698ba4ca27b
+reference image byte size: 9372837
+reference image dimensions: 8064 x 6048 x 3
+```
+
+The user supplied this provenance statement: author `alittlegangsta`; original
+photograph created by the repository owner for this project on 2026-07-20;
+CC BY 4.0; declared free of identifiable persons, private documents, license
+plates, and confidential information. That authorship and licensing statement is
+recorded as user-provided provenance, not independently inferred from the pixels.
+
+The binary audit nevertheless found information that requires a human file-safety
+decision before public-repository use. Pillow identifies the file as MPO, while
+`file` and OpenCV accept its JPEG representation. It is 9,372,837 bytes rather
+than a small sample and contains 13 GPS EXIF entries, including precise latitude
+and longitude, altitude, UTC timestamp/date, camera direction, and horizontal
+positioning error. The coordinate values are deliberately omitted from this
+potentially committable record. Codex did not modify, re-encode, strip metadata
+from, stage, or delete the user file.
+
+No implementation or repair attempt was started. The runtime/model blocker is
+resolved, but the task remains `Blocked` because committing a large geotagged
+binary hits the protocol's Git/file-safety stop and exposes location metadata
+that requires the owner's explicit handling.
+
+### Recovery File-Safety Blocking Report
+
+```text
+Current Task: Task 003 - Establish the Python ORT tensor baseline
+Current Status: Blocked
+Last Successful Step: Revalidated the project .venv, ONNX Runtime 1.18.1 CPU provider, Task 002 ONNX hash/contract, and OpenCV decoding of the supplied image.
+Failed Command: None; all recovery commands returned 0, then the read-only image metadata audit triggered a mandatory Git/file-safety stop.
+Exit Code: 0 for the recovery commands; not applicable to the mandatory stop.
+Relevant Error: data/samples/images/pc_reference.jpg is a 9,372,837-byte 8064x6048 MPO/JPEG containing precise GPS coordinates, altitude, time/date, direction, and positioning-error EXIF metadata. The task calls for a small licensed JPEG, and the protocol requires a stop when a large binary would need to be committed.
+Files Changed: TASKS.md and tasks/003_python_ort_tensor_baseline.md retain the legitimate Blocked state; data/samples/images/pc_reference.jpg is the user-supplied untracked Allowed File; no implementation files were created.
+Attempts Made: 0 repair attempts; 2 recovery audits. Environment and input-presence recovery passed, but file safety requires human action.
+Why Automatic Recovery Is Unsafe: Codex is forbidden to re-encode or replace the original image, cannot decide that precise location metadata is appropriate for a public repository, and cannot waive the mandatory large-binary commit stop.
+Exact Human Action Required: Preserve the original outside the repository and replace data/samples/images/pc_reference.jpg with a genuinely small, standard JPEG derivative that the owner has stripped of GPS/private EXIF metadata; retain the stated CC BY 4.0 provenance for that derivative. Alternatively, explicitly direct whether the protocol should be amended to permit the current large geotagged binary; Codex will not infer that permission.
+Commands to Resume: source .venv/bin/activate; git branch --show-current; git status --short --untracked-files=all; python3 -m pip check; python3 -c 'import onnxruntime as ort; print(ort.__version__, ort.get_available_providers())'; test -s data/samples/images/pc_reference.jpg; file data/samples/images/pc_reference.jpg; stat --printf='size_bytes=%s\n' data/samples/images/pc_reference.jpg; sha256sum data/samples/images/pc_reference.jpg; use a read-only EXIF inspection to confirm that no GPS IFD remains; use OpenCV to confirm a nonempty three-channel decode.
+Git Status: TASKS.md and tasks/003_python_ort_tensor_baseline.md modified; data/samples/images/pc_reference.jpg untracked; all three paths are within Task 003 Allowed Files.
+```
+
+## Recovery Resumed: 2026-07-20T17:09:12+08:00
+
+The user replaced the original phone image without granting Codex access to it.
+The repository input is now a user-created, privacy-sanitized derivative. The
+read-only recovery audit produced:
+
+```text
+branch: feature/pc-batch-a-python-baseline
+worktree paths: TASKS.md, tasks/003_python_ort_tensor_baseline.md, data/samples/images/pc_reference.jpg
+Python: 3.12.3
+pip check: PASS
+onnxruntime: 1.18.1
+available providers: AzureExecutionProvider, CPUExecutionProvider
+numpy: 1.26.4
+all imported dependency paths under the project .venv: PASS
+Task 002 status: Completed
+Task 002 commit: cfbb53d
+ONNX SHA256 expected/actual: 78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121
+Task 002 contract check-only: PASS
+reference image SHA256: 625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071
+reference image: standard JPEG, RGB, 1280 x 960, 157404 bytes
+OpenCV decode: PASS, BGR shape [960, 1280, 3]
+EXIF entries: 0
+GPS entries: 0
+XMP metadata: absent
+privacy metadata check: PASS
+image ignored by Git: no
+git diff --check: PASS
+```
+
+Provenance and license, as supplied by the owner and resolved against the author
+already recorded in this task: author `alittlegangsta`; the original photograph
+was created by the repository owner specifically for this project on 2026-07-20;
+this privacy-sanitized and resized derivative was created by the same owner on
+2026-07-20; license CC BY 4.0. The owner states that the derivative contains no
+identifiable persons, private documents, license plates, confidential information,
+GPS/location metadata, or original capture metadata, and confirms the right to
+publish both the original and derivative under that license. The original remains
+outside the repository and was not accessed by Codex.
+
+The environment, model, file-safety, and provenance blockers are resolved. Task
+003 is restored to `In Progress`; prior Blocking Reports remain intact. Repair
+attempt count remains `0` because no implementation failure has occurred.
+
+## Completion Record: 2026-07-20T17:16:53+08:00
+
+Task 003 completed after real CPU ONNX Runtime inference and validation. The
+earlier Blocking Reports and recovery history above remain preserved.
+
+### Actual Environment
+
+```text
+platform: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39
+Python: 3.12.3
+numpy: 1.26.4
+onnx: 1.16.2
+onnxruntime: 1.18.1
+opencv-python distribution: 4.10.0.84
+OpenCV module: 4.10.0
+scipy: 1.12.0
+torch: 2.2.2+cpu
+torchvision: 0.17.2+cpu
+pip check: PASS
+available providers: AzureExecutionProvider, CPUExecutionProvider
+selected session providers: CPUExecutionProvider only
+```
+
+### Actual Input and Runtime Contract
+
+```text
+ONNX SHA256: 78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121
+manifest SHA256 validation before session creation: PASS
+runtime input: images, shape [1, 3, 640, 640], tensor(float)/FLOAT
+runtime output: output0, shape [1, 25200, 85], tensor(float)/FLOAT
+runtime I/O comparison with Task 002: PASS
+session provider: CPUExecutionProvider
+reference JPEG SHA256: 625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071
+reference decode: BGR uint8 [960, 1280, 3]
+letterbox scale: 0.5
+letterbox resized size: 640 x 480
+letterbox padding: left=0, top=80, right=0, bottom=80
+input tensor: shape [1, 3, 640, 640], float32, C-contiguous
+input range: [0.0, 1.0]
+input finite values: 1228800 / 1228800
+```
+
+### Actual Raw Tensor Statistics
+
+```text
+name: output0
+shape: [1, 25200, 85]
+dtype: float32
+element count: 2142000
+finite count: 2142000
+minimum: 0.0
+maximum: 637.1151733398438
+mean: 8.75883828884917
+standard deviation: 57.105199602048685
+all finite: PASS
+```
+
+These are raw aggregate model-output statistics, not decoded boxes, classes,
+confidence scores, or detections. No full tensor dump was saved.
+
+### Commands and Results
+
+```text
+python3 --version: PASS (Python 3.12.3)
+python3 -m pip check: PASS (No broken requirements found.)
+read-only pinned package/provider validation: PASS
+python3 -m py_compile python/edgeai_benchmark/model_contract.py python/edgeai_benchmark/preprocess.py python/apps/ort_tensor_baseline.py: PASS
+PYTHONPATH=python python3 -m unittest tests/python/test_ort_tensor_baseline.py: PASS (8 tests)
+required ORT tensor baseline command with pipefail and tee: PASS (exit code 0)
+python3 -m json.tool results/evidence/003/model_io.json: PASS
+python3 -m json.tool results/evidence/003/raw_tensor_stats.json: PASS
+independent evidence semantic assertions: PASS
+reference-image privacy metadata assertions: PASS
+git diff --check: PASS
+Allowed Files audit: PASS
+Task 002 frozen-file diff audit: PASS
+```
+
+### Preserved Evidence
+
+```text
+results/evidence/003/model_io.json
+SHA256: 1ea295bcbd1002d8dec8b4e820f48f650afdb679d2b391231a3abf5164f8fa98
+
+results/evidence/003/raw_tensor_stats.json
+SHA256: 361cf3bbd1a9747a2dc738784017872a56c0a9bdbd31037b4df376bbb3296e73
+
+results/logs/003_ort_tensor_baseline.log
+SHA256: e44583425323cda7aee0a7d771ccf312cd1e4f5426be76ce5b1e9cbef040dfa3
+```
+
+The real log remains locally preserved but ignored by the repository-wide
+`*.log` rule, so it will not be forced into Git. Its output and SHA256 are
+recorded above and the structured JSON evidence is eligible for the atomic
+commit.
+
+Repair attempts: `0`. A nonexistent top-level ONNX Runtime exception name was
+corrected during pre-build static review before any required command failed, so
+it did not start a repair loop.
+
+Skipped required checks: none. Decode, confidence filtering, NMS, coordinate
+mapping, drawing, detections, and benchmarking were intentionally not performed
+because they are outside Task 003 rather than skipped Task 003 requirements.
+
+Final pre-completion Git status contains only Task 003 Allowed Files. The local
+atomic commit hash is reported by Git after commit creation and cannot be
+self-referentially embedded in that same commit.
