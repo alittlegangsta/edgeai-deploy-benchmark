@@ -7,7 +7,7 @@ The authoritative execution rules are in
 | Task | Batch | Dependency | Status | Description |
 | --- | --- | --- | --- | --- |
 | 001 | Bootstrap | None | Completed | Bootstrap the repository and validate C++17, CMake, and OpenCV with a native smoke test. |
-| 002 | A | 001 | Planned | Freeze YOLOv5n v7.0 provenance, export constraints, manifest, and observed ONNX contract. |
+| 002 | A | 001 | Completed | Freeze YOLOv5n v7.0 provenance, export constraints, manifest, and observed ONNX contract. |
 | 003 | A | 002 | Planned | Validate the existing Python/ORT environment, model loading, model I/O, and raw tensor statistics. |
 | 004 | A | 003 | Planned | Implement the Python ORT single-image detection reference with structured results and stage timings. |
 | 005 | A | 004 | Planned | Add focused Python tests, fixed inputs, and a tolerance-based semantic golden result. |
