@@ -6,7 +6,7 @@ Implement Python ONNX Runtime single-image detection.
 
 ## Status
 
-Planned
+Completed
 
 ## Batch
 
@@ -217,4 +217,218 @@ build/run/tests, invalid cases, attempts, risks, and Git status.
 
 ## Execution Record
 
-Not started. No detection, image, confidence, or timing evidence exists yet.
+Started: `2026-07-20T17:18:46+08:00`
+
+Branch: `feature/pc-batch-a-python-baseline`
+
+Starting commit: `381c0ee`
+
+Starting Git status: clean (`git status --short --untracked-files=all` produced
+no output).
+
+Task 003 dependency: `Completed` in local commit `381c0ee`.
+
+The initial inference configuration is frozen before observing Task 004
+detections. A read-only inspection of the authorized YOLOv5 v7.0 source
+`/home/dministrator/src/yolov5-v7.0/detect.py` reported its actual CLI defaults:
+
+```text
+input size: 640 x 640
+confidence threshold: 0.25
+IoU threshold: 0.45
+maximum detections: 1000
+agnostic NMS: false (therefore class-aware)
+```
+
+Task 004 adopts those values without tuning. No detection, output image,
+confidence, or timing result has been observed at task start. Repair attempts:
+`0`.
+
+Blocked for mandatory visual review: `2026-07-20T17:24:09+08:00`.
+
+### Actual Build, Tests, and Run
+
+```text
+python3 -m py_compile python/edgeai_benchmark/preprocess.py python/edgeai_benchmark/postprocess.py python/edgeai_benchmark/visualize.py python/apps/ort_image.py: PASS
+PYTHONPATH=python python3 -m unittest tests/python/test_python_single_image_cli.py: PASS (7 tests)
+invalid model/input CLI case: PASS (nonzero exit verified by the unit test)
+required CPU ORT image command with pipefail and tee: PASS (exit code 0)
+output PNG nonempty/file check: PASS (1280 x 960, 8-bit RGB PNG)
+output JSON parsing: PASS
+structured detection/order/finite/bounds assertions: PASS
+output PNG OpenCV decode/shape validation: PASS ([960, 1280, 3])
+git diff --check: PASS
+```
+
+### Frozen Configuration and Geometry
+
+```text
+configuration SHA256: 82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d
+input size: 640 x 640
+confidence threshold: 0.25
+IoU threshold: 0.45
+class-aware NMS: true
+maximum detections: 1000
+source image: 1280 x 960
+letterbox scale: 0.5
+resized image: 640 x 480
+padding: left=0, top=80, right=0, bottom=80
+```
+
+### Actual Detection Evidence
+
+```text
+model SHA256: 78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121
+source image SHA256: 625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071
+raw candidates: 25200
+threshold candidates: 60
+NMS candidates: 5
+invalid boxes: 0
+
+1: keyboard (class 66), confidence=0.892058, objectness=0.898821, class_score=0.992476, source_xyxy=[420.918823, 636.48291, 786.872803, 747.389648]
+2: tv (class 62), confidence=0.816359, objectness=0.829812, class_score=0.983788, source_xyxy=[400.534912, 255.551636, 895.718262, 543.92749]
+3: cup (class 41), confidence=0.707963, objectness=0.752367, class_score=0.940981, source_xyxy=[252.854919, 613.533691, 348.21405, 771.307129]
+4: mouse (class 64), confidence=0.394466, objectness=0.420920, class_score=0.937153, source_xyxy=[870.52655, 716.008606, 970.28949, 787.96759]
+5: mouse (class 64), confidence=0.274518, objectness=0.311945, class_score=0.880020, source_xyxy=[185.716171, 676.066406, 253.75264, 712.830078]
+```
+
+The five detections are real program output. Their numeric structure passed
+machine validation, but their semantic and spatial plausibility has not been
+approved.
+
+### Diagnostic Single-Run Timings
+
+```text
+preprocess (decode + letterbox + tensor construction): 22.153435 ms
+inference (session.run only): 22.953080 ms
+postprocess (decode + threshold + NMS + map + clip): 6.901413 ms
+visualization and PNG write: 21.876687 ms
+```
+
+These values are diagnostic and are not benchmark results, FPS, or representative
+performance measurements.
+
+### Preserved Artifacts
+
+```text
+results/images/python_ort_reference.png
+SHA256: 57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2
+
+results/evidence/004/python_ort_detections.json
+SHA256: db966a7e2492be3101a2a9acf1ab983d281ed591ba2162e874275a078767d4ca
+
+results/logs/004_python_ort_image.log
+SHA256: 49fd45a1477565c385341bdcc2cd9d0fe56d4eee59c521ef6d4dab8bc771890c
+```
+
+The log is locally preserved but ignored by the repository-wide `*.log` rule.
+No ignored file will be force-added.
+
+Repair attempts: `0`. No build, test, run, JSON, or structural validation command
+failed. Required machine checks completed before the mandatory human stop.
+
+## Blocking Report
+
+```text
+Current Task: Task 004 - Python ONNX Runtime single-image detection
+Current Status: Blocked
+Last Successful Step: Real CPU ORT inference, structured detection validation, and output PNG decode/shape validation all passed.
+Failed Command: None; all required machine commands returned 0. Creation of the annotated image triggered the mandatory human visual-review stop.
+Exit Code: 0 for build, tests, run, JSON, PNG, and structural checks; not applicable to the human-review stop.
+Relevant Error: results/images/python_ort_reference.png contains five real annotations whose class and spatial plausibility cannot be established by machine structure checks alone. Its JSON records visual_review=PENDING_HUMAN_REVIEW.
+Files Changed: TASKS.md; tasks/004_python_single_image_inference.md; configs/yolov5n_v7_inference.json; python/edgeai_benchmark/postprocess.py; python/edgeai_benchmark/visualize.py; python/apps/ort_image.py; tests/python/test_python_single_image_cli.py; results/images/python_ort_reference.png; results/evidence/004/python_ort_detections.json; ignored local results/logs/004_python_ort_image.log.
+Attempts Made: 0 repair attempts; implementation passed its first build, test, and run. Thresholds were not changed after observing results.
+Why Automatic Recovery Is Unsafe: The protocol and Task 004 require a human to judge whether the keyboard, television, cup, and two mouse boxes align with real objects and whether labels/coverage are plausible. Codex cannot turn structural validity into visual approval or tune thresholds to manufacture approval.
+Exact Human Action Required: Open results/images/python_ort_reference.png and compare it with data/samples/images/pc_reference.jpg. Confirm whether all five boxes and labels are spatially/class-wise plausible, with particular attention to the two mouse detections at confidences 0.394466 and 0.274518. Explicitly approve or reject the image without changing the frozen thresholds merely to alter the result.
+Commands to Resume: git branch --show-current; git status --short --untracked-files=all; sed -n '1,420p' tasks/004_python_single_image_inference.md; test -s results/images/python_ort_reference.png; sha256sum results/images/python_ort_reference.png results/evidence/004/python_ort_detections.json; python3 -m json.tool results/evidence/004/python_ort_detections.json >/dev/null; PYTHONPATH=python python3 -m unittest tests/python/test_python_single_image_cli.py; git diff --check
+Git Status: Task 004 allowed source/config/task/evidence/image paths are modified or untracked; the task log is ignored; no file is staged and no Task 004 commit exists.
+```
+
+## Recovery Resumed: 2026-07-20T17:42:21+08:00
+
+The user completed the mandatory visual comparison of the exact PNG whose
+SHA256 is `57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2`.
+Before accepting that review, Codex revalidated the old structured evidence,
+configuration, model, source image, output image, branch, and Allowed Files.
+Every recorded hash and all five detection tuples matched the blocked record.
+
+The human review found:
+
+```text
+keyboard: correct class and reasonable box
+tv: correct class and reasonable box
+cup: correct class and reasonable box
+mouse at confidence 0.394466: correct; corresponds to a real mouse
+mouse at confidence 0.274518: false positive; the box corresponds to an earbud case
+duplicate boxes: none observed
+systematic coordinate offset: none observed
+NMS anomaly: none observed
+letterbox inverse-mapping anomaly: none observed
+boundary-clipping anomaly: none observed
+label-drawing anomaly: none observed
+source/result dimensions: both 1280 x 960
+```
+
+The earbud-case result is retained as a real low-confidence YOLOv5n model false
+positive. It is not classified as a deployment implementation error because its
+box aligns with the actual earbud case and no systematic geometry error was
+observed. The confidence threshold remains `0.25`, IoU threshold remains `0.45`,
+NMS remains class-aware, maximum detections remains `1000`, input remains
+`640 x 640`, and the Task 002 model contract is unchanged. No class, confidence,
+or coordinate filtering will be added to conceal the false positive.
+
+Task 004 is restored to `In Progress` for the required deterministic rerun and
+completion checks. Repair-attempt count remains `0`.
+
+## Completion Record: 2026-07-20T17:44:21+08:00
+
+The complete build/test/run sequence was repeated after human review. The rerun
+preserved the reviewed PNG SHA256 and matched the old model, source image,
+configuration, preprocessing geometry, candidate counts, detection order,
+classes, confidences, and coordinates exactly. Only the explicitly variable
+generation timestamp and diagnostic single-run timings changed.
+
+```text
+py_compile: PASS
+unit tests: PASS (7 tests)
+required CPU ORT run with pipefail: PASS (exit code 0)
+JSON validation: PASS
+PNG nonempty/file/OpenCV decode validation: PASS
+reviewed-result semantic rerun comparison: PASS
+human-review evidence assertions: PASS
+git diff --check: PASS
+Allowed Files audit: PASS
+repair attempts: 0
+skipped required checks: none
+```
+
+The final rerun's diagnostic timings were:
+
+```text
+preprocess: 13.416208 ms
+inference (session.run only): 23.023305 ms
+postprocess: 7.657632 ms
+visualization and PNG write: 23.877807 ms
+```
+
+They remain labeled single-run diagnostic observations and are not benchmark or
+FPS claims.
+
+Final evidence identity:
+
+```text
+configuration SHA256: 82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d
+annotated PNG SHA256: 57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2
+structured evidence SHA256: 4c90dea9de06f5c01e5486d76ac1395fd35730fd3a1494c08ec8b74a8e55ff4b
+local ignored run-log SHA256: 5d00c64a31232a1edf05816eaf8a16c7044d8306b0218f190c8ea09b76fa3957
+```
+
+Human acceptance is recorded both above and in the structured evidence. The
+rank-4 mouse is a correct detection of the real mouse. The rank-5 `mouse` at
+confidence `0.274518` is a known false positive on an earbud case; it remains in
+the result as an honest YOLOv5n model limitation and is not treated as a deploy
+implementation error. No threshold, NMS rule, model contract, class, or box was
+changed after review.
+
+The local atomic commit hash is reported by Git after commit creation and cannot
+be embedded self-referentially in this same commit.
