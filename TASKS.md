@@ -1,19 +1,26 @@
 # Tasks
 
-| Task | Status | Description |
-| --- | --- | --- |
-| 001 | Completed | Bootstrap the repository and validate C++17, CMake, and OpenCV with a native smoke test. |
-| 002 | Planned | Define the small input-data and result-evidence conventions for later PC work. |
-| 003 | Planned | Define model metadata and artifact validation without adding runtime integration early. |
-| 004 | Planned | Implement and test inference-independent image preprocessing. |
-| 005 | Planned | Define the PC inference-backend boundary and its data contracts. |
-| 006 | Planned | Integrate the first planned PC inference backend. |
-| 007 | Planned | Integrate the second planned PC inference backend. |
-| 008 | Planned | Implement inference-independent output decoding and visualization. |
-| 009 | Planned | Compare PC backend outputs for functional correctness. |
-| 010 | Planned | Add a reproducible PC performance-measurement workflow. |
-| 011 | Planned | Record and validate the Anlogic DR1 ARM CPU toolchain setup. |
-| 012 | Planned | Configure the Stage 2 ARM CPU build for the established modules. |
-| 013 | Planned | Run the first Anlogic DR1 ARM CPU functional baseline. |
-| 014 | Planned | Measure and report the Anlogic DR1 ARM CPU baseline. |
-| 015 | Planned | Consolidate reproducibility notes and close the two-stage baseline. |
+The authoritative execution rules are in
+`tasks/000_pc_stage_execution_protocol.md`. A task state is exactly `Planned`,
+`In Progress`, `Blocked`, or `Completed`.
+
+| Task | Batch | Dependency | Status | Description |
+| --- | --- | --- | --- | --- |
+| 001 | Bootstrap | None | Completed | Bootstrap the repository and validate C++17, CMake, and OpenCV with a native smoke test. |
+| 002 | A | 001 | Planned | Freeze YOLOv5n v7.0 provenance, export constraints, manifest, and observed ONNX contract. |
+| 003 | A | 002 | Planned | Validate the existing Python/ORT environment, model loading, model I/O, and raw tensor statistics. |
+| 004 | A | 003 | Planned | Implement the Python ORT single-image detection reference with structured results and stage timings. |
+| 005 | A | 004 | Planned | Add focused Python tests, fixed inputs, and a tolerance-based semantic golden result. |
+| 006 | B | 005 + Checkpoint A approval | Planned | Add backend-neutral C++ detection, configuration, preprocessing, mapping, and visualization modules. |
+| 007 | B | 006 | Planned | Add C++ ONNX Runtime single-image inference and compare it with Python. |
+| 008 | B | 007 | Planned | Add C++ ONNX Runtime video-file inference with honest read/process/write timing boundaries. |
+| 009 | B | 008 | Planned | Add the unified Release-only PC benchmark framework and real Python/C++ ORT measurements. |
+| 010 | C | 009 + Checkpoint B approval | Planned | Convert the frozen ONNX model with pinned ncnn tools and verify param/bin loading. |
+| 011 | C | 010 | Planned | Add C++ ncnn image/video inference, ORT alignment, and benchmark integration. |
+| 012 | C | 011 | Planned | Generate the PC comparison, complete README, acceptance matrix, and Checkpoint C report. |
+| 013 | Stage 2 | 012 + Checkpoint C approval | Planned | Record and validate the Anlogic DR1 ARM CPU toolchain setup. |
+| 014 | Stage 2 | 013 | Planned | Run and measure the Anlogic DR1 ARM CPU functional baseline. |
+| 015 | Stage 2 | 014 | Planned | Consolidate reproducibility notes and close the two-stage baseline. |
+
+Batch A stops after Task 005, Batch B stops after Task 009, and Batch C stops
+after Task 012. A checkpoint requires explicit human review before the next batch.
