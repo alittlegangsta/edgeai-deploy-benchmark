@@ -8,7 +8,7 @@ endif()
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(OpenCV 4 REQUIRED COMPONENTS core imgproc imgcodecs)
+find_package(OpenCV 4 REQUIRED COMPONENTS core imgproc imgcodecs videoio)
 
 set(ONNXRUNTIME_ROOT "" CACHE PATH "Absolute root of ONNX Runtime 1.18.1 C/C++ SDK")
 if(NOT IS_ABSOLUTE "${ONNXRUNTIME_ROOT}")
@@ -54,6 +54,7 @@ add_library(edgeai_common STATIC
     src/common/config.cpp
     src/common/postprocess.cpp
     src/common/preprocess.cpp
+    src/common/video_pipeline.cpp
     src/common/visualize.cpp
 )
 
@@ -172,3 +173,31 @@ edgeai_enable_warnings(edgeai_postprocess_tests)
 add_test(NAME edgeai_postprocess_tests COMMAND edgeai_postprocess_tests)
 add_test(NAME edgeai_ort_image_invalid_args COMMAND edgeai_ort_image)
 set_tests_properties(edgeai_ort_image_invalid_args PROPERTIES WILL_FAIL TRUE)
+
+add_executable(edgeai_ort_video
+    apps/ort_video.cpp
+)
+target_compile_features(edgeai_ort_video PRIVATE cxx_std_17)
+set_target_properties(edgeai_ort_video PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    BUILD_RPATH "${ONNXRUNTIME_ROOT}/lib"
+)
+target_link_libraries(edgeai_ort_video PRIVATE edgeai_ort_backend)
+edgeai_enable_warnings(edgeai_ort_video)
+add_test(NAME edgeai_ort_video_invalid_args COMMAND edgeai_ort_video)
+set_tests_properties(edgeai_ort_video_invalid_args PROPERTIES WILL_FAIL TRUE)
+
+add_executable(edgeai_video_pipeline_tests
+    tests/test_video_pipeline.cpp
+)
+target_compile_features(edgeai_video_pipeline_tests PRIVATE cxx_std_17)
+set_target_properties(edgeai_video_pipeline_tests PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_video_pipeline_tests PRIVATE edgeai_common)
+edgeai_enable_warnings(edgeai_video_pipeline_tests)
+add_test(NAME edgeai_video_pipeline_tests COMMAND edgeai_video_pipeline_tests)
