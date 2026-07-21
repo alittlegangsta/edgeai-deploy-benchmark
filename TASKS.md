@@ -15,7 +15,7 @@ The authoritative execution rules are in
 | 007 | B | 006 | Completed | Add C++ ONNX Runtime single-image inference and compare it with Python. |
 | 008 | B | 007 | Completed | Add C++ ONNX Runtime video-file inference with honest read/process/write timing boundaries. |
 | 009 | B | 008 | Completed | Add the unified Release-only PC benchmark framework and real Python/C++ ORT measurements. |
-| 010 | C | 009 + Checkpoint B approval | Planned | Convert the frozen ONNX model with pinned ncnn tools and verify param/bin loading. |
+| 010 | C | 009 + Checkpoint B approval | Completed | Export the frozen YOLOv5n weights to TorchScript, convert with same-revision pnnx, and verify ncnn loading. |
 | 011 | C | 010 | Planned | Add C++ ncnn image/video inference, ORT alignment, and benchmark integration. |
 | 012 | C | 011 | Planned | Generate the PC comparison, complete README, acceptance matrix, and Checkpoint C report. |
 | 013 | Stage 2 | 012 + Checkpoint C approval | Planned | Record and validate the Anlogic DR1 ARM CPU toolchain setup. |

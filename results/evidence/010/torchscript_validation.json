@@ -1,0 +1,309 @@
+{
+  "application": "edgeai_validate_torchscript_conversion",
+  "environment": {
+    "cuda_available": false,
+    "numpy": "1.26.4",
+    "onnxruntime": "1.18.1",
+    "opencv_python_distribution": "4.10.0.84",
+    "opencv_runtime": "4.10.0",
+    "python": "3.12.3",
+    "python_executable": "/usr/bin/python3.12",
+    "torch": "2.2.2+cpu",
+    "torch_cxx11_abi": false,
+    "torchvision": "0.17.2+cpu"
+  },
+  "export": {
+    "batch_size": 1,
+    "command": [
+      ".venv/bin/python",
+      "/home/dministrator/src/yolov5-v7.0/export.py",
+      "--weights",
+      "models/yolov5n-v7.0/yolov5n.pt",
+      "--include",
+      "torchscript",
+      "--imgsz",
+      "640",
+      "640",
+      "--batch-size",
+      "1",
+      "--device",
+      "cpu"
+    ],
+    "detect_head_replacement": false,
+    "device": "cpu",
+    "dynamic": false,
+    "half": false,
+    "include": [
+      "torchscript"
+    ],
+    "input_size": [
+      640,
+      640
+    ],
+    "int8": false,
+    "layout": "NCHW",
+    "log": {
+      "path": "results/logs/010_torchscript_export.log",
+      "sha256": "66f3749b7b3dde378e8cb0b3619722592aac1bef76cfe503de260c19a4a1cce0",
+      "size_bytes": 1295
+    },
+    "model_surgery": false,
+    "optimize": false,
+    "precision": "FP32",
+    "quantization": false,
+    "source": {
+      "export_py_sha256": "db7228296e49f58f88651446e31fce7d879d24ee1b5d40be4623084203a13872",
+      "path": "/home/dministrator/src/yolov5-v7.0",
+      "revision": "915bbf294bb74c859f0b41f1c23bc395014ea679",
+      "tag": "v7.0",
+      "tree": "c54a6d586927aea25e80574e1e54ea0534ef679d",
+      "worktree_status": "clean"
+    },
+    "vulkan": false
+  },
+  "generated_at": "2026-07-21T17:16:15+08:00",
+  "lineage": {
+    "frozen_onnx": {
+      "path": "models/yolov5n-v7.0/yolov5n.onnx",
+      "role": "unchanged ORT baseline",
+      "sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "size_bytes": 7921360
+    },
+    "statement": "The ORT implementations use the same frozen ONNX model. The ncnn model is generated from the same YOLOv5n v7.0 weights through a separately frozen TorchScript-to-pnnx conversion path and is validated for semantic equivalence.",
+    "weights": {
+      "path": "models/yolov5n-v7.0/yolov5n.pt",
+      "sha256": "4f180cf23ba0717ada0badd6c685026d73d48f184d00fc159c2641284b2ac0a3",
+      "size_bytes": 4062133
+    }
+  },
+  "onnx_runtime": {
+    "inputs": [
+      {
+        "dtype": "FLOAT",
+        "name": "images",
+        "ort_type": "tensor(float)",
+        "shape": [
+          1,
+          3,
+          640,
+          640
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "dtype": "FLOAT",
+        "name": "output0",
+        "ort_type": "tensor(float)",
+        "shape": [
+          1,
+          25200,
+          85
+        ]
+      }
+    ],
+    "providers": [
+      "CPUExecutionProvider"
+    ],
+    "raw_outputs": [
+      {
+        "all_finite": true,
+        "dtype": "float32",
+        "element_count": 2142000,
+        "finite_count": 2142000,
+        "max": 637.1151733398438,
+        "mean": 8.75883828884917,
+        "min": 0.0,
+        "name": "output0",
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "std": 57.105199602048685
+      }
+    ],
+    "version": "1.18.1"
+  },
+  "reference_input": {
+    "configuration": {
+      "path": "configs/yolov5n_v7_inference.json",
+      "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+      "values": {
+        "class_aware_nms": true,
+        "confidence_threshold": 0.25,
+        "input_size": [
+          640,
+          640
+        ],
+        "iou_threshold": 0.45,
+        "max_detections": 1000,
+        "schema_version": 1
+      }
+    },
+    "image": {
+      "path": "data/samples/images/pc_reference.jpg",
+      "sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+      "size_bytes": 157404
+    },
+    "letterbox": {
+      "interpolation": "cv2.INTER_LINEAR",
+      "original_size": {
+        "height": 960,
+        "width": 1280
+      },
+      "pad_color_bgr": [
+        114,
+        114,
+        114
+      ],
+      "padding": {
+        "bottom": 80,
+        "left": 0,
+        "right": 0,
+        "top": 80
+      },
+      "resized_size": {
+        "height": 480,
+        "width": 640
+      },
+      "scale": 0.5,
+      "target_size": {
+        "height": 640,
+        "width": 640
+      },
+      "transforms": [
+        "BGR_TO_RGB",
+        "HWC_TO_CHW",
+        "uint8_TO_float32",
+        "divide_by_255",
+        "add_batch_dimension"
+      ]
+    },
+    "tensor": {
+      "all_finite": true,
+      "dtype": "float32",
+      "element_count": 1228800,
+      "finite_count": 1228800,
+      "max": 1.0,
+      "mean": 0.47450521551223346,
+      "min": 0.0,
+      "name": "images",
+      "shape": [
+        1,
+        3,
+        640,
+        640
+      ],
+      "std": 0.2260038423030862
+    }
+  },
+  "schema_version": 1,
+  "semantic_comparison": {
+    "identical_input": true,
+    "matches": [
+      {
+        "absolute_confidence_difference": 0.0,
+        "class_id": 66,
+        "class_name": "keyboard",
+        "iou": 0.9999988675117493,
+        "onnx_rank": 1,
+        "torchscript_rank": 1
+      },
+      {
+        "absolute_confidence_difference": 0.0,
+        "class_id": 62,
+        "class_name": "tv",
+        "iou": 0.9999995827674866,
+        "onnx_rank": 2,
+        "torchscript_rank": 2
+      },
+      {
+        "absolute_confidence_difference": 1.0000000000287557e-06,
+        "class_id": 41,
+        "class_name": "cup",
+        "iou": 0.9999995827674866,
+        "onnx_rank": 3,
+        "torchscript_rank": 3
+      },
+      {
+        "absolute_confidence_difference": 0.0,
+        "class_id": 64,
+        "class_name": "mouse",
+        "iou": 0.9999971389770508,
+        "onnx_rank": 4,
+        "torchscript_rank": 4
+      },
+      {
+        "absolute_confidence_difference": 2.000000000002e-06,
+        "class_id": 64,
+        "class_name": "mouse",
+        "iou": 0.9999992251396179,
+        "onnx_rank": 5,
+        "torchscript_rank": 5
+      }
+    ],
+    "maximum_observed_confidence_difference": 2.000000000002e-06,
+    "minimum_observed_iou": 0.9999971389770508,
+    "onnx_detection_count": 5,
+    "raw_tensor_delta_diagnostic": {
+      "maximum_absolute_difference": 0.0017242431640625,
+      "mean_absolute_difference": 1.0239697521250297e-06,
+      "note": "Diagnostic only; Task 010 acceptance is the frozen detection-semantic comparison."
+    },
+    "status": "PASS",
+    "tolerances": {
+      "maximum_absolute_confidence_difference": 0.001,
+      "minimum_class_matched_iou": 0.99
+    },
+    "torchscript_detection_count": 5
+  },
+  "status": "PASS",
+  "torchscript": {
+    "forward_schema": "forward(__torch__.models.yolo.DetectionModel self, Tensor x) -> ((Tensor))",
+    "input": {
+      "device": "cpu",
+      "dtype": "float32",
+      "layout": "NCHW",
+      "shape": [
+        1,
+        3,
+        640,
+        640
+      ]
+    },
+    "load": "PASS",
+    "module": {
+      "buffer_count": 18,
+      "devices": [
+        "cpu"
+      ],
+      "dtypes": [
+        "torch.float32"
+      ],
+      "floating_precision": "FP32",
+      "parameter_count": 1867405
+    },
+    "outputs": [
+      {
+        "all_finite": true,
+        "dtype": "float32",
+        "element_count": 2142000,
+        "finite_count": 2142000,
+        "max": 637.1151733398438,
+        "mean": 8.758838519794608,
+        "min": 2.839104507046386e-09,
+        "name": "output_0",
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "std": 57.1051998565332
+      }
+    ],
+    "path": "models/yolov5n-v7.0/yolov5n.torchscript",
+    "sha256": "1ea5813fac07158ca4ff5eb98b273353b1bf5baafdd46f1ced4ab33835247892",
+    "size_bytes": 7993343
+  }
+}

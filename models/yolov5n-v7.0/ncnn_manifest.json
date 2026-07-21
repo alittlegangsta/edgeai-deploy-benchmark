@@ -1,0 +1,332 @@
+{
+  "contract": {
+    "attributes_per_candidate": 85,
+    "batch": 1,
+    "class_count": 80,
+    "classification": "single decoded YOLOv5 candidate tensor",
+    "contains_graph_nms": false,
+    "detect_head": {
+      "adapter_required_for_task_011": false,
+      "form": "decoded candidates",
+      "note": "Task 011 may pass out0 directly to the shared candidate postprocessor after ncnn Mat layout validation.",
+      "scale_candidate_counts": [
+        19200,
+        4800,
+        1200
+      ],
+      "strides": [
+        8,
+        16,
+        32
+      ]
+    },
+    "device": "CPU",
+    "inputs": [
+      {
+        "c": 3,
+        "dtype": "float32",
+        "h": 640,
+        "logical_shape": [
+          1,
+          3,
+          640,
+          640
+        ],
+        "name": "in0",
+        "ncnn_dims": 3,
+        "w": 640
+      }
+    ],
+    "outputs": [
+      {
+        "c": 1,
+        "d": 1,
+        "dims": 2,
+        "dtype": "float32",
+        "elembits": 32,
+        "elempack": 1,
+        "h": 25200,
+        "logical_shape": [
+          1,
+          25200,
+          85
+        ],
+        "name": "out0",
+        "w": 85
+      }
+    ],
+    "precision": "FP32"
+  },
+  "conversion": {
+    "command": [
+      "LD_LIBRARY_PATH=/home/dministrator/projects/edgeai-deploy-benchmark/.venv/lib/python3.12/site-packages/torch/lib",
+      "/home/dministrator/opt/ncnn/pnnx-linux-x64-20240410-torch2.2.2-local/bin/pnnx",
+      "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.torchscript",
+      "inputshape=[1,3,640,640]f32",
+      "device=cpu",
+      "fp16=0",
+      "optlevel=2",
+      "pnnxparam=/tmp/edgeai-task010-pnnx/yolov5n.pnnx.param",
+      "pnnxbin=/tmp/edgeai-task010-pnnx/yolov5n.pnnx.bin",
+      "pnnxpy=/tmp/edgeai-task010-pnnx/yolov5n_pnnx.py",
+      "pnnxonnx=/tmp/edgeai-task010-pnnx/yolov5n.pnnx.onnx",
+      "ncnnparam=/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.param",
+      "ncnnbin=/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.bin",
+      "ncnnpy=/tmp/edgeai-task010-pnnx/yolov5n_ncnn.py"
+    ],
+    "generated_helpers": {
+      "executed": false,
+      "ncnn_python": {
+        "path": "/tmp/edgeai-task010-pnnx/yolov5n_ncnn.py",
+        "sha256": "e566cd24d2cbc95237dc6db7550f9700a0e29ad1bd5b42538ba48a24b164a9f9",
+        "size_bytes": 785
+      },
+      "pnnx_python": {
+        "path": "/tmp/edgeai-task010-pnnx/yolov5n_pnnx.py",
+        "sha256": "83cdc6ed5e082cfd860db0c1993b43f445676183e0c2772e49983d2c2744b286",
+        "size_bytes": 39934
+      }
+    },
+    "log": {
+      "customop": "",
+      "exit_status": 0,
+      "fixed_settings_present": true,
+      "moduleop": "",
+      "path": "results/logs/010_pnnx_conversion.log",
+      "pnnx_int_list_fallback_count": 4,
+      "pnnx_int_list_fallback_explanation": "The pinned loader substituted zero for four Torch JIT integer-list elements without constant value attributes. The generated graph still freezes the correct explicit input/output shapes and the ncnn runtime contract probe passes. Task 011 semantic equivalence remains mandatory.",
+      "sha256": "a9354cb789af90158fa1d2316e884c8e4716a065b141681357eccbd95ac6ff32",
+      "size_bytes": 1378,
+      "unsupported_operator_count": 0
+    },
+    "pnnx_intermediate": {
+      "bin": {
+        "path": "/tmp/edgeai-task010-pnnx/yolov5n.pnnx.bin",
+        "sha256": "7ceccfe635efb103cb207e6e847026b3ef4083448821ea75df074b6fd32b028a",
+        "size_bytes": 7896238
+      },
+      "graph": {
+        "declared_blob_count": 184,
+        "declared_layer_count": 179,
+        "input_blobs": [],
+        "layer_type_counts": {
+          "F.sigmoid": 3,
+          "Tensor.contiguous": 3,
+          "Tensor.view": 6,
+          "nn.Conv2d": 60,
+          "nn.MaxPool2d": 3,
+          "nn.SiLU": 57,
+          "nn.Upsample": 2,
+          "pnnx.Attribute": 6,
+          "pnnx.Expression": 13,
+          "pnnx.Input": 1,
+          "pnnx.Output": 1,
+          "prim::TupleConstruct": 1,
+          "torch.cat": 17,
+          "torch.permute": 3,
+          "torch.split": 3
+        },
+        "magic": "7767517",
+        "output_blobs": [],
+        "parsed_layer_count": 179
+      },
+      "input_annotation": {
+        "dtype": "f32",
+        "shape": [
+          1,
+          3,
+          640,
+          640
+        ]
+      },
+      "onnx": {
+        "emitted": false,
+        "path": "/tmp/edgeai-task010-pnnx/yolov5n.pnnx.onnx",
+        "reason_if_absent": "pnnx built without onnx-zero because Torch uses CXX11 ABI 0"
+      },
+      "output_annotation": {
+        "dtype": "f32",
+        "shape": [
+          1,
+          25200,
+          85
+        ]
+      },
+      "param": {
+        "path": "/tmp/edgeai-task010-pnnx/yolov5n.pnnx.param",
+        "sha256": "32e10a83491e58afaffd48718ec24b6926354f2ccd08a84ac95032dc9338bd87",
+        "size_bytes": 30921
+      }
+    },
+    "settings": {
+      "customop": [],
+      "device": "cpu",
+      "fp16": 0,
+      "inputshape": "[1,3,640,640]f32",
+      "moduleop": [],
+      "ncnnoptimize_used": false,
+      "optlevel": 2,
+      "quantization": false,
+      "vulkan": false
+    },
+    "status": "PASS"
+  },
+  "created_at": "2026-07-21T17:24:53+08:00",
+  "lineage": {
+    "frozen_onnx": {
+      "path": "models/yolov5n-v7.0/yolov5n.onnx",
+      "role": "unchanged ORT baseline",
+      "sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "size_bytes": 7921360
+    },
+    "statement": "The ORT implementations use the same frozen ONNX model. The ncnn model is generated from the same YOLOv5n v7.0 weights through a separately frozen TorchScript-to-pnnx conversion path and is validated for semantic equivalence.",
+    "torchscript": {
+      "path": "models/yolov5n-v7.0/yolov5n.torchscript",
+      "sha256": "1ea5813fac07158ca4ff5eb98b273353b1bf5baafdd46f1ced4ab33835247892",
+      "size_bytes": 7993343
+    },
+    "torchscript_manifest": {
+      "path": "models/yolov5n-v7.0/torchscript_manifest.json",
+      "sha256": "24401522387fd91d6afe6dfbc7029140aea564a8ea3cd09f0db55763ad14e8f2",
+      "size_bytes": 7901
+    },
+    "weights": {
+      "path": "models/yolov5n-v7.0/yolov5n.pt",
+      "sha256": "4f180cf23ba0717ada0badd6c685026d73d48f184d00fc159c2641284b2ac0a3",
+      "size_bytes": 4062133
+    }
+  },
+  "ncnn_model": {
+    "bin": {
+      "path": "models/yolov5n-v7.0/yolov5n.ncnn.bin",
+      "sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+      "size_bytes": 7873060
+    },
+    "custom_layer_count": 0,
+    "custom_layer_types": [],
+    "graph": {
+      "declared_blob_count": 237,
+      "declared_layer_count": 207,
+      "input_blobs": [],
+      "layer_type_counts": {
+        "BinaryOp": 16,
+        "Concat": 17,
+        "Convolution": 60,
+        "Eltwise": 3,
+        "Input": 1,
+        "Interp": 2,
+        "MemoryData": 6,
+        "Permute": 3,
+        "Pooling": 3,
+        "Reshape": 6,
+        "Sigmoid": 3,
+        "Slice": 3,
+        "Split": 24,
+        "Swish": 57,
+        "UnaryOp": 3
+      },
+      "magic": "7767517",
+      "output_blobs": [
+        "out0"
+      ],
+      "parsed_layer_count": 207
+    },
+    "param": {
+      "path": "models/yolov5n-v7.0/yolov5n.ncnn.param",
+      "sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+      "size_bytes": 16885
+    }
+  },
+  "runtime_validation": {
+    "options": {
+      "bf16_storage": false,
+      "fp16_arithmetic": false,
+      "fp16_packed": false,
+      "fp16_storage": false,
+      "int8_arithmetic": false,
+      "int8_inference": false,
+      "int8_packed": false,
+      "int8_storage": false,
+      "num_threads": 1,
+      "vulkan_compute": false
+    },
+    "path": "results/evidence/010/ncnn_model_load.json",
+    "probe_scope": "zero-input shape/type/load contract probe; not a correctness result",
+    "sha256": "6860a7702ebf7fb3d57551831baf4cd7e3a6b1ac1edfb2a8a41ef9df23e99310",
+    "size_bytes": 1097,
+    "status": "PASS"
+  },
+  "schema_version": 1,
+  "status": "PASS",
+  "task_011_preregistered_correctness_gate": {
+    "below_hard_minimum": "Task 011 fails and stops",
+    "hard_minimum": {
+      "disposition": "stop for human explanation if only this gate passes",
+      "maximum_absolute_confidence_difference": 0.02,
+      "minimum_class_matched_iou": 0.98
+    },
+    "must": [
+      "equal detection count",
+      "equal detection classes",
+      "all boxes finite and within valid image bounds",
+      "no confidence/NMS threshold or golden-result changes"
+    ],
+    "target": {
+      "disposition": "may proceed normally",
+      "maximum_absolute_confidence_difference": 0.01,
+      "minimum_class_matched_iou": 0.99
+    }
+  },
+  "toolchain": {
+    "ncnn": {
+      "cmake_config": {
+        "path": "/home/dministrator/opt/ncnn/ncnn-linux-x64-20240410-local/lib/cmake/ncnn/ncnnConfig.cmake",
+        "sha256": "8b132a0fa6e1335f1e33e49efd8b8fd009ba4869e89a47d6f2b45b6414a28e01",
+        "size_bytes": 1339
+      },
+      "library": {
+        "path": "/home/dministrator/opt/ncnn/ncnn-linux-x64-20240410-local/lib/libncnn.a",
+        "sha256": "f1936728d19ce288ad7180926670ac7f1833107a13cc9446d178d2bef340fcc1",
+        "size_bytes": 14527906
+      },
+      "provenance": {
+        "path": "/home/dministrator/opt/ncnn/ncnn-linux-x64-20240410-local/provenance.local.txt",
+        "sha256": "805e774c7b3f79e237b35a7041e0f92f39ca92a8e06466bedfb49f62188eaef1",
+        "size_bytes": 4841
+      },
+      "root": "/home/dministrator/opt/ncnn/ncnn-linux-x64-20240410-local",
+      "version": "1.0.20240410"
+    },
+    "official_source": "https://github.com/Tencent/ncnn",
+    "pnnx": {
+      "file": "/home/dministrator/opt/ncnn/pnnx-linux-x64-20240410-torch2.2.2-local/bin/pnnx: ELF 64-bit LSB pie executable, x86-64, version 1 (GNU/Linux), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=e0c2c7d9b8bebe91ded4d8bfbc69f862d67ae79c, for GNU/Linux 3.2.0, not stripped",
+      "ldd": [
+        "linux-vdso.so.1 (0x00007ffea7cab000)",
+        "\tlibc10.so => /home/dministrator/projects/edgeai-deploy-benchmark/.venv/lib/python3.12/site-packages/torch/lib/libc10.so (0x00007cf471f16000)",
+        "\tlibtorch_cpu.so => /home/dministrator/projects/edgeai-deploy-benchmark/.venv/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so (0x00007cf45ac00000)",
+        "\tlibtorch.so => /home/dministrator/projects/edgeai-deploy-benchmark/.venv/lib/python3.12/site-packages/torch/lib/libtorch.so (0x00007cf4725d8000)",
+        "\tlibstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007cf45a800000)",
+        "\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007cf471e1e000)",
+        "\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007cf471dee000)",
+        "\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007cf45a400000)",
+        "\tlibpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007cf471de9000)",
+        "\t/lib64/ld-linux-x86-64.so.2 (0x00007cf4725dd000)",
+        "\tlibrt.so.1 => /lib/x86_64-linux-gnu/librt.so.1 (0x00007cf471de4000)",
+        "\tlibdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007cf471ddf000)",
+        "\tlibgomp-a34b3233.so.1 => /home/dministrator/projects/edgeai-deploy-benchmark/.venv/lib/python3.12/site-packages/torch/lib/libgomp-a34b3233.so.1 (0x00007cf45a000000)"
+      ],
+      "path": "/home/dministrator/opt/ncnn/pnnx-linux-x64-20240410-torch2.2.2-local/bin/pnnx",
+      "provenance": {
+        "path": "/home/dministrator/opt/ncnn/pnnx-linux-x64-20240410-torch2.2.2-local/provenance.local.txt",
+        "sha256": "dc0cc8f39e5e80de8d92dc809143f7d83e61308f1737628199f629ce491b07f1",
+        "size_bytes": 6105
+      },
+      "sha256": "978daf93358863bd6ebcceee6447d5a8db9b95c4aa1b25d34fdee71b816d052f",
+      "size_bytes": 6797712,
+      "torch_library_path": "/home/dministrator/projects/edgeai-deploy-benchmark/.venv/lib/python3.12/site-packages/torch/lib"
+    },
+    "pnnx_source_tree": "db4f9e5bc6dff9d78e0eecb1ebc5d2b19a4f5893",
+    "revision": "56775de50990ab7f16627efdcf5529b49541206f",
+    "tag": "20240410"
+  }
+}

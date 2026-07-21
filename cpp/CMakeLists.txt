@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.16)
 
 project(edgeai_deploy_benchmark LANGUAGES CXX)
 
+if(POLICY CMP0144)
+    cmake_policy(SET CMP0144 NEW)
+endif()
+
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
@@ -39,6 +43,18 @@ message(STATUS "ONNX Runtime root: ${ONNXRUNTIME_ROOT}")
 message(STATUS "ONNX Runtime include: ${ONNXRUNTIME_INCLUDE_DIR}")
 message(STATUS "ONNX Runtime library: ${ONNXRUNTIME_LIBRARY}")
 message(STATUS "ONNX Runtime version: ${ONNXRUNTIME_VERSION}")
+
+set(NCNN_ROOT "" CACHE PATH "Absolute root of the pinned ncnn 20240410 install")
+if(NOT IS_ABSOLUTE "${NCNN_ROOT}")
+    message(FATAL_ERROR "NCNN_ROOT must be an explicit absolute SDK path")
+endif()
+get_filename_component(NCNN_ROOT "${NCNN_ROOT}" REALPATH)
+set(ncnn_DIR "${NCNN_ROOT}/lib/cmake/ncnn")
+if(NOT EXISTS "${ncnn_DIR}/ncnnConfig.cmake")
+    message(FATAL_ERROR "Required ncnn CMake config is missing: ${ncnn_DIR}/ncnnConfig.cmake")
+endif()
+find_package(ncnn CONFIG REQUIRED NO_DEFAULT_PATH PATHS "${ncnn_DIR}")
+message(STATUS "ncnn root: ${NCNN_ROOT}")
 
 function(edgeai_enable_warnings target_name)
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
@@ -218,6 +234,20 @@ target_compile_definitions(edgeai_benchmark_ort PRIVATE
 )
 target_link_libraries(edgeai_benchmark_ort PRIVATE edgeai_ort_backend)
 edgeai_enable_warnings(edgeai_benchmark_ort)
+
+add_executable(edgeai_ncnn_model_smoke
+    apps/ncnn_model_smoke.cpp
+)
+target_compile_features(edgeai_ncnn_model_smoke PRIVATE cxx_std_17)
+set_target_properties(edgeai_ncnn_model_smoke PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_ncnn_model_smoke PRIVATE ncnn)
+edgeai_enable_warnings(edgeai_ncnn_model_smoke)
+add_test(NAME edgeai_ncnn_model_smoke_invalid_args COMMAND edgeai_ncnn_model_smoke)
+set_tests_properties(edgeai_ncnn_model_smoke_invalid_args PROPERTIES WILL_FAIL TRUE)
 add_test(NAME edgeai_benchmark_ort_invalid_args COMMAND edgeai_benchmark_ort)
 set_tests_properties(edgeai_benchmark_ort_invalid_args PROPERTIES WILL_FAIL TRUE)
 

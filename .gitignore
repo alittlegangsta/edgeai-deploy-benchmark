@@ -15,6 +15,14 @@ third_party/
 models/**/*.pt
 models/**/*.onnx
 models/**/*.bin
+models/**/*.ncnn.param
+models/**/*.ncnn.bin
+models/**/*.pnnx.param
+models/**/*.pnnx.bin
+models/**/*.pnnx.onnx
+models/**/*_pnnx.py
+models/**/*_ncnn.py
+models/**/*.torchscript
 results/videos/*
 data/samples/videos/*
 .agents/
