@@ -10,6 +10,36 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(OpenCV 4 REQUIRED COMPONENTS core imgproc imgcodecs)
 
+set(ONNXRUNTIME_ROOT "" CACHE PATH "Absolute root of ONNX Runtime 1.18.1 C/C++ SDK")
+if(NOT IS_ABSOLUTE "${ONNXRUNTIME_ROOT}")
+    message(FATAL_ERROR "ONNXRUNTIME_ROOT must be an explicit absolute SDK path")
+endif()
+get_filename_component(ONNXRUNTIME_ROOT "${ONNXRUNTIME_ROOT}" REALPATH)
+set(ONNXRUNTIME_INCLUDE_DIR "${ONNXRUNTIME_ROOT}/include")
+set(ONNXRUNTIME_LIBRARY "${ONNXRUNTIME_ROOT}/lib/libonnxruntime.so")
+set(ONNXRUNTIME_VERSION_FILE "${ONNXRUNTIME_ROOT}/VERSION_NUMBER")
+foreach(required_path
+        "${ONNXRUNTIME_INCLUDE_DIR}/onnxruntime_c_api.h"
+        "${ONNXRUNTIME_INCLUDE_DIR}/onnxruntime_cxx_api.h"
+        "${ONNXRUNTIME_INCLUDE_DIR}/cpu_provider_factory.h"
+        "${ONNXRUNTIME_LIBRARY}"
+        "${ONNXRUNTIME_VERSION_FILE}")
+    if(NOT EXISTS "${required_path}")
+        message(FATAL_ERROR "Required ONNX Runtime SDK artifact is missing: ${required_path}")
+    endif()
+endforeach()
+file(READ "${ONNXRUNTIME_VERSION_FILE}" ONNXRUNTIME_VERSION)
+string(STRIP "${ONNXRUNTIME_VERSION}" ONNXRUNTIME_VERSION)
+if(NOT ONNXRUNTIME_VERSION STREQUAL "1.18.1")
+    message(FATAL_ERROR
+        "ONNX Runtime SDK version must be 1.18.1, observed: ${ONNXRUNTIME_VERSION}"
+    )
+endif()
+message(STATUS "ONNX Runtime root: ${ONNXRUNTIME_ROOT}")
+message(STATUS "ONNX Runtime include: ${ONNXRUNTIME_INCLUDE_DIR}")
+message(STATUS "ONNX Runtime library: ${ONNXRUNTIME_LIBRARY}")
+message(STATUS "ONNX Runtime version: ${ONNXRUNTIME_VERSION}")
+
 function(edgeai_enable_warnings target_name)
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
         target_compile_options(${target_name} PRIVATE
@@ -22,6 +52,7 @@ endfunction()
 
 add_library(edgeai_common STATIC
     src/common/config.cpp
+    src/common/postprocess.cpp
     src/common/preprocess.cpp
     src/common/visualize.cpp
 )
@@ -75,6 +106,40 @@ set_target_properties(edgeai_preprocess_probe PROPERTIES
 target_link_libraries(edgeai_preprocess_probe PRIVATE edgeai_common)
 edgeai_enable_warnings(edgeai_preprocess_probe)
 
+add_library(edgeai_ort_backend STATIC
+    src/backends/ort_detector.cpp
+)
+target_compile_features(edgeai_ort_backend PUBLIC cxx_std_17)
+set_target_properties(edgeai_ort_backend PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_include_directories(edgeai_ort_backend PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_include_directories(edgeai_ort_backend SYSTEM PRIVATE
+    ${ONNXRUNTIME_INCLUDE_DIR}
+)
+target_link_libraries(edgeai_ort_backend PUBLIC
+    edgeai_common
+    ${ONNXRUNTIME_LIBRARY}
+)
+edgeai_enable_warnings(edgeai_ort_backend)
+
+add_executable(edgeai_ort_image
+    apps/ort_image.cpp
+)
+target_compile_features(edgeai_ort_image PRIVATE cxx_std_17)
+set_target_properties(edgeai_ort_image PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    BUILD_RPATH "${ONNXRUNTIME_ROOT}/lib"
+)
+target_link_libraries(edgeai_ort_image PRIVATE edgeai_ort_backend)
+edgeai_enable_warnings(edgeai_ort_image)
+
 add_executable(edgeai_common_tests
     tests/test_common.cpp
 )
@@ -92,3 +157,18 @@ edgeai_enable_warnings(edgeai_common_tests)
 
 enable_testing()
 add_test(NAME edgeai_common_tests COMMAND edgeai_common_tests)
+
+add_executable(edgeai_postprocess_tests
+    tests/test_postprocess.cpp
+)
+target_compile_features(edgeai_postprocess_tests PRIVATE cxx_std_17)
+set_target_properties(edgeai_postprocess_tests PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_postprocess_tests PRIVATE edgeai_common)
+edgeai_enable_warnings(edgeai_postprocess_tests)
+add_test(NAME edgeai_postprocess_tests COMMAND edgeai_postprocess_tests)
+add_test(NAME edgeai_ort_image_invalid_args COMMAND edgeai_ort_image)
+set_tests_properties(edgeai_ort_image_invalid_args PROPERTIES WILL_FAIL TRUE)
