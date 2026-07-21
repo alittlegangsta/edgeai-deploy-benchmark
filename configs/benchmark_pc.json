@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "methodology_id": "task009-pc-ort-v1",
+  "environment": {
+    "cpu_affinity": "scheduler managed",
+    "cpu_pinning": "disabled",
+    "platform": "WSL2",
+    "required_environment_variables": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "workload": {
+    "batch": 1,
+    "golden_result": {
+      "path": "tests/fixtures/python_ort_golden.json",
+      "sha256": "9a8fa96233aba0f77fd1196da9c48cc719bb361d97a656e6507ddd50f81dcc4f"
+    },
+    "image": {
+      "path": "data/samples/images/pc_reference.jpg",
+      "sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+    },
+    "inference_config": {
+      "path": "configs/yolov5n_v7_inference.json",
+      "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+    },
+    "input_size": [
+      640,
+      640
+    ],
+    "manifest": {
+      "path": "models/yolov5n-v7.0/manifest.json",
+      "sha256": "764f3e4980c1f6b18ea245262af99703d13e817fedc52bf97bbfc5a1389f06c2"
+    },
+    "model": {
+      "name": "YOLOv5n v7.0",
+      "path": "models/yolov5n-v7.0/yolov5n.onnx",
+      "sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121"
+    },
+    "precision": "FP32"
+  },
+  "runtime": {
+    "execution_mode": "ORT_SEQUENTIAL",
+    "execution_provider": "CPUExecutionProvider",
+    "graph_optimization": "ORT_ENABLE_ALL",
+    "inter_op_threads": 1,
+    "intra_op_threads": 1,
+    "onnxruntime_version": "1.18.1",
+    "opencv_threads": 1
+  },
+  "rounds": {
+    "count": 5,
+    "order": [
+      ["python_ort", "cpp_ort"],
+      ["cpp_ort", "python_ort"],
+      ["python_ort", "cpp_ort"],
+      ["cpp_ort", "python_ort"],
+      ["python_ort", "cpp_ort"]
+    ],
+    "repeat": 100,
+    "warmup": 10
+  },
+  "timing": {
+    "clock_cpp": "std::chrono::steady_clock",
+    "clock_python": "time.perf_counter_ns",
+    "excluded": [
+      "image_file_read_and_decode",
+      "model_load_and_session_creation",
+      "visualization_and_labels",
+      "image_write",
+      "json_and_csv_write",
+      "video_read_and_encode"
+    ],
+    "pipeline_total_formula": "preprocess_ns + inference_ns + postprocess_ns",
+    "stages": [
+      "preprocess",
+      "inference",
+      "postprocess",
+      "pipeline_total"
+    ]
+  },
+  "statistics": {
+    "fps_formula": "1000 / aggregate_mean_pipeline_total_ms",
+    "maximum_round_mean_relative_difference_percent": 10.0,
+    "percentile_method": "nearest-rank",
+    "preserve_all_samples": true,
+    "round_mean_relative_difference_formula": "(max_round_mean - min_round_mean) / min_round_mean * 100"
+  },
+  "resources": {
+    "cpu_formula": "100 * process_user_and_system_cpu_time_delta / wall_clock_time_delta",
+    "cpu_scope": "each round's 100 formal complete pipelines",
+    "peak_rss_formula_linux": "getrusage(RUSAGE_SELF).ru_maxrss * 1024",
+    "peak_rss_scope": "process startup through formal measurement completion"
+  },
+  "correctness": {
+    "checks": ["before_warmup", "after_measurement"],
+    "maximum_absolute_confidence_difference": 0.001,
+    "minimum_class_matched_iou": 0.99
+  }
+}

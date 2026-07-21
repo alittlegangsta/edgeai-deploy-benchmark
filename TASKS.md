@@ -11,10 +11,10 @@ The authoritative execution rules are in
 | 003 | A | 002 | Completed | Validate the existing Python/ORT environment, model loading, model I/O, and raw tensor statistics. |
 | 004 | A | 003 | Completed | Implement the Python ORT single-image detection reference with structured results and stage timings. |
 | 005 | A | 004 | Completed | Add focused Python tests, fixed inputs, and a tolerance-based semantic golden result. |
-| 006 | B | 005 + Checkpoint A approval | Planned | Add backend-neutral C++ detection, configuration, preprocessing, mapping, and visualization modules. |
-| 007 | B | 006 | Planned | Add C++ ONNX Runtime single-image inference and compare it with Python. |
-| 008 | B | 007 | Planned | Add C++ ONNX Runtime video-file inference with honest read/process/write timing boundaries. |
-| 009 | B | 008 | Planned | Add the unified Release-only PC benchmark framework and real Python/C++ ORT measurements. |
+| 006 | B | 005 + Checkpoint A approval | Completed | Add backend-neutral C++ detection, configuration, preprocessing, mapping, and visualization modules. |
+| 007 | B | 006 | Completed | Add C++ ONNX Runtime single-image inference and compare it with Python. |
+| 008 | B | 007 | Completed | Add C++ ONNX Runtime video-file inference with honest read/process/write timing boundaries. |
+| 009 | B | 008 | Completed | Add the unified Release-only PC benchmark framework and real Python/C++ ORT measurements. |
 | 010 | C | 009 + Checkpoint B approval | Planned | Convert the frozen ONNX model with pinned ncnn tools and verify param/bin loading. |
 | 011 | C | 010 | Planned | Add C++ ncnn image/video inference, ORT alignment, and benchmark integration. |
 | 012 | C | 011 | Planned | Generate the PC comparison, complete README, acceptance matrix, and Checkpoint C report. |

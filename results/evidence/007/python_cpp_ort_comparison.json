@@ -1,0 +1,66 @@
+{
+  "application": "edgeai_compare_detections",
+  "candidate": {
+    "detection_count": 5,
+    "execution_provider": "CPUExecutionProvider",
+    "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "path": "results/evidence/007/cpp_ort_detections.json",
+    "runtime_version": "1.18.1",
+    "sha256": "42892e2fcd911936cc81ef36756eda2b7675424154f43d95699b85715b485dd1"
+  },
+  "matches": [
+    {
+      "absolute_confidence_difference": 1.4869689923813212e-08,
+      "candidate_rank": 1,
+      "class_id": 66,
+      "class_name": "keyboard",
+      "iou": 0.9999999932587617,
+      "reference_rank": 1
+    },
+    {
+      "absolute_confidence_difference": 1.648330683057253e-08,
+      "candidate_rank": 2,
+      "class_id": 62,
+      "class_name": "tv",
+      "iou": 0.9999999975043942,
+      "reference_rank": 2
+    },
+    {
+      "absolute_confidence_difference": 1.0192871102709944e-08,
+      "candidate_rank": 3,
+      "class_id": 41,
+      "class_name": "cup",
+      "iou": 0.9999999892116751,
+      "reference_rank": 3
+    },
+    {
+      "absolute_confidence_difference": 1.2716293351644481e-08,
+      "candidate_rank": 4,
+      "class_id": 64,
+      "class_name": "mouse",
+      "iou": 0.9999999893069534,
+      "reference_rank": 4
+    },
+    {
+      "absolute_confidence_difference": 1.300048829699918e-08,
+      "candidate_rank": 5,
+      "class_id": 64,
+      "class_name": "mouse",
+      "iou": 0.9999999825368343,
+      "reference_rank": 5
+    }
+  ],
+  "maximum_observed_confidence_difference": 1.648330683057253e-08,
+  "minimum_observed_iou": 0.9999999825368343,
+  "reference": {
+    "detection_count": 5,
+    "path": "tests/fixtures/python_ort_golden.json",
+    "sha256": "9a8fa96233aba0f77fd1196da9c48cc719bb361d97a656e6507ddd50f81dcc4f"
+  },
+  "schema_version": 1,
+  "status": "PASS",
+  "tolerances": {
+    "maximum_absolute_confidence_difference": 0.001,
+    "minimum_iou": 0.99
+  }
+}
