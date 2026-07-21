@@ -1,0 +1,9 @@
+# Verified project environment for the Batch A Python baseline (Python 3.12.3).
+# This file records exact installed versions; Codex did not install from it.
+numpy==1.26.4
+onnx==1.16.2
+onnxruntime==1.18.1
+opencv-python==4.10.0.84
+scipy==1.12.0
+torch==2.2.2+cpu
+torchvision==0.17.2+cpu

@@ -1,0 +1,85 @@
+{
+  "approved_artifact": {
+    "path": "results/evidence/004/python_ort_detections.json",
+    "sha256": "4c90dea9de06f5c01e5486d76ac1395fd35730fd3a1494c08ec8b74a8e55ff4b"
+  },
+  "detections": [
+    {
+      "box_xyxy_source": [
+        420.918823,
+        636.48291,
+        786.872803,
+        747.389648
+      ],
+      "class_id": 66,
+      "class_name": "keyboard",
+      "confidence": 0.892058,
+      "rank": 1
+    },
+    {
+      "box_xyxy_source": [
+        400.534912,
+        255.551636,
+        895.718262,
+        543.92749
+      ],
+      "class_id": 62,
+      "class_name": "tv",
+      "confidence": 0.816359,
+      "rank": 2
+    },
+    {
+      "box_xyxy_source": [
+        252.854919,
+        613.533691,
+        348.21405,
+        771.307129
+      ],
+      "class_id": 41,
+      "class_name": "cup",
+      "confidence": 0.707963,
+      "rank": 3
+    },
+    {
+      "box_xyxy_source": [
+        870.52655,
+        716.008606,
+        970.28949,
+        787.96759
+      ],
+      "class_id": 64,
+      "class_name": "mouse",
+      "confidence": 0.394466,
+      "rank": 4
+    },
+    {
+      "box_xyxy_source": [
+        185.716171,
+        676.066406,
+        253.75264,
+        712.830078
+      ],
+      "class_id": 64,
+      "class_name": "mouse",
+      "confidence": 0.274518,
+      "rank": 5
+    }
+  ],
+  "known_model_limitations": [
+    {
+      "class_name": "mouse",
+      "confidence": 0.274518,
+      "description": "An earbud case is misclassified as mouse; the aligned box is retained as a YOLOv5n model false positive.",
+      "rank": 5
+    }
+  ],
+  "schema_version": 1,
+  "source_dimensions": {
+    "height": 960,
+    "width": 1280
+  },
+  "tolerances": {
+    "maximum_absolute_confidence_difference": 0.001,
+    "minimum_class_matched_iou": 0.99
+  }
+}

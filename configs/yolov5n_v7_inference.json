@@ -1,0 +1,11 @@
+{
+  "class_aware_nms": true,
+  "confidence_threshold": 0.25,
+  "input_size": [
+    640,
+    640
+  ],
+  "iou_threshold": 0.45,
+  "max_detections": 1000,
+  "schema_version": 1
+}
