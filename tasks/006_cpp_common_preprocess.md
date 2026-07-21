@@ -6,7 +6,7 @@ Create reusable C++ detection types, configuration, preprocessing, and visualiza
 
 ## Status
 
-Planned
+Completed
 
 ## Batch
 
@@ -215,4 +215,173 @@ risks, and final Git status with real-versus-static labels.
 
 ## Execution Record
 
-Not started. No preprocessing alignment values have been measured.
+Started: `2026-07-21T10:53:26+08:00`
+
+Branch: `feature/pc-batch-b-cpp-ort`
+
+Starting commit: `16687e4`
+
+Starting Git status: clean (`git status --short --untracked-files=all` produced
+no output).
+
+Dependencies: Tasks 001–005 are `Completed`; the user explicitly approved
+Checkpoint A on `2026-07-21`.
+
+Alignment tolerances frozen before the first comparison run:
+
+```text
+metadata and tensor shape: exact match
+maximum absolute tensor difference: <= 1/255 + 1e-6
+mean absolute tensor difference: <= 1e-6
+```
+
+No preprocessing alignment values have been measured yet.
+
+### Repair Attempt 1
+
+Failure: the first required Release build stopped while compiling
+`cpp/src/common/config.cpp`; `cpp/src/common/visualize.cpp` also emitted three
+narrowing warnings.
+
+Root Cause: an unsigned `cv::FileNode` sequence index was ambiguous against
+OpenCV 4.6's string and integer index overloads, including index zero. Braced
+construction of `cv::Scalar` also required explicit conversion from integer
+color components to `double` under the configured warnings.
+
+Files Modified: `cpp/src/common/config.cpp`, `cpp/src/common/visualize.cpp`, and
+this Execution Record.
+
+Fix Applied: sequence values are read through `cv::FileNode` iterators, and the
+three deterministic color components are explicitly converted to `double`.
+Warning settings and all frozen alignment tolerances remain unchanged.
+
+Commands Re-run: the complete configure/build, test, probe, and Python comparison
+sequence will be rerun.
+
+Result: the complete Release configure/build, C++ tests, probe, and Python
+comparison all passed after the fix. Repair attempts completed: `1`.
+
+Completed: `2026-07-21T11:03:27+08:00`
+
+### Environment
+
+```text
+GCC: 13.3.0
+CMake: 3.28.3
+Ninja: 1.11.1
+C++ OpenCV: 4.6.0
+Python: 3.12.3 from the project .venv
+Python OpenCV: 4.10.0
+NumPy: 1.26.4
+python -m pip check: No broken requirements found
+```
+
+Read-only fixed-input hashes were verified before implementation:
+
+```text
+configs/yolov5n_v7_inference.json
+  SHA256: 82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d
+data/samples/images/pc_reference.jpg
+  SHA256: 625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071
+```
+
+### Implementation and Backend Boundary
+
+- Added plain detection, tensor, letterbox, box, and stage-timing value types.
+- Added validated JSON configuration loading with frozen COCO class ordering,
+  input/threshold/maximum-detection checks, and letterbox validation.
+- Added OpenCV-based BGR loading, letterbox, RGB NCHW FP32 construction, inverse
+  coordinate mapping, clipping, deterministic drawing, and checked image writes.
+- Added a probe that writes metadata and a temporary raw FP32 tensor only below
+  `build/pc-release/`.
+- Added pure common-module tests and a Python comparator that uses the existing
+  frozen Python preprocessing reference.
+- A case-insensitive search of the common headers, common sources, probe, tests,
+  and comparator found no ONNX Runtime or ncnn symbols. No inference backend,
+  raw-output decoder, video pipeline, or benchmark was added.
+
+### Commands and Results
+
+The first required configure command exited `0`. Its associated first build
+exited `1` with the compiler error and warnings recorded in Repair Attempt 1.
+
+After the repair, the complete required build sequence was rerun from an empty
+`build/pc-release`:
+
+```text
+rm -rf build/pc-release                                      exit 0
+cmake -S cpp -B build/pc-release -G Ninja
+      -DCMAKE_BUILD_TYPE=Release                             exit 0
+cmake --build build/pc-release --parallel                    exit 0
+```
+
+The successful build completed `10/10` Ninja steps. The final build output
+contained no compiler warnings.
+
+```text
+ctest --test-dir build/pc-release --output-on-failure        exit 0
+edgeai_common_tests                                          PASS
+edgeai_preprocess_probe with the required fixed inputs       exit 0
+tests/python/compare_preprocess.py with required arguments   exit 0
+python3 -m json.tool preprocess_alignment.json               exit 0
+git diff --check                                             exit 0
+```
+
+CTest ran `1/1` registered executable tests with zero failures. The executable
+checks configuration rejection, four letterbox geometries, RGB NCHW normalized
+layout, inverse mapping, clipping, empty values, invalid image input, and
+copy-preserving visualization.
+
+### Real Preprocessing Alignment
+
+```text
+Python shape: [1, 3, 640, 640]
+C++ shape: [1, 3, 640, 640]
+shape match: true
+metadata match: true
+original size: 1280x960
+target size: 640x640
+resized size: 640x480
+scale: 0.5
+padding: left=0, top=80, right=0, bottom=80
+maximum absolute tensor difference: 0.0
+mean absolute tensor difference: 0.0
+maximum allowed absolute difference: 0.0039225686274509805
+maximum allowed mean absolute difference: 0.000001
+alignment status: PASS
+```
+
+Six sampled tensor locations were also recorded from the real tensors; every
+sample had an absolute difference of `0.0`.
+
+### Evidence
+
+```text
+build/pc-release/cpp_preprocess.json
+  SHA256: 5edc9e2e37f531007864c40fb359c14bf513101ee0dedaa8c6930c191c303158
+  size: 785 bytes
+build/pc-release/cpp_preprocess.f32
+  SHA256: da7341562470c2bdc037b98bef7e6b2569a160418083e45a39fb989017e83693
+  size: 4915200 bytes
+results/evidence/006/preprocess_alignment.json
+  SHA256: ee0576201532fbec56f2af9202ced514effb287554f94584ec3cb160b3a81930
+  size: 3606 bytes
+results/logs/006_cpp_common.log
+  SHA256: 035c7f6137e544dbfb1323b4172a7df5a97f7114bd593a1d6ef70031bee549c5
+  size: 235 bytes
+```
+
+The raw tensor and C++ metadata remain reproducible ignored build artifacts and
+are not committed. The `*.log` policy keeps the real probe log local; its hash
+and output summary are recorded here. The compact alignment JSON is preserved.
+
+### Skips and Human Review
+
+No required command or check was skipped. Task 006 produced no visualization
+sample, so no new image required human visual review; the visualization API was
+exercised by unit tests without persisting an image. No timing was collected or
+reported as benchmark data.
+
+Final Acceptance Criteria status: all passed. Task 006 is `Completed`. The local
+atomic commit uses the required message `feat(cpp): add shared detection
+preprocessing modules`; its hash is the commit containing this Execution Record.

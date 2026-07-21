@@ -1,0 +1,158 @@
+{
+  "application": "edgeai_compare_preprocess",
+  "comparison": {
+    "maximum_absolute_difference": 0.0,
+    "mean_absolute_difference": 0.0,
+    "metadata_match": true,
+    "samples": [
+      {
+        "absolute_difference": 0.0,
+        "cpp_value": 0.4470588266849518,
+        "flat_index": 0,
+        "python_value": 0.4470588266849518
+      },
+      {
+        "absolute_difference": 0.0,
+        "cpp_value": 0.4470588266849518,
+        "flat_index": 639,
+        "python_value": 0.4470588266849518
+      },
+      {
+        "absolute_difference": 0.0,
+        "cpp_value": 0.4470588266849518,
+        "flat_index": 409600,
+        "python_value": 0.4470588266849518
+      },
+      {
+        "absolute_difference": 0.0,
+        "cpp_value": 0.40392157435417175,
+        "flat_index": 614400,
+        "python_value": 0.40392157435417175
+      },
+      {
+        "absolute_difference": 0.0,
+        "cpp_value": 0.4470588266849518,
+        "flat_index": 819200,
+        "python_value": 0.4470588266849518
+      },
+      {
+        "absolute_difference": 0.0,
+        "cpp_value": 0.4470588266849518,
+        "flat_index": 1228799,
+        "python_value": 0.4470588266849518
+      }
+    ],
+    "shape_match": true,
+    "tolerances": {
+      "maximum_absolute_difference": 0.0039225686274509805,
+      "maximum_mean_absolute_difference": 1e-06
+    }
+  },
+  "cpp": {
+    "dtype": "float32",
+    "metadata": {
+      "interpolation": "cv2.INTER_LINEAR",
+      "original_size": {
+        "height": 960,
+        "width": 1280
+      },
+      "pad_color_bgr": [
+        114,
+        114,
+        114
+      ],
+      "padding": {
+        "bottom": 80,
+        "left": 0,
+        "right": 0,
+        "top": 80
+      },
+      "resized_size": {
+        "height": 480,
+        "width": 640
+      },
+      "scale": 0.5,
+      "target_size": {
+        "height": 640,
+        "width": 640
+      },
+      "transforms": [
+        "BGR_TO_RGB",
+        "HWC_TO_CHW",
+        "uint8_TO_float32",
+        "divide_by_255",
+        "add_batch_dimension"
+      ]
+    },
+    "shape": [
+      1,
+      3,
+      640,
+      640
+    ]
+  },
+  "inputs": {
+    "config": {
+      "path": "configs/yolov5n_v7_inference.json",
+      "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+    },
+    "cpp_metadata": {
+      "path": "build/pc-release/cpp_preprocess.json",
+      "sha256": "5edc9e2e37f531007864c40fb359c14bf513101ee0dedaa8c6930c191c303158"
+    },
+    "cpp_tensor": {
+      "path": "build/pc-release/cpp_preprocess.f32",
+      "sha256": "da7341562470c2bdc037b98bef7e6b2569a160418083e45a39fb989017e83693",
+      "size_bytes": 4915200
+    },
+    "image": {
+      "path": "data/samples/images/pc_reference.jpg",
+      "sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+    }
+  },
+  "python": {
+    "dtype": "float32",
+    "metadata": {
+      "interpolation": "cv2.INTER_LINEAR",
+      "original_size": {
+        "height": 960,
+        "width": 1280
+      },
+      "pad_color_bgr": [
+        114,
+        114,
+        114
+      ],
+      "padding": {
+        "bottom": 80,
+        "left": 0,
+        "right": 0,
+        "top": 80
+      },
+      "resized_size": {
+        "height": 480,
+        "width": 640
+      },
+      "scale": 0.5,
+      "target_size": {
+        "height": 640,
+        "width": 640
+      },
+      "transforms": [
+        "BGR_TO_RGB",
+        "HWC_TO_CHW",
+        "uint8_TO_float32",
+        "divide_by_255",
+        "add_batch_dimension"
+      ]
+    },
+    "shape": [
+      1,
+      3,
+      640,
+      640
+    ]
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}
