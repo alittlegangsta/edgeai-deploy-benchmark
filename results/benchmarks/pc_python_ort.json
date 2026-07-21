@@ -1,0 +1,4983 @@
+{
+  "backend": "python_ort",
+  "benchmark_config_sha256": "64596e3fd469227c25c2e8c397aade0079867ef3e5e238eec83c50c3536c536d",
+  "evidence_type": "task009_raw_benchmark",
+  "rounds": [
+    {
+      "correctness": {
+        "after_measurement": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        },
+        "before_warmup": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        }
+      },
+      "environment": {
+        "architecture": "x86_64",
+        "cpu_affinity": "scheduler managed",
+        "cpu_model": "Intel(R) Core(TM) i5-14600KF",
+        "cpu_pinning": "disabled",
+        "environment_variables": {
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1"
+        },
+        "kernel": "6.6.87.2-microsoft-standard-WSL2",
+        "logical_cpu_count": 20,
+        "onnxruntime_version": "1.18.1",
+        "opencv_version": "4.10.0",
+        "os": "Linux",
+        "platform": "WSL2",
+        "python_version": "3.12.3"
+      },
+      "formal_iterations": 100,
+      "golden_result_sha256": "9a8fa96233aba0f77fd1196da9c48cc719bb361d97a656e6507ddd50f81dcc4f",
+      "image_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+      "inference_config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+      "manifest_sha256": "764f3e4980c1f6b18ea245262af99703d13e817fedc52bf97bbfc5a1389f06c2",
+      "model_load_ms": 26.649479,
+      "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "process_id": 4,
+      "process_started_unix_ns": 1784615721267581953,
+      "resource_measurement": {
+        "language_scope_note": "includes Python interpreter and imported modules",
+        "peak_rss_bytes": 179421184,
+        "peak_rss_is_process_level_not_model_only": true,
+        "peak_rss_scope": "process startup through formal measurement completion",
+        "process_cpu_percent_one_core_basis": 111.041790384276,
+        "process_cpu_time_delta_seconds": 5.680492999999999,
+        "wall_clock_time_delta_seconds": 5.115635276
+      },
+      "round": 1,
+      "runtime": {
+        "execution_mode": "ORT_SEQUENTIAL",
+        "execution_provider": "CPUExecutionProvider",
+        "graph_optimization": "ORT_ENABLE_ALL",
+        "inter_op_threads": 1,
+        "intra_op_threads": 1,
+        "onnxruntime_version": "1.18.1",
+        "opencv_threads": 1,
+        "runtime_inputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "images",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "runtime_outputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "output0",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "selected_providers": [
+          "CPUExecutionProvider"
+        ]
+      },
+      "samples": [
+        {
+          "aggregate_sample_index": 1,
+          "inference_ns": 43916290,
+          "iteration": 1,
+          "pipeline_total_ns": 52029633,
+          "postprocess_ns": 5192143,
+          "preprocess_ns": 2921200,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 2,
+          "inference_ns": 41328517,
+          "iteration": 2,
+          "pipeline_total_ns": 49339096,
+          "postprocess_ns": 4720055,
+          "preprocess_ns": 3290524,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 3,
+          "inference_ns": 41174153,
+          "iteration": 3,
+          "pipeline_total_ns": 48840841,
+          "postprocess_ns": 4588891,
+          "preprocess_ns": 3077797,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 4,
+          "inference_ns": 41986771,
+          "iteration": 4,
+          "pipeline_total_ns": 49645877,
+          "postprocess_ns": 4675551,
+          "preprocess_ns": 2983555,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 5,
+          "inference_ns": 41714485,
+          "iteration": 5,
+          "pipeline_total_ns": 49700887,
+          "postprocess_ns": 5080657,
+          "preprocess_ns": 2905745,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 6,
+          "inference_ns": 44453127,
+          "iteration": 6,
+          "pipeline_total_ns": 52301111,
+          "postprocess_ns": 4482588,
+          "preprocess_ns": 3365396,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 7,
+          "inference_ns": 42443912,
+          "iteration": 7,
+          "pipeline_total_ns": 51007662,
+          "postprocess_ns": 5468965,
+          "preprocess_ns": 3094785,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 8,
+          "inference_ns": 42292107,
+          "iteration": 8,
+          "pipeline_total_ns": 50034694,
+          "postprocess_ns": 4858259,
+          "preprocess_ns": 2884328,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 9,
+          "inference_ns": 41010606,
+          "iteration": 9,
+          "pipeline_total_ns": 49110490,
+          "postprocess_ns": 4958714,
+          "preprocess_ns": 3141170,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 10,
+          "inference_ns": 41438088,
+          "iteration": 10,
+          "pipeline_total_ns": 48942470,
+          "postprocess_ns": 4552321,
+          "preprocess_ns": 2952061,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 11,
+          "inference_ns": 42734970,
+          "iteration": 11,
+          "pipeline_total_ns": 51325366,
+          "postprocess_ns": 4902487,
+          "preprocess_ns": 3687909,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 12,
+          "inference_ns": 41346604,
+          "iteration": 12,
+          "pipeline_total_ns": 49286381,
+          "postprocess_ns": 4707799,
+          "preprocess_ns": 3231978,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 13,
+          "inference_ns": 42371883,
+          "iteration": 13,
+          "pipeline_total_ns": 50110047,
+          "postprocess_ns": 4668317,
+          "preprocess_ns": 3069847,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 14,
+          "inference_ns": 40879261,
+          "iteration": 14,
+          "pipeline_total_ns": 48815526,
+          "postprocess_ns": 5008039,
+          "preprocess_ns": 2928226,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 15,
+          "inference_ns": 42069537,
+          "iteration": 15,
+          "pipeline_total_ns": 49868855,
+          "postprocess_ns": 4756604,
+          "preprocess_ns": 3042714,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 16,
+          "inference_ns": 41958170,
+          "iteration": 16,
+          "pipeline_total_ns": 49894868,
+          "postprocess_ns": 4903582,
+          "preprocess_ns": 3033116,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 17,
+          "inference_ns": 42139264,
+          "iteration": 17,
+          "pipeline_total_ns": 49877743,
+          "postprocess_ns": 4683518,
+          "preprocess_ns": 3054961,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 18,
+          "inference_ns": 42645926,
+          "iteration": 18,
+          "pipeline_total_ns": 51007345,
+          "postprocess_ns": 5219623,
+          "preprocess_ns": 3141796,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 19,
+          "inference_ns": 42388488,
+          "iteration": 19,
+          "pipeline_total_ns": 50469344,
+          "postprocess_ns": 4677039,
+          "preprocess_ns": 3403817,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 20,
+          "inference_ns": 41308495,
+          "iteration": 20,
+          "pipeline_total_ns": 49623585,
+          "postprocess_ns": 5292417,
+          "preprocess_ns": 3022673,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 21,
+          "inference_ns": 43538436,
+          "iteration": 21,
+          "pipeline_total_ns": 51764551,
+          "postprocess_ns": 4901536,
+          "preprocess_ns": 3324579,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 22,
+          "inference_ns": 42179606,
+          "iteration": 22,
+          "pipeline_total_ns": 50223069,
+          "postprocess_ns": 4886965,
+          "preprocess_ns": 3156498,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 23,
+          "inference_ns": 42666097,
+          "iteration": 23,
+          "pipeline_total_ns": 50600706,
+          "postprocess_ns": 4779973,
+          "preprocess_ns": 3154636,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 24,
+          "inference_ns": 41355484,
+          "iteration": 24,
+          "pipeline_total_ns": 48975758,
+          "postprocess_ns": 4532642,
+          "preprocess_ns": 3087632,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 25,
+          "inference_ns": 41525526,
+          "iteration": 25,
+          "pipeline_total_ns": 49108640,
+          "postprocess_ns": 4590282,
+          "preprocess_ns": 2992832,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 26,
+          "inference_ns": 42655051,
+          "iteration": 26,
+          "pipeline_total_ns": 50872317,
+          "postprocess_ns": 4955171,
+          "preprocess_ns": 3262095,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 27,
+          "inference_ns": 41404103,
+          "iteration": 27,
+          "pipeline_total_ns": 49462375,
+          "postprocess_ns": 5067458,
+          "preprocess_ns": 2990814,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 28,
+          "inference_ns": 42783415,
+          "iteration": 28,
+          "pipeline_total_ns": 51109976,
+          "postprocess_ns": 5291728,
+          "preprocess_ns": 3034833,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 29,
+          "inference_ns": 44977303,
+          "iteration": 29,
+          "pipeline_total_ns": 55076757,
+          "postprocess_ns": 6786131,
+          "preprocess_ns": 3313323,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 30,
+          "inference_ns": 42731770,
+          "iteration": 30,
+          "pipeline_total_ns": 51835594,
+          "postprocess_ns": 5933117,
+          "preprocess_ns": 3170707,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 31,
+          "inference_ns": 41149746,
+          "iteration": 31,
+          "pipeline_total_ns": 49386753,
+          "postprocess_ns": 4759750,
+          "preprocess_ns": 3477257,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 32,
+          "inference_ns": 42806149,
+          "iteration": 32,
+          "pipeline_total_ns": 50682821,
+          "postprocess_ns": 4734852,
+          "preprocess_ns": 3141820,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 33,
+          "inference_ns": 42204366,
+          "iteration": 33,
+          "pipeline_total_ns": 50404637,
+          "postprocess_ns": 5171586,
+          "preprocess_ns": 3028685,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 34,
+          "inference_ns": 41721911,
+          "iteration": 34,
+          "pipeline_total_ns": 49653824,
+          "postprocess_ns": 4803777,
+          "preprocess_ns": 3128136,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 35,
+          "inference_ns": 41801447,
+          "iteration": 35,
+          "pipeline_total_ns": 49976425,
+          "postprocess_ns": 5028931,
+          "preprocess_ns": 3146047,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 36,
+          "inference_ns": 42264251,
+          "iteration": 36,
+          "pipeline_total_ns": 50243422,
+          "postprocess_ns": 4975444,
+          "preprocess_ns": 3003727,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 37,
+          "inference_ns": 42261769,
+          "iteration": 37,
+          "pipeline_total_ns": 50317625,
+          "postprocess_ns": 5016526,
+          "preprocess_ns": 3039330,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 38,
+          "inference_ns": 41040417,
+          "iteration": 38,
+          "pipeline_total_ns": 48703156,
+          "postprocess_ns": 4677937,
+          "preprocess_ns": 2984802,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 39,
+          "inference_ns": 41974641,
+          "iteration": 39,
+          "pipeline_total_ns": 50213610,
+          "postprocess_ns": 5344389,
+          "preprocess_ns": 2894580,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 40,
+          "inference_ns": 42400942,
+          "iteration": 40,
+          "pipeline_total_ns": 50946718,
+          "postprocess_ns": 5288953,
+          "preprocess_ns": 3256823,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 41,
+          "inference_ns": 42492385,
+          "iteration": 41,
+          "pipeline_total_ns": 50824400,
+          "postprocess_ns": 5070729,
+          "preprocess_ns": 3261286,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 42,
+          "inference_ns": 41288751,
+          "iteration": 42,
+          "pipeline_total_ns": 49206503,
+          "postprocess_ns": 4733532,
+          "preprocess_ns": 3184220,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 43,
+          "inference_ns": 41922309,
+          "iteration": 43,
+          "pipeline_total_ns": 50007752,
+          "postprocess_ns": 5080022,
+          "preprocess_ns": 3005421,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 44,
+          "inference_ns": 42540140,
+          "iteration": 44,
+          "pipeline_total_ns": 50605930,
+          "postprocess_ns": 4994807,
+          "preprocess_ns": 3070983,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 45,
+          "inference_ns": 43488179,
+          "iteration": 45,
+          "pipeline_total_ns": 51651600,
+          "postprocess_ns": 4899460,
+          "preprocess_ns": 3263961,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 46,
+          "inference_ns": 42172187,
+          "iteration": 46,
+          "pipeline_total_ns": 49997907,
+          "postprocess_ns": 4817657,
+          "preprocess_ns": 3008063,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 47,
+          "inference_ns": 42365826,
+          "iteration": 47,
+          "pipeline_total_ns": 50578131,
+          "postprocess_ns": 4871064,
+          "preprocess_ns": 3341241,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 48,
+          "inference_ns": 42996652,
+          "iteration": 48,
+          "pipeline_total_ns": 50850383,
+          "postprocess_ns": 4899373,
+          "preprocess_ns": 2954358,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 49,
+          "inference_ns": 41649453,
+          "iteration": 49,
+          "pipeline_total_ns": 50298657,
+          "postprocess_ns": 4843164,
+          "preprocess_ns": 3806040,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 50,
+          "inference_ns": 40809403,
+          "iteration": 50,
+          "pipeline_total_ns": 48534660,
+          "postprocess_ns": 4689895,
+          "preprocess_ns": 3035362,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 51,
+          "inference_ns": 42529701,
+          "iteration": 51,
+          "pipeline_total_ns": 50450137,
+          "postprocess_ns": 4647067,
+          "preprocess_ns": 3273369,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 52,
+          "inference_ns": 40814238,
+          "iteration": 52,
+          "pipeline_total_ns": 49256098,
+          "postprocess_ns": 5411967,
+          "preprocess_ns": 3029893,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 53,
+          "inference_ns": 42551011,
+          "iteration": 53,
+          "pipeline_total_ns": 50686504,
+          "postprocess_ns": 4877802,
+          "preprocess_ns": 3257691,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 54,
+          "inference_ns": 42918896,
+          "iteration": 54,
+          "pipeline_total_ns": 51074522,
+          "postprocess_ns": 4748327,
+          "preprocess_ns": 3407299,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 55,
+          "inference_ns": 41772218,
+          "iteration": 55,
+          "pipeline_total_ns": 50127927,
+          "postprocess_ns": 4830769,
+          "preprocess_ns": 3524940,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 56,
+          "inference_ns": 41691656,
+          "iteration": 56,
+          "pipeline_total_ns": 49800846,
+          "postprocess_ns": 4977540,
+          "preprocess_ns": 3131650,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 57,
+          "inference_ns": 42943822,
+          "iteration": 57,
+          "pipeline_total_ns": 51182474,
+          "postprocess_ns": 5288874,
+          "preprocess_ns": 2949778,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 58,
+          "inference_ns": 42269399,
+          "iteration": 58,
+          "pipeline_total_ns": 50234061,
+          "postprocess_ns": 4792997,
+          "preprocess_ns": 3171665,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 59,
+          "inference_ns": 41053049,
+          "iteration": 59,
+          "pipeline_total_ns": 49764287,
+          "postprocess_ns": 5300781,
+          "preprocess_ns": 3410457,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 60,
+          "inference_ns": 42502339,
+          "iteration": 60,
+          "pipeline_total_ns": 50708752,
+          "postprocess_ns": 4984452,
+          "preprocess_ns": 3221961,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 61,
+          "inference_ns": 41528503,
+          "iteration": 61,
+          "pipeline_total_ns": 49848404,
+          "postprocess_ns": 5081163,
+          "preprocess_ns": 3238738,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 62,
+          "inference_ns": 42005161,
+          "iteration": 62,
+          "pipeline_total_ns": 49838702,
+          "postprocess_ns": 4721156,
+          "preprocess_ns": 3112385,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 63,
+          "inference_ns": 41704808,
+          "iteration": 63,
+          "pipeline_total_ns": 50299605,
+          "postprocess_ns": 5642633,
+          "preprocess_ns": 2952164,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 64,
+          "inference_ns": 42758048,
+          "iteration": 64,
+          "pipeline_total_ns": 52142407,
+          "postprocess_ns": 5151470,
+          "preprocess_ns": 4232889,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 65,
+          "inference_ns": 42475303,
+          "iteration": 65,
+          "pipeline_total_ns": 51154089,
+          "postprocess_ns": 5160811,
+          "preprocess_ns": 3517975,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 66,
+          "inference_ns": 41806782,
+          "iteration": 66,
+          "pipeline_total_ns": 50179769,
+          "postprocess_ns": 5071785,
+          "preprocess_ns": 3301202,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 67,
+          "inference_ns": 42603369,
+          "iteration": 67,
+          "pipeline_total_ns": 51393891,
+          "postprocess_ns": 5520118,
+          "preprocess_ns": 3270404,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 68,
+          "inference_ns": 41619479,
+          "iteration": 68,
+          "pipeline_total_ns": 50141189,
+          "postprocess_ns": 5122099,
+          "preprocess_ns": 3399611,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 69,
+          "inference_ns": 44692487,
+          "iteration": 69,
+          "pipeline_total_ns": 54029967,
+          "postprocess_ns": 6123767,
+          "preprocess_ns": 3213713,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 70,
+          "inference_ns": 42102204,
+          "iteration": 70,
+          "pipeline_total_ns": 49960544,
+          "postprocess_ns": 4870184,
+          "preprocess_ns": 2988156,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 71,
+          "inference_ns": 41721089,
+          "iteration": 71,
+          "pipeline_total_ns": 49867257,
+          "postprocess_ns": 5107605,
+          "preprocess_ns": 3038563,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 72,
+          "inference_ns": 41500639,
+          "iteration": 72,
+          "pipeline_total_ns": 49800481,
+          "postprocess_ns": 5251204,
+          "preprocess_ns": 3048638,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 73,
+          "inference_ns": 43396877,
+          "iteration": 73,
+          "pipeline_total_ns": 51703727,
+          "postprocess_ns": 4713449,
+          "preprocess_ns": 3593401,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 74,
+          "inference_ns": 43191613,
+          "iteration": 74,
+          "pipeline_total_ns": 52285650,
+          "postprocess_ns": 6158846,
+          "preprocess_ns": 2935191,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 75,
+          "inference_ns": 42721130,
+          "iteration": 75,
+          "pipeline_total_ns": 51792258,
+          "postprocess_ns": 5410960,
+          "preprocess_ns": 3660168,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 76,
+          "inference_ns": 42303344,
+          "iteration": 76,
+          "pipeline_total_ns": 50990662,
+          "postprocess_ns": 5341252,
+          "preprocess_ns": 3346066,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 77,
+          "inference_ns": 41729704,
+          "iteration": 77,
+          "pipeline_total_ns": 50284909,
+          "postprocess_ns": 5284548,
+          "preprocess_ns": 3270657,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 78,
+          "inference_ns": 43092460,
+          "iteration": 78,
+          "pipeline_total_ns": 52374938,
+          "postprocess_ns": 6185073,
+          "preprocess_ns": 3097405,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 79,
+          "inference_ns": 42639660,
+          "iteration": 79,
+          "pipeline_total_ns": 52182698,
+          "postprocess_ns": 6048823,
+          "preprocess_ns": 3494215,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 80,
+          "inference_ns": 42535082,
+          "iteration": 80,
+          "pipeline_total_ns": 51037538,
+          "postprocess_ns": 5186583,
+          "preprocess_ns": 3315873,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 81,
+          "inference_ns": 41667141,
+          "iteration": 81,
+          "pipeline_total_ns": 49898922,
+          "postprocess_ns": 5018180,
+          "preprocess_ns": 3213601,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 82,
+          "inference_ns": 42446818,
+          "iteration": 82,
+          "pipeline_total_ns": 50969816,
+          "postprocess_ns": 4753701,
+          "preprocess_ns": 3769297,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 83,
+          "inference_ns": 42650909,
+          "iteration": 83,
+          "pipeline_total_ns": 51086045,
+          "postprocess_ns": 5057237,
+          "preprocess_ns": 3377899,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 84,
+          "inference_ns": 42854870,
+          "iteration": 84,
+          "pipeline_total_ns": 53076138,
+          "postprocess_ns": 6870142,
+          "preprocess_ns": 3351126,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 85,
+          "inference_ns": 45024597,
+          "iteration": 85,
+          "pipeline_total_ns": 55437513,
+          "postprocess_ns": 6252241,
+          "preprocess_ns": 4160675,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 86,
+          "inference_ns": 42187009,
+          "iteration": 86,
+          "pipeline_total_ns": 50681285,
+          "postprocess_ns": 4736450,
+          "preprocess_ns": 3757826,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 87,
+          "inference_ns": 43174629,
+          "iteration": 87,
+          "pipeline_total_ns": 51101043,
+          "postprocess_ns": 4949819,
+          "preprocess_ns": 2976595,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 88,
+          "inference_ns": 42544780,
+          "iteration": 88,
+          "pipeline_total_ns": 50516500,
+          "postprocess_ns": 4878853,
+          "preprocess_ns": 3092867,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 89,
+          "inference_ns": 43356008,
+          "iteration": 89,
+          "pipeline_total_ns": 51605867,
+          "postprocess_ns": 5131526,
+          "preprocess_ns": 3118333,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 90,
+          "inference_ns": 41812808,
+          "iteration": 90,
+          "pipeline_total_ns": 50293891,
+          "postprocess_ns": 5448453,
+          "preprocess_ns": 3032630,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 91,
+          "inference_ns": 42104270,
+          "iteration": 91,
+          "pipeline_total_ns": 50465166,
+          "postprocess_ns": 4674347,
+          "preprocess_ns": 3686549,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 92,
+          "inference_ns": 44108678,
+          "iteration": 92,
+          "pipeline_total_ns": 54027577,
+          "postprocess_ns": 6975819,
+          "preprocess_ns": 2943080,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 93,
+          "inference_ns": 41056411,
+          "iteration": 93,
+          "pipeline_total_ns": 49381722,
+          "postprocess_ns": 4764377,
+          "preprocess_ns": 3560934,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 94,
+          "inference_ns": 42190232,
+          "iteration": 94,
+          "pipeline_total_ns": 50165541,
+          "postprocess_ns": 4802605,
+          "preprocess_ns": 3172704,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 95,
+          "inference_ns": 43731642,
+          "iteration": 95,
+          "pipeline_total_ns": 51963940,
+          "postprocess_ns": 5014938,
+          "preprocess_ns": 3217360,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 96,
+          "inference_ns": 43954627,
+          "iteration": 96,
+          "pipeline_total_ns": 53135290,
+          "postprocess_ns": 5533852,
+          "preprocess_ns": 3646811,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 97,
+          "inference_ns": 41675618,
+          "iteration": 97,
+          "pipeline_total_ns": 50743533,
+          "postprocess_ns": 5288482,
+          "preprocess_ns": 3779433,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 98,
+          "inference_ns": 43150442,
+          "iteration": 98,
+          "pipeline_total_ns": 51523130,
+          "postprocess_ns": 5085132,
+          "preprocess_ns": 3287556,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 99,
+          "inference_ns": 42542397,
+          "iteration": 99,
+          "pipeline_total_ns": 50828395,
+          "postprocess_ns": 5158385,
+          "preprocess_ns": 3127613,
+          "round": 1
+        },
+        {
+          "aggregate_sample_index": 100,
+          "inference_ns": 41709679,
+          "iteration": 100,
+          "pipeline_total_ns": 49799633,
+          "postprocess_ns": 4785670,
+          "preprocess_ns": 3304284,
+          "round": 1
+        }
+      ],
+      "started_at": "2026-07-21T14:35:27+08:00",
+      "warmup_iterations": 10
+    },
+    {
+      "correctness": {
+        "after_measurement": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        },
+        "before_warmup": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        }
+      },
+      "environment": {
+        "architecture": "x86_64",
+        "cpu_affinity": "scheduler managed",
+        "cpu_model": "Intel(R) Core(TM) i5-14600KF",
+        "cpu_pinning": "disabled",
+        "environment_variables": {
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1"
+        },
+        "kernel": "6.6.87.2-microsoft-standard-WSL2",
+        "logical_cpu_count": 20,
+        "onnxruntime_version": "1.18.1",
+        "opencv_version": "4.10.0",
+        "os": "Linux",
+        "platform": "WSL2",
+        "python_version": "3.12.3"
+      },
+      "formal_iterations": 100,
+      "golden_result_sha256": "9a8fa96233aba0f77fd1196da9c48cc719bb361d97a656e6507ddd50f81dcc4f",
+      "image_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+      "inference_config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+      "manifest_sha256": "764f3e4980c1f6b18ea245262af99703d13e817fedc52bf97bbfc5a1389f06c2",
+      "model_load_ms": 24.515147,
+      "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "process_id": 10,
+      "process_started_unix_ns": 1784615737901521164,
+      "resource_measurement": {
+        "language_scope_note": "includes Python interpreter and imported modules",
+        "peak_rss_bytes": 180342784,
+        "peak_rss_is_process_level_not_model_only": true,
+        "peak_rss_scope": "process startup through formal measurement completion",
+        "process_cpu_percent_one_core_basis": 111.10727304447663,
+        "process_cpu_time_delta_seconds": 5.77026,
+        "wall_clock_time_delta_seconds": 5.193413394
+      },
+      "round": 2,
+      "runtime": {
+        "execution_mode": "ORT_SEQUENTIAL",
+        "execution_provider": "CPUExecutionProvider",
+        "graph_optimization": "ORT_ENABLE_ALL",
+        "inter_op_threads": 1,
+        "intra_op_threads": 1,
+        "onnxruntime_version": "1.18.1",
+        "opencv_threads": 1,
+        "runtime_inputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "images",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "runtime_outputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "output0",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "selected_providers": [
+          "CPUExecutionProvider"
+        ]
+      },
+      "samples": [
+        {
+          "aggregate_sample_index": 101,
+          "inference_ns": 40871244,
+          "iteration": 1,
+          "pipeline_total_ns": 49222440,
+          "postprocess_ns": 5244403,
+          "preprocess_ns": 3106793,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 102,
+          "inference_ns": 41639713,
+          "iteration": 2,
+          "pipeline_total_ns": 50858549,
+          "postprocess_ns": 6033343,
+          "preprocess_ns": 3185493,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 103,
+          "inference_ns": 41506105,
+          "iteration": 3,
+          "pipeline_total_ns": 50193619,
+          "postprocess_ns": 5104743,
+          "preprocess_ns": 3582771,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 104,
+          "inference_ns": 41478610,
+          "iteration": 4,
+          "pipeline_total_ns": 50676706,
+          "postprocess_ns": 6093260,
+          "preprocess_ns": 3104836,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 105,
+          "inference_ns": 42036391,
+          "iteration": 5,
+          "pipeline_total_ns": 51071256,
+          "postprocess_ns": 5884928,
+          "preprocess_ns": 3149937,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 106,
+          "inference_ns": 43116881,
+          "iteration": 6,
+          "pipeline_total_ns": 51941372,
+          "postprocess_ns": 5428316,
+          "preprocess_ns": 3396175,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 107,
+          "inference_ns": 40717683,
+          "iteration": 7,
+          "pipeline_total_ns": 48981207,
+          "postprocess_ns": 5126232,
+          "preprocess_ns": 3137292,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 108,
+          "inference_ns": 41472607,
+          "iteration": 8,
+          "pipeline_total_ns": 49434423,
+          "postprocess_ns": 4788247,
+          "preprocess_ns": 3173569,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 109,
+          "inference_ns": 40515966,
+          "iteration": 9,
+          "pipeline_total_ns": 48465264,
+          "postprocess_ns": 4942095,
+          "preprocess_ns": 3007203,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 110,
+          "inference_ns": 41337028,
+          "iteration": 10,
+          "pipeline_total_ns": 49528371,
+          "postprocess_ns": 4729442,
+          "preprocess_ns": 3461901,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 111,
+          "inference_ns": 41694614,
+          "iteration": 11,
+          "pipeline_total_ns": 50076304,
+          "postprocess_ns": 5150238,
+          "preprocess_ns": 3231452,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 112,
+          "inference_ns": 41816332,
+          "iteration": 12,
+          "pipeline_total_ns": 50116369,
+          "postprocess_ns": 4890350,
+          "preprocess_ns": 3409687,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 113,
+          "inference_ns": 41250654,
+          "iteration": 13,
+          "pipeline_total_ns": 50275089,
+          "postprocess_ns": 5926781,
+          "preprocess_ns": 3097654,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 114,
+          "inference_ns": 41259433,
+          "iteration": 14,
+          "pipeline_total_ns": 49989165,
+          "postprocess_ns": 5386056,
+          "preprocess_ns": 3343676,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 115,
+          "inference_ns": 41247746,
+          "iteration": 15,
+          "pipeline_total_ns": 49476910,
+          "postprocess_ns": 5056634,
+          "preprocess_ns": 3172530,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 116,
+          "inference_ns": 41235943,
+          "iteration": 16,
+          "pipeline_total_ns": 49903813,
+          "postprocess_ns": 5524538,
+          "preprocess_ns": 3143332,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 117,
+          "inference_ns": 41279716,
+          "iteration": 17,
+          "pipeline_total_ns": 49137259,
+          "postprocess_ns": 4861642,
+          "preprocess_ns": 2995901,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 118,
+          "inference_ns": 42489870,
+          "iteration": 18,
+          "pipeline_total_ns": 50669563,
+          "postprocess_ns": 4948961,
+          "preprocess_ns": 3230732,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 119,
+          "inference_ns": 41228477,
+          "iteration": 19,
+          "pipeline_total_ns": 49163908,
+          "postprocess_ns": 4886931,
+          "preprocess_ns": 3048500,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 120,
+          "inference_ns": 41758067,
+          "iteration": 20,
+          "pipeline_total_ns": 49683615,
+          "postprocess_ns": 4868453,
+          "preprocess_ns": 3057095,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 121,
+          "inference_ns": 42070344,
+          "iteration": 21,
+          "pipeline_total_ns": 50890568,
+          "postprocess_ns": 5801914,
+          "preprocess_ns": 3018310,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 122,
+          "inference_ns": 40498402,
+          "iteration": 22,
+          "pipeline_total_ns": 49106262,
+          "postprocess_ns": 5230674,
+          "preprocess_ns": 3377186,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 123,
+          "inference_ns": 40959510,
+          "iteration": 23,
+          "pipeline_total_ns": 49038685,
+          "postprocess_ns": 5015412,
+          "preprocess_ns": 3063763,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 124,
+          "inference_ns": 41321028,
+          "iteration": 24,
+          "pipeline_total_ns": 49412982,
+          "postprocess_ns": 4931846,
+          "preprocess_ns": 3160108,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 125,
+          "inference_ns": 41075711,
+          "iteration": 25,
+          "pipeline_total_ns": 49393986,
+          "postprocess_ns": 4769669,
+          "preprocess_ns": 3548606,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 126,
+          "inference_ns": 42080270,
+          "iteration": 26,
+          "pipeline_total_ns": 50370692,
+          "postprocess_ns": 5133964,
+          "preprocess_ns": 3156458,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 127,
+          "inference_ns": 41899965,
+          "iteration": 27,
+          "pipeline_total_ns": 49974653,
+          "postprocess_ns": 5046546,
+          "preprocess_ns": 3028142,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 128,
+          "inference_ns": 41820745,
+          "iteration": 28,
+          "pipeline_total_ns": 50411116,
+          "postprocess_ns": 5497570,
+          "preprocess_ns": 3092801,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 129,
+          "inference_ns": 42731681,
+          "iteration": 29,
+          "pipeline_total_ns": 50769165,
+          "postprocess_ns": 4925020,
+          "preprocess_ns": 3112464,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 130,
+          "inference_ns": 42985207,
+          "iteration": 30,
+          "pipeline_total_ns": 51476374,
+          "postprocess_ns": 5011691,
+          "preprocess_ns": 3479476,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 131,
+          "inference_ns": 42242647,
+          "iteration": 31,
+          "pipeline_total_ns": 52568614,
+          "postprocess_ns": 6994692,
+          "preprocess_ns": 3331275,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 132,
+          "inference_ns": 45934231,
+          "iteration": 32,
+          "pipeline_total_ns": 57390319,
+          "postprocess_ns": 6920058,
+          "preprocess_ns": 4536030,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 133,
+          "inference_ns": 48322436,
+          "iteration": 33,
+          "pipeline_total_ns": 58588711,
+          "postprocess_ns": 5348444,
+          "preprocess_ns": 4917831,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 134,
+          "inference_ns": 49236510,
+          "iteration": 34,
+          "pipeline_total_ns": 58327789,
+          "postprocess_ns": 5809237,
+          "preprocess_ns": 3282042,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 135,
+          "inference_ns": 43167560,
+          "iteration": 35,
+          "pipeline_total_ns": 52847566,
+          "postprocess_ns": 6054172,
+          "preprocess_ns": 3625834,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 136,
+          "inference_ns": 43885784,
+          "iteration": 36,
+          "pipeline_total_ns": 52497681,
+          "postprocess_ns": 5173271,
+          "preprocess_ns": 3438626,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 137,
+          "inference_ns": 42148224,
+          "iteration": 37,
+          "pipeline_total_ns": 51500039,
+          "postprocess_ns": 6227702,
+          "preprocess_ns": 3124113,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 138,
+          "inference_ns": 42557672,
+          "iteration": 38,
+          "pipeline_total_ns": 52689814,
+          "postprocess_ns": 6836066,
+          "preprocess_ns": 3296076,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 139,
+          "inference_ns": 51634398,
+          "iteration": 39,
+          "pipeline_total_ns": 61066230,
+          "postprocess_ns": 5537082,
+          "preprocess_ns": 3894750,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 140,
+          "inference_ns": 44382906,
+          "iteration": 40,
+          "pipeline_total_ns": 55678403,
+          "postprocess_ns": 7668095,
+          "preprocess_ns": 3627402,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 141,
+          "inference_ns": 43930685,
+          "iteration": 41,
+          "pipeline_total_ns": 55231289,
+          "postprocess_ns": 7848948,
+          "preprocess_ns": 3451656,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 142,
+          "inference_ns": 47394357,
+          "iteration": 42,
+          "pipeline_total_ns": 57846555,
+          "postprocess_ns": 5420410,
+          "preprocess_ns": 5031788,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 143,
+          "inference_ns": 43728227,
+          "iteration": 43,
+          "pipeline_total_ns": 53901937,
+          "postprocess_ns": 6364243,
+          "preprocess_ns": 3809467,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 144,
+          "inference_ns": 47508447,
+          "iteration": 44,
+          "pipeline_total_ns": 57737240,
+          "postprocess_ns": 5304018,
+          "preprocess_ns": 4924775,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 145,
+          "inference_ns": 42400950,
+          "iteration": 45,
+          "pipeline_total_ns": 51587707,
+          "postprocess_ns": 5079871,
+          "preprocess_ns": 4106886,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 146,
+          "inference_ns": 43408388,
+          "iteration": 46,
+          "pipeline_total_ns": 51736052,
+          "postprocess_ns": 5033845,
+          "preprocess_ns": 3293819,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 147,
+          "inference_ns": 41855315,
+          "iteration": 47,
+          "pipeline_total_ns": 50186477,
+          "postprocess_ns": 5076266,
+          "preprocess_ns": 3254896,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 148,
+          "inference_ns": 42321204,
+          "iteration": 48,
+          "pipeline_total_ns": 51031842,
+          "postprocess_ns": 4848687,
+          "preprocess_ns": 3861951,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 149,
+          "inference_ns": 40258395,
+          "iteration": 49,
+          "pipeline_total_ns": 48690394,
+          "postprocess_ns": 5054974,
+          "preprocess_ns": 3377025,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 150,
+          "inference_ns": 42470973,
+          "iteration": 50,
+          "pipeline_total_ns": 50650876,
+          "postprocess_ns": 4909243,
+          "preprocess_ns": 3270660,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 151,
+          "inference_ns": 43083405,
+          "iteration": 51,
+          "pipeline_total_ns": 52504025,
+          "postprocess_ns": 6118394,
+          "preprocess_ns": 3302226,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 152,
+          "inference_ns": 42280765,
+          "iteration": 52,
+          "pipeline_total_ns": 50949022,
+          "postprocess_ns": 5014617,
+          "preprocess_ns": 3653640,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 153,
+          "inference_ns": 42250675,
+          "iteration": 53,
+          "pipeline_total_ns": 51304221,
+          "postprocess_ns": 5678373,
+          "preprocess_ns": 3375173,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 154,
+          "inference_ns": 40831662,
+          "iteration": 54,
+          "pipeline_total_ns": 48848855,
+          "postprocess_ns": 4885027,
+          "preprocess_ns": 3132166,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 155,
+          "inference_ns": 41749707,
+          "iteration": 55,
+          "pipeline_total_ns": 50385798,
+          "postprocess_ns": 5502940,
+          "preprocess_ns": 3133151,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 156,
+          "inference_ns": 40802073,
+          "iteration": 56,
+          "pipeline_total_ns": 48759824,
+          "postprocess_ns": 4773654,
+          "preprocess_ns": 3184097,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 157,
+          "inference_ns": 41216962,
+          "iteration": 57,
+          "pipeline_total_ns": 49738403,
+          "postprocess_ns": 5387197,
+          "preprocess_ns": 3134244,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 158,
+          "inference_ns": 41524800,
+          "iteration": 58,
+          "pipeline_total_ns": 49599022,
+          "postprocess_ns": 4831497,
+          "preprocess_ns": 3242725,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 159,
+          "inference_ns": 41547886,
+          "iteration": 59,
+          "pipeline_total_ns": 50001032,
+          "postprocess_ns": 5203378,
+          "preprocess_ns": 3249768,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 160,
+          "inference_ns": 40555948,
+          "iteration": 60,
+          "pipeline_total_ns": 48772897,
+          "postprocess_ns": 4774485,
+          "preprocess_ns": 3442464,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 161,
+          "inference_ns": 41096784,
+          "iteration": 61,
+          "pipeline_total_ns": 49440655,
+          "postprocess_ns": 5068954,
+          "preprocess_ns": 3274917,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 162,
+          "inference_ns": 40949031,
+          "iteration": 62,
+          "pipeline_total_ns": 49089570,
+          "postprocess_ns": 4840291,
+          "preprocess_ns": 3300248,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 163,
+          "inference_ns": 42282705,
+          "iteration": 63,
+          "pipeline_total_ns": 50935592,
+          "postprocess_ns": 5201580,
+          "preprocess_ns": 3451307,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 164,
+          "inference_ns": 44236488,
+          "iteration": 64,
+          "pipeline_total_ns": 53391890,
+          "postprocess_ns": 5481119,
+          "preprocess_ns": 3674283,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 165,
+          "inference_ns": 42017115,
+          "iteration": 65,
+          "pipeline_total_ns": 51592780,
+          "postprocess_ns": 5970211,
+          "preprocess_ns": 3605454,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 166,
+          "inference_ns": 41919773,
+          "iteration": 66,
+          "pipeline_total_ns": 50937503,
+          "postprocess_ns": 5405564,
+          "preprocess_ns": 3612166,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 167,
+          "inference_ns": 42899294,
+          "iteration": 67,
+          "pipeline_total_ns": 52233868,
+          "postprocess_ns": 5692420,
+          "preprocess_ns": 3642154,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 168,
+          "inference_ns": 42379133,
+          "iteration": 68,
+          "pipeline_total_ns": 51479339,
+          "postprocess_ns": 5500194,
+          "preprocess_ns": 3600012,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 169,
+          "inference_ns": 42783438,
+          "iteration": 69,
+          "pipeline_total_ns": 51938121,
+          "postprocess_ns": 5517360,
+          "preprocess_ns": 3637323,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 170,
+          "inference_ns": 43873295,
+          "iteration": 70,
+          "pipeline_total_ns": 55207066,
+          "postprocess_ns": 7620010,
+          "preprocess_ns": 3713761,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 171,
+          "inference_ns": 43208231,
+          "iteration": 71,
+          "pipeline_total_ns": 52882293,
+          "postprocess_ns": 5779656,
+          "preprocess_ns": 3894406,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 172,
+          "inference_ns": 44518618,
+          "iteration": 72,
+          "pipeline_total_ns": 53405026,
+          "postprocess_ns": 5208838,
+          "preprocess_ns": 3677570,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 173,
+          "inference_ns": 42842335,
+          "iteration": 73,
+          "pipeline_total_ns": 51966168,
+          "postprocess_ns": 5137872,
+          "preprocess_ns": 3985961,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 174,
+          "inference_ns": 41944676,
+          "iteration": 74,
+          "pipeline_total_ns": 50764516,
+          "postprocess_ns": 5344828,
+          "preprocess_ns": 3475012,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 175,
+          "inference_ns": 42190640,
+          "iteration": 75,
+          "pipeline_total_ns": 51553335,
+          "postprocess_ns": 5887420,
+          "preprocess_ns": 3475275,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 176,
+          "inference_ns": 42409197,
+          "iteration": 76,
+          "pipeline_total_ns": 51219484,
+          "postprocess_ns": 5377444,
+          "preprocess_ns": 3432843,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 177,
+          "inference_ns": 42108599,
+          "iteration": 77,
+          "pipeline_total_ns": 51098309,
+          "postprocess_ns": 5333400,
+          "preprocess_ns": 3656310,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 178,
+          "inference_ns": 42157681,
+          "iteration": 78,
+          "pipeline_total_ns": 50867844,
+          "postprocess_ns": 5159435,
+          "preprocess_ns": 3550728,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 179,
+          "inference_ns": 42977170,
+          "iteration": 79,
+          "pipeline_total_ns": 51781849,
+          "postprocess_ns": 5407240,
+          "preprocess_ns": 3397439,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 180,
+          "inference_ns": 42077821,
+          "iteration": 80,
+          "pipeline_total_ns": 51262061,
+          "postprocess_ns": 5491121,
+          "preprocess_ns": 3693119,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 181,
+          "inference_ns": 43011833,
+          "iteration": 81,
+          "pipeline_total_ns": 51865601,
+          "postprocess_ns": 5282979,
+          "preprocess_ns": 3570789,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 182,
+          "inference_ns": 41878030,
+          "iteration": 82,
+          "pipeline_total_ns": 51531255,
+          "postprocess_ns": 6354647,
+          "preprocess_ns": 3298578,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 183,
+          "inference_ns": 43121860,
+          "iteration": 83,
+          "pipeline_total_ns": 52568501,
+          "postprocess_ns": 5268419,
+          "preprocess_ns": 4178222,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 184,
+          "inference_ns": 44266625,
+          "iteration": 84,
+          "pipeline_total_ns": 53179315,
+          "postprocess_ns": 5383108,
+          "preprocess_ns": 3529582,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 185,
+          "inference_ns": 42970834,
+          "iteration": 85,
+          "pipeline_total_ns": 52517569,
+          "postprocess_ns": 5400109,
+          "preprocess_ns": 4146626,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 186,
+          "inference_ns": 43389795,
+          "iteration": 86,
+          "pipeline_total_ns": 52321040,
+          "postprocess_ns": 5047680,
+          "preprocess_ns": 3883565,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 187,
+          "inference_ns": 42384671,
+          "iteration": 87,
+          "pipeline_total_ns": 51836906,
+          "postprocess_ns": 5860429,
+          "preprocess_ns": 3591806,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 188,
+          "inference_ns": 42391925,
+          "iteration": 88,
+          "pipeline_total_ns": 51748652,
+          "postprocess_ns": 5408702,
+          "preprocess_ns": 3948025,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 189,
+          "inference_ns": 41970733,
+          "iteration": 89,
+          "pipeline_total_ns": 50865014,
+          "postprocess_ns": 5360181,
+          "preprocess_ns": 3534100,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 190,
+          "inference_ns": 44109553,
+          "iteration": 90,
+          "pipeline_total_ns": 52472974,
+          "postprocess_ns": 5062552,
+          "preprocess_ns": 3300869,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 191,
+          "inference_ns": 42336349,
+          "iteration": 91,
+          "pipeline_total_ns": 51163929,
+          "postprocess_ns": 5213746,
+          "preprocess_ns": 3613834,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 192,
+          "inference_ns": 42261613,
+          "iteration": 92,
+          "pipeline_total_ns": 50623081,
+          "postprocess_ns": 5060641,
+          "preprocess_ns": 3300827,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 193,
+          "inference_ns": 41909373,
+          "iteration": 93,
+          "pipeline_total_ns": 51041182,
+          "postprocess_ns": 5812911,
+          "preprocess_ns": 3318898,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 194,
+          "inference_ns": 42081048,
+          "iteration": 94,
+          "pipeline_total_ns": 51353594,
+          "postprocess_ns": 5258774,
+          "preprocess_ns": 4013772,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 195,
+          "inference_ns": 43794774,
+          "iteration": 95,
+          "pipeline_total_ns": 53607687,
+          "postprocess_ns": 6042747,
+          "preprocess_ns": 3770166,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 196,
+          "inference_ns": 43506289,
+          "iteration": 96,
+          "pipeline_total_ns": 52688377,
+          "postprocess_ns": 5328173,
+          "preprocess_ns": 3853915,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 197,
+          "inference_ns": 41919317,
+          "iteration": 97,
+          "pipeline_total_ns": 51009774,
+          "postprocess_ns": 5547786,
+          "preprocess_ns": 3542671,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 198,
+          "inference_ns": 42234374,
+          "iteration": 98,
+          "pipeline_total_ns": 51493248,
+          "postprocess_ns": 5503858,
+          "preprocess_ns": 3755016,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 199,
+          "inference_ns": 42436864,
+          "iteration": 99,
+          "pipeline_total_ns": 51388268,
+          "postprocess_ns": 5346193,
+          "preprocess_ns": 3605211,
+          "round": 2
+        },
+        {
+          "aggregate_sample_index": 200,
+          "inference_ns": 42453285,
+          "iteration": 100,
+          "pipeline_total_ns": 51932306,
+          "postprocess_ns": 5952942,
+          "preprocess_ns": 3526079,
+          "round": 2
+        }
+      ],
+      "started_at": "2026-07-21T14:35:43+08:00",
+      "warmup_iterations": 10
+    },
+    {
+      "correctness": {
+        "after_measurement": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        },
+        "before_warmup": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        }
+      },
+      "environment": {
+        "architecture": "x86_64",
+        "cpu_affinity": "scheduler managed",
+        "cpu_model": "Intel(R) Core(TM) i5-14600KF",
+        "cpu_pinning": "disabled",
+        "environment_variables": {
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1"
+        },
+        "kernel": "6.6.87.2-microsoft-standard-WSL2",
+        "logical_cpu_count": 20,
+        "onnxruntime_version": "1.18.1",
+        "opencv_version": "4.10.0",
+        "os": "Linux",
+        "platform": "WSL2",
+        "python_version": "3.12.3"
+      },
+      "formal_iterations": 100,
+      "golden_result_sha256": "9a8fa96233aba0f77fd1196da9c48cc719bb361d97a656e6507ddd50f81dcc4f",
+      "image_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+      "inference_config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+      "manifest_sha256": "764f3e4980c1f6b18ea245262af99703d13e817fedc52bf97bbfc5a1389f06c2",
+      "model_load_ms": 26.627728,
+      "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "process_id": 12,
+      "process_started_unix_ns": 1784615743863146232,
+      "resource_measurement": {
+        "language_scope_note": "includes Python interpreter and imported modules",
+        "peak_rss_bytes": 178692096,
+        "peak_rss_is_process_level_not_model_only": true,
+        "peak_rss_scope": "process startup through formal measurement completion",
+        "process_cpu_percent_one_core_basis": 111.07640911435226,
+        "process_cpu_time_delta_seconds": 5.597494999999999,
+        "wall_clock_time_delta_seconds": 5.03931937
+      },
+      "round": 3,
+      "runtime": {
+        "execution_mode": "ORT_SEQUENTIAL",
+        "execution_provider": "CPUExecutionProvider",
+        "graph_optimization": "ORT_ENABLE_ALL",
+        "inter_op_threads": 1,
+        "intra_op_threads": 1,
+        "onnxruntime_version": "1.18.1",
+        "opencv_threads": 1,
+        "runtime_inputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "images",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "runtime_outputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "output0",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "selected_providers": [
+          "CPUExecutionProvider"
+        ]
+      },
+      "samples": [
+        {
+          "aggregate_sample_index": 201,
+          "inference_ns": 42692578,
+          "iteration": 1,
+          "pipeline_total_ns": 50395487,
+          "postprocess_ns": 4849517,
+          "preprocess_ns": 2853392,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 202,
+          "inference_ns": 43469081,
+          "iteration": 2,
+          "pipeline_total_ns": 51657440,
+          "postprocess_ns": 5202603,
+          "preprocess_ns": 2985756,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 203,
+          "inference_ns": 42908025,
+          "iteration": 3,
+          "pipeline_total_ns": 50952506,
+          "postprocess_ns": 5000583,
+          "preprocess_ns": 3043898,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 204,
+          "inference_ns": 43612487,
+          "iteration": 4,
+          "pipeline_total_ns": 51593847,
+          "postprocess_ns": 5211813,
+          "preprocess_ns": 2769547,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 205,
+          "inference_ns": 41965837,
+          "iteration": 5,
+          "pipeline_total_ns": 50277522,
+          "postprocess_ns": 5441033,
+          "preprocess_ns": 2870652,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 206,
+          "inference_ns": 43717154,
+          "iteration": 6,
+          "pipeline_total_ns": 51655901,
+          "postprocess_ns": 5059134,
+          "preprocess_ns": 2879613,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 207,
+          "inference_ns": 42890627,
+          "iteration": 7,
+          "pipeline_total_ns": 51610098,
+          "postprocess_ns": 5638622,
+          "preprocess_ns": 3080849,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 208,
+          "inference_ns": 42673181,
+          "iteration": 8,
+          "pipeline_total_ns": 51014044,
+          "postprocess_ns": 5484960,
+          "preprocess_ns": 2855903,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 209,
+          "inference_ns": 44113337,
+          "iteration": 9,
+          "pipeline_total_ns": 52529989,
+          "postprocess_ns": 5360674,
+          "preprocess_ns": 3055978,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 210,
+          "inference_ns": 44981794,
+          "iteration": 10,
+          "pipeline_total_ns": 54406327,
+          "postprocess_ns": 4985512,
+          "preprocess_ns": 4439021,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 211,
+          "inference_ns": 43167068,
+          "iteration": 11,
+          "pipeline_total_ns": 51006480,
+          "postprocess_ns": 5074182,
+          "preprocess_ns": 2765230,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 212,
+          "inference_ns": 42715640,
+          "iteration": 12,
+          "pipeline_total_ns": 50801729,
+          "postprocess_ns": 4899401,
+          "preprocess_ns": 3186688,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 213,
+          "inference_ns": 42084815,
+          "iteration": 13,
+          "pipeline_total_ns": 49899470,
+          "postprocess_ns": 4925234,
+          "preprocess_ns": 2889421,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 214,
+          "inference_ns": 40971086,
+          "iteration": 14,
+          "pipeline_total_ns": 48627911,
+          "postprocess_ns": 4550675,
+          "preprocess_ns": 3106150,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 215,
+          "inference_ns": 41840353,
+          "iteration": 15,
+          "pipeline_total_ns": 49698711,
+          "postprocess_ns": 5104846,
+          "preprocess_ns": 2753512,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 216,
+          "inference_ns": 40764214,
+          "iteration": 16,
+          "pipeline_total_ns": 48470200,
+          "postprocess_ns": 4851450,
+          "preprocess_ns": 2854536,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 217,
+          "inference_ns": 42032689,
+          "iteration": 17,
+          "pipeline_total_ns": 50203191,
+          "postprocess_ns": 5491333,
+          "preprocess_ns": 2679169,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 218,
+          "inference_ns": 43301447,
+          "iteration": 18,
+          "pipeline_total_ns": 50982775,
+          "postprocess_ns": 4567931,
+          "preprocess_ns": 3113397,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 219,
+          "inference_ns": 41960095,
+          "iteration": 19,
+          "pipeline_total_ns": 50198932,
+          "postprocess_ns": 5534370,
+          "preprocess_ns": 2704467,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 220,
+          "inference_ns": 40939024,
+          "iteration": 20,
+          "pipeline_total_ns": 48834523,
+          "postprocess_ns": 4715163,
+          "preprocess_ns": 3180336,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 221,
+          "inference_ns": 40954099,
+          "iteration": 21,
+          "pipeline_total_ns": 49045747,
+          "postprocess_ns": 5333848,
+          "preprocess_ns": 2757800,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 222,
+          "inference_ns": 40773833,
+          "iteration": 22,
+          "pipeline_total_ns": 48282783,
+          "postprocess_ns": 4920125,
+          "preprocess_ns": 2588825,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 223,
+          "inference_ns": 41404569,
+          "iteration": 23,
+          "pipeline_total_ns": 48856618,
+          "postprocess_ns": 4624194,
+          "preprocess_ns": 2827855,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 224,
+          "inference_ns": 41353634,
+          "iteration": 24,
+          "pipeline_total_ns": 48692637,
+          "postprocess_ns": 4487379,
+          "preprocess_ns": 2851624,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 225,
+          "inference_ns": 41214733,
+          "iteration": 25,
+          "pipeline_total_ns": 48619459,
+          "postprocess_ns": 4614994,
+          "preprocess_ns": 2789732,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 226,
+          "inference_ns": 41150974,
+          "iteration": 26,
+          "pipeline_total_ns": 48785374,
+          "postprocess_ns": 4707104,
+          "preprocess_ns": 2927296,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 227,
+          "inference_ns": 43799256,
+          "iteration": 27,
+          "pipeline_total_ns": 51389833,
+          "postprocess_ns": 4883507,
+          "preprocess_ns": 2707070,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 228,
+          "inference_ns": 43020277,
+          "iteration": 28,
+          "pipeline_total_ns": 50957533,
+          "postprocess_ns": 4798193,
+          "preprocess_ns": 3139063,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 229,
+          "inference_ns": 42026592,
+          "iteration": 29,
+          "pipeline_total_ns": 49387935,
+          "postprocess_ns": 4703483,
+          "preprocess_ns": 2657860,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 230,
+          "inference_ns": 43092193,
+          "iteration": 30,
+          "pipeline_total_ns": 51258896,
+          "postprocess_ns": 5312196,
+          "preprocess_ns": 2854507,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 231,
+          "inference_ns": 42082749,
+          "iteration": 31,
+          "pipeline_total_ns": 50233811,
+          "postprocess_ns": 5222257,
+          "preprocess_ns": 2928805,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 232,
+          "inference_ns": 41418246,
+          "iteration": 32,
+          "pipeline_total_ns": 48719102,
+          "postprocess_ns": 4606854,
+          "preprocess_ns": 2694002,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 233,
+          "inference_ns": 42104073,
+          "iteration": 33,
+          "pipeline_total_ns": 49434699,
+          "postprocess_ns": 4691447,
+          "preprocess_ns": 2639179,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 234,
+          "inference_ns": 42832071,
+          "iteration": 34,
+          "pipeline_total_ns": 52264414,
+          "postprocess_ns": 6602531,
+          "preprocess_ns": 2829812,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 235,
+          "inference_ns": 41002062,
+          "iteration": 35,
+          "pipeline_total_ns": 48980815,
+          "postprocess_ns": 4961889,
+          "preprocess_ns": 3016864,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 236,
+          "inference_ns": 41391170,
+          "iteration": 36,
+          "pipeline_total_ns": 49201751,
+          "postprocess_ns": 4762396,
+          "preprocess_ns": 3048185,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 237,
+          "inference_ns": 42525050,
+          "iteration": 37,
+          "pipeline_total_ns": 50580922,
+          "postprocess_ns": 5195645,
+          "preprocess_ns": 2860227,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 238,
+          "inference_ns": 42285244,
+          "iteration": 38,
+          "pipeline_total_ns": 50062781,
+          "postprocess_ns": 5048800,
+          "preprocess_ns": 2728737,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 239,
+          "inference_ns": 41678786,
+          "iteration": 39,
+          "pipeline_total_ns": 49672711,
+          "postprocess_ns": 5041069,
+          "preprocess_ns": 2952856,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 240,
+          "inference_ns": 41376744,
+          "iteration": 40,
+          "pipeline_total_ns": 48915646,
+          "postprocess_ns": 4965323,
+          "preprocess_ns": 2573579,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 241,
+          "inference_ns": 41119166,
+          "iteration": 41,
+          "pipeline_total_ns": 48486693,
+          "postprocess_ns": 4708989,
+          "preprocess_ns": 2658538,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 242,
+          "inference_ns": 41091314,
+          "iteration": 42,
+          "pipeline_total_ns": 48564995,
+          "postprocess_ns": 4537780,
+          "preprocess_ns": 2935901,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 243,
+          "inference_ns": 40850041,
+          "iteration": 43,
+          "pipeline_total_ns": 48993945,
+          "postprocess_ns": 5372843,
+          "preprocess_ns": 2771061,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 244,
+          "inference_ns": 42647421,
+          "iteration": 44,
+          "pipeline_total_ns": 50046467,
+          "postprocess_ns": 4746783,
+          "preprocess_ns": 2652263,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 245,
+          "inference_ns": 41753005,
+          "iteration": 45,
+          "pipeline_total_ns": 49882026,
+          "postprocess_ns": 4991142,
+          "preprocess_ns": 3137879,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 246,
+          "inference_ns": 43351172,
+          "iteration": 46,
+          "pipeline_total_ns": 52293692,
+          "postprocess_ns": 5869733,
+          "preprocess_ns": 3072787,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 247,
+          "inference_ns": 44298788,
+          "iteration": 47,
+          "pipeline_total_ns": 53461482,
+          "postprocess_ns": 5649338,
+          "preprocess_ns": 3513356,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 248,
+          "inference_ns": 41806633,
+          "iteration": 48,
+          "pipeline_total_ns": 49910018,
+          "postprocess_ns": 5103239,
+          "preprocess_ns": 3000146,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 249,
+          "inference_ns": 41839393,
+          "iteration": 49,
+          "pipeline_total_ns": 50284136,
+          "postprocess_ns": 5491586,
+          "preprocess_ns": 2953157,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 250,
+          "inference_ns": 42090587,
+          "iteration": 50,
+          "pipeline_total_ns": 51133824,
+          "postprocess_ns": 5767996,
+          "preprocess_ns": 3275241,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 251,
+          "inference_ns": 41588415,
+          "iteration": 51,
+          "pipeline_total_ns": 49393918,
+          "postprocess_ns": 5135059,
+          "preprocess_ns": 2670444,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 252,
+          "inference_ns": 40606747,
+          "iteration": 52,
+          "pipeline_total_ns": 47851400,
+          "postprocess_ns": 4514358,
+          "preprocess_ns": 2730295,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 253,
+          "inference_ns": 42713174,
+          "iteration": 53,
+          "pipeline_total_ns": 51179696,
+          "postprocess_ns": 5571116,
+          "preprocess_ns": 2895406,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 254,
+          "inference_ns": 41586308,
+          "iteration": 54,
+          "pipeline_total_ns": 49132546,
+          "postprocess_ns": 4874691,
+          "preprocess_ns": 2671547,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 255,
+          "inference_ns": 42843865,
+          "iteration": 55,
+          "pipeline_total_ns": 50388191,
+          "postprocess_ns": 4794307,
+          "preprocess_ns": 2750019,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 256,
+          "inference_ns": 41941958,
+          "iteration": 56,
+          "pipeline_total_ns": 49686465,
+          "postprocess_ns": 4905916,
+          "preprocess_ns": 2838591,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 257,
+          "inference_ns": 40951522,
+          "iteration": 57,
+          "pipeline_total_ns": 48368377,
+          "postprocess_ns": 4803368,
+          "preprocess_ns": 2613487,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 258,
+          "inference_ns": 41579064,
+          "iteration": 58,
+          "pipeline_total_ns": 48979260,
+          "postprocess_ns": 4423278,
+          "preprocess_ns": 2976918,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 259,
+          "inference_ns": 41344767,
+          "iteration": 59,
+          "pipeline_total_ns": 48891908,
+          "postprocess_ns": 4774221,
+          "preprocess_ns": 2772920,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 260,
+          "inference_ns": 40613481,
+          "iteration": 60,
+          "pipeline_total_ns": 48175318,
+          "postprocess_ns": 4659590,
+          "preprocess_ns": 2902247,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 261,
+          "inference_ns": 40871323,
+          "iteration": 61,
+          "pipeline_total_ns": 48571872,
+          "postprocess_ns": 4915162,
+          "preprocess_ns": 2785387,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 262,
+          "inference_ns": 42389486,
+          "iteration": 62,
+          "pipeline_total_ns": 50052652,
+          "postprocess_ns": 5007706,
+          "preprocess_ns": 2655460,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 263,
+          "inference_ns": 43645774,
+          "iteration": 63,
+          "pipeline_total_ns": 51919980,
+          "postprocess_ns": 5119409,
+          "preprocess_ns": 3154797,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 264,
+          "inference_ns": 40799744,
+          "iteration": 64,
+          "pipeline_total_ns": 48749923,
+          "postprocess_ns": 4662008,
+          "preprocess_ns": 3288171,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 265,
+          "inference_ns": 42461614,
+          "iteration": 65,
+          "pipeline_total_ns": 50731716,
+          "postprocess_ns": 5472560,
+          "preprocess_ns": 2797542,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 266,
+          "inference_ns": 41369688,
+          "iteration": 66,
+          "pipeline_total_ns": 49421843,
+          "postprocess_ns": 4853150,
+          "preprocess_ns": 3199005,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 267,
+          "inference_ns": 42633574,
+          "iteration": 67,
+          "pipeline_total_ns": 50339141,
+          "postprocess_ns": 4846372,
+          "preprocess_ns": 2859195,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 268,
+          "inference_ns": 41186579,
+          "iteration": 68,
+          "pipeline_total_ns": 48909222,
+          "postprocess_ns": 4599631,
+          "preprocess_ns": 3123012,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 269,
+          "inference_ns": 41854337,
+          "iteration": 69,
+          "pipeline_total_ns": 49475248,
+          "postprocess_ns": 4664895,
+          "preprocess_ns": 2956016,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 270,
+          "inference_ns": 42772840,
+          "iteration": 70,
+          "pipeline_total_ns": 51048616,
+          "postprocess_ns": 5295987,
+          "preprocess_ns": 2979789,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 271,
+          "inference_ns": 41851109,
+          "iteration": 71,
+          "pipeline_total_ns": 49754904,
+          "postprocess_ns": 4905610,
+          "preprocess_ns": 2998185,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 272,
+          "inference_ns": 46847108,
+          "iteration": 72,
+          "pipeline_total_ns": 55110563,
+          "postprocess_ns": 5450212,
+          "preprocess_ns": 2813243,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 273,
+          "inference_ns": 40109507,
+          "iteration": 73,
+          "pipeline_total_ns": 48127067,
+          "postprocess_ns": 5156489,
+          "preprocess_ns": 2861071,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 274,
+          "inference_ns": 42080071,
+          "iteration": 74,
+          "pipeline_total_ns": 50407812,
+          "postprocess_ns": 5619464,
+          "preprocess_ns": 2708277,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 275,
+          "inference_ns": 44671942,
+          "iteration": 75,
+          "pipeline_total_ns": 53452553,
+          "postprocess_ns": 5900519,
+          "preprocess_ns": 2880092,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 276,
+          "inference_ns": 41413458,
+          "iteration": 76,
+          "pipeline_total_ns": 49152110,
+          "postprocess_ns": 5025079,
+          "preprocess_ns": 2713573,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 277,
+          "inference_ns": 44631620,
+          "iteration": 77,
+          "pipeline_total_ns": 52823948,
+          "postprocess_ns": 5066001,
+          "preprocess_ns": 3126327,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 278,
+          "inference_ns": 41174596,
+          "iteration": 78,
+          "pipeline_total_ns": 49747572,
+          "postprocess_ns": 5350499,
+          "preprocess_ns": 3222477,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 279,
+          "inference_ns": 41530530,
+          "iteration": 79,
+          "pipeline_total_ns": 49264905,
+          "postprocess_ns": 4841999,
+          "preprocess_ns": 2892376,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 280,
+          "inference_ns": 40813002,
+          "iteration": 80,
+          "pipeline_total_ns": 48928624,
+          "postprocess_ns": 5266072,
+          "preprocess_ns": 2849550,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 281,
+          "inference_ns": 42685030,
+          "iteration": 81,
+          "pipeline_total_ns": 50713171,
+          "postprocess_ns": 5212735,
+          "preprocess_ns": 2815406,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 282,
+          "inference_ns": 40705617,
+          "iteration": 82,
+          "pipeline_total_ns": 49137533,
+          "postprocess_ns": 5201411,
+          "preprocess_ns": 3230505,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 283,
+          "inference_ns": 43808695,
+          "iteration": 83,
+          "pipeline_total_ns": 52271766,
+          "postprocess_ns": 5631958,
+          "preprocess_ns": 2831113,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 284,
+          "inference_ns": 41630436,
+          "iteration": 84,
+          "pipeline_total_ns": 50280665,
+          "postprocess_ns": 4943355,
+          "preprocess_ns": 3706874,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 285,
+          "inference_ns": 40861090,
+          "iteration": 85,
+          "pipeline_total_ns": 49723222,
+          "postprocess_ns": 5911735,
+          "preprocess_ns": 2950397,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 286,
+          "inference_ns": 42286323,
+          "iteration": 86,
+          "pipeline_total_ns": 50248207,
+          "postprocess_ns": 4817639,
+          "preprocess_ns": 3144245,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 287,
+          "inference_ns": 41747594,
+          "iteration": 87,
+          "pipeline_total_ns": 49646913,
+          "postprocess_ns": 5045902,
+          "preprocess_ns": 2853417,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 288,
+          "inference_ns": 42159479,
+          "iteration": 88,
+          "pipeline_total_ns": 50399669,
+          "postprocess_ns": 5222285,
+          "preprocess_ns": 3017905,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 289,
+          "inference_ns": 42302715,
+          "iteration": 89,
+          "pipeline_total_ns": 52019580,
+          "postprocess_ns": 6805048,
+          "preprocess_ns": 2911817,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 290,
+          "inference_ns": 41017510,
+          "iteration": 90,
+          "pipeline_total_ns": 48902040,
+          "postprocess_ns": 5041316,
+          "preprocess_ns": 2843214,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 291,
+          "inference_ns": 42457860,
+          "iteration": 91,
+          "pipeline_total_ns": 50798699,
+          "postprocess_ns": 5341264,
+          "preprocess_ns": 2999575,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 292,
+          "inference_ns": 44186332,
+          "iteration": 92,
+          "pipeline_total_ns": 54046449,
+          "postprocess_ns": 6618132,
+          "preprocess_ns": 3241985,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 293,
+          "inference_ns": 40948315,
+          "iteration": 93,
+          "pipeline_total_ns": 48953593,
+          "postprocess_ns": 5058463,
+          "preprocess_ns": 2946815,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 294,
+          "inference_ns": 40835745,
+          "iteration": 94,
+          "pipeline_total_ns": 48426355,
+          "postprocess_ns": 4847153,
+          "preprocess_ns": 2743457,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 295,
+          "inference_ns": 41476297,
+          "iteration": 95,
+          "pipeline_total_ns": 49124360,
+          "postprocess_ns": 4967430,
+          "preprocess_ns": 2680633,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 296,
+          "inference_ns": 40819390,
+          "iteration": 96,
+          "pipeline_total_ns": 48468251,
+          "postprocess_ns": 4709618,
+          "preprocess_ns": 2939243,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 297,
+          "inference_ns": 42191403,
+          "iteration": 97,
+          "pipeline_total_ns": 50176723,
+          "postprocess_ns": 4657391,
+          "preprocess_ns": 3327929,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 298,
+          "inference_ns": 41020808,
+          "iteration": 98,
+          "pipeline_total_ns": 48605547,
+          "postprocess_ns": 4723600,
+          "preprocess_ns": 2861139,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 299,
+          "inference_ns": 41224490,
+          "iteration": 99,
+          "pipeline_total_ns": 49168655,
+          "postprocess_ns": 4621114,
+          "preprocess_ns": 3323051,
+          "round": 3
+        },
+        {
+          "aggregate_sample_index": 300,
+          "inference_ns": 40759590,
+          "iteration": 100,
+          "pipeline_total_ns": 49022856,
+          "postprocess_ns": 5461974,
+          "preprocess_ns": 2801292,
+          "round": 3
+        }
+      ],
+      "started_at": "2026-07-21T14:35:49+08:00",
+      "warmup_iterations": 10
+    },
+    {
+      "correctness": {
+        "after_measurement": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        },
+        "before_warmup": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        }
+      },
+      "environment": {
+        "architecture": "x86_64",
+        "cpu_affinity": "scheduler managed",
+        "cpu_model": "Intel(R) Core(TM) i5-14600KF",
+        "cpu_pinning": "disabled",
+        "environment_variables": {
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1"
+        },
+        "kernel": "6.6.87.2-microsoft-standard-WSL2",
+        "logical_cpu_count": 20,
+        "onnxruntime_version": "1.18.1",
+        "opencv_version": "4.10.0",
+        "os": "Linux",
+        "platform": "WSL2",
+        "python_version": "3.12.3"
+      },
+      "formal_iterations": 100,
+      "golden_result_sha256": "9a8fa96233aba0f77fd1196da9c48cc719bb361d97a656e6507ddd50f81dcc4f",
+      "image_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+      "inference_config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+      "manifest_sha256": "764f3e4980c1f6b18ea245262af99703d13e817fedc52bf97bbfc5a1389f06c2",
+      "model_load_ms": 24.20077,
+      "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "process_id": 18,
+      "process_started_unix_ns": 1784615764021009073,
+      "resource_measurement": {
+        "language_scope_note": "includes Python interpreter and imported modules",
+        "peak_rss_bytes": 181534720,
+        "peak_rss_is_process_level_not_model_only": true,
+        "peak_rss_scope": "process startup through formal measurement completion",
+        "process_cpu_percent_one_core_basis": 111.10914874188238,
+        "process_cpu_time_delta_seconds": 5.61531,
+        "wall_clock_time_delta_seconds": 5.053868258
+      },
+      "round": 4,
+      "runtime": {
+        "execution_mode": "ORT_SEQUENTIAL",
+        "execution_provider": "CPUExecutionProvider",
+        "graph_optimization": "ORT_ENABLE_ALL",
+        "inter_op_threads": 1,
+        "intra_op_threads": 1,
+        "onnxruntime_version": "1.18.1",
+        "opencv_threads": 1,
+        "runtime_inputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "images",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "runtime_outputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "output0",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "selected_providers": [
+          "CPUExecutionProvider"
+        ]
+      },
+      "samples": [
+        {
+          "aggregate_sample_index": 301,
+          "inference_ns": 41040128,
+          "iteration": 1,
+          "pipeline_total_ns": 48983229,
+          "postprocess_ns": 4727070,
+          "preprocess_ns": 3216031,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 302,
+          "inference_ns": 41378593,
+          "iteration": 2,
+          "pipeline_total_ns": 49846205,
+          "postprocess_ns": 5235145,
+          "preprocess_ns": 3232467,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 303,
+          "inference_ns": 41843437,
+          "iteration": 3,
+          "pipeline_total_ns": 50115946,
+          "postprocess_ns": 4974519,
+          "preprocess_ns": 3297990,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 304,
+          "inference_ns": 42055837,
+          "iteration": 4,
+          "pipeline_total_ns": 49825520,
+          "postprocess_ns": 4752949,
+          "preprocess_ns": 3016734,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 305,
+          "inference_ns": 41204844,
+          "iteration": 5,
+          "pipeline_total_ns": 50001378,
+          "postprocess_ns": 5752425,
+          "preprocess_ns": 3044109,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 306,
+          "inference_ns": 41728998,
+          "iteration": 6,
+          "pipeline_total_ns": 49888050,
+          "postprocess_ns": 4964412,
+          "preprocess_ns": 3194640,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 307,
+          "inference_ns": 41368502,
+          "iteration": 7,
+          "pipeline_total_ns": 49715403,
+          "postprocess_ns": 5283201,
+          "preprocess_ns": 3063700,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 308,
+          "inference_ns": 42199434,
+          "iteration": 8,
+          "pipeline_total_ns": 50533516,
+          "postprocess_ns": 5203782,
+          "preprocess_ns": 3130300,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 309,
+          "inference_ns": 43347990,
+          "iteration": 9,
+          "pipeline_total_ns": 51531991,
+          "postprocess_ns": 5073505,
+          "preprocess_ns": 3110496,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 310,
+          "inference_ns": 41488053,
+          "iteration": 10,
+          "pipeline_total_ns": 50135182,
+          "postprocess_ns": 5031425,
+          "preprocess_ns": 3615704,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 311,
+          "inference_ns": 41029177,
+          "iteration": 11,
+          "pipeline_total_ns": 49174603,
+          "postprocess_ns": 4916686,
+          "preprocess_ns": 3228740,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 312,
+          "inference_ns": 42647196,
+          "iteration": 12,
+          "pipeline_total_ns": 51076654,
+          "postprocess_ns": 4811209,
+          "preprocess_ns": 3618249,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 313,
+          "inference_ns": 41883077,
+          "iteration": 13,
+          "pipeline_total_ns": 50030385,
+          "postprocess_ns": 5039983,
+          "preprocess_ns": 3107325,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 314,
+          "inference_ns": 42208780,
+          "iteration": 14,
+          "pipeline_total_ns": 50575926,
+          "postprocess_ns": 5026691,
+          "preprocess_ns": 3340455,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 315,
+          "inference_ns": 41678846,
+          "iteration": 15,
+          "pipeline_total_ns": 49398024,
+          "postprocess_ns": 4719347,
+          "preprocess_ns": 2999831,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 316,
+          "inference_ns": 42662921,
+          "iteration": 16,
+          "pipeline_total_ns": 50818407,
+          "postprocess_ns": 4984246,
+          "preprocess_ns": 3171240,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 317,
+          "inference_ns": 41224763,
+          "iteration": 17,
+          "pipeline_total_ns": 49228469,
+          "postprocess_ns": 5025642,
+          "preprocess_ns": 2978064,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 318,
+          "inference_ns": 40415969,
+          "iteration": 18,
+          "pipeline_total_ns": 48168948,
+          "postprocess_ns": 4738761,
+          "preprocess_ns": 3014218,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 319,
+          "inference_ns": 41272421,
+          "iteration": 19,
+          "pipeline_total_ns": 49175062,
+          "postprocess_ns": 4790101,
+          "preprocess_ns": 3112540,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 320,
+          "inference_ns": 41371131,
+          "iteration": 20,
+          "pipeline_total_ns": 50193278,
+          "postprocess_ns": 5127961,
+          "preprocess_ns": 3694186,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 321,
+          "inference_ns": 42502916,
+          "iteration": 21,
+          "pipeline_total_ns": 51111495,
+          "postprocess_ns": 5279924,
+          "preprocess_ns": 3328655,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 322,
+          "inference_ns": 40680251,
+          "iteration": 22,
+          "pipeline_total_ns": 48607445,
+          "postprocess_ns": 4623868,
+          "preprocess_ns": 3303326,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 323,
+          "inference_ns": 40666301,
+          "iteration": 23,
+          "pipeline_total_ns": 48891166,
+          "postprocess_ns": 5254604,
+          "preprocess_ns": 2970261,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 324,
+          "inference_ns": 41795905,
+          "iteration": 24,
+          "pipeline_total_ns": 50878217,
+          "postprocess_ns": 5641089,
+          "preprocess_ns": 3441223,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 325,
+          "inference_ns": 41421703,
+          "iteration": 25,
+          "pipeline_total_ns": 49477055,
+          "postprocess_ns": 4739943,
+          "preprocess_ns": 3315409,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 326,
+          "inference_ns": 41630387,
+          "iteration": 26,
+          "pipeline_total_ns": 49726345,
+          "postprocess_ns": 4921794,
+          "preprocess_ns": 3174164,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 327,
+          "inference_ns": 43213698,
+          "iteration": 27,
+          "pipeline_total_ns": 52860985,
+          "postprocess_ns": 6514821,
+          "preprocess_ns": 3132466,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 328,
+          "inference_ns": 40933681,
+          "iteration": 28,
+          "pipeline_total_ns": 49763668,
+          "postprocess_ns": 5126079,
+          "preprocess_ns": 3703908,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 329,
+          "inference_ns": 41763730,
+          "iteration": 29,
+          "pipeline_total_ns": 50249525,
+          "postprocess_ns": 5276787,
+          "preprocess_ns": 3209008,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 330,
+          "inference_ns": 42484463,
+          "iteration": 30,
+          "pipeline_total_ns": 50481188,
+          "postprocess_ns": 4910991,
+          "preprocess_ns": 3085734,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 331,
+          "inference_ns": 42615474,
+          "iteration": 31,
+          "pipeline_total_ns": 52089870,
+          "postprocess_ns": 6280705,
+          "preprocess_ns": 3193691,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 332,
+          "inference_ns": 41735845,
+          "iteration": 32,
+          "pipeline_total_ns": 51059153,
+          "postprocess_ns": 5916110,
+          "preprocess_ns": 3407198,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 333,
+          "inference_ns": 41467186,
+          "iteration": 33,
+          "pipeline_total_ns": 49935287,
+          "postprocess_ns": 5152649,
+          "preprocess_ns": 3315452,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 334,
+          "inference_ns": 41395097,
+          "iteration": 34,
+          "pipeline_total_ns": 50239666,
+          "postprocess_ns": 5415376,
+          "preprocess_ns": 3429193,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 335,
+          "inference_ns": 41539629,
+          "iteration": 35,
+          "pipeline_total_ns": 50148527,
+          "postprocess_ns": 5181256,
+          "preprocess_ns": 3427642,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 336,
+          "inference_ns": 44057744,
+          "iteration": 36,
+          "pipeline_total_ns": 52704546,
+          "postprocess_ns": 5094481,
+          "preprocess_ns": 3552321,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 337,
+          "inference_ns": 41311142,
+          "iteration": 37,
+          "pipeline_total_ns": 50215794,
+          "postprocess_ns": 5651279,
+          "preprocess_ns": 3253373,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 338,
+          "inference_ns": 41605444,
+          "iteration": 38,
+          "pipeline_total_ns": 49957981,
+          "postprocess_ns": 5125164,
+          "preprocess_ns": 3227373,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 339,
+          "inference_ns": 42775670,
+          "iteration": 39,
+          "pipeline_total_ns": 50805662,
+          "postprocess_ns": 4870313,
+          "preprocess_ns": 3159679,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 340,
+          "inference_ns": 41248057,
+          "iteration": 40,
+          "pipeline_total_ns": 49562149,
+          "postprocess_ns": 5173188,
+          "preprocess_ns": 3140904,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 341,
+          "inference_ns": 41097587,
+          "iteration": 41,
+          "pipeline_total_ns": 49055488,
+          "postprocess_ns": 4837929,
+          "preprocess_ns": 3119972,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 342,
+          "inference_ns": 41549576,
+          "iteration": 42,
+          "pipeline_total_ns": 49547783,
+          "postprocess_ns": 4939680,
+          "preprocess_ns": 3058527,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 343,
+          "inference_ns": 41001879,
+          "iteration": 43,
+          "pipeline_total_ns": 49349924,
+          "postprocess_ns": 5240053,
+          "preprocess_ns": 3107992,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 344,
+          "inference_ns": 40729104,
+          "iteration": 44,
+          "pipeline_total_ns": 49361196,
+          "postprocess_ns": 5322006,
+          "preprocess_ns": 3310086,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 345,
+          "inference_ns": 41248625,
+          "iteration": 45,
+          "pipeline_total_ns": 49823135,
+          "postprocess_ns": 5568108,
+          "preprocess_ns": 3006402,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 346,
+          "inference_ns": 41244438,
+          "iteration": 46,
+          "pipeline_total_ns": 49755276,
+          "postprocess_ns": 5300261,
+          "preprocess_ns": 3210577,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 347,
+          "inference_ns": 42953657,
+          "iteration": 47,
+          "pipeline_total_ns": 51007662,
+          "postprocess_ns": 5060138,
+          "preprocess_ns": 2993867,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 348,
+          "inference_ns": 41421622,
+          "iteration": 48,
+          "pipeline_total_ns": 50155876,
+          "postprocess_ns": 5046209,
+          "preprocess_ns": 3688045,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 349,
+          "inference_ns": 41607144,
+          "iteration": 49,
+          "pipeline_total_ns": 50231981,
+          "postprocess_ns": 5538453,
+          "preprocess_ns": 3086384,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 350,
+          "inference_ns": 42653939,
+          "iteration": 50,
+          "pipeline_total_ns": 50868842,
+          "postprocess_ns": 4901215,
+          "preprocess_ns": 3313688,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 351,
+          "inference_ns": 41968620,
+          "iteration": 51,
+          "pipeline_total_ns": 50438379,
+          "postprocess_ns": 5278171,
+          "preprocess_ns": 3191588,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 352,
+          "inference_ns": 40681856,
+          "iteration": 52,
+          "pipeline_total_ns": 48594715,
+          "postprocess_ns": 4844714,
+          "preprocess_ns": 3068145,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 353,
+          "inference_ns": 41360360,
+          "iteration": 53,
+          "pipeline_total_ns": 49698169,
+          "postprocess_ns": 5018907,
+          "preprocess_ns": 3318902,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 354,
+          "inference_ns": 41100231,
+          "iteration": 54,
+          "pipeline_total_ns": 49440794,
+          "postprocess_ns": 5228088,
+          "preprocess_ns": 3112475,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 355,
+          "inference_ns": 42977051,
+          "iteration": 55,
+          "pipeline_total_ns": 51181907,
+          "postprocess_ns": 5042128,
+          "preprocess_ns": 3162728,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 356,
+          "inference_ns": 41786841,
+          "iteration": 56,
+          "pipeline_total_ns": 50648868,
+          "postprocess_ns": 5907113,
+          "preprocess_ns": 2954914,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 357,
+          "inference_ns": 42889180,
+          "iteration": 57,
+          "pipeline_total_ns": 52361044,
+          "postprocess_ns": 5422143,
+          "preprocess_ns": 4049721,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 358,
+          "inference_ns": 41918144,
+          "iteration": 58,
+          "pipeline_total_ns": 50028255,
+          "postprocess_ns": 4635283,
+          "preprocess_ns": 3474828,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 359,
+          "inference_ns": 42517051,
+          "iteration": 59,
+          "pipeline_total_ns": 51925062,
+          "postprocess_ns": 6221976,
+          "preprocess_ns": 3186035,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 360,
+          "inference_ns": 41667746,
+          "iteration": 60,
+          "pipeline_total_ns": 50253096,
+          "postprocess_ns": 5469139,
+          "preprocess_ns": 3116211,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 361,
+          "inference_ns": 41582922,
+          "iteration": 61,
+          "pipeline_total_ns": 50158959,
+          "postprocess_ns": 4845691,
+          "preprocess_ns": 3730346,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 362,
+          "inference_ns": 41938686,
+          "iteration": 62,
+          "pipeline_total_ns": 50321468,
+          "postprocess_ns": 5235268,
+          "preprocess_ns": 3147514,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 363,
+          "inference_ns": 42529605,
+          "iteration": 63,
+          "pipeline_total_ns": 50827150,
+          "postprocess_ns": 5095679,
+          "preprocess_ns": 3201866,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 364,
+          "inference_ns": 43167286,
+          "iteration": 64,
+          "pipeline_total_ns": 51961909,
+          "postprocess_ns": 5174785,
+          "preprocess_ns": 3619838,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 365,
+          "inference_ns": 40693631,
+          "iteration": 65,
+          "pipeline_total_ns": 48433652,
+          "postprocess_ns": 4693840,
+          "preprocess_ns": 3046181,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 366,
+          "inference_ns": 41530024,
+          "iteration": 66,
+          "pipeline_total_ns": 49808736,
+          "postprocess_ns": 5142384,
+          "preprocess_ns": 3136328,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 367,
+          "inference_ns": 43398411,
+          "iteration": 67,
+          "pipeline_total_ns": 52399990,
+          "postprocess_ns": 5807871,
+          "preprocess_ns": 3193708,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 368,
+          "inference_ns": 41799028,
+          "iteration": 68,
+          "pipeline_total_ns": 50568746,
+          "postprocess_ns": 5742311,
+          "preprocess_ns": 3027407,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 369,
+          "inference_ns": 41261599,
+          "iteration": 69,
+          "pipeline_total_ns": 50456853,
+          "postprocess_ns": 6073206,
+          "preprocess_ns": 3122048,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 370,
+          "inference_ns": 42792819,
+          "iteration": 70,
+          "pipeline_total_ns": 51387309,
+          "postprocess_ns": 5241684,
+          "preprocess_ns": 3352806,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 371,
+          "inference_ns": 41710971,
+          "iteration": 71,
+          "pipeline_total_ns": 50457687,
+          "postprocess_ns": 4992403,
+          "preprocess_ns": 3754313,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 372,
+          "inference_ns": 41550467,
+          "iteration": 72,
+          "pipeline_total_ns": 49631157,
+          "postprocess_ns": 4806150,
+          "preprocess_ns": 3274540,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 373,
+          "inference_ns": 41542386,
+          "iteration": 73,
+          "pipeline_total_ns": 49742717,
+          "postprocess_ns": 5051040,
+          "preprocess_ns": 3149291,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 374,
+          "inference_ns": 41639127,
+          "iteration": 74,
+          "pipeline_total_ns": 50182779,
+          "postprocess_ns": 5382694,
+          "preprocess_ns": 3160958,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 375,
+          "inference_ns": 42328859,
+          "iteration": 75,
+          "pipeline_total_ns": 50665538,
+          "postprocess_ns": 5067937,
+          "preprocess_ns": 3268742,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 376,
+          "inference_ns": 41535703,
+          "iteration": 76,
+          "pipeline_total_ns": 49794506,
+          "postprocess_ns": 5080852,
+          "preprocess_ns": 3177951,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 377,
+          "inference_ns": 41387123,
+          "iteration": 77,
+          "pipeline_total_ns": 49650247,
+          "postprocess_ns": 5061066,
+          "preprocess_ns": 3202058,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 378,
+          "inference_ns": 43853695,
+          "iteration": 78,
+          "pipeline_total_ns": 52681776,
+          "postprocess_ns": 5307047,
+          "preprocess_ns": 3521034,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 379,
+          "inference_ns": 41403467,
+          "iteration": 79,
+          "pipeline_total_ns": 50027048,
+          "postprocess_ns": 5438319,
+          "preprocess_ns": 3185262,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 380,
+          "inference_ns": 41771312,
+          "iteration": 80,
+          "pipeline_total_ns": 50279306,
+          "postprocess_ns": 5029326,
+          "preprocess_ns": 3478668,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 381,
+          "inference_ns": 41494643,
+          "iteration": 81,
+          "pipeline_total_ns": 49316824,
+          "postprocess_ns": 4856165,
+          "preprocess_ns": 2966016,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 382,
+          "inference_ns": 41750830,
+          "iteration": 82,
+          "pipeline_total_ns": 50105220,
+          "postprocess_ns": 4952700,
+          "preprocess_ns": 3401690,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 383,
+          "inference_ns": 41520590,
+          "iteration": 83,
+          "pipeline_total_ns": 49574037,
+          "postprocess_ns": 4973999,
+          "preprocess_ns": 3079448,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 384,
+          "inference_ns": 41905589,
+          "iteration": 84,
+          "pipeline_total_ns": 50568783,
+          "postprocess_ns": 5543073,
+          "preprocess_ns": 3120121,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 385,
+          "inference_ns": 40445089,
+          "iteration": 85,
+          "pipeline_total_ns": 48361963,
+          "postprocess_ns": 4893440,
+          "preprocess_ns": 3023434,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 386,
+          "inference_ns": 41672961,
+          "iteration": 86,
+          "pipeline_total_ns": 49622749,
+          "postprocess_ns": 4821545,
+          "preprocess_ns": 3128243,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 387,
+          "inference_ns": 41022390,
+          "iteration": 87,
+          "pipeline_total_ns": 49189438,
+          "postprocess_ns": 5014616,
+          "preprocess_ns": 3152432,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 388,
+          "inference_ns": 41817710,
+          "iteration": 88,
+          "pipeline_total_ns": 49637485,
+          "postprocess_ns": 4727648,
+          "preprocess_ns": 3092127,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 389,
+          "inference_ns": 41496218,
+          "iteration": 89,
+          "pipeline_total_ns": 49553421,
+          "postprocess_ns": 4896810,
+          "preprocess_ns": 3160393,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 390,
+          "inference_ns": 42627153,
+          "iteration": 90,
+          "pipeline_total_ns": 51007765,
+          "postprocess_ns": 5175364,
+          "preprocess_ns": 3205248,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 391,
+          "inference_ns": 41823224,
+          "iteration": 91,
+          "pipeline_total_ns": 50352955,
+          "postprocess_ns": 5034571,
+          "preprocess_ns": 3495160,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 392,
+          "inference_ns": 41865220,
+          "iteration": 92,
+          "pipeline_total_ns": 50142482,
+          "postprocess_ns": 5259763,
+          "preprocess_ns": 3017499,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 393,
+          "inference_ns": 41048449,
+          "iteration": 93,
+          "pipeline_total_ns": 49490737,
+          "postprocess_ns": 4950721,
+          "preprocess_ns": 3491567,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 394,
+          "inference_ns": 41300507,
+          "iteration": 94,
+          "pipeline_total_ns": 49674285,
+          "postprocess_ns": 5352696,
+          "preprocess_ns": 3021082,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 395,
+          "inference_ns": 41629273,
+          "iteration": 95,
+          "pipeline_total_ns": 50023302,
+          "postprocess_ns": 5162317,
+          "preprocess_ns": 3231712,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 396,
+          "inference_ns": 41156342,
+          "iteration": 96,
+          "pipeline_total_ns": 49489799,
+          "postprocess_ns": 5273499,
+          "preprocess_ns": 3059958,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 397,
+          "inference_ns": 40132404,
+          "iteration": 97,
+          "pipeline_total_ns": 48249446,
+          "postprocess_ns": 4801011,
+          "preprocess_ns": 3316031,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 398,
+          "inference_ns": 41658911,
+          "iteration": 98,
+          "pipeline_total_ns": 49732295,
+          "postprocess_ns": 5153358,
+          "preprocess_ns": 2920026,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 399,
+          "inference_ns": 43029960,
+          "iteration": 99,
+          "pipeline_total_ns": 51262697,
+          "postprocess_ns": 5094780,
+          "preprocess_ns": 3137957,
+          "round": 4
+        },
+        {
+          "aggregate_sample_index": 400,
+          "inference_ns": 41982164,
+          "iteration": 100,
+          "pipeline_total_ns": 50442173,
+          "postprocess_ns": 5406310,
+          "preprocess_ns": 3053699,
+          "round": 4
+        }
+      ],
+      "started_at": "2026-07-21T14:36:09+08:00",
+      "warmup_iterations": 10
+    },
+    {
+      "correctness": {
+        "after_measurement": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        },
+        "before_warmup": {
+          "detection_count": 5,
+          "maximum_absolute_confidence_difference": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "status": "PASS"
+        }
+      },
+      "environment": {
+        "architecture": "x86_64",
+        "cpu_affinity": "scheduler managed",
+        "cpu_model": "Intel(R) Core(TM) i5-14600KF",
+        "cpu_pinning": "disabled",
+        "environment_variables": {
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1"
+        },
+        "kernel": "6.6.87.2-microsoft-standard-WSL2",
+        "logical_cpu_count": 20,
+        "onnxruntime_version": "1.18.1",
+        "opencv_version": "4.10.0",
+        "os": "Linux",
+        "platform": "WSL2",
+        "python_version": "3.12.3"
+      },
+      "formal_iterations": 100,
+      "golden_result_sha256": "9a8fa96233aba0f77fd1196da9c48cc719bb361d97a656e6507ddd50f81dcc4f",
+      "image_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+      "inference_config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+      "manifest_sha256": "764f3e4980c1f6b18ea245262af99703d13e817fedc52bf97bbfc5a1389f06c2",
+      "model_load_ms": 25.804319,
+      "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "process_id": 20,
+      "process_started_unix_ns": 1784615769828443497,
+      "resource_measurement": {
+        "language_scope_note": "includes Python interpreter and imported modules",
+        "peak_rss_bytes": 180428800,
+        "peak_rss_is_process_level_not_model_only": true,
+        "peak_rss_scope": "process startup through formal measurement completion",
+        "process_cpu_percent_one_core_basis": 111.1098869656488,
+        "process_cpu_time_delta_seconds": 5.639851,
+        "wall_clock_time_delta_seconds": 5.075921823
+      },
+      "round": 5,
+      "runtime": {
+        "execution_mode": "ORT_SEQUENTIAL",
+        "execution_provider": "CPUExecutionProvider",
+        "graph_optimization": "ORT_ENABLE_ALL",
+        "inter_op_threads": 1,
+        "intra_op_threads": 1,
+        "onnxruntime_version": "1.18.1",
+        "opencv_threads": 1,
+        "runtime_inputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "images",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "runtime_outputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "output0",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "selected_providers": [
+          "CPUExecutionProvider"
+        ]
+      },
+      "samples": [
+        {
+          "aggregate_sample_index": 401,
+          "inference_ns": 40820264,
+          "iteration": 1,
+          "pipeline_total_ns": 48624024,
+          "postprocess_ns": 4692772,
+          "preprocess_ns": 3110988,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 402,
+          "inference_ns": 42346649,
+          "iteration": 2,
+          "pipeline_total_ns": 49771526,
+          "postprocess_ns": 4595518,
+          "preprocess_ns": 2829359,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 403,
+          "inference_ns": 41524153,
+          "iteration": 3,
+          "pipeline_total_ns": 49889396,
+          "postprocess_ns": 5103518,
+          "preprocess_ns": 3261725,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 404,
+          "inference_ns": 42567514,
+          "iteration": 4,
+          "pipeline_total_ns": 50796769,
+          "postprocess_ns": 5469051,
+          "preprocess_ns": 2760204,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 405,
+          "inference_ns": 42498684,
+          "iteration": 5,
+          "pipeline_total_ns": 50736888,
+          "postprocess_ns": 5184983,
+          "preprocess_ns": 3053221,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 406,
+          "inference_ns": 42573563,
+          "iteration": 6,
+          "pipeline_total_ns": 50919556,
+          "postprocess_ns": 4856254,
+          "preprocess_ns": 3489739,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 407,
+          "inference_ns": 40987489,
+          "iteration": 7,
+          "pipeline_total_ns": 48509038,
+          "postprocess_ns": 4612784,
+          "preprocess_ns": 2908765,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 408,
+          "inference_ns": 40913574,
+          "iteration": 8,
+          "pipeline_total_ns": 48850488,
+          "postprocess_ns": 4895229,
+          "preprocess_ns": 3041685,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 409,
+          "inference_ns": 41228347,
+          "iteration": 9,
+          "pipeline_total_ns": 49422354,
+          "postprocess_ns": 5194428,
+          "preprocess_ns": 2999579,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 410,
+          "inference_ns": 41647427,
+          "iteration": 10,
+          "pipeline_total_ns": 50255584,
+          "postprocess_ns": 5451829,
+          "preprocess_ns": 3156328,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 411,
+          "inference_ns": 43066941,
+          "iteration": 11,
+          "pipeline_total_ns": 51797541,
+          "postprocess_ns": 4941600,
+          "preprocess_ns": 3789000,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 412,
+          "inference_ns": 42281841,
+          "iteration": 12,
+          "pipeline_total_ns": 50685296,
+          "postprocess_ns": 5210154,
+          "preprocess_ns": 3193301,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 413,
+          "inference_ns": 42170258,
+          "iteration": 13,
+          "pipeline_total_ns": 50309539,
+          "postprocess_ns": 5121738,
+          "preprocess_ns": 3017543,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 414,
+          "inference_ns": 42279264,
+          "iteration": 14,
+          "pipeline_total_ns": 50620852,
+          "postprocess_ns": 4726710,
+          "preprocess_ns": 3614878,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 415,
+          "inference_ns": 41312357,
+          "iteration": 15,
+          "pipeline_total_ns": 49250097,
+          "postprocess_ns": 4841164,
+          "preprocess_ns": 3096576,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 416,
+          "inference_ns": 42539010,
+          "iteration": 16,
+          "pipeline_total_ns": 50655577,
+          "postprocess_ns": 4879733,
+          "preprocess_ns": 3236834,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 417,
+          "inference_ns": 41485443,
+          "iteration": 17,
+          "pipeline_total_ns": 49939027,
+          "postprocess_ns": 5051320,
+          "preprocess_ns": 3402264,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 418,
+          "inference_ns": 41239998,
+          "iteration": 18,
+          "pipeline_total_ns": 49796383,
+          "postprocess_ns": 5023885,
+          "preprocess_ns": 3532500,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 419,
+          "inference_ns": 41919440,
+          "iteration": 19,
+          "pipeline_total_ns": 50208196,
+          "postprocess_ns": 5002554,
+          "preprocess_ns": 3286202,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 420,
+          "inference_ns": 41524975,
+          "iteration": 20,
+          "pipeline_total_ns": 49483351,
+          "postprocess_ns": 4861080,
+          "preprocess_ns": 3097296,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 421,
+          "inference_ns": 41942286,
+          "iteration": 21,
+          "pipeline_total_ns": 50192919,
+          "postprocess_ns": 4606758,
+          "preprocess_ns": 3643875,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 422,
+          "inference_ns": 41141228,
+          "iteration": 22,
+          "pipeline_total_ns": 49549147,
+          "postprocess_ns": 5248286,
+          "preprocess_ns": 3159633,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 423,
+          "inference_ns": 41557546,
+          "iteration": 23,
+          "pipeline_total_ns": 49247139,
+          "postprocess_ns": 4732777,
+          "preprocess_ns": 2956816,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 424,
+          "inference_ns": 42321202,
+          "iteration": 24,
+          "pipeline_total_ns": 50113192,
+          "postprocess_ns": 4854932,
+          "preprocess_ns": 2937058,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 425,
+          "inference_ns": 43211959,
+          "iteration": 25,
+          "pipeline_total_ns": 51555299,
+          "postprocess_ns": 4788192,
+          "preprocess_ns": 3555148,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 426,
+          "inference_ns": 41758271,
+          "iteration": 26,
+          "pipeline_total_ns": 50198620,
+          "postprocess_ns": 5293519,
+          "preprocess_ns": 3146830,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 427,
+          "inference_ns": 40635236,
+          "iteration": 27,
+          "pipeline_total_ns": 48984770,
+          "postprocess_ns": 5491406,
+          "preprocess_ns": 2858128,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 428,
+          "inference_ns": 43406006,
+          "iteration": 28,
+          "pipeline_total_ns": 52605079,
+          "postprocess_ns": 6001190,
+          "preprocess_ns": 3197883,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 429,
+          "inference_ns": 42325625,
+          "iteration": 29,
+          "pipeline_total_ns": 50948326,
+          "postprocess_ns": 4724832,
+          "preprocess_ns": 3897869,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 430,
+          "inference_ns": 41229591,
+          "iteration": 30,
+          "pipeline_total_ns": 49367331,
+          "postprocess_ns": 5239400,
+          "preprocess_ns": 2898340,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 431,
+          "inference_ns": 43591266,
+          "iteration": 31,
+          "pipeline_total_ns": 52181752,
+          "postprocess_ns": 5455583,
+          "preprocess_ns": 3134903,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 432,
+          "inference_ns": 41940685,
+          "iteration": 32,
+          "pipeline_total_ns": 51470140,
+          "postprocess_ns": 6416149,
+          "preprocess_ns": 3113306,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 433,
+          "inference_ns": 41998617,
+          "iteration": 33,
+          "pipeline_total_ns": 50710095,
+          "postprocess_ns": 5628176,
+          "preprocess_ns": 3083302,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 434,
+          "inference_ns": 42287574,
+          "iteration": 34,
+          "pipeline_total_ns": 50810962,
+          "postprocess_ns": 5402386,
+          "preprocess_ns": 3121002,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 435,
+          "inference_ns": 41379284,
+          "iteration": 35,
+          "pipeline_total_ns": 49599924,
+          "postprocess_ns": 4876280,
+          "preprocess_ns": 3344360,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 436,
+          "inference_ns": 42209137,
+          "iteration": 36,
+          "pipeline_total_ns": 49949614,
+          "postprocess_ns": 4787548,
+          "preprocess_ns": 2952929,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 437,
+          "inference_ns": 41770218,
+          "iteration": 37,
+          "pipeline_total_ns": 49777236,
+          "postprocess_ns": 4878789,
+          "preprocess_ns": 3128229,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 438,
+          "inference_ns": 42491091,
+          "iteration": 38,
+          "pipeline_total_ns": 50428742,
+          "postprocess_ns": 4945731,
+          "preprocess_ns": 2991920,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 439,
+          "inference_ns": 43070398,
+          "iteration": 39,
+          "pipeline_total_ns": 51609729,
+          "postprocess_ns": 5596159,
+          "preprocess_ns": 2943172,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 440,
+          "inference_ns": 44307156,
+          "iteration": 40,
+          "pipeline_total_ns": 52781239,
+          "postprocess_ns": 5046800,
+          "preprocess_ns": 3427283,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 441,
+          "inference_ns": 43653651,
+          "iteration": 41,
+          "pipeline_total_ns": 51909707,
+          "postprocess_ns": 4993740,
+          "preprocess_ns": 3262316,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 442,
+          "inference_ns": 41641702,
+          "iteration": 42,
+          "pipeline_total_ns": 49618647,
+          "postprocess_ns": 5027989,
+          "preprocess_ns": 2948956,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 443,
+          "inference_ns": 42209906,
+          "iteration": 43,
+          "pipeline_total_ns": 49903267,
+          "postprocess_ns": 4661943,
+          "preprocess_ns": 3031418,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 444,
+          "inference_ns": 41705401,
+          "iteration": 44,
+          "pipeline_total_ns": 49981562,
+          "postprocess_ns": 5293555,
+          "preprocess_ns": 2982606,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 445,
+          "inference_ns": 41768460,
+          "iteration": 45,
+          "pipeline_total_ns": 49825998,
+          "postprocess_ns": 5258686,
+          "preprocess_ns": 2798852,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 446,
+          "inference_ns": 42168974,
+          "iteration": 46,
+          "pipeline_total_ns": 50131354,
+          "postprocess_ns": 4844569,
+          "preprocess_ns": 3117811,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 447,
+          "inference_ns": 41620741,
+          "iteration": 47,
+          "pipeline_total_ns": 49153794,
+          "postprocess_ns": 4637605,
+          "preprocess_ns": 2895448,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 448,
+          "inference_ns": 41719945,
+          "iteration": 48,
+          "pipeline_total_ns": 49458260,
+          "postprocess_ns": 4992632,
+          "preprocess_ns": 2745683,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 449,
+          "inference_ns": 42245657,
+          "iteration": 49,
+          "pipeline_total_ns": 50538887,
+          "postprocess_ns": 5426225,
+          "preprocess_ns": 2867005,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 450,
+          "inference_ns": 43452668,
+          "iteration": 50,
+          "pipeline_total_ns": 52814471,
+          "postprocess_ns": 5712859,
+          "preprocess_ns": 3648944,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 451,
+          "inference_ns": 42694260,
+          "iteration": 51,
+          "pipeline_total_ns": 50765404,
+          "postprocess_ns": 5040331,
+          "preprocess_ns": 3030813,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 452,
+          "inference_ns": 40994981,
+          "iteration": 52,
+          "pipeline_total_ns": 48936611,
+          "postprocess_ns": 4986573,
+          "preprocess_ns": 2955057,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 453,
+          "inference_ns": 42120202,
+          "iteration": 53,
+          "pipeline_total_ns": 49594077,
+          "postprocess_ns": 4452561,
+          "preprocess_ns": 3021314,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 454,
+          "inference_ns": 41852500,
+          "iteration": 54,
+          "pipeline_total_ns": 49567845,
+          "postprocess_ns": 4614261,
+          "preprocess_ns": 3101084,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 455,
+          "inference_ns": 42558449,
+          "iteration": 55,
+          "pipeline_total_ns": 50444944,
+          "postprocess_ns": 4888837,
+          "preprocess_ns": 2997658,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 456,
+          "inference_ns": 42088345,
+          "iteration": 56,
+          "pipeline_total_ns": 50254398,
+          "postprocess_ns": 5157425,
+          "preprocess_ns": 3008628,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 457,
+          "inference_ns": 43104323,
+          "iteration": 57,
+          "pipeline_total_ns": 51028474,
+          "postprocess_ns": 4819224,
+          "preprocess_ns": 3104927,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 458,
+          "inference_ns": 42449957,
+          "iteration": 58,
+          "pipeline_total_ns": 51448914,
+          "postprocess_ns": 5895117,
+          "preprocess_ns": 3103840,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 459,
+          "inference_ns": 45551409,
+          "iteration": 59,
+          "pipeline_total_ns": 53595531,
+          "postprocess_ns": 4595976,
+          "preprocess_ns": 3448146,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 460,
+          "inference_ns": 41035610,
+          "iteration": 60,
+          "pipeline_total_ns": 49537293,
+          "postprocess_ns": 5679615,
+          "preprocess_ns": 2822068,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 461,
+          "inference_ns": 41635371,
+          "iteration": 61,
+          "pipeline_total_ns": 50492611,
+          "postprocess_ns": 5063415,
+          "preprocess_ns": 3793825,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 462,
+          "inference_ns": 42950346,
+          "iteration": 62,
+          "pipeline_total_ns": 50772031,
+          "postprocess_ns": 4925895,
+          "preprocess_ns": 2895790,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 463,
+          "inference_ns": 43147456,
+          "iteration": 63,
+          "pipeline_total_ns": 51096544,
+          "postprocess_ns": 4686533,
+          "preprocess_ns": 3262555,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 464,
+          "inference_ns": 41979068,
+          "iteration": 64,
+          "pipeline_total_ns": 50125569,
+          "postprocess_ns": 5062485,
+          "preprocess_ns": 3084016,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 465,
+          "inference_ns": 41334018,
+          "iteration": 65,
+          "pipeline_total_ns": 49235967,
+          "postprocess_ns": 4722769,
+          "preprocess_ns": 3179180,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 466,
+          "inference_ns": 42114501,
+          "iteration": 66,
+          "pipeline_total_ns": 50166857,
+          "postprocess_ns": 5031162,
+          "preprocess_ns": 3021194,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 467,
+          "inference_ns": 46572940,
+          "iteration": 67,
+          "pipeline_total_ns": 54835306,
+          "postprocess_ns": 4797695,
+          "preprocess_ns": 3464671,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 468,
+          "inference_ns": 42821479,
+          "iteration": 68,
+          "pipeline_total_ns": 50506125,
+          "postprocess_ns": 4501879,
+          "preprocess_ns": 3182767,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 469,
+          "inference_ns": 40568495,
+          "iteration": 69,
+          "pipeline_total_ns": 48143411,
+          "postprocess_ns": 4625503,
+          "preprocess_ns": 2949413,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 470,
+          "inference_ns": 42353085,
+          "iteration": 70,
+          "pipeline_total_ns": 50341592,
+          "postprocess_ns": 4941324,
+          "preprocess_ns": 3047183,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 471,
+          "inference_ns": 40910827,
+          "iteration": 71,
+          "pipeline_total_ns": 49107376,
+          "postprocess_ns": 4838635,
+          "preprocess_ns": 3357914,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 472,
+          "inference_ns": 42685645,
+          "iteration": 72,
+          "pipeline_total_ns": 51839408,
+          "postprocess_ns": 5956910,
+          "preprocess_ns": 3196853,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 473,
+          "inference_ns": 41659641,
+          "iteration": 73,
+          "pipeline_total_ns": 50088245,
+          "postprocess_ns": 5425022,
+          "preprocess_ns": 3003582,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 474,
+          "inference_ns": 42254583,
+          "iteration": 74,
+          "pipeline_total_ns": 51003837,
+          "postprocess_ns": 5748368,
+          "preprocess_ns": 3000886,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 475,
+          "inference_ns": 43612941,
+          "iteration": 75,
+          "pipeline_total_ns": 52908282,
+          "postprocess_ns": 6089737,
+          "preprocess_ns": 3205604,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 476,
+          "inference_ns": 43147124,
+          "iteration": 76,
+          "pipeline_total_ns": 52257720,
+          "postprocess_ns": 5728623,
+          "preprocess_ns": 3381973,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 477,
+          "inference_ns": 42833878,
+          "iteration": 77,
+          "pipeline_total_ns": 51245758,
+          "postprocess_ns": 4994902,
+          "preprocess_ns": 3416978,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 478,
+          "inference_ns": 41229420,
+          "iteration": 78,
+          "pipeline_total_ns": 49573224,
+          "postprocess_ns": 4915806,
+          "preprocess_ns": 3427998,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 479,
+          "inference_ns": 42886860,
+          "iteration": 79,
+          "pipeline_total_ns": 51274905,
+          "postprocess_ns": 5278908,
+          "preprocess_ns": 3109137,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 480,
+          "inference_ns": 40862313,
+          "iteration": 80,
+          "pipeline_total_ns": 48579177,
+          "postprocess_ns": 4570640,
+          "preprocess_ns": 3146224,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 481,
+          "inference_ns": 41240691,
+          "iteration": 81,
+          "pipeline_total_ns": 49224211,
+          "postprocess_ns": 4945771,
+          "preprocess_ns": 3037749,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 482,
+          "inference_ns": 41642754,
+          "iteration": 82,
+          "pipeline_total_ns": 49531588,
+          "postprocess_ns": 4573593,
+          "preprocess_ns": 3315241,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 483,
+          "inference_ns": 41234899,
+          "iteration": 83,
+          "pipeline_total_ns": 48865142,
+          "postprocess_ns": 4528686,
+          "preprocess_ns": 3101557,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 484,
+          "inference_ns": 42693468,
+          "iteration": 84,
+          "pipeline_total_ns": 50400103,
+          "postprocess_ns": 4735784,
+          "preprocess_ns": 2970851,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 485,
+          "inference_ns": 41088552,
+          "iteration": 85,
+          "pipeline_total_ns": 49476498,
+          "postprocess_ns": 5258537,
+          "preprocess_ns": 3129409,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 486,
+          "inference_ns": 43315401,
+          "iteration": 86,
+          "pipeline_total_ns": 51770895,
+          "postprocess_ns": 5155126,
+          "preprocess_ns": 3300368,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 487,
+          "inference_ns": 41339821,
+          "iteration": 87,
+          "pipeline_total_ns": 49027559,
+          "postprocess_ns": 4587021,
+          "preprocess_ns": 3100717,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 488,
+          "inference_ns": 41515104,
+          "iteration": 88,
+          "pipeline_total_ns": 49624358,
+          "postprocess_ns": 5026385,
+          "preprocess_ns": 3082869,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 489,
+          "inference_ns": 42315136,
+          "iteration": 89,
+          "pipeline_total_ns": 50440228,
+          "postprocess_ns": 4836472,
+          "preprocess_ns": 3288620,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 490,
+          "inference_ns": 42642953,
+          "iteration": 90,
+          "pipeline_total_ns": 50320524,
+          "postprocess_ns": 4691961,
+          "preprocess_ns": 2985610,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 491,
+          "inference_ns": 42532430,
+          "iteration": 91,
+          "pipeline_total_ns": 50395548,
+          "postprocess_ns": 4780594,
+          "preprocess_ns": 3082524,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 492,
+          "inference_ns": 41781559,
+          "iteration": 92,
+          "pipeline_total_ns": 49664252,
+          "postprocess_ns": 4809835,
+          "preprocess_ns": 3072858,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 493,
+          "inference_ns": 41904095,
+          "iteration": 93,
+          "pipeline_total_ns": 50208800,
+          "postprocess_ns": 5281332,
+          "preprocess_ns": 3023373,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 494,
+          "inference_ns": 42612432,
+          "iteration": 94,
+          "pipeline_total_ns": 50492566,
+          "postprocess_ns": 4611372,
+          "preprocess_ns": 3268762,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 495,
+          "inference_ns": 42378214,
+          "iteration": 95,
+          "pipeline_total_ns": 49994195,
+          "postprocess_ns": 4808971,
+          "preprocess_ns": 2807010,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 496,
+          "inference_ns": 43939697,
+          "iteration": 96,
+          "pipeline_total_ns": 52087371,
+          "postprocess_ns": 5010240,
+          "preprocess_ns": 3137434,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 497,
+          "inference_ns": 42062366,
+          "iteration": 97,
+          "pipeline_total_ns": 50406762,
+          "postprocess_ns": 5247930,
+          "preprocess_ns": 3096466,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 498,
+          "inference_ns": 43893569,
+          "iteration": 98,
+          "pipeline_total_ns": 52568190,
+          "postprocess_ns": 5106384,
+          "preprocess_ns": 3568237,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 499,
+          "inference_ns": 41419083,
+          "iteration": 99,
+          "pipeline_total_ns": 49619996,
+          "postprocess_ns": 4757463,
+          "preprocess_ns": 3443450,
+          "round": 5
+        },
+        {
+          "aggregate_sample_index": 500,
+          "inference_ns": 43299927,
+          "iteration": 100,
+          "pipeline_total_ns": 51516043,
+          "postprocess_ns": 4862881,
+          "preprocess_ns": 3353235,
+          "round": 5
+        }
+      ],
+      "started_at": "2026-07-21T14:36:15+08:00",
+      "warmup_iterations": 10
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,634 @@
+{
+  "actual_process_order": [
+    [
+      "python_ort",
+      "cpp_ort"
+    ],
+    [
+      "cpp_ort",
+      "python_ort"
+    ],
+    [
+      "python_ort",
+      "cpp_ort"
+    ],
+    [
+      "cpp_ort",
+      "python_ort"
+    ],
+    [
+      "python_ort",
+      "cpp_ort"
+    ]
+  ],
+  "all_raw_samples_preserved": true,
+  "benchmark_config": {
+    "path": "configs/benchmark_pc.json",
+    "sha256": "64596e3fd469227c25c2e8c397aade0079867ef3e5e238eec83c50c3536c536d"
+  },
+  "evidence_type": "task009_benchmark_validation",
+  "percentile_method": "nearest-rank",
+  "raw_inputs": [
+    {
+      "path": "results/benchmarks/pc_python_ort.json",
+      "sha256": "125f1fa1eb2f2ab46268fb9bdb7cd37d7092543a29d6b41527f885d41e417c41"
+    },
+    {
+      "path": "results/benchmarks/pc_cpp_ort.json",
+      "sha256": "8b8a6cfb444dd4047a43165c256c7a854b406079f8cfb93479039733af7c5c8e"
+    }
+  ],
+  "sample_count_per_backend": 500,
+  "schema_version": 1,
+  "stability_gate": "PASS",
+  "statistics_implementation": "scripts/validate_benchmark.py",
+  "status": "PENDING_HUMAN_REVIEW",
+  "summaries": [
+    {
+      "aggregate": {
+        "fastest_sample": {
+          "aggregate_sample_index": 252,
+          "iteration": 52,
+          "pipeline_total_ms": 47.8514,
+          "round": 3
+        },
+        "five_round_pipeline_mean_max_relative_difference_percent": 2.8585206030354486,
+        "pipeline_fps_batch1_sequential": 19.776055394195538,
+        "slowest_sample": {
+          "aggregate_sample_index": 139,
+          "iteration": 39,
+          "pipeline_total_ms": 61.06623,
+          "round": 2
+        },
+        "stability_gate": "PASS",
+        "stability_limit_percent": 10.0,
+        "stages": {
+          "inference": {
+            "count": 500,
+            "max_ms": 51.634398,
+            "mean_ms": 42.185938614,
+            "min_ms": 40.109507,
+            "p50_ms": 41.979068,
+            "p90_ms": 43.452668
+          },
+          "pipeline_total": {
+            "count": 500,
+            "max_ms": 61.06623,
+            "mean_ms": 50.566201402,
+            "min_ms": 47.8514,
+            "p50_ms": 50.255584,
+            "p90_ms": 52.32104
+          },
+          "postprocess": {
+            "count": 500,
+            "max_ms": 7.848948,
+            "mean_ms": 5.171687212,
+            "min_ms": 4.423278,
+            "p50_ms": 5.060641,
+            "p90_ms": 5.779656
+          },
+          "preprocess": {
+            "count": 500,
+            "max_ms": 5.031788,
+            "mean_ms": 3.2085755760000003,
+            "min_ms": 2.573579,
+            "p50_ms": 3.143332,
+            "p90_ms": 3.625834
+          }
+        }
+      },
+      "backend": "python_ort",
+      "rounds": [
+        {
+          "model_load_ms": 26.649479,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 179421184,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.041790384276,
+            "process_cpu_time_delta_seconds": 5.680492999999999,
+            "wall_clock_time_delta_seconds": 5.115635276
+          },
+          "round": 1,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 45.024597,
+              "mean_ms": 42.318860050000005,
+              "min_ms": 40.809403,
+              "p50_ms": 42.264251,
+              "p90_ms": 43.396877
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 55.437513,
+              "mean_ms": 50.64641718,
+              "min_ms": 48.53466,
+              "p50_ms": 50.404637,
+              "p90_ms": 52.142407
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 6.975819,
+              "mean_ms": 5.10018734,
+              "min_ms": 4.482588,
+              "p50_ms": 4.984452,
+              "p90_ms": 5.533852
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 4.232889,
+              "mean_ms": 3.22736979,
+              "min_ms": 2.884328,
+              "p50_ms": 3.156498,
+              "p90_ms": 3.593401
+            }
+          }
+        },
+        {
+          "model_load_ms": 24.515147,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 180342784,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.10727304447663,
+            "process_cpu_time_delta_seconds": 5.77026,
+            "wall_clock_time_delta_seconds": 5.193413394
+          },
+          "round": 2,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 51.634398,
+              "mean_ms": 42.57330304,
+              "min_ms": 40.258395,
+              "p50_ms": 42.19064,
+              "p90_ms": 44.109553
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 61.06623,
+              "mean_ms": 51.52583861,
+              "min_ms": 48.465264,
+              "p50_ms": 51.071256,
+              "p90_ms": 53.607687
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 7.848948,
+              "mean_ms": 5.45840319,
+              "min_ms": 4.729442,
+              "p50_ms": 5.3334,
+              "p90_ms": 6.09326
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 5.031788,
+              "mean_ms": 3.49413238,
+              "min_ms": 2.995901,
+              "p50_ms": 3.432843,
+              "p90_ms": 3.89475
+            }
+          }
+        },
+        {
+          "model_load_ms": 26.627728,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 178692096,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.07640911435226,
+            "process_cpu_time_delta_seconds": 5.597494999999999,
+            "wall_clock_time_delta_seconds": 5.03931937
+          },
+          "round": 3,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 46.847108,
+              "mean_ms": 42.07136329,
+              "min_ms": 40.109507,
+              "p50_ms": 41.851109,
+              "p90_ms": 43.645774
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 55.110563,
+              "mean_ms": 50.09389432,
+              "min_ms": 47.8514,
+              "p50_ms": 49.754904,
+              "p90_ms": 52.01958
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 6.805048,
+              "mean_ms": 5.0898595,
+              "min_ms": 4.423278,
+              "p50_ms": 5.000583,
+              "p90_ms": 5.619464
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 4.439021,
+              "mean_ms": 2.93267153,
+              "min_ms": 2.573579,
+              "p50_ms": 2.870652,
+              "p90_ms": 3.199005
+            }
+          }
+        },
+        {
+          "model_load_ms": 24.20077,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 181534720,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.10914874188238,
+            "process_cpu_time_delta_seconds": 5.61531,
+            "wall_clock_time_delta_seconds": 5.053868258
+          },
+          "round": 4,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 44.057744,
+              "mean_ms": 41.76065819,
+              "min_ms": 40.132404,
+              "p50_ms": 41.629273,
+              "p90_ms": 42.792819
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 52.860985,
+              "mean_ms": 50.16144741,
+              "min_ms": 48.168948,
+              "p50_ms": 50.030385,
+              "p90_ms": 51.262697
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 6.514821,
+              "mean_ms": 5.16765134,
+              "min_ms": 4.623868,
+              "p50_ms": 5.094481,
+              "p90_ms": 5.641089
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 4.049721,
+              "mean_ms": 3.2331378799999997,
+              "min_ms": 2.920026,
+              "p50_ms": 3.177951,
+              "p90_ms": 3.521034
+            }
+          }
+        },
+        {
+          "model_load_ms": 25.804319,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 180428800,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.1098869656488,
+            "process_cpu_time_delta_seconds": 5.639851,
+            "wall_clock_time_delta_seconds": 5.075921823
+          },
+          "round": 5,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 46.57294,
+              "mean_ms": 42.20550849999999,
+              "min_ms": 40.568495,
+              "p50_ms": 42.120202,
+              "p90_ms": 43.315401
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 54.835306,
+              "mean_ms": 50.40340949,
+              "min_ms": 48.143411,
+              "p50_ms": 50.2088,
+              "p90_ms": 51.909707
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 6.416149,
+              "mean_ms": 5.042334690000001,
+              "min_ms": 4.452561,
+              "p50_ms": 4.945771,
+              "p90_ms": 5.596159
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 3.897869,
+              "mean_ms": 3.1555663,
+              "min_ms": 2.745683,
+              "p50_ms": 3.10384,
+              "p90_ms": 3.464671
+            }
+          }
+        }
+      ],
+      "sample_count": 500
+    },
+    {
+      "aggregate": {
+        "fastest_sample": {
+          "aggregate_sample_index": 310,
+          "iteration": 10,
+          "pipeline_total_ms": 45.058795,
+          "round": 4
+        },
+        "five_round_pipeline_mean_max_relative_difference_percent": 0.8462639083680779,
+        "pipeline_fps_batch1_sequential": 21.336327160277214,
+        "slowest_sample": {
+          "aggregate_sample_index": 132,
+          "iteration": 32,
+          "pipeline_total_ms": 50.014768,
+          "round": 2
+        },
+        "stability_gate": "PASS",
+        "stability_limit_percent": 10.0,
+        "stages": {
+          "inference": {
+            "count": 500,
+            "max_ms": 44.671321,
+            "mean_ms": 41.528575272000005,
+            "min_ms": 39.795074,
+            "p50_ms": 41.383756,
+            "p90_ms": 42.836305
+          },
+          "pipeline_total": {
+            "count": 500,
+            "max_ms": 50.014768,
+            "mean_ms": 46.86842269,
+            "min_ms": 45.058795,
+            "p50_ms": 46.713867,
+            "p90_ms": 48.182646
+          },
+          "postprocess": {
+            "count": 500,
+            "max_ms": 4.740303,
+            "mean_ms": 3.684626722,
+            "min_ms": 3.54084,
+            "p50_ms": 3.64204,
+            "p90_ms": 3.841475
+          },
+          "preprocess": {
+            "count": 500,
+            "max_ms": 2.144182,
+            "mean_ms": 1.655220696,
+            "min_ms": 1.532662,
+            "p50_ms": 1.62177,
+            "p90_ms": 1.768998
+          }
+        }
+      },
+      "backend": "cpp_ort",
+      "rounds": [
+        {
+          "model_load_ms": 46.127253,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 154427392,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.10880237078926,
+            "process_cpu_time_delta_seconds": 5.235604,
+            "wall_clock_time_delta_seconds": 4.712141512
+          },
+          "round": 1,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 44.493227,
+              "mean_ms": 41.78518666,
+              "min_ms": 40.407031,
+              "p50_ms": 41.60476,
+              "p90_ms": 43.060076
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 49.741054,
+              "mean_ms": 47.11677256,
+              "min_ms": 45.616975,
+              "p50_ms": 46.958771,
+              "p90_ms": 48.372049
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.23048,
+              "mean_ms": 3.6988057600000004,
+              "min_ms": 3.54084,
+              "p50_ms": 3.650457,
+              "p90_ms": 3.863848
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.062956,
+              "mean_ms": 1.6327801400000002,
+              "min_ms": 1.545375,
+              "p50_ms": 1.597149,
+              "p90_ms": 1.744559
+            }
+          }
+        },
+        {
+          "model_load_ms": 47.157786,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 154705920,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.09787549890446,
+            "process_cpu_time_delta_seconds": 5.203531000000001,
+            "wall_clock_time_delta_seconds": 4.683735829
+          },
+          "round": 2,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 44.671321,
+              "mean_ms": 41.506142579999995,
+              "min_ms": 40.12755,
+              "p50_ms": 41.428592,
+              "p90_ms": 42.386988
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 50.014768,
+              "mean_ms": 46.83252539,
+              "min_ms": 45.348046,
+              "p50_ms": 46.709625,
+              "p90_ms": 47.856418
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.740303,
+              "mean_ms": 3.6832793099999996,
+              "min_ms": 3.547575,
+              "p50_ms": 3.635274,
+              "p90_ms": 3.806837
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.091879,
+              "mean_ms": 1.6431035,
+              "min_ms": 1.532662,
+              "p50_ms": 1.608082,
+              "p90_ms": 1.768123
+            }
+          }
+        },
+        {
+          "model_load_ms": 48.423678,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 154054656,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.10877732103178,
+            "process_cpu_time_delta_seconds": 5.210405000000001,
+            "wall_clock_time_delta_seconds": 4.689462998
+          },
+          "round": 3,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 43.812456,
+              "mean_ms": 41.541578040000005,
+              "min_ms": 40.059597,
+              "p50_ms": 41.34876,
+              "p90_ms": 42.855711
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 49.571045,
+              "mean_ms": 46.88986484,
+              "min_ms": 45.32339,
+              "p50_ms": 46.706884,
+              "p90_ms": 48.208902
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.190221,
+              "mean_ms": 3.6738176,
+              "min_ms": 3.546265,
+              "p50_ms": 3.629439,
+              "p90_ms": 3.832575
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 1.983257,
+              "mean_ms": 1.6744692,
+              "min_ms": 1.582995,
+              "p50_ms": 1.639395,
+              "p90_ms": 1.798867
+            }
+          }
+        },
+        {
+          "model_load_ms": 47.222859,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 154222592,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.10980605967958,
+            "process_cpu_time_delta_seconds": 5.191730999999999,
+            "wall_clock_time_delta_seconds": 4.672612782
+          },
+          "round": 4,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 43.484786,
+              "mean_ms": 41.38735121,
+              "min_ms": 39.795074,
+              "p50_ms": 41.207099,
+              "p90_ms": 42.761233
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 49.119124,
+              "mean_ms": 46.721386329999994,
+              "min_ms": 45.058795,
+              "p50_ms": 46.564586,
+              "p90_ms": 48.063236
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.024993,
+              "mean_ms": 3.68117709,
+              "min_ms": 3.551604,
+              "p50_ms": 3.655392,
+              "p90_ms": 3.820254
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 1.932671,
+              "mean_ms": 1.65285803,
+              "min_ms": 1.562285,
+              "p50_ms": 1.627811,
+              "p90_ms": 1.764081
+            }
+          }
+        },
+        {
+          "model_load_ms": 47.605719,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 154443776,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 111.10978040585465,
+            "process_cpu_time_delta_seconds": 5.198425,
+            "wall_clock_time_delta_seconds": 4.678638533
+          },
+          "round": 5,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 43.68721,
+              "mean_ms": 41.42261787,
+              "min_ms": 40.031156,
+              "p50_ms": 41.278128,
+              "p90_ms": 42.435715
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 49.208004,
+              "mean_ms": 46.78156433,
+              "min_ms": 45.200685,
+              "p50_ms": 46.636603,
+              "p90_ms": 47.944635
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.252925,
+              "mean_ms": 3.68605385,
+              "min_ms": 3.553273,
+              "p50_ms": 3.629066,
+              "p90_ms": 3.873098
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.144182,
+              "mean_ms": 1.6728926100000001,
+              "min_ms": 1.57525,
+              "p50_ms": 1.640335,
+              "p90_ms": 1.783232
+            }
+          }
+        }
+      ],
+      "sample_count": 500
+    }
+  ]
+}

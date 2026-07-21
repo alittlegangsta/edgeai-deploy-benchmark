@@ -51,6 +51,7 @@ function(edgeai_enable_warnings target_name)
 endfunction()
 
 add_library(edgeai_common STATIC
+    src/common/benchmark.cpp
     src/common/config.cpp
     src/common/postprocess.cpp
     src/common/preprocess.cpp
@@ -201,3 +202,34 @@ set_target_properties(edgeai_video_pipeline_tests PROPERTIES
 target_link_libraries(edgeai_video_pipeline_tests PRIVATE edgeai_common)
 edgeai_enable_warnings(edgeai_video_pipeline_tests)
 add_test(NAME edgeai_video_pipeline_tests COMMAND edgeai_video_pipeline_tests)
+
+add_executable(edgeai_benchmark_ort
+    apps/benchmark_ort.cpp
+)
+target_compile_features(edgeai_benchmark_ort PRIVATE cxx_std_17)
+set_target_properties(edgeai_benchmark_ort PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    BUILD_RPATH "${ONNXRUNTIME_ROOT}/lib"
+)
+target_compile_definitions(edgeai_benchmark_ort PRIVATE
+    EDGEAI_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
+)
+target_link_libraries(edgeai_benchmark_ort PRIVATE edgeai_ort_backend)
+edgeai_enable_warnings(edgeai_benchmark_ort)
+add_test(NAME edgeai_benchmark_ort_invalid_args COMMAND edgeai_benchmark_ort)
+set_tests_properties(edgeai_benchmark_ort_invalid_args PROPERTIES WILL_FAIL TRUE)
+
+add_executable(edgeai_benchmark_tests
+    tests/test_benchmark.cpp
+)
+target_compile_features(edgeai_benchmark_tests PRIVATE cxx_std_17)
+set_target_properties(edgeai_benchmark_tests PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_benchmark_tests PRIVATE edgeai_common)
+edgeai_enable_warnings(edgeai_benchmark_tests)
+add_test(NAME edgeai_benchmark_tests COMMAND edgeai_benchmark_tests)
