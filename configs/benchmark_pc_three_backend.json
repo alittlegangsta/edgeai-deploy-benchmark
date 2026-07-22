@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "methodology_id": "task012-pc-three-backend-v1",
+  "base_process_config": {
+    "path": "configs/benchmark_pc.json",
+    "sha256": "64596e3fd469227c25c2e8c397aade0079867ef3e5e238eec83c50c3536c536d"
+  },
+  "environment": {
+    "platform": "WSL2",
+    "cpu_affinity": "scheduler managed",
+    "cpu_pinning": "disabled",
+    "required_environment_variables": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    }
+  },
+  "workload": {
+    "name": "YOLOv5n v7.0 fixed reference image",
+    "source_weights": {
+      "path": "models/yolov5n-v7.0/yolov5n.pt",
+      "sha256": "4f180cf23ba0717ada0badd6c685026d73d48f184d00fc159c2641284b2ac0a3"
+    },
+    "frozen_onnx": {
+      "path": "models/yolov5n-v7.0/yolov5n.onnx",
+      "sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121"
+    },
+    "ort_manifest": {
+      "path": "models/yolov5n-v7.0/manifest.json",
+      "sha256": "764f3e4980c1f6b18ea245262af99703d13e817fedc52bf97bbfc5a1389f06c2"
+    },
+    "ncnn_manifest": {
+      "path": "models/yolov5n-v7.0/ncnn_manifest.json",
+      "sha256": "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff"
+    },
+    "ncnn_param": {
+      "path": "models/yolov5n-v7.0/yolov5n.ncnn.param",
+      "sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4"
+    },
+    "ncnn_bin": {
+      "path": "models/yolov5n-v7.0/yolov5n.ncnn.bin",
+      "sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0"
+    },
+    "image": {
+      "path": "data/samples/images/pc_reference.jpg",
+      "sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+    },
+    "inference_config": {
+      "path": "configs/yolov5n_v7_inference.json",
+      "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+    },
+    "golden_result": {
+      "path": "tests/fixtures/python_ort_golden.json",
+      "sha256": "9a8fa96233aba0f77fd1196da9c48cc719bb361d97a656e6507ddd50f81dcc4f"
+    },
+    "reference_detections": {
+      "path": "results/evidence/007/cpp_ort_detections.json",
+      "sha256": "42892e2fcd911936cc81ef36756eda2b7675424154f43d95699b85715b485dd1"
+    },
+    "batch": 1,
+    "precision": "FP32",
+    "input_size": [640, 640],
+    "model_relationship": "The two ONNX Runtime implementations use the same frozen ONNX model. The ncnn implementation uses a separately frozen TorchScript-to-pnnx model generated from the same YOLOv5n v7.0 weights and validated for semantic equivalence."
+  },
+  "backends": {
+    "python_ort": {
+      "runtime": "ONNX Runtime",
+      "version": "1.18.1",
+      "provider": "CPUExecutionProvider",
+      "model_serialization": "frozen ONNX",
+      "opencv_version": "4.10.0"
+    },
+    "cpp_ort": {
+      "runtime": "ONNX Runtime",
+      "version": "1.18.1",
+      "provider": "CPUExecutionProvider",
+      "model_serialization": "frozen ONNX",
+      "opencv_version": "4.6.0"
+    },
+    "cpp_ncnn": {
+      "runtime": "ncnn",
+      "version": "1.0.20240410",
+      "provider": "ncnn CPU",
+      "model_serialization": "TorchScript-to-pnnx ncnn param/bin",
+      "opencv_version": "4.6.0",
+      "vulkan": false,
+      "fp16": false,
+      "bf16": false,
+      "int8": false
+    }
+  },
+  "runtime": {
+    "threads": 1,
+    "opencv_threads": 1,
+    "ort_intra_op_threads": 1,
+    "ort_inter_op_threads": 1,
+    "ort_execution_mode": "ORT_SEQUENTIAL",
+    "ort_graph_optimization": "ORT_ENABLE_ALL"
+  },
+  "rounds": {
+    "count": 6,
+    "warmup": 10,
+    "repeat": 100,
+    "order": [
+      ["python_ort", "cpp_ort", "cpp_ncnn"],
+      ["python_ort", "cpp_ncnn", "cpp_ort"],
+      ["cpp_ort", "python_ort", "cpp_ncnn"],
+      ["cpp_ort", "cpp_ncnn", "python_ort"],
+      ["cpp_ncnn", "python_ort", "cpp_ort"],
+      ["cpp_ncnn", "cpp_ort", "python_ort"]
+    ]
+  },
+  "timing": {
+    "stages": ["preprocess", "inference", "postprocess", "pipeline_total"],
+    "pipeline_total_formula": "preprocess_ns + inference_ns + postprocess_ns",
+    "excluded": [
+      "image_file_read_and_decode",
+      "model_load_and_runtime_creation",
+      "visualization_and_labels",
+      "image_write",
+      "json_and_csv_write",
+      "video_read_and_encode"
+    ]
+  },
+  "statistics": {
+    "percentile_method": "nearest-rank",
+    "pipeline_fps_formula": "1000 / aggregate_mean_pipeline_total_ms",
+    "preserve_all_samples": true,
+    "maximum_round_mean_relative_difference_percent": 10.0,
+    "round_mean_spread_formula": "(max_round_mean - min_round_mean) / min_round_mean * 100",
+    "position_mean_spread_formula": "(max_position_mean - min_position_mean) / min_position_mean * 100"
+  },
+  "resources": {
+    "cpu_metric": "process_cpu_percent_one_core_basis",
+    "cpu_formula": "100 * process_user_and_system_cpu_time_delta / wall_clock_time_delta",
+    "peak_rss_formula_linux": "getrusage(RUSAGE_SELF).ru_maxrss * 1024",
+    "peak_rss_scope": "process startup through formal measurement completion",
+    "peak_rss_is_process_level_not_model_only": true
+  },
+  "correctness": {
+    "checks": ["before_warmup", "after_measurement"],
+    "ort": {
+      "minimum_class_matched_iou": 0.99,
+      "maximum_absolute_confidence_difference": 0.001
+    },
+    "ncnn_target": {
+      "minimum_class_matched_iou": 0.99,
+      "maximum_absolute_confidence_difference": 0.01
+    },
+    "ncnn_hard_minimum": {
+      "minimum_class_matched_iou": 0.98,
+      "maximum_absolute_confidence_difference": 0.02
+    }
+  },
+  "immutable_historical_campaigns": {
+    "task009_python_ort": {
+      "path": "results/benchmarks/pc_python_ort.json",
+      "sha256": "125f1fa1eb2f2ab46268fb9bdb7cd37d7092543a29d6b41527f885d41e417c41"
+    },
+    "task009_cpp_ort": {
+      "path": "results/benchmarks/pc_cpp_ort.json",
+      "sha256": "8b8a6cfb444dd4047a43165c256c7a854b406079f8cfb93479039733af7c5c8e"
+    },
+    "task009_summary": {
+      "path": "results/benchmarks/pc_ort_summary.csv",
+      "sha256": "4ac971e42f718807fd802c3df9e69cf1a4acc3766f1457e2f86b57fc4d35be63"
+    },
+    "task011_cpp_ncnn": {
+      "path": "results/benchmarks/pc_cpp_ncnn.json",
+      "sha256": "0719578b3da1c036e7fb20eadac295b7e7aa19ccf92302f01a8ac88ed77bb673"
+    },
+    "task011_summary_json": {
+      "path": "results/benchmarks/pc_cpp_ncnn_summary.json",
+      "sha256": "2750462a117cfccd461b6aeb7e9d40aa18fff868e0ba087255fca398941f08e1"
+    },
+    "task011_summary_csv": {
+      "path": "results/benchmarks/pc_cpp_ncnn_summary.csv",
+      "sha256": "88326b374e7651da9f108ff5d78cd8e9f14aa95c73609dc6f8d24765fabe8411"
+    }
+  }
+}
