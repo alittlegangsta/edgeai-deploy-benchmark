@@ -263,3 +263,82 @@ set_target_properties(edgeai_benchmark_tests PROPERTIES
 target_link_libraries(edgeai_benchmark_tests PRIVATE edgeai_common)
 edgeai_enable_warnings(edgeai_benchmark_tests)
 add_test(NAME edgeai_benchmark_tests COMMAND edgeai_benchmark_tests)
+
+add_library(edgeai_ncnn_backend STATIC
+    src/backends/ncnn_detector.cpp
+)
+target_compile_features(edgeai_ncnn_backend PUBLIC cxx_std_17)
+set_target_properties(edgeai_ncnn_backend PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_include_directories(edgeai_ncnn_backend PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_link_libraries(edgeai_ncnn_backend PUBLIC
+    edgeai_common
+    ncnn
+)
+edgeai_enable_warnings(edgeai_ncnn_backend)
+
+add_executable(edgeai_ncnn_image
+    apps/ncnn_image.cpp
+)
+target_compile_features(edgeai_ncnn_image PRIVATE cxx_std_17)
+set_target_properties(edgeai_ncnn_image PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_ncnn_image PRIVATE edgeai_ncnn_backend)
+edgeai_enable_warnings(edgeai_ncnn_image)
+add_test(NAME edgeai_ncnn_image_invalid_args COMMAND edgeai_ncnn_image)
+set_tests_properties(edgeai_ncnn_image_invalid_args PROPERTIES WILL_FAIL TRUE)
+
+add_executable(edgeai_ncnn_detector_tests
+    tests/test_ncnn_detector.cpp
+)
+target_compile_features(edgeai_ncnn_detector_tests PRIVATE cxx_std_17)
+set_target_properties(edgeai_ncnn_detector_tests PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_compile_definitions(edgeai_ncnn_detector_tests PRIVATE
+    EDGEAI_REPOSITORY_ROOT="${CMAKE_CURRENT_SOURCE_DIR}/.."
+)
+target_link_libraries(edgeai_ncnn_detector_tests PRIVATE edgeai_ncnn_backend)
+edgeai_enable_warnings(edgeai_ncnn_detector_tests)
+add_test(NAME edgeai_ncnn_detector_tests COMMAND edgeai_ncnn_detector_tests)
+
+add_executable(edgeai_ncnn_video
+    apps/ncnn_video.cpp
+)
+target_compile_features(edgeai_ncnn_video PRIVATE cxx_std_17)
+set_target_properties(edgeai_ncnn_video PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_ncnn_video PRIVATE edgeai_ncnn_backend)
+edgeai_enable_warnings(edgeai_ncnn_video)
+add_test(NAME edgeai_ncnn_video_invalid_args COMMAND edgeai_ncnn_video)
+set_tests_properties(edgeai_ncnn_video_invalid_args PROPERTIES WILL_FAIL TRUE)
+
+add_executable(edgeai_benchmark_ncnn
+    apps/benchmark_ncnn.cpp
+)
+target_compile_features(edgeai_benchmark_ncnn PRIVATE cxx_std_17)
+set_target_properties(edgeai_benchmark_ncnn PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_compile_definitions(edgeai_benchmark_ncnn PRIVATE
+    EDGEAI_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
+)
+target_link_libraries(edgeai_benchmark_ncnn PRIVATE edgeai_ncnn_backend)
+edgeai_enable_warnings(edgeai_benchmark_ncnn)
+add_test(NAME edgeai_benchmark_ncnn_invalid_args COMMAND edgeai_benchmark_ncnn)
+set_tests_properties(edgeai_benchmark_ncnn_invalid_args PROPERTIES WILL_FAIL TRUE)

@@ -1,0 +1,77 @@
+{
+  "application": "edgeai_compare_detections",
+  "candidate": {
+    "detection_count": 5,
+    "execution_provider": "ncnn CPU",
+    "model_sha256": null,
+    "path": "results/evidence/011/cpp_ncnn_detections.json",
+    "runtime_version": "1.0.20240410",
+    "sha256": "e840dac9a1cd3693a6efcd855ce5b293dd9039ea1d694de05dfcb8c4c888a1ab"
+  },
+  "matches": [
+    {
+      "absolute_confidence_difference": 0.0,
+      "candidate_rank": 1,
+      "class_id": 66,
+      "class_name": "keyboard",
+      "iou": 0.9999988159515842,
+      "reference_rank": 1
+    },
+    {
+      "absolute_confidence_difference": 0.0,
+      "candidate_rank": 2,
+      "class_id": 62,
+      "class_name": "tv",
+      "iou": 0.9999994708716987,
+      "reference_rank": 2
+    },
+    {
+      "absolute_confidence_difference": 0.0,
+      "candidate_rank": 3,
+      "class_id": 41,
+      "class_name": "cup",
+      "iou": 0.9999993599444944,
+      "reference_rank": 3
+    },
+    {
+      "absolute_confidence_difference": 1.0132789611816406e-06,
+      "candidate_rank": 4,
+      "class_id": 64,
+      "class_name": "mouse",
+      "iou": 0.9999970800108954,
+      "reference_rank": 4
+    },
+    {
+      "absolute_confidence_difference": 2.0265579223632812e-06,
+      "candidate_rank": 5,
+      "class_id": 64,
+      "class_name": "mouse",
+      "iou": 0.9999995514527437,
+      "reference_rank": 5
+    }
+  ],
+  "maximum_observed_confidence_difference": 2.0265579223632812e-06,
+  "minimum_observed_iou": 0.9999970800108954,
+  "preregistered_gates": {
+    "hard_floor": {
+      "maximum_absolute_confidence_difference": 0.02,
+      "minimum_iou": 0.98
+    },
+    "target": {
+      "maximum_absolute_confidence_difference": 0.01,
+      "minimum_iou": 0.99
+    }
+  },
+  "profile": "ncnn-preregistered",
+  "reference": {
+    "detection_count": 5,
+    "path": "results/evidence/007/cpp_ort_detections.json",
+    "sha256": "42892e2fcd911936cc81ef36756eda2b7675424154f43d95699b85715b485dd1"
+  },
+  "schema_version": 1,
+  "status": "PASS_TARGET",
+  "tolerances": {
+    "maximum_absolute_confidence_difference": 0.01,
+    "minimum_iou": 0.99
+  }
+}
