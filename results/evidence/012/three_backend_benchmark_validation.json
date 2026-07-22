@@ -1,0 +1,1990 @@
+{
+  "checks": {
+    "actual_process_order": [
+      [
+        "python_ort",
+        "cpp_ort",
+        "cpp_ncnn"
+      ],
+      [
+        "python_ort",
+        "cpp_ncnn",
+        "cpp_ort"
+      ],
+      [
+        "cpp_ort",
+        "python_ort",
+        "cpp_ncnn"
+      ],
+      [
+        "cpp_ort",
+        "cpp_ncnn",
+        "python_ort"
+      ],
+      [
+        "cpp_ncnn",
+        "python_ort",
+        "cpp_ort"
+      ],
+      [
+        "cpp_ncnn",
+        "cpp_ort",
+        "python_ort"
+      ]
+    ],
+    "all_raw_samples_preserved": true,
+    "correctness_before_and_after_every_process": "PASS_TARGET",
+    "exact_pipeline_stage_sum": "PASS",
+    "historical_campaigns_unchanged": "PASS",
+    "independent_process_identities": 18,
+    "position_balance": "PASS",
+    "process_count": 18,
+    "release_cpu_fp32_one_thread": "PASS",
+    "sample_count_per_backend": 600
+  },
+  "derived_outputs": [
+    {
+      "path": "results/benchmarks/pc_three_backend_summary.json",
+      "sha256": "e0419a12a4f9e3e2d815733c26566e5af5f878d585ffd1be4437d47144376126"
+    },
+    {
+      "path": "results/benchmarks/pc_three_backend_summary.csv",
+      "sha256": "a14e66928dc7f89181e240ca8873175a293cc23f06f0c212893ad3260861eb9a"
+    }
+  ],
+  "evidence_type": "task012_three_backend_benchmark_validation",
+  "immutable_historical_campaigns": [
+    {
+      "path": "results/benchmarks/pc_python_ort.json",
+      "sha256": "125f1fa1eb2f2ab46268fb9bdb7cd37d7092543a29d6b41527f885d41e417c41"
+    },
+    {
+      "path": "results/benchmarks/pc_cpp_ort.json",
+      "sha256": "8b8a6cfb444dd4047a43165c256c7a854b406079f8cfb93479039733af7c5c8e"
+    },
+    {
+      "path": "results/benchmarks/pc_ort_summary.csv",
+      "sha256": "4ac971e42f718807fd802c3df9e69cf1a4acc3766f1457e2f86b57fc4d35be63"
+    },
+    {
+      "path": "results/benchmarks/pc_cpp_ncnn.json",
+      "sha256": "0719578b3da1c036e7fb20eadac295b7e7aa19ccf92302f01a8ac88ed77bb673"
+    },
+    {
+      "path": "results/benchmarks/pc_cpp_ncnn_summary.json",
+      "sha256": "2750462a117cfccd461b6aeb7e9d40aa18fff868e0ba087255fca398941f08e1"
+    },
+    {
+      "path": "results/benchmarks/pc_cpp_ncnn_summary.csv",
+      "sha256": "88326b374e7651da9f108ff5d78cd8e9f14aa95c73609dc6f8d24765fabe8411"
+    }
+  ],
+  "methodology_id": "task012-pc-three-backend-v1",
+  "raw_inputs": [
+    {
+      "path": "results/benchmarks/pc_three_backend_python_ort.json",
+      "sha256": "7cf24818fe722a7c1ecc169a2f458f66a4f903b3cf0499cde8ae95fd7731390e"
+    },
+    {
+      "path": "results/benchmarks/pc_three_backend_cpp_ort.json",
+      "sha256": "a047eee174b7ae355613c6f3f95bfac3c2d681467cd16333de1b8d3261bad085"
+    },
+    {
+      "path": "results/benchmarks/pc_three_backend_cpp_ncnn.json",
+      "sha256": "64ec3a8a9e7c3b9ed4c89e3a7836b9caa349dfa7325af24a8bf1401e38f2fc7c"
+    }
+  ],
+  "schema_version": 1,
+  "stability_gate": "PASS",
+  "status": "PENDING_HUMAN_REVIEW",
+  "summaries": [
+    {
+      "aggregate": {
+        "fastest_sample": {
+          "aggregate_sample_index": 140,
+          "iteration": 40,
+          "pipeline_total_ms": 51.59066,
+          "position": 1,
+          "round": 2
+        },
+        "pipeline_fps_batch1_sequential": 18.22114067500961,
+        "position_pipeline_mean_spread_percent": 1.1566706172345533,
+        "six_round_pipeline_mean_max_relative_difference_percent": 3.098913369846172,
+        "slowest_sample": {
+          "aggregate_sample_index": 70,
+          "iteration": 70,
+          "pipeline_total_ms": 65.453303,
+          "position": 1,
+          "round": 1
+        },
+        "stability_gate": "PASS",
+        "stability_limit_percent": 10.0,
+        "stages": {
+          "inference": {
+            "count": 600,
+            "max_ms": 52.577248,
+            "mean_ms": 45.898200665,
+            "min_ms": 43.31609,
+            "p50_ms": 45.642828,
+            "p90_ms": 47.614491
+          },
+          "pipeline_total": {
+            "count": 600,
+            "max_ms": 65.453303,
+            "mean_ms": 54.881306161666664,
+            "min_ms": 51.59066,
+            "p50_ms": 54.640382,
+            "p90_ms": 56.898155
+          },
+          "postprocess": {
+            "count": 600,
+            "max_ms": 9.36593,
+            "mean_ms": 5.626543446666667,
+            "min_ms": 4.835907,
+            "p50_ms": 5.466566,
+            "p90_ms": 6.263589
+          },
+          "preprocess": {
+            "count": 600,
+            "max_ms": 6.474108,
+            "mean_ms": 3.35656205,
+            "min_ms": 2.633559,
+            "p50_ms": 3.342945,
+            "p90_ms": 3.819361
+          }
+        }
+      },
+      "backend": "python_ort",
+      "environment": {
+        "architecture": "x86_64",
+        "cpu_affinity": "scheduler managed",
+        "cpu_model": "Intel(R) Core(TM) i5-14600KF",
+        "cpu_pinning": "disabled",
+        "environment_variables": {
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1"
+        },
+        "kernel": "6.6.87.2-microsoft-standard-WSL2",
+        "logical_cpu_count": 20,
+        "onnxruntime_version": "1.18.1",
+        "opencv_version": "4.10.0",
+        "os": "Linux",
+        "platform": "WSL2",
+        "python_version": "3.12.3"
+      },
+      "positions": [
+        {
+          "position": 1,
+          "rounds": [
+            1,
+            2
+          ],
+          "stages": {
+            "inference": {
+              "count": 200,
+              "max_ms": 52.577248,
+              "mean_ms": 45.60085991,
+              "min_ms": 43.31609,
+              "p50_ms": 45.40674,
+              "p90_ms": 47.294212
+            },
+            "pipeline_total": {
+              "count": 200,
+              "max_ms": 65.453303,
+              "mean_ms": 54.47204205,
+              "min_ms": 51.59066,
+              "p50_ms": 54.209565,
+              "p90_ms": 56.187087
+            },
+            "postprocess": {
+              "count": 200,
+              "max_ms": 8.167447,
+              "mean_ms": 5.55768213,
+              "min_ms": 4.88958,
+              "p50_ms": 5.414259,
+              "p90_ms": 6.156105
+            },
+            "preprocess": {
+              "count": 200,
+              "max_ms": 5.307596,
+              "mean_ms": 3.3135000100000003,
+              "min_ms": 2.63986,
+              "p50_ms": 3.296054,
+              "p90_ms": 3.734199
+            }
+          }
+        },
+        {
+          "position": 2,
+          "rounds": [
+            3,
+            5
+          ],
+          "stages": {
+            "inference": {
+              "count": 200,
+              "max_ms": 50.103845,
+              "mean_ms": 46.13017194,
+              "min_ms": 43.964786,
+              "p50_ms": 45.900687,
+              "p90_ms": 47.750537
+            },
+            "pipeline_total": {
+              "count": 200,
+              "max_ms": 64.949211,
+              "mean_ms": 55.102104155,
+              "min_ms": 51.845836,
+              "p50_ms": 54.816234,
+              "p90_ms": 57.371336
+            },
+            "postprocess": {
+              "count": 200,
+              "max_ms": 8.783049,
+              "mean_ms": 5.608541355,
+              "min_ms": 4.835907,
+              "p50_ms": 5.46172,
+              "p90_ms": 6.172581
+            },
+            "preprocess": {
+              "count": 200,
+              "max_ms": 6.474108,
+              "mean_ms": 3.36339086,
+              "min_ms": 2.689546,
+              "p50_ms": 3.363212,
+              "p90_ms": 3.707268
+            }
+          }
+        },
+        {
+          "position": 3,
+          "rounds": [
+            4,
+            6
+          ],
+          "stages": {
+            "inference": {
+              "count": 200,
+              "max_ms": 52.529499,
+              "mean_ms": 45.963570145000006,
+              "min_ms": 43.593444,
+              "p50_ms": 45.686213,
+              "p90_ms": 47.787637
+            },
+            "pipeline_total": {
+              "count": 200,
+              "max_ms": 63.723259,
+              "mean_ms": 55.069772279999995,
+              "min_ms": 52.243379,
+              "p50_ms": 54.852384,
+              "p90_ms": 57.017865
+            },
+            "postprocess": {
+              "count": 200,
+              "max_ms": 9.36593,
+              "mean_ms": 5.713406855,
+              "min_ms": 4.986661,
+              "p50_ms": 5.529321,
+              "p90_ms": 6.429941
+            },
+            "preprocess": {
+              "count": 200,
+              "max_ms": 4.899728,
+              "mean_ms": 3.39279528,
+              "min_ms": 2.633559,
+              "p50_ms": 3.381009,
+              "p90_ms": 3.979929
+            }
+          }
+        }
+      ],
+      "round_count": 6,
+      "rounds": [
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 27.76512,
+          "position": 1,
+          "process_id": 3,
+          "process_started_unix_ns": 1784688348534440069,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 179056640,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.97212206013303,
+            "process_cpu_time_delta_seconds": 5.511288,
+            "wall_clock_time_delta_seconds": 5.512824862
+          },
+          "round": 1,
+          "sequence_index": 1,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 52.577248,
+              "mean_ms": 45.42576808,
+              "min_ms": 43.31609,
+              "p50_ms": 45.189004,
+              "p90_ms": 46.629926
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 65.453303,
+              "mean_ms": 54.65497858,
+              "min_ms": 52.212071,
+              "p50_ms": 54.236216,
+              "p90_ms": 56.26154
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 8.167447,
+              "mean_ms": 5.69177144,
+              "min_ms": 4.978077,
+              "p50_ms": 5.469499,
+              "p90_ms": 6.374579
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 5.307596,
+              "mean_ms": 3.5374390599999996,
+              "min_ms": 3.020732,
+              "p50_ms": 3.474596,
+              "p90_ms": 3.879828
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 27.340525,
+          "position": 1,
+          "process_id": 6,
+          "process_started_unix_ns": 1784688369547188052,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 179122176,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.97007541175911,
+            "process_cpu_time_delta_seconds": 5.462704,
+            "wall_clock_time_delta_seconds": 5.464339181
+          },
+          "round": 2,
+          "sequence_index": 4,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 48.608941,
+              "mean_ms": 45.775951740000004,
+              "min_ms": 43.579049,
+              "p50_ms": 45.637688,
+              "p90_ms": 47.322102
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 58.785147,
+              "mean_ms": 54.28910552,
+              "min_ms": 51.59066,
+              "p50_ms": 54.123043,
+              "p90_ms": 55.831372
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 6.659643,
+              "mean_ms": 5.42359282,
+              "min_ms": 4.88958,
+              "p50_ms": 5.295397,
+              "p90_ms": 6.065312
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 3.850868,
+              "mean_ms": 3.08956096,
+              "min_ms": 2.63986,
+              "p50_ms": 3.055561,
+              "p90_ms": 3.419476
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 30.779244,
+          "position": 2,
+          "process_id": 10,
+          "process_started_unix_ns": 1784688396681608130,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 179122176,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.95104170457986,
+            "process_cpu_time_delta_seconds": 5.633307,
+            "wall_clock_time_delta_seconds": 5.636066322
+          },
+          "round": 3,
+          "sequence_index": 8,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 50.103845,
+              "mean_ms": 46.5728593,
+              "min_ms": 44.602392,
+              "p50_ms": 46.357004,
+              "p90_ms": 48.078571
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 64.949211,
+              "mean_ms": 55.94286024,
+              "min_ms": 53.411683,
+              "p50_ms": 55.551731,
+              "p90_ms": 58.124746
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 8.783049,
+              "mean_ms": 5.806934539999999,
+              "min_ms": 5.107126,
+              "p50_ms": 5.621652,
+              "p90_ms": 6.564239
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 6.474108,
+              "mean_ms": 3.5630664000000003,
+              "min_ms": 3.1252,
+              "p50_ms": 3.482942,
+              "p90_ms": 3.826555
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 34.602837,
+          "position": 3,
+          "process_id": 14,
+          "process_started_unix_ns": 1784688426987170907,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 181420032,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.94566857104243,
+            "process_cpu_time_delta_seconds": 5.58521,
+            "wall_clock_time_delta_seconds": 5.588246174
+          },
+          "round": 4,
+          "sequence_index": 12,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 50.235955,
+              "mean_ms": 46.07491737,
+              "min_ms": 44.015459,
+              "p50_ms": 45.860185,
+              "p90_ms": 47.758779
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 60.699744,
+              "mean_ms": 55.41814006,
+              "min_ms": 52.621009,
+              "p50_ms": 55.188321,
+              "p90_ms": 57.017865
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 9.164893,
+              "mean_ms": 5.6452268100000005,
+              "min_ms": 4.986661,
+              "p50_ms": 5.457902,
+              "p90_ms": 6.335653
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 4.899728,
+              "mean_ms": 3.6979958799999997,
+              "min_ms": 3.155235,
+              "p50_ms": 3.633907,
+              "p90_ms": 4.096952
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 32.588005,
+          "position": 2,
+          "process_id": 16,
+          "process_started_unix_ns": 1784688442394872859,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 179253248,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.97202157953238,
+            "process_cpu_time_delta_seconds": 5.458266,
+            "wall_clock_time_delta_seconds": 5.459793564
+          },
+          "round": 5,
+          "sequence_index": 14,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 49.643433,
+              "mean_ms": 45.68748458,
+              "min_ms": 43.964786,
+              "p50_ms": 45.40198,
+              "p90_ms": 47.277768
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 58.619173,
+              "mean_ms": 54.261348070000004,
+              "min_ms": 51.845836,
+              "p50_ms": 54.172481,
+              "p90_ms": 56.035071
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 7.209556,
+              "mean_ms": 5.41014817,
+              "min_ms": 4.835907,
+              "p50_ms": 5.305427,
+              "p90_ms": 6.03278
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 4.05403,
+              "mean_ms": 3.16371532,
+              "min_ms": 2.689546,
+              "p50_ms": 3.117165,
+              "p90_ms": 3.497167
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0.0,
+              "minimum_class_matched_iou": 1.0,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 27.902335,
+          "position": 3,
+          "process_id": 20,
+          "process_started_unix_ns": 1784688469376793124,
+          "resource_measurement": {
+            "language_scope_note": "includes Python interpreter and imported modules",
+            "peak_rss_bytes": 178225152,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.94209611548183,
+            "process_cpu_time_delta_seconds": 5.508997999999999,
+            "wall_clock_time_delta_seconds": 5.512189772
+          },
+          "round": 6,
+          "sequence_index": 18,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 52.529499,
+              "mean_ms": 45.85222292,
+              "min_ms": 43.593444,
+              "p50_ms": 45.566297,
+              "p90_ms": 47.843302
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 63.723259,
+              "mean_ms": 54.7214045,
+              "min_ms": 52.243379,
+              "p50_ms": 54.358327,
+              "p90_ms": 56.918125
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 9.36593,
+              "mean_ms": 5.7815869,
+              "min_ms": 5.104017,
+              "p50_ms": 5.577868,
+              "p90_ms": 6.647496
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 4.631189,
+              "mean_ms": 3.0875946800000005,
+              "min_ms": 2.633559,
+              "p50_ms": 2.995688,
+              "p90_ms": 3.460738
+            }
+          }
+        }
+      ],
+      "runtime": {
+        "execution_mode": "ORT_SEQUENTIAL",
+        "execution_provider": "CPUExecutionProvider",
+        "graph_optimization": "ORT_ENABLE_ALL",
+        "inter_op_threads": 1,
+        "intra_op_threads": 1,
+        "onnxruntime_version": "1.18.1",
+        "opencv_threads": 1,
+        "runtime_inputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "images",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "runtime_outputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "output0",
+            "ort_type": "tensor(float)",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "selected_providers": [
+          "CPUExecutionProvider"
+        ]
+      },
+      "sample_count": 600
+    },
+    {
+      "aggregate": {
+        "fastest_sample": {
+          "aggregate_sample_index": 62,
+          "iteration": 62,
+          "pipeline_total_ms": 48.863992,
+          "position": 2,
+          "round": 1
+        },
+        "pipeline_fps_batch1_sequential": 19.303906657155686,
+        "position_pipeline_mean_spread_percent": 1.3831732160016712,
+        "six_round_pipeline_mean_max_relative_difference_percent": 3.221212473119965,
+        "slowest_sample": {
+          "aggregate_sample_index": 503,
+          "iteration": 3,
+          "pipeline_total_ms": 65.671301,
+          "position": 2,
+          "round": 6
+        },
+        "stability_gate": "PASS",
+        "stability_limit_percent": 10.0,
+        "stages": {
+          "inference": {
+            "count": 600,
+            "max_ms": 59.337732,
+            "mean_ms": 45.849136916666666,
+            "min_ms": 43.224541,
+            "p50_ms": 45.639122,
+            "p90_ms": 47.497857
+          },
+          "pipeline_total": {
+            "count": 600,
+            "max_ms": 65.671301,
+            "mean_ms": 51.80298567333333,
+            "min_ms": 48.863992,
+            "p50_ms": 51.595426,
+            "p90_ms": 53.627128
+          },
+          "postprocess": {
+            "count": 600,
+            "max_ms": 5.334411,
+            "mean_ms": 4.1202788749999995,
+            "min_ms": 3.922701,
+            "p50_ms": 4.036812,
+            "p90_ms": 4.372345
+          },
+          "preprocess": {
+            "count": 600,
+            "max_ms": 3.411278,
+            "mean_ms": 1.8335698816666666,
+            "min_ms": 1.637727,
+            "p50_ms": 1.790252,
+            "p90_ms": 1.991453
+          }
+        }
+      },
+      "backend": "cpp_ort",
+      "environment": {
+        "architecture": "x86_64",
+        "build_type": "Release",
+        "compiler_version": "13.3.0",
+        "cpu_affinity": "scheduler managed",
+        "cpu_model": "Intel(R) Core(TM) i5-14600KF",
+        "cpu_pinning": "disabled",
+        "environment_variables": {
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1"
+        },
+        "kernel": "6.6.87.2-microsoft-standard-WSL2",
+        "logical_cpu_count": 20,
+        "opencv_version": "4.6.0",
+        "os": "Linux",
+        "platform": "WSL2"
+      },
+      "positions": [
+        {
+          "position": 1,
+          "rounds": [
+            3,
+            4
+          ],
+          "stages": {
+            "inference": {
+              "count": 200,
+              "max_ms": 51.243051,
+              "mean_ms": 46.158539069999996,
+              "min_ms": 43.430595,
+              "p50_ms": 46.049925,
+              "p90_ms": 48.036024
+            },
+            "pipeline_total": {
+              "count": 200,
+              "max_ms": 57.222049,
+              "mean_ms": 52.163539220000004,
+              "min_ms": 49.237806,
+              "p50_ms": 51.94163,
+              "p90_ms": 54.250419
+            },
+            "postprocess": {
+              "count": 200,
+              "max_ms": 5.334411,
+              "mean_ms": 4.1532399,
+              "min_ms": 3.941358,
+              "p50_ms": 4.057355,
+              "p90_ms": 4.479334
+            },
+            "preprocess": {
+              "count": 200,
+              "max_ms": 3.411278,
+              "mean_ms": 1.85176025,
+              "min_ms": 1.711855,
+              "p50_ms": 1.800294,
+              "p90_ms": 2.01619
+            }
+          }
+        },
+        {
+          "position": 2,
+          "rounds": [
+            1,
+            6
+          ],
+          "stages": {
+            "inference": {
+              "count": 200,
+              "max_ms": 59.337732,
+              "mean_ms": 45.52681415,
+              "min_ms": 43.224541,
+              "p50_ms": 45.223685,
+              "p90_ms": 47.144697
+            },
+            "pipeline_total": {
+              "count": 200,
+              "max_ms": 65.671301,
+              "mean_ms": 51.451870725,
+              "min_ms": 48.863992,
+              "p50_ms": 51.153564,
+              "p90_ms": 53.10202
+            },
+            "postprocess": {
+              "count": 200,
+              "max_ms": 5.041476,
+              "mean_ms": 4.10160224,
+              "min_ms": 3.922701,
+              "p50_ms": 4.033692,
+              "p90_ms": 4.317418
+            },
+            "preprocess": {
+              "count": 200,
+              "max_ms": 2.567507,
+              "mean_ms": 1.823454335,
+              "min_ms": 1.637727,
+              "p50_ms": 1.776432,
+              "p90_ms": 1.988596
+            }
+          }
+        },
+        {
+          "position": 3,
+          "rounds": [
+            2,
+            5
+          ],
+          "stages": {
+            "inference": {
+              "count": 200,
+              "max_ms": 51.081205,
+              "mean_ms": 45.86205753,
+              "min_ms": 43.984905,
+              "p50_ms": 45.699969,
+              "p90_ms": 47.23869
+            },
+            "pipeline_total": {
+              "count": 200,
+              "max_ms": 57.115419,
+              "mean_ms": 51.793547075,
+              "min_ms": 49.973625,
+              "p50_ms": 51.630002,
+              "p90_ms": 53.306972
+            },
+            "postprocess": {
+              "count": 200,
+              "max_ms": 4.913342,
+              "mean_ms": 4.105994485,
+              "min_ms": 3.942081,
+              "p50_ms": 4.031001,
+              "p90_ms": 4.363101
+            },
+            "preprocess": {
+              "count": 200,
+              "max_ms": 2.350948,
+              "mean_ms": 1.8254950600000002,
+              "min_ms": 1.714765,
+              "p50_ms": 1.790766,
+              "p90_ms": 1.960134
+            }
+          }
+        }
+      ],
+      "round_count": 6,
+      "rounds": [
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 53.446605,
+          "position": 2,
+          "process_id": 4,
+          "process_started_unix_ns": 1784688354799199236,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 154386432,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.99622021243385,
+            "process_cpu_time_delta_seconds": 5.0916809999999995,
+            "wall_clock_time_delta_seconds": 5.091873462
+          },
+          "round": 1,
+          "sequence_index": 2,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 49.082434,
+              "mean_ms": 45.05020719,
+              "min_ms": 43.224541,
+              "p50_ms": 44.797385,
+              "p90_ms": 46.808215
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 54.726565,
+              "mean_ms": 50.91389853,
+              "min_ms": 48.863992,
+              "p50_ms": 50.677531,
+              "p90_ms": 52.661405
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 5.02426,
+              "mean_ms": 4.06693775,
+              "min_ms": 3.922701,
+              "p50_ms": 4.013939,
+              "p90_ms": 4.249711
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.567507,
+              "mean_ms": 1.7967535899999998,
+              "min_ms": 1.637727,
+              "p50_ms": 1.741221,
+              "p90_ms": 1.942904
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 53.271779,
+          "position": 3,
+          "process_id": 8,
+          "process_started_unix_ns": 1784688384621821070,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 154603520,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.99809517703721,
+            "process_cpu_time_delta_seconds": 5.205004,
+            "wall_clock_time_delta_seconds": 5.205103148
+          },
+          "round": 2,
+          "sequence_index": 6,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 51.081205,
+              "mean_ms": 46.12782728,
+              "min_ms": 44.366501,
+              "p50_ms": 45.808444,
+              "p90_ms": 47.723906
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 57.115419,
+              "mean_ms": 52.045641800000006,
+              "min_ms": 50.094537,
+              "p50_ms": 51.667889,
+              "p90_ms": 53.704935
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.913342,
+              "mean_ms": 4.10689047,
+              "min_ms": 3.942081,
+              "p50_ms": 4.032729,
+              "p90_ms": 4.363101
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.16837,
+              "mean_ms": 1.8109240500000001,
+              "min_ms": 1.714765,
+              "p50_ms": 1.781784,
+              "p90_ms": 1.928702
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 54.676551,
+          "position": 1,
+          "process_id": 9,
+          "process_started_unix_ns": 1784688390594742771,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 155078656,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 100.00009098318544,
+            "process_cpu_time_delta_seconds": 5.255921,
+            "wall_clock_time_delta_seconds": 5.255916218
+          },
+          "round": 3,
+          "sequence_index": 7,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 50.902714,
+              "mean_ms": 46.519627220000004,
+              "min_ms": 44.370106,
+              "p50_ms": 46.343236,
+              "p90_ms": 48.594484
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 57.222049,
+              "mean_ms": 52.55394338,
+              "min_ms": 50.163324,
+              "p50_ms": 52.339529,
+              "p90_ms": 54.825034
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.912977,
+              "mean_ms": 4.1508595,
+              "min_ms": 3.957235,
+              "p50_ms": 4.051577,
+              "p90_ms": 4.519486
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 3.411278,
+              "mean_ms": 1.88345666,
+              "min_ms": 1.720959,
+              "p50_ms": 1.827692,
+              "p90_ms": 2.057731
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 53.401028,
+          "position": 1,
+          "process_id": 12,
+          "process_started_unix_ns": 1784688412110302414,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 154365952,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.99910112603321,
+            "process_cpu_time_delta_seconds": 5.177765,
+            "wall_clock_time_delta_seconds": 5.177811542
+          },
+          "round": 4,
+          "sequence_index": 10,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 51.243051,
+              "mean_ms": 45.79745092,
+              "min_ms": 43.430595,
+              "p50_ms": 45.637904,
+              "p90_ms": 47.75977
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 57.163461,
+              "mean_ms": 51.77313506,
+              "min_ms": 49.237806,
+              "p50_ms": 51.59358,
+              "p90_ms": 53.786946
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 5.334411,
+              "mean_ms": 4.1556203,
+              "min_ms": 3.941358,
+              "p50_ms": 4.061773,
+              "p90_ms": 4.469176
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.448956,
+              "mean_ms": 1.82006384,
+              "min_ms": 1.711855,
+              "p50_ms": 1.785431,
+              "p90_ms": 1.954844
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 53.144442,
+          "position": 3,
+          "process_id": 17,
+          "process_started_unix_ns": 1784688448620023331,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 153935872,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.99821127464911,
+            "process_cpu_time_delta_seconds": 5.154584000000001,
+            "wall_clock_time_delta_seconds": 5.154676203
+          },
+          "round": 5,
+          "sequence_index": 15,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 47.428641,
+              "mean_ms": 45.596287780000004,
+              "min_ms": 43.984905,
+              "p50_ms": 45.487325,
+              "p90_ms": 46.797131
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 53.762189,
+              "mean_ms": 51.54145235,
+              "min_ms": 49.973625,
+              "p50_ms": 51.453556,
+              "p90_ms": 52.746281
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.717896,
+              "mean_ms": 4.1050984999999995,
+              "min_ms": 3.944178,
+              "p50_ms": 4.030899,
+              "p90_ms": 4.3464
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.350948,
+              "mean_ms": 1.84006607,
+              "min_ms": 1.723607,
+              "p50_ms": 1.794399,
+              "p90_ms": 1.980463
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 0,
+              "minimum_class_matched_iou": 1,
+              "status": "PASS"
+            }
+          },
+          "model_load_ms": 53.300879,
+          "position": 2,
+          "process_id": 19,
+          "process_started_unix_ns": 1784688463357017349,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 154570752,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.99871329116503,
+            "process_cpu_time_delta_seconds": 5.199400000000001,
+            "wall_clock_time_delta_seconds": 5.199466902
+          },
+          "round": 6,
+          "sequence_index": 17,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 59.337732,
+              "mean_ms": 46.00342111,
+              "min_ms": 43.65852,
+              "p50_ms": 45.704514,
+              "p90_ms": 47.559676
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 65.671301,
+              "mean_ms": 51.98984292,
+              "min_ms": 49.540956,
+              "p50_ms": 51.618202,
+              "p90_ms": 53.813522
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 5.041476,
+              "mean_ms": 4.13626673,
+              "min_ms": 3.945637,
+              "p50_ms": 4.040443,
+              "p90_ms": 4.39115
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.551165,
+              "mean_ms": 1.8501550800000002,
+              "min_ms": 1.703164,
+              "p50_ms": 1.826065,
+              "p90_ms": 1.995225
+            }
+          }
+        }
+      ],
+      "runtime": {
+        "execution_mode": "ORT_SEQUENTIAL",
+        "execution_provider": "CPUExecutionProvider",
+        "graph_optimization": "ORT_ENABLE_ALL",
+        "inter_op_threads": 1,
+        "intra_op_threads": 1,
+        "onnxruntime_version": "1.18.1",
+        "opencv_threads": 1,
+        "runtime_inputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "images",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "runtime_outputs": [
+          {
+            "dtype": "FLOAT",
+            "name": "output0",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "selected_providers": [
+          "CPUExecutionProvider"
+        ]
+      },
+      "sample_count": 600
+    },
+    {
+      "aggregate": {
+        "fastest_sample": {
+          "aggregate_sample_index": 3,
+          "iteration": 3,
+          "pipeline_total_ms": 73.478461,
+          "position": 3,
+          "round": 1
+        },
+        "pipeline_fps_batch1_sequential": 12.842683020174379,
+        "position_pipeline_mean_spread_percent": 0.4385573648715986,
+        "six_round_pipeline_mean_max_relative_difference_percent": 1.727134382779864,
+        "slowest_sample": {
+          "aggregate_sample_index": 202,
+          "iteration": 2,
+          "pipeline_total_ms": 85.075339,
+          "position": 3,
+          "round": 3
+        },
+        "stability_gate": "PASS",
+        "stability_limit_percent": 10.0,
+        "stages": {
+          "inference": {
+            "count": 600,
+            "max_ms": 78.761169,
+            "mean_ms": 71.94152975833333,
+            "min_ms": 67.737249,
+            "p50_ms": 71.691847,
+            "p90_ms": 74.737161
+          },
+          "pipeline_total": {
+            "count": 600,
+            "max_ms": 85.075339,
+            "mean_ms": 77.86534935333333,
+            "min_ms": 73.478461,
+            "p50_ms": 77.618684,
+            "p90_ms": 80.776143
+          },
+          "postprocess": {
+            "count": 600,
+            "max_ms": 5.601814,
+            "mean_ms": 4.108282998333333,
+            "min_ms": 3.920831,
+            "p50_ms": 4.039258,
+            "p90_ms": 4.369979
+          },
+          "preprocess": {
+            "count": 600,
+            "max_ms": 3.052281,
+            "mean_ms": 1.8155365966666666,
+            "min_ms": 1.679137,
+            "p50_ms": 1.773508,
+            "p90_ms": 1.957498
+          }
+        }
+      },
+      "backend": "cpp_ncnn",
+      "environment": {
+        "architecture": "x86_64",
+        "build_type": "Release",
+        "compiler_version": "13.3.0",
+        "cpu_affinity": "scheduler managed",
+        "cpu_model": "Intel(R) Core(TM) i5-14600KF",
+        "cpu_pinning": "disabled",
+        "environment_variables": {
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1"
+        },
+        "kernel": "6.6.87.2-microsoft-standard-WSL2",
+        "logical_cpu_count": 20,
+        "opencv_version": "4.6.0",
+        "os": "Linux",
+        "platform": "WSL2"
+      },
+      "positions": [
+        {
+          "position": 1,
+          "rounds": [
+            5,
+            6
+          ],
+          "stages": {
+            "inference": {
+              "count": 200,
+              "max_ms": 78.367732,
+              "mean_ms": 71.99490938,
+              "min_ms": 68.503694,
+              "p50_ms": 71.615922,
+              "p90_ms": 74.737161
+            },
+            "pipeline_total": {
+              "count": 200,
+              "max_ms": 84.45097,
+              "mean_ms": 77.95648351,
+              "min_ms": 74.375021,
+              "p50_ms": 77.616643,
+              "p90_ms": 80.828384
+            },
+            "postprocess": {
+              "count": 200,
+              "max_ms": 5.161396,
+              "mean_ms": 4.130879215,
+              "min_ms": 3.936405,
+              "p50_ms": 4.047632,
+              "p90_ms": 4.400024
+            },
+            "preprocess": {
+              "count": 200,
+              "max_ms": 2.854338,
+              "mean_ms": 1.830694915,
+              "min_ms": 1.70435,
+              "p50_ms": 1.785817,
+              "p90_ms": 1.961108
+            }
+          }
+        },
+        {
+          "position": 2,
+          "rounds": [
+            2,
+            4
+          ],
+          "stages": {
+            "inference": {
+              "count": 200,
+              "max_ms": 78.140089,
+              "mean_ms": 71.721038265,
+              "min_ms": 67.737249,
+              "p50_ms": 71.444746,
+              "p90_ms": 74.356133
+            },
+            "pipeline_total": {
+              "count": 200,
+              "max_ms": 84.402174,
+              "mean_ms": 77.649513445,
+              "min_ms": 73.536212,
+              "p50_ms": 77.311541,
+              "p90_ms": 80.433823
+            },
+            "postprocess": {
+              "count": 200,
+              "max_ms": 5.601814,
+              "mean_ms": 4.110219235,
+              "min_ms": 3.920831,
+              "p50_ms": 4.024572,
+              "p90_ms": 4.402221
+            },
+            "preprocess": {
+              "count": 200,
+              "max_ms": 3.052281,
+              "mean_ms": 1.818255945,
+              "min_ms": 1.685541,
+              "p50_ms": 1.768353,
+              "p90_ms": 1.944219
+            }
+          }
+        },
+        {
+          "position": 3,
+          "rounds": [
+            1,
+            3
+          ],
+          "stages": {
+            "inference": {
+              "count": 200,
+              "max_ms": 78.761169,
+              "mean_ms": 72.10864163000001,
+              "min_ms": 67.855404,
+              "p50_ms": 71.944046,
+              "p90_ms": 75.207117
+            },
+            "pipeline_total": {
+              "count": 200,
+              "max_ms": 85.075339,
+              "mean_ms": 77.990051105,
+              "min_ms": 73.478461,
+              "p50_ms": 77.798166,
+              "p90_ms": 81.060003
+            },
+            "postprocess": {
+              "count": 200,
+              "max_ms": 4.679163,
+              "mean_ms": 4.083750545,
+              "min_ms": 3.930365,
+              "p50_ms": 4.032978,
+              "p90_ms": 4.243542
+            },
+            "preprocess": {
+              "count": 200,
+              "max_ms": 2.324399,
+              "mean_ms": 1.79765893,
+              "min_ms": 1.679137,
+              "p50_ms": 1.762894,
+              "p90_ms": 1.951547
+            }
+          }
+        }
+      ],
+      "round_count": 6,
+      "rounds": [
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            }
+          },
+          "model_load_ms": 30.798871,
+          "position": 3,
+          "process_id": 5,
+          "process_started_unix_ns": 1784688360633200374,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 188006400,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.98899686681538,
+            "process_cpu_time_delta_seconds": 7.801091999999999,
+            "wall_clock_time_delta_seconds": 7.801950459
+          },
+          "round": 1,
+          "sequence_index": 3,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 75.892966,
+              "mean_ms": 71.46754460999999,
+              "min_ms": 67.855404,
+              "p50_ms": 71.060249,
+              "p90_ms": 74.366439
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 82.02375,
+              "mean_ms": 77.32232091,
+              "min_ms": 73.478461,
+              "p50_ms": 76.945605,
+              "p90_ms": 80.230121
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.600225,
+              "mean_ms": 4.08115775,
+              "min_ms": 3.930365,
+              "p50_ms": 4.035241,
+              "p90_ms": 4.243542
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.071463,
+              "mean_ms": 1.77361855,
+              "min_ms": 1.679137,
+              "p50_ms": 1.729194,
+              "p90_ms": 1.922844
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            }
+          },
+          "model_load_ms": 31.074082,
+          "position": 2,
+          "process_id": 7,
+          "process_started_unix_ns": 1784688375754369368,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 188178432,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.9979673369767,
+            "process_cpu_time_delta_seconds": 7.809054999999999,
+            "wall_clock_time_delta_seconds": 7.809213735
+          },
+          "round": 2,
+          "sequence_index": 5,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 78.140089,
+              "mean_ms": 71.71144476,
+              "min_ms": 67.737249,
+              "p50_ms": 71.372178,
+              "p90_ms": 74.854926
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 84.402174,
+              "mean_ms": 77.64167816999999,
+              "min_ms": 73.536212,
+              "p50_ms": 77.2788,
+              "p90_ms": 80.812893
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 5.601814,
+              "mean_ms": 4.12181885,
+              "min_ms": 3.920831,
+              "p50_ms": 4.019275,
+              "p90_ms": 4.431477
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 3.052281,
+              "mean_ms": 1.80841456,
+              "min_ms": 1.685541,
+              "p50_ms": 1.758015,
+              "p90_ms": 1.939581
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            }
+          },
+          "model_load_ms": 32.392902,
+          "position": 3,
+          "process_id": 11,
+          "process_started_unix_ns": 1784688403100532115,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 188141568,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.99742518305095,
+            "process_cpu_time_delta_seconds": 7.907542999999999,
+            "wall_clock_time_delta_seconds": 7.90774661
+          },
+          "round": 3,
+          "sequence_index": 9,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 78.761169,
+              "mean_ms": 72.74973865,
+              "min_ms": 69.355008,
+              "p50_ms": 72.343273,
+              "p90_ms": 76.048879
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 85.075339,
+              "mean_ms": 78.6577813,
+              "min_ms": 75.524753,
+              "p50_ms": 78.229645,
+              "p90_ms": 82.082771
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.679163,
+              "mean_ms": 4.08634334,
+              "min_ms": 3.944333,
+              "p50_ms": 4.025076,
+              "p90_ms": 4.240347
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.324399,
+              "mean_ms": 1.8216993099999998,
+              "min_ms": 1.704127,
+              "p50_ms": 1.782827,
+              "p90_ms": 1.975432
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            }
+          },
+          "model_load_ms": 32.002999,
+          "position": 2,
+          "process_id": 13,
+          "process_started_unix_ns": 1784688418044799051,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 187932672,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.99666276619297,
+            "process_cpu_time_delta_seconds": 7.811029000000001,
+            "wall_clock_time_delta_seconds": 7.811289681
+          },
+          "round": 4,
+          "sequence_index": 11,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 77.112615,
+              "mean_ms": 71.73063177,
+              "min_ms": 68.521755,
+              "p50_ms": 71.484058,
+              "p90_ms": 73.90841
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 83.230452,
+              "mean_ms": 77.65734872,
+              "min_ms": 74.40958,
+              "p50_ms": 77.40723,
+              "p90_ms": 80.236084
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.741826,
+              "mean_ms": 4.09861962,
+              "min_ms": 3.938413,
+              "p50_ms": 4.030213,
+              "p90_ms": 4.35858
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.946064,
+              "mean_ms": 1.8280973299999999,
+              "min_ms": 1.721037,
+              "p50_ms": 1.77783,
+              "p90_ms": 1.944219
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            }
+          },
+          "model_load_ms": 32.886271,
+          "position": 1,
+          "process_id": 15,
+          "process_started_unix_ns": 1784688433344179846,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 188170240,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.99852774381466,
+            "process_cpu_time_delta_seconds": 7.901158000000001,
+            "wall_clock_time_delta_seconds": 7.901274327
+          },
+          "round": 5,
+          "sequence_index": 13,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 78.367732,
+              "mean_ms": 72.57415302,
+              "min_ms": 68.724353,
+              "p50_ms": 72.221637,
+              "p90_ms": 75.143844
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 84.45097,
+              "mean_ms": 78.56486565,
+              "min_ms": 74.709302,
+              "p50_ms": 78.187362,
+              "p90_ms": 81.220901
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 5.161396,
+              "mean_ms": 4.14772926,
+              "min_ms": 3.940264,
+              "p50_ms": 4.064074,
+              "p90_ms": 4.422448
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.431556,
+              "mean_ms": 1.84298337,
+              "min_ms": 1.70435,
+              "p50_ms": 1.792749,
+              "p90_ms": 1.975106
+            }
+          }
+        },
+        {
+          "correctness": {
+            "after_measurement": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            },
+            "before_warmup": {
+              "detection_count": 5,
+              "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+              "minimum_class_matched_iou": 0.9999970800108954,
+              "status": "PASS_TARGET"
+            }
+          },
+          "model_load_ms": 32.821074,
+          "position": 1,
+          "process_id": 18,
+          "process_started_unix_ns": 1784688454527465814,
+          "resource_measurement": {
+            "language_scope_note": "includes executable and dynamic libraries",
+            "peak_rss_bytes": 187768832,
+            "peak_rss_is_process_level_not_model_only": true,
+            "peak_rss_scope": "process startup through formal measurement completion",
+            "process_cpu_percent_one_core_basis": 99.99819346153004,
+            "process_cpu_time_delta_seconds": 7.782312,
+            "wall_clock_time_delta_seconds": 7.782452593
+          },
+          "round": 6,
+          "sequence_index": 16,
+          "stages": {
+            "inference": {
+              "count": 100,
+              "max_ms": 77.30949,
+              "mean_ms": 71.41566574000001,
+              "min_ms": 68.503694,
+              "p50_ms": 71.182331,
+              "p90_ms": 73.875488
+            },
+            "pipeline_total": {
+              "count": 100,
+              "max_ms": 83.259063,
+              "mean_ms": 77.34810137000001,
+              "min_ms": 74.375021,
+              "p50_ms": 77.065012,
+              "p90_ms": 79.734968
+            },
+            "postprocess": {
+              "count": 100,
+              "max_ms": 4.783395,
+              "mean_ms": 4.11402917,
+              "min_ms": 3.936405,
+              "p50_ms": 4.026878,
+              "p90_ms": 4.376322
+            },
+            "preprocess": {
+              "count": 100,
+              "max_ms": 2.854338,
+              "mean_ms": 1.8184064599999998,
+              "min_ms": 1.704788,
+              "p50_ms": 1.777256,
+              "p90_ms": 1.920992
+            }
+          }
+        }
+      ],
+      "runtime": {
+        "bf16": false,
+        "execution_provider": "ncnn CPU",
+        "fp16": false,
+        "input": {
+          "dtype": "float32",
+          "logical_shape": [
+            1,
+            3,
+            640,
+            640
+          ],
+          "name": "in0"
+        },
+        "int8": false,
+        "ncnn_version": "1.0.20240410",
+        "output": {
+          "dtype": "float32",
+          "logical_shape": [
+            1,
+            25200,
+            85
+          ],
+          "name": "out0"
+        },
+        "threads": 1,
+        "vulkan": false
+      },
+      "sample_count": 600
+    }
+  ]
+}

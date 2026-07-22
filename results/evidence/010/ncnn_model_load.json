@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "application": "edgeai_ncnn_model_smoke",
+  "ncnn_version": "1.0.20240410",
+  "param_path": "models/yolov5n-v7.0/yolov5n.ncnn.param",
+  "bin_path": "models/yolov5n-v7.0/yolov5n.ncnn.bin",
+  "load_param_status": 0,
+  "load_model_status": 0,
+  "input_names": ["in0"],
+  "output_names": ["out0"],
+  "probe": {
+    "purpose": "zero-input shape/type/load contract probe; not a correctness result",
+    "input_shape_ncnn_chw": [3, 640, 640],
+    "input_dtype": "float32",
+    "outputs": [
+      {
+        "name": "out0",
+        "dims": 2,
+        "w": 85,
+        "h": 25200,
+        "d": 1,
+        "c": 1,
+        "elempack": 1,
+        "elembits": 32,
+        "dtype": "float32",
+        "scalar_count": 2142000,
+        "all_finite": true
+      }
+    ]
+  },
+  "options": {
+    "num_threads": 1,
+    "vulkan_compute": false,
+    "fp16_packed": false,
+    "fp16_storage": false,
+    "fp16_arithmetic": false,
+    "bf16_storage": false,
+    "int8_inference": false,
+    "int8_packed": false,
+    "int8_storage": false,
+    "int8_arithmetic": false
+  },
+  "status": "PASS"
+}

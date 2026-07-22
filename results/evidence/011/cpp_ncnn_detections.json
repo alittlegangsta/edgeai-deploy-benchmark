@@ -1,0 +1,265 @@
+{
+    "schema_version": 1,
+    "application": "edgeai_cpp_ncnn_image",
+    "model": {
+        "manifest_path": "models/yolov5n-v7.0/ncnn_manifest.json",
+        "manifest_sha256": "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff",
+        "param_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.param",
+        "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+        "bin_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.bin",
+        "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+        "runtime_version": "1.0.20240410",
+        "execution_provider": "ncnn CPU",
+        "threads": 1,
+        "vulkan": 0,
+        "fp16": 0,
+        "bf16": 0,
+        "int8": 0,
+        "runtime_inputs": [
+            {
+                "name": "in0",
+                "dtype": "float32",
+                "logical_shape": [
+                    1,
+                    3,
+                    640,
+                    640
+                ],
+                "dims": 3,
+                "w": 640,
+                "h": 640,
+                "d": 1,
+                "c": 3,
+                "elempack": 1,
+                "elembits": 32
+            }
+        ],
+        "runtime_outputs": [
+            {
+                "name": "out0",
+                "dtype": "float32",
+                "logical_shape": [
+                    1,
+                    25200,
+                    85
+                ],
+                "dims": 2,
+                "w": 85,
+                "h": 25200,
+                "d": 1,
+                "c": 1,
+                "elempack": 1,
+                "elembits": 32
+            }
+        ]
+    },
+    "configuration_file": {
+        "path": "configs/yolov5n_v7_inference.json",
+        "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+    },
+    "configuration": {
+        "schema_version": 1,
+        "input_size": [
+            640,
+            640
+        ],
+        "confidence_threshold": 2.5000000000000000e-01,
+        "iou_threshold": 4.5000000000000001e-01,
+        "class_aware_nms": 1,
+        "max_detections": 1000
+    },
+    "source_image": {
+        "path": "data/samples/images/pc_reference.jpg",
+        "sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+        "size_bytes": 157404.0,
+        "shape_bgr": [
+            960,
+            1280,
+            3
+        ]
+    },
+    "preprocess": {
+        "scale": 5.0000000000000000e-01,
+        "padding": {
+            "left": 0,
+            "top": 80,
+            "right": 0,
+            "bottom": 80
+        },
+        "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+        ]
+    },
+    "candidate_counts": {
+        "raw_candidate_count": 25200,
+        "threshold_candidate_count": 60,
+        "nms_candidate_count": 5,
+        "invalid_box_count": 0
+    },
+    "detections": [
+        {
+            "rank": 1,
+            "candidate_index": 24269,
+            "class_id": 66,
+            "class_name": "keyboard",
+            "objectness": 8.9882099628448486e-01,
+            "class_score": 9.9247598648071289e-01,
+            "confidence": 8.9205801486968994e-01,
+            "box_xywh_input": [
+                3.0194790649414062e+02,
+                4.2596810913085938e+02,
+                1.8297695922851562e+02,
+                5.5453357696533203e+01
+            ],
+            "box_xyxy_input": [
+                2.1045942687988281e+02,
+                3.9824142456054688e+02,
+                3.9343640136718750e+02,
+                4.5369479370117188e+02
+            ],
+            "box_xyxy_source": [
+                4.2091885375976562e+02,
+                6.3648284912109375e+02,
+                7.8687280273437500e+02,
+                7.4738958740234375e+02
+            ]
+        },
+        {
+            "rank": 2,
+            "candidate_index": 24170,
+            "class_id": 62,
+            "class_name": "tv",
+            "objectness": 8.2981199026107788e-01,
+            "class_score": 9.8378801345825195e-01,
+            "confidence": 8.1635898351669312e-01,
+            "box_xywh_input": [
+                3.2406329345703125e+02,
+                2.7986981201171875e+02,
+                2.4759165954589844e+02,
+                1.4418795776367188e+02
+            ],
+            "box_xyxy_input": [
+                2.0026745605468750e+02,
+                2.0777583312988281e+02,
+                4.4785913085937500e+02,
+                3.5196380615234375e+02
+            ],
+            "box_xyxy_source": [
+                4.0053491210937500e+02,
+                2.5555166625976562e+02,
+                8.9571826171875000e+02,
+                5.4392761230468750e+02
+            ]
+        },
+        {
+            "rank": 3,
+            "candidate_index": 24265,
+            "class_id": 41,
+            "class_name": "cup",
+            "objectness": 7.5236600637435913e-01,
+            "class_score": 9.4098097085952759e-01,
+            "confidence": 7.0796298980712891e-01,
+            "box_xywh_input": [
+                1.5026725769042969e+02,
+                4.2621020507812500e+02,
+                4.7679557800292969e+01,
+                7.8886688232421875e+01
+            ],
+            "box_xyxy_input": [
+                1.2642747497558594e+02,
+                3.8676684570312500e+02,
+                1.7410704040527344e+02,
+                4.6565356445312500e+02
+            ],
+            "box_xyxy_source": [
+                2.5285494995117188e+02,
+                6.1353369140625000e+02,
+                3.4821408081054688e+02,
+                7.7130712890625000e+02
+            ]
+        },
+        {
+            "rank": 4,
+            "candidate_index": 24293,
+            "class_id": 64,
+            "class_name": "mouse",
+            "objectness": 4.2091900110244751e-01,
+            "class_score": 9.3715202808380127e-01,
+            "confidence": 3.9446499943733215e-01,
+            "box_xywh_input": [
+                4.6020401000976562e+02,
+                4.5599404907226562e+02,
+                4.9881412506103516e+01,
+                3.5979461669921875e+01
+            ],
+            "box_xyxy_input": [
+                4.3526330566406250e+02,
+                4.3800433349609375e+02,
+                4.8514471435546875e+02,
+                4.7398376464843750e+02
+            ],
+            "box_xyxy_source": [
+                8.7052661132812500e+02,
+                7.1600866699218750e+02,
+                9.7028942871093750e+02,
+                7.8796752929687500e+02
+            ]
+        },
+        {
+            "rank": 5,
+            "candidate_index": 21847,
+            "class_id": 64,
+            "class_name": "mouse",
+            "objectness": 3.1194299459457397e-01,
+            "class_score": 8.8001900911331177e-01,
+            "confidence": 2.7451598644256592e-01,
+            "box_xywh_input": [
+                1.0986721038818359e+02,
+                4.2722412109375000e+02,
+                3.4018234252929688e+01,
+                1.8381858825683594e+01
+            ],
+            "box_xyxy_input": [
+                9.2858093261718750e+01,
+                4.1803320312500000e+02,
+                1.2687632751464844e+02,
+                4.3641503906250000e+02
+            ],
+            "box_xyxy_source": [
+                1.8571618652343750e+02,
+                6.7606640625000000e+02,
+                2.5375265502929688e+02,
+                7.1283007812500000e+02
+            ]
+        }
+    ],
+    "output_image": {
+        "path": "results/images/cpp_ncnn_reference.png",
+        "sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2",
+        "size_bytes": 1260338.0,
+        "shape_bgr": [
+            960,
+            1280,
+            3
+        ],
+        "decode_validation": "PASS",
+        "visual_review": "PENDING_HUMAN_REVIEW"
+    },
+    "timings_ms": {
+        "measurement_type": "single-run diagnostic, not a benchmark",
+        "input_read": 2.2267282000000002e+01,
+        "preprocess": 3.8979130000000000e+00,
+        "inference": 8.0136533000000000e+01,
+        "postprocess": 3.7084940000000000e+00,
+        "visualization": 1.1610750000000001e+00,
+        "output_write": 3.4142401999999997e+01,
+        "boundaries": {
+            "inference": "NcnnDetector::infer input bind, Extractor::extract, validation and copy",
+            "postprocess": "shared YOLOv5 decode, threshold, NMS, inverse map and clipping"
+        }
+    }
+}
