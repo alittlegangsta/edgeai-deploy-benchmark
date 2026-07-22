@@ -14,47 +14,58 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(OpenCV 4 REQUIRED COMPONENTS core imgproc imgcodecs videoio)
 
-set(ONNXRUNTIME_ROOT "" CACHE PATH "Absolute root of ONNX Runtime 1.18.1 C/C++ SDK")
-if(NOT IS_ABSOLUTE "${ONNXRUNTIME_ROOT}")
-    message(FATAL_ERROR "ONNXRUNTIME_ROOT must be an explicit absolute SDK path")
-endif()
-get_filename_component(ONNXRUNTIME_ROOT "${ONNXRUNTIME_ROOT}" REALPATH)
-set(ONNXRUNTIME_INCLUDE_DIR "${ONNXRUNTIME_ROOT}/include")
-set(ONNXRUNTIME_LIBRARY "${ONNXRUNTIME_ROOT}/lib/libonnxruntime.so")
-set(ONNXRUNTIME_VERSION_FILE "${ONNXRUNTIME_ROOT}/VERSION_NUMBER")
-foreach(required_path
-        "${ONNXRUNTIME_INCLUDE_DIR}/onnxruntime_c_api.h"
-        "${ONNXRUNTIME_INCLUDE_DIR}/onnxruntime_cxx_api.h"
-        "${ONNXRUNTIME_INCLUDE_DIR}/cpu_provider_factory.h"
-        "${ONNXRUNTIME_LIBRARY}"
-        "${ONNXRUNTIME_VERSION_FILE}")
-    if(NOT EXISTS "${required_path}")
-        message(FATAL_ERROR "Required ONNX Runtime SDK artifact is missing: ${required_path}")
-    endif()
-endforeach()
-file(READ "${ONNXRUNTIME_VERSION_FILE}" ONNXRUNTIME_VERSION)
-string(STRIP "${ONNXRUNTIME_VERSION}" ONNXRUNTIME_VERSION)
-if(NOT ONNXRUNTIME_VERSION STREQUAL "1.18.1")
-    message(FATAL_ERROR
-        "ONNX Runtime SDK version must be 1.18.1, observed: ${ONNXRUNTIME_VERSION}"
-    )
-endif()
-message(STATUS "ONNX Runtime root: ${ONNXRUNTIME_ROOT}")
-message(STATUS "ONNX Runtime include: ${ONNXRUNTIME_INCLUDE_DIR}")
-message(STATUS "ONNX Runtime library: ${ONNXRUNTIME_LIBRARY}")
-message(STATUS "ONNX Runtime version: ${ONNXRUNTIME_VERSION}")
+option(EDGEAI_ENABLE_ORT "Build targets that require the ONNX Runtime C/C++ SDK" ON)
+option(EDGEAI_ENABLE_NCNN "Build targets that require the pinned ncnn SDK" ON)
 
-set(NCNN_ROOT "" CACHE PATH "Absolute root of the pinned ncnn 20240410 install")
-if(NOT IS_ABSOLUTE "${NCNN_ROOT}")
-    message(FATAL_ERROR "NCNN_ROOT must be an explicit absolute SDK path")
+if(EDGEAI_ENABLE_ORT)
+    set(ONNXRUNTIME_ROOT "" CACHE PATH "Absolute root of ONNX Runtime 1.18.1 C/C++ SDK")
+    if(NOT IS_ABSOLUTE "${ONNXRUNTIME_ROOT}")
+        message(FATAL_ERROR "ONNXRUNTIME_ROOT must be an explicit absolute SDK path")
+    endif()
+    get_filename_component(ONNXRUNTIME_ROOT "${ONNXRUNTIME_ROOT}" REALPATH)
+    set(ONNXRUNTIME_INCLUDE_DIR "${ONNXRUNTIME_ROOT}/include")
+    set(ONNXRUNTIME_LIBRARY "${ONNXRUNTIME_ROOT}/lib/libonnxruntime.so")
+    set(ONNXRUNTIME_VERSION_FILE "${ONNXRUNTIME_ROOT}/VERSION_NUMBER")
+    foreach(required_path
+            "${ONNXRUNTIME_INCLUDE_DIR}/onnxruntime_c_api.h"
+            "${ONNXRUNTIME_INCLUDE_DIR}/onnxruntime_cxx_api.h"
+            "${ONNXRUNTIME_INCLUDE_DIR}/cpu_provider_factory.h"
+            "${ONNXRUNTIME_LIBRARY}"
+            "${ONNXRUNTIME_VERSION_FILE}")
+        if(NOT EXISTS "${required_path}")
+            message(FATAL_ERROR "Required ONNX Runtime SDK artifact is missing: ${required_path}")
+        endif()
+    endforeach()
+    file(READ "${ONNXRUNTIME_VERSION_FILE}" ONNXRUNTIME_VERSION)
+    string(STRIP "${ONNXRUNTIME_VERSION}" ONNXRUNTIME_VERSION)
+    if(NOT ONNXRUNTIME_VERSION STREQUAL "1.18.1")
+        message(FATAL_ERROR
+            "ONNX Runtime SDK version must be 1.18.1, observed: ${ONNXRUNTIME_VERSION}"
+        )
+    endif()
+    message(STATUS "ONNX Runtime root: ${ONNXRUNTIME_ROOT}")
+    message(STATUS "ONNX Runtime include: ${ONNXRUNTIME_INCLUDE_DIR}")
+    message(STATUS "ONNX Runtime library: ${ONNXRUNTIME_LIBRARY}")
+    message(STATUS "ONNX Runtime version: ${ONNXRUNTIME_VERSION}")
+else()
+    message(STATUS "ONNX Runtime targets disabled")
 endif()
-get_filename_component(NCNN_ROOT "${NCNN_ROOT}" REALPATH)
-set(ncnn_DIR "${NCNN_ROOT}/lib/cmake/ncnn")
-if(NOT EXISTS "${ncnn_DIR}/ncnnConfig.cmake")
-    message(FATAL_ERROR "Required ncnn CMake config is missing: ${ncnn_DIR}/ncnnConfig.cmake")
+
+if(EDGEAI_ENABLE_NCNN)
+    set(NCNN_ROOT "" CACHE PATH "Absolute root of the pinned ncnn 20240410 install")
+    if(NOT IS_ABSOLUTE "${NCNN_ROOT}")
+        message(FATAL_ERROR "NCNN_ROOT must be an explicit absolute SDK path")
+    endif()
+    get_filename_component(NCNN_ROOT "${NCNN_ROOT}" REALPATH)
+    set(ncnn_DIR "${NCNN_ROOT}/lib/cmake/ncnn")
+    if(NOT EXISTS "${ncnn_DIR}/ncnnConfig.cmake")
+        message(FATAL_ERROR "Required ncnn CMake config is missing: ${ncnn_DIR}/ncnnConfig.cmake")
+    endif()
+    find_package(ncnn CONFIG REQUIRED NO_DEFAULT_PATH PATHS "${ncnn_DIR}")
+    message(STATUS "ncnn root: ${NCNN_ROOT}")
+else()
+    message(STATUS "ncnn targets disabled")
 endif()
-find_package(ncnn CONFIG REQUIRED NO_DEFAULT_PATH PATHS "${ncnn_DIR}")
-message(STATUS "ncnn root: ${NCNN_ROOT}")
 
 function(edgeai_enable_warnings target_name)
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
@@ -124,6 +135,7 @@ set_target_properties(edgeai_preprocess_probe PROPERTIES
 target_link_libraries(edgeai_preprocess_probe PRIVATE edgeai_common)
 edgeai_enable_warnings(edgeai_preprocess_probe)
 
+if(EDGEAI_ENABLE_ORT)
 add_library(edgeai_ort_backend STATIC
     src/backends/ort_detector.cpp
 )
@@ -157,6 +169,7 @@ set_target_properties(edgeai_ort_image PROPERTIES
 )
 target_link_libraries(edgeai_ort_image PRIVATE edgeai_ort_backend)
 edgeai_enable_warnings(edgeai_ort_image)
+endif()
 
 add_executable(edgeai_common_tests
     tests/test_common.cpp
@@ -188,9 +201,12 @@ set_target_properties(edgeai_postprocess_tests PROPERTIES
 target_link_libraries(edgeai_postprocess_tests PRIVATE edgeai_common)
 edgeai_enable_warnings(edgeai_postprocess_tests)
 add_test(NAME edgeai_postprocess_tests COMMAND edgeai_postprocess_tests)
-add_test(NAME edgeai_ort_image_invalid_args COMMAND edgeai_ort_image)
-set_tests_properties(edgeai_ort_image_invalid_args PROPERTIES WILL_FAIL TRUE)
+if(EDGEAI_ENABLE_ORT)
+    add_test(NAME edgeai_ort_image_invalid_args COMMAND edgeai_ort_image)
+    set_tests_properties(edgeai_ort_image_invalid_args PROPERTIES WILL_FAIL TRUE)
+endif()
 
+if(EDGEAI_ENABLE_ORT)
 add_executable(edgeai_ort_video
     apps/ort_video.cpp
 )
@@ -205,6 +221,7 @@ target_link_libraries(edgeai_ort_video PRIVATE edgeai_ort_backend)
 edgeai_enable_warnings(edgeai_ort_video)
 add_test(NAME edgeai_ort_video_invalid_args COMMAND edgeai_ort_video)
 set_tests_properties(edgeai_ort_video_invalid_args PROPERTIES WILL_FAIL TRUE)
+endif()
 
 add_executable(edgeai_video_pipeline_tests
     tests/test_video_pipeline.cpp
@@ -219,6 +236,7 @@ target_link_libraries(edgeai_video_pipeline_tests PRIVATE edgeai_common)
 edgeai_enable_warnings(edgeai_video_pipeline_tests)
 add_test(NAME edgeai_video_pipeline_tests COMMAND edgeai_video_pipeline_tests)
 
+if(EDGEAI_ENABLE_ORT)
 add_executable(edgeai_benchmark_ort
     apps/benchmark_ort.cpp
 )
@@ -234,7 +252,9 @@ target_compile_definitions(edgeai_benchmark_ort PRIVATE
 )
 target_link_libraries(edgeai_benchmark_ort PRIVATE edgeai_ort_backend)
 edgeai_enable_warnings(edgeai_benchmark_ort)
+endif()
 
+if(EDGEAI_ENABLE_NCNN)
 add_executable(edgeai_ncnn_model_smoke
     apps/ncnn_model_smoke.cpp
 )
@@ -248,8 +268,11 @@ target_link_libraries(edgeai_ncnn_model_smoke PRIVATE ncnn)
 edgeai_enable_warnings(edgeai_ncnn_model_smoke)
 add_test(NAME edgeai_ncnn_model_smoke_invalid_args COMMAND edgeai_ncnn_model_smoke)
 set_tests_properties(edgeai_ncnn_model_smoke_invalid_args PROPERTIES WILL_FAIL TRUE)
-add_test(NAME edgeai_benchmark_ort_invalid_args COMMAND edgeai_benchmark_ort)
-set_tests_properties(edgeai_benchmark_ort_invalid_args PROPERTIES WILL_FAIL TRUE)
+endif()
+if(EDGEAI_ENABLE_ORT)
+    add_test(NAME edgeai_benchmark_ort_invalid_args COMMAND edgeai_benchmark_ort)
+    set_tests_properties(edgeai_benchmark_ort_invalid_args PROPERTIES WILL_FAIL TRUE)
+endif()
 
 add_executable(edgeai_benchmark_tests
     tests/test_benchmark.cpp
@@ -264,6 +287,7 @@ target_link_libraries(edgeai_benchmark_tests PRIVATE edgeai_common)
 edgeai_enable_warnings(edgeai_benchmark_tests)
 add_test(NAME edgeai_benchmark_tests COMMAND edgeai_benchmark_tests)
 
+if(EDGEAI_ENABLE_NCNN)
 add_library(edgeai_ncnn_backend STATIC
     src/backends/ncnn_detector.cpp
 )
@@ -342,3 +366,4 @@ target_link_libraries(edgeai_benchmark_ncnn PRIVATE edgeai_ncnn_backend)
 edgeai_enable_warnings(edgeai_benchmark_ncnn)
 add_test(NAME edgeai_benchmark_ncnn_invalid_args COMMAND edgeai_benchmark_ncnn)
 set_tests_properties(edgeai_benchmark_ncnn_invalid_args PROPERTIES WILL_FAIL TRUE)
+endif()
