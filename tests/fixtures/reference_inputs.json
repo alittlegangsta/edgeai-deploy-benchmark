@@ -1,0 +1,48 @@
+{
+  "approved_task_004": {
+    "annotated_image_path": "results/images/python_ort_reference.png",
+    "annotated_image_sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2",
+    "evidence_path": "results/evidence/004/python_ort_detections.json",
+    "evidence_sha256": "4c90dea9de06f5c01e5486d76ac1395fd35730fd3a1494c08ec8b74a8e55ff4b",
+    "human_review_status": "APPROVED_WITH_KNOWN_MODEL_FALSE_POSITIVE"
+  },
+  "configuration": {
+    "path": "configs/yolov5n_v7_inference.json",
+    "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+    "values": {
+      "class_aware_nms": true,
+      "confidence_threshold": 0.25,
+      "input_size": [
+        640,
+        640
+      ],
+      "iou_threshold": 0.45,
+      "max_detections": 1000,
+      "schema_version": 1
+    }
+  },
+  "image": {
+    "author": "alittlegangsta",
+    "derivative_creation_date": "2026-07-20",
+    "height": 960,
+    "license": "CC BY 4.0",
+    "path": "data/samples/images/pc_reference.jpg",
+    "sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "source": "Privacy-sanitized derivative of an original photograph created for this project by the repository owner",
+    "width": 1280
+  },
+  "model": {
+    "manifest_path": "models/yolov5n-v7.0/manifest.json",
+    "manifest_sha256": "764f3e4980c1f6b18ea245262af99703d13e817fedc52bf97bbfc5a1389f06c2",
+    "onnx_path": "models/yolov5n-v7.0/yolov5n.onnx",
+    "onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "source_weights_path": "models/yolov5n-v7.0/yolov5n.pt",
+    "source_weights_sha256": "4f180cf23ba0717ada0badd6c685026d73d48f184d00fc159c2641284b2ac0a3"
+  },
+  "schema_version": 1,
+  "source_task": "Task 004",
+  "tolerances": {
+    "maximum_absolute_confidence_difference": 0.001,
+    "minimum_class_matched_iou": 0.99
+  }
+}

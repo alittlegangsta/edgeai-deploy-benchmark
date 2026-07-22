@@ -1,0 +1,184 @@
+{
+  "acceptance_matrix": [
+    {
+      "automatic_state": "PASS",
+      "evidence": "tasks/001_project_bootstrap.md",
+      "human_review": "APPROVED",
+      "task": 1,
+      "task_file": "tasks/001_project_bootstrap.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/002/model_contract.json",
+      "human_review": "APPROVED",
+      "task": 2,
+      "task_file": "tasks/002_model_contract.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/003/raw_tensor_stats.json",
+      "human_review": "APPROVED",
+      "task": 3,
+      "task_file": "tasks/003_python_ort_tensor_baseline.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/004/python_ort_detections.json",
+      "human_review": "APPROVED",
+      "task": 4,
+      "task_file": "tasks/004_python_single_image_inference.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/005/python_test_summary.json",
+      "human_review": "APPROVED",
+      "task": 5,
+      "task_file": "tasks/005_python_tests_and_golden_result.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/006/preprocess_alignment.json",
+      "human_review": "APPROVED",
+      "task": 6,
+      "task_file": "tasks/006_cpp_common_preprocess.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/007/python_cpp_ort_comparison.json",
+      "human_review": "APPROVED",
+      "task": 7,
+      "task_file": "tasks/007_cpp_ort_single_image.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/008/cpp_ort_video.json",
+      "human_review": "APPROVED",
+      "task": 8,
+      "task_file": "tasks/008_cpp_ort_video.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/009/benchmark_validation.json",
+      "human_review": "APPROVED",
+      "task": 9,
+      "task_file": "tasks/009_benchmark_framework.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/010/ncnn_model_load.json",
+      "human_review": "APPROVED",
+      "task": 10,
+      "task_file": "tasks/010_ncnn_model_conversion.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/011/ncnn_benchmark_validation.json",
+      "human_review": "APPROVED",
+      "task": 11,
+      "task_file": "tasks/011_cpp_ncnn_inference.md",
+      "task_status": "Completed"
+    },
+    {
+      "automatic_state": "PASS",
+      "evidence": "results/evidence/012/three_backend_benchmark_validation.json",
+      "human_review": "APPROVED",
+      "task": 12,
+      "task_file": "tasks/012_pc_stage_acceptance.md",
+      "task_status": "Completed"
+    }
+  ],
+  "benchmark_summary": {
+    "path": "results/benchmarks/pc_three_backend_summary.json",
+    "sha256": "e0419a12a4f9e3e2d815733c26566e5af5f878d585ffd1be4437d47144376126"
+  },
+  "benchmark_validation": {
+    "path": "results/evidence/012/three_backend_benchmark_validation.json",
+    "sha256": "f50c139fef074c11bff5879ab6cd49a26097843800d523ee409f77c1c20550a8"
+  },
+  "campaign_config": {
+    "path": "configs/benchmark_pc_three_backend.json",
+    "sha256": "abb6b79a2935905929fb065af5a3c9d74fd5629afa73f90eacbf8d7a6205a954"
+  },
+  "checks": {
+    "arm_stage": "NOT_IMPLEMENTED_PLANNED",
+    "checkpoint_c": "HUMAN_APPROVED",
+    "final_document_review": "HUMAN_APPROVED",
+    "fresh_correctness": "PASS_TARGET",
+    "fresh_visual_review": "HUMAN_APPROVED",
+    "historical_evidence_unchanged": "PASS",
+    "pc_stage_1": "COMPLETED",
+    "performance_review": "HUMAN_APPROVED",
+    "tasks_001_012_completed": "PASS",
+    "three_backend_campaign": "PASS_HUMAN_APPROVED"
+  },
+  "evidence_type": "task012_pc_stage_acceptance",
+  "fresh_comparisons": {
+    "ort_ncnn": {
+      "detection_count": 5,
+      "maximum_absolute_confidence_difference": 2.0265579223632812e-06,
+      "minimum_class_matched_iou": 0.9999970800108954,
+      "status": "PASS"
+    },
+    "python_cpp_ort": {
+      "detection_count": 5,
+      "maximum_absolute_confidence_difference": 1.648330683057253e-08,
+      "minimum_class_matched_iou": 0.9999999825368343,
+      "status": "PASS"
+    }
+  },
+  "fresh_images": [
+    {
+      "channels": 3,
+      "height": 960,
+      "path": "results/acceptance/python_ort_reference.png",
+      "sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2",
+      "width": 1280
+    },
+    {
+      "channels": 3,
+      "height": 960,
+      "path": "results/acceptance/cpp_ort_reference.png",
+      "sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2",
+      "width": 1280
+    },
+    {
+      "channels": 3,
+      "height": 960,
+      "path": "results/acceptance/cpp_ncnn_reference.png",
+      "sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2",
+      "width": 1280
+    }
+  ],
+  "fresh_results": [
+    {
+      "backend": "python_ort",
+      "detection_count": 5,
+      "path": "results/acceptance/python_ort_reference.json",
+      "sha256": "2e005e95e229368bf8b415aa4f162e03a3a75d0b128cec4db94a9ba9d3fa79f3"
+    },
+    {
+      "backend": "cpp_ort",
+      "detection_count": 5,
+      "path": "results/acceptance/cpp_ort_reference.json",
+      "sha256": "3c4f8b3890f3066ac7212bf60d3c44c0f18637c41f4663c20c4eccc0371b4db5"
+    },
+    {
+      "backend": "cpp_ncnn",
+      "detection_count": 5,
+      "path": "results/acceptance/cpp_ncnn_reference.json",
+      "sha256": "fb343f605218a5fa30a825a3f14e4d00137d6275e1b1af99c9029956e2492fa9"
+    }
+  ],
+  "schema_version": 1,
+  "status": "COMPLETED_CHECKPOINT_C_APPROVED"
+}

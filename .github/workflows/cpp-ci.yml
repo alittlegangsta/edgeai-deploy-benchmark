@@ -1,0 +1,54 @@
+name: C++ CI
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - main
+  push:
+    branches:
+      - dev
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cpp-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y \
+            build-essential \
+            cmake \
+            ninja-build \
+            pkg-config \
+            libopencv-dev
+
+      - name: Configure model-independent Release build
+        run: |
+          cmake \
+            -S cpp \
+            -B build/ci-cpp-release \
+            -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DEDGEAI_ENABLE_ORT=OFF \
+            -DEDGEAI_ENABLE_NCNN=OFF
+
+      - name: Build model-independent targets
+        run: cmake --build build/ci-cpp-release --parallel
+
+      - name: Run model-independent CTest suite
+        run: ctest --test-dir build/ci-cpp-release --output-on-failure
