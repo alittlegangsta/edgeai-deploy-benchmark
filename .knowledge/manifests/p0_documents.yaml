@@ -1,0 +1,423 @@
+schema_version: "1"
+inventory_scope:
+  source_root: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA"
+  scan_mode: "metadata_only"
+  body_parsing: false
+  total_files_scanned: 165763
+  preferred_document_files_scanned: 2731
+documents:
+  - id: mlk_f3p_cz02_board_hw_manual
+    title: "MLK F3P CZ02 DR1 development board hardware manual"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/01_硬件手册/MLK_F3P_CZ02_DR1开发板硬件使用手册.pdf"
+    file_type: pdf
+    file_size: 1635948
+    modified_at: "2025-08-04 09:43:43.3450913000"
+    sha256: "8f3389ace08f58882fd355233c8ef12efe358c722d1b3c18180e5331a95c4995"
+    priority: P0
+    topics: [board_hardware, interfaces, startup]
+    selection_reason: "Board-level source for physical interfaces and board bring-up; selected from filename and path metadata only."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "PDF body not parsed; source remains outside the repository."
+
+  - id: mlk_cz02_core_hw_manual
+    title: "MLK CZ02 DR1 core board hardware manual"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/01_硬件手册/MLK_CZ02_DR1核心板硬件使用手册.pdf"
+    file_type: pdf
+    file_size: 1172164
+    modified_at: "2025-07-23 16:45:29.1701884000"
+    sha256: "1aa80e170690bb3d87bf75533bcfb2f08645b252d4e5de0b5399d39492f7ee06"
+    priority: P0
+    topics: [core_board, hardware, interfaces]
+    selection_reason: "Core-board-specific electrical and mechanical reference needed alongside the development-board manual."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "Metadata-only selection; no content or claims were extracted."
+
+  - id: linux_factory_test
+    title: "Milianke/Anlogic development board Linux factory system test"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/02_test_board/02-1_米联客-安路开发板Linux出厂系统测试.pdf"
+    file_type: pdf
+    file_size: 3199178
+    modified_at: "2025-09-23 11:37:38.0000000000"
+    sha256: "a89fc634f7fc46119c484e42b4672875a07c5c4c7c9c57b36cdcd7d42d3958ab"
+    priority: P0
+    topics: [linux, factory_test, bring_up]
+    selection_reason: "Named Linux factory-test procedure for the first board boot and validation stage."
+    duplicate_status: unique
+    possible_duplicates: [linux_restore_factory]
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "The relationship to restore-factory material is based on filenames only."
+
+  - id: linux_buildroot_secondary_development
+    title: "Milianke/Anlogic development board secondary development: Buildroot"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/04-1_米联客-安路开发板二次开发Buildroot篇.pdf"
+    file_type: pdf
+    file_size: 1377262
+    modified_at: "2025-09-23 11:37:43.0000000000"
+    sha256: "2a6be13ca8a37c1e3209d87214bbe2a8278e092c8947d289a9ddb58d90230a31"
+    priority: P0
+    topics: [linux, buildroot, system_customization, toolchain]
+    selection_reason: "Directly named Buildroot secondary-development guide for the Linux/toolchain phase."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "No Buildroot version was inferred from the filename."
+
+  - id: linux_basics
+    title: "2024 Milianke Anlogic F3P-CZ02 FPSoc Linux basics"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux/ebook/3-4-01_米联客2024版安路F3P-CZ02-FPSoc Linux基础入门篇.pdf"
+    file_type: pdf
+    file_size: 3735089
+    modified_at: "2025-09-24 11:38:06.0000000000"
+    sha256: "68f27724c3e05be77ec3fa505427a3614ab589f5c5a4ff09272cb3e018201656"
+    priority: P0
+    topics: [linux, basics, fpsoc, board_setup]
+    selection_reason: "Board-family-specific Linux entry guide suitable for the first user-space and deployment steps."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "Filename/path metadata only; no version beyond the filename label was inferred."
+
+  - id: linux_driver_development
+    title: "2024 Milianke Anlogic F3P-CZ02 FPSoc Linux driver development"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux/ebook/3-4-02_米联客2024版安路F3P-CZ02-FPSoC Linux驱动开发篇.pdf"
+    file_type: pdf
+    file_size: 25547684
+    modified_at: "2025-09-24 11:38:08.0000000000"
+    sha256: "d4521b7c2fd2a3a84f098b5c29ddcce521d6356c4960bd1abd732a38987a38b6"
+    priority: P1
+    topics: [linux, drivers, fpsoc, deployment]
+    selection_reason: "Directly named Linux driver-development material for later runtime and device integration work."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "Large document; copying remains separately gated by approved_for_copy."
+
+  - id: linux_qt_demo
+    title: "F3P-CZ02 Linux Qt environment and demo"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/05_application_demo/05-1_QT环境搭建及demo演示/05-1_米联客-安路F3P-CZ02开发板QT环境搭建及demo演示.pdf"
+    file_type: pdf
+    file_size: 4047728
+    modified_at: "2025-09-24 11:38:30.0000000000"
+    sha256: "35dfc69b05ba15bca745239b74a1b923f06cc4a851eb91218e4972714d4629b4"
+    priority: P1
+    topics: [linux, qt, application_demo]
+    selection_reason: "Named application-layer Qt setup/demo guide for validating the board software environment."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "Application demo; not evidence that Qt is installed on the target board."
+
+  - id: linux_ubuntu_demo
+    title: "F3P-CZ02 Ubuntu desktop demo"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/05_application_demo/05-2_Ubuntu桌面演示/05-2_米联客-安路F3P-CZ02开发板Ubuntu桌面演示.pdf"
+    file_type: pdf
+    file_size: 477727
+    modified_at: "2025-09-24 11:38:25.0000000000"
+    sha256: "d6f3bb7b5b6fe647bb751cd21bcf64536c4af871b633026131773fd9af0c2dec"
+    priority: P1
+    topics: [linux, ubuntu, application_demo]
+    selection_reason: "Named Ubuntu demonstration guide; useful for identifying the supported user-space image path without assuming it is installed."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "The document does not establish the current board OS until reviewed and checked on hardware."
+
+  - id: fpsoc_application_development_alpha12
+    title: "FPSoC application development alpha 1.2"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/06_芯片手册/01_DR1/FPSoC应用开发说明_alpha1.2.pdf"
+    file_type: pdf
+    file_size: 4837214
+    modified_at: "2023-11-23 19:11:59.2400526000"
+    sha256: "91bed8745ca6498873752646feb22031fc1b171a6f1d9729988b5c814246986b"
+    priority: P0
+    topics: [fpsoc, application_development, dr1]
+    selection_reason: "Named DR1 FPSoC application-development reference for the chip/software integration phase."
+    duplicate_status: possible_version_or_reformat
+    possible_duplicates: [fpsoc_application_development_alpha12_milianke_copy]
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "A similarly named file has a different hash. This selection is based only on file path and material organization; authority has not been proven by a PDF revision page, revision history, or content comparison. The other candidate remains for later comparison."
+
+  - id: dr1_product_overview_ug1214_root
+    title: "Anlogic DR1-series FPSoC product description (UG1214 copy)"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/UG1214_安路科技DR1系列FPSoC产品说明书.pdf"
+    file_type: pdf
+    file_size: 9254591
+    modified_at: "2025-10-22 10:46:00.7290846000"
+    sha256: "58d8e2002ed3066d0d0bfbb15010889c23a7011689bcc4730a16aa30c0e36e23"
+    priority: P1
+    topics: [dr1, product_overview, fpsoc]
+    selection_reason: "Named DR1 product overview for freezing chip-family identity before using SDK or NPU claims."
+    duplicate_status: possible_version_or_reformat
+    possible_duplicates: [dr1_product_overview_ug1214_dr1_copy]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "The two UG1214 paths have different hashes; filesystem timestamps are not treated as document versions."
+
+  - id: apug1205_npu_reference_design
+    title: "APUG1205 NPU reference design"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/APUG1205_NPU参考设计文档.pdf"
+    file_type: pdf
+    file_size: 1427207
+    modified_at: "2025-09-26 17:35:13.7760789000"
+    sha256: "54a25d9a5dc59b21e7f7253bc72adeeb2c8b3a4bc04c30bea81463026ef7c1f2"
+    priority: P0
+    topics: [npu, reference_design, dr1]
+    selection_reason: "Explicit NPU reference-design document required for the later NPU evidence track."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "No NPU API or architecture claim was inferred from the filename."
+
+  - id: ipug166_video_npu_user_manual
+    title: "IPUG166 Video NPU IP user manual"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/IPUG166_Video_NPU_IP用户手册.pdf"
+    file_type: pdf
+    file_size: 976250
+    modified_at: "2025-09-26 17:35:12.4358706000"
+    sha256: "d13f70fa563c9d43bb568bcd80edab32ad74a8b6e4a868339119eba6f1945fb7"
+    priority: P0
+    topics: [npu, video, ip, dr1]
+    selection_reason: "Explicit Video NPU IP manual for the NPU/video integration phase."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "No IP configuration claim was inferred from the filename."
+
+  - id: putty_serial_login
+    title: "PuTTY installation and use for the Anlogic development board"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/01_prepare/01-2_米联客-安路开发板PuTTY安装与使用.pdf"
+    file_type: pdf
+    file_size: 716446
+    modified_at: "2025-09-23 11:37:35.0000000000"
+    sha256: "e256c74eff9bbf6bac1b230ae0312035dad68e6397f5a1ab8b0d897d3e9f3bcf"
+    priority: P0
+    topics: [serial, login, remote_access, board_setup]
+    selection_reason: "Directly named serial/terminal access guide for obtaining real-board evidence and login."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "The actual transport and credentials remain unknown until hardware-side verification."
+
+  - id: fpsoc_sdk_intro_2024
+    title: "2024 FPSoC SDK introduction"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-0_book_all/3_2_01_米联客2024版FPSoc_SDK入门篇.pdf"
+    file_type: pdf
+    file_size: 53419189
+    modified_at: "2025-10-30 17:26:41.6903018000"
+    sha256: "a815be57fbd4abfe5e06d5408c7579d41025dcc69457fa08102fc29fbf9e57fa"
+    priority: P0
+    topics: [sdk, toolchain, fpsoc, build]
+    selection_reason: "Named SDK introduction likely to anchor the build/toolchain phase; selected by filename and path only."
+    duplicate_status: possible_version_or_reformat
+    possible_duplicates: [fpsoc_sdk_advanced_2025]
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "Large document; no SDK version or command was inferred beyond its filename label."
+
+  - id: linux_pl_multinet_demo
+    title: "F3P-CZ02 Linux PL multi-network demo"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/05_application_demo/05-3_PL端多网口方案/05-3_米联客-安路F3P-CZ02开发板Linux下PL多网口演示.pdf"
+    file_type: pdf
+    file_size: 2407964
+    modified_at: "2025-09-24 11:40:03.0000000000"
+    sha256: "a468968e222489978d66deb8de324393f6e05d59e3980e48b088d61b01890c19"
+    priority: P1
+    topics: [linux, network, file_transfer, pl]
+    selection_reason: "Named Linux multi-network demonstration candidate for board connectivity and transfer planning."
+    duplicate_status: unique
+    possible_duplicates: [linux_wireless_demo]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "The filename does not establish SCP/rsync support; this remains a review question."
+
+  - id: linux_wireless_demo
+    title: "F3P-CZ02 Linux wireless communication solution"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/05_application_demo/05-4_无线通信方案/05-4_米联客-安路F3P-CZ02开发板无线通信方案.pdf"
+    file_type: pdf
+    file_size: 3295178
+    modified_at: "2025-09-24 11:40:52.0000000000"
+    sha256: "ccdcd485bcb409a27daf9b1c515125add82b639485b236946f9c7513cfa1dfe6"
+    priority: P1
+    topics: [linux, network, wireless, file_transfer]
+    selection_reason: "Named Linux wireless-communications candidate for establishing a practical board transport path."
+    duplicate_status: unique
+    possible_duplicates: [linux_pl_multinet_demo]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "No wireless hardware or protocol was inferred from the filename."
+
+  - id: fpsoc_application_development_alpha12_milianke_copy
+    title: "FPSoC application development alpha 1.2 (Milianke-named copy)"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/06_芯片手册/01_DR1/FPSoC应用开发说明_alpha1.2--米联客.pdf"
+    file_type: pdf
+    file_size: 4969626
+    modified_at: "2023-11-23 19:11:52.7741540000"
+    sha256: "cf04eceebef6dbf7b6c86b11cb20ee9ce820fbed7625a3d4668311e95a91b7f3"
+    priority: P1
+    topics: [fpsoc, application_development, dr1]
+    selection_reason: "Retained as a candidate because its filename is near-identical to the selected alpha 1.2 record but the hash differs."
+    duplicate_status: possible_version_or_reformat
+    possible_duplicates: [fpsoc_application_development_alpha12]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "Deferred. This candidate remains based only on file path and material organization; authority has not been proven by a PDF revision page, revision history, or content comparison. It remains available for later comparison."
+
+  - id: dr1_product_overview_ug1214_dr1_copy
+    title: "Anlogic DR1-series FPSoC product description (UG1214 DR1-folder copy)"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/06_芯片手册/01_DR1/UG1214_安路科技DR1系列FPSoC产品说明书.pdf"
+    file_type: pdf
+    file_size: 10277644
+    modified_at: "2025-02-13 16:17:34.2617578000"
+    sha256: "1d28043b8d29b81287b22ead0f1a5da7511567d03b9c9fc03fe61fb221cb8fe6"
+    priority: P0
+    topics: [dr1, product_overview, fpsoc]
+    selection_reason: "Near-identical UG1214 title/path candidate retained because its hash differs from the other UG1214 file."
+    duplicate_status: possible_version_or_reformat
+    possible_duplicates: [dr1_product_overview_ug1214_root]
+    approved_for_copy: true
+    index_status: not_indexed
+    notes: "This selection is based only on file path and material organization; authority has not been proven by a PDF revision page, revision history, or content comparison. The other UG1214 candidate remains for later comparison."
+
+  - id: fpsoc_sdk_advanced_2025
+    title: "2025 FPSoC SDK advanced guide"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-0_book_all/3_2_02_米联客2025版FPSoc_SDK高级篇.pdf"
+    file_type: pdf
+    file_size: 28808067
+    modified_at: "2025-09-23 10:59:49.0000000000"
+    sha256: "72238e2383e2c6b4bd10d76e96eea6371ae24962546cef38ce2b55d6de01791d"
+    priority: P1
+    topics: [sdk, toolchain, fpsoc, build]
+    selection_reason: "Related SDK guide with an explicit 2025 filename label; retain for human selection against the 2024 introduction."
+    duplicate_status: possible_version_or_reformat
+    possible_duplicates: [fpsoc_sdk_intro_2024]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "Different hash and title year; not treated as an exact duplicate."
+
+  - id: linux_restore_factory
+    title: "Anlogic development board Linux restore factory settings"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/03_restore_factory/03-1_米联客-安路开发板Linux恢复出厂设置.pdf"
+    file_type: pdf
+    file_size: 2311655
+    modified_at: "2025-09-23 11:37:41.0000000000"
+    sha256: "bf42426baa68b3d4f5264c5d4b6215b661055c055acfde5fdb9acd4fed882fb8"
+    priority: P0-alternative
+    topics: [linux, recovery, factory_image, startup]
+    selection_reason: "Useful recovery/startup companion to the factory-test guide; retained as a separate candidate."
+    duplicate_status: unique
+    possible_duplicates: [linux_factory_test]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "Filename relationship only; no procedure was read."
+
+  - id: board_boot_test
+    title: "MLK F3P DR1M90G development board power-on test"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/01_start_fpga/01_bit_test/米联客-安路MLK_F3P_DR1M90G 开发板开机测试.pdf"
+    file_type: pdf
+    file_size: 2060965
+    modified_at: "2025-09-23 11:00:59.0000000000"
+    sha256: "6bb6087959a2344500bc350fa55daacf2002968c1152dedba9b76c4db71d9b5f"
+    priority: P0-alternative
+    topics: [board, boot, startup, smoke_test]
+    selection_reason: "Named power-on test for the DR1M90G board family; retained until exact CZ02 board applicability is confirmed."
+    duplicate_status: unique
+    possible_duplicates: [mlk_f3p_cz02_board_hw_manual]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "Applicability to the exact CZ02 revision is unknown from metadata alone."
+
+  - id: linux_vm_deployment
+    title: "Anlogic development board Linux virtual-machine setup"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/01_prepare/01-1_米联客-安路开发板部署虚拟机环境.pdf"
+    file_type: pdf
+    file_size: 644491
+    modified_at: "2025-09-23 11:37:33.0000000000"
+    sha256: "0b100b0420c6cac3af6a920c4437506a7b04e08f8c5c47eb33aee4920bb9e26b"
+    priority: P0-alternative
+    topics: [linux, host_setup, deployment]
+    selection_reason: "Host-side setup candidate for reproducing the board software workflow before real-device work."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "No host-tool version or VM image was inferred."
+
+  - id: dr1_family_overview_ds1201
+    title: "DR1 family overview DS1201"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/06_芯片手册/01_DR1/DS1201_DR1_FamilyOverview-米联客.pdf"
+    file_type: pdf
+    file_size: 1350947
+    modified_at: "2024-03-13 17:45:09.7458358000"
+    sha256: "2edc070d46a2434b2141306af1468a972f26afcf9a46f95d62917047d031c38d"
+    priority: P0-alternative
+    topics: [dr1, family_overview, product_overview]
+    selection_reason: "Explicit DR1 family-overview candidate for cross-checking product identity and applicability."
+    duplicate_status: unique
+    possible_duplicates: [dr1_product_overview_ug1214_root]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "Related topic does not imply duplicate content."
+
+  - id: dr1_user_guide_fd
+    title: "DR1 user guide FD_DR1_User_Guide_V1.1"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/06_芯片手册/01_DR1/FD_DR1_User_Guide_V1.1-米联客.pdf"
+    file_type: pdf
+    file_size: 2959646
+    modified_at: "2024-03-13 17:45:08.8972059000"
+    sha256: "9f59580b48e48b45db7be90c9ff88e36a467ba9ec3888b9d442dd85762740f39"
+    priority: P0-alternative
+    topics: [dr1, user_guide, product_overview]
+    selection_reason: "Explicit DR1 user-guide candidate retained for human comparison with product and family overviews."
+    duplicate_status: unique
+    possible_duplicates: [dr1_product_overview_ug1214_root, dr1_family_overview_ds1201]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "No guide version was inferred beyond the filename label."
+
+  - id: dr1_datasheet_ds1200
+    title: "DR1 datasheet DS1200"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/06_芯片手册/01_DR1/DS1200_DR1_Datasheet_202411-米联客.pdf"
+    file_type: pdf
+    file_size: 3821245
+    modified_at: "2025-03-13 14:36:02.7173971000"
+    sha256: "f68b25ee9f822beab57936ec4954c8174052a1527413224e2396e4fb5aef556a"
+    priority: P0-alternative
+    topics: [dr1, datasheet, product_overview]
+    selection_reason: "Explicit DR1 datasheet candidate for cross-checking chip identity and revision applicability."
+    duplicate_status: unique
+    possible_duplicates: [dr1_product_overview_ug1214_root, dr1_family_overview_ds1201]
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "Document applicability remains unverified until content review."
+
+  - id: dr1_outline_txt
+    title: "F3P DR1M90G material outline"
+    exact_source_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/F3P_DR1M90G资料大纲.txt"
+    file_type: txt
+    file_size: 2355
+    modified_at: "2025-09-23 10:59:22.0000000000"
+    sha256: "2a655a21f8483fb60a59d4d1f1950b6bfc4b85184055b665028d43c6b2d6b346"
+    priority: P0-alternative
+    topics: [dr1, inventory, navigation]
+    selection_reason: "Small text index candidate for navigating the DR1M90G source bundle without parsing large PDFs."
+    duplicate_status: unique
+    possible_duplicates: []
+    approved_for_copy: false
+    index_status: not_indexed
+    notes: "This record is based on path/name metadata; the TXT body was not read in this task."
