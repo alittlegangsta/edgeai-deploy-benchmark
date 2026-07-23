@@ -1,0 +1,7 @@
+# Copy this file to local_paths.yaml only in a private working tree.
+# Values below are placeholders and are not repository evidence.
+milianke_source_root: "/path/to/fpga_info/02_F3P_DR1M90GEG400_FPGA"
+private_workspace_root: "/path/to/private/anlogic-dr1-knowledge"
+wiki_snapshot_root: "/path/to/private/anlogic-dr1-knowledge/anlogic/wiki/snapshots"
+anlogic_repo_root: "/path/to/private/anlogic-dr1-knowledge/anlogic/repos"
+curated_wiki_root: "/path/to/private/anlogic-dr1-knowledge/anlogic/wiki/curated"

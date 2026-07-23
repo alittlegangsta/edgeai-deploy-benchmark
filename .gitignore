@@ -1,6 +1,10 @@
 build/
 cmake-build-*/
 .cache/
+.knowledge/local_paths.yaml
+.knowledge/cache/
+*.sqlite
+*.sqlite3
 .vscode/
 .idea/
 .venv/

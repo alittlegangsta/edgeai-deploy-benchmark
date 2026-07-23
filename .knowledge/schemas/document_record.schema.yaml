@@ -1,0 +1,75 @@
+schema_version: "1"
+document_record:
+  type: object
+  required:
+    - id
+    - title
+    - source
+    - source_path
+    - local_path
+    - document_type
+    - applicable_board
+    - applicable_chip
+    - version
+    - priority
+    - sha256
+    - file_size
+    - modified_at
+    - topics
+    - authority
+    - index_status
+    - notes
+  properties:
+    id:
+      type: string
+      description: "Stable document identifier."
+    title:
+      type: string
+      description: "Document title as observed in the source."
+    source:
+      type: string
+      description: "Source manifest identifier."
+    source_path:
+      type: string
+      description: "Path or URL at the source; unknown until observed."
+    local_path:
+      type: string
+      description: "Path in the private knowledge workspace; never a repository copy."
+    document_type:
+      type: string
+      description: "Observed type such as pdf, wiki_page, source_file, or log."
+    applicable_board:
+      type: string
+      description: "Board applicability as evidenced by the document."
+    applicable_chip:
+      type: string
+      description: "Chip applicability as evidenced by the document."
+    version:
+      type: string
+      description: "Document or SDK version, or unknown."
+    priority:
+      type: string
+      description: "Curated precedence class, or unknown before policy review."
+    sha256:
+      type: string
+      description: "Observed file hash, or unknown before ingestion."
+    file_size:
+      type: string
+      description: "Observed byte size, or unknown before ingestion."
+    modified_at:
+      type: string
+      description: "Observed source modification timestamp, or unknown."
+    topics:
+      type: array
+      items:
+        type: string
+      description: "Reviewed topic labels."
+    authority:
+      type: string
+      description: "Authority rationale under SOURCE_POLICY.md."
+    index_status:
+      type: string
+      description: "Indexer state such as not_indexed, indexed, or excluded."
+    notes:
+      type: string
+      description: "Evidence, privacy, and review notes."
