@@ -19,7 +19,7 @@ documents:
     duplicate_status: unique
     possible_duplicates: []
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "PDF body not parsed; source remains outside the repository."
 
   - id: mlk_cz02_core_hw_manual
@@ -35,7 +35,7 @@ documents:
     duplicate_status: unique
     possible_duplicates: []
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "Metadata-only selection; no content or claims were extracted."
 
   - id: linux_factory_test
@@ -51,7 +51,7 @@ documents:
     duplicate_status: unique
     possible_duplicates: [linux_restore_factory]
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "The relationship to restore-factory material is based on filenames only."
 
   - id: linux_buildroot_secondary_development
@@ -67,7 +67,7 @@ documents:
     duplicate_status: unique
     possible_duplicates: []
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "No Buildroot version was inferred from the filename."
 
   - id: linux_basics
@@ -83,7 +83,7 @@ documents:
     duplicate_status: unique
     possible_duplicates: []
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "Filename/path metadata only; no version beyond the filename label was inferred."
 
   - id: linux_driver_development
@@ -147,7 +147,7 @@ documents:
     duplicate_status: possible_version_or_reformat
     possible_duplicates: [fpsoc_application_development_alpha12_milianke_copy]
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "A similarly named file has a different hash. This selection is based only on file path and material organization; authority has not been proven by a PDF revision page, revision history, or content comparison. The other candidate remains for later comparison."
 
   - id: dr1_product_overview_ug1214_root
@@ -179,7 +179,7 @@ documents:
     duplicate_status: unique
     possible_duplicates: []
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "No NPU API or architecture claim was inferred from the filename."
 
   - id: ipug166_video_npu_user_manual
@@ -195,7 +195,7 @@ documents:
     duplicate_status: unique
     possible_duplicates: []
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "No IP configuration claim was inferred from the filename."
 
   - id: putty_serial_login
@@ -211,7 +211,7 @@ documents:
     duplicate_status: unique
     possible_duplicates: []
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "The actual transport and credentials remain unknown until hardware-side verification."
 
   - id: fpsoc_sdk_intro_2024
@@ -227,7 +227,7 @@ documents:
     duplicate_status: possible_version_or_reformat
     possible_duplicates: [fpsoc_sdk_advanced_2025]
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "Large document; no SDK version or command was inferred beyond its filename label."
 
   - id: linux_pl_multinet_demo
@@ -291,7 +291,7 @@ documents:
     duplicate_status: possible_version_or_reformat
     possible_duplicates: [dr1_product_overview_ug1214_root]
     approved_for_copy: true
-    index_status: not_indexed
+    index_status: keyword_indexed
     notes: "This selection is based only on file path and material organization; authority has not been proven by a PDF revision page, revision history, or content comparison. The other UG1214 candidate remains for later comparison."
 
   - id: fpsoc_sdk_advanced_2025
