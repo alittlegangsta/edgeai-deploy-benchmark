@@ -1,0 +1,56 @@
+schema_version: "1"
+vm_root: /home/uisrc/vendor/anlogic
+sdk:
+  windows_source: 'C:\Users\Administrator\Desktop\fpga_info\sdk.2025.7.tar.gz'
+  vm_shared_source: /mnt/hgfs/fpga_info/sdk.2025.7.tar.gz
+  vm_destination: /home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz
+  file_size_bytes: 1368135226
+  sha256: c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0
+  destination_sha256: c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0
+  status: staged_not_extracted
+  verification: source_and_destination_sha256_match
+  archive_extracted_by_this_session: false
+  preexisting_extracted_tree_detected: true
+  preexisting_extracted_tree_path: /home/uisrc/vendor/anlogic/sdk/sdk
+  preexisting_extracted_tree_mtime: "2025-09-08 10:31:53 +0800"
+  preexisting_extracted_tree_file_count: 125421
+  preexisting_extracted_tree_directory_count: 12577
+  preexisting_extracted_tree_size_bytes: 2877807733
+  extraction_acceptance: failed_preexisting_tree
+  copied_by_this_session: false
+npu_demo:
+  windows_source: 'C:\Users\Administrator\Desktop\fpga_info\02_F3P_DR1M90GEG400_FPGA\03_demo\05-5_NPU演示'
+  vm_shared_source: /mnt/hgfs/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/05-5_NPU演示
+  vm_destination: /home/uisrc/vendor/anlogic/demos/milianke_npu_demo
+  source_file_count: 1321
+  source_directory_count: 460
+  source_total_size_bytes: 713313118
+  destination_file_count: 1321
+  destination_directory_count: 460
+  destination_total_size_bytes: 714562398
+  source_tree_digest: c82767562ba9e07d8ca6bf3842b32b366d08bc5b9cafa113bdaadd908882202a
+  destination_tree_digest: c82767562ba9e07d8ca6bf3842b32b366d08bc5b9cafa113bdaadd908882202a
+  status: staged_not_executed
+  verification: content_tree_digest_match
+  copied_by_this_session: false
+putty:
+  windows_source: 'C:\Users\Administrator\Desktop\fpga_info\putty-0.81'
+  status: windows_only
+  copied_to_vm: false
+workspace:
+  requested_root: /home/uisrc/vendor/anlogic
+  existing_directories: [packages, sdk, demos, builds, logs, manifests, logs/input_staging]
+  missing_directories: []
+  created_by_this_session: true
+  input_staging_logs:
+    - vm_environment.txt
+    - sdk_sha256.txt
+    - sdk_archive_preview.txt
+    - npu_demo_tree.txt
+    - npu_demo_summary.txt
+    - staging_summary.md
+notes:
+  - "The SDK and Demo destinations pre-existed this session and were verified read-only."
+  - "No unconditional overwrite was performed."
+  - "The execute step created the missing workspace directories and input-staging logs."
+  - "The archive itself remains intact, but a pre-existing extracted SDK tree prevents a clean unextracted-state acceptance."

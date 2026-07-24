@@ -1,0 +1,151 @@
+schema_version: "1"
+generated_at: "2026-07-24T11:43:41+08:00"
+scan_mode: "ZIP central-directory metadata plus read-only CRC/integrity test"
+extraction_performed: false
+execution_performed: false
+large_member_threshold_bytes: 104857600
+archives:
+  - id: secondary_demo_archive
+    archive_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo.zip"
+    sha256: "62b713f4bb0facb26544f5fe8e470866046234016ccc9c97d54debabccd263c9"
+    manifest_sha256: "62b713f4bb0facb26544f5fe8e470866046234016ccc9c97d54debabccd263c9"
+    sha256_matches_manifest: true
+    archive_size: 114924599
+    integrity_status: valid
+    member_count: 3485
+    uncompressed_size: 206782523
+    compressed_size_from_members: 113991427
+    top_level_entries: [boot, soc_dts, soc_hw, soc_prj, soc_sdk]
+    likely_content_type: "FPSoC boot/project workspace with generated platform artifacts"
+    sdk_markers:
+      - pattern: VERSION
+        count: 2
+        examples: [soc_sdk/.metadata/version.ini, soc_sdk/soc_base/3rdparty/lib/CherryUSB/VERSION]
+      - pattern: README
+        count: 5
+        examples: [soc_prj/system_Runs/best_result/readMe.txt, soc_sdk/soc_base/3rdparty/lib/NMSIS/README.md]
+    buildroot_markers: []
+    toolchain_markers: []
+    sysroot_markers: []
+    kernel_markers:
+      - pattern: kernel
+        count: 13
+        examples: [soc_dts/kernel-dts/, soc_dts/kernel-dts/anlogic-dr1.dts]
+    npu_markers:
+      - pattern: .hpf
+        count: 2
+        examples: [soc_hw/system.hpf, soc_sdk/soc_base/system.hpf]
+      - pattern: '*.bit'
+        count: 3
+        examples: [soc_sdk/soc_base/platform/system.bit, soc_prj/system_Runs/best_result/system.bit]
+    encoding_issues: []
+    split_markers: []
+    large_members: []
+    largest_members_external: "/home/dministrator/vendor/anlogic-dr1-knowledge/logs/archive_inventory/secondary_demo_archive.members.txt"
+    member_list_external: "/home/dministrator/vendor/anlogic-dr1-knowledge/logs/archive_inventory/secondary_demo_archive.members.txt"
+    confidence: low
+    recommended_action: selective_metadata_extract
+    notes:
+      - "Central-directory names show boot, device-tree, FPSoC project, and soc_sdk content; they do not establish a Linux SDK release."
+      - "No member meets the 100 MiB uncompressed large-member threshold."
+      - "Only small version, README, Makefile, and manifest candidates should be considered for a later approved metadata extraction."
+  - id: linux_base_archive
+    archive_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux/01_ex_linux_base_F3P_DR1M90G.zip"
+    sha256: "07f1ea03f8dcc60b73e2ecda8427a3238a50e2e8e414ef09659c101cf1161849"
+    manifest_sha256: "07f1ea03f8dcc60b73e2ecda8427a3238a50e2e8e414ef09659c101cf1161849"
+    sha256_matches_manifest: true
+    archive_size: 121364628
+    integrity_status: valid
+    member_count: 3526
+    uncompressed_size: 227410095
+    compressed_size_from_members: 120212112
+    top_level_entries: ["Linux Base Appendix"]
+    likely_content_type: "Linux base example bundle with boot images and embedded soc_sdk"
+    sdk_markers:
+      - pattern: VERSION
+        count: 2
+        examples: ["Linux Base Appendix/Chapter 3/soc_sdk/.metadata/version.ini", "Linux Base Appendix/Chapter 3/soc_sdk/soc_base/3rdparty/lib/CherryUSB/VERSION"]
+      - pattern: README
+        count: 5
+        examples: ["Linux Base Appendix/Chapter 3/soc_prj/system_Runs/best_result/readMe.txt", "Linux Base Appendix/Chapter 3/soc_sdk/soc_base/3rdparty/lib/NMSIS/README.md"]
+    buildroot_markers: []
+    toolchain_markers: []
+    sysroot_markers: []
+    kernel_markers:
+      - pattern: kernel
+        count: 13
+        examples: ["Linux Base Appendix/Chapter 3/soc_dts/kernel-dts/", "Linux Base Appendix/Chapter 3/soc_dts/kernel-dts/anlogic-dr1.dts"]
+    npu_markers:
+      - pattern: .hpf
+        count: 2
+        examples: ["Linux Base Appendix/Chapter 3/soc_hw/system.hpf", "Linux Base Appendix/Chapter 3/soc_sdk/soc_base/system.hpf"]
+      - pattern: '*.bit'
+        count: 3
+        examples: ["Linux Base Appendix/Chapter 3/soc_sdk/soc_base/platform/system.bit", "Linux Base Appendix/Chapter 3/soc_prj/system_Runs/best_result/system.bit"]
+    encoding_issues: []
+    split_markers: []
+    large_members: []
+    largest_members_external: "/home/dministrator/vendor/anlogic-dr1-knowledge/logs/archive_inventory/linux_base_archive.members.txt"
+    member_list_external: "/home/dministrator/vendor/anlogic-dr1-knowledge/logs/archive_inventory/linux_base_archive.members.txt"
+    confidence: low
+    recommended_action: selective_metadata_extract
+    notes:
+      - "The archive contains boot images and an embedded soc_sdk workspace, but no Buildroot, sysroot, or compiler names appeared in the member directory."
+      - "No member meets the 100 MiB uncompressed large-member threshold."
+      - "The archive remains a Linux example candidate, not a verified SDK_2026.01 package."
+  - id: linux_driver_archive
+    archive_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux/02_ex_linux_drive_F3P_DR1M90G.zip"
+    sha256: "8e2482145481fd1eb9e3e7799371052f670d52005b9fb54e04281e0d2d4289ab"
+    manifest_sha256: "8e2482145481fd1eb9e3e7799371052f670d52005b9fb54e04281e0d2d4289ab"
+    sha256_matches_manifest: true
+    archive_size: 1040244482
+    integrity_status: valid
+    member_count: 28199
+    uncompressed_size: 1912595064
+    compressed_size_from_members: 1031275498
+    top_level_entries: [Sourcecode]
+    likely_content_type: "Linux driver example collection with repeated demo workspaces and generated kernel artifacts"
+    sdk_markers:
+      - pattern: VERSION
+        count: 16
+        examples: [Sourcecode/project/soc_sdk/.metadata/version.ini, Sourcecode/project/soc_sdk/soc_base/3rdparty/lib/CherryUSB/VERSION]
+      - pattern: README
+        count: 42
+        examples: [Sourcecode/project/soc_prj/system_Runs/best_result/readMe.txt, Sourcecode/project/soc_sdk/soc_base/3rdparty/lib/NMSIS/README.md]
+    buildroot_markers: []
+    toolchain_markers: []
+    sysroot_markers: []
+    kernel_markers:
+      - pattern: kernel
+        count: 118
+        examples: [Sourcecode/12.rtc/12.rtc/soc_dts/kernel-dts/, Sourcecode/12.rtc/12.rtc/soc_dts/kernel-dts/anlogic-dr1.dts]
+      - pattern: modules
+        count: 32
+        examples: [Sourcecode/1.HelloWorld/modules.order, Sourcecode/6.device_tree/drive/modules.order]
+      - pattern: .ko
+        count: 16
+        examples: [Sourcecode/1.HelloWorld/KernelPrint.ko, Sourcecode/6.device_tree/drive/platform_gpio_drv.ko]
+    npu_markers:
+      - pattern: .hpf
+        count: 16
+        examples: [Sourcecode/project/soc_hw/system.hpf, Sourcecode/project/soc_sdk/soc_base/system.hpf]
+      - pattern: '*.bit'
+        count: 24
+        examples: [Sourcecode/project/soc_sdk/soc_base/platform/system.bit, Sourcecode/project/soc_prj/system_Runs/best_result/system.bit]
+    encoding_issues:
+      - kind: legacy_non_utf8_filename_flag
+        count: 2
+        examples:
+          - "Sourcecode/16.plint/soc_prj/uisrc/03_ip/uiaxii2c/milianke_ip_uiadv7611cfg_更新日志.txt"
+          - "Sourcecode/17.axi_gpio/project/soc_prj/uisrc/03_ip/uiaxii2c/milianke_ip_uiadv7611cfg_更新日志.txt"
+    split_markers: []
+    large_members: []
+    largest_members_external: "/home/dministrator/vendor/anlogic-dr1-knowledge/logs/archive_inventory/linux_driver_archive.members.txt"
+    member_list_external: "/home/dministrator/vendor/anlogic-dr1-knowledge/logs/archive_inventory/linux_driver_archive.members.txt"
+    confidence: low
+    recommended_action: selective_metadata_extract
+    notes:
+      - "The directory is dominated by repeated Linux driver examples and generated .ko/.o/boot/HPF artifacts; no Buildroot, sysroot, or compiler member names appeared."
+      - "Two member names use a legacy non-UTF-8 filename flag; this is an encoding review item, not an integrity failure."
+      - "No member meets the 100 MiB uncompressed large-member threshold; full extraction would still require about 1.91 GB uncompressed plus workspace overhead."
+      - "Do not treat the repeated soc_sdk directories as a versioned Linux SDK without reading approved small metadata files."

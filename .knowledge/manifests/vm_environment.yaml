@@ -1,0 +1,47 @@
+schema_version: "1"
+hostname: ubuntu
+user: uisrc
+home: /home/uisrc
+os: Ubuntu
+os_version: "18.04.4 LTS (Bionic Beaver)"
+host_arch: x86_64
+kernel: "Linux ubuntu 4.15.0-91-generic #92-Ubuntu SMP Fri Feb 28 11:09:48 UTC 2020 x86_64"
+ip_addresses:
+  - 127.0.0.1/8
+  - 192.168.244.128/24
+ssh_status: active
+memory:
+  total: 7.8G
+  available: 6.4G
+  swap_total: 2.0G
+disk_free:
+  filesystem: /dev/sda1
+  size: 196G
+  available: 162G
+  used_percent: "14%"
+compiler:
+  gcc: "7.5.0"
+  gxx: "7.5.0"
+cmake: not_found
+make: "4.1"
+python: "3.6.9"
+tar: "1.29"
+git: "2.17.1"
+shared_folder_status: available
+audited_at: "2026-07-24"
+vendor_staging:
+  root: /home/uisrc/vendor/anlogic
+  created_directories:
+    - /home/uisrc/vendor/anlogic/builds
+    - /home/uisrc/vendor/anlogic/manifests
+    - /home/uisrc/vendor/anlogic/logs/input_staging
+  input_staging_logs: present
+  sdk_archive_hash_check: pass
+  npu_demo_content_check: pass
+  sdk_unextracted_acceptance: failed_preexisting_extracted_tree
+notes:
+  - "All remote commands were sent through /home/dministrator/bin/anlogic-vm-ssh."
+  - "cmake is absent; no package installation was attempted."
+  - "This is an x86_64 Ubuntu VM baseline, not an ARM board baseline."
+  - "The execute step did not copy either existing input because their SHA/content digests matched."
+  - "A pre-existing expanded tree exists at /home/uisrc/vendor/anlogic/sdk/sdk; it was not created or modified by this session."
