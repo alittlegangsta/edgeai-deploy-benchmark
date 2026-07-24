@@ -1,0 +1,45 @@
+schema_version: "1"
+seed_scope: "Wiki URLs observed in local repository README or source files; no Wiki page was fetched."
+seeds:
+  - id: dr1_demo_prjs_overview_wiki
+    url: "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/WCuPymw"
+    discovered_from: "dr1_demo_prjs/README.md"
+    repository: dr1_demo_prjs
+    related_path: "."
+    topic: "DR1 series example-project overview"
+    priority: P0
+    snapshot_status: not_snapshot
+    notes: "URL text was recorded; page title and body were not fetched."
+  - id: dr1_demo_prjs_c4_wiki
+    url: "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/XKwEaVkZ"
+    discovered_from: "dr1_demo_prjs/C4/wiki_links.md"
+    repository: dr1_demo_prjs
+    related_path: "C4"
+    topic: "C4 example-project explanation"
+    priority: P1
+    snapshot_status: not_snapshot
+    notes: "URL text was recorded; page title and body were not fetched."
+  - id: dr1m90_npu_sdk_wiki
+    url: "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/GVKBLhkf"
+    discovered_from: "dr1m90_npu/README.md"
+    repository: dr1m90_npu
+    related_path: "."
+    topic: "Linux SDK environment and cross compiler"
+    priority: P0
+    snapshot_status: not_snapshot
+    notes: "README presents this as SDK usage guidance; no page content was fetched."
+  - id: dr1m90_npu_vdma_wiki
+    url: "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/R7MPfrun"
+    discovered_from:
+      - "dr1m90_npu/face_detection/README.md"
+      - "dr1m90_npu/face_detection/README2.md"
+      - "dr1m90_npu/obb/README.md"
+      - "dr1m90_npu/obb/README2.md"
+      - "dr1m90_npu/pose/README.md"
+      - "dr1m90_npu/pose/README2.md"
+    repository: dr1m90_npu
+    related_path: "face_detection/README2.md; obb/README2.md; pose/README2.md"
+    topic: "D21.1 Linux VDMA framebuffer"
+    priority: P1
+    snapshot_status: not_snapshot
+    notes: "The same URL is repeated by camera/HDMI README files; no page content was fetched."
