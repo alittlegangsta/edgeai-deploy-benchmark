@@ -1,0 +1,102 @@
+schema_version: "1"
+inventory_type: "anlogic_board_opencv_user_space_smoke"
+audited_at: "2026-07-27"
+scope: "AArch64 OpenCV core/imgproc/imgcodecs user-space smoke only"
+execution_policy:
+  board_system_modified: false
+  emmc_modified: false
+  packages_installed: false
+  npu_accessed: false
+  ncnn_built_or_run: false
+  armnn_accessed: false
+  task_file_modified: false
+sources:
+  vm_wrapper: "/home/dministrator/bin/anlogic-vm-ssh"
+  board_wrapper: "/home/dministrator/bin/anlogic-board-ssh"
+  toolchain_root: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0"
+  opencv_root: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64"
+  opencv_include: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/include/opencv4"
+  opencv_cmake_config: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/cmake/opencv4/OpenCVConfig.cmake"
+  opencv_pkg_config: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/pkgconfig/opencv4.pc"
+opencv:
+  version: "4.7.0"
+  target_architecture: "AArch64 ELF64"
+  requested_modules: ["opencv_core", "opencv_imgproc", "opencv_imgcodecs"]
+  prohibited_modules: ["opencv_highgui", "opencv_videoio", "opencv_dnn"]
+  version_evidence: "opencv2/core/version.hpp and OpenCVConfig.cmake"
+  libraries:
+    opencv_core:
+      source: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/libopencv_core.so.4.7.0"
+      packaged_as: "lib/libopencv_core.so.407"
+      sha256: "d0e4f5942fd8bfbba43ff092cebf636f463362c14c3a24aaada48034f08aa297"
+      soname: "libopencv_core.so.407"
+      needed: ["libdl.so.2", "libpthread.so.0", "libstdc++.so.6", "libm.so.6", "libgcc_s.so.1", "libc.so.6"]
+    opencv_imgproc:
+      source: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/libopencv_imgproc.so.4.7.0"
+      packaged_as: "lib/libopencv_imgproc.so.407"
+      sha256: "86dc1d5631c2ee5f33fe844ae9932f274dae34fa2a9359d6a76674bb4f4996b7"
+      soname: "libopencv_imgproc.so.407"
+      needed: ["libopencv_core.so.407", "libstdc++.so.6", "libm.so.6", "libgcc_s.so.1", "libc.so.6"]
+    opencv_imgcodecs:
+      source: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/libopencv_imgcodecs.so.4.7.0"
+      packaged_as: "lib/libopencv_imgcodecs.so.407"
+      sha256: "cc793274dc28e5ea60563c3125ba92401b13ba48adbfa835366f99877bdefde8"
+      soname: "libopencv_imgcodecs.so.407"
+      needed: ["libopencv_imgproc.so.407", "libopencv_core.so.407", "libpthread.so.0", "libstdc++.so.6", "libm.so.6", "libgcc_s.so.1", "libc.so.6"]
+  dependency_closure: "Three packaged OpenCV SONAMEs plus board system libraries; no FFmpeg dependency in the selected three libraries."
+  rpath_note: "Vendor RPATH was preserved; the executable also uses $ORIGIN/lib and runtime succeeded."
+toolchain:
+  compiler: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-g++"
+  compiler_version: "Linaro GCC 7.5-2019.12 7.5.0"
+  target_triple: "aarch64-linux-gnu"
+  sysroot: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc"
+  language_standard: "C++17"
+  flags: "-O2 -g -Wall -Wextra -Werror"
+build:
+  vm_build_root: "/home/uisrc/vendor/anlogic/builds/opencv_board_smoke"
+  source: "/home/uisrc/vendor/anlogic/builds/opencv_board_smoke/anlogic_opencv_smoke.cpp"
+  application: "/home/uisrc/vendor/anlogic/builds/opencv_board_smoke/opencv_board_smoke"
+  sha256: "6cd7f4d3493139f98531f487ff879753bb1ca4510b48d62d4323683d2f635adf"
+  elf: "ELF64 AArch64 EXEC; interpreter /lib/ld-linux-aarch64.so.1"
+  direct_needed: ["libopencv_imgcodecs.so.407", "libopencv_imgproc.so.407", "libopencv_core.so.407", "libstdc++.so.6", "libm.so.6", "libgcc_s.so.1", "libc.so.6"]
+package:
+  vm_path: "/home/uisrc/vendor/anlogic/builds/opencv_board_smoke/package"
+  windows_shared_path: "C:\\Users\\Administrator\\Desktop\\fpga_info\\_generated\\board_opencv_smoke"
+  board_path: "/tmp/edgeai_opencv_smoke"
+  files: ["opencv_board_smoke", "run.sh", "README.txt", "SHA256SUMS", "lib/libopencv_core.so.407", "lib/libopencv_imgproc.so.407", "lib/libopencv_imgcodecs.so.407"]
+  sha256sums: "75c8cdb3c7cc97de1474840773f37fb7e71a49390d7b126017eec130bacdb9a2"
+  application_sha256: "6cd7f4d3493139f98531f487ff879753bb1ca4510b48d62d4323683d2f635adf"
+  run_script_sha256: "207b1d2009c931ca2170d9a725d6c0ef17881d30133270e858588a5fb0f01d69"
+  sha256_validation: "PASS before and after board chmod"
+board_runtime:
+  package_transfer: "Windows OpenSSH scp.exe to /tmp/edgeai_opencv_smoke.new, then atomic rename"
+  chmod_scope: "opencv_board_smoke and run.sh only; content hashes unchanged"
+  exit_code: 0
+  stdout: {opencv_version: "4.7.0", width: 320, height: 240, channels: 3}
+  stderr: "empty"
+  image_sha256: "bb460edbcf75e07f96d1a09bad2d6d44d5be6d2e2f9cf2098d6f3e3e6a208898"
+  status: "PASS"
+  evidence:
+    - "results/logs/vendor/board_opencv/opencv_package_audit.log"
+    - "results/logs/vendor/board_opencv/opencv_build.log"
+    - "results/logs/vendor/board_opencv/opencv_package_checksum_local.log"
+    - "results/logs/vendor/board_opencv/opencv_package_transfer.log"
+    - "results/logs/vendor/board_opencv/opencv_board_runtime.log"
+    - "results/logs/vendor/board_opencv/opencv_image_transfer.log"
+    - "results/logs/vendor/board_opencv/opencv_image_local_validation.log"
+image_output:
+  local_path: "results/images/anlogic_opencv_smoke.png"
+  sha256: "bb460edbcf75e07f96d1a09bad2d6d44d5be6d2e2f9cf2098d6f3e3e6a208898"
+  size_bytes: 8205
+  dimensions: "320x240x3"
+  decode_status: "PASS with local Python OpenCV"
+decisions:
+  OPENCV_AARCH64_LIBRARY_IDENTITY: "PASS"
+  OPENCV_LINK: "PASS"
+  OPENCV_DEPENDENCY_CLOSURE: "PASS"
+  OPENCV_BOARD_RUNTIME: "PASS"
+  OPENCV_IMAGE_OUTPUT: "PASS"
+  BOARD_CPU_BASELINE_READINESS: "GO for next approved user-space CPU baseline; ncnn/NPU remain HOLD"
+notes:
+  - "The first deployment invocation stopped because /mnt/hgfs was not visible in WSL; the default local path was corrected to the actual /mnt/c shared path."
+  - "No CMake was installed and no system OpenCV or board system library was replaced."
