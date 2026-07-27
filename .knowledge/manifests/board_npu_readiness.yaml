@@ -1,0 +1,44 @@
+schema_version: "1"
+inventory_type: board_npu_readiness
+audited_at: "2026-07-27"
+board_model: "Anlogic, DR1M90 FPSoc"
+kernel: "6.1.111-rt42"
+architecture: "aarch64"
+read_only_evidence:
+  device_nodes:
+    hard_npu: false
+    soft_npu: false
+    cma_mem: false
+  loaded_modules:
+    observed: "aic_load_fw only"
+    npu_module_observed: false
+  module_tree_npu_match: false
+  rootfs_npu_runtime_match: false
+  rootfs_armnn_match: false
+  rootfs_hpf_or_bit_match: false
+  generic_emmc_boot_files: true
+  npu_specific_boot_payload: "unknown; BOOT.bin was not opened"
+  evidence:
+    - "results/logs/vendor/board_runtime/03_modules_and_npu.log"
+    - "results/logs/vendor/board_runtime/03b_module_matches.log"
+    - "results/logs/vendor/board_runtime/05_npu_search.log"
+    - "results/logs/vendor/board_runtime/04_emmc_tree_corrected.log"
+decisions:
+  BOARD_NPU_DEVICE_READY: "NO"
+  BOARD_NPU_DRIVER_PRESENT_ON_DISK: "NO"
+  BOARD_NPU_BOOT_ASSET_PRESENT: "UNKNOWN"
+  CURRENT_EMMC_NPU_READY: "NO"
+  rationale:
+    - "No /dev/hard_npu or /dev/soft_npu node exists."
+    - "No NPU-specific loadable module or rootfs runtime marker was found; built-in driver presence cannot be fully inferred without kernel config/source."
+    - "Generic eMMC boot files are present, but an NPU payload cannot be inferred from opaque BOOT.bin bytes."
+sdk_comparison:
+  sdk_release: "SDK_2025_07"
+  vm_knowledge: "Arm NN 32.1.0 with Alnpu custom backend and /dev/hard_npu strings were observed in the VM SDK audit; this is not board-side evidence."
+  board_runtime_match: "UNKNOWN"
+  evidence: ".knowledge/manifests/npu_demo_dependency_inventory.yaml"
+next_gates:
+  driver_loading: "HOLD; requires separate approval"
+  vendor_demo: "HOLD; requires separate approval"
+  model_execution: "HOLD"
+  npu_benchmark: "HOLD"

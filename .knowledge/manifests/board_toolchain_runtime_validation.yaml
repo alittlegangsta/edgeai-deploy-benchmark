@@ -1,0 +1,93 @@
+schema_version: "1"
+inventory_type: board_toolchain_runtime_validation
+audited_at: "2026-07-27"
+board:
+  wrapper: "/home/dministrator/bin/anlogic-board-ssh"
+  architecture: "aarch64"
+  libc: "glibc 2.25"
+  loader_path: "/lib/ld-linux-aarch64.so.1"
+  loader_present: true
+  libc_path: "/lib/libc.so.6"
+  libstdcxx_path: "/lib/libstdc++.so.6"
+  libgcc_path: "/lib/libgcc_s.so.1"
+  file_command: "NOT_AVAILABLE on board"
+  readelf_command: "NOT_AVAILABLE on board"
+  evidence: "results/logs/vendor/board_runtime/01_runtime_environment.log"
+toolchain_identity:
+  kernel_compiler: "aarch64-linux-gnu-gcc (Linaro GCC 7.5-2019.12) 7.5.0"
+  target_triple: "aarch64-linux-gnu"
+  vm_sdk_identity: "SDK_2025_07 Linaro GCC 7.5.0"
+  match_status: "CONFIRMED"
+  scope: "compiler/libc identity only; complete SDK provenance remains a separate VM record"
+  evidence:
+    - "results/logs/vendor/board_runtime/01_runtime_environment.log"
+    - ".knowledge/manifests/vm_aarch64_toolchain.yaml"
+smoke_gate:
+  expected_directory: "/tmp/board_smoke"
+  required_order:
+    - hello_c_static
+    - hello_c_dynamic
+    - hello_cpp_dynamic
+  previous_attempt: "NOT_RUN"
+  previous_blocker: "INPUT_PACKAGE_MISSING"
+  previous_permission_attempt:
+    execution_attempt: "BLOCKED_BEFORE_EXEC"
+    blocker: "FILE_NOT_EXECUTABLE"
+    shell_exit_code: 126
+    elf_runtime_result: "NOT_RUN"
+    note: "The shell rejected mode 0644 before entering the ELF; this was not an ELF runtime failure."
+  transfer:
+    source: "C:/Users/Administrator/Desktop/fpga_info/_generated/board_smoke_package"
+    method: "Windows OpenSSH scp.exe with the authorized board key"
+    temporary_target: "/tmp/board_smoke.new"
+    final_target: "/tmp/board_smoke"
+    status: "PASS"
+  executable_permission_validation: "PASS"
+  permissions_before:
+    hello_c_static: "0644"
+    hello_c_dynamic: "0644"
+    hello_cpp_dynamic: "0644"
+  permissions_after:
+    hello_c_static: "0755"
+    hello_c_dynamic: "0755"
+    hello_cpp_dynamic: "0755"
+  chmod_scope: "Only the three ELF files; file contents and names unchanged"
+  hashes_before:
+    hello_c_static: "10f41dd84947e8774f6a00199188bfaf0921ac187cd61be3e8c85d484d9cae02"
+    hello_c_dynamic: "2fd2e5adb6a112109fe29fa7f1ab43248df0a928af48ecf42d8e64c0c8741005"
+    hello_cpp_dynamic: "605ebeab229cd6abc14f61432019ad997f4209ffb71cfad10527535458df4464"
+  hashes_after:
+    hello_c_static: "10f41dd84947e8774f6a00199188bfaf0921ac187cd61be3e8c85d484d9cae02"
+    hello_c_dynamic: "2fd2e5adb6a112109fe29fa7f1ab43248df0a928af48ecf42d8e64c0c8741005"
+    hello_cpp_dynamic: "605ebeab229cd6abc14f61432019ad997f4209ffb71cfad10527535458df4464"
+  checksum_validation: "PASS"
+  checksum_evidence: "results/logs/vendor/board_runtime/board_smoke_checksum.log"
+  status: "PASS"
+  hello_c_static: "PASS; exit_code=0"
+  hello_c_dynamic: "PASS; exit_code=0"
+  hello_cpp_dynamic: "PASS; exit_code=0"
+  stdout:
+    hello_c_static: "edgeai_arm_toolchain_hello_c; sizeof(void*)=8"
+    hello_c_dynamic: "edgeai_arm_toolchain_hello_c; sizeof(void*)=8"
+    hello_cpp_dynamic: "edgeai_arm_toolchain_hello_cpp\\nsizeof(void*)=8\\nvector_size=3"
+  stderr: "empty for all three programs"
+  reason: "The permission-only correction changed metadata from 0644 to 0755; all three SHA256 values remained unchanged and all three direct executions returned zero."
+  evidence:
+    - "results/logs/vendor/board_runtime/board_smoke_transfer.log"
+    - "results/logs/vendor/board_runtime/board_smoke_checksum.log"
+    - "results/logs/vendor/board_runtime/board_smoke_permissions.log"
+    - "results/logs/vendor/board_runtime/board_smoke_checksum_after_chmod.log"
+    - "results/logs/vendor/board_runtime/hello_c_static_runtime.log"
+    - "results/logs/vendor/board_runtime/board_smoke_summary.log"
+    - "results/logs/vendor/board_runtime/hello_c_dynamic_runtime.log"
+    - "results/logs/vendor/board_runtime/hello_cpp_dynamic_runtime.log"
+    - "results/logs/vendor/board_runtime/board_smoke_final_state.log"
+decisions:
+  board_toolchain_runtime: "PASS"
+  executable_permission_validation: "PASS"
+  static_c_runtime: "PASS"
+  dynamic_c_runtime: "PASS"
+  dynamic_cpp_runtime: "PASS"
+  transfer_or_execution: "PASS"
+  checksum_validation: "PASS"
+  next_action: "Keep NPU driver, demo, and benchmark work on HOLD; this task validates user-space toolchain execution only."
