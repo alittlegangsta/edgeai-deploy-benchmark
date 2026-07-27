@@ -1,0 +1,129 @@
+schema_version: "1"
+inventory_type: "sdk_2025_07_component_inventory"
+audited_at: "2026-07-24"
+audit_mode: "read_only_metadata_and_small_text"
+sdk:
+  root: "/home/uisrc/vendor/anlogic/sdk/sdk"
+  archive: "/home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz"
+  archive_sha256: "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0"
+  release_marker: "/home/uisrc/vendor/anlogic/sdk/sdk/buildroot/rel_ver"
+  release: "SDK_2025_07"
+  source_tree_modified: false
+  archive_extracted_this_audit: false
+buildroot:
+  root: "/home/uisrc/vendor/anlogic/sdk/sdk/buildroot"
+  version: "unknown"
+  release_marker: "SDK_2025_07"
+  defconfig: "/home/uisrc/vendor/anlogic/sdk/sdk/buildroot/configs/anlogic_dr1m90_defconfig"
+  architecture: "aarch64"
+  libc: "glibc"
+  external_toolchain_prefix: "aarch64-linux-gnu-"
+  external_toolchain_path: "../toolchains/aarch64-linux"
+  external_gcc_major: 7
+  kernel_headers: "4.10"
+  generated_config: "missing: buildroot/.config"
+  output_host: "missing: buildroot/output/host"
+  output_staging: "missing: buildroot/output/staging"
+  output_target: "missing: buildroot/output/target"
+  rootfs: "defconfig describes cpio/ext2/JFFS2/UBI outputs; generated rootfs not found"
+  evidence:
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/buildroot/rel_ver"
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/buildroot/configs/anlogic_dr1m90_defconfig"
+toolchains:
+  linux_aarch64:
+    archive: "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/dr1m_arm-gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar"
+    archive_format: "tar"
+    expected_prefix: "aarch64-linux-gnu-"
+    version_marker: "GCC Linaro 7.5.0-2019.12"
+    installed_path: "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/aarch64-linux"
+    installed_compiler: "missing_not_extracted"
+    sysroot: "unknown"
+    status: "archive_present_not_extracted"
+  baremetal_aarch64:
+    archive: "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/dr1m_arm-gnu-toolchain-12.3.rel1-x86_64-aarch64-none-elf.tar.xz"
+    archive_format: "tar.xz"
+    expected_prefix: "aarch64-none-elf-"
+    version_marker: "12.3.rel1"
+    installed_path: "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/aarch64-bm"
+    installed_compiler: "missing_not_extracted"
+    sysroot: "not_applicable_until_extracted"
+    status: "archive_present_not_extracted"
+  archive_evidence: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/toolchain_archive_inventory.txt"
+armnn:
+  root: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib"
+  status: "AARCH64_ARMNN_BUNDLE_CONFIRMED"
+  version: "32.1.0"
+  parser_version: "24.6.0"
+  architecture: "AArch64 ELF64"
+  cmake_config: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib/lib/cmake/armnn/ArmnnConfig.cmake"
+  core_library: "libarmnn.so.32.1"
+  parser_library: "libarmnnOnnxParser.so.24.6"
+  backend_library: "libarmnnBasePipeServer.so.32.1"
+  missing_or_incomplete:
+    - "libprotoc.so.* expected by build.sh not found"
+    - "ArmnnTargets-release.cmake references serializer/deserializer files absent from lib directory"
+  evidence:
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib/include/armnn/Version.hpp"
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib/include/armnnOnnxParser/Version.hpp"
+    - "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/armnn_elf.txt"
+opencv:
+  root: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64"
+  status: "AARCH64_OPENCV_4_7_CONFIRMED"
+  version: "4.7.0"
+  architecture: "AArch64 ELF64"
+  cmake_config: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/cmake/opencv4/OpenCVConfig.cmake"
+  pkg_config: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/pkgconfig/opencv4.pc"
+  modules:
+    - "core"
+    - "imgproc"
+    - "imgcodecs"
+    - "dnn"
+    - "videoio"
+    - "highgui"
+  runtime_caveat: "OpenCV RPATH contains /home/rtxiao/repos/ffmpeg/ffmpeg_opencv4.7.0_aarch64/lib; relocation and FFmpeg availability are not validated."
+  evidence:
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/include/opencv4/opencv2/core/version.hpp"
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/cmake/opencv4/OpenCVConfig.cmake"
+drivers:
+  source_files:
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu/cma_mem_driver/cma_mem.c"
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu/hard_npu_driver/hard_npu.c"
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu/soft_npu_driver/soft_npu.c"
+  kernel_module_binaries: 0
+  status: "source_present_binary_missing"
+hardware_artifacts:
+  hpf_count_sdk_and_demo: 21
+  bit_count_sdk_and_demo: 25
+  boot_artifacts_present: true
+  compatibility: "unknown"
+  evidence: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/hardware_artifact_inventory.txt"
+npu_runtime:
+  standalone_library: "not_found"
+  integration: "vendor Arm NN Alnpu backend"
+  evidence: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/npu_interface_inventory.txt"
+cmake:
+  minimum_required: "3.15"
+  vm_command_status: "cmake not found"
+  evidence: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/cmake_requirements.txt"
+known_absences:
+  - "Extracted AArch64 Linux compiler"
+  - "Validated sysroot"
+  - "Generated Buildroot output/staging/rootfs"
+  - "Prebuilt NPU kernel module binaries"
+  - "Standalone libnpu_runtime"
+  - "Validated board runtime environment"
+provenance_logs:
+  root: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit"
+  files:
+    - "tool_commands.txt"
+    - "armnn_inventory.txt"
+    - "armnn_elf.txt"
+    - "opencv_inventory.txt"
+    - "opencv_elf.txt"
+    - "npu_interface_inventory.txt"
+    - "driver_inventory.txt"
+    - "hardware_artifact_inventory.txt"
+    - "toolchain_archive_inventory.txt"
+    - "cmake_requirements.txt"
+    - "version_evidence.txt"
+    - "summary.md"
