@@ -1,0 +1,139 @@
+schema_version: "1"
+inventory_type: "anlogic_board_smoke_package"
+created_at: "2026-07-27"
+status: "deployed_and_executed_user_space_smoke"
+execution_policy:
+  board_connected: true
+  board_programs_executed: true
+  npu_accessed: false
+  source_elfs_rebuilt: false
+  sdk_modified: false
+  task_file_modified: false
+source:
+  build_root: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke"
+  toolchain_root: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0"
+  remote_wrapper: "/home/dministrator/bin/anlogic-vm-ssh"
+package:
+  vm_path: "/home/uisrc/vendor/anlogic/builds/board_smoke_package"
+  shared_copy: "/mnt/hgfs/fpga_info/_generated/board_smoke_package"
+  windows_path: "C:\\Users\\Administrator\\Desktop\\fpga_info\\_generated\\board_smoke_package"
+  regular_file_count: 7
+  elf_file_count: 3
+  total_size_bytes: 4981926
+  sha256sums_file_sha256: "7b105dedc715ab7db5e09b74e2ecb39cdcdd3907002dac35f3843ffd7387f55c"
+  board_probe_sha256: "55189ef219714b616ce276e58a5d18d53516fe8238ca2f8e7defe24fbb47c9be"
+  readme_sha256: "a779c42a27f0458a3e7861f83f881ebe398ca3e36e16f2a44b2f908bd73f46dc"
+  run_order_file_sha256: "48753035369d5a47602c69875f8e1e3edcb227a2b59296f19340796f7d6e4c47"
+  vm_shared_hashes_match: true
+artifacts:
+  - id: "hello_c_static"
+    source_path: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke/hello_c_static"
+    package_path: "/home/uisrc/vendor/anlogic/builds/board_smoke_package/hello_c_static"
+    sha256: "10f41dd84947e8774f6a00199188bfaf0921ac187cd61be3e8c85d484d9cae02"
+    file_type: "ELF64 AArch64 executable"
+    linkage: "static"
+    interpreter: "none"
+    needed: []
+    verification: "file/readelf -h/readelf -l/readelf -d passed; sha256sum -c passed"
+  - id: "hello_c_dynamic"
+    source_path: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke/hello_c"
+    package_path: "/home/uisrc/vendor/anlogic/builds/board_smoke_package/hello_c_dynamic"
+    sha256: "2fd2e5adb6a112109fe29fa7f1ab43248df0a928af48ecf42d8e64c0c8741005"
+    file_type: "ELF64 AArch64 executable"
+    linkage: "dynamic"
+    interpreter: "/lib/ld-linux-aarch64.so.1"
+    needed:
+      - "libc.so.6"
+    verification: "file/readelf -h/readelf -l/readelf -d passed; sha256sum -c passed"
+  - id: "hello_cpp_dynamic"
+    source_path: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke/hello_cpp"
+    package_path: "/home/uisrc/vendor/anlogic/builds/board_smoke_package/hello_cpp_dynamic"
+    sha256: "605ebeab229cd6abc14f61432019ad997f4209ffb71cfad10527535458df4464"
+    file_type: "ELF64 AArch64 executable"
+    linkage: "dynamic"
+    interpreter: "/lib/ld-linux-aarch64.so.1"
+    needed:
+      - "libstdc++.so.6"
+      - "libm.so.6"
+      - "libgcc_s.so.1"
+      - "libc.so.6"
+    verification: "file/readelf -h/readelf -l/readelf -d passed; sha256sum -c passed"
+run_order:
+  file: "/home/uisrc/vendor/anlogic/builds/board_smoke_package/BOARD_RUN_ORDER.txt"
+  steps:
+    - "Run hello_c_static first and collect its exit code."
+    - "Inspect the board dynamic loader and required libc before dynamic programs."
+    - "Run hello_c_dynamic second and collect its exit code."
+    - "Run hello_cpp_dynamic last and collect its exit code."
+    - "Stop immediately after any failure."
+board_probe:
+  script: "scripts/vendor/probe_anlogic_board.sh"
+  status: "prepared_not_run"
+  allowed_scope:
+    - "identity, kernel, OS, architecture, libc, loader, memory, storage"
+    - "network addresses and TCP 22 listener"
+    - "sshd/dropbear process presence"
+    - "NPU device nodes and module filenames"
+  prohibited:
+    - "execute hello artifacts"
+    - "load modules"
+    - "run NPU"
+    - "install or modify system software"
+evidence:
+  package_preparation_script: "scripts/vendor/prepare_board_smoke_package.sh"
+  source_elf_audit: "prepare_board_smoke_package.sh output: file, sha256sum, readelf -h/-l/-d"
+  package_verification: "VM and /mnt/hgfs copies: seven files, three ELF64 AArch64; sha256sum -c SHA256SUMS passed for three ELF files and board_probe.sh"
+  target_execution: "board-side user-space smoke executed after an approved chmod-only correction; see board_runtime logs"
+board_execution:
+  wrapper: "/home/dministrator/bin/anlogic-board-ssh"
+  target_root: "/tmp/board_smoke"
+  transfer_method: "Windows OpenSSH scp.exe to /tmp/board_smoke.new, then remote atomic rename"
+  package_file_count: 7
+  previous_attempt:
+    status: "NOT_RUN"
+    blocker: "INPUT_PACKAGE_MISSING"
+    evidence:
+      - "results/logs/vendor/board_runtime/06_smoke_execution.log"
+      - "results/logs/vendor/board_runtime/07_smoke_location.log"
+  previous_permission_attempt:
+    execution_attempt: "BLOCKED_BEFORE_EXEC"
+    blocker: "FILE_NOT_EXECUTABLE"
+    shell_exit_code: 126
+    elf_runtime_result: "NOT_RUN"
+    note: "The shell rejected mode 0644 before entering the ELF; this was not an ELF runtime failure."
+  checksum_validation: "PASS"
+  permission_correction:
+    status: "PASS"
+    scope:
+      - "hello_c_static"
+      - "hello_c_dynamic"
+      - "hello_cpp_dynamic"
+    before: "0644"
+    after: "0755"
+    content_hashes_changed: false
+  run_order:
+    - program: "hello_c_static"
+      status: "PASS"
+      exit_code: 0
+      stdout: "edgeai_arm_toolchain_hello_c; sizeof(void*)=8"
+      stderr: "empty"
+    - program: "hello_c_dynamic"
+      status: "PASS"
+      exit_code: 0
+      stdout: "edgeai_arm_toolchain_hello_c; sizeof(void*)=8"
+      stderr: "empty"
+    - program: "hello_cpp_dynamic"
+      status: "PASS"
+      exit_code: 0
+      stdout: "edgeai_arm_toolchain_hello_cpp\\nsizeof(void*)=8\\nvector_size=3"
+      stderr: "empty"
+  status: "PASS"
+  npu_stage_entered: false
+  evidence:
+    - "results/logs/vendor/board_runtime/board_smoke_permissions.log"
+    - "results/logs/vendor/board_runtime/board_smoke_checksum_after_chmod.log"
+    - "results/logs/vendor/board_runtime/hello_c_static_runtime.log"
+    - "results/logs/vendor/board_runtime/hello_c_dynamic_runtime.log"
+    - "results/logs/vendor/board_runtime/hello_cpp_dynamic_runtime.log"
+    - "results/logs/vendor/board_runtime/board_smoke_summary.log"
+    - "results/logs/vendor/board_runtime/board_smoke_final_state.log"
