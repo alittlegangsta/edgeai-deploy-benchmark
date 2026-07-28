@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "evidence_type": "task013_anlogic_ncnn_board_runtime_smoke",
+  "recorded_at_wsl": "2026-07-28T15:21:23+08:00",
+  "status": "PASS",
+  "source_artifact": {
+    "origin": "/home/uisrc/build/ncnn-aarch64/anlogic_ncnn_smoke",
+    "wsl_staging_path": "/tmp/edgeai-anlogic-deploy/anlogic_ncnn_smoke",
+    "sha256": "cad23a736f86b0d1ae6f9cfd938dce55732a3fc983a5baaa5a31fde0e393b8f7",
+    "elf_class": "ELF64",
+    "machine": "AArch64",
+    "interpreter": "/lib/ld-linux-aarch64.so.1",
+    "ncnn_tag": "20240410",
+    "ncnn_commit": "56775de50990ab7f16627efdcf5529b49541206f"
+  },
+  "deployment": {
+    "method": "SSH stdin transfer through the approved board wrapper",
+    "remote_directory": "/root/edgeai/ncnn-smoke-20240410",
+    "remote_path": "/root/edgeai/ncnn-smoke-20240410/anlogic_ncnn_smoke",
+    "remote_sha256": "cad23a736f86b0d1ae6f9cfd938dce55732a3fc983a5baaa5a31fde0e393b8f7",
+    "mode_before_chmod": "0600",
+    "mode_after_chmod": "0700",
+    "sha256_unchanged_after_chmod": true,
+    "system_directory_modified": false,
+    "system_library_modified": false
+  },
+  "board_environment": {
+    "hostname": "buildroot",
+    "user": "root",
+    "architecture": "aarch64",
+    "os": "Buildroot",
+    "os_version": "2022.02.6",
+    "kernel": "6.1.111-rt42",
+    "libc": "glibc 2.25",
+    "memory_total": "988.7 MiB",
+    "root_filesystem": "/dev/root",
+    "root_filesystem_size": "7.0 GiB",
+    "root_filesystem_available": "6.3 GiB",
+    "board_clock": "Thu Jan 1 00:06:43 UTC 1970",
+    "board_clock_status": "NOT_SYNCHRONIZED",
+    "getconf": "NOT_AVAILABLE",
+    "file": "NOT_AVAILABLE",
+    "readelf": "NOT_AVAILABLE",
+    "timeout": "NOT_AVAILABLE"
+  },
+  "dependency_closure": {
+    "command": "ldd /root/edgeai/ncnn-smoke-20240410/anlogic_ncnn_smoke",
+    "exit_code": 0,
+    "not_found_count": 0,
+    "resolved": [
+      "linux-vdso.so.1",
+      "libdl.so.2 => /lib/libdl.so.2",
+      "libstdc++.so.6 => /lib/libstdc++.so.6",
+      "libm.so.6 => /lib/libm.so.6",
+      "libgcc_s.so.1 => /lib/libgcc_s.so.1",
+      "libpthread.so.0 => /lib/libpthread.so.0",
+      "libc.so.6 => /lib/libc.so.6",
+      "/lib/ld-linux-aarch64.so.1"
+    ]
+  },
+  "execution": {
+    "working_directory": "/root/edgeai/ncnn-smoke-20240410",
+    "command": "./anlogic_ncnn_smoke",
+    "exit_code": 0,
+    "stdout": [
+      "program=edgeai_anlogic_ncnn_smoke",
+      "ncnn_version=1.0.20240410",
+      "reported_cpu_count=2",
+      "configured_threads=1",
+      "vulkan_enabled=0",
+      "fp16_storage_enabled=0",
+      "fp16_arithmetic_enabled=0",
+      "bf16_storage_enabled=0",
+      "int8_inference_enabled=0",
+      "mat_sum=10",
+      "runtime_contract=PASS"
+    ],
+    "stderr": "",
+    "expected_ncnn_api_path_observed": true,
+    "illegal_instruction": false,
+    "segmentation_fault": false,
+    "loader_error": false
+  },
+  "pass_criteria": {
+    "board_aarch64": true,
+    "remote_hash_matches_host": true,
+    "all_dynamic_dependencies_resolved": true,
+    "program_started": true,
+    "ncnn_net_created": true,
+    "runtime_information_printed": true,
+    "no_runtime_signal_or_loader_error": true,
+    "exit_code_zero": true,
+    "stdout_stderr_environment_preserved": true,
+    "no_system_library_or_image_change": true
+  },
+  "remote_text_evidence": [
+    {
+      "path": "/root/edgeai/ncnn-smoke-20240410/environment.txt",
+      "sha256": "1dd89618479b2b5f724d0f1852453b14850705f30af41919a6484d3a3e0ba5ea"
+    },
+    {
+      "path": "/root/edgeai/ncnn-smoke-20240410/remote_sha256.txt",
+      "sha256": "20f71e600bfda8e1ac806457705e055108c679db0b8ec5d4c61d9f5f1f4adf15"
+    },
+    {
+      "path": "/root/edgeai/ncnn-smoke-20240410/ldd.txt",
+      "sha256": "df80b94007fe806de26390969ad1aecff3fab44e88db9c804defc72e8edc727f"
+    },
+    {
+      "path": "/root/edgeai/ncnn-smoke-20240410/ldd.exit_code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/root/edgeai/ncnn-smoke-20240410/run_command.txt",
+      "sha256": "949002daff93cdc564c5856d456be6a3fd0d30ba07ca0dae2caae76a7ead3b1b"
+    },
+    {
+      "path": "/root/edgeai/ncnn-smoke-20240410/anlogic_ncnn_smoke.stdout.txt",
+      "sha256": "a6e83987fd24a17af5c6a8fb91c5b3b6e90a9b258c3bab3b857cf74b4396bfa2"
+    },
+    {
+      "path": "/root/edgeai/ncnn-smoke-20240410/anlogic_ncnn_smoke.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/root/edgeai/ncnn-smoke-20240410/anlogic_ncnn_smoke.exit_code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/root/edgeai/ncnn-smoke-20240410/summary.txt",
+      "sha256": "b995a9fd55eb1acc64c205b1b158cb5ff93a49c83119d79b5d203dfc77312c5a"
+    }
+  ],
+  "scope_boundary": {
+    "model_loaded": false,
+    "inference_run": false,
+    "benchmark_run": false,
+    "video_run": false,
+    "camera_used": false,
+    "vulkan_used": false,
+    "npu_used": false,
+    "kernel_module_changed": false,
+    "boot_asset_changed": false
+  },
+  "evidence_brief": {
+    "task": "Task 013 AArch64 ncnn runtime smoke",
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "sdk_tag": "SDK_2025_07",
+    "repository_tag_commit": "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f",
+    "sources_consulted": [
+      "Task 013 fixed host-build manifest",
+      "host file/readelf/SHA256 inspection",
+      "real-device uname, os-release, ldd, SHA256, stdout, stderr, and exit code"
+    ],
+    "documented_facts": [
+      "The frozen target uses the SDK_2025_07 AArch64 GCC 7.5.0 and glibc 2.25 toolchain contract."
+    ],
+    "source_code_facts": [
+      "The smoke creates ncnn::Net, configures one CPU thread, allocates an FP32 ncnn::Mat, and checks a fixed sum."
+    ],
+    "assumptions": [],
+    "conflicts": [
+      "The board real-time clock was not synchronized; the WSL record time is authoritative for evidence capture order."
+    ],
+    "unresolved_blockers": [],
+    "proposed_action": "Begin Task 014 with fixed-model staging and correctness-first ARM inference under separate authorization."
+  }
+}

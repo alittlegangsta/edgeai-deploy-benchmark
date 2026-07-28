@@ -6,7 +6,7 @@ Record and validate the Anlogic DR1 ARM CPU toolchain setup.
 
 ## Status
 
-In Progress
+Completed
 
 ## Stage
 
@@ -78,6 +78,7 @@ scripts/vendor/build_anlogic_aarch64_ncnn.sh
 scripts/vendor/validate_anlogic_aarch64_ncnn.sh
 docs/vendor/ANLOGIC_AARCH64_NCNN_BUILD.md
 .knowledge/manifests/anlogic_aarch64_ncnn_build.yaml
+results/evidence/013/anlogic_ncnn_board_smoke.json
 ```
 
 Repository-external generated work is allowed only under:
@@ -193,8 +194,8 @@ VM.
 9. All repository syntax, manifest, whitespace, Allowed Files, and staged-diff
    checks pass.
 
-Task 013 remains `In Progress` until criterion 8 has passed on the real board.
-Task 014 remains `Planned`.
+Task 013 becomes `Completed` only after criterion 8 has passed on the real
+board. Task 014 remains `Planned`.
 
 ## Repair Rules
 
@@ -380,7 +381,7 @@ The structured record is
 | 5. Static ncnn build/install | PASS |
 | 6. AArch64 model-free smoke build/inspection | PASS |
 | 7. Provenance record | PASS |
-| 8. Real board smoke execution | Pending |
+| 8. Real board smoke execution | PASS |
 | 9. Repository final checks | PASS |
 
 Final repository validation completed:
@@ -401,6 +402,76 @@ git diff --check: PASS
 Allowed Files audit: PASS
 ```
 
-Task 013 remains `In Progress` solely because the ncnn smoke has not run on the
-real board. Task 014 remains `Planned`; no model, inference, benchmark, video,
-camera, Vulkan, or NPU work occurred.
+### Real Board Runtime Completion
+
+Resumed: `2026-07-28T15:00:00+08:00`
+
+Starting commit: `64b898db84de0287f4f2b81b693951e77accbca3`
+
+The frozen ELF was absent from WSL and was therefore revalidated at its VM
+build path, copied byte-for-byte to `/tmp/edgeai-anlogic-deploy/`, and checked
+again before deployment:
+
+```text
+VM source: /home/uisrc/build/ncnn-aarch64/anlogic_ncnn_smoke
+WSL staging: /tmp/edgeai-anlogic-deploy/anlogic_ncnn_smoke
+VM/WSL SHA256: cad23a736f86b0d1ae6f9cfd938dce55732a3fc983a5baaa5a31fde0e393b8f7
+identity: ELF64 AArch64
+interpreter: /lib/ld-linux-aarch64.so.1
+```
+
+The board wrapper connected as `root` to the real Buildroot target. The task
+created only `/root/edgeai/ncnn-smoke-20240410`, transferred the ELF through
+SSH stdin, verified its SHA256, and changed only that file's mode from `0600`
+to `0700`. The hash remained unchanged.
+
+The board reported:
+
+```text
+hostname: buildroot
+architecture: aarch64
+OS: Buildroot 2022.02.6
+kernel: 6.1.111-rt42
+libc: glibc 2.25
+memory: 988.7 MiB
+getconf/file/readelf/timeout: NOT_AVAILABLE
+board clock: not synchronized (1970-01-01)
+```
+
+The absence of board-side `file` and `readelf` did not weaken the gate because
+the exact same SHA256 had already passed host-side `file` and `readelf`
+inspection. Board-side `ldd` exited zero, contained no `not found`, and resolved
+the loader plus `libdl`, `libstdc++`, `libm`, `libgcc_s`, `libpthread`, and
+`libc` from `/lib`.
+
+The ELF was executed directly without `LD_LIBRARY_PATH`, loader overrides, or
+system-library changes:
+
+```text
+program=edgeai_anlogic_ncnn_smoke
+ncnn_version=1.0.20240410
+reported_cpu_count=2
+configured_threads=1
+vulkan_enabled=0
+fp16_storage_enabled=0
+fp16_arithmetic_enabled=0
+bf16_storage_enabled=0
+int8_inference_enabled=0
+mat_sum=10
+runtime_contract=PASS
+stderr: empty
+exit code: 0
+```
+
+The normalized evidence is
+`results/evidence/013/anlogic_ncnn_board_smoke.json`, SHA256
+`dd7ba7d247d7cf459cffe2662130e1af7ea6b57a04056bdaad861610c377021c`.
+Nine remote text records were copied to WSL `/tmp`, and every local copy passed
+the board-generated SHA256 list.
+
+Completed: `2026-07-28T15:21:23+08:00`
+
+Task 013 is `Completed`. This completion covers the toolchain, static ncnn
+host build, model-free AArch64 smoke build, dependency closure, and real board
+runtime only. Task 014 remains `Planned`; no model, inference, correctness
+comparison, benchmark, video, camera, Vulkan, or NPU work occurred.

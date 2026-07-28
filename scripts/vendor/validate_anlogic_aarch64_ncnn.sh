@@ -64,5 +64,5 @@ fi
 
 sha256sum "$LIB" "$SMOKE"
 printf 'aarch64_ncnn_validation=PASS\n'
-printf 'board_execution=NOT_RUN\n'
+printf 'board_execution_by_this_host_validator=NOT_RUN\n'
 REMOTE

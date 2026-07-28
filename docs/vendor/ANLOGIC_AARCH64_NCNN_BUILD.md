@@ -2,15 +2,16 @@
 
 ## Outcome
 
-Task 013 now has a reproducible host-side AArch64 ncnn baseline. CMake 3.16.9
+Task 013 now has a reproducible AArch64 ncnn build and runtime baseline. CMake 3.16.9
 was built in the Anlogic VM user's home directory, a clean archive was generated
 from the fixed ncnn Git object, the checked-in toolchain file configured the real
 Linaro compiler/sysroot, and a CPU-only static ncnn library plus a model-free
-AArch64 smoke ELF were built successfully.
+AArch64 smoke ELF were built successfully. The hash-identical ELF then passed
+dependency resolution and direct execution on the real DR1M90 board.
 
-The smoke ELF was inspected but not executed. The VM is x86_64 and the
-development board was not accessed. Task 013 therefore remains `In Progress`
-until a separately approved board run passes.
+This proves the frozen toolchain and ncnn runtime can execute the model-free
+contract on the target userspace. It does not prove model loading, inference
+correctness, performance, video, camera, Vulkan, or NPU readiness.
 
 ## Source identity
 
@@ -175,8 +176,65 @@ Its NEEDED entries are `libdl.so.2`, `libstdc++.so.6`, `libm.so.6`,
 `libgcc_s.so.1`, `libpthread.so.0`, and `libc.so.6`. There is no Vulkan,
 Python, or OpenMP runtime dependency.
 
-Successful cross-compilation and ELF inspection do not prove board runtime
-success. The file was not executed in the x86_64 VM.
+The file was not executed in the x86_64 VM. Successful cross-compilation and
+ELF inspection alone did not establish runtime success; the following real-board
+execution supplied that evidence.
+
+## Real-board runtime smoke
+
+The VM artifact was copied to WSL `/tmp`, and its fixed SHA256 was checked
+before deployment. It was then transferred through the approved SSH wrapper to:
+
+```text
+/root/edgeai/ncnn-smoke-20240410/anlogic_ncnn_smoke
+```
+
+Only that independent directory was created. The file arrived as mode `0600`;
+adding the root execute bit changed it to `0700` without changing its SHA256:
+
+```text
+cad23a736f86b0d1ae6f9cfd938dce55732a3fc983a5baaa5a31fde0e393b8f7
+```
+
+The real board reported AArch64, Buildroot 2022.02.6, kernel 6.1.111-rt42,
+glibc 2.25, and two CPUs. Its clock was not synchronized and reported
+1970-01-01; the WSL capture timestamp records evidence order.
+
+Board-side `file`, `readelf`, `getconf`, and `timeout` were unavailable.
+Because the board hash exactly matched the host-inspected ELF, the missing
+inspection utilities did not require a replacement package. Board-side `ldd`
+exited zero and resolved every dependency from `/lib`:
+
+```text
+libdl.so.2
+libstdc++.so.6
+libm.so.6
+libgcc_s.so.1
+libpthread.so.0
+libc.so.6
+/lib/ld-linux-aarch64.so.1
+```
+
+The smoke ran directly without `LD_LIBRARY_PATH`, a loader override, or a
+system-library change:
+
+```text
+program=edgeai_anlogic_ncnn_smoke
+ncnn_version=1.0.20240410
+reported_cpu_count=2
+configured_threads=1
+vulkan_enabled=0
+fp16_storage_enabled=0
+fp16_arithmetic_enabled=0
+bf16_storage_enabled=0
+int8_inference_enabled=0
+mat_sum=10
+runtime_contract=PASS
+```
+
+Stderr was empty and the exit code was zero. The output demonstrates that the
+program created `ncnn::Net`, exercised the fixed FP32 `ncnn::Mat` check, and
+reached its intended success path on the actual target.
 
 ## Attempts and recovery
 
@@ -204,9 +262,14 @@ External logs are under:
 
 The tracked manifest
 `.knowledge/manifests/anlogic_aarch64_ncnn_build.yaml` records the command,
-artifact, cache, and log identities.
+artifact, cache, and log identities. The normalized real-board evidence is
+`results/evidence/013/anlogic_ncnn_board_smoke.json`, SHA256:
 
-Task 013 remains `In Progress`. The next gate is a separately approved transfer
-to a temporary board directory, checksum validation, and direct execution of
-the smoke ELF. Task 014 inference, model deployment, correctness comparison,
-benchmarking, video, camera, Vulkan, and NPU remain out of scope.
+```text
+dd7ba7d247d7cf459cffe2662130e1af7ea6b57a04056bdaad861610c377021c
+```
+
+Task 013 is `Completed`. Task 014 remains `Planned`; its next gate is
+correctness-first deployment of the already frozen ncnn model and fixed
+reference input. Model inference, PC/ARM comparison, benchmarking, video,
+camera, Vulkan, and NPU were not performed in Task 013.

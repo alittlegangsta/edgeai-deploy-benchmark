@@ -1,12 +1,12 @@
 schema_version: "1"
 manifest_type: "anlogic_aarch64_ncnn_build"
-recorded_at: "2026-07-28T11:33:34+08:00"
+recorded_at: "2026-07-28T15:21:23+08:00"
 task: "013"
-status: "HOST_BUILD_PASS_BOARD_RUNTIME_PENDING"
+status: "PASS"
 
 scope:
-  board_accessed: false
-  aarch64_elf_executed: false
+  board_accessed: true
+  aarch64_elf_executed: true
   yolo_run: false
   model_converted: false
   benchmark_run: false
@@ -155,7 +155,38 @@ smoke:
   maximum_glibc_requirement: "GLIBC_2.17"
   maximum_glibcxx_requirement: "GLIBCXX_3.4.21"
   vm_execution: "NOT_RUN_WRONG_ARCHITECTURE"
-  board_execution: "PENDING_SEPARATE_APPROVAL"
+  board_execution: "PASS"
+
+board_runtime:
+  evidence: "results/evidence/013/anlogic_ncnn_board_smoke.json"
+  evidence_sha256: "dd7ba7d247d7cf459cffe2662130e1af7ea6b57a04056bdaad861610c377021c"
+  remote_directory: "/root/edgeai/ncnn-smoke-20240410"
+  remote_artifact: "/root/edgeai/ncnn-smoke-20240410/anlogic_ncnn_smoke"
+  remote_sha256: "cad23a736f86b0d1ae6f9cfd938dce55732a3fc983a5baaa5a31fde0e393b8f7"
+  transfer_hash_validation: "PASS"
+  chmod_hash_validation: "PASS"
+  board_architecture: "aarch64"
+  board_os: "Buildroot 2022.02.6"
+  board_kernel: "6.1.111-rt42"
+  board_libc: "glibc 2.25"
+  board_clock: "NOT_SYNCHRONIZED"
+  board_file_tool: "NOT_AVAILABLE"
+  board_readelf_tool: "NOT_AVAILABLE"
+  dependency_check:
+    command: "ldd /root/edgeai/ncnn-smoke-20240410/anlogic_ncnn_smoke"
+    exit_code: 0
+    missing_dependencies: 0
+  execution:
+    command: "./anlogic_ncnn_smoke"
+    exit_code: 0
+    stderr: "empty"
+    ncnn_version: "1.0.20240410"
+    reported_cpu_count: 2
+    configured_threads: 1
+    mat_sum: 10
+    runtime_contract: "PASS"
+  system_library_modified: false
+  boot_asset_modified: false
 
 attempts:
   - id: "cmake_orchestration"
@@ -189,13 +220,13 @@ decisions:
   static_ncnn_build: "PASS"
   aarch64_smoke_build: "PASS"
   aarch64_elf_inspection: "PASS"
-  board_runtime: "PENDING"
-  task_013: "In Progress"
+  board_runtime: "PASS"
+  task_013: "Completed"
   task_014: "Planned"
   npu: "HOLD"
 
 evidence_brief:
-  task: "Task 013 AArch64 ncnn host build baseline"
+  task: "Task 013 AArch64 ncnn build and real-board runtime baseline"
   board: "MLK-F3P-CZ02-DR1M90"
   sdk_tag: "SDK_2025_07"
   repository_tag_commit: "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f"
@@ -205,9 +236,11 @@ evidence_brief:
     - ".knowledge/manifests/board_runtime_inventory.yaml"
     - ".knowledge/manifests/board_opencv_runtime.yaml"
     - "real VM configure/build/install logs"
+    - "results/evidence/013/anlogic_ncnn_board_smoke.json"
   documented_facts:
     - "The VM is Ubuntu 18.04.4 x86_64 with glibc 2.27."
     - "The target sysroot contains glibc 2.25 runtime and startup files."
+    - "The real board reports Buildroot 2022.02.6, kernel 6.1.111-rt42, AArch64, and glibc 2.25."
   source_code_facts:
     - "ncnn 20240410 exposes the frozen options listed above."
     - "pybind11 is gated by NCNN_PYTHON and glslang is gated by NCNN_VULKAN."
@@ -215,6 +248,6 @@ evidence_brief:
   assumptions: []
   conflicts:
     - "The current OpenCV package has no lib/pkgconfig/opencv4.pc although an older project manifest recorded that path as present."
-  unresolved_blockers:
-    - "The AArch64 ncnn smoke ELF has not run on the real board."
-  proposed_action: "Transfer the hash-verified smoke ELF to a temporary board directory and execute it under a separately approved Task 013 follow-up."
+    - "The board clock is not synchronized; the WSL record time preserves evidence ordering."
+  unresolved_blockers: []
+  proposed_action: "Begin Task 014 with fixed-model staging and correctness-first ARM inference under separate authorization."
