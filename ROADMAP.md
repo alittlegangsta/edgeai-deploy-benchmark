@@ -35,7 +35,7 @@ quantization, or NPU result.
 
 ## Stage 2 benchmark
 
-Task 017, `Anlogic DR1 ARM CPU benchmark`, is `In Progress`. Its protocol is
+Task 017, `Anlogic DR1 ARM CPU benchmark`, is `Completed`. Its protocol was
 frozen before measurement:
 
 - unchanged ncnn `20240410`, frozen YOLOv5n param/bin, fixed input, CPU FP32,
@@ -47,8 +47,12 @@ frozen before measurement:
 - correctness against the PC C++ ncnn golden before and after every process;
 - all raw samples and invalid-attempt evidence retained.
 
-No formal ARM value has been collected or published. Real-board collection and
-the first complete candidate review remain pending.
+The approved real-board baseline contains five independent processes and 100
+retained formal samples. It passes before/after correctness, deterministic
+validator recomputation, the frozen `10%` stability gate with `1.688017802%`
+round-mean spread, and user review. The unoptimized one-thread pipeline mean is
+`3513.992354 ms` and sequential batch-1 FPS is `0.284576601`; inference is the
+dominant stage.
 
 ## Future work: explicitly out of scope
 

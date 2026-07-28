@@ -1,10 +1,18 @@
 schema_version: "1"
 manifest_type: "anlogic_arm_cpu_benchmark_protocol"
 task: "017"
-task_status: "In Progress"
+task_status: "Completed"
 protocol_status: "FROZEN"
-formal_data_collection: "Pending"
-formal_performance_published: false
+formal_data_collection: "PASS"
+formal_performance_published: true
+ARM_CPU_BENCHMARK: "PASS"
+
+human_approval:
+  human_review: "PASS"
+  human_review_source: "user"
+  candidate_approved: true
+  recorded_at: "2026-07-28T18:00:25+08:00"
+  recorded_at_basis: "WSL approval record time; not board runtime time"
 
 dependencies:
   task_013: "Completed"
@@ -89,6 +97,99 @@ correctness:
   finite_values: "required"
   valid_boxes: "required"
 
+build_candidate:
+  recorded_at: "2026-07-28T17:46:22+08:00"
+  source_archive_sha256: "9fc8d2606891eabda4d404337a76c5b0b2a86fcd6bd3f98d13a3dfa515f33039"
+  cmake: "3.16.9"
+  compiler: "Linaro GCC/G++ 7.5.0"
+  target_triple: "aarch64-linux-gnu"
+  executable:
+    external_path: "/home/uisrc/build/edgeai-arm-yolov5n/build-9fc8d2606891eabda4d404337a76c5b0b2a86fcd6bd3f98d13a3dfa515f33039/edgeai_benchmark_ncnn"
+    sha256: "6fc9f99a62ef57231a29bce59657a9cf69bffb1e0a4a329b6e7f64b75ac1512a"
+    elf: "ELF64 AArch64"
+    interpreter: "/lib/ld-linux-aarch64.so.1"
+    maximum_glibc: "GLIBC_2.17"
+    maximum_glibcxx: "GLIBCXX_3.4.21"
+    unexpected_dependencies: []
+  package_sha256sums_sha256: "3fe88a1d2a2728700d4e9a45214eeb79ad925854b15c7bcda487cf663e0527bd"
+
+formal_candidate:
+  recorded_at: "2026-07-28T17:46:22+08:00"
+  board_directory: "/root/edgeai/anlogic-arm-benchmark-task017-repair1"
+  board_clock: "NOT_SYNCHRONIZED"
+  ordering_time_basis: "round order and monotonic timings; WSL time records evidence"
+  valid_process_rounds: 5
+  invalid_process_rounds_in_candidate: 0
+  formal_samples: 100
+  process_ids: [446, 455, 463, 470, 477]
+  correctness_before_after: "PASS_TARGET"
+  maximum_round_mean_relative_difference_percent: 1.6880178022069963
+  stability_gate_percent: 10.0
+  stability_gate: "PASS"
+  sensors:
+    cpu_frequency_non_null_samples: 0
+    temperature_non_null_samples: 0
+    unavailable_representation: null
+  performance:
+    preprocess:
+      mean_ms: 41.933672779999995
+      p50_ms: 41.80569
+      p90_ms: 42.164101
+      min_ms: 41.71833
+      max_ms: 43.284
+      sample_standard_deviation_ms: 0.39564257161303756
+    inference:
+      mean_ms: 3418.0920051599996
+      p50_ms: 3406.781914
+      p90_ms: 3411.752194
+      min_ms: 3403.005634
+      max_ms: 3575.035295
+      sample_standard_deviation_ms: 35.03927570748967
+    postprocess:
+      mean_ms: 53.96667567
+      p50_ms: 53.79033
+      p90_ms: 54.23139
+      min_ms: 53.7336
+      max_ms: 55.551871
+      sample_standard_deviation_ms: 0.4976346237901544
+    pipeline:
+      mean_ms: 3513.99235361
+      p50_ms: 3502.465775
+      p90_ms: 3507.337445
+      min_ms: 3498.901385
+      max_ms: 3672.449047
+      sample_standard_deviation_ms: 35.86217393181143
+    fps_batch1_sequential: 0.2845766010198282
+    peak_rss_kib_maximum: 142476
+    model_load_ms_mean: 633.4503962
+  status: "PASS"
+  human_review: "PASS"
+  human_review_source: "user"
+  candidate_approved: true
+  human_review_recorded_at: "2026-07-28T18:00:25+08:00"
+  human_review_recorded_at_basis: "WSL approval record time; not board runtime time"
+
+candidate_evidence:
+  environment_before:
+    path: "results/evidence/017/benchmark_environment_before.json"
+    sha256: "ff77be569e9bf423de6a5ff38cda669ab27c5f11dd9ac2e2caf2be9c4702ee49"
+  environment_after:
+    path: "results/evidence/017/benchmark_environment_after.json"
+    sha256: "8d33e3cb2d1da932efaf85c7f912f02f06dc9b13ff12a63952257d24e8287b1e"
+  raw_samples:
+    path: "results/evidence/017/benchmark_raw_samples.json"
+    sha256: "b39c3f1bc4883713a67ba8494c46d0d569894505ca12bc4cd1f92b72ef7f9c74"
+  summary:
+    path: "results/evidence/017/benchmark_summary.json"
+    sha256: "81b5ca3adb512b4ee77559271523e5073535bc8cc1ff388378d54f410e29c4eb"
+  validation:
+    path: "results/evidence/017/benchmark_validation.json"
+    sha256: "697dcb1279f4af360d11cd81a9611c33f5cbe0a7aef501878ec843c2c300a27e"
+  invalid_session:
+    external_path: "/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_benchmark_failed_session_1"
+    reason: "collector append failed on OpenCV JSON null parsing; preserved and excluded from candidate"
+    raw_sha256: "07ffde431af3f17b25924ad0008034f7cc97e2d29b5a7c3c699569f28e91c6a3"
+
 tracked_protocol:
   config:
     path: "configs/benchmark_anlogic_arm.json"
@@ -98,8 +199,8 @@ tracked_protocol:
   task: "tasks/017_anlogic_dr1_arm_cpu_benchmark.md"
 
 scope_boundary:
-  formal_benchmark_run: false
-  performance_values: "not collected or published"
+  formal_benchmark_run: true
+  performance_values: "published as the user-approved unoptimized default CPU baseline"
   video: false
   camera: false
   vulkan: false
@@ -117,13 +218,12 @@ evidence_brief:
     - "existing shared C++ ncnn benchmark and single-image source"
   documented_facts:
     - "Tasks 013-015 prove the board ABI, ncnn runtime, and frozen single-image correctness."
-    - "No formal ARM benchmark data has been collected."
+    - "One real-board five-process/100-sample session passes the validator and user review."
   source_code_facts:
     - "Task 017 extends the existing benchmark target rather than duplicating preprocessing or postprocessing."
     - "The original benchmark mode is PC-specific and remains backward compatible."
   assumptions: []
   conflicts:
     - "The local SDK_2025_07 identity is not proof of an exact official repository SDK tag."
-  unresolved_blockers:
-    - "Formal real-board data collection and complete candidate review."
-  proposed_action: "Run the offline checks, then authorize one real-board formal campaign."
+  unresolved_blockers: []
+  proposed_action: "Publish the approved unoptimized CPU baseline and keep optimization, video, camera, Vulkan, quantization, and NPU in separate future tasks."

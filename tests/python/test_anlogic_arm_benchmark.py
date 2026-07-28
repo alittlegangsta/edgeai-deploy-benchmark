@@ -152,6 +152,38 @@ class AnlogicArmBenchmarkTests(unittest.TestCase):
         self.assertGreater(summary["statistics"]["pipeline"]["sample_standard_deviation_ms"], 0)
         self.assertGreater(summary["pipeline_fps_batch1_sequential"], 0)
         self.assertEqual(summary["correctness_before_after"], "PASS_TARGET")
+        self.assertEqual(summary["benchmark_status"], "PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW")
+        self.assertFalse(summary["candidate_approved"])
+
+    def test_user_approved_fixture_is_final(self) -> None:
+        review = VALIDATOR.human_review_record(
+            approve_candidate=True,
+            source="user",
+            recorded_at="2026-07-28T18:00:25+08:00",
+        )
+        summary = VALIDATOR.validate_and_summarize(
+            raw_payload(self.config_sha),
+            self.config,
+            self.config_sha,
+            environment("before"),
+            environment("after"),
+            review,
+        )
+        self.assertEqual(summary["benchmark_status"], "PASS")
+        self.assertEqual(summary["formal_publication"], "APPROVED_BASELINE")
+        self.assertEqual(summary["human_review"], "PASS")
+        self.assertEqual(summary["human_review_source"], "user")
+        self.assertTrue(summary["candidate_approved"])
+
+    def test_rejects_approval_without_user_source(self) -> None:
+        with self.assertRaisesRegex(
+            VALIDATOR.ValidationError, "review source must be user"
+        ):
+            VALIDATOR.human_review_record(
+                approve_candidate=True,
+                source=None,
+                recorded_at="2026-07-28T18:00:25+08:00",
+            )
 
     def test_rejects_incomplete_round(self) -> None:
         payload = raw_payload(self.config_sha)

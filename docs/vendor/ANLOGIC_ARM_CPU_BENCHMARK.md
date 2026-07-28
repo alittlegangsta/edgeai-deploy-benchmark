@@ -2,9 +2,11 @@
 
 ## Status
 
-Task 017 is `In Progress`. The protocol and offline tooling are frozen; no
-formal ARM measurement has been collected or published. The existing Task 014
-single-run timings remain diagnostic and are not benchmark evidence.
+Task 017 is `Completed`. The frozen protocol produced one real-board
+five-process/100-sample session that passes the automated validator and user
+review. It is published as the unoptimized default DR1 CPU-only FP32,
+single-thread baseline. The existing Task 014 single-run timings remain
+diagnostic and are not benchmark evidence.
 
 ## Purpose and baseline
 
@@ -124,7 +126,11 @@ all valid samples and outliers remain in the raw dataset.
 
 The preregistered contract is
 [`benchmark_contract.json`](../../results/evidence/017/benchmark_contract.json).
-Formal collection will add:
+Its freeze-time `formal_data_collected: false` and
+`published_performance_values: false` fields are immutable preregistration
+facts, not the current task state. Current collection and publication state is
+recorded in the generated summary, validation, task, and manifest.
+Formal collection added:
 
 ```text
 results/evidence/017/
@@ -138,6 +144,55 @@ results/evidence/017/
 Raw stage durations are authoritative integer nanoseconds. Millisecond fields
 are exact derived representations. The validator regenerates summary and
 validation files; those values must not be entered manually.
+
+## Formal user-approved baseline
+
+The baseline was collected on the real MLK-F3P-CZ02-DR1M90 using five new
+processes and the hash-verified AArch64 executable
+`6fc9f99a62ef57231a29bce59657a9cf69bffb1e0a4a329b6e7f64b75ac1512a`.
+All 100 valid samples are retained:
+
+| Stage | Mean ms | P50 ms | P90 ms | Min ms | Max ms | Sample SD ms |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| preprocess | 41.933673 | 41.805690 | 42.164101 | 41.718330 | 43.284000 | 0.395643 |
+| inference | 3418.092005 | 3406.781914 | 3411.752194 | 3403.005634 | 3575.035295 | 35.039276 |
+| postprocess | 53.966676 | 53.790330 | 54.231390 | 53.733600 | 55.551871 | 0.497635 |
+| pipeline | 3513.992354 | 3502.465775 | 3507.337445 | 3498.901385 | 3672.449047 | 35.862174 |
+
+Sequential batch-1 FPS is `0.284576601`. Maximum process Peak RSS is
+`142476 KiB`; mean model load is `633.450396 ms` and remains excluded from FPS.
+The five round pipeline means differ by `1.688017802%`, passing the frozen 10%
+gate. The pipeline mean is about `3.514` seconds per image and inference is the
+dominant stage.
+
+Every process passed correctness before warmup and after measurement with five
+detections, minimum class-matched IoU `0.999985507578`, and maximum confidence
+delta `0.00000500679016113`. Frequency, governor, available-frequency, and
+thermal sysfs nodes were unavailable; all 100 per-sample frequency and
+temperature observations are JSON `null`, not zero.
+
+The user approved the complete candidate. The approval record is:
+
+```text
+human_review: PASS
+human_review_source: user
+candidate_approved: true
+recorded_at: 2026-07-28T18:00:25+08:00
+```
+
+That timestamp is the WSL approval record time, not board runtime time. The
+board clock was not synchronized. Evidence ordering uses process rounds,
+monotonic durations, and WSL record time. The pre-session load average was
+`0.09, 0.24, 0.17`; the post-session load average was `1.00, 0.90, 0.58`.
+No governor, frequency, system-library, or service setting was changed.
+
+The first collection attempt is retained outside Git because its second process
+exposed an append-parser defect after a valid first round. The repaired
+executable ran a completely new five-process session; no round from the failed
+session was mixed into the approved baseline. The failed attempt is not an
+invalid round in the approved session and its evidence was not deleted. A later
+checksum-path defect occurred only after board collection and was repaired by
+resuming the same accepted session without rerunning any process.
 
 ## Entry points
 
@@ -167,8 +222,23 @@ OpenCV libraries, uses an isolated board directory, performs five process
 rounds, returns evidence, and runs the deterministic validator. It does not
 build ncnn, alter system libraries, or change board power/governor/frequency.
 
-The first complete candidate must stop for human review before Task 017 can be
-marked `Completed` or performance values can be published.
+Candidate approval is an explicit WSL-only validator operation; omitting the
+approval arguments always regenerates a pending-review candidate:
+
+```bash
+python3 scripts/vendor/validate_anlogic_arm_benchmark.py summarize \
+  --raw results/evidence/017/benchmark_raw_samples.json \
+  --environment-before results/evidence/017/benchmark_environment_before.json \
+  --environment-after results/evidence/017/benchmark_environment_after.json \
+  --summary results/evidence/017/benchmark_summary.json \
+  --validation results/evidence/017/benchmark_validation.json \
+  --approve-candidate \
+  --human-review-source user \
+  --human-review-recorded-at 2026-07-28T18:00:25+08:00
+```
+
+The complete candidate stopped for human review and was approved before Task
+017 was marked `Completed` and the values above were published.
 
 ## Known limitations
 
@@ -178,6 +248,6 @@ marked `Completed` or performance values can be published.
   can influence results.
 - Peak RSS is process-level.
 - FPS is single-image pipeline throughput, not video throughput.
-- No formal ARM number exists at protocol-freeze time.
+- The approved result is an unoptimized default baseline, not a tuned result.
 - Video, camera, Vulkan, quantization, and NPU remain out of scope; NPU is
   `HOLD`.

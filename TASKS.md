@@ -22,7 +22,7 @@ The authoritative execution rules are in
 | 014 | Stage 2 | 013 | Completed | Run and validate the frozen YOLOv5n ncnn single-image pipeline on the Anlogic DR1 ARM CPU; automated correctness reached PASS_TARGET and the user approved the returned output image. Benchmark, video, camera, Vulkan, quantization, and NPU remain out of scope. |
 | 015 | Stage 2 | 014 | Completed | Consolidate Tasks 013–014 provenance, reproduction, deployment, and correctness evidence, then close the DR1 CPU single-image baseline without adding benchmark, video, camera, Vulkan, quantization, or NPU claims. |
 | 016 | Vendor and board baseline | None | Completed | Inventory Anlogic DR1 sources and SDK 2025.07, validate the AArch64 toolchain and board C/C++/OpenCV userspace smoke, and record runtime/NPU readiness; ARM ncnn, ARM YOLO/benchmark, NPU deployment, and exact SDK/Demo tag matching remain out of scope. |
-| 017 | Stage 2 benchmark | 013 + 014 + 015 | In Progress | Freeze the formal MLK-F3P-CZ02-DR1M90 CPU/FP32 single-thread benchmark protocol and offline collection/validation tooling before any real ARM measurement; formal board data collection is pending and NPU remains on hold. |
+| 017 | Stage 2 benchmark | 013 + 014 + 015 | Completed | Measure the frozen MLK-F3P-CZ02-DR1M90 CPU/FP32 single-thread baseline under the preregistered protocol; five independent processes and 100 retained samples pass correctness, deterministic validation, stability, and user review. NPU remains on hold. |
 
 Batch A stops after Task 005, Batch B stops after Task 009, and Batch C stops
 after Task 012. A checkpoint requires explicit human review before the next batch.

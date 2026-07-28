@@ -9,6 +9,7 @@ import json
 import math
 import statistics
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Sequence
 
@@ -234,13 +235,54 @@ def validate_environment(value: dict[str, Any], phase: str) -> None:
         require(isinstance(value.get(field), list), f"{phase} {field} must be a list")
 
 
+def human_review_record(
+    *,
+    approve_candidate: bool,
+    source: str | None,
+    recorded_at: str | None,
+) -> dict[str, Any]:
+    if not approve_candidate:
+        require(source is None, "human review source requires candidate approval")
+        require(recorded_at is None, "human review timestamp requires candidate approval")
+        return {
+            "human_review": "PENDING",
+            "human_review_source": None,
+            "candidate_approved": False,
+            "human_review_recorded_at": None,
+            "human_review_recorded_at_basis": None,
+        }
+    require(source == "user", "approved candidate review source must be user")
+    require(isinstance(recorded_at, str) and bool(recorded_at), "approval timestamp is required")
+    try:
+        parsed = datetime.fromisoformat(recorded_at)
+    except ValueError as error:
+        raise ValidationError("approval timestamp must be ISO 8601") from error
+    require(parsed.tzinfo is not None, "approval timestamp must include a timezone")
+    return {
+        "human_review": "PASS",
+        "human_review_source": "user",
+        "candidate_approved": True,
+        "human_review_recorded_at": recorded_at,
+        "human_review_recorded_at_basis": (
+            "WSL approval record time; not board runtime time"
+        ),
+    }
+
+
 def validate_and_summarize(
     raw: dict[str, Any],
     config: dict[str, Any],
     config_sha: str,
     environment_before: dict[str, Any],
     environment_after: dict[str, Any],
+    review: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if review is None:
+        review = human_review_record(
+            approve_candidate=False,
+            source=None,
+            recorded_at=None,
+        )
     validate_environment(environment_before, "before")
     validate_environment(environment_after, "after")
     require(raw.get("schema_version") == 2, "raw schema differs")
@@ -390,10 +432,11 @@ def validate_and_summarize(
     )
     require(spread <= maximum_spread, "round pipeline mean spread exceeds the frozen gate")
     aggregate_pipeline_mean = float(aggregate["pipeline"]["mean_ms"])
-    return {
+    approved = review["candidate_approved"] is True
+    summary = {
         "schema_version": 1,
         "evidence_type": "task017_anlogic_arm_benchmark_summary",
-        "benchmark_status": "PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW",
+        "benchmark_status": "PASS" if approved else "PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW",
         "benchmark_config_sha256": config_sha,
         "runtime_contract": {
             "name": "ncnn",
@@ -445,8 +488,10 @@ def validate_and_summarize(
             "after": environment_after,
         },
         "outlier_policy": "all 100 valid samples retained; no latency-based deletion",
-        "formal_publication": "PENDING_HUMAN_REVIEW",
+        "formal_publication": "APPROVED_BASELINE" if approved else "PENDING_HUMAN_REVIEW",
     }
+    summary.update(review)
+    return summary
 
 
 def write_json(path: Path, value: dict[str, Any]) -> None:
@@ -472,14 +517,26 @@ def command_summarize(args: argparse.Namespace) -> int:
     raw = load_json(args.raw)
     environment_before = load_json(args.environment_before)
     environment_after = load_json(args.environment_after)
+    review = human_review_record(
+        approve_candidate=args.approve_candidate,
+        source=args.human_review_source,
+        recorded_at=args.human_review_recorded_at,
+    )
     summary = validate_and_summarize(
-        raw, config, config_sha, environment_before, environment_after
+        raw,
+        config,
+        config_sha,
+        environment_before,
+        environment_after,
+        review,
     )
     write_json(args.summary, summary)
+    approved = review["candidate_approved"] is True
+    status = "PASS" if approved else "PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW"
     validation = {
         "schema_version": 1,
         "evidence_type": "task017_anlogic_arm_benchmark_validation",
-        "status": "PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW",
+        "status": status,
         "raw_sha256": sha256_file(args.raw),
         "environment_before_sha256": sha256_file(args.environment_before),
         "environment_after_sha256": sha256_file(args.environment_after),
@@ -496,10 +553,10 @@ def command_summarize(args: argparse.Namespace) -> int:
             "fps_recomputed": "PASS",
             "environment_schema": "PASS",
         },
-        "human_review": "PENDING",
     }
+    validation.update(review)
     write_json(args.validation, validation)
-    print("task017_validation=PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW")
+    print(f"task017_validation={status}")
     print("sample_count=100")
     print("valid_process_rounds=5")
     return 0
@@ -520,6 +577,13 @@ def build_parser() -> argparse.ArgumentParser:
     summarize.add_argument("--environment-after", type=Path, required=True)
     summarize.add_argument("--summary", type=Path, required=True)
     summarize.add_argument("--validation", type=Path, required=True)
+    summarize.add_argument(
+        "--approve-candidate",
+        action="store_true",
+        help="record explicit human approval and publish the validated candidate",
+    )
+    summarize.add_argument("--human-review-source", choices=("user",))
+    summarize.add_argument("--human-review-recorded-at")
     summarize.set_defaults(handler=command_summarize)
     return parser
 

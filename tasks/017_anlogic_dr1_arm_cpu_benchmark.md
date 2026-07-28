@@ -6,7 +6,7 @@ Anlogic DR1 ARM CPU benchmark.
 
 ## Status
 
-In Progress
+Completed
 
 ## Stage
 
@@ -22,7 +22,7 @@ Tasks 013, 014, and 015 (`Completed`).
 
 ## Recommended Commit
 
-`feat(benchmark): freeze DR1 ARM CPU benchmark protocol`
+`test(benchmark): record DR1 ARM CPU baseline`
 
 ## Goal
 
@@ -253,6 +253,7 @@ be typed into documentation or hand-edited.
 TASKS.md
 ROADMAP.md
 README.md
+CHANGELOG.md
 tasks/017_anlogic_dr1_arm_cpu_benchmark.md
 configs/benchmark_anlogic_arm.json
 cpp/apps/benchmark_ncnn.cpp
@@ -265,6 +266,11 @@ tests/python/test_anlogic_arm_benchmark.py
 .knowledge/manifests/anlogic_arm_cpu_benchmark.yaml
 docs/vendor/ANLOGIC_ARM_CPU_BENCHMARK.md
 results/evidence/017/benchmark_contract.json
+results/evidence/017/benchmark_environment_before.json
+results/evidence/017/benchmark_environment_after.json
+results/evidence/017/benchmark_raw_samples.json
+results/evidence/017/benchmark_summary.json
+results/evidence/017/benchmark_validation.json
 ```
 
 Repository-external build/deployment/result files are allowed only under
@@ -397,12 +403,12 @@ board: MLK-F3P-CZ02-DR1M90
 SDK tag: SDK_2025_07 local asset identity; exact official repository tag compatibility unproven
 repository tag/commit: ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f
 sources consulted: Tasks 009, 011, 012, 013, 014, and 015; their tracked manifests and evidence; existing benchmark and ARM application source
-documented facts: the board and ABI passed Tasks 013-015; no formal ARM benchmark exists
-source-code facts: the existing ncnn benchmark target reuses shared preprocessing, ncnn inference, and postprocessing but its original protocol is PC-specific
+documented facts: the board and ABI passed Tasks 013-015; one five-process/100-sample real-board session passes automated validation and user review
+source-code facts: the Task 017 mode reuses shared preprocessing, ncnn inference, and postprocessing and preserves the PC mode
 assumptions: none
 conflicts: the exact official repository SDK tag corresponding to the local SDK_2025_07 asset remains unproven and is not needed for this CPU benchmark identity
-unresolved blockers: real-board formal collection and human review are pending
-proposed action: freeze and locally validate protocol/tooling, then run one separately authorized real-board campaign
+unresolved blockers: none
+proposed action: publish the approved unoptimized CPU baseline and keep optimization, video, camera, Vulkan, quantization, and NPU separate
 ```
 
 ## Execution Record
@@ -551,7 +557,304 @@ benchmark target and all focused tests were rebuilt successfully. This was an
 editing-orchestration mismatch, not a producer, runner, benchmark, or evidence
 repair attempt.
 
-Task 017 remains `In Progress`. Protocol and offline tooling are ready. Formal
-readiness still requires the separately authorized VM cross-build and AArch64
-ELF inspection, followed by board preflight and the first complete candidate
-campaign. No performance number is present or published.
+At protocol-freeze commit `035f9cfb49ce380a493fc7af1dcd93861b46ea63`,
+Task 017 remained `In Progress`; no performance number was present or published.
+
+### Formal Collection Repair Attempt 1: append JSON with unavailable sensors
+
+Recorded: `2026-07-28T17:30:21+08:00`
+
+```text
+Failed command: bash scripts/vendor/run_anlogic_arm_benchmark.sh --execute
+Exit code: 1
+Failure point: round 2 before formal timing
+Error: OpenCV 4.7 FileStorage rejected the existing raw JSON value null
+Preserved evidence: round 1 raw samples and acceptance marker; round 2 attempt 1 stderr and exit code
+Diagnosis: Task 017 correctly emits JSON null for unavailable frequency and
+  temperature, but append_round incorrectly reopened the prior raw file with
+  OpenCV FileStorage, whose JSON parser does not accept null
+Frozen contract impact: none; null remains the required unavailable value
+Files modified: cpp/apps/benchmark_ncnn.cpp and this execution record
+Repair: validate the producer-owned raw file's schema, evidence type, backend,
+  config hash, round count, and sequential round identities directly before
+  appending, without passing evidence JSON through OpenCV FileStorage; add a
+  task-owned remote-session path override so the repaired executable runs a
+  fresh five-process session while the original failed session remains intact
+Required retest: local build/CTest, VM cross-build/ELF inspection, hash-safe
+  board redeployment, complete one fresh rounds 1-5 session, and validator
+Status: PASS; the failed original session remains preserved outside Git and was
+  not mixed with the repaired candidate
+```
+
+### Formal Collection Repair Attempt 2: returned checksum paths
+
+Recorded: `2026-07-28T17:43:57+08:00`
+
+```text
+Failed command: ANLOGIC_SHARED_LOCAL=...repair1
+  ANLOGIC_SHARED_WINDOWS=...repair1
+  ANLOGIC_ARM_BENCHMARK_REMOTE=...repair1
+  bash scripts/vendor/run_anlogic_arm_benchmark.sh --execute
+Exit code: 1
+Failure point: local verification after all five rounds, both environment
+  captures, and board-side returned-file hashes completed
+Error: RETURNED_SHA256SUMS named results/<file>, but SCP returned the contents
+  of results/ into the local returned directory, where those paths do not exist
+Preserved evidence: one complete five-process session, 100 raw samples, all
+  accepted markers, before/after environments, board-side source hashes, and
+  the first returned copy
+Diagnosis: checksum paths were generated relative to the deployment root rather
+  than the returned evidence directory
+Files modified: scripts/vendor/run_anlogic_arm_benchmark.sh and this execution record
+Repair: generate RETURNED_SHA256SUMS from inside results/ and preserve an
+  existing after-environment capture when resuming a completed session
+Required retest: shell syntax/dry-run, resume the same task-owned remote session,
+  verify that five rounds are already accepted without rerunning them, transfer
+  to a fresh external return directory, verify hashes, and run the validator
+Status: PASS; the resume reported all five rounds ALREADY_ACCEPTED, performed no
+  measurement process, verified returned hashes, and ran the validator
+```
+
+### Formal Candidate Collection
+
+Candidate recorded in WSL: `2026-07-28T17:46:22+08:00`
+
+VM build:
+
+```text
+command: bash scripts/vendor/build_anlogic_aarch64_yolov5n.sh --execute
+status: PASS
+CMake: 3.16.9
+compiler: Linaro GCC/G++ 7.5.0
+target: aarch64-linux-gnu
+source archive SHA256:
+9fc8d2606891eabda4d404337a76c5b0b2a86fcd6bd3f98d13a3dfa515f33039
+libncnn.a SHA256:
+5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a
+benchmark ELF SHA256:
+6fc9f99a62ef57231a29bce59657a9cf69bffb1e0a4a329b6e7f64b75ac1512a
+ELF: ELF64 AArch64; /lib/ld-linux-aarch64.so.1
+maximum requirements: GLIBC_2.17; GLIBCXX_3.4.21
+unexpected Vulkan/Python/libgomp dependency: none
+```
+
+Real-device observations:
+
+```text
+board: MLK-F3P-CZ02-DR1M90
+architecture: aarch64
+OS: Buildroot 2022.02.6
+kernel: 6.1.111-rt42
+glibc: 2.25
+CPU count: 2
+package SHA256SUMS SHA256:
+3fe88a1d2a2728700d4e9a45214eeb79ad925854b15c7bcda487cf663e0527bd
+ldd not found count: 0
+governor/frequency/thermal nodes: unavailable
+system or governor modification: none
+board clock: not synchronized; ordering uses round order/monotonic timing and
+  WSL record time
+```
+
+Formal session:
+
+```text
+remote directory: /root/edgeai/anlogic-arm-benchmark-task017-repair1
+valid process IDs: 446, 455, 463, 470, 477
+valid independent rounds: 5
+invalid rounds in candidate: 0
+warmup per round: 10
+measured per round: 20
+formal samples: 100
+all five exit codes: 0
+all five stderr files: empty
+correctness before and after every process: PASS_TARGET
+minimum class-matched IoU:
+0.9999855075776749
+maximum confidence delta:
+0.0000050067901611328125
+```
+
+Validator-recomputed candidate statistics:
+
+```text
+preprocess mean/P50/P90/min/max/sample-SD ms:
+41.933672780 / 41.805690 / 42.164101 / 41.718330 / 43.284000 / 0.395642572
+inference mean/P50/P90/min/max/sample-SD ms:
+3418.092005160 / 3406.781914 / 3411.752194 / 3403.005634 / 3575.035295 / 35.039275707
+postprocess mean/P50/P90/min/max/sample-SD ms:
+53.966675670 / 53.790330 / 54.231390 / 53.733600 / 55.551871 / 0.497634624
+pipeline mean/P50/P90/min/max/sample-SD ms:
+3513.992353610 / 3502.465775 / 3507.337445 / 3498.901385 / 3672.449047 / 35.862173932
+sequential batch-1 FPS:
+0.2845766010198282
+maximum Peak RSS KiB:
+142476
+model-load mean/min/max ms:
+633.4503962 / 631.833936 / 637.443276
+five-round pipeline mean spread:
+1.6880178022069963 percent (PASS against 10 percent gate)
+frequency observations:
+0 available / 100 null
+temperature observations:
+0 available / 100 null
+```
+
+Environment:
+
+```text
+before load average: 0.09, 0.24, 0.17
+after load average: 1.00, 0.90, 0.58
+before MemAvailable: 932564 KiB
+after MemAvailable: 932804 KiB
+governor, available/current frequency, thermal lists: empty/unavailable
+```
+
+Tracked candidate evidence:
+
+```text
+benchmark_environment_before.json:
+ff77be569e9bf423de6a5ff38cda669ab27c5f11dd9ac2e2caf2be9c4702ee49
+benchmark_environment_after.json:
+8d33e3cb2d1da932efaf85c7f912f02f06dc9b13ff12a63952257d24e8287b1e
+benchmark_raw_samples.json:
+b39c3f1bc4883713a67ba8494c46d0d569894505ca12bc4cd1f92b72ef7f9c74
+benchmark_summary.json:
+c800b8e088261398b86f52c137e5b009a955e77f59fd7e614a84adc6eb839a21
+benchmark_validation.json:
+24843e11a8fb775bf26cb7e89525a32641c50b4bdd0f834a1453fb3a83195f92
+```
+
+The validator was rerun independently to `/tmp`; both recomputed summary and
+validation hashes exactly matched the tracked candidate. Its status is
+`PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW`. The first candidate dataset and
+environment are now at the task's mandatory human stop. Task 017 remains
+`In Progress`; no result is published and no completion commit is permitted
+until the user reviews this candidate.
+
+### Final Offline Validation Before Human Review
+
+Recorded: `2026-07-28T17:54:49+08:00`
+
+```text
+frozen contract check: PASS
+independent summary regeneration: PASS; byte-identical SHA256
+independent validation regeneration: PASS; byte-identical SHA256
+YAML parse: PASS (44 files, including multi-document YAML)
+JSON parse: PASS (77 files)
+tracked/local Markdown link check: PASS (54 files, 12 local links)
+frozen model/manifest/config/input/golden hashes: PASS
+runner --check: PASS
+runner --dry-run: PASS; no VM, board, inference, or benchmark access
+focused Task 017 Python tests: PASS (7)
+model-independent Release build: PASS
+model-independent CTest: PASS (4/4)
+full PC Release build: PASS
+full CTest: PASS (12/12)
+full Python unittest discovery: PASS (71/71)
+tracked/untracked shell syntax: PASS
+tracked/untracked Python py_compile: PASS
+sensitive-material scan of all candidate changes/evidence: PASS
+candidate file policy and size check: PASS; largest candidate file is 51110 bytes
+git diff --check: PASS
+```
+
+The first generic Markdown-link scan included ignored third-party files under
+`.venv` and found only upstream-package links outside this repository. The
+authoritative check was rerun over Git-tracked and non-ignored candidate
+Markdown files and passed. Similarly, the first all-YAML command selected the
+single-document parser and was corrected to `safe_load_all` for the repository's
+existing multi-document YAML; all documents then parsed successfully. Neither
+check changed task evidence.
+
+### Human Review and Baseline Approval
+
+Approval recorded in WSL: `2026-07-28T18:00:25+08:00`
+
+The timestamp above is the approval record time in WSL, not the board runtime
+time. The approval was made by the user; it was not performed or inferred by
+Codex.
+
+```text
+human_review: PASS
+human_review_source: user
+candidate_approved: true
+ARM_CPU_BENCHMARK: PASS
+formal session: APPROVED
+Task 017: Completed
+```
+
+The user approved the complete five-process/100-sample candidate after reviewing
+the frozen protocol, retained raw samples, before/after correctness, independent
+validator output, and environment limitations. The approved formal baseline is
+the unoptimized ncnn `20240410` CPU-only FP32, batch-1, `640x640`, one-thread
+result. Its aggregate pipeline mean is `3513.992354 ms` (about `3.514` seconds
+per image) and sequential batch-1 FPS is `0.2845766010198282` (about `0.285`).
+Inference dominates the measured pipeline.
+
+The approval does not generalize this result to multi-thread execution,
+NEON-specific optimization, quantization, Vulkan, video, camera, or NPU. The
+board clock remained unsynchronized, so evidence ordering continues to use
+process round, monotonic durations, and WSL record time. Frequency, governor,
+available-frequency, and thermal sysfs observations remain unavailable, and
+the 100 frequency and temperature sample fields remain JSON `null`.
+
+The original failed collection remains outside Git with its first completed
+round and its second-round pre-timing collector failure. It is not an invalid
+round in the approved session, was not merged into the approved five rounds,
+and was not deleted.
+
+Final generated evidence:
+
+```text
+benchmark_environment_before.json:
+ff77be569e9bf423de6a5ff38cda669ab27c5f11dd9ac2e2caf2be9c4702ee49
+benchmark_environment_after.json:
+8d33e3cb2d1da932efaf85c7f912f02f06dc9b13ff12a63952257d24e8287b1e
+benchmark_raw_samples.json:
+b39c3f1bc4883713a67ba8494c46d0d569894505ca12bc4cd1f92b72ef7f9c74
+benchmark_summary.json:
+81b5ca3adb512b4ee77559271523e5073535bc8cc1ff388378d54f410e29c4eb
+benchmark_validation.json:
+697dcb1279f4af360d11cd81a9611c33f5cbe0a7aef501878ec843c2c300a27e
+validator status: PASS
+formal publication: APPROVED_BASELINE
+```
+
+### Final Completion Validation
+
+Completed: `2026-07-28T18:07:31+08:00`
+
+No VM, board, SSH, inference, or benchmark process ran during approval
+closeout.
+
+```text
+approved validator regeneration: PASS
+independent approved summary SHA256 match: PASS
+independent approved validation SHA256 match: PASS
+YAML parse: PASS (44 files)
+JSON parse: PASS (77 files)
+manifest/evidence SHA256 reconciliation: PASS
+raw rounds/samples: PASS (5/100)
+frequency null preservation: PASS (100/100)
+temperature null preservation: PASS (100/100)
+frozen asset hashes: PASS
+runner --check: PASS
+runner --dry-run: PASS; no remote access
+all tracked/non-ignored shell syntax: PASS
+all tracked/non-ignored Python py_compile: PASS
+focused Task 017 Python tests: PASS (9/9)
+model-independent Release build: PASS
+model-independent CTest: PASS (4/4)
+full PC Release build: PASS
+full CTest: PASS (12/12)
+full Python unittest discovery: PASS (73/73)
+Markdown local links: PASS (54 files, 12 links)
+sensitive-material scan: PASS (16 candidate files)
+repository artifact/size policy: PASS; largest candidate file is 51110 bytes
+git diff --check: PASS
+```
+
+All twelve Acceptance Criteria passed in real execution or required human
+review. Tasks 013–016 and their evidence remain unchanged. Task 017 is
+`Completed`; `ARM_CPU_BENCHMARK` is `PASS`.

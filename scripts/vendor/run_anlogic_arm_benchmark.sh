@@ -38,8 +38,8 @@ BOARD_SSH="${ANLOGIC_BOARD_SSH:-/home/dministrator/bin/anlogic-board-ssh}"
 BOARD_SCP="${ANLOGIC_BOARD_SCP:-/mnt/c/Windows/System32/OpenSSH/scp.exe}"
 BOARD_KEY_WINDOWS="${ANLOGIC_BOARD_KEY_WINDOWS:-C:/Users/Administrator/.ssh/anlogic_board_ed25519}"
 BOARD_TARGET="${ANLOGIC_BOARD_TARGET:-root@192.168.50.2}"
-REMOTE_NEW="/root/edgeai/anlogic-arm-benchmark-task017.new"
-REMOTE_DEST="/root/edgeai/anlogic-arm-benchmark-task017"
+REMOTE_DEST="${ANLOGIC_ARM_BENCHMARK_REMOTE:-/root/edgeai/anlogic-arm-benchmark-task017}"
+REMOTE_NEW="${REMOTE_DEST}.new"
 FORMAL_EVIDENCE="$REPO_ROOT/results/evidence/017"
 LOG_DIR="$REPO_ROOT/results/logs/vendor/arm_benchmark"
 
@@ -217,11 +217,12 @@ elif [[ "$remote_mode" == "conflict" ]]; then
 fi
 
 set +e
-"$BOARD_SSH" 'sh -s -- '"$remote_mode" <<'REMOTE' 2>&1 | tee "$LOG_DIR/formal_collection.log"
+"$BOARD_SSH" "sh -s -- '$remote_mode' '$REMOTE_NEW' '$REMOTE_DEST'" <<'REMOTE' \
+  2>&1 | tee "$LOG_DIR/formal_collection.log"
 set -u
 mode=$1
-new=/root/edgeai/anlogic-arm-benchmark-task017.new
-dest=/root/edgeai/anlogic-arm-benchmark-task017
+new=$2
+dest=$3
 if [ "$mode" = transfer ]; then
   test -d "$new" || exit 1
   test ! -e "$dest" || exit 1
@@ -340,11 +341,16 @@ while [ "$round" -le 5 ]; do
     > "results/logs/round_${round}.accepted"
   round=$((round + 1))
 done
-capture_environment after results/benchmark_environment_after.json
-sha256sum \
-  results/benchmark_environment_before.json \
-  results/benchmark_environment_after.json \
-  results/benchmark_raw_samples.json > results/RETURNED_SHA256SUMS
+if [ ! -e results/benchmark_environment_after.json ]; then
+  capture_environment after results/benchmark_environment_after.json
+fi
+(
+  cd results || exit 1
+  sha256sum \
+    benchmark_environment_before.json \
+    benchmark_environment_after.json \
+    benchmark_raw_samples.json > RETURNED_SHA256SUMS
+)
 cat results/RETURNED_SHA256SUMS
 REMOTE
 board_rc=${PIPESTATUS[0]}

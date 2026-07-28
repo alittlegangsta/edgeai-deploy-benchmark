@@ -1,0 +1,26 @@
+{
+  "benchmark_config_sha256": "51ffd0db29be98e74767ee5cf5d03d97f8392ebd42749aa4c9c46bb8162f20c1",
+  "candidate_approved": true,
+  "checks": {
+    "all_samples_retained": "PASS",
+    "correctness_before_after": "PASS_TARGET",
+    "environment_schema": "PASS",
+    "exact_stage_sums": "PASS",
+    "five_independent_processes": "PASS",
+    "fps_recomputed": "PASS",
+    "frozen_asset_hashes": "PASS",
+    "nearest_rank_and_sample_stddev": "PASS",
+    "one_hundred_samples": "PASS"
+  },
+  "environment_after_sha256": "8d33e3cb2d1da932efaf85c7f912f02f06dc9b13ff12a63952257d24e8287b1e",
+  "environment_before_sha256": "ff77be569e9bf423de6a5ff38cda669ab27c5f11dd9ac2e2caf2be9c4702ee49",
+  "evidence_type": "task017_anlogic_arm_benchmark_validation",
+  "human_review": "PASS",
+  "human_review_recorded_at": "2026-07-28T18:00:25+08:00",
+  "human_review_recorded_at_basis": "WSL approval record time; not board runtime time",
+  "human_review_source": "user",
+  "raw_sha256": "b39c3f1bc4883713a67ba8494c46d0d569894505ca12bc4cd1f92b72ef7f9c74",
+  "schema_version": 1,
+  "status": "PASS",
+  "summary_sha256": "81b5ca3adb512b4ee77559271523e5073535bc8cc1ff388378d54f410e29c4eb"
+}

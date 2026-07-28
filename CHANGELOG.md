@@ -22,4 +22,9 @@
 - Completed the Anlogic DR1 ARM CPU single-image baseline with a frozen
   AArch64 ncnn build, real-board runtime smoke, frozen YOLOv5n deployment,
   PC/ARM `PASS_TARGET` correctness, byte-identical annotated output, and user
-  visual approval; formal ARM benchmarking and NPU remain out of scope.
+  visual approval.
+- Added the preregistered DR1 ARM CPU benchmark with five independent
+  processes, 100 retained samples, before/after correctness, independent
+  statistic recomputation, stability validation, and user approval. The
+  published result is the unoptimized CPU-only FP32 one-thread baseline; NPU
+  remains out of scope and `HOLD`.

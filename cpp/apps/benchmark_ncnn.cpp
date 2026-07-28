@@ -636,22 +636,41 @@ void append_round(
     }
     std::string payload;
     if (edgeai::filesystem::exists(path)) {
-        cv::FileStorage storage(path.string(), cv::FileStorage::READ | cv::FileStorage::FORMAT_JSON);
-        if (!storage.isOpened() || static_cast<std::string>(storage["backend"]) != kBackend ||
-            static_cast<std::string>(storage["evidence_type"]) != evidence_type ||
-            static_cast<std::string>(storage["benchmark_config_sha256"]) !=
-                benchmark_config_sha256) {
-            throw std::runtime_error("existing ncnn benchmark identity differs");
-        }
-        const cv::FileNode rounds = storage["rounds"];
-        if (!rounds.isSeq() || static_cast<int>(rounds.size()) + 1 != round) {
-            throw std::runtime_error("ncnn benchmark rounds must append sequentially");
-        }
-        storage.release();
         std::ifstream input(path);
         payload.assign(std::istreambuf_iterator<char>(input), std::istreambuf_iterator<char>());
         while (!payload.empty() && std::isspace(static_cast<unsigned char>(payload.back())) != 0) {
             payload.pop_back();
+        }
+        const std::string expected_schema =
+            "\"schema_version\":" +
+            std::string(evidence_type == "task017_anlogic_arm_raw_benchmark" ? "2" : "1");
+        const std::string expected_type = "\"evidence_type\":" + json_string(evidence_type);
+        const std::string expected_backend = "\"backend\":" + json_string(kBackend);
+        const std::string expected_config =
+            "\"benchmark_config_sha256\":" + json_string(benchmark_config_sha256);
+        if (payload.find(expected_schema) == std::string::npos ||
+            payload.find(expected_type) == std::string::npos ||
+            payload.find(expected_backend) == std::string::npos ||
+            payload.find(expected_config) == std::string::npos) {
+            throw std::runtime_error("existing ncnn benchmark identity differs");
+        }
+        std::size_t existing_rounds = 0U;
+        std::size_t offset = 0U;
+        const std::string process_marker = "\"process_id\":";
+        while ((offset = payload.find(process_marker, offset)) != std::string::npos) {
+            ++existing_rounds;
+            offset += process_marker.size();
+        }
+        if (existing_rounds + 1U != static_cast<std::size_t>(round)) {
+            throw std::runtime_error("ncnn benchmark rounds must append sequentially");
+        }
+        for (std::size_t expected_round = 1U; expected_round <= existing_rounds;
+             ++expected_round) {
+            const std::string round_marker =
+                "{\"round\":" + std::to_string(expected_round) + ",\"process_id\":";
+            if (payload.find(round_marker) == std::string::npos) {
+                throw std::runtime_error("existing ncnn benchmark round identity differs");
+            }
         }
         if (payload.size() < 2U || payload.substr(payload.size() - 2U) != "]}") {
             throw std::runtime_error("existing ncnn benchmark JSON suffix differs");

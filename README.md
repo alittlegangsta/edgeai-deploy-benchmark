@@ -9,18 +9,21 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–016 are completed. Task 017 is `In Progress`. Checkpoint C is human-approved, PC Stage 1 is
-complete, and the Anlogic DR1 Stage 2 CPU single-image baseline is complete.
+Tasks 001–017 are completed. Checkpoint C is human-approved, PC Stage 1 is
+complete, and the Anlogic DR1 Stage 2 CPU single-image and unoptimized benchmark
+baselines are complete.
 Stage 2 covers the validated AArch64 toolchain, a CPU-only static ncnn build,
 real-board ncnn runtime smoke, frozen YOLOv5n single-image inference, PC/ARM
-correctness, and user-approved visual output. It does not include a formal ARM
-benchmark, video, camera, Vulkan, quantization, or NPU deployment.
+correctness, user-approved visual output, and the formal CPU/FP32 one-thread
+benchmark. It does not include video, camera, Vulkan, quantization, optimization,
+or NPU deployment.
 
-Task 017 freezes the separate formal DR1 ARM CPU benchmark protocol and offline
+Task 017 froze the separate formal DR1 ARM CPU benchmark protocol and offline
 collector/validator. It defines five independent processes, 10 warmups and 20
 measured iterations per process, exact stage boundaries, nearest-rank
 statistics, Peak RSS, frequency/temperature observation, and before/after
-correctness. No formal ARM performance data has been collected or published.
+correctness. The complete 100-sample real-board session passed automated
+validation and user review and is published as the default unoptimized baseline.
 See [the ARM benchmark protocol](docs/vendor/ANLOGIC_ARM_CPU_BENCHMARK.md).
 
 ## PC architecture and model lineage
@@ -65,6 +68,15 @@ postprocessing, and PC C++ ncnn golden. It exited zero with five matching
 detections. The minimum class-matched IoU is `0.999985507578`, the maximum
 confidence delta is `0.00000500679016113`, the annotated PNG is byte-identical
 to the PC ncnn golden, and the user visual review is `PASS`.
+
+The user-approved Task 017 benchmark uses five independent processes, 10
+warmups and 20 measured iterations per process. The aggregate pipeline mean is
+`3513.992354 ms` (about `3.514` seconds per image), and sequential batch-1 FPS
+is `0.284576601` (about `0.285`). Mean inference time is `3418.092005 ms`, so
+inference dominates the pipeline. Maximum process Peak RSS is `142476 KiB`.
+These values describe the default CPU-only FP32, batch-1, `640x640`, one-thread
+configuration, not multi-thread, NEON-specific, quantized, Vulkan, or NPU
+performance.
 
 Use [the Stage 2 closeout guide](docs/vendor/ANLOGIC_ARM_STAGE2_CLOSEOUT.md) for
 the frozen identities, environment roles, phased build/deploy/run/collect/
@@ -310,7 +322,7 @@ backend includes its Runtime, model, and input state.
 ## Stage boundary and future work
 
 PC Stage 1 and the DR1 ARM CPU single-image Stage 2 baseline are complete.
-No formal ARM performance result has been collected or published. Task 017 has
-preregistered the frozen single-thread CPU/FP32 method, but real-board
-collection and human review remain pending. Video, camera, Vulkan, quantization,
-and NPU remain separate future work; NPU readiness remains `HOLD`.
+Task 017 has completed the preregistered single-thread CPU/FP32 benchmark and
+published the validator- and user-approved unoptimized default baseline. Video,
+camera, multi-thread/NEON-specific optimization, Vulkan, quantization, and NPU
+remain separate future work; NPU readiness remains `HOLD`.
