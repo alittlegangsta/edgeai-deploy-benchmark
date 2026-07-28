@@ -3,6 +3,7 @@
 #include <cmath>
 #include <functional>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -87,6 +88,27 @@ void test_detection_comparison() {
             ));
         },
         "detection count drift is rejected"
+    );
+    auto nonfinite = reordered;
+    nonfinite.front().confidence = std::numeric_limits<float>::quiet_NaN();
+    expect_throws(
+        [&] {
+            static_cast<void>(edgeai::common::compare_benchmark_detections(
+                reference, nonfinite, 0.99, 0.001
+            ));
+        },
+        "non-finite detection values are rejected"
+    );
+    auto invalid_box = reordered;
+    invalid_box.front().box_xyxy_source.x2 =
+        invalid_box.front().box_xyxy_source.x1;
+    expect_throws(
+        [&] {
+            static_cast<void>(edgeai::common::compare_benchmark_detections(
+                reference, invalid_box, 0.99, 0.001
+            ));
+        },
+        "invalid detection boxes are rejected"
     );
 }
 

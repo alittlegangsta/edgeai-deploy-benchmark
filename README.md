@@ -9,12 +9,19 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–016 are completed. Checkpoint C is human-approved, PC Stage 1 is
+Tasks 001–016 are completed. Task 017 is `In Progress`. Checkpoint C is human-approved, PC Stage 1 is
 complete, and the Anlogic DR1 Stage 2 CPU single-image baseline is complete.
 Stage 2 covers the validated AArch64 toolchain, a CPU-only static ncnn build,
 real-board ncnn runtime smoke, frozen YOLOv5n single-image inference, PC/ARM
 correctness, and user-approved visual output. It does not include a formal ARM
 benchmark, video, camera, Vulkan, quantization, or NPU deployment.
+
+Task 017 freezes the separate formal DR1 ARM CPU benchmark protocol and offline
+collector/validator. It defines five independent processes, 10 warmups and 20
+measured iterations per process, exact stage boundaries, nearest-rank
+statistics, Peak RSS, frequency/temperature observation, and before/after
+correctness. No formal ARM performance data has been collected or published.
+See [the ARM benchmark protocol](docs/vendor/ANLOGIC_ARM_CPU_BENCHMARK.md).
 
 ## PC architecture and model lineage
 
@@ -303,9 +310,7 @@ backend includes its Runtime, model, and input state.
 ## Stage boundary and future work
 
 PC Stage 1 and the DR1 ARM CPU single-image Stage 2 baseline are complete.
-No formal ARM performance result has been collected or published. A future,
-separately authorized ARM CPU benchmark should retain the frozen model and
-single-thread CPU/FP32 contract while preregistering warmup, repetitions,
-process rounds, timing boundaries, raw samples, Peak RSS, governor, frequency,
-and temperature. Video, camera, Vulkan, quantization, and NPU remain separate
-future work; NPU readiness remains `HOLD`.
+No formal ARM performance result has been collected or published. Task 017 has
+preregistered the frozen single-thread CPU/FP32 method, but real-board
+collection and human review remain pending. Video, camera, Vulkan, quantization,
+and NPU remain separate future work; NPU readiness remains `HOLD`.

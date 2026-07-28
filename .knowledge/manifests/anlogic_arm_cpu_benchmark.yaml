@@ -1,0 +1,129 @@
+schema_version: "1"
+manifest_type: "anlogic_arm_cpu_benchmark_protocol"
+task: "017"
+task_status: "In Progress"
+protocol_status: "FROZEN"
+formal_data_collection: "Pending"
+formal_performance_published: false
+
+dependencies:
+  task_013: "Completed"
+  task_014: "Completed"
+  task_015: "Completed"
+
+target:
+  board: "MLK-F3P-CZ02-DR1M90"
+  architecture: "AArch64"
+  cpu: "two cores; CPU part 0xd04"
+  os: "Buildroot 2022.02.6"
+  kernel: "6.1.111-rt42"
+  libc: "glibc 2.25"
+
+runtime:
+  name: "ncnn"
+  tag: "20240410"
+  commit: "56775de50990ab7f16627efdcf5529b49541206f"
+  library_sha256: "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a"
+  cpu_only: true
+  precision: "FP32"
+  batch: 1
+  threads: 1
+  vulkan: false
+  fp16: false
+  bf16: false
+  int8: false
+
+frozen_assets:
+  model_manifest:
+    path: "models/yolov5n-v7.0/ncnn_manifest.json"
+    sha256: "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff"
+  param:
+    path: "models/yolov5n-v7.0/yolov5n.ncnn.param"
+    sha256: "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4"
+    git_policy: "ignored deployment input"
+  bin:
+    path: "models/yolov5n-v7.0/yolov5n.ncnn.bin"
+    sha256: "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0"
+    git_policy: "ignored deployment input"
+  input:
+    path: "data/samples/images/pc_reference.jpg"
+    sha256: "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+  inference_config:
+    path: "configs/yolov5n_v7_inference.json"
+    sha256: "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+  pc_ncnn_golden:
+    path: "results/acceptance/cpp_ncnn_reference.json"
+    sha256: "fb343f605218a5fa30a825a3f14e4d00137d6275e1b1af99c9029956e2492fa9"
+
+sampling:
+  independent_process_rounds: 5
+  warmup_per_round: 10
+  measured_per_round: 20
+  required_valid_samples: 100
+  outlier_removal: false
+  percentile_method: "nearest-rank"
+  sample_standard_deviation: "count - 1 denominator"
+  fps_formula: "1000 / aggregate mean pipeline_ms"
+
+timing:
+  clock: "std::chrono::steady_clock"
+  authoritative_unit: "integer nanoseconds"
+  pipeline_formula: "preprocess + inference + postprocess"
+  model_load_excluded: true
+  image_read_excluded: true
+  output_writes_excluded: true
+
+resources:
+  peak_rss: "getrusage(RUSAGE_SELF).ru_maxrss in KiB"
+  cpu_frequency: "maximum readable scaling_cur_freq after each formal pipeline"
+  temperature: "maximum readable thermal-zone temperature after each formal pipeline"
+  governor: "observe only"
+  missing_value: null
+
+correctness:
+  before_warmup: "required"
+  after_measurement: "required"
+  expected_detections: 5
+  minimum_class_matched_iou: 0.99
+  maximum_confidence_delta: 0.01
+  finite_values: "required"
+  valid_boxes: "required"
+
+tracked_protocol:
+  config:
+    path: "configs/benchmark_anlogic_arm.json"
+    sha256: "51ffd0db29be98e74767ee5cf5d03d97f8392ebd42749aa4c9c46bb8162f20c1"
+  contract:
+    path: "results/evidence/017/benchmark_contract.json"
+  task: "tasks/017_anlogic_dr1_arm_cpu_benchmark.md"
+
+scope_boundary:
+  formal_benchmark_run: false
+  performance_values: "not collected or published"
+  video: false
+  camera: false
+  vulkan: false
+  quantization: false
+  npu: "HOLD"
+
+evidence_brief:
+  task: "Task 017 Anlogic DR1 ARM CPU benchmark protocol"
+  board: "MLK-F3P-CZ02-DR1M90"
+  sdk_tag: "SDK_2025_07 local asset identity; exact official repository tag compatibility unproven"
+  repository_tag_commit: "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f"
+  sources_consulted:
+    - "Tasks 009, 011, and 012 benchmark contracts and statistics"
+    - "Tasks 013, 014, and 015 ARM manifests and real-board evidence"
+    - "existing shared C++ ncnn benchmark and single-image source"
+  documented_facts:
+    - "Tasks 013-015 prove the board ABI, ncnn runtime, and frozen single-image correctness."
+    - "No formal ARM benchmark data has been collected."
+  source_code_facts:
+    - "Task 017 extends the existing benchmark target rather than duplicating preprocessing or postprocessing."
+    - "The original benchmark mode is PC-specific and remains backward compatible."
+  assumptions: []
+  conflicts:
+    - "The local SDK_2025_07 identity is not proof of an exact official repository SDK tag."
+  unresolved_blockers:
+    - "Formal real-board data collection and complete candidate review."
+  proposed_action: "Run the offline checks, then authorize one real-board formal campaign."

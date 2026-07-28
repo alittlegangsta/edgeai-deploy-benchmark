@@ -124,35 +124,41 @@ source_cpp="$source_dir/cpp"
   -DNCNN_ROOT="$ncnn_root" \
   2>&1 | tee "$log_dir/configure.log"
 
-"$cmake_bin" --build "$build_dir" --target edgeai_ncnn_image -- -j2 \
+"$cmake_bin" --build "$build_dir" \
+  --target edgeai_ncnn_image edgeai_benchmark_ncnn -- -j2 \
   2>&1 | tee "$log_dir/build.log"
 
 application="$build_dir/edgeai_ncnn_image"
+benchmark_application="$build_dir/edgeai_benchmark_ncnn"
 test -x "$application"
-file "$application" | tee "$log_dir/file.txt"
-readelf -h "$application" > "$log_dir/readelf-h.txt"
-readelf -lW "$application" > "$log_dir/readelf-l.txt"
-readelf -dW "$application" > "$log_dir/readelf-d.txt"
-readelf -AW "$application" > "$log_dir/readelf-a.txt"
-readelf -VW "$application" > "$log_dir/readelf-v.txt"
-sha256sum "$application" | tee "$log_dir/application.sha256"
-
-grep -Fq 'ELF 64-bit' "$log_dir/file.txt"
-grep -Eq 'ARM aarch64|AArch64' "$log_dir/file.txt"
-grep -Fq '/lib/ld-linux-aarch64.so.1' "$log_dir/readelf-l.txt"
-if grep -Eiq 'vulkan|python|libgomp' "$log_dir/readelf-d.txt"; then
-  echo 'unexpected runtime dependency found' >&2
-  exit 1
-fi
+test -x "$benchmark_application"
+for artifact in "$application" "$benchmark_application"; do
+  name=$(basename "$artifact")
+  file "$artifact" | tee "$log_dir/$name.file.txt"
+  readelf -h "$artifact" > "$log_dir/$name.readelf-h.txt"
+  readelf -lW "$artifact" > "$log_dir/$name.readelf-l.txt"
+  readelf -dW "$artifact" > "$log_dir/$name.readelf-d.txt"
+  readelf -AW "$artifact" > "$log_dir/$name.readelf-a.txt"
+  readelf -VW "$artifact" > "$log_dir/$name.readelf-v.txt"
+  sha256sum "$artifact" | tee "$log_dir/$name.sha256"
+  grep -Fq 'ELF 64-bit' "$log_dir/$name.file.txt"
+  grep -Eq 'ARM aarch64|AArch64' "$log_dir/$name.file.txt"
+  grep -Fq '/lib/ld-linux-aarch64.so.1' "$log_dir/$name.readelf-l.txt"
+  if grep -Eiq 'vulkan|python|libgomp' "$log_dir/$name.readelf-d.txt"; then
+    echo "unexpected runtime dependency found in $name" >&2
+    exit 1
+  fi
+done
 
 cp "$application" "$export_dir/edgeai_ncnn_image"
+cp "$benchmark_application" "$export_dir/edgeai_benchmark_ncnn"
 cp -L "$opencv_root/lib/libopencv_core.so.407" "$export_dir/lib/libopencv_core.so.407"
 cp -L "$opencv_root/lib/libopencv_imgproc.so.407" "$export_dir/lib/libopencv_imgproc.so.407"
 cp -L "$opencv_root/lib/libopencv_imgcodecs.so.407" "$export_dir/lib/libopencv_imgcodecs.so.407"
 
 (
   cd "$export_dir"
-  sha256sum edgeai_ncnn_image lib/libopencv_core.so.407 \
+  sha256sum edgeai_ncnn_image edgeai_benchmark_ncnn lib/libopencv_core.so.407 \
     lib/libopencv_imgproc.so.407 lib/libopencv_imgcodecs.so.407 \
     > BUILD_OUTPUT_SHA256SUMS
 )
@@ -163,6 +169,7 @@ cp -L "$opencv_root/lib/libopencv_imgcodecs.so.407" "$export_dir/lib/libopencv_i
   echo "compiler=$(/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-g++ --version | head -1)"
   echo "ncnn_library_sha256=$(sha256sum "$ncnn_root/lib/libncnn.a" | awk '{print $1}')"
   echo "application_sha256=$(sha256sum "$application" | awk '{print $1}')"
+  echo "benchmark_application_sha256=$(sha256sum "$benchmark_application" | awk '{print $1}')"
   echo "application=$application"
   echo "build_dir=$build_dir"
   echo "opencv_root=$opencv_root"
