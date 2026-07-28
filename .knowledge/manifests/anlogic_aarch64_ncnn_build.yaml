@@ -1,0 +1,220 @@
+schema_version: "1"
+manifest_type: "anlogic_aarch64_ncnn_build"
+recorded_at: "2026-07-28T11:33:34+08:00"
+task: "013"
+status: "HOST_BUILD_PASS_BOARD_RUNTIME_PENDING"
+
+scope:
+  board_accessed: false
+  aarch64_elf_executed: false
+  yolo_run: false
+  model_converted: false
+  benchmark_run: false
+  vulkan_used: false
+  npu_used: false
+  sdk_modified: false
+  system_packages_installed: false
+  network_used: false
+
+source:
+  project: "Tencent ncnn"
+  remote: "https://github.com/Tencent/ncnn.git"
+  tag: "20240410"
+  commit: "56775de50990ab7f16627efdcf5529b49541206f"
+  license: "BSD 3-Clause with third-party notices in LICENSE.txt"
+  license_sha256: "6495f972a09ad7f64ccd953e79adba91a93d862edc7135e6d95210bbf4002a01"
+  wsl_git_root: "/home/dministrator/src/ncnn-20240410"
+  wsl_worktree_status: "python/pybind11 submodule checkout differs from the pinned gitlink"
+  snapshot_method: "git archive from the exact commit object"
+  snapshot_command: "git archive --format=tar.gz --prefix=ncnn-20240410/ -o /tmp/ncnn-20240410-56775de.tar.gz 56775de50990ab7f16627efdcf5529b49541206f"
+  snapshot_path_wsl: "/tmp/ncnn-20240410-56775de.tar.gz"
+  snapshot_path_vm: "/home/uisrc/build/ncnn-aarch64/ncnn-20240410-56775de.tar.gz"
+  snapshot_size_bytes: 12840688
+  snapshot_member_count: 3446
+  snapshot_sha256: "81239dfeb25316afd526ccf3d7da20ee85b66d8ff613d3af61d4ae36dfdc5e45"
+  reproducibility_check: "A second git archive invocation produced the same SHA256"
+  submodule_policy:
+    python_pybind11: "not included; NCNN_PYTHON=OFF"
+    glslang: "not included; NCNN_VULKAN=OFF"
+
+cmake:
+  version: "3.16.9"
+  source_archive: "/home/uisrc/vendor/anlogic/sdk/sdk/buildroot/dl/cmake/cmake-3.16.9.tar.gz"
+  source_size_bytes: 9113695
+  source_sha256: "1708361827a5a0de37d55f5c9698004c035abb1de6120a376d5d59a81630191f"
+  build_workspace: "/home/uisrc/build-tools/cmake-3.16.9"
+  install_prefix: "/home/uisrc/.local/cmake-3.16.9"
+  executable: "/home/uisrc/.local/cmake-3.16.9/bin/cmake"
+  executable_size_bytes: 18075864
+  executable_sha256: "fa6d96ed54cbb20be01e16a275e6f86e97ed76953c113c8fffa2de18123f42b5"
+  bootstrap_command: "/home/uisrc/build-tools/cmake-3.16.9/source/bootstrap --prefix=/home/uisrc/.local/cmake-3.16.9"
+  build_command: "make -j2"
+  install_command: "make install"
+  status: "PASS"
+
+build_host:
+  hostname: "ubuntu"
+  os: "Ubuntu 18.04.4 LTS"
+  architecture: "x86_64"
+  kernel: "4.15.0-91-generic"
+  libc: "glibc 2.27"
+  make: "GNU Make 4.1"
+  ninja: "not installed; not required"
+
+target:
+  board: "MLK-F3P-CZ02-DR1M90"
+  architecture: "AArch64"
+  cpu: "two cores; CPU part 0xd04"
+  os: "Buildroot 2022.02.6"
+  kernel: "6.1.111-rt42"
+  libc: "glibc 2.25"
+  dynamic_loader: "/lib/ld-linux-aarch64.so.1"
+
+toolchain:
+  root: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0"
+  gcc: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-gcc"
+  gxx: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-g++"
+  version: "7.5.0 (Linaro GCC 7.5-2019.12)"
+  target_triple: "aarch64-linux-gnu"
+  sysroot: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc"
+  required_runtime_files: "PASS"
+  toolchain_file: "configs/toolchains/anlogic-dr1-aarch64.cmake"
+  toolchain_file_sha256: "8ba63b21a1fa6bb2d3ddb391c686e460ea08d39a521592540997e76edb5359b0"
+  cmake_compiler_test: "PASS"
+  cmake_target_arch: "arm 64bit"
+
+opencv_cross_check:
+  root: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64"
+  version: "4.7.0"
+  headers: "present"
+  cmake_config: "present"
+  pkg_config: "not present at lib/pkgconfig/opencv4.pc"
+  core_elf: "ELF64 AArch64"
+  imgproc_elf: "ELF64 AArch64"
+  imgcodecs_elf: "ELF64 AArch64"
+  used_by_this_build: false
+  note: "The missing pkg-config file differs from an older project-side record; ncnn examples/tools are disabled and this build does not consume OpenCV."
+
+ncnn_options:
+  CMAKE_BUILD_TYPE: "Release"
+  NCNN_VERSION: "20240410"
+  NCNN_SHARED_LIB: false
+  NCNN_VULKAN: false
+  NCNN_PYTHON: false
+  NCNN_BUILD_TOOLS: false
+  NCNN_BUILD_EXAMPLES: false
+  NCNN_BUILD_BENCHMARK: false
+  NCNN_BUILD_TESTS: false
+  NCNN_OPENMP: false
+  NCNN_RUNTIME_CPU: true
+  NCNN_INT8: false
+  NCNN_BF16: true
+  NCNN_VFPV4: true
+  NCNN_ARM82: false
+  precision_note: "BF16 conversion code remains compiled because this revision does not compile with VFPV4 enabled and BF16 disabled; the smoke explicitly disables BF16/FP16/INT8 runtime options and validates the FP32 contract."
+
+build:
+  workspace: "/home/uisrc/build/ncnn-aarch64"
+  source_dir: "/home/uisrc/build/ncnn-aarch64/source"
+  build_dir: "/home/uisrc/build/ncnn-aarch64/build"
+  install_dir: "/home/uisrc/build/ncnn-aarch64/install"
+  generator: "Unix Makefiles"
+  configure_status: "PASS"
+  build_status: "PASS"
+  install_status: "PASS"
+  install_entry_count: 33
+  library:
+    path: "/home/uisrc/build/ncnn-aarch64/install/lib/libncnn.a"
+    size_bytes: 4087846
+    sha256: "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a"
+    archive_members: 180
+    member_architecture: "180/180 AArch64"
+  installed_outputs:
+    - "include/ncnn/"
+    - "lib/libncnn.a"
+    - "lib/cmake/ncnn/"
+    - "lib/pkgconfig/ncnn.pc"
+
+smoke:
+  source: "cpp/apps/anlogic_ncnn_smoke.cpp"
+  source_sha256: "0d999d67c8569b39b7d4c9960b7e4835dc1f2bd243f8d2c36e3193fcc5faa432"
+  artifact: "/home/uisrc/build/ncnn-aarch64/anlogic_ncnn_smoke"
+  size_bytes: 2553816
+  sha256: "cad23a736f86b0d1ae6f9cfd938dce55732a3fc983a5baaa5a31fde0e393b8f7"
+  elf_class: "ELF64"
+  machine: "AArch64"
+  interpreter: "/lib/ld-linux-aarch64.so.1"
+  needed:
+    - "libdl.so.2"
+    - "libstdc++.so.6"
+    - "libm.so.6"
+    - "libgcc_s.so.1"
+    - "libpthread.so.0"
+    - "libc.so.6"
+  prohibited_dependencies: "no Vulkan, Python, or libgomp dependency"
+  maximum_glibc_requirement: "GLIBC_2.17"
+  maximum_glibcxx_requirement: "GLIBCXX_3.4.21"
+  vm_execution: "NOT_RUN_WRONG_ARCHITECTURE"
+  board_execution: "PENDING_SEPARATE_APPROVAL"
+
+attempts:
+  - id: "cmake_orchestration"
+    failure: "A logging-expression quoting error and an interrupted local SSH session left one bootstrap process running; a second bootstrap collided with it and reported Text file busy."
+    recovery: "The surviving task-owned bootstrap was allowed to finish; its generated Makefile was verified, then make -j2 and make install were run once."
+    result: "PASS"
+  - id: "ncnn_build_attempt_1"
+    failure: "net.cpp failed at two empty conditional chains when NCNN_VFPV4=ON and NCNN_BF16=OFF."
+    recovery: "Restored fixed-revision-compatible NCNN_BF16=ON without changing source; all BF16/FP16 runtime options remain disabled in the FP32 smoke."
+    result: "PASS"
+
+evidence:
+  vm_cmake_log_root: "/home/uisrc/vendor/anlogic/logs/arm_ncnn_build"
+  vm_ncnn_log_root: "/home/uisrc/build/ncnn-aarch64/logs"
+  cmake_logs:
+    bootstrap_sha256: "9f2a4403992822f012bfa870c35720afba54ec36b49838f56deaaf671e98a93e"
+    build_sha256: "4974a9b7fd111633e17648f5448ab30eedb58fa4a61e57f334b19b0ca644ff3b"
+    install_sha256: "3d07964d93b5caff259eae43139bbdaa28db2c5f42df78bc9d986cba5662fd69"
+  ncnn_logs:
+    configure_sha256: "5ebfd2249a6b4f7392b8dd8c491a8b2f7c249180afcc5709a243cba2b9786ada"
+    failed_build_sha256: "8c74f40cb05483f5639cf16d825244ed773879963a9eba0a9e54036436923ab5"
+    repair_reconfigure_sha256: "a59fa8ccdad8619473a07873a05b113af334ba70ad0209ccf8953752a2e1ef9e"
+    successful_build_sha256: "ab5996c031c9fd33abdb3a9b3c4574e819590d469236fb73934bef8a4395992b"
+    install_sha256: "1136d272defb49afcba9cfa122aea9eaf60e4064eaa73fe5563b90d98c405c34"
+    smoke_build_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+
+decisions:
+  cmake_user_install: "PASS"
+  clean_ncnn_snapshot: "PASS"
+  aarch64_toolchain_file: "PASS"
+  static_ncnn_build: "PASS"
+  aarch64_smoke_build: "PASS"
+  aarch64_elf_inspection: "PASS"
+  board_runtime: "PENDING"
+  task_013: "In Progress"
+  task_014: "Planned"
+  npu: "HOLD"
+
+evidence_brief:
+  task: "Task 013 AArch64 ncnn host build baseline"
+  board: "MLK-F3P-CZ02-DR1M90"
+  sdk_tag: "SDK_2025_07"
+  repository_tag_commit: "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f"
+  sources_consulted:
+    - "fixed ncnn Git commit object"
+    - ".knowledge/manifests/vm_aarch64_toolchain.yaml"
+    - ".knowledge/manifests/board_runtime_inventory.yaml"
+    - ".knowledge/manifests/board_opencv_runtime.yaml"
+    - "real VM configure/build/install logs"
+  documented_facts:
+    - "The VM is Ubuntu 18.04.4 x86_64 with glibc 2.27."
+    - "The target sysroot contains glibc 2.25 runtime and startup files."
+  source_code_facts:
+    - "ncnn 20240410 exposes the frozen options listed above."
+    - "pybind11 is gated by NCNN_PYTHON and glslang is gated by NCNN_VULKAN."
+    - "The fixed revision requires BF16 conversion code when VFPV4 is compiled in; runtime use remains independently disabled."
+  assumptions: []
+  conflicts:
+    - "The current OpenCV package has no lib/pkgconfig/opencv4.pc although an older project manifest recorded that path as present."
+  unresolved_blockers:
+    - "The AArch64 ncnn smoke ELF has not run on the real board."
+  proposed_action: "Transfer the hash-verified smoke ELF to a temporary board directory and execute it under a separately approved Task 013 follow-up."
