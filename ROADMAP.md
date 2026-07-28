@@ -33,12 +33,29 @@ This stage is `Completed` for the correctness-first CPU single-image baseline:
 Stage 2 does not contain a formal ARM benchmark, video, camera, Vulkan,
 quantization, or NPU result.
 
+## Stage 2 benchmark
+
+Task 017, `Anlogic DR1 ARM CPU benchmark`, is `Completed`. Its protocol was
+frozen before measurement:
+
+- unchanged ncnn `20240410`, frozen YOLOv5n param/bin, fixed input, CPU FP32,
+  batch 1, `640x640`, and one thread;
+- five independent processes, each with 10 warmups and 20 measured pipelines;
+- exact preprocess/inference/postprocess sums, nearest-rank P50/P90, sample
+  standard deviation, aggregate-mean FPS, model-load time, and Peak RSS;
+- read-only governor/frequency/thermal/environment observation;
+- correctness against the PC C++ ncnn golden before and after every process;
+- all raw samples and invalid-attempt evidence retained.
+
+The approved real-board baseline contains five independent processes and 100
+retained formal samples. It passes before/after correctness, deterministic
+validator recomputation, the frozen `10%` stability gate with `1.688017802%`
+round-mean spread, and user review. The unoptimized one-thread pipeline mean is
+`3513.992354 ms` and sequential batch-1 FPS is `0.284576601`; inference is the
+dominant stage.
+
 ## Future work: explicitly out of scope
 
-The next unused task number is 017. A future `Anlogic DR1 ARM CPU benchmark`
-task may be proposed under separate authorization using the unchanged
-YOLOv5n/ncnn CPU FP32 single-thread contract. It must preregister warmup,
-formal repetitions, independent process rounds, timing boundaries, P50/P90/FPS,
-Peak RSS, governor, frequency, temperature, and raw-sample retention before
-measurement. Video, camera, Vulkan, quantization, and NPU remain separate
-projects; NPU is `HOLD`.
+Video, camera, Vulkan, quantization, multi-thread/affinity optimization, and NPU
+remain separate projects. None is part of the Task 017 unoptimized CPU
+baseline; NPU is `HOLD`.

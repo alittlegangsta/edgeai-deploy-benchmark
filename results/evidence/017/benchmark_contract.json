@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "task": "017",
+  "title": "Anlogic DR1 ARM CPU benchmark",
+  "status": "protocol_frozen_data_pending",
+  "methodology_id": "task017-anlogic-dr1-arm-cpu-v1",
+  "benchmark_config": "configs/benchmark_anlogic_arm.json",
+  "benchmark_config_sha256": "51ffd0db29be98e74767ee5cf5d03d97f8392ebd42749aa4c9c46bb8162f20c1",
+  "runtime": {
+    "name": "ncnn",
+    "tag": "20240410",
+    "commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "execution": "CPU-only FP32",
+    "threads": 1,
+    "vulkan": false,
+    "fp16": false,
+    "bf16": false,
+    "int8": false
+  },
+  "sampling": {
+    "independent_process_rounds": 5,
+    "warmup_iterations_per_round": 10,
+    "measured_iterations_per_round": 20,
+    "required_valid_samples": 100,
+    "latency_outlier_removal": false
+  },
+  "timing": {
+    "unit": "integer nanoseconds",
+    "pipeline_formula": "preprocess_ns + inference_ns + postprocess_ns",
+    "percentile_method": "nearest-rank",
+    "standard_deviation": "sample; denominator count - 1",
+    "fps_formula": "1000 / aggregate_mean_pipeline_ms"
+  },
+  "reserved_outputs": [
+    "results/evidence/017/benchmark_environment_before.json",
+    "results/evidence/017/benchmark_environment_after.json",
+    "results/evidence/017/benchmark_raw_samples.json",
+    "results/evidence/017/benchmark_summary.json",
+    "results/evidence/017/benchmark_validation.json"
+  ],
+  "formal_data_collected": false,
+  "published_performance_values": false,
+  "next_action": "Run the frozen protocol on the real board in a separately authorized turn."
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "evidence_type": "task017_board_environment",
+  "phase": "before",
+  "board": {"model": "MLK-F3P-CZ02-DR1M90", "architecture": "aarch64", "os": "Buildroot 2022.02.6", "kernel": "6.1.111-rt42", "glibc": "2.25", "cpu_count": 2},
+  "memory": {"mem_total_kib": 1012420, "mem_available_kib": 932564},
+  "uptime_seconds": 831.50,
+  "load_average": [0.09,0.24,0.17],
+  "governors": [],
+  "available_frequencies_khz": [],
+  "current_frequencies_khz": [],
+  "thermal_zones": []
+}

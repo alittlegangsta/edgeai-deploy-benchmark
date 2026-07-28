@@ -9,6 +9,18 @@
 namespace edgeai::common {
 namespace {
 
+void validate_detection(const Detection& detection) {
+    const Box& box = detection.box_xyxy_source;
+    if (!std::isfinite(detection.confidence) ||
+        !std::isfinite(box.x1) || !std::isfinite(box.y1) ||
+        !std::isfinite(box.x2) || !std::isfinite(box.y2)) {
+        throw std::runtime_error("benchmark correctness detection is non-finite");
+    }
+    if (box.x2 <= box.x1 || box.y2 <= box.y1) {
+        throw std::runtime_error("benchmark correctness detection box is invalid");
+    }
+}
+
 double benchmark_box_iou(const Box& left, const Box& right) {
     const double intersection_width = std::max(
         0.0,
@@ -78,6 +90,12 @@ DetectionComparison compare_benchmark_detections(
         !std::isfinite(maximum_confidence_difference) ||
         maximum_confidence_difference < 0.0) {
         throw std::runtime_error("benchmark correctness tolerance is invalid");
+    }
+    for (const auto& detection : reference) {
+        validate_detection(detection);
+    }
+    for (const auto& detection : candidate) {
+        validate_detection(detection);
     }
     std::vector<bool> matched(candidate.size(), false);
     DetectionComparison result;
