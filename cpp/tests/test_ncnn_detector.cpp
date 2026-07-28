@@ -30,6 +30,18 @@ void run_contract_test() {
     require(runtime.inputs[0].name == "in0" && runtime.outputs[0].name == "out0",
             "unexpected blob names");
 
+    edgeai::backends::NcnnDetector explicit_detector(
+        manifest,
+        1,
+        repository / "models/yolov5n-v7.0/yolov5n.ncnn.param",
+        repository / "models/yolov5n-v7.0/yolov5n.ncnn.bin"
+    );
+    require(
+        explicit_detector.param_sha256() == detector.param_sha256() &&
+            explicit_detector.bin_sha256() == detector.bin_sha256(),
+        "explicit model paths differ from the manifest contract"
+    );
+
     edgeai::common::InputTensor input;
     input.shape = {1, 3, 640, 640};
     input.values.assign(1U * 3U * 640U * 640U, 0.0F);

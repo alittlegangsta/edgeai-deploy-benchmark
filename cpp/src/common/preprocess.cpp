@@ -40,11 +40,12 @@ bool finite_box(const Box& box) {
 
 }  // namespace
 
-cv::Mat load_bgr_image(const std::filesystem::path& path) {
-    if (std::filesystem::is_symlink(path)) {
+cv::Mat load_bgr_image(const edgeai::filesystem::path& path) {
+    if (edgeai::filesystem::is_symlink(path)) {
         throw std::runtime_error("input image must not be a symbolic link: " + path.string());
     }
-    if (!std::filesystem::is_regular_file(path) || std::filesystem::file_size(path) == 0U) {
+    if (!edgeai::filesystem::is_regular_file(path) ||
+        edgeai::filesystem::file_size(path) == 0U) {
         throw std::runtime_error("input image is missing or empty: " + path.string());
     }
     cv::Mat image = cv::imread(path.string(), cv::IMREAD_COLOR);

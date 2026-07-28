@@ -12,10 +12,34 @@ endif()
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(OpenCV 4 REQUIRED COMPONENTS core imgproc imgcodecs videoio)
-
 option(EDGEAI_ENABLE_ORT "Build targets that require the ONNX Runtime C/C++ SDK" ON)
 option(EDGEAI_ENABLE_NCNN "Build targets that require the pinned ncnn SDK" ON)
+option(EDGEAI_ENABLE_VIDEO "Build targets and tests that require OpenCV videoio" ON)
+set(EDGEAI_OPENCV_ROOT "" CACHE PATH "Optional explicit target OpenCV install root")
+
+set(EDGEAI_OPENCV_COMPONENTS core imgproc imgcodecs)
+if(EDGEAI_ENABLE_VIDEO)
+    list(APPEND EDGEAI_OPENCV_COMPONENTS videoio)
+endif()
+if(EDGEAI_OPENCV_ROOT)
+    if(NOT IS_ABSOLUTE "${EDGEAI_OPENCV_ROOT}")
+        message(FATAL_ERROR "EDGEAI_OPENCV_ROOT must be an explicit absolute SDK path")
+    endif()
+    get_filename_component(EDGEAI_OPENCV_ROOT "${EDGEAI_OPENCV_ROOT}" REALPATH)
+    set(OpenCV_DIR "${EDGEAI_OPENCV_ROOT}/lib/cmake/opencv4")
+    if(NOT EXISTS "${OpenCV_DIR}/OpenCVConfig.cmake")
+        message(FATAL_ERROR "Required OpenCV CMake config is missing: ${OpenCV_DIR}/OpenCVConfig.cmake")
+    endif()
+    find_package(OpenCV 4 CONFIG REQUIRED
+        COMPONENTS ${EDGEAI_OPENCV_COMPONENTS}
+        NO_DEFAULT_PATH
+        PATHS "${OpenCV_DIR}"
+        NO_CMAKE_FIND_ROOT_PATH
+    )
+    message(STATUS "OpenCV target root: ${EDGEAI_OPENCV_ROOT}")
+else()
+    find_package(OpenCV 4 REQUIRED COMPONENTS ${EDGEAI_OPENCV_COMPONENTS})
+endif()
 
 if(EDGEAI_ENABLE_ORT)
     set(ONNXRUNTIME_ROOT "" CACHE PATH "Absolute root of ONNX Runtime 1.18.1 C/C++ SDK")
@@ -61,7 +85,11 @@ if(EDGEAI_ENABLE_NCNN)
     if(NOT EXISTS "${ncnn_DIR}/ncnnConfig.cmake")
         message(FATAL_ERROR "Required ncnn CMake config is missing: ${ncnn_DIR}/ncnnConfig.cmake")
     endif()
-    find_package(ncnn CONFIG REQUIRED NO_DEFAULT_PATH PATHS "${ncnn_DIR}")
+    find_package(ncnn CONFIG REQUIRED
+        NO_DEFAULT_PATH
+        PATHS "${ncnn_DIR}"
+        NO_CMAKE_FIND_ROOT_PATH
+    )
     message(STATUS "ncnn root: ${NCNN_ROOT}")
 else()
     message(STATUS "ncnn targets disabled")
@@ -77,14 +105,18 @@ function(edgeai_enable_warnings target_name)
     endif()
 endfunction()
 
-add_library(edgeai_common STATIC
+set(EDGEAI_COMMON_SOURCES
     src/common/benchmark.cpp
     src/common/config.cpp
     src/common/postprocess.cpp
     src/common/preprocess.cpp
-    src/common/video_pipeline.cpp
     src/common/visualize.cpp
 )
+if(EDGEAI_ENABLE_VIDEO)
+    list(APPEND EDGEAI_COMMON_SOURCES src/common/video_pipeline.cpp)
+endif()
+
+add_library(edgeai_common STATIC ${EDGEAI_COMMON_SOURCES})
 
 target_compile_features(edgeai_common PUBLIC cxx_std_17)
 set_target_properties(edgeai_common PROPERTIES
@@ -101,6 +133,9 @@ target_include_directories(edgeai_common SYSTEM PUBLIC
 target_link_libraries(edgeai_common PUBLIC
     ${OpenCV_LIBS}
 )
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 8)
+    target_link_libraries(edgeai_common PUBLIC stdc++fs)
+endif()
 edgeai_enable_warnings(edgeai_common)
 
 add_executable(edgeai_opencv_smoke
@@ -206,7 +241,7 @@ if(EDGEAI_ENABLE_ORT)
     set_tests_properties(edgeai_ort_image_invalid_args PROPERTIES WILL_FAIL TRUE)
 endif()
 
-if(EDGEAI_ENABLE_ORT)
+if(EDGEAI_ENABLE_ORT AND EDGEAI_ENABLE_VIDEO)
 add_executable(edgeai_ort_video
     apps/ort_video.cpp
 )
@@ -223,6 +258,7 @@ add_test(NAME edgeai_ort_video_invalid_args COMMAND edgeai_ort_video)
 set_tests_properties(edgeai_ort_video_invalid_args PROPERTIES WILL_FAIL TRUE)
 endif()
 
+if(EDGEAI_ENABLE_VIDEO)
 add_executable(edgeai_video_pipeline_tests
     tests/test_video_pipeline.cpp
 )
@@ -235,6 +271,7 @@ set_target_properties(edgeai_video_pipeline_tests PROPERTIES
 target_link_libraries(edgeai_video_pipeline_tests PRIVATE edgeai_common)
 edgeai_enable_warnings(edgeai_video_pipeline_tests)
 add_test(NAME edgeai_video_pipeline_tests COMMAND edgeai_video_pipeline_tests)
+endif()
 
 if(EDGEAI_ENABLE_ORT)
 add_executable(edgeai_benchmark_ort
@@ -336,6 +373,7 @@ target_link_libraries(edgeai_ncnn_detector_tests PRIVATE edgeai_ncnn_backend)
 edgeai_enable_warnings(edgeai_ncnn_detector_tests)
 add_test(NAME edgeai_ncnn_detector_tests COMMAND edgeai_ncnn_detector_tests)
 
+if(EDGEAI_ENABLE_VIDEO)
 add_executable(edgeai_ncnn_video
     apps/ncnn_video.cpp
 )
@@ -349,6 +387,7 @@ target_link_libraries(edgeai_ncnn_video PRIVATE edgeai_ncnn_backend)
 edgeai_enable_warnings(edgeai_ncnn_video)
 add_test(NAME edgeai_ncnn_video_invalid_args COMMAND edgeai_ncnn_video)
 set_tests_properties(edgeai_ncnn_video_invalid_args PROPERTIES WILL_FAIL TRUE)
+endif()
 
 add_executable(edgeai_benchmark_ncnn
     apps/benchmark_ncnn.cpp

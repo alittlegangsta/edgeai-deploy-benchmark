@@ -2,8 +2,8 @@
 
 #include "edgeai/common/config.hpp"
 #include "edgeai/common/detection.hpp"
+#include "edgeai/common/filesystem.hpp"
 
-#include <filesystem>
 #include <optional>
 
 #include <opencv2/core/mat.hpp>
@@ -16,7 +16,7 @@ struct PreprocessResult {
     LetterboxMetadata metadata;
 };
 
-cv::Mat load_bgr_image(const std::filesystem::path& path);
+cv::Mat load_bgr_image(const edgeai::filesystem::path& path);
 PreprocessResult preprocess_image(const cv::Mat& image, const InferenceConfig& config);
 std::optional<Box> restore_and_clip_box(
     const Box& input_box,

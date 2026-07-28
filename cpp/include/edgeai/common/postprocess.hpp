@@ -18,6 +18,12 @@ struct PostprocessResult {
 
 Box xywh_to_xyxy(const Box& box);
 float box_iou(const Box& left, const Box& right);
+void validate_frame_detections(
+    const std::vector<Detection>& detections,
+    int frame_width,
+    int frame_height,
+    std::size_t frame_index
+);
 PostprocessResult decode_yolov5_output(
     const std::vector<float>& raw_output,
     const std::vector<std::int64_t>& output_shape,

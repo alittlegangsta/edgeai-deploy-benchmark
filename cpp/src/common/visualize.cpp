@@ -75,17 +75,18 @@ cv::Mat draw_detections(const cv::Mat& image, const std::vector<Detection>& dete
     return output;
 }
 
-void save_image(const std::filesystem::path& path, const cv::Mat& image) {
+void save_image(const edgeai::filesystem::path& path, const cv::Mat& image) {
     if (image.empty()) {
         throw std::runtime_error("cannot save an empty image");
     }
     if (!path.parent_path().empty()) {
-        std::filesystem::create_directories(path.parent_path());
+        edgeai::filesystem::create_directories(path.parent_path());
     }
     if (!cv::imwrite(path.string(), image)) {
         throw std::runtime_error("OpenCV failed to write image: " + path.string());
     }
-    if (!std::filesystem::is_regular_file(path) || std::filesystem::file_size(path) == 0U) {
+    if (!edgeai::filesystem::is_regular_file(path) ||
+        edgeai::filesystem::file_size(path) == 0U) {
         throw std::runtime_error("output image is missing or empty: " + path.string());
     }
 }

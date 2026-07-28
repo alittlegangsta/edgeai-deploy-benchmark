@@ -1,0 +1,222 @@
+schema_version: "1"
+manifest_type: "anlogic_arm_yolov5n_single_image"
+recorded_at: "2026-07-28T15:52:43+08:00"
+completed_at: "2026-07-28T16:11:11+08:00"
+task: "014"
+task_status: "Completed"
+automated_status: "PASS_TARGET"
+human_visual_review: "PASS"
+human_visual_check: "PASS"
+human_visual_approval_source: "user"
+human_visual_approval_recorded_at: "2026-07-28T16:11:11+08:00"
+human_visual_approval_time_basis: "WSL record time, not board runtime time"
+
+scope:
+  target: "MLK-F3P-CZ02-DR1M90 AArch64 CPU"
+  runtime: "ncnn 20240410 CPU-only FP32"
+  batch: 1
+  input_size: [640, 640]
+  threads: 1
+  single_image: true
+  benchmark_run: false
+  video_run: false
+  camera_used: false
+  vulkan_used: false
+  quantization_used: false
+  npu_used: false
+  model_converted: false
+
+source:
+  base_commit: "6d50c6daad99b4faf779f991bba8059d95ff7328"
+  ncnn_remote: "https://github.com/Tencent/ncnn.git"
+  ncnn_tag: "20240410"
+  ncnn_commit: "56775de50990ab7f16627efdcf5529b49541206f"
+  task_013_ncnn_library_sha256: "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a"
+  task_014_source_archive_sha256: "ad7adebb6e4ad9a4b93c7db40ef8dd626bf3467b9350c87ff6eeda588d8a422e"
+  reused_modules:
+    - "cpp/src/common/config.cpp"
+    - "cpp/src/common/preprocess.cpp"
+    - "cpp/src/backends/ncnn_detector.cpp"
+    - "cpp/src/common/postprocess.cpp"
+    - "cpp/src/common/visualize.cpp"
+    - "cpp/apps/ncnn_image.cpp"
+
+build:
+  vm_host: "Ubuntu 18.04.4 x86_64"
+  cmake: "3.16.9"
+  compiler: "Linaro GCC/G++ 7.5.0"
+  target_triple: "aarch64-linux-gnu"
+  toolchain_file: "configs/toolchains/anlogic-dr1-aarch64.cmake"
+  sysroot_libc: "glibc 2.25"
+  ncnn_root: "/home/uisrc/build/ncnn-aarch64/install"
+  opencv_root: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64"
+  opencv_version: "4.7.0"
+  opencv_modules: ["core", "imgproc", "imgcodecs"]
+  application:
+    external_path: "/home/uisrc/build/edgeai-arm-yolov5n/build-ad7adebb6e4ad9a4b93c7db40ef8dd626bf3467b9350c87ff6eeda588d8a422e/edgeai_ncnn_image"
+    sha256: "a4d3f1a405284881d2c2bd9790033b3997d02de69142644b4d2c24dbb55056f1"
+    elf: "ELF64 AArch64"
+    interpreter: "/lib/ld-linux-aarch64.so.1"
+    maximum_glibc: "GLIBC_2.17"
+    maximum_glibcxx: "GLIBCXX_3.4.21"
+    rpath: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib"
+    rpath_runtime_note: "The board run uses the private package lib directory through LD_LIBRARY_PATH; no system library was replaced."
+  unexpected_dependencies: []
+
+frozen_inputs:
+  model_manifest:
+    path: "models/yolov5n-v7.0/ncnn_manifest.json"
+    sha256: "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff"
+  param:
+    repository_local_path: "models/yolov5n-v7.0/yolov5n.ncnn.param"
+    sha256: "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4"
+  bin:
+    repository_local_path: "models/yolov5n-v7.0/yolov5n.ncnn.bin"
+    sha256: "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0"
+  config:
+    path: "configs/yolov5n_v7_inference.json"
+    sha256: "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+  input:
+    path: "data/samples/images/pc_reference.jpg"
+    sha256: "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+  pc_golden:
+    detection_json: "results/acceptance/cpp_ncnn_reference.json"
+    detection_json_sha256: "fb343f605218a5fa30a825a3f14e4d00137d6275e1b1af99c9029956e2492fa9"
+    annotated_image: "results/acceptance/cpp_ncnn_reference.png"
+    annotated_image_sha256: "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2"
+  contract:
+    input_blob: "in0"
+    output_blob: "out0"
+    confidence_threshold: 0.25
+    nms_iou_threshold: 0.45
+    classes: "COCO-80"
+
+deployment:
+  board_directory: "/root/edgeai/yolov5n-ncnn-single-image"
+  deployment_manifest_sha256: "6d02105089d6a79c420f19cb66373f410e7098bd0366784ddc61754d4f76b173"
+  sha256sums_sha256: "ab50df6e0ce70ff45845a4e753b29a79d7c7d79f57381fd1a49bd3c5ca911ae1"
+  packaged_runtime_libraries:
+    libopencv_core.so.407: "d0e4f5942fd8bfbba43ff092cebf636f463362c14c3a24aaada48034f08aa297"
+    libopencv_imgproc.so.407: "86dc1d5631c2ee5f33fe844ae9932f274dae34fa2a9359d6a76674bb4f4996b7"
+    libopencv_imgcodecs.so.407: "cc793274dc28e5ea60563c3125ba92401b13ba48adbfa835366f99877bdefde8"
+  transfer_hash_validation: "PASS"
+  chmod_hash_validation: "PASS"
+  dependency_validation: "PASS"
+  system_library_modified: false
+
+board_runtime:
+  architecture: "aarch64"
+  os: "Buildroot 2022.02.6"
+  kernel: "6.1.111-rt42"
+  libc: "glibc 2.25"
+  clock: "NOT_SYNCHRONIZED"
+  exit_code: 0
+  stderr: "empty"
+  detection_count: 5
+  classes_in_rank_order: ["keyboard", "tv", "cup", "mouse", "mouse"]
+  known_low_confidence_mouse_retained: true
+  diagnostic_timings_ms:
+    preprocess: 47.158801
+    inference: 3603.510246
+    postprocess: 55.625431
+    pipeline: 4922.010409
+    classification: "single-run diagnostic, not benchmark evidence"
+
+correctness:
+  comparison_profile: "ncnn-preregistered"
+  target_minimum_iou: 0.99
+  target_maximum_confidence_delta: 0.01
+  hard_floor_minimum_iou: 0.98
+  hard_floor_maximum_confidence_delta: 0.02
+  detection_count_match: "PASS"
+  class_match: "PASS"
+  finite_values: "PASS"
+  valid_boxes: "PASS"
+  minimum_class_matched_iou: 0.9999855075776749
+  maximum_confidence_delta: 0.0000050067901611328125
+  automated_status: "PASS_TARGET"
+
+outputs:
+  detection_json:
+    path: "results/evidence/014/anlogic_arm_ncnn_detections.json"
+    sha256: "e93a3489d24632a5ff9327a3364a9a62753cfb8d0969994bd62525dabe47dd2c"
+  comparison_json:
+    path: "results/evidence/014/anlogic_arm_ncnn_comparison.json"
+    sha256: "fee041817ffd1bf36b9beae4bb98cc9cca7baad3773e19c006c3f0a01eac0e92"
+  validation_json:
+    path: "results/evidence/014/anlogic_arm_ncnn_validation.json"
+    sha256: "e5f7c13831cb7134064e6ca180c5aab30f5c15fe7b19ccf05f4812a23985b342"
+  annotated_image:
+    path: "results/images/anlogic_arm_ncnn_reference.png"
+    sha256: "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2"
+    shape_bgr: [960, 1280, 3]
+    decode_status: "PASS"
+    byte_identical_to_pc_ncnn_golden: true
+    human_visual_review: "PASS"
+    human_visual_approval_source: "user"
+
+attempts:
+  - id: "aarch64_build_1"
+    failure: "GCC 7.5 has no standard <filesystem> header."
+    recovery: "Added a narrow project filesystem alias to experimental/filesystem and linked stdc++fs only for GNU compilers older than 8."
+    result: "NEXT_ATTEMPT_REQUIRED"
+  - id: "aarch64_build_2"
+    failure: "The GCC 7 experimental path type has no lexically_normal method."
+    recovery: "Removed nonessential lexical normalization and used absolute paths plus explicit string conversion for file streams."
+    result: "NEXT_ATTEMPT_REQUIRED"
+  - id: "aarch64_build_3"
+    failure: "none"
+    recovery: "not applicable"
+    result: "PASS"
+  - id: "board_run_1"
+    failure: "The package results directory did not exist before environment evidence was opened; the ELF was not executed."
+    recovery: "Create results before evidence writes and safely reuse the hash-validated task-owned package and board directory."
+    result: "NEXT_ATTEMPT_REQUIRED"
+  - id: "board_run_2"
+    failure: "none"
+    recovery: "not applicable"
+    result: "PASS"
+
+evidence:
+  validation: "results/evidence/014/anlogic_arm_ncnn_validation.json"
+  board_logs_root: "results/logs/vendor/arm_yolov5n (ignored, present locally)"
+  board_preflight_sha256: "7793e8bd56f2610c0c97c2104d181952e97ac07214b965b76dcf849e2a83a667"
+  board_execution_sha256: "a4b2a46f2257b75c8dd2b691993dad474d1bb05cc3ce8ab79e71e4eab0eda8c6"
+  environment_sha256: "a91ab71af6acbe67d85945f5dbac215feba999e990959d2e3a5b0b00077389ce"
+  ldd_sha256: "4d6282a1de1f9eec9e08d8099b04e855d2c1c1bc942bc725a9a78c2c46f19a19"
+  stdout_sha256: "ad39b6bce8ca7f86457c7a688800b5eff673478199b2888808aa924978ca93c0"
+  stderr_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  exit_code_sha256: "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+
+decisions:
+  ARM_YOLO_BUILD: "PASS"
+  BOARD_NCNN_SINGLE_IMAGE_RUNTIME: "PASS"
+  AUTOMATED_CORRECTNESS: "PASS_TARGET"
+  OUTPUT_IMAGE_DECODE: "PASS"
+  HUMAN_VISUAL_REVIEW: "PASS"
+  TASK_014: "Completed"
+  TASK_015: "Planned"
+  NPU: "HOLD"
+
+evidence_brief:
+  task: "Task 014 Anlogic DR1 YOLOv5n ncnn single-image correctness"
+  board: "MLK-F3P-CZ02-DR1M90"
+  sdk_tag: "SDK_2025_07"
+  repository_tag_commit: "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f"
+  sources_consulted:
+    - "Tasks 010-013 frozen manifests and evidence"
+    - "PC C++ ncnn golden JSON and PNG"
+    - "real VM AArch64 build output"
+    - "real board stdout, stderr, exit code, hashes, environment, and ldd"
+    - "user visual review of the returned ARM PNG"
+  documented_facts:
+    - "The board ran the hash-validated frozen param/bin and fixed input."
+    - "The returned image is byte-identical to the approved PC ncnn image."
+  source_code_facts:
+    - "The ARM application reuses the PC common preprocessing, postprocessing, visualization, and ncnn backend."
+    - "Runtime explicitly disables Vulkan, FP16, BF16 storage, and INT8 and uses one thread."
+  assumptions: []
+  conflicts:
+    - "The board clock is unsynchronized; WSL capture time establishes evidence order."
+  unresolved_blockers: []
+  proposed_action: "Prepare a Task 014 pull request; do not start Task 015 without separate authorization."
