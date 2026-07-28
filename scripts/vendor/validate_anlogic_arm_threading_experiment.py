@@ -617,8 +617,23 @@ def validate_process_environment(
     require(value.get("system_modification") is False, "system modification is forbidden")
     require(
         value.get("new_runtime_dependencies") is False,
-        "new runtime dependency was introduced",
+        "condition-specific runtime dependency was introduced",
     )
+    private_dependencies = value.get("shared_private_runtime_dependencies")
+    if private_dependencies is not None:
+        require(
+            value.get("new_runtime_dependencies_scope")
+            == "shared_experiment_instrument",
+            "runtime dependency scope differs",
+        )
+        require(
+            private_dependencies == ["libgomp.so.1"],
+            "shared private runtime dependency differs",
+        )
+        require(
+            value.get("new_system_runtime_dependencies") is False,
+            "system runtime dependency was introduced",
+        )
     events = value.get("events")
     require(isinstance(events, list) and len(events) == 20, "20 environment events required")
     expected = []
@@ -839,7 +854,10 @@ def write_json(path: Path, value: dict[str, Any]) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def assemble_process_environment(path: Path) -> dict[str, Any]:
+def assemble_process_environment(
+    path: Path,
+    shared_private_runtime: str | None = None,
+) -> dict[str, Any]:
     events = []
     try:
         lines = path.read_text(encoding="utf-8").splitlines()
@@ -862,6 +880,18 @@ def assemble_process_environment(path: Path) -> dict[str, Any]:
         "new_runtime_dependencies": False,
         "events": events,
     }
+    if shared_private_runtime is not None:
+        require(
+            shared_private_runtime == "libgomp.so.1",
+            "only the approved private libgomp runtime may be recorded",
+        )
+        result.update(
+            {
+                "new_runtime_dependencies_scope": "shared_experiment_instrument",
+                "shared_private_runtime_dependencies": [shared_private_runtime],
+                "new_system_runtime_dependencies": False,
+            }
+        )
     validate_process_environment(result)
     return result
 
@@ -893,7 +923,10 @@ def command_check_contract(args: argparse.Namespace) -> int:
 
 
 def command_assemble_environment(args: argparse.Namespace) -> int:
-    result = assemble_process_environment(args.ndjson)
+    result = assemble_process_environment(
+        args.ndjson,
+        shared_private_runtime=args.shared_private_runtime,
+    )
     write_json(args.output, result)
     print("task018_process_environment=PASS")
     print(f"environment_events={len(result['events'])}")
@@ -962,6 +995,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     assemble.add_argument("--ndjson", type=Path, required=True)
     assemble.add_argument("--output", type=Path, required=True)
+    assemble.add_argument("--shared-private-runtime")
     assemble.set_defaults(handler=command_assemble_environment)
     summarize = subparsers.add_parser("summarize", help="validate real paired evidence")
     summarize.add_argument("--config", type=Path, default=DEFAULT_CONFIG)

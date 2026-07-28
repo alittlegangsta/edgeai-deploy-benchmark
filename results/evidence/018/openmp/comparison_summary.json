@@ -1,0 +1,34 @@
+{
+  "candidate_approved": true,
+  "classification": "BENEFICIAL",
+  "cross_condition_correctness": {
+    "maximum_absolute_confidence_difference": 0.0,
+    "minimum_class_matched_iou": 1.0,
+    "status": "PASS_TARGET"
+  },
+  "evidence_type": "task018_anlogic_arm_threading_comparison",
+  "experiment_status": "PASS",
+  "fps_gain_percent": 84.53343651108935,
+  "human_review": "PASS",
+  "human_review_recorded_at": "2026-07-28T21:24:36+08:00",
+  "human_review_source": "user",
+  "inference_speedup": 1.8894823055760568,
+  "pipeline_speedup": 1.845334365110893,
+  "resource_policy": "Peak RSS change disclosed; no preregistered RSS rejection threshold",
+  "rss_change_percent": -0.08963836522031254,
+  "schema_version": 1,
+  "source_sha256": {
+    "experiment_config": "f4db66c7d0be8ece68c7a392b28b04934e141267966921210dac765318db4e0a",
+    "process_environment": "dc875f037f2efeff8bd7917287a049ca9bac114475713fa4dca8da11d46b94fa",
+    "threads1_raw": "5987fbdf00bdb9389c6e7cbff91d36e5ba24a9be387ba68c5c3dfeca3b5e3d4a",
+    "threads1_summary": "e698272ff04823cc9dea22d766693c91fd5439334ea4767f8fc78762fed2e282",
+    "threads2_raw": "b1246ce255a1962bf96b76a717faafe78481393aa95c43072349009d85600f40",
+    "threads2_summary": "e6173f21d13116da9d98a53723f851b6ae55ec02aebc3c970deda3f771b8b9d2"
+  },
+  "task017_historical_consistency": {
+    "absolute_difference_percent": 3.4209860034698747,
+    "contemporaneous_threads1_pipeline_mean_ms": 3634.2055401899997,
+    "historical_pipeline_mean_ms": 3513.99235361,
+    "status": "PASS"
+  }
+}

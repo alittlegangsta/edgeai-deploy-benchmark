@@ -2,15 +2,12 @@
 
 ## Status
 
-Task 018 is `In Progress`. The paired protocol, shared producer extension,
-runner, deterministic validator, and synthetic fixtures are frozen. A complete
-real-board candidate has 10 valid processes and 200 retained samples and passes
-the preregistered statistical checks. A later thread-backend audit proved that
-the fixed ncnn library has no effective operator-parallel backend, so the
-session is retained as OpenMP-off thread-parameter sensitivity evidence and is
-not a valid multithread performance comparison. It is not published or
-approved. Task 017 remains the immutable approved one-thread historical
-baseline.
+Task 018 is `Completed`. The user approved the corrected OpenMP-enabled
+real-board session as `BENEFICIAL` after independent validation of 10 valid
+processes and 200 retained samples. The earlier OpenMP-off session remains
+byte-preserved as thread-parameter sensitivity evidence and is invalid for
+multithread performance comparison. Task 017 remains the immutable approved
+one-thread historical baseline and is not a direct Task 018 experimental group.
 
 ## Question and only variable
 
@@ -339,13 +336,13 @@ Session 2 remains complete and byte-preserved. Its raw classifier result remains
 `NEUTRAL`, but it must not be presented as evidence that hardware two-thread
 execution is neutral.
 
-## Current boundaries
+## Historical post-audit boundary
 
-The original automatic collection is retained, `human_review` is `PENDING`,
-`candidate_approved` remains `false`, and Task 018 remains `In Progress`.
-Proceeding requires a user decision to create a separate ncnn build with a
-verified multithread backend and then repeat the paired protocol using that new
-ELF. Such a rebuild must not alter Task 017 or splice any existing session.
+At this audit point, the original automatic collection was retained,
+`human_review` was `PENDING`, `candidate_approved` was `false`, and Task 018
+remained `In Progress`. The subsequently approved instrument correction and
+paired OpenMP session are recorded below. Neither changed Task 017 nor spliced
+the original session.
 Video, camera, affinity tuning, NEON rewriting, Vulkan, FP16/BF16/INT8 runtime,
 quantization, NPU, and system modification remain out of scope. NPU remains
 `HOLD`.
@@ -380,3 +377,102 @@ libgomp, the one-thread run observed one process thread and CPU/wall ratio
 ratio `1.8452701642847376`. Both passed the frozen correctness gate. Together
 with the compiler macros, link evidence, and `ldd` result, this is sufficient
 to proceed with a new complete paired session.
+
+## Corrected OpenMP candidate session
+
+The corrected session used one hash-identical ELF and private libgomp for both
+conditions. All ten independent processes completed without an invalid attempt;
+each condition retained five processes and 100 formal samples. No outlier or
+slow sample was removed.
+
+| Metric | threads=1 | threads=2 |
+| --- | ---: | ---: |
+| Preprocess mean (ms) | 43.220097 | 43.436489 |
+| Inference mean (ms) | 3535.475920 | 1871.134707 |
+| Postprocess mean (ms) | 55.509524 | 54.830994 |
+| Pipeline mean (ms) | 3634.205540 | 1969.402190 |
+| Pipeline P50 (ms) | 3635.311207 | 1973.123870 |
+| Pipeline P90 (ms) | 3640.145197 | 1976.094379 |
+| Pipeline FPS | 0.275163 | 0.507768 |
+| Peak RSS maximum (KiB) | 142796 | 142668 |
+| Model load mean (ms) | 657.063877 | 584.943234 |
+| Five-round mean spread | 0.370811% | 0.824824% |
+
+The complete formal pipeline distribution is:
+
+| Condition | Mean ms | P50 ms | P90 ms | Min ms | Max ms | Sample SD ms |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| threads=1 | 3634.205540 | 3635.311207 | 3640.145197 | 3626.020746 | 3641.313787 | 4.527992 |
+| threads=2 | 1969.402190 | 1973.123870 | 1976.094379 | 1958.800699 | 1977.787789 | 6.577660 |
+
+The independently recomputed comparison is:
+
+```text
+pipeline speedup: 1.845334365110893
+inference speedup: 1.8894823055760568
+FPS gain: 84.53343651108935%
+Peak RSS change: -0.08963836522031254%
+cross-condition correctness: PASS_TARGET
+minimum cross-condition class-matched IoU: 1.0
+maximum cross-condition confidence delta: 0.0
+threads=1 stability: PASS
+threads=2 stability: PASS
+automatic candidate classification: BENEFICIAL
+```
+
+The contemporaneous one-thread pipeline mean differs from the Task 017
+historical mean by `3.4209860034698747%`, within the preregistered 10% warning
+threshold. This is a historical consistency check only because Task 017 used a
+different ncnn build without effective operator parallelism.
+
+The board exposed no readable cpufreq or thermal values, so those sample fields
+remain JSON `null`. Load average progressed from `0.08, 0.07, 0.03` in the
+first before-event to `1.64, 1.28, 0.86` in the final after-event. The runner
+did not modify governor, frequency, affinity, services, or system libraries.
+The shared experiment instrument includes private `libgomp.so.1` in its
+isolated deployment directory; it is explicitly recorded as a shared private
+runtime, not as a condition-specific dependency or a system installation.
+
+## User-approved formal result
+
+The user approved the corrected candidate at
+`2026-07-28T21:24:36+08:00`. This timestamp is the WSL approval record time,
+not board runtime time; Codex did not perform the human review.
+
+```text
+validator_status: PASS
+classification: BENEFICIAL
+human_review: PASS
+human_review_source: user
+candidate_approved: true
+Task 018: Completed
+```
+
+With the same OpenMP-enabled ncnn `20240410` build, private libgomp, frozen
+model/input, and timing boundaries, changing only `configured_threads` from
+one to two reduced mean pipeline latency from `3634.205540 ms` to
+`1969.402190 ms`. This is `1.845334365110893x` pipeline speedup and
+`84.53343651108935%` FPS gain. It is a beneficial result, not ideal `2x`
+linear scaling: serial preprocessing and postprocessing, thread scheduling,
+and other nonparallel work remain.
+
+The build identity is:
+
+```text
+NCNN_OPENMP=ON
+NCNN_THREADS=ON
+NCNN_SIMPLEOMP=OFF
+effective_parallel_backend=openmp
+libncnn.a SHA256=bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3
+private libgomp.so.1 SHA256=87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91
+benchmark ELF SHA256=19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2
+```
+
+The private runtime was used only through the isolated package and
+`LD_LIBRARY_PATH`; no board system library was replaced. The board clock was
+unsynchronized, and all 200 frequency and temperature fields remain JSON
+`null`, never zero.
+
+Original session 2 remains separately retained and invalid for multithread
+performance comparison. It is not merged with or reclassified by this
+corrected candidate.

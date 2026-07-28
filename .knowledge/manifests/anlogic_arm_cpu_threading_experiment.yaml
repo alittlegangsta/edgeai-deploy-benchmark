@@ -1,16 +1,19 @@
 schema_version: "1"
 manifest_type: "anlogic_arm_cpu_threading_experiment"
 task: "018"
-task_status: "In Progress"
+task_status: "Completed"
 protocol_status: "FROZEN"
-formal_data_collection: "PASS_RETAINED_NOT_VALID_AS_MULTITHREAD_COMPARISON"
-performance_values_published: false
+formal_data_collection: "PASS"
+performance_values_published: true
 candidate_recorded_at: "2026-07-28T19:38:35+08:00"
 candidate_record_time_basis: "WSL record time; the board clock is unsynchronized"
 candidate_session_retained: true
-human_review: "PENDING"
-candidate_approved: false
-classification: "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON"
+human_review: "PASS"
+human_review_source: "user"
+human_review_recorded_at: "2026-07-28T21:24:36+08:00"
+human_review_record_time_basis: "WSL approval record time; not board runtime time"
+candidate_approved: true
+classification: "BENEFICIAL"
 
 dependencies:
   task_017:
@@ -274,7 +277,7 @@ thread_backend_audit:
     sha256: "6fff4a82b4965878bca7ba98c98c5ad85527acd4dbb09d9c1657d2e02eaecc07"
 
 instrument_correction:
-  status: "STANDARD_LIBGOMP_PARALLEL_CAPABILITY_GATE_PASS"
+  status: "COMPLETED_BENEFICIAL"
   approval_source: "user"
   original_session_retained: true
   original_session_publication_classification: "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON"
@@ -315,6 +318,85 @@ instrument_correction:
       evidence_sha256: "f7ce5106f7d61a1f55f07d1dea8762efe230b145f1ef49a653bac21ed27761ac"
     status: "PASS"
 
+corrected_openmp_candidate:
+  evidence_namespace: "results/evidence/018/openmp"
+  formal_session_count: 1
+  valid_process_rounds:
+    threads1: 5
+    threads2: 5
+  invalid_process_rounds: 0
+  samples:
+    threads1: 100
+    threads2: 100
+  executable_sha256: "19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2"
+  statistics:
+    threads1:
+      preprocess_mean_ms: 43.220096780000006
+      inference_mean_ms: 3535.47591964
+      postprocess_mean_ms: 55.509523769999994
+      pipeline_mean_ms: 3634.2055401899997
+      pipeline_p50_ms: 3635.311207
+      pipeline_p90_ms: 3640.145197
+      pipeline_min_ms: 3626.020746
+      pipeline_max_ms: 3641.313787
+      pipeline_sample_sd_ms: 4.527992101693737
+      pipeline_fps: 0.27516330293957975
+      peak_rss_kib: 142796
+      model_load_mean_ms: 657.0638766
+      stability_spread_percent: 0.3708109182831205
+    threads2:
+      preprocess_mean_ms: 43.43648921
+      inference_mean_ms: 1871.13470669
+      postprocess_mean_ms: 54.83099424
+      pipeline_mean_ms: 1969.4021901400001
+      pipeline_p50_ms: 1973.12387
+      pipeline_p90_ms: 1976.094379
+      pipeline_min_ms: 1958.800699
+      pipeline_max_ms: 1977.787789
+      pipeline_sample_sd_ms: 6.577660346451398
+      pipeline_fps: 0.5077682989318258
+      peak_rss_kib: 142668
+      model_load_mean_ms: 584.9432337999999
+      stability_spread_percent: 0.8248244869113479
+  comparison:
+    pipeline_speedup: 1.845334365110893
+    inference_speedup: 1.8894823055760568
+    fps_gain_percent: 84.53343651108935
+    rss_change_percent: -0.08963836522031254
+    cross_condition_correctness: "PASS_TARGET"
+    minimum_class_matched_iou: 1.0
+    maximum_confidence_delta: 0.0
+    golden_correctness: "PASS_TARGET"
+    detections: 5
+    minimum_golden_iou: 0.9999855075776749
+    maximum_golden_confidence_delta: 0.0000050067901611328125
+    task017_historical_pipeline_difference_percent: 3.4209860034698747
+    task017_history_status: "PASS_DIFFERENT_BUILD_REFERENCE_ONLY"
+  stability:
+    threads1: "PASS"
+    threads2: "PASS"
+  environment:
+    cpufreq_samples: "JSON null"
+    temperature_samples: "JSON null"
+    load_average_first: [0.08, 0.07, 0.03]
+    load_average_last: [1.64, 1.28, 0.86]
+    system_modified: false
+  classification: "BENEFICIAL"
+  validator_status: "PASS"
+  human_review: "PASS"
+  human_review_source: "user"
+  human_review_recorded_at: "2026-07-28T21:24:36+08:00"
+  human_review_record_time_basis: "WSL approval record time; not board runtime time"
+  candidate_approved: true
+  evidence_sha256:
+    threads1_raw: "5987fbdf00bdb9389c6e7cbff91d36e5ba24a9be387ba68c5c3dfeca3b5e3d4a"
+    threads2_raw: "b1246ce255a1962bf96b76a717faafe78481393aa95c43072349009d85600f40"
+    process_environment: "dc875f037f2efeff8bd7917287a049ca9bac114475713fa4dca8da11d46b94fa"
+    threads1_summary: "e698272ff04823cc9dea22d766693c91fd5439334ea4767f8fc78762fed2e282"
+    threads2_summary: "e6173f21d13116da9d98a53723f851b6ae55ec02aebc3c970deda3f771b8b9d2"
+    comparison_summary: "aa4449be22c8a549b42296b39740f430d66c87f177545578982ffa401d14b8d6"
+    experiment_validation: "1acb574b8760f0e27d2de4a906c1f2cb7e44f777ad4f0cf17a72654d5841e292"
+
 failed_collection:
   session: 1
   status: "PRESERVED_OUTSIDE_FORMAL_CANDIDATE"
@@ -346,6 +428,7 @@ evidence_brief:
   documented_facts:
     - "Task 017 is the approved one-thread historical baseline."
     - "Task 018 session 2 is retained in full and is not an approved multithread result."
+    - "The user approved the corrected OpenMP-enabled paired session as BENEFICIAL."
   source_code_facts:
     - "ncnn 20240410 ARM operators use OpenMP pragmas parameterized by opt.num_threads."
     - "The fixed static library has NCNN_OPENMP=OFF, NCNN_THREADS=ON, and NCNN_SIMPLEOMP=OFF."
@@ -359,6 +442,5 @@ evidence_brief:
   assumptions: []
   conflicts:
     - "The local SDK_2025_07 identity does not establish exact official SDK tag compatibility."
-  unresolved_blockers:
-    - "The corrected complete paired session has not yet been collected and independently validated."
-  proposed_action: "Run the frozen paired protocol using the one corrected OpenMP-enabled ELF and private libgomp for both conditions, then retain the candidate for user review."
+  unresolved_blockers: []
+  proposed_action: "Keep the approved Task 018 result immutable; evaluate any further CPU optimization under a new preregistered task."

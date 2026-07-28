@@ -499,6 +499,48 @@ class AnlogicArmThreadingExperimentTests(unittest.TestCase):
             1.5,
         )
 
+    def test_corrected_candidate_discloses_shared_private_libgomp(self) -> None:
+        environment = json.loads(
+            (
+                ROOT
+                / "results/evidence/018/openmp/process_environment.json"
+            ).read_text(encoding="utf-8")
+        )
+        VALIDATOR.validate_process_environment(environment)
+        self.assertFalse(environment["system_modification"])
+        self.assertFalse(environment["new_system_runtime_dependencies"])
+        self.assertFalse(environment["new_runtime_dependencies"])
+        self.assertEqual(
+            environment["new_runtime_dependencies_scope"],
+            "shared_experiment_instrument",
+        )
+        self.assertEqual(
+            environment["shared_private_runtime_dependencies"],
+            ["libgomp.so.1"],
+        )
+
+    def test_corrected_candidate_records_user_approval(self) -> None:
+        comparison = json.loads(
+            (
+                ROOT
+                / "results/evidence/018/openmp/comparison_summary.json"
+            ).read_text(encoding="utf-8")
+        )
+        validation = json.loads(
+            (
+                ROOT
+                / "results/evidence/018/openmp/experiment_validation.json"
+            ).read_text(encoding="utf-8")
+        )
+        for evidence in (comparison, validation):
+            self.assertEqual(evidence["human_review"], "PASS")
+            self.assertEqual(evidence["human_review_source"], "user")
+            self.assertTrue(evidence["candidate_approved"])
+            self.assertEqual(evidence["classification"], "BENEFICIAL")
+            self.assertTrue(evidence["human_review_recorded_at"])
+        self.assertEqual(validation["status"], "PASS")
+        self.assertEqual(comparison["experiment_status"], "PASS")
+
 
 if __name__ == "__main__":
     unittest.main()

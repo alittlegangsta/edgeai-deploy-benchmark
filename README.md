@@ -9,7 +9,7 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–017 are completed and Task 018 is in progress. Checkpoint C is
+Tasks 001–018 are completed. Checkpoint C is
 human-approved, PC Stage 1 is complete, and the Anlogic DR1 Stage 2 CPU
 single-image and unoptimized benchmark baselines are complete.
 Stage 2 covers the validated AArch64 toolchain, a CPU-only static ncnn build,
@@ -26,14 +26,11 @@ correctness. The complete 100-sample real-board session passed automated
 validation and user review and is published as the default unoptimized baseline.
 See [the ARM benchmark protocol](docs/vendor/ANLOGIC_ARM_CPU_BENCHMARK.md).
 
-Task 018 has retained a separate configured-one-thread/configured-two-thread
-candidate, but a fixed-revision source, build, and board audit confirmed that
-its ncnn library was compiled with `NCNN_OPENMP=OFF`,
-`NCNN_THREADS=ON`, and `NCNN_SIMPLEOMP=OFF` and had no effective
-operator-parallel backend. The session is therefore parameter-sensitivity
-evidence, not a publishable multithread performance comparison; Task 018
-remains `In Progress` pending a user decision on a separate multithread-enabled
-build. See
+Task 018 completed a contemporaneous paired one-thread/two-thread experiment
+with one OpenMP-enabled ncnn build. The user-approved `BENEFICIAL` result
+records `1.845334x` pipeline speedup and `84.53%` FPS gain while preserving
+correctness. The earlier OpenMP-off session remains parameter-sensitivity
+evidence and is invalid for multithread performance comparison. See
 [the threading experiment protocol](docs/vendor/ANLOGIC_ARM_CPU_THREADING_EXPERIMENT.md).
 
 ## PC architecture and model lineage
@@ -66,6 +63,9 @@ The input contract is batch 1, FP32, NCHW `[1,3,640,640]`.
   GCC/G++ 7.5.0, target `aarch64-linux-gnu`, and glibc 2.25 sysroot.
 - ARM target: MLK-F3P-CZ02-DR1M90, AArch64 dual core, Buildroot 2022.02.6,
   kernel 6.1.111-rt42, glibc 2.25, and OpenCV 4.7.0.
+- Task 018 ARM threading instrument: ncnn `20240410` with
+  `NCNN_OPENMP=ON`, `NCNN_THREADS=ON`, `NCNN_SIMPLEOMP=OFF`, plus a private
+  `libgomp.so.1` loaded only from the isolated deployment directory.
 
 The Python/C++ OpenCV version difference limits single-cause attribution of
 preprocess performance even though tensor and detection correctness pass.
@@ -87,6 +87,15 @@ inference dominates the pipeline. Maximum process Peak RSS is `142476 KiB`.
 These values describe the default CPU-only FP32, batch-1, `640x640`, one-thread
 configuration, not multi-thread, NEON-specific, quantized, Vulkan, or NPU
 performance.
+
+The user-approved Task 018 paired experiment uses a separate OpenMP-enabled
+build for both conditions and changes only `configured_threads`. Mean pipeline
+latency is `3634.205540 ms` at one thread and `1969.402190 ms` at two threads,
+corresponding to `1.845334x` speedup and an FPS increase from `0.275163303` to
+`0.507768299`. Correctness is unchanged (`IoU=1.0`, confidence delta `0.0`
+between thread conditions), and both stability gates pass. This is beneficial
+but not ideal `2x` scaling; serial pipeline work and scheduling overhead remain.
+Task 017 is a different-build historical reference and was not modified.
 
 Use [the Stage 2 closeout guide](docs/vendor/ANLOGIC_ARM_STAGE2_CLOSEOUT.md) for
 the frozen identities, environment roles, phased build/deploy/run/collect/
@@ -334,9 +343,8 @@ backend includes its Runtime, model, and input state.
 PC Stage 1 and the DR1 ARM CPU single-image Stage 2 baseline are complete.
 Task 017 has completed the preregistered single-thread CPU/FP32 benchmark and
 published the validator- and user-approved unoptimized default baseline.
-Task 018 now retains an automatically validated parameter-sensitivity candidate
-without changing that baseline. A thread-backend audit found no effective
-operator-parallel backend in that candidate, so a genuine multithread comparison
-requires a separately approved rebuild. Video, camera,
+Task 018 completed the corrected OpenMP-enabled paired thread experiment without
+changing that baseline. Its original OpenMP-off session remains intact and
+invalid for multithread performance comparison. Video, camera,
 affinity/NEON-specific optimization, Vulkan, quantization, and NPU remain
 separate future work; NPU readiness remains `HOLD`.

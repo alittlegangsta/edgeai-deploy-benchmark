@@ -369,6 +369,7 @@ cp "$RETURN_LOCAL/threads1_raw_samples.json" "$FORMAL_EVIDENCE/"
 cp "$RETURN_LOCAL/threads2_raw_samples.json" "$FORMAL_EVIDENCE/"
 python3 "$VALIDATOR" assemble-environment \
   --ndjson "$RETURN_LOCAL/process_environment.ndjson" \
+  --shared-private-runtime libgomp.so.1 \
   --output "$FORMAL_EVIDENCE/process_environment.json"
 python3 "$VALIDATOR" summarize \
   --config "$CONFIG" \

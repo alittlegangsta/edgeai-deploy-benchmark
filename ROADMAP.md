@@ -30,8 +30,10 @@ This stage is `Completed` for the correctness-first CPU single-image baseline:
 - Task 015 reconciles provenance, hashes, evidence, and the existing
   build/deploy/run/compare entry points into the Stage 2 closeout.
 
-Stage 2 does not contain a formal ARM benchmark, video, camera, Vulkan,
-quantization, or NPU result.
+The correctness-first closeout itself did not add a formal ARM benchmark.
+Tasks 017 and 018 subsequently add the preregistered single-thread baseline and
+paired CPU-threading experiment. Video, camera, Vulkan, quantization, and NPU
+remain outside Stage 2.
 
 ## Stage 2 benchmark
 
@@ -56,23 +58,28 @@ dominant stage.
 
 ## Stage 2 CPU threading experiment
 
-Task 018, `Anlogic DR1 ARM CPU threading experiment`, is `In Progress`. Its
+Task 018, `Anlogic DR1 ARM CPU threading experiment`, is `Completed`. Its
 protocol compares `configured_threads=1` and `configured_threads=2` while
-holding the Task 017 runtime, model, input, thresholds, executable, timing, and
-statistics constant. Five pairs alternate `1→2`, `2→1`, `1→2`, `2→1`, and
+holding the corrected OpenMP-enabled runtime, model, input, thresholds,
+executable, timing, and statistics constant. Five pairs alternate `1→2`,
+`2→1`, `1→2`, `2→1`, and
 `1→2`; each condition receives five independent processes and 100 retained
 samples.
 
-The producer, runner, validator, correctness/stability gates, speedup formulas,
-classification, and historical-drift warning are frozen. A complete real-board
-10-process/200-sample session remains preserved, but a fixed-revision source,
-build-cache, symbol, and short board-runtime audit confirmed that it used
+The initial complete real-board session remains preserved, but a fixed-revision
+source, build-cache, symbol, and short board-runtime audit confirmed that it used
 `NCNN_OPENMP=OFF`, `NCNN_THREADS=ON`, and `NCNN_SIMPLEOMP=OFF` with no
 effective operator-parallel backend. It is therefore retained as configured
 thread-parameter sensitivity evidence, not published as a multithread
-performance comparison. Task 018 stays `In Progress` pending a user decision
-on a separately built, verified multithread backend. Task 017 remains the
-immutable historical baseline.
+performance comparison.
+
+The corrected formal session uses one standard-libgomp OpenMP-enabled ncnn
+build for both conditions. The user-approved `BENEFICIAL` result reduces mean
+pipeline latency from `3634.205540 ms` to `1969.402190 ms`, a
+`1.845334365x` speedup and `84.533437%` FPS gain. Both 100-sample conditions
+pass correctness and stability; cross-thread detections have IoU `1.0` and
+confidence delta `0.0`. Task 017 remains the immutable different-build
+historical baseline.
 
 ## Future work: explicitly out of scope
 

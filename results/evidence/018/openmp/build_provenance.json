@@ -81,5 +81,13 @@
     }
   ],
   "host_validation_status": "PASS",
-  "board_runtime_validation_status": "PENDING"
+  "board_runtime_validation_status": "PASS",
+  "board_runtime_validation": {
+    "recorded_at": "2026-07-28T21:14:06+08:00",
+    "record_time_basis": "WSL evidence record time; not board clock time",
+    "board_architecture": "aarch64",
+    "private_libgomp_resolved": true,
+    "ldd_not_found_count": 0,
+    "system_library_modified": false
+  }
 }

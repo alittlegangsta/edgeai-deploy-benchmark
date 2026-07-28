@@ -6,7 +6,7 @@ Anlogic DR1 ARM CPU threading experiment.
 
 ## Status
 
-In Progress
+Completed
 
 ## Stage
 
@@ -22,7 +22,7 @@ Task 017 (`Completed`).
 
 ## Recommended Commit
 
-`feat(benchmark): freeze DR1 CPU threading experiment`
+`test(benchmark): record DR1 CPU threading result`
 
 ## Goal
 
@@ -284,10 +284,19 @@ result paths.
    material, repository hygiene, and whitespace checks pass.
 8. No VM, board, inference, or performance collection runs during protocol
    freeze.
+9. A corrected OpenMP-enabled instrument proves that one and two configured
+   threads produce one and two observed process threads while preserving
+   `PASS_TARGET` correctness.
+10. The corrected paired session contains five independent processes and 100
+    retained formal samples per condition with zero invalid formal rounds.
+11. Independent validation passes correctness, stability, statistics, source
+    hashes, cross-condition equivalence, and the preregistered `BENEFICIAL`
+    classification.
+12. The user records `human_review: PASS` and approves the corrected candidate.
 
-Criteria 1–8 freeze the protocol but do not complete the experiment. Formal
-collection, validator results, and required human review remain pending, so
-Task 018 stays `In Progress`.
+Criteria 1–8 froze the protocol before collection. Criteria 9–12 subsequently
+passed using the corrected OpenMP-enabled instrument and the preserved formal
+evidence, so Task 018 is `Completed`.
 
 ## Repair Rules
 
@@ -815,3 +824,225 @@ runner --check and --dry-run: PASS
 Task 017 evidence hashes: unchanged
 git diff --check: PASS
 ```
+
+### Corrected OpenMP candidate collection
+
+The new isolated session completed the exact frozen alternating order with one
+shared OpenMP-enabled ELF. There were ten valid independent processes, no
+invalid formal attempts, and 100 retained samples per condition.
+
+```text
+threads=1:
+  preprocess mean: 43.220096780000006 ms
+  inference mean: 3535.47591964 ms
+  postprocess mean: 55.509523769999994 ms
+  pipeline mean/P50/P90: 3634.2055401899997 / 3635.311207 / 3640.145197 ms
+  FPS: 0.27516330293957975
+  Peak RSS maximum: 142796 KiB
+  model load mean: 657.0638766 ms
+  five-round pipeline spread: 0.3708109182831205% (PASS)
+
+threads=2:
+  preprocess mean: 43.43648921 ms
+  inference mean: 1871.13470669 ms
+  postprocess mean: 54.83099424 ms
+  pipeline mean/P50/P90: 1969.4021901400001 / 1973.12387 / 1976.094379 ms
+  FPS: 0.5077682989318258
+  Peak RSS maximum: 142668 KiB
+  model load mean: 584.9432337999999 ms
+  five-round pipeline spread: 0.8248244869113479% (PASS)
+
+comparison:
+  pipeline speedup: 1.845334365110893
+  inference speedup: 1.8894823055760568
+  FPS gain: 84.53343651108935%
+  Peak RSS change: -0.08963836522031254%
+  cross-condition correctness: PASS_TARGET (IoU 1.0, confidence delta 0.0)
+  Task 017 historical difference: 3.4209860034698747% (PASS; different build)
+  automatic classification: BENEFICIAL
+```
+
+All 200 frequency and temperature sample fields remain JSON `null` because the
+corresponding board nodes were unavailable. The first and last process-event
+load averages were `0.08, 0.07, 0.03` and `1.64, 1.28, 0.86`. No governor,
+frequency, affinity, service, or system-library setting was changed.
+Private `libgomp.so.1` is explicitly recorded as a shared experiment-instrument
+dependency; it was not installed into the board system and is not a
+condition-specific dependency.
+
+At collection completion, before the later user review, the candidate was
+intentionally not approved or published:
+
+```text
+validator status: PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW
+human_review: PENDING
+candidate_approved: false
+Task 018: In Progress
+```
+
+The original session 2 remains byte-preserved with
+`MULTITHREAD_PERFORMANCE_COMPARISON: INVALID`; it was not overwritten,
+reclassified, or spliced into this corrected session.
+
+Corrected candidate validation:
+
+```text
+runner formal collection: PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW
+valid/invalid independent processes: 10/0
+raw formal samples: 100 + 100
+validator independent regeneration: PASS; summaries byte-identical
+automatic classification: BENEFICIAL
+focused Task 018 tests: PASS (17/17)
+model-independent Release build and CTest: PASS (4/4)
+full default-options Release build and CTest: PASS (12/12)
+full Python unittest discovery: PASS (90/90)
+tracked Bash syntax: PASS
+tracked Python py_compile: PASS
+YAML parse: PASS (26 manifest files)
+JSON parse: PASS (36 config/evidence files)
+Task 017, original session 2, model, and input hashes: PASS (13 files)
+Markdown local links: PASS (56 files, 25 links)
+changed-file sensitive/binary/size hygiene: PASS
+git diff --check: PASS
+```
+
+### Final user approval and completion
+
+Approval recorded in WSL: `2026-07-28T21:24:36+08:00`
+
+This is the approval record time, not board runtime time. The approval source
+is the user; Codex did not perform or substitute for the human review.
+
+```text
+validator_status: PASS
+human_review: PASS
+human_review_source: user
+candidate_approved: true
+classification: BENEFICIAL
+Task 018: Completed
+```
+
+The formal pipeline distributions are:
+
+| Condition | Mean ms | P50 ms | P90 ms | Min ms | Max ms | Sample SD ms | FPS | Peak RSS KiB |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| threads=1 | 3634.205540 | 3635.311207 | 3640.145197 | 3626.020746 | 3641.313787 | 4.527992 | 0.275163303 | 142796 |
+| threads=2 | 1969.402190 | 1973.123870 | 1976.094379 | 1958.800699 | 1977.787789 | 6.577660 | 0.507768299 | 142668 |
+
+The independently recomputed comparison is:
+
+```text
+pipeline speedup: 1.845334365110893
+inference speedup: 1.8894823055760568
+FPS gain: 84.53343651108935%
+Peak RSS change: -0.08963836522031254%
+threads=1 stability spread: 0.3708109182831205% (PASS)
+threads=2 stability spread: 0.8248244869113479% (PASS)
+correctness: PASS_TARGET
+minimum golden IoU: 0.9999855075776749
+maximum confidence delta: 0.0000050067901611328125
+cross-thread IoU: 1.0
+cross-thread confidence delta: 0.0
+```
+
+With the same OpenMP-enabled build, model, input, timing boundaries, private
+libgomp, and other runtime settings, changing only `configured_threads` from
+one to two reduced mean pipeline latency from `3634.205540 ms` to
+`1969.402190 ms`. The `1.845334x` speedup and approximately `84.53%` FPS gain
+are `BENEFICIAL`, but are not a claim of ideal `2x` scaling: preprocessing,
+postprocessing, thread scheduling, and other nonparallel work remain.
+
+Task 017 remains unchanged and is a different-build historical reference only;
+its mean differs by `3.420986%`, within the 10% environment-drift warning
+threshold. The original OpenMP-off session 2 remains byte-preserved with:
+
+```text
+OPENMP_OFF_THREAD_PARAMETER_SENSITIVITY: PASS
+MULTITHREAD_PERFORMANCE_COMPARISON: INVALID
+publication_classification: INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON
+```
+
+All 200 frequency and temperature fields remain JSON `null`; the board clock
+was unsynchronized. Load average changed from `0.08, 0.07, 0.03` to
+`1.64, 1.28, 0.86`. No governor, frequency, affinity, service, SDK, or system
+library was modified. Further benchmark, video, camera, Vulkan, quantization,
+NEON-specific optimization, and NPU work require separate tasks; NPU remains
+`HOLD`.
+
+Final offline validation:
+
+```text
+validator regenerated summaries and final approval evidence: PASS; byte-identical
+runner --check: PASS
+runner --dry-run: PASS; no VM, board, inference, or benchmark command
+focused Task 018 tests: PASS (18/18)
+full Python unittest discovery: PASS (91/91)
+model-independent Release build and CTest: PASS (4/4)
+full default-options Release build and CTest: PASS (12/12)
+YAML parse: PASS (26 manifest files)
+JSON parse: PASS (30 Task 018 config/evidence files)
+manifest/evidence SHA256 reconciliation: PASS (14 files)
+frozen model/input/config/golden hashes: PASS
+Task 017 immutability: PASS
+original OpenMP-off session 2 immutability: PASS
+tracked Bash syntax: PASS
+tracked Python py_compile: PASS (33 files)
+Markdown local links: PASS
+sensitive-material and changed-file size checks: PASS
+git diff --check: PASS
+```
+
+Final validation repair attempt 1:
+
+```text
+failing command:
+the combined sensitive-material/changed-file-size shell check
+
+error:
+the inline regular expression contained mismatched shell quoting
+
+repair:
+replace it with filename-only fixed credential-marker patterns and a separate
+quoted file-size loop; do not weaken the credential categories
+
+result:
+PASS
+```
+
+Final validation repair attempt 2:
+
+```text
+failing command:
+the current-state text scan using an unescaped backtick expression
+
+error:
+the shell treated the backticked status text as command substitution
+
+repair:
+rerun the same read-only search with the expression in single quotes
+
+result:
+PASS; remaining pending strings are explicitly historical or belong to the
+retained invalid OpenMP-off session
+```
+
+Final validation repair attempt 3:
+
+```text
+failing check:
+git diff --cached --summary
+
+error:
+the two newly tracked raw JSON files inherited executable mode 0755 from the
+external collection path
+
+repair:
+change only those two JSON metadata modes to 0644 and restage them; file
+content and SHA256 remain unchanged
+
+result:
+PASS
+```
+
+No VM, board, inference, diagnostic, or benchmark command was run during final
+approval recording.
