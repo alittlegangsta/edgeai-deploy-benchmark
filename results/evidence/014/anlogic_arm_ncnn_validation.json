@@ -2,7 +2,22 @@
   "schema_version": 1,
   "evidence_type": "task014_anlogic_arm_ncnn_single_image_validation",
   "task": "014",
-  "status": "AUTOMATED_PASS_HUMAN_REVIEW_PENDING",
+  "status": "PASS",
+  "task_status": "Completed",
+  "human_visual_check": {
+    "status": "PASS",
+    "approval_source": "user",
+    "approval_recorded_at": "2026-07-28T16:11:11+08:00",
+    "time_basis": "WSL record time, not board runtime time",
+    "confirmed_observations": [
+      "The image decodes and displays normally.",
+      "Detection boxes, class text, and confidence text display normally.",
+      "The keyboard, tv, cup, and mouse detections are reasonably placed.",
+      "The low-confidence earbud-case mouse false positive matches the PC golden.",
+      "No black frame, corruption, color anomaly, coordinate offset, or text anomaly is visible.",
+      "The ARM output is visually consistent with the PC ncnn golden."
+    ]
+  },
   "scope": {
     "single_image": true,
     "cpu_only": true,
@@ -107,7 +122,9 @@
       ],
       "decode_validation": "PASS",
       "byte_identical_to_pc_ncnn_golden": true,
-      "human_visual_review": "PENDING"
+      "human_visual_review": "PASS",
+      "human_visual_approval_source": "user",
+      "human_visual_approval_recorded_at": "2026-07-28T16:11:11+08:00"
     },
     "comparison": {
       "path": "results/evidence/014/anlogic_arm_ncnn_comparison.json",
@@ -136,6 +153,6 @@
     "board_execution": "PASS",
     "output_decode": "PASS",
     "automated_correctness": "PASS_TARGET",
-    "human_visual_review": "PENDING"
+    "human_visual_review": "PASS"
   }
 }

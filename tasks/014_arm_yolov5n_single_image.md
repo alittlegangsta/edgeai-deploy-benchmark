@@ -7,7 +7,7 @@ DR1 ARM CPU.
 
 ## Status
 
-In Progress
+Completed
 
 ## Stage
 
@@ -203,7 +203,7 @@ must remain present.
     scan, Allowed Files, and diff checks pass.
 
 Task 014 becomes `Completed` only after all criteria, including human visual
-review, pass. Until then it remains `In Progress`. Task 015 remains `Planned`.
+review, pass. All criteria have now passed. Task 015 remains `Planned`.
 
 ## Build, Run, and Test Commands
 
@@ -253,6 +253,8 @@ or private deployment-library issues are repairable within this task.
 ## Execution Record
 
 Started: `2026-07-28T16:00:00+08:00`
+
+Completed record time: `2026-07-28T16:11:11+08:00`
 
 Branch: `feature/arm-yolov5n-single-image`
 
@@ -378,26 +380,27 @@ JSON parsing, finite numeric checks, source-box bounds, model/input hashes,
 one-thread runtime settings, and the retained low-confidence `mouse` all pass.
 The single timing record is diagnostic only and is not benchmark evidence.
 
-### Current Status and Human Stop
+### Human Visual Acceptance and Final Status
 
-Automated correctness is `PASS_TARGET`; Acceptance Criteria 1–9 and 11 pass.
-Criterion 10 is still pending because only the user may approve the returned
-image. Task 014 therefore remains `In Progress`, Task 015 remains `Planned`,
-and NPU remains `HOLD`.
+Human visual check: `PASS`
 
-Exact Human Action Required: open
-`results/images/anlogic_arm_ncnn_reference.png`, compare it with
-`data/samples/images/pc_reference.jpg` and
-`results/acceptance/cpp_ncnn_reference.png`, and explicitly approve or reject
-box placement, classes, confidence labels, clipping/readability, and the known
-low-confidence earbud-case `mouse` false positive.
+Human visual approval source: user
 
-Resume instructions: this automated implementation and evidence may be
-committed while Task 014 remains `In Progress`. After explicit visual
-approval, record that approval, recompute the affected evidence hashes, run
-the complete non-benchmark validation suite, and mark Task 014 `Completed` in
-a follow-up task-state commit. Do not start Task 015 before Task 014 is
-complete.
+Approval record time: `2026-07-28T16:11:11+08:00` (WSL record time, not board
+runtime time).
+
+The user confirmed that the image decodes and displays normally; detection
+boxes, class text, and confidence text are normal; the `keyboard`, `tv`, `cup`,
+and `mouse` placements are reasonable; the low-confidence earbud-case `mouse`
+false positive matches the PC golden; no black frame, corruption, color
+anomaly, coordinate offset, or text anomaly is present; and the ARM image is
+visually consistent with the PC ncnn golden.
+
+Automated correctness is `PASS_TARGET`, and all Acceptance Criteria 1–11 now
+pass. Task 014 is `Completed`; Task 015 remains `Planned`; NPU remains `HOLD`.
+No formal benchmark, video, camera, Vulkan, FP16/BF16/INT8 inference, NPU
+workflow, model conversion, threshold change, input change, or PC-golden
+change occurred.
 
 ### Repository Validation
 
@@ -417,3 +420,23 @@ complete.
 - Frozen input, output, and evidence hashes revalidate; comparison
   reconciliation is deterministic and remains `PASS_TARGET`.
 - Sensitive-material scan and `git diff --check`: PASS.
+
+### Final Closeout Validation
+
+After the user visual approval was recorded:
+
+- model-independent Release incremental build: PASS;
+- CTest: 12/12 PASS;
+- Python unittest: 64/64 PASS using the documented project `.venv`;
+- Task 014 YAML and JSON parse: PASS;
+- comparison evidence reconciliation: `PASS_TARGET`;
+- returned PNG decode and hash: PASS (`1280x960x3`);
+- Markdown links and both vendor-script `bash -n` checks: PASS;
+- frozen model, input, PC golden, detections, comparison, and PNG hashes:
+  unchanged and PASS;
+- updated validation JSON SHA256:
+  `e5f7c13831cb7134064e6ca180c5aab30f5c15fe7b19ccf05f4812a23985b342`;
+- sensitive-material scan and `git diff --check`: PASS.
+
+No ARM inference, PC benchmark, formal ARM benchmark, video, camera, Vulkan,
+quantization, or NPU command was run during final closeout.

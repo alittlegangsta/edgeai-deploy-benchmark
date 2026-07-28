@@ -19,7 +19,7 @@ The authoritative execution rules are in
 | 011 | C | 010 | Completed | Add C++ ncnn image/video inference, ORT alignment, and benchmark integration. |
 | 012 | C | 011 | Completed | Generate the PC comparison, complete README, acceptance matrix, and Checkpoint C report. |
 | 013 | Stage 2 | 012 + Checkpoint C approval | Completed | Record and validate the Anlogic DR1 ARM CPU toolchain setup; CMake 3.16.9, the fixed ncnn source snapshot, AArch64 toolchain, static ncnn library, and model-free smoke ELF are host-validated, and the hash-identical smoke ELF passes on the real board. Inference, benchmark, and NPU remain out of scope. |
-| 014 | Stage 2 | 013 | In Progress | Run and validate the frozen YOLOv5n ncnn single-image pipeline on the Anlogic DR1 ARM CPU; automated correctness and human output-image review are required before completion. Benchmark, video, camera, Vulkan, quantization, and NPU remain out of scope. |
+| 014 | Stage 2 | 013 | Completed | Run and validate the frozen YOLOv5n ncnn single-image pipeline on the Anlogic DR1 ARM CPU; automated correctness reached PASS_TARGET and the user approved the returned output image. Benchmark, video, camera, Vulkan, quantization, and NPU remain out of scope. |
 | 015 | Stage 2 | 014 | Planned | Consolidate reproducibility notes and close the two-stage baseline. |
 | 016 | Vendor and board baseline | None | Completed | Inventory Anlogic DR1 sources and SDK 2025.07, validate the AArch64 toolchain and board C/C++/OpenCV userspace smoke, and record runtime/NPU readiness; ARM ncnn, ARM YOLO/benchmark, NPU deployment, and exact SDK/Demo tag matching remain out of scope. |
 

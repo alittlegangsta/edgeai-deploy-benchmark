@@ -13,8 +13,8 @@ comparison: PASS_TARGET
 ```
 
 The returned PNG decodes as `1280x960x3` and its SHA256 is byte-identical to
-the approved PC C++ ncnn PNG. Automated correctness therefore passes. Task 014
-remains `In Progress` until a user completes the required visual review.
+the approved PC C++ ncnn PNG. Automated correctness passes, and the user
+subsequently approved the visual result. Task 014 is `Completed`.
 
 This run is functional evidence only. Its single diagnostic timings are not
 benchmark results.
@@ -133,7 +133,7 @@ Stderr was empty and the exit code was zero.
 |---|---|
 | [board detections](../../results/evidence/014/anlogic_arm_ncnn_detections.json) | `e93a3489d24632a5ff9327a3364a9a62753cfb8d0969994bd62525dabe47dd2c` |
 | [PC/ARM comparison](../../results/evidence/014/anlogic_arm_ncnn_comparison.json) | `fee041817ffd1bf36b9beae4bb98cc9cca7baad3773e19c006c3f0a01eac0e92` |
-| [validation summary](../../results/evidence/014/anlogic_arm_ncnn_validation.json) | `8cceaa8470a5cfdf93ff5e223f3a69d4f04b40f90069398e56bd9fc4036d7f4e` |
+| [validation summary](../../results/evidence/014/anlogic_arm_ncnn_validation.json) | `e5f7c13831cb7134064e6ca180c5aab30f5c15fe7b19ccf05f4812a23985b342` |
 | [annotated board image](../../results/images/anlogic_arm_ncnn_reference.png) | `57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2` |
 
 The JSON parses, all values are finite, boxes are legal, count/classes match,
@@ -153,19 +153,27 @@ and the comparison reaches `PASS_TARGET`.
    create the directory and reuse only the hash-validated task package.
 5. The second board attempt passed end to end.
 
-## Required human action
+## Human visual acceptance
 
-Open [the returned board image](../../results/images/anlogic_arm_ncnn_reference.png)
-and compare it with the fixed input and approved PC ncnn result. Confirm or
-reject box placement, class labels, confidence labels, clipping/readability,
-and the retained low-confidence earbud-case `mouse` false positive.
+The user inspected
+[the returned board image](../../results/images/anlogic_arm_ncnn_reference.png)
+and recorded `PASS`. The WSL record time is
+`2026-07-28T16:11:11+08:00`; it is not a board runtime timestamp.
 
-Until that explicit review is recorded:
+The user confirmed normal decoding and display, normal boxes/class/confidence
+text, reasonable `keyboard`, `tv`, `cup`, and `mouse` placement, retention of
+the known low-confidence earbud-case `mouse` false positive, no black frame or
+visual/coordinate/text corruption, and visual consistency with the PC ncnn
+golden.
 
 ```text
-Task 014: In Progress
+Task 014: Completed
 automated correctness: PASS_TARGET
-human visual check: Pending
+human visual check: PASS
+human visual approval source: user
 Task 015: Planned
 NPU: HOLD
 ```
+
+No formal benchmark, video, camera, Vulkan, FP16/BF16/INT8 inference, NPU
+workflow, frozen model/input/threshold change, or PC-golden change occurred.

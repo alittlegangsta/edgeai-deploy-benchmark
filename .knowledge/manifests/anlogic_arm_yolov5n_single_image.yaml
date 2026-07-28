@@ -1,10 +1,15 @@
 schema_version: "1"
 manifest_type: "anlogic_arm_yolov5n_single_image"
 recorded_at: "2026-07-28T15:52:43+08:00"
+completed_at: "2026-07-28T16:11:11+08:00"
 task: "014"
-task_status: "In Progress"
+task_status: "Completed"
 automated_status: "PASS_TARGET"
-human_visual_review: "PENDING"
+human_visual_review: "PASS"
+human_visual_check: "PASS"
+human_visual_approval_source: "user"
+human_visual_approval_recorded_at: "2026-07-28T16:11:11+08:00"
+human_visual_approval_time_basis: "WSL record time, not board runtime time"
 
 scope:
   target: "MLK-F3P-CZ02-DR1M90 AArch64 CPU"
@@ -140,14 +145,15 @@ outputs:
     sha256: "fee041817ffd1bf36b9beae4bb98cc9cca7baad3773e19c006c3f0a01eac0e92"
   validation_json:
     path: "results/evidence/014/anlogic_arm_ncnn_validation.json"
-    sha256: "8cceaa8470a5cfdf93ff5e223f3a69d4f04b40f90069398e56bd9fc4036d7f4e"
+    sha256: "e5f7c13831cb7134064e6ca180c5aab30f5c15fe7b19ccf05f4812a23985b342"
   annotated_image:
     path: "results/images/anlogic_arm_ncnn_reference.png"
     sha256: "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2"
     shape_bgr: [960, 1280, 3]
     decode_status: "PASS"
     byte_identical_to_pc_ncnn_golden: true
-    human_visual_review: "PENDING"
+    human_visual_review: "PASS"
+    human_visual_approval_source: "user"
 
 attempts:
   - id: "aarch64_build_1"
@@ -187,8 +193,8 @@ decisions:
   BOARD_NCNN_SINGLE_IMAGE_RUNTIME: "PASS"
   AUTOMATED_CORRECTNESS: "PASS_TARGET"
   OUTPUT_IMAGE_DECODE: "PASS"
-  HUMAN_VISUAL_REVIEW: "PENDING"
-  TASK_014: "In Progress"
+  HUMAN_VISUAL_REVIEW: "PASS"
+  TASK_014: "Completed"
   TASK_015: "Planned"
   NPU: "HOLD"
 
@@ -202,6 +208,7 @@ evidence_brief:
     - "PC C++ ncnn golden JSON and PNG"
     - "real VM AArch64 build output"
     - "real board stdout, stderr, exit code, hashes, environment, and ldd"
+    - "user visual review of the returned ARM PNG"
   documented_facts:
     - "The board ran the hash-validated frozen param/bin and fixed input."
     - "The returned image is byte-identical to the approved PC ncnn image."
@@ -211,6 +218,5 @@ evidence_brief:
   assumptions: []
   conflicts:
     - "The board clock is unsynchronized; WSL capture time establishes evidence order."
-  unresolved_blockers:
-    - "A user must complete the required human visual review before Task 014 can be Completed."
-  proposed_action: "Review results/images/anlogic_arm_ncnn_reference.png against the fixed input and PC golden, then approve or reject Task 014 visual correctness."
+  unresolved_blockers: []
+  proposed_action: "Prepare a Task 014 pull request; do not start Task 015 without separate authorization."
