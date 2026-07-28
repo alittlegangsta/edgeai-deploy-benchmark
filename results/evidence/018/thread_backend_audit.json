@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "evidence_type": "task018_ncnn_thread_backend_audit",
+  "recorded_at": "2026-07-28T20:04:29+08:00",
+  "record_time_basis": "WSL audit record time; not board runtime time",
+  "source": {
+    "remote": "https://github.com/Tencent/ncnn.git",
+    "tag": "20240410",
+    "commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "source_mechanism": {
+      "operator_parallelism": "OpenMP pragmas using opt.num_threads",
+      "ncnn_threads_option": "pthread-backed mutex, condition variable, thread, and TLS primitives; not an independent operator parallel-for backend",
+      "simpleomp": "minimal OpenMP runtime used only when the OpenMP build path is enabled"
+    }
+  },
+  "actual_build": {
+    "cmake_cache": "/home/uisrc/build/ncnn-aarch64/build/CMakeCache.txt",
+    "installed_config": "/home/uisrc/build/ncnn-aarch64/install/lib/cmake/ncnn/ncnnConfig.cmake",
+    "generated_platform_header": "/home/uisrc/build/ncnn-aarch64/install/include/ncnn/platform.h",
+    "static_library": "/home/uisrc/build/ncnn-aarch64/install/lib/libncnn.a",
+    "static_library_sha256": "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a",
+    "NCNN_OPENMP": false,
+    "NCNN_THREADS": true,
+    "NCNN_SIMPLEOMP": false,
+    "OpenMP_CXX_FOUND": "NOT_EVALUATED_BECAUSE_NCNN_OPENMP_OFF",
+    "compile_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DNCNN_STATIC_DEFINE",
+      "-Ofast",
+      "-ffast-math",
+      "-pthread"
+    ],
+    "fopenmp_present": false,
+    "gomp_or_omp_symbols_present": false,
+    "simpleomp_object_payload": "EMPTY_GUARDED_OBJECT",
+    "pthread_symbols_present": [
+      "pthread_key_create",
+      "pthread_key_delete",
+      "pthread_mutex_init",
+      "pthread_mutex_lock",
+      "pthread_mutex_unlock",
+      "pthread_mutex_destroy"
+    ],
+    "linked_thread_runtime": "libpthread via -pthread; no libgomp or libomp"
+  },
+  "diagnostic_build": {
+    "source_archive_sha256": "d5b5a6afe02243b96f15c527539303f1aae0252c7f8b9afcf5fb0fcdc7052849",
+    "executable_sha256": "46b2b33d6854ec20dc9922d884f38d5df81c348699cbd4da4c1466f1faa39578",
+    "identity": "ELF64 AArch64; interpreter /lib/ld-linux-aarch64.so.1",
+    "maximum_required_glibc": "GLIBC_2.17",
+    "unexpected_dependencies": false,
+    "runtime_capability_output": {
+      "ncnn_openmp_compiled": false,
+      "ncnn_threads_compiled": true,
+      "ncnn_simpleomp_compiled": false,
+      "compiler_openmp_macro_defined": false,
+      "effective_parallel_backend": "none"
+    }
+  },
+  "board_diagnostics": {
+    "threads1": "results/evidence/018/thread_diagnostic_threads1.json",
+    "threads2": "results/evidence/018/thread_diagnostic_threads2.json",
+    "correctness": "PASS_TARGET_BOTH",
+    "maximum_observed_process_threads": {
+      "configured_threads_1": 1,
+      "configured_threads_2": 1
+    },
+    "cpu_time_to_wall_time_ratio": {
+      "configured_threads_1": 0.9927591018688856,
+      "configured_threads_2": 0.9688177035962872
+    }
+  },
+  "set_num_threads_effect": {
+    "configuration_write": "network.opt.num_threads is set before load_param",
+    "operator_parallelism": "NO_EFFECT_WITH_CURRENT_BUILD",
+    "reason": "the ARM layer parallel regions are OpenMP pragmas, but this library was built without OpenMP or simpleomp"
+  },
+  "candidate_session_2": {
+    "retained": true,
+    "raw_statistical_classification": "NEUTRAL",
+    "human_review": "PENDING",
+    "candidate_approved": false,
+    "publication_classification": "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON",
+    "openmp_off_parameter_sensitivity": "PASS",
+    "multithread_performance_comparison": "INVALID"
+  },
+  "audit_conclusion": "CURRENT_BUILD_HAS_NO_EFFECTIVE_CPU_OPERATOR_PARALLEL_BACKEND",
+  "task_status": "In Progress",
+  "decision_required": "Approve a separate ncnn rebuild with a verified multithread backend before repeating the paired experiment"
+}

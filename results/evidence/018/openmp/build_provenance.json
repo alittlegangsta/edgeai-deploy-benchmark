@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "evidence_type": "task018_openmp_build_provenance",
+  "recorded_at": "2026-07-28T20:40:43+08:00",
+  "record_time_basis": "WSL provenance record time; not board runtime time",
+  "backend_selection": {
+    "selected": "standard_libgomp",
+    "fallback_used": false,
+    "reason": "The preferred Linaro libgomp route configured, compiled, linked, and passed host ABI inspection."
+  },
+  "source": {
+    "remote": "https://github.com/Tencent/ncnn.git",
+    "tag": "20240410",
+    "commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "archive_sha256": "81239dfeb25316afd526ccf3d7da20ee85b66d8ff613d3af61d4ae36dfdc5e45",
+    "root_cmake_sha256": "7e7df04a8af9e151e04703a0860383fdc4b8df340032d7f5542ed25116212185",
+    "src_cmake_sha256": "6f0f283a2b4136e8c4eff619c75eac6d087dcfc5f589bc542a4439b2f9e877e"
+  },
+  "project_source_archive_sha256": "01b70259586931e86d0bc071030aea10674b09f80f28d80fc09857001ebd8f8e",
+  "build_host": {
+    "path": "/home/uisrc/build/ncnn-aarch64-openmp",
+    "cmake": "3.16.9",
+    "compiler": "Linaro aarch64-linux-gnu GCC/G++ 7.5.0",
+    "target_triplet": "aarch64-linux-gnu",
+    "sysroot": "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc"
+  },
+  "ncnn_options": {
+    "NCNN_OPENMP": true,
+    "NCNN_THREADS": true,
+    "NCNN_SIMPLEOMP": false,
+    "NCNN_VULKAN": false,
+    "NCNN_PYTHON": false,
+    "NCNN_SHARED_LIB": false,
+    "NCNN_BUILD_TOOLS": false,
+    "NCNN_BUILD_EXAMPLES": false,
+    "NCNN_BUILD_BENCHMARK": false,
+    "NCNN_BUILD_TESTS": false
+  },
+  "openmp_detection": {
+    "OpenMP_CXX_FOUND": true,
+    "OpenMP_CXX_FLAGS": "-fopenmp",
+    "OpenMP_gomp_LIBRARY": "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc/lib/libgomp.so",
+    "compile_commands_contain_fopenmp": true,
+    "link_command_contains_libgomp": true
+  },
+  "artifacts": {
+    "libncnn_a": {
+      "sha256": "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3",
+      "architecture": "AArch64 objects in a static archive"
+    },
+    "libgomp_so_1": {
+      "sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+      "identity": "ELF64 AArch64 shared object",
+      "soname": "libgomp.so.1",
+      "maximum_required_glibc": "GLIBC_2.17",
+      "deployment": "private Task 018 directory through LD_LIBRARY_PATH"
+    },
+    "benchmark_elf": {
+      "sha256": "19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2",
+      "identity": "ELF64 AArch64",
+      "interpreter": "/lib/ld-linux-aarch64.so.1",
+      "maximum_required_glibc": "GLIBC_2.17",
+      "maximum_required_glibcxx": "GLIBCXX_3.4.21",
+      "needed_openmp_runtime": "libgomp.so.1"
+    }
+  },
+  "isolation": {
+    "original_ncnn_build_path": "/home/uisrc/build/ncnn-aarch64",
+    "original_ncnn_library_sha256": "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a",
+    "original_build_modified": false,
+    "task017_modified": false
+  },
+  "build_repairs": [
+    {
+      "issue": "CMake 3.16 does not persist OpenMP_CXX_FOUND as a BOOL cache entry.",
+      "resolution": "Validate OpenMP_COMPILE_RESULT_CXX_fopenmp, OpenMP_CXX_FLAGS, OpenMP_gomp_LIBRARY, compile commands, and the final link instead."
+    },
+    {
+      "issue": "A cached idempotent configure does not repeat the one-time Found OpenMP_CXX console message.",
+      "resolution": "Use persistent CMakeCache and compiled/link artifact evidence rather than a transient console line."
+    }
+  ],
+  "host_validation_status": "PASS",
+  "board_runtime_validation_status": "PASS",
+  "board_runtime_validation": {
+    "recorded_at": "2026-07-28T21:14:06+08:00",
+    "record_time_basis": "WSL evidence record time; not board clock time",
+    "board_architecture": "aarch64",
+    "private_libgomp_resolved": true,
+    "ldd_not_found_count": 0,
+    "system_library_modified": false
+  }
+}

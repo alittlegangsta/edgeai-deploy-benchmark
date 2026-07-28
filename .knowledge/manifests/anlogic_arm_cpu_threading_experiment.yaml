@@ -1,0 +1,446 @@
+schema_version: "1"
+manifest_type: "anlogic_arm_cpu_threading_experiment"
+task: "018"
+task_status: "Completed"
+protocol_status: "FROZEN"
+formal_data_collection: "PASS"
+performance_values_published: true
+candidate_recorded_at: "2026-07-28T19:38:35+08:00"
+candidate_record_time_basis: "WSL record time; the board clock is unsynchronized"
+candidate_session_retained: true
+human_review: "PASS"
+human_review_source: "user"
+human_review_recorded_at: "2026-07-28T21:24:36+08:00"
+human_review_record_time_basis: "WSL approval record time; not board runtime time"
+candidate_approved: true
+classification: "BENEFICIAL"
+
+dependencies:
+  task_017:
+    status: "Completed"
+    evidence_policy: "immutable historical baseline"
+    pipeline_mean_ms: 3513.99235361
+    fps: 0.2845766010198282
+    raw_samples_sha256: "b39c3f1bc4883713a67ba8494c46d0d569894505ca12bc4cd1f92b72ef7f9c74"
+    summary_sha256: "81b5ca3adb512b4ee77559271523e5073535bc8cc1ff388378d54f410e29c4eb"
+    validation_sha256: "697dcb1279f4af360d11cd81a9611c33f5cbe0a7aef501878ec843c2c300a27e"
+
+target:
+  board: "MLK-F3P-CZ02-DR1M90"
+  architecture: "AArch64"
+  cpu: "two cores; CPU part 0xd04"
+  os: "Buildroot 2022.02.6"
+  kernel: "6.1.111-rt42"
+  libc: "glibc 2.25"
+
+runtime:
+  name: "ncnn"
+  tag: "20240410"
+  commit: "56775de50990ab7f16627efdcf5529b49541206f"
+  cpu_only: true
+  precision: "FP32"
+  batch: 1
+  input_size: [640, 640]
+  thread_conditions: [1, 2]
+  only_experimental_variable: "configured_threads"
+  opencv_threads: 1
+  vulkan: false
+  fp16: false
+  bf16: false
+  int8: false
+
+frozen_assets:
+  ncnn_manifest:
+    path: "models/yolov5n-v7.0/ncnn_manifest.json"
+    sha256: "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff"
+  param:
+    path: "models/yolov5n-v7.0/yolov5n.ncnn.param"
+    sha256: "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4"
+    git_policy: "ignored deployment input"
+  bin:
+    path: "models/yolov5n-v7.0/yolov5n.ncnn.bin"
+    sha256: "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0"
+    git_policy: "ignored deployment input"
+  input:
+    path: "data/samples/images/pc_reference.jpg"
+    sha256: "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+  inference_config:
+    path: "configs/yolov5n_v7_inference.json"
+    sha256: "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+  pc_ncnn_golden:
+    path: "results/acceptance/cpp_ncnn_reference.json"
+    sha256: "fb343f605218a5fa30a825a3f14e4d00137d6275e1b1af99c9029956e2492fa9"
+
+paired_sampling:
+  pair_count: 5
+  independent_processes_per_condition: 5
+  warmup_per_process: 10
+  measured_per_process: 20
+  measured_samples_per_condition: 100
+  total_independent_processes: 10
+  total_measured_samples: 200
+  order:
+    - {pair: 1, conditions: [1, 2]}
+    - {pair: 2, conditions: [2, 1]}
+    - {pair: 3, conditions: [1, 2]}
+    - {pair: 4, conditions: [2, 1]}
+    - {pair: 5, conditions: [1, 2]}
+  outlier_removal: false
+  invalid_attempts: "retain stdout, stderr, exit code, environment, and reason"
+
+timing:
+  authoritative_unit: "integer nanoseconds"
+  pipeline_formula: "preprocess_ns + inference_ns + postprocess_ns"
+  model_load_excluded: true
+  image_read_excluded: true
+  correctness_excluded: true
+  resource_sampling_excluded: true
+  output_writes_excluded: true
+
+statistics:
+  percentile: "nearest-rank"
+  standard_deviation: "sample; denominator count - 1"
+  fps: "1000 / aggregate mean pipeline_ms"
+  stability_gate_per_condition_percent: 10.0
+  formulas:
+    pipeline_speedup: "threads1_mean_pipeline_ms / threads2_mean_pipeline_ms"
+    inference_speedup: "threads1_mean_inference_ms / threads2_mean_inference_ms"
+    fps_gain_percent: "(threads2_fps / threads1_fps - 1) * 100"
+    rss_change_percent: "(threads2_peak_rss_kib / threads1_peak_rss_kib - 1) * 100"
+
+classification:
+  BENEFICIAL:
+    - "correctness and both stability gates PASS"
+    - "pipeline_speedup >= 1.05"
+    - "threads2 pipeline P90 <= threads1 pipeline P90"
+    - "no new runtime dependency or system modification"
+  NEUTRAL:
+    - "correctness and both stability gates PASS"
+    - "0.98 <= pipeline_speedup < 1.05"
+  REGRESSION:
+    - "pipeline_speedup < 0.98; or"
+    - "correctness/stability/runtime-resource gate fails; or"
+    - "pipeline_speedup >= 1.05 while threads2 P90 is worse"
+  rss_policy: "disclose change; no preregistered rejection threshold"
+
+correctness:
+  before_warmup: "required for every process"
+  after_measurement: "required for every process"
+  expected_detections: 5
+  minimum_class_matched_iou: 0.99
+  maximum_confidence_delta: 0.01
+  finite_values: "required"
+  valid_boxes: "required"
+  cross_condition_comparison: "required from captured detection snapshots"
+
+historical_consistency:
+  task017_pipeline_mean_ms: 3513.99235361
+  maximum_absolute_difference_percent: 10.0
+  status_when_exceeded: "WARNING_ENVIRONMENT_DRIFT"
+  effect_on_task018_samples: "warning only; do not discard or alter"
+
+tracked_protocol:
+  config:
+    path: "configs/benchmark_anlogic_arm_threading.json"
+    sha256: "901628d80a63ee5fa34d8a62db21d65796bb9e8c6284207c2490dc44379d13f9"
+  execution_order:
+    path: "results/evidence/018/execution_order.json"
+    sha256: "cf924d46e6bac1bba342ab9aac93bb62ad1703b81cca9aa443e84643e8d1c8a4"
+  contract:
+    path: "results/evidence/018/experiment_contract.json"
+    sha256: "c9e27bbba7b823668f31da4586adc019867be3680731541859c515b9de6431d8"
+  task: "tasks/018_anlogic_dr1_arm_cpu_threading_experiment.md"
+  document: "docs/vendor/ANLOGIC_ARM_CPU_THREADING_EXPERIMENT.md"
+
+build_candidate:
+  source_archive_sha256: "540773f59afda16baa89538b33b5c5a8889f4105818a30e53e8c7b3b84a12f57"
+  executable_sha256: "40fdd3b777fccaf3bd45f3a9c59842de53e7bf42bcbd285fa73c37b86b457f2a"
+  executable_identity: "ELF64 AArch64; /lib/ld-linux-aarch64.so.1"
+  maximum_required_glibc: "GLIBC_2.17"
+  compiler: "Linaro GCC/G++ 7.5.0"
+  cmake: "3.16.9"
+  ncnn_static_library_sha256: "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a"
+  dependency_status: "PASS; private OpenCV 4.7.0 plus board system libraries, no not found"
+
+candidate_session:
+  session: 2
+  board_path: "/root/edgeai/anlogic-arm-threading-task018-session2"
+  status: "RETAINED_AFTER_THREAD_BACKEND_AUDIT"
+  raw_statistical_classification: "NEUTRAL"
+  publication_classification: "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON"
+  openmp_off_thread_parameter_sensitivity: "PASS"
+  multithread_performance_comparison: "INVALID"
+  human_review: "PENDING"
+  candidate_approved: false
+  valid_processes: 10
+  invalid_processes: 0
+  samples_per_condition: 100
+  total_samples: 200
+  correctness:
+    threads1: "PASS_TARGET"
+    threads2: "PASS_TARGET"
+    cross_condition: "PASS_TARGET"
+    minimum_class_matched_iou: 0.9999855075776749
+    maximum_confidence_delta: 0.0000050067901611328125
+  threads1:
+    fps: 0.2815073468486081
+    maximum_peak_rss_kib: 142572
+    model_load_ms: {mean: 644.9032742, min: 630.293556, max: 675.432396}
+    stability_percent: 3.343810125550009
+    stability_status: "PASS"
+  threads2:
+    fps: 0.28163327612748756
+    maximum_peak_rss_kib: 142872
+    model_load_ms: {mean: 647.9484844000001, min: 635.196576, max: 658.532376}
+    stability_percent: 3.2791492082843625
+    stability_status: "PASS"
+  comparison:
+    pipeline_speedup: 1.0004473392268058
+    inference_speedup: 1.000657684049391
+    fps_gain_percent: 0.04473392268058429
+    rss_change_percent: 0.2104199983166355
+  task017_historical_consistency:
+    absolute_pipeline_mean_difference_percent: 1.0902927421182582
+    status: "PASS"
+  environment_limits:
+    board_clock: "unsynchronized"
+    frequency_samples: "200/200 JSON null"
+    temperature_samples: "200/200 JSON null"
+    governor_or_frequency_modified: false
+    system_libraries_or_services_modified: false
+
+formal_evidence:
+  threads1_raw:
+    path: "results/evidence/018/threads1_raw_samples.json"
+    sha256: "7a2f96346f289860b0033ffdd5c635f572cd4c52306a9a13c2e39ec9f24f833c"
+  threads2_raw:
+    path: "results/evidence/018/threads2_raw_samples.json"
+    sha256: "d385cf4055b54da915fe710855a9e434e07f4434723b4a9a1bc6aa70e4005125"
+  process_environment:
+    path: "results/evidence/018/process_environment.json"
+    sha256: "14ce7a366527d5bb63db77233e16724130aacb7d44c2cffe1a58a48a08f8f9b2"
+  threads1_summary:
+    path: "results/evidence/018/threads1_summary.json"
+    sha256: "5b5039f6ce5bc663d93d4a3bd3732fd0996338027bf4667a076d59b7b4958ede"
+  threads2_summary:
+    path: "results/evidence/018/threads2_summary.json"
+    sha256: "520c99e8c1fe54929642c7247ccd2fbd09d3292650e3f26cd2c0b0440111590a"
+  comparison_summary:
+    path: "results/evidence/018/comparison_summary.json"
+    sha256: "3ac735e4ff474ec2f515b39cd7758e3289d94f028c54406609f54b2f63042de3"
+  validation:
+    path: "results/evidence/018/experiment_validation.json"
+    sha256: "de908a24ca5a2cc23648f16ca649a4b62c3cd3410468e0009c2a31a72de794b3"
+
+thread_backend_audit:
+  recorded_at: "2026-07-28T20:04:29+08:00"
+  record_time_basis: "WSL audit record time; not board runtime time"
+  fixed_revision: "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f"
+  cmake_options:
+    NCNN_OPENMP: false
+    NCNN_THREADS: true
+    NCNN_SIMPLEOMP: false
+    OpenMP_CXX_FOUND: "NOT_EVALUATED_BECAUSE_NCNN_OPENMP_OFF"
+  compile_and_link:
+    fopenmp: false
+    gomp_or_omp_symbols: false
+    simpleomp_object: "EMPTY_GUARDED_OBJECT"
+    linked_thread_runtime: "libpthread via -pthread; no libgomp or libomp"
+  source_conclusion:
+    operator_parallelism: "OpenMP pragmas using opt.num_threads"
+    ncnn_threads_option: "pthread synchronization/thread abstractions, not an independent operator parallel-for backend"
+    set_num_threads: "network.opt.num_threads is written before load_param but cannot activate operator parallelism in this build"
+  diagnostic_build:
+    source_archive_sha256: "d5b5a6afe02243b96f15c527539303f1aae0252c7f8b9afcf5fb0fcdc7052849"
+    executable_sha256: "46b2b33d6854ec20dc9922d884f38d5df81c348699cbd4da4c1466f1faa39578"
+    identity: "ELF64 AArch64; /lib/ld-linux-aarch64.so.1; maximum GLIBC_2.17"
+    effective_parallel_backend: "none"
+  board_diagnostic:
+    protocol: "one process per condition; 2 warmups and 3 measured pipelines; not a formal benchmark"
+    threads1:
+      max_observed_process_threads: 1
+      cpu_time_to_wall_time_ratio: 0.9927591018688856
+      correctness: "PASS_TARGET"
+    threads2:
+      max_observed_process_threads: 1
+      cpu_time_to_wall_time_ratio: 0.9688177035962872
+      correctness: "PASS_TARGET"
+  conclusion: "CURRENT_BUILD_HAS_NO_EFFECTIVE_CPU_OPERATOR_PARALLEL_BACKEND"
+  audit_evidence:
+    path: "results/evidence/018/thread_backend_audit.json"
+    sha256: "f64c15ac22e34481eb870ea93eee974fdf08e5cd975a45ee0965ef9615513d0e"
+  threads1_diagnostic:
+    path: "results/evidence/018/thread_diagnostic_threads1.json"
+    sha256: "673dac321e20a0a0c23f62714a030051fd3c7bb14e34812c0204717b39949110"
+  threads2_diagnostic:
+    path: "results/evidence/018/thread_diagnostic_threads2.json"
+    sha256: "6fff4a82b4965878bca7ba98c98c5ad85527acd4dbb09d9c1657d2e02eaecc07"
+
+instrument_correction:
+  status: "COMPLETED_BENEFICIAL"
+  approval_source: "user"
+  original_session_retained: true
+  original_session_publication_classification: "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON"
+  corrected_evidence_namespace: "results/evidence/018/openmp"
+  preferred_backend:
+    NCNN_OPENMP: true
+    NCNN_THREADS: true
+    NCNN_SIMPLEOMP: false
+    runtime: "standard Linaro libgomp, privately deployed"
+  fallback_backend:
+    NCNN_OPENMP: true
+    NCNN_THREADS: true
+    NCNN_SIMPLEOMP: true
+    condition: "only after the standard libgomp route fails a build, ABI, dependency, runtime, correctness, or observed-parallelism gate"
+  frozen_protocol_changed: false
+  task017_modified: false
+  corrected_config:
+    path: "configs/benchmark_anlogic_arm_threading_openmp.json"
+    sha256: "f4db66c7d0be8ece68c7a392b28b04934e141267966921210dac765318db4e0a"
+    OMP_NUM_THREADS_policy: "configured_threads"
+  selected_build:
+    backend: "standard_libgomp"
+    fallback_used: false
+    libncnn_a_sha256: "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3"
+    libgomp_so_1_sha256: "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91"
+    benchmark_elf_sha256: "19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2"
+  parallel_capability_gate:
+    protocol: "one independent process per condition; 2 warmups and 3 measured pipelines; not a formal benchmark"
+    threads1:
+      max_observed_process_threads: 1
+      cpu_time_to_wall_time_ratio: 0.9926010969416309
+      correctness: "PASS_TARGET"
+      evidence_sha256: "88e42ffcb65cb3416293caa88a17cce3b1721f9f4971dbdbb9c2eb6276df7ead"
+    threads2:
+      max_observed_process_threads: 2
+      cpu_time_to_wall_time_ratio: 1.8452701642847376
+      correctness: "PASS_TARGET"
+      evidence_sha256: "f7ce5106f7d61a1f55f07d1dea8762efe230b145f1ef49a653bac21ed27761ac"
+    status: "PASS"
+
+corrected_openmp_candidate:
+  evidence_namespace: "results/evidence/018/openmp"
+  formal_session_count: 1
+  valid_process_rounds:
+    threads1: 5
+    threads2: 5
+  invalid_process_rounds: 0
+  samples:
+    threads1: 100
+    threads2: 100
+  executable_sha256: "19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2"
+  statistics:
+    threads1:
+      preprocess_mean_ms: 43.220096780000006
+      inference_mean_ms: 3535.47591964
+      postprocess_mean_ms: 55.509523769999994
+      pipeline_mean_ms: 3634.2055401899997
+      pipeline_p50_ms: 3635.311207
+      pipeline_p90_ms: 3640.145197
+      pipeline_min_ms: 3626.020746
+      pipeline_max_ms: 3641.313787
+      pipeline_sample_sd_ms: 4.527992101693737
+      pipeline_fps: 0.27516330293957975
+      peak_rss_kib: 142796
+      model_load_mean_ms: 657.0638766
+      stability_spread_percent: 0.3708109182831205
+    threads2:
+      preprocess_mean_ms: 43.43648921
+      inference_mean_ms: 1871.13470669
+      postprocess_mean_ms: 54.83099424
+      pipeline_mean_ms: 1969.4021901400001
+      pipeline_p50_ms: 1973.12387
+      pipeline_p90_ms: 1976.094379
+      pipeline_min_ms: 1958.800699
+      pipeline_max_ms: 1977.787789
+      pipeline_sample_sd_ms: 6.577660346451398
+      pipeline_fps: 0.5077682989318258
+      peak_rss_kib: 142668
+      model_load_mean_ms: 584.9432337999999
+      stability_spread_percent: 0.8248244869113479
+  comparison:
+    pipeline_speedup: 1.845334365110893
+    inference_speedup: 1.8894823055760568
+    fps_gain_percent: 84.53343651108935
+    rss_change_percent: -0.08963836522031254
+    cross_condition_correctness: "PASS_TARGET"
+    minimum_class_matched_iou: 1.0
+    maximum_confidence_delta: 0.0
+    golden_correctness: "PASS_TARGET"
+    detections: 5
+    minimum_golden_iou: 0.9999855075776749
+    maximum_golden_confidence_delta: 0.0000050067901611328125
+    task017_historical_pipeline_difference_percent: 3.4209860034698747
+    task017_history_status: "PASS_DIFFERENT_BUILD_REFERENCE_ONLY"
+  stability:
+    threads1: "PASS"
+    threads2: "PASS"
+  environment:
+    cpufreq_samples: "JSON null"
+    temperature_samples: "JSON null"
+    load_average_first: [0.08, 0.07, 0.03]
+    load_average_last: [1.64, 1.28, 0.86]
+    system_modified: false
+  classification: "BENEFICIAL"
+  validator_status: "PASS"
+  human_review: "PASS"
+  human_review_source: "user"
+  human_review_recorded_at: "2026-07-28T21:24:36+08:00"
+  human_review_record_time_basis: "WSL approval record time; not board runtime time"
+  candidate_approved: true
+  evidence_sha256:
+    threads1_raw: "5987fbdf00bdb9389c6e7cbff91d36e5ba24a9be387ba68c5c3dfeca3b5e3d4a"
+    threads2_raw: "b1246ce255a1962bf96b76a717faafe78481393aa95c43072349009d85600f40"
+    process_environment: "dc875f037f2efeff8bd7917287a049ca9bac114475713fa4dca8da11d46b94fa"
+    threads1_summary: "e698272ff04823cc9dea22d766693c91fd5439334ea4767f8fc78762fed2e282"
+    threads2_summary: "e6173f21d13116da9d98a53723f851b6ae55ec02aebc3c970deda3f771b8b9d2"
+    comparison_summary: "aa4449be22c8a549b42296b39740f430d66c87f177545578982ffa401d14b8d6"
+    experiment_validation: "1acb574b8760f0e27d2de4a906c1f2cb7e44f777ad4f0cf17a72654d5841e292"
+
+failed_collection:
+  session: 1
+  status: "PRESERVED_OUTSIDE_FORMAL_CANDIDATE"
+  accepted_before_failure: "pair 1 threads=1 and threads=2"
+  failed_condition: "pair 2 order 1 threads=2"
+  failed_attempts: 3
+  failure: "producer append validator expected process_id immediately after round"
+  disposition: "not spliced into session 2; board and external logs retained"
+
+scope_boundary:
+  formal_collection_run: true
+  new_performance_numbers: true
+  task017_modified: false
+  video: false
+  camera: false
+  vulkan: false
+  quantization: false
+  npu: "HOLD"
+
+evidence_brief:
+  task: "Task 018 Anlogic DR1 ARM CPU threading experiment"
+  board: "MLK-F3P-CZ02-DR1M90"
+  sdk_tag: "SDK_2025_07 local asset identity; exact official repository tag compatibility unproven"
+  repository_tag_commit: "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f"
+  sources_consulted:
+    - "Task 017 protocol, raw samples, summary, validation, manifest, and document"
+    - "Tasks 013-015 ARM build, board runtime, and correctness evidence"
+    - "shared benchmark producer and ncnn adapter source"
+  documented_facts:
+    - "Task 017 is the approved one-thread historical baseline."
+    - "Task 018 session 2 is retained in full and is not an approved multithread result."
+    - "The user approved the corrected OpenMP-enabled paired session as BENEFICIAL."
+  source_code_facts:
+    - "ncnn 20240410 ARM operators use OpenMP pragmas parameterized by opt.num_threads."
+    - "The fixed static library has NCNN_OPENMP=OFF, NCNN_THREADS=ON, and NCNN_SIMPLEOMP=OFF."
+    - "NCNN_THREADS supplies pthread synchronization and thread abstractions but is not an independent operator parallel-for backend."
+  real_device_observations:
+    - "Both short diagnostic processes passed correctness before and after measurement."
+    - "Both configured thread conditions exposed one process thread throughout the successful external monitor retry."
+    - "CPU-time/wall-time ratios were 0.9927591018688856 and 0.9688177035962872 for configured threads 1 and 2."
+    - "The corrected standard-libgomp diagnostic observed one thread at configured_threads=1 and two threads at configured_threads=2."
+    - "Corrected diagnostic CPU-time/wall-time ratios were 0.9926010969416309 and 1.8452701642847376, with PASS_TARGET correctness for both conditions."
+  assumptions: []
+  conflicts:
+    - "The local SDK_2025_07 identity does not establish exact official SDK tag compatibility."
+  unresolved_blockers: []
+  proposed_action: "Keep the approved Task 018 result immutable; evaluate any further CPU optimization under a new preregistered task."

@@ -30,8 +30,10 @@ This stage is `Completed` for the correctness-first CPU single-image baseline:
 - Task 015 reconciles provenance, hashes, evidence, and the existing
   build/deploy/run/compare entry points into the Stage 2 closeout.
 
-Stage 2 does not contain a formal ARM benchmark, video, camera, Vulkan,
-quantization, or NPU result.
+The correctness-first closeout itself did not add a formal ARM benchmark.
+Tasks 017 and 018 subsequently add the preregistered single-thread baseline and
+paired CPU-threading experiment. Video, camera, Vulkan, quantization, and NPU
+remain outside Stage 2.
 
 ## Stage 2 benchmark
 
@@ -54,8 +56,33 @@ round-mean spread, and user review. The unoptimized one-thread pipeline mean is
 `3513.992354 ms` and sequential batch-1 FPS is `0.284576601`; inference is the
 dominant stage.
 
+## Stage 2 CPU threading experiment
+
+Task 018, `Anlogic DR1 ARM CPU threading experiment`, is `Completed`. Its
+protocol compares `configured_threads=1` and `configured_threads=2` while
+holding the corrected OpenMP-enabled runtime, model, input, thresholds,
+executable, timing, and statistics constant. Five pairs alternate `1→2`,
+`2→1`, `1→2`, `2→1`, and
+`1→2`; each condition receives five independent processes and 100 retained
+samples.
+
+The initial complete real-board session remains preserved, but a fixed-revision
+source, build-cache, symbol, and short board-runtime audit confirmed that it used
+`NCNN_OPENMP=OFF`, `NCNN_THREADS=ON`, and `NCNN_SIMPLEOMP=OFF` with no
+effective operator-parallel backend. It is therefore retained as configured
+thread-parameter sensitivity evidence, not published as a multithread
+performance comparison.
+
+The corrected formal session uses one standard-libgomp OpenMP-enabled ncnn
+build for both conditions. The user-approved `BENEFICIAL` result reduces mean
+pipeline latency from `3634.205540 ms` to `1969.402190 ms`, a
+`1.845334365x` speedup and `84.533437%` FPS gain. Both 100-sample conditions
+pass correctness and stability; cross-thread detections have IoU `1.0` and
+confidence delta `0.0`. Task 017 remains the immutable different-build
+historical baseline.
+
 ## Future work: explicitly out of scope
 
-Video, camera, Vulkan, quantization, multi-thread/affinity optimization, and NPU
-remain separate projects. None is part of the Task 017 unoptimized CPU
-baseline; NPU is `HOLD`.
+Video, camera, Vulkan, quantization, affinity/NEON tuning, concurrent requests,
+and NPU remain separate projects. Task 018 changes only ncnn's configured
+thread count and does not absorb those topics. NPU is `HOLD`.

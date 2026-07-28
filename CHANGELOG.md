@@ -28,3 +28,7 @@
   statistic recomputation, stability validation, and user approval. The
   published result is the unoptimized CPU-only FP32 one-thread baseline; NPU
   remains out of scope and `HOLD`.
+- Completed the paired DR1 CPU threading experiment with a shared
+  OpenMP-enabled ncnn build and private libgomp. The user-approved
+  `BENEFICIAL` result records `1.845334x` pipeline speedup and preserves the
+  original OpenMP-off session as invalid-for-comparison sensitivity evidence.

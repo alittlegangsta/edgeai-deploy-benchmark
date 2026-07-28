@@ -335,8 +335,8 @@ struct NcnnDetector::Impl {
         const edgeai::filesystem::path& param_override,
         const edgeai::filesystem::path& bin_override
     ) {
-        if (threads != 1) {
-            throw std::runtime_error("Task 011 requires exactly one ncnn thread");
+        if (threads != 1 && threads != 2) {
+            throw std::runtime_error("ncnn thread count must be 1 or 2");
         }
         if (param_override.empty() != bin_override.empty()) {
             throw std::runtime_error("ncnn param/bin overrides must be supplied together");

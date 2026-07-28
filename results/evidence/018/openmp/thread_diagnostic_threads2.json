@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "evidence_type": "task018_openmp_parallel_capability_diagnostic",
+  "formal_benchmark": false,
+  "configured_threads": 2,
+  "diagnostic_protocol": {
+    "warmup": 2,
+    "repeat": 3
+  },
+  "instrument": {
+    "benchmark_elf_sha256": "19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2",
+    "benchmark_config_sha256": "f4db66c7d0be8ece68c7a392b28b04934e141267966921210dac765318db4e0a",
+    "private_openmp_runtime": "libgomp.so.1",
+    "private_openmp_runtime_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91"
+  },
+  "build_capabilities": {
+    "ncnn_openmp_compiled": true,
+    "ncnn_threads_compiled": true,
+    "ncnn_simpleomp_compiled": false,
+    "compiler_openmp_macro_defined": true,
+    "effective_parallel_backend": "openmp"
+  },
+  "runtime_environment": {
+    "OMP_NUM_THREADS": "2",
+    "external_max_observed_threads": 2,
+    "external_monitor_samples": 16
+  },
+  "resource_measurement": {
+    "process_user_cpu_time_delta_seconds": 10.925551999999998,
+    "process_system_cpu_time_delta_seconds": 0.06592699999999996,
+    "process_cpu_time_delta_seconds": 10.991478999999998,
+    "wall_clock_time_delta_seconds": 5.956568969,
+    "cpu_time_to_wall_time_ratio": 1.8452701642847376,
+    "process_cpu_percent_one_core_basis": 184.52701642847376,
+    "thread_count_before_measurement": 2,
+    "thread_count_after_measurement": 2,
+    "peak_rss_kib": 142708
+  },
+  "correctness": {
+    "before_warmup": "PASS_TARGET",
+    "after_measurement": "PASS_TARGET",
+    "detection_count": 5,
+    "minimum_class_matched_iou": 0.9999855075776749,
+    "maximum_absolute_confidence_difference": 0.0000050067901611328125
+  },
+  "samples": [
+    {
+      "preprocess_ns": 44325990,
+      "inference_ns": 1880467999,
+      "postprocess_ns": 55522230,
+      "pipeline_ns": 1980316219
+    },
+    {
+      "preprocess_ns": 44511660,
+      "inference_ns": 1883541619,
+      "postprocess_ns": 55464660,
+      "pipeline_ns": 1983517939
+    },
+    {
+      "preprocess_ns": 44362921,
+      "inference_ns": 1882909698,
+      "postprocess_ns": 53784511,
+      "pipeline_ns": 1981057130
+    }
+  ],
+  "source_evidence_sha256": {
+    "board_raw_json": "789fe266eb00c73c0b7070562702f38e79f89271e7bb2a895dec515e83682dfe",
+    "external_thread_monitor": "b747d61f4847645b09387fb922b3e5e5a19357c6de84d9de5a32a3f5c1deee91"
+  },
+  "exit_code": 0,
+  "status": "PASS"
+}

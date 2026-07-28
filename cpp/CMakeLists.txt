@@ -401,6 +401,15 @@ set_target_properties(edgeai_benchmark_ncnn PROPERTIES
 target_compile_definitions(edgeai_benchmark_ncnn PRIVATE
     EDGEAI_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
 )
+if(NCNN_OPENMP)
+    target_compile_definitions(edgeai_benchmark_ncnn PRIVATE
+        EDGEAI_NCNN_OPENMP_COMPILED=1
+    )
+else()
+    target_compile_definitions(edgeai_benchmark_ncnn PRIVATE
+        EDGEAI_NCNN_OPENMP_COMPILED=0
+    )
+endif()
 target_link_libraries(edgeai_benchmark_ncnn PRIVATE edgeai_ncnn_backend)
 edgeai_enable_warnings(edgeai_benchmark_ncnn)
 add_test(NAME edgeai_benchmark_ncnn_invalid_args COMMAND edgeai_benchmark_ncnn)

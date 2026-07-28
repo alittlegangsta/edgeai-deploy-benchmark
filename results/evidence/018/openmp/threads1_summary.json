@@ -1,0 +1,316 @@
+{
+  "configured_threads": 1,
+  "correctness_before_after": "PASS_TARGET",
+  "executable_sha256": "19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2",
+  "five_round_pipeline_mean_max_relative_difference_percent": 0.3708109182831205,
+  "measured_per_round": 20,
+  "model_load_ms": {
+    "count": 5,
+    "max": 661.709376,
+    "mean": 657.0638766,
+    "min": 654.483186
+  },
+  "peak_rss_kib": {
+    "count": 5,
+    "maximum": 142796,
+    "per_round": [
+      142616,
+      142596,
+      142740,
+      142796,
+      142628
+    ]
+  },
+  "pipeline_fps_batch1_sequential": 0.27516330293957975,
+  "rounds": [
+    {
+      "configured_threads": 1,
+      "execution_order": 1,
+      "exit_code": 0,
+      "model_load_ms": 661.709376,
+      "pair_index": 1,
+      "peak_rss_kib": 142616,
+      "process_id": 2215,
+      "process_started_unix_ns": 13021050532269,
+      "round": 1,
+      "statistics": {
+        "inference": {
+          "count": 20,
+          "max_ms": 3528.627845,
+          "mean_ms": 3528.02956555,
+          "min_ms": 3527.273975,
+          "p50_ms": 3528.000755,
+          "p90_ms": 3528.442475,
+          "sample_standard_deviation_ms": 0.3839142630803854
+        },
+        "pipeline": {
+          "count": 20,
+          "max_ms": 3627.351846,
+          "mean_ms": 3626.7791850000003,
+          "min_ms": 3626.020746,
+          "p50_ms": 3626.774766,
+          "p90_ms": 3627.187656,
+          "sample_standard_deviation_ms": 0.36902145073725395
+        },
+        "postprocess": {
+          "count": 20,
+          "max_ms": 55.797421,
+          "mean_ms": 55.52588465,
+          "min_ms": 55.45653,
+          "p50_ms": 55.500421,
+          "p90_ms": 55.583821,
+          "sample_standard_deviation_ms": 0.07570865128224312
+        },
+        "preprocess": {
+          "count": 20,
+          "max_ms": 43.263421,
+          "mean_ms": 43.2237348,
+          "min_ms": 43.17969,
+          "p50_ms": 43.22358,
+          "p90_ms": 43.25499,
+          "sample_standard_deviation_ms": 0.024344529597556678
+        }
+      }
+    },
+    {
+      "configured_threads": 1,
+      "execution_order": 2,
+      "exit_code": 0,
+      "model_load_ms": 655.900477,
+      "pair_index": 2,
+      "peak_rss_kib": 142596,
+      "process_id": 2262,
+      "process_started_unix_ns": 13269968912572,
+      "round": 2,
+      "statistics": {
+        "inference": {
+          "count": 20,
+          "max_ms": 3538.522416,
+          "mean_ms": 3537.3724731499997,
+          "min_ms": 3536.630735,
+          "p50_ms": 3537.255275,
+          "p90_ms": 3537.846695,
+          "sample_standard_deviation_ms": 0.5043354089238765
+        },
+        "pipeline": {
+          "count": 20,
+          "max_ms": 3637.268316,
+          "mean_ms": 3636.0851011500004,
+          "min_ms": 3635.311207,
+          "p50_ms": 3635.993466,
+          "p90_ms": 3636.498636,
+          "sample_standard_deviation_ms": 0.5116134225519937
+        },
+        "postprocess": {
+          "count": 20,
+          "max_ms": 55.537231,
+          "mean_ms": 55.49511055000001,
+          "min_ms": 55.46643,
+          "p50_ms": 55.493911,
+          "p90_ms": 55.523251,
+          "sample_standard_deviation_ms": 0.02103369102547738
+        },
+        "preprocess": {
+          "count": 20,
+          "max_ms": 43.326241,
+          "mean_ms": 43.21751745,
+          "min_ms": 43.17177,
+          "p50_ms": 43.20888,
+          "p90_ms": 43.24803,
+          "sample_standard_deviation_ms": 0.0341936782237752
+        }
+      }
+    },
+    {
+      "configured_threads": 1,
+      "execution_order": 1,
+      "exit_code": 0,
+      "model_load_ms": 656.563597,
+      "pair_index": 3,
+      "peak_rss_kib": 142740,
+      "process_id": 2276,
+      "process_started_unix_ns": 13388706762542,
+      "round": 3,
+      "statistics": {
+        "inference": {
+          "count": 20,
+          "max_ms": 3542.631815,
+          "mean_ms": 3541.4944612,
+          "min_ms": 3539.724905,
+          "p50_ms": 3541.405535,
+          "p90_ms": 3542.257565,
+          "sample_standard_deviation_ms": 0.6443560546229472
+        },
+        "pipeline": {
+          "count": 20,
+          "max_ms": 3641.313787,
+          "mean_ms": 3640.2276782,
+          "min_ms": 3638.459796,
+          "p50_ms": 3640.145197,
+          "p90_ms": 3641.017026,
+          "sample_standard_deviation_ms": 0.648303001484667
+        },
+        "postprocess": {
+          "count": 20,
+          "max_ms": 55.61415,
+          "mean_ms": 55.517918099999996,
+          "min_ms": 55.447111,
+          "p50_ms": 55.509421,
+          "p90_ms": 55.570531,
+          "sample_standard_deviation_ms": 0.03873303063400511
+        },
+        "preprocess": {
+          "count": 20,
+          "max_ms": 43.27395,
+          "mean_ms": 43.2152989,
+          "min_ms": 43.169221,
+          "p50_ms": 43.2009,
+          "p90_ms": 43.2477,
+          "sample_standard_deviation_ms": 0.033311669587792934
+        }
+      }
+    },
+    {
+      "configured_threads": 1,
+      "execution_order": 2,
+      "exit_code": 0,
+      "model_load_ms": 656.662747,
+      "pair_index": 4,
+      "peak_rss_kib": 142796,
+      "process_id": 2322,
+      "process_started_unix_ns": 13637960466678,
+      "round": 4,
+      "statistics": {
+        "inference": {
+          "count": 20,
+          "max_ms": 3538.452965,
+          "mean_ms": 3536.8078776499997,
+          "min_ms": 3535.872395,
+          "p50_ms": 3536.795255,
+          "p90_ms": 3537.593135,
+          "sample_standard_deviation_ms": 0.670108722439594
+        },
+        "pipeline": {
+          "count": 20,
+          "max_ms": 3637.178496,
+          "mean_ms": 3635.52033905,
+          "min_ms": 3634.523916,
+          "p50_ms": 3635.487546,
+          "p90_ms": 3636.272556,
+          "sample_standard_deviation_ms": 0.6644725893500816
+        },
+        "postprocess": {
+          "count": 20,
+          "max_ms": 55.61499,
+          "mean_ms": 55.50531955,
+          "min_ms": 55.45341,
+          "p50_ms": 55.49616,
+          "p90_ms": 55.557631,
+          "sample_standard_deviation_ms": 0.043386619455014305
+        },
+        "preprocess": {
+          "count": 20,
+          "max_ms": 43.26327,
+          "mean_ms": 43.20714185,
+          "min_ms": 43.157551,
+          "p50_ms": 43.21248,
+          "p90_ms": 43.22871,
+          "sample_standard_deviation_ms": 0.02556989615538878
+        }
+      }
+    },
+    {
+      "configured_threads": 1,
+      "execution_order": 1,
+      "exit_code": 0,
+      "model_load_ms": 654.483186,
+      "pair_index": 5,
+      "peak_rss_kib": 142628,
+      "process_id": 2340,
+      "process_started_unix_ns": 13756679544627,
+      "round": 5,
+      "statistics": {
+        "inference": {
+          "count": 20,
+          "max_ms": 3535.280015,
+          "mean_ms": 3533.67522065,
+          "min_ms": 3532.648235,
+          "p50_ms": 3533.512145,
+          "p90_ms": 3534.289205,
+          "sample_standard_deviation_ms": 0.6490521410975856
+        },
+        "pipeline": {
+          "count": 20,
+          "max_ms": 3633.938376,
+          "mean_ms": 3632.41539755,
+          "min_ms": 3631.315956,
+          "p50_ms": 3632.237256,
+          "p90_ms": 3633.039156,
+          "sample_standard_deviation_ms": 0.6559160433643784
+        },
+        "postprocess": {
+          "count": 20,
+          "max_ms": 55.64121,
+          "mean_ms": 55.503386,
+          "min_ms": 55.440391,
+          "p50_ms": 55.49718,
+          "p90_ms": 55.54614,
+          "sample_standard_deviation_ms": 0.05103086047213301
+        },
+        "preprocess": {
+          "count": 20,
+          "max_ms": 43.499791,
+          "mean_ms": 43.2367909,
+          "min_ms": 43.15368,
+          "p50_ms": 43.22469,
+          "p90_ms": 43.26648,
+          "sample_standard_deviation_ms": 0.0733237274556434
+        }
+      }
+    }
+  ],
+  "sample_count": 100,
+  "schema_version": 1,
+  "stability_gate_percent": 10.0,
+  "stability_status": "PASS",
+  "statistics": {
+    "inference": {
+      "count": 100,
+      "max_ms": 3542.631815,
+      "mean_ms": 3535.47591964,
+      "min_ms": 3527.273975,
+      "p50_ms": 3536.630735,
+      "p90_ms": 3541.405535,
+      "sample_standard_deviation_ms": 4.5368851226924525
+    },
+    "pipeline": {
+      "count": 100,
+      "max_ms": 3641.313787,
+      "mean_ms": 3634.2055401899997,
+      "min_ms": 3626.020746,
+      "p50_ms": 3635.311207,
+      "p90_ms": 3640.145197,
+      "sample_standard_deviation_ms": 4.527992101693737
+    },
+    "postprocess": {
+      "count": 100,
+      "max_ms": 55.797421,
+      "mean_ms": 55.509523769999994,
+      "min_ms": 55.440391,
+      "p50_ms": 55.499341,
+      "p90_ms": 55.570531,
+      "sample_standard_deviation_ms": 0.049551916202611304
+    },
+    "preprocess": {
+      "count": 100,
+      "max_ms": 43.499791,
+      "mean_ms": 43.220096780000006,
+      "min_ms": 43.15368,
+      "p50_ms": 43.215301,
+      "p90_ms": 43.2504,
+      "sample_standard_deviation_ms": 0.04251218562099986
+    }
+  },
+  "valid_process_rounds": 5,
+  "warmup_per_round": 10
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "evidence_type": "task018_thread_backend_diagnostic_summary",
+  "configured_threads": 2,
+  "diagnostic_protocol": {
+    "warmup": 2,
+    "repeat": 3,
+    "formal_benchmark": false
+  },
+  "source_evidence": {
+    "board_raw_json_sha256": "8e6b31f9485b8513ec802545d758e263a3c2abc53df3440fcf30fe8eee9ed3ee",
+    "external_board_raw_path": "/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_thread_backend_audit/returned/results/retry/thread_diagnostic_threads2.json",
+    "executable_sha256": "46b2b33d6854ec20dc9922d884f38d5df81c348699cbd4da4c1466f1faa39578"
+  },
+  "build_capabilities": {
+    "ncnn_openmp_compiled": false,
+    "ncnn_threads_compiled": true,
+    "ncnn_simpleomp_compiled": false,
+    "compiler_openmp_macro_defined": false,
+    "effective_parallel_backend": "none"
+  },
+  "runtime_observation": {
+    "process_user_cpu_time_delta_seconds": 10.465954999999999,
+    "process_system_cpu_time_delta_seconds": 0.06934300000000002,
+    "process_cpu_time_delta_seconds": 10.535297999999999,
+    "wall_clock_time_delta_seconds": 10.874386338,
+    "cpu_time_to_wall_time_ratio": 0.9688177035962872,
+    "thread_count_before_measurement": 1,
+    "thread_count_after_measurement": 1,
+    "external_max_observed_threads": 1,
+    "external_monitor_samples": 28,
+    "peak_rss_kib": 142812
+  },
+  "correctness": {
+    "before_warmup": "PASS_TARGET",
+    "after_measurement": "PASS_TARGET",
+    "detection_count": 5,
+    "minimum_class_matched_iou": 0.9999855075776749,
+    "maximum_confidence_delta": 0.0000050067901611328125
+  },
+  "samples": [
+    {
+      "iteration": 1,
+      "preprocess_ns": 44383080,
+      "inference_ns": 3521788085,
+      "postprocess_ns": 55481191,
+      "pipeline_ns": 3621652356
+    },
+    {
+      "iteration": 2,
+      "preprocess_ns": 44339940,
+      "inference_ns": 3520137995,
+      "postprocess_ns": 55493641,
+      "pipeline_ns": 3619971576
+    },
+    {
+      "iteration": 3,
+      "preprocess_ns": 44387850,
+      "inference_ns": 3521068355,
+      "postprocess_ns": 55479571,
+      "pipeline_ns": 3620935776
+    }
+  ],
+  "notes": [
+    "This is a short diagnostic, not a formal benchmark result.",
+    "The first external monitor attempt had a shell quoting defect and is retained outside Git; this summary uses the separately preserved successful retry."
+  ]
+}
