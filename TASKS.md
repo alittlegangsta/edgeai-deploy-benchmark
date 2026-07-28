@@ -18,9 +18,10 @@ The authoritative execution rules are in
 | 010 | C | 009 + Checkpoint B approval | Completed | Export the frozen YOLOv5n weights to TorchScript, convert with same-revision pnnx, and verify ncnn loading. |
 | 011 | C | 010 | Completed | Add C++ ncnn image/video inference, ORT alignment, and benchmark integration. |
 | 012 | C | 011 | Completed | Generate the PC comparison, complete README, acceptance matrix, and Checkpoint C report. |
-| 013 | Stage 2 | 012 + Checkpoint C approval | Planned | Record and validate the Anlogic DR1 ARM CPU toolchain setup. |
+| 013 | Stage 2 | 012 + Checkpoint C approval | In Progress | Record and validate the Anlogic DR1 ARM CPU toolchain setup; AArch64/GCC 7.5.0, sysroot/glibc 2.25, C/C++ userspace, and OpenCV 4.7 smoke are verified, while CMake, ncnn, inference, and NPU remain incomplete. |
 | 014 | Stage 2 | 013 | Planned | Run and measure the Anlogic DR1 ARM CPU functional baseline. |
 | 015 | Stage 2 | 014 | Planned | Consolidate reproducibility notes and close the two-stage baseline. |
+| 016 | Vendor and board baseline | None | Completed | Inventory Anlogic DR1 sources and SDK 2025.07, validate the AArch64 toolchain and board C/C++/OpenCV userspace smoke, and record runtime/NPU readiness; ARM ncnn, ARM YOLO/benchmark, NPU deployment, and exact SDK/Demo tag matching remain out of scope. |
 
 Batch A stops after Task 005, Batch B stops after Task 009, and Batch C stops
 after Task 012. A checkpoint requires explicit human review before the next batch.
