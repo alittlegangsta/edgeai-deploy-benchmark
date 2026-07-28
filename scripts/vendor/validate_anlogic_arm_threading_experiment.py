@@ -151,16 +151,27 @@ def validate_contract(
         environment.get("governor_policy") == "observe only; do not modify",
         "governor policy differs",
     )
+    required_environment = environment.get("required_environment_variables")
+    original_environment = {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+    }
+    openmp_environment = {
+        **original_environment,
+        "OMP_NUM_THREADS": "configured_threads",
+    }
+    is_openmp_instrument = required_environment == openmp_environment
     require(
-        environment.get("required_environment_variables")
-        == {
-            "MKL_NUM_THREADS": "1",
-            "NUMEXPR_NUM_THREADS": "1",
-            "OMP_NUM_THREADS": "1",
-            "OPENBLAS_NUM_THREADS": "1",
-        },
+        required_environment in (original_environment, openmp_environment),
         "non-ncnn thread environment differs",
     )
+    if is_openmp_instrument:
+        require(
+            environment.get("thread_instrument_revision") == "openmp-v2",
+            "OpenMP instrument revision differs",
+        )
     workload = config.get("workload", {})
     require(workload.get("batch") == 1, "batch differs")
     require(workload.get("precision") == "FP32", "precision differs")
@@ -260,6 +271,18 @@ def validate_contract(
     require(contract.get("schema_version") == 1, "contract schema differs")
     require(contract.get("task") == "018", "contract task differs")
     require(contract.get("status") == "protocol_frozen_data_pending", "contract status differs")
+    if is_openmp_instrument:
+        require(
+            contract.get("instrument_revision") == "openmp-v2",
+            "contract OpenMP instrument revision differs",
+        )
+        require(
+            contract.get("instrument_correction")
+            == "results/evidence/018/openmp/instrument_correction.json",
+            "instrument correction evidence differs",
+        )
+    else:
+        require("instrument_revision" not in contract, "original contract gained an instrument")
     require(contract.get("experiment_config_sha256") == config_sha, "config hash differs")
     require(contract.get("execution_order_sha256") == order_sha, "order hash differs")
     require(contract.get("formal_data_collected") is False, "formal data must be pending")
@@ -358,6 +381,7 @@ def summarize_condition(
     *,
     configured_threads: int,
     config_sha: str,
+    openmp_instrument: bool,
     all_process_ids: set[int],
     all_process_starts: set[int],
 ) -> tuple[dict[str, Any], list[list[dict[str, Any]]]]:
@@ -423,6 +447,36 @@ def summarize_condition(
         )
         for disabled in ("vulkan", "fp16", "bf16", "int8"):
             require(runtime.get(disabled) is False, f"runtime {disabled} differs")
+        environment_variables = round_value.get("environment", {}).get(
+            "environment_variables", {}
+        )
+        require(
+            environment_variables.get("OMP_NUM_THREADS")
+            == str(configured_threads if openmp_instrument else 1),
+            "observed OMP_NUM_THREADS differs",
+        )
+        if openmp_instrument:
+            capabilities = runtime.get("thread_capabilities", {})
+            require(
+                capabilities.get("ncnn_openmp_compiled") is True,
+                "OpenMP-enabled instrument reports OpenMP disabled",
+            )
+            require(
+                capabilities.get("ncnn_threads_compiled") is True,
+                "OpenMP-enabled instrument reports ncnn threads disabled",
+            )
+            require(
+                capabilities.get("ncnn_simpleomp_compiled") is False,
+                "standard libgomp instrument unexpectedly reports simpleomp",
+            )
+            require(
+                capabilities.get("compiler_openmp_macro_defined") is True,
+                "OpenMP compiler macro is missing",
+            )
+            require(
+                capabilities.get("effective_parallel_backend") == "openmp",
+                "effective parallel backend differs",
+            )
         require(
             round_value.get("environment", {}).get("architecture") in ("aarch64", "arm64"),
             "round architecture differs",
@@ -677,10 +731,17 @@ def validate_and_summarize(
         )
     process_ids: set[int] = set()
     process_starts: set[int] = set()
+    openmp_instrument = (
+        config.get("environment", {})
+        .get("required_environment_variables", {})
+        .get("OMP_NUM_THREADS")
+        == "configured_threads"
+    )
     threads1, snapshots1 = summarize_condition(
         threads1_raw,
         configured_threads=1,
         config_sha=config_sha,
+        openmp_instrument=openmp_instrument,
         all_process_ids=process_ids,
         all_process_starts=process_starts,
     )
@@ -688,6 +749,7 @@ def validate_and_summarize(
         threads2_raw,
         configured_threads=2,
         config_sha=config_sha,
+        openmp_instrument=openmp_instrument,
         all_process_ids=process_ids,
         all_process_starts=process_starts,
     )

@@ -112,7 +112,15 @@ def raw_payload(
                     "bf16": False,
                     "int8": False,
                 },
-                "environment": {"architecture": "aarch64"},
+                "environment": {
+                    "architecture": "aarch64",
+                    "environment_variables": {
+                        "MKL_NUM_THREADS": "1",
+                        "NUMEXPR_NUM_THREADS": "1",
+                        "OMP_NUM_THREADS": "1",
+                        "OPENBLAS_NUM_THREADS": "1",
+                    },
+                },
                 "warmup_iterations": 10,
                 "formal_iterations": 20,
                 "resource_measurement": {
@@ -194,6 +202,12 @@ class AnlogicArmThreadingExperimentTests(unittest.TestCase):
             for configured_threads, path in cls.thread_diagnostic_paths.items()
         }
         cls.config_sha = VALIDATOR.sha256_file(cls.config_path)
+        cls.openmp_config_path = (
+            ROOT / "configs/benchmark_anlogic_arm_threading_openmp.json"
+        )
+        cls.openmp_contract_path = (
+            ROOT / "results/evidence/018/openmp/experiment_contract.json"
+        )
 
     def summarize(
         self,
@@ -218,6 +232,27 @@ class AnlogicArmThreadingExperimentTests(unittest.TestCase):
             VALIDATOR.sha256_file(self.order_path),
         )
         self.assertFalse(self.contract["formal_data_collected"])
+
+    def test_openmp_instrument_contract_preserves_protocol(self) -> None:
+        config = json.loads(self.openmp_config_path.read_text(encoding="utf-8"))
+        contract = json.loads(
+            self.openmp_contract_path.read_text(encoding="utf-8")
+        )
+        VALIDATOR.validate_contract(
+            config,
+            contract,
+            self.order,
+            VALIDATOR.sha256_file(self.openmp_config_path),
+            VALIDATOR.sha256_file(self.order_path),
+        )
+        self.assertEqual(
+            config["environment"]["required_environment_variables"][
+                "OMP_NUM_THREADS"
+            ],
+            "configured_threads",
+        )
+        self.assertEqual(contract["instrument_revision"], "openmp-v2")
+        self.assertFalse(contract["formal_data_collected"])
 
     def test_beneficial_fixture(self) -> None:
         _, _, comparison, validation = self.summarize(
@@ -415,6 +450,54 @@ class AnlogicArmThreadingExperimentTests(unittest.TestCase):
                         + sample["inference_ns"]
                         + sample["postprocess_ns"],
                     )
+
+    def test_openmp_diagnostics_prove_parallel_backend(self) -> None:
+        diagnostics = {
+            configured_threads: json.loads(
+                (
+                    ROOT
+                    / "results/evidence/018/openmp"
+                    / f"thread_diagnostic_threads{configured_threads}.json"
+                ).read_text(encoding="utf-8")
+            )
+            for configured_threads in (1, 2)
+        }
+        for configured_threads, diagnostic in diagnostics.items():
+            with self.subTest(configured_threads=configured_threads):
+                self.assertEqual(diagnostic["status"], "PASS")
+                self.assertFalse(diagnostic["formal_benchmark"])
+                self.assertEqual(
+                    diagnostic["configured_threads"], configured_threads
+                )
+                capabilities = diagnostic["build_capabilities"]
+                self.assertTrue(capabilities["ncnn_openmp_compiled"])
+                self.assertTrue(capabilities["ncnn_threads_compiled"])
+                self.assertFalse(capabilities["ncnn_simpleomp_compiled"])
+                self.assertTrue(capabilities["compiler_openmp_macro_defined"])
+                self.assertEqual(
+                    capabilities["effective_parallel_backend"], "openmp"
+                )
+                self.assertEqual(
+                    diagnostic["runtime_environment"][
+                        "external_max_observed_threads"
+                    ],
+                    configured_threads,
+                )
+                self.assertEqual(
+                    diagnostic["correctness"]["before_warmup"], "PASS_TARGET"
+                )
+                self.assertEqual(
+                    diagnostic["correctness"]["after_measurement"],
+                    "PASS_TARGET",
+                )
+        self.assertLess(
+            diagnostics[1]["resource_measurement"]["cpu_time_to_wall_time_ratio"],
+            1.2,
+        )
+        self.assertGreater(
+            diagnostics[2]["resource_measurement"]["cpu_time_to_wall_time_ratio"],
+            1.5,
+        )
 
 
 if __name__ == "__main__":

@@ -273,6 +273,48 @@ thread_backend_audit:
     path: "results/evidence/018/thread_diagnostic_threads2.json"
     sha256: "6fff4a82b4965878bca7ba98c98c5ad85527acd4dbb09d9c1657d2e02eaecc07"
 
+instrument_correction:
+  status: "STANDARD_LIBGOMP_PARALLEL_CAPABILITY_GATE_PASS"
+  approval_source: "user"
+  original_session_retained: true
+  original_session_publication_classification: "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON"
+  corrected_evidence_namespace: "results/evidence/018/openmp"
+  preferred_backend:
+    NCNN_OPENMP: true
+    NCNN_THREADS: true
+    NCNN_SIMPLEOMP: false
+    runtime: "standard Linaro libgomp, privately deployed"
+  fallback_backend:
+    NCNN_OPENMP: true
+    NCNN_THREADS: true
+    NCNN_SIMPLEOMP: true
+    condition: "only after the standard libgomp route fails a build, ABI, dependency, runtime, correctness, or observed-parallelism gate"
+  frozen_protocol_changed: false
+  task017_modified: false
+  corrected_config:
+    path: "configs/benchmark_anlogic_arm_threading_openmp.json"
+    sha256: "f4db66c7d0be8ece68c7a392b28b04934e141267966921210dac765318db4e0a"
+    OMP_NUM_THREADS_policy: "configured_threads"
+  selected_build:
+    backend: "standard_libgomp"
+    fallback_used: false
+    libncnn_a_sha256: "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3"
+    libgomp_so_1_sha256: "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91"
+    benchmark_elf_sha256: "19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2"
+  parallel_capability_gate:
+    protocol: "one independent process per condition; 2 warmups and 3 measured pipelines; not a formal benchmark"
+    threads1:
+      max_observed_process_threads: 1
+      cpu_time_to_wall_time_ratio: 0.9926010969416309
+      correctness: "PASS_TARGET"
+      evidence_sha256: "88e42ffcb65cb3416293caa88a17cce3b1721f9f4971dbdbb9c2eb6276df7ead"
+    threads2:
+      max_observed_process_threads: 2
+      cpu_time_to_wall_time_ratio: 1.8452701642847376
+      correctness: "PASS_TARGET"
+      evidence_sha256: "f7ce5106f7d61a1f55f07d1dea8762efe230b145f1ef49a653bac21ed27761ac"
+    status: "PASS"
+
 failed_collection:
   session: 1
   status: "PRESERVED_OUTSIDE_FORMAL_CANDIDATE"
@@ -312,9 +354,11 @@ evidence_brief:
     - "Both short diagnostic processes passed correctness before and after measurement."
     - "Both configured thread conditions exposed one process thread throughout the successful external monitor retry."
     - "CPU-time/wall-time ratios were 0.9927591018688856 and 0.9688177035962872 for configured threads 1 and 2."
+    - "The corrected standard-libgomp diagnostic observed one thread at configured_threads=1 and two threads at configured_threads=2."
+    - "Corrected diagnostic CPU-time/wall-time ratios were 0.9926010969416309 and 1.8452701642847376, with PASS_TARGET correctness for both conditions."
   assumptions: []
   conflicts:
     - "The local SDK_2025_07 identity does not establish exact official SDK tag compatibility."
   unresolved_blockers:
-    - "The user must approve a separate ncnn rebuild with a verified multithread backend before a valid paired performance experiment can proceed."
-  proposed_action: "Preserve session 2 as an OpenMP-off parameter-sensitivity result, keep Task 018 In Progress, and request a route decision for a new multithread-enabled ncnn build."
+    - "The corrected complete paired session has not yet been collected and independently validated."
+  proposed_action: "Run the frozen paired protocol using the one corrected OpenMP-enabled ELF and private libgomp for both conditions, then retain the candidate for user review."

@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "evidence_type": "task018_experiment_instrument_correction",
+  "recorded_at": "2026-07-28T20:33:51+08:00",
+  "record_time_basis": "WSL repository record time; not board runtime time",
+  "approval_source": "user",
+  "task_status": "In Progress",
+  "starting_commit": "c00bb2e39cda57f67051e847c27917d56eece2b0",
+  "reason": "The original experiment ELF was built without an effective ncnn operator-parallel backend, so configured_threads did not change actual parallel execution.",
+  "original_session_2": {
+    "retained": true,
+    "approved": false,
+    "openmp_off_thread_parameter_sensitivity": "PASS",
+    "multithread_performance_comparison": "INVALID",
+    "publication_classification": "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON",
+    "evidence_sha256": {
+      "threads1_raw_samples.json": "7a2f96346f289860b0033ffdd5c635f572cd4c52306a9a13c2e39ec9f24f833c",
+      "threads2_raw_samples.json": "d385cf4055b54da915fe710855a9e434e07f4434723b4a9a1bc6aa70e4005125",
+      "process_environment.json": "14ce7a366527d5bb63db77233e16724130aacb7d44c2cffe1a58a48a08f8f9b2",
+      "threads1_summary.json": "5b5039f6ce5bc663d93d4a3bd3732fd0996338027bf4667a076d59b7b4958ede",
+      "threads2_summary.json": "520c99e8c1fe54929642c7247ccd2fbd09d3292650e3f26cd2c0b0440111590a",
+      "comparison_summary.json": "3ac735e4ff474ec2f515b39cd7758e3289d94f028c54406609f54b2f63042de3",
+      "experiment_validation.json": "de908a24ca5a2cc23648f16ca649a4b62c3cd3410468e0009c2a31a72de794b3"
+    }
+  },
+  "frozen_protocol": {
+    "benchmark_config_sha256": "901628d80a63ee5fa34d8a62db21d65796bb9e8c6284207c2490dc44379d13f9",
+    "experiment_contract_sha256": "c9e27bbba7b823668f31da4586adc019867be3680731541859c515b9de6431d8",
+    "execution_order_sha256": "cf924d46e6bac1bba342ab9aac93bb62ad1703b81cca9aa443e84643e8d1c8a4",
+    "statistics_changed": false,
+    "sample_counts_changed": false,
+    "execution_order_changed": false,
+    "correctness_gates_changed": false,
+    "classification_rules_changed": false
+  },
+  "corrected_instrument": {
+    "experiment_config": "configs/benchmark_anlogic_arm_threading_openmp.json",
+    "experiment_config_sha256": "f4db66c7d0be8ece68c7a392b28b04934e141267966921210dac765318db4e0a",
+    "experiment_contract": "results/evidence/018/openmp/experiment_contract.json",
+    "same_elf_for_both_conditions": true,
+    "same_ncnn_library_for_both_conditions": true,
+    "same_openmp_runtime_for_both_conditions": true,
+    "only_between_condition_variable": "configured_threads",
+    "preferred_options": {
+      "NCNN_OPENMP": true,
+      "NCNN_THREADS": true,
+      "NCNN_SIMPLEOMP": false
+    },
+    "preferred_runtime": "standard Linaro libgomp in the isolated deployment directory",
+    "fallback": "NCNN_SIMPLEOMP only after a documented standard-libgomp technical-gate failure"
+  },
+  "corrected_evidence_namespace": "results/evidence/018/openmp",
+  "task017_modified": false
+}

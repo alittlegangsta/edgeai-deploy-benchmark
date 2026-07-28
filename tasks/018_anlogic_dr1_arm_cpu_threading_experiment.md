@@ -171,11 +171,13 @@ ROADMAP.md
 README.md
 tasks/018_anlogic_dr1_arm_cpu_threading_experiment.md
 configs/benchmark_anlogic_arm_threading.json
+configs/benchmark_anlogic_arm_threading_openmp.json
 cpp/CMakeLists.txt
 cpp/apps/benchmark_ncnn.cpp
 cpp/src/backends/ncnn_detector.cpp
 cpp/tests/test_ncnn_detector.cpp
 scripts/vendor/run_anlogic_arm_threading_experiment.sh
+scripts/vendor/build_anlogic_aarch64_ncnn_openmp.sh
 scripts/vendor/validate_anlogic_arm_threading_experiment.py
 tests/python/test_anlogic_arm_threading_experiment.py
 .knowledge/manifests/anlogic_arm_cpu_threading_experiment.yaml
@@ -192,6 +194,18 @@ results/evidence/018/experiment_validation.json
 results/evidence/018/thread_backend_audit.json
 results/evidence/018/thread_diagnostic_threads1.json
 results/evidence/018/thread_diagnostic_threads2.json
+results/evidence/018/openmp/instrument_correction.json
+results/evidence/018/openmp/build_provenance.json
+results/evidence/018/openmp/experiment_contract.json
+results/evidence/018/openmp/thread_diagnostic_threads1.json
+results/evidence/018/openmp/thread_diagnostic_threads2.json
+results/evidence/018/openmp/threads1_raw_samples.json
+results/evidence/018/openmp/threads2_raw_samples.json
+results/evidence/018/openmp/process_environment.json
+results/evidence/018/openmp/threads1_summary.json
+results/evidence/018/openmp/threads2_summary.json
+results/evidence/018/openmp/comparison_summary.json
+results/evidence/018/openmp/experiment_validation.json
 ```
 
 Task-owned external build, deployment, logs, and returned evidence are allowed
@@ -718,3 +732,86 @@ next step is a separate reproducible ncnn build with a verified OpenMP or
 simpleomp backend, followed by a new complete paired session using only that
 new ELF. Do not alter Task 017, overwrite session 2, splice sessions, or publish
 session 2 as a hardware multithread result.
+
+### Approved experiment-instrument correction
+
+Approval recorded in WSL on `2026-07-28`; this is a repository record date, not
+board runtime time.
+
+The user approved a separate OpenMP-enabled ncnn build after the audit proved
+that the session 2 ELF had no effective operator-parallel backend. This changes
+the common experimental instrument used by both thread conditions, not the
+between-condition variable. The following remain frozen:
+
+```text
+ncnn tag/commit
+model, input, thresholds, and PC golden
+preprocess, inference, postprocess, and pipeline definitions
+five alternating pairs
+ten warmups and twenty measured samples per process
+five independent processes and one hundred samples per condition
+nearest-rank statistics, correctness gates, stability gate, and classification
+```
+
+The corrected experiment must use one hash-identical OpenMP-enabled ELF, one
+ncnn library, and one private OpenMP runtime for both `configured_threads=1`
+and `configured_threads=2`. Standard Linaro libgomp is preferred; simpleomp is
+allowed only if standard libgomp fails its build, ABI, dependency, runtime,
+correctness, or observed-parallelism gates.
+
+The original session 2 evidence remains byte-preserved under
+`results/evidence/018/`. New evidence must use
+`results/evidence/018/openmp/`; it must not overwrite or splice the original
+session. Task 017 remains immutable and Task 018 remains `In Progress`.
+
+The isolated standard-libgomp build and the preregistered parallel-capability
+gate have passed. The selected instrument has `NCNN_OPENMP=ON`,
+`NCNN_THREADS=ON`, `NCNN_SIMPLEOMP=OFF`, `libncnn.a` SHA256
+`bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3`,
+private `libgomp.so.1` SHA256
+`87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91`,
+and benchmark ELF SHA256
+`19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2`.
+
+The non-formal diagnostic used two warmups and three measured pipelines per
+condition. It observed one process thread and CPU-time/wall-time ratio
+`0.9926010969416309` for `configured_threads=1`, versus two process threads
+and ratio `1.8452701642847376` for `configured_threads=2`. Both conditions
+passed correctness before and after measurement. This proves that the
+experiment variable is effective; these short measurements are diagnostic
+only and are not publishable performance results.
+
+Implementation repairs:
+
+1. The first build-evidence assertion expected `OpenMP_CXX_FOUND` as a
+   persistent CMake 3.16 cache BOOL. CMake did not persist that variable. The
+   assertion was corrected to use
+   `OpenMP_COMPILE_RESULT_CXX_fopenmp=TRUE`, `OpenMP_CXX_FLAGS=-fopenmp`,
+   the resolved `OpenMP_gomp_LIBRARY`, compile commands, and final link
+   evidence. Rebuild: PASS.
+2. A cached idempotent configure did not repeat CMake's one-time
+   `Found OpenMP_CXX` console line. The transient console assertion was
+   removed in favor of the persistent cache and binary evidence above.
+   Rebuild: PASS.
+3. The first new-ELF diagnostic rejected `configured_threads=2` before
+   inference because the original session config correctly froze
+   `OMP_NUM_THREADS=1`. No original file was changed. A separate
+   `openmp-v2` config and contract were created before collecting corrected
+   data; only `OMP_NUM_THREADS` follows `configured_threads`. Rebuild and both
+   short diagnostic runs: PASS.
+
+Validation completed before the corrected formal session:
+
+```text
+standard libgomp build/configure/install/export: PASS
+ELF64 AArch64 and private libgomp ABI/dependency inspection: PASS
+parallel-capability gate: PASS
+correctness before/after for both conditions: PASS_TARGET
+OpenMP instrument contract and original frozen contract tests: PASS
+focused Task 018 tests: PASS (16/16)
+model-independent Release build: PASS
+model-independent CTest: PASS (4/4)
+runner --check and --dry-run: PASS
+Task 017 evidence hashes: unchanged
+git diff --check: PASS
+```

@@ -349,3 +349,34 @@ ELF. Such a rebuild must not alter Task 017 or splice any existing session.
 Video, camera, affinity tuning, NEON rewriting, Vulkan, FP16/BF16/INT8 runtime,
 quantization, NPU, and system modification remain out of scope. NPU remains
 `HOLD`.
+
+## Approved experiment-instrument correction
+
+The user approved a new, isolated OpenMP-enabled ncnn build. This corrects the
+instrument shared by both thread conditions; it does not change the sole
+experimental variable, `configured_threads`.
+
+The statistical protocol, alternating order, sample counts, timing boundaries,
+correctness/stability gates, classification rules, frozen assets, and PC golden
+remain unchanged. Both conditions must use the same new ELF, ncnn archive, and
+private OpenMP runtime. The standard Linaro libgomp route has priority;
+simpleomp is a fallback only if standard libgomp fails a technical gate.
+
+Original session 2 remains under `results/evidence/018/` with publication
+classification `INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON`. Corrected
+evidence uses the separate `results/evidence/018/openmp/` namespace. Neither
+Task 017 nor the original session may be rewritten, deleted, or spliced into
+the corrected session.
+
+The preferred standard-libgomp route passed its build, ABI, private dependency,
+correctness, and observed-parallelism gates, so the simpleomp fallback was not
+used. The selected build has `NCNN_OPENMP=ON`, `NCNN_THREADS=ON`, and
+`NCNN_SIMPLEOMP=OFF`; its benchmark ELF SHA256 is
+`19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2`.
+
+The short diagnostic was not a formal benchmark. With the same ELF and private
+libgomp, the one-thread run observed one process thread and CPU/wall ratio
+`0.9926010969416309`; the two-thread run observed two process threads and
+ratio `1.8452701642847376`. Both passed the frozen correctness gate. Together
+with the compiler macros, link evidence, and `ldd` result, this is sufficient
+to proceed with a new complete paired session.

@@ -78,6 +78,7 @@ struct BenchmarkConfig {
     Artifact inference_config;
     Artifact golden_result;
     std::map<std::string, std::string> required_environment;
+    bool omp_threads_follow_configured_threads{false};
 };
 
 bool is_arm_benchmark(const BenchmarkConfig& config) {
@@ -258,8 +259,20 @@ BenchmarkConfig load_benchmark_config(const edgeai::filesystem::path& path) {
              "OPENBLAS_NUM_THREADS",
          }) {
         const std::string value = required_string(environment_variables, name.c_str());
-        require_equal(value, "1", "thread environment value");
+        if (name == "OMP_NUM_THREADS" && arm_task018 &&
+            value == "configured_threads") {
+            result.omp_threads_follow_configured_threads = true;
+        } else {
+            require_equal(value, "1", "thread environment value");
+        }
         result.required_environment.emplace(name, value);
+    }
+    if (result.omp_threads_follow_configured_threads) {
+        require_equal(
+            required_string(environment, "thread_instrument_revision"),
+            "openmp-v2",
+            "thread instrument revision"
+        );
     }
     const cv::FileNode workload = storage["workload"];
     if (required_int(workload, "batch") != 1 ||
@@ -734,7 +747,11 @@ std::string make_round_json(
     std::size_t environment_index = 0U;
     for (const auto& [name, expected] : config.required_environment) {
         const char* observed = std::getenv(name.c_str());
-        if (observed == nullptr || observed != expected) {
+        const std::string effective_expected =
+            name == "OMP_NUM_THREADS" && config.omp_threads_follow_configured_threads
+                ? std::to_string(configured_threads)
+                : expected;
+        if (observed == nullptr || observed != effective_expected) {
             throw std::runtime_error("thread environment differs for " + name);
         }
         if (environment_index++ != 0U) {
@@ -960,7 +977,12 @@ int run(int argc, char* argv[]) {
     }
     for (const auto& [name, expected] : benchmark.required_environment) {
         const char* observed = std::getenv(name.c_str());
-        if (observed == nullptr || observed != expected) {
+        const std::string effective_expected =
+            name == "OMP_NUM_THREADS" &&
+                    benchmark.omp_threads_follow_configured_threads
+                ? std::to_string(configured_threads)
+                : expected;
+        if (observed == nullptr || observed != effective_expected) {
             throw std::runtime_error("thread environment differs for " + name);
         }
     }

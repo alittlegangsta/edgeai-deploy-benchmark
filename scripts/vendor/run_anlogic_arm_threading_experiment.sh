@@ -11,8 +11,8 @@ case "$MODE" in
 esac
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-CONFIG="$REPO_ROOT/configs/benchmark_anlogic_arm_threading.json"
-CONTRACT="$REPO_ROOT/results/evidence/018/experiment_contract.json"
+CONFIG="$REPO_ROOT/configs/benchmark_anlogic_arm_threading_openmp.json"
+CONTRACT="$REPO_ROOT/results/evidence/018/openmp/experiment_contract.json"
 ORDER="$REPO_ROOT/results/evidence/018/execution_order.json"
 VALIDATOR="$REPO_ROOT/scripts/vendor/validate_anlogic_arm_threading_experiment.py"
 PARAM="$REPO_ROOT/models/yolov5n-v7.0/yolov5n.ncnn.param"
@@ -28,9 +28,10 @@ EXPECTED_INPUT="625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071
 EXPECTED_INFERENCE_CONFIG="82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
 EXPECTED_REFERENCE="fb343f605218a5fa30a825a3f14e4d00137d6275e1b1af99c9029956e2492fa9"
 
-SHARED_LOCAL="${ANLOGIC_THREADING_SHARED_LOCAL:-/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_threading_task018}"
-SHARED_WINDOWS="${ANLOGIC_THREADING_SHARED_WINDOWS:-C:/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_threading_task018}"
-BUILD_OUTPUT="${ANLOGIC_ARM_BUILD_OUTPUT:-/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_yolov5n/build-output}"
+SHARED_LOCAL="${ANLOGIC_THREADING_SHARED_LOCAL:-/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_threading_task018_openmp_session1}"
+SHARED_WINDOWS="${ANLOGIC_THREADING_SHARED_WINDOWS:-C:/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_threading_task018_openmp_session1}"
+BUILD_OUTPUT="${ANLOGIC_ARM_BUILD_OUTPUT:-/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_threading_task018_openmp/build-output-libgomp-01b70259586931e86d0bc071030aea10674b09f80f28d80fc09857001ebd8f8e}"
+BENCHMARK_ELF="$BUILD_OUTPUT/bin/edgeai_benchmark_ncnn"
 PACKAGE_LOCAL="$SHARED_LOCAL/package"
 PACKAGE_WINDOWS="$SHARED_WINDOWS/package"
 RETURN_LOCAL="$SHARED_LOCAL/returned"
@@ -39,9 +40,9 @@ BOARD_SSH="${ANLOGIC_BOARD_SSH:-/home/dministrator/bin/anlogic-board-ssh}"
 BOARD_SCP="${ANLOGIC_BOARD_SCP:-/mnt/c/Windows/System32/OpenSSH/scp.exe}"
 BOARD_KEY_WINDOWS="${ANLOGIC_BOARD_KEY_WINDOWS:-C:/Users/Administrator/.ssh/anlogic_board_ed25519}"
 BOARD_TARGET="${ANLOGIC_BOARD_TARGET:-root@192.168.50.2}"
-REMOTE_DEST="${ANLOGIC_THREADING_REMOTE:-/root/edgeai/anlogic-arm-threading-task018}"
+REMOTE_DEST="${ANLOGIC_THREADING_REMOTE:-/root/edgeai/anlogic-arm-threading-task018-openmp-session1}"
 REMOTE_NEW="${REMOTE_DEST}.new"
-FORMAL_EVIDENCE="$REPO_ROOT/results/evidence/018"
+FORMAL_EVIDENCE="${ANLOGIC_THREADING_EVIDENCE_DIR:-$REPO_ROOT/results/evidence/018/openmp}"
 LOG_DIR="$REPO_ROOT/results/logs/vendor/arm_threading"
 
 sha256_of() {
@@ -85,16 +86,16 @@ offline_check() {
   require_hash "$INPUT" "$EXPECTED_INPUT" "fixed_input"
   require_hash "$INFERENCE_CONFIG" "$EXPECTED_INFERENCE_CONFIG" "inference_config"
   require_hash "$REFERENCE" "$EXPECTED_REFERENCE" "pc_ncnn_golden"
-  if [[ -f "$BUILD_OUTPUT/edgeai_benchmark_ncnn" ]]; then
-    file "$BUILD_OUTPUT/edgeai_benchmark_ncnn"
-    if [[ -f "$BUILD_OUTPUT/BUILD_OUTPUT_SHA256SUMS" ]]; then
+  if [[ -f "$BENCHMARK_ELF" ]]; then
+    file "$BENCHMARK_ELF"
+    if [[ -f "$BUILD_OUTPUT/SHA256SUMS" ]]; then
       (
         cd "$BUILD_OUTPUT"
-        sha256sum -c BUILD_OUTPUT_SHA256SUMS
+        sha256sum -c SHA256SUMS
       )
       printf 'arm_benchmark_elf=PRESENT_BUILD_OUTPUT_HASH_VERIFIED\n'
       printf 'arm_benchmark_elf_sha256=%s\n' \
-        "$(sha256_of "$BUILD_OUTPUT/edgeai_benchmark_ncnn")"
+        "$(sha256_of "$BENCHMARK_ELF")"
     else
       printf 'arm_benchmark_elf=PRESENT_WITHOUT_BUILD_OUTPUT_MANIFEST\n'
     fi
@@ -148,10 +149,11 @@ offline_check
   exit 1
 }
 for required in \
-  "$BUILD_OUTPUT/edgeai_benchmark_ncnn" \
+  "$BENCHMARK_ELF" \
   "$BUILD_OUTPUT/lib/libopencv_core.so.407" \
   "$BUILD_OUTPUT/lib/libopencv_imgproc.so.407" \
-  "$BUILD_OUTPUT/lib/libopencv_imgcodecs.so.407"; do
+  "$BUILD_OUTPUT/lib/libopencv_imgcodecs.so.407" \
+  "$BUILD_OUTPUT/lib/libgomp.so.1"; do
   [[ -f "$required" ]] || {
     printf 'formal collection build input is missing: %s\n' "$required" >&2
     exit 1
@@ -164,9 +166,10 @@ done
 }
 
 mkdir -p "$LOG_DIR" "$PACKAGE_LOCAL"/{bin,config,input,lib,model,reference}
-cp "$BUILD_OUTPUT/edgeai_benchmark_ncnn" "$PACKAGE_LOCAL/bin/"
+cp "$BENCHMARK_ELF" "$PACKAGE_LOCAL/bin/"
 cp "$BUILD_OUTPUT/lib/"*.so.407 "$PACKAGE_LOCAL/lib/"
-cp "$CONFIG" "$PACKAGE_LOCAL/config/benchmark_anlogic_arm_threading.json"
+cp "$BUILD_OUTPUT/lib/libgomp.so.1" "$PACKAGE_LOCAL/lib/"
+cp "$CONFIG" "$PACKAGE_LOCAL/config/benchmark_anlogic_arm_threading_openmp.json"
 cp "$INFERENCE_CONFIG" "$PACKAGE_LOCAL/config/yolov5n_v7_inference.json"
 cp "$INPUT" "$PACKAGE_LOCAL/input/pc_reference.jpg"
 cp "$MODEL_MANIFEST" "$PACKAGE_LOCAL/model/ncnn_manifest.json"
@@ -187,14 +190,14 @@ case "$threads:$pair:$order" in
 esac
 cd "$root" || exit 1
 mkdir -p results/logs
-export OMP_NUM_THREADS=1
+export OMP_NUM_THREADS="$threads"
 export OPENBLAS_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
 LD_LIBRARY_PATH="$root/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 export LD_LIBRARY_PATH
 exec "$root/bin/edgeai_benchmark_ncnn" \
-  --benchmark-config "$root/config/benchmark_anlogic_arm_threading.json" \
+  --benchmark-config "$root/config/benchmark_anlogic_arm_threading_openmp.json" \
   --ncnn-manifest "$root/model/ncnn_manifest.json" \
   --model-param "$root/model/yolov5n.ncnn.param" \
   --model-bin "$root/model/yolov5n.ncnn.bin" \
