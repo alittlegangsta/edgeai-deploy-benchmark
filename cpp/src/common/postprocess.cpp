@@ -62,6 +62,32 @@ float box_iou(const Box& left, const Box& right) {
     return union_area > 0.0F ? intersection / union_area : 0.0F;
 }
 
+void validate_frame_detections(
+    const std::vector<Detection>& detections,
+    int frame_width,
+    int frame_height,
+    std::size_t frame_index
+) {
+    for (std::size_t index = 0; index < detections.size(); ++index) {
+        const Detection& detection = detections[index];
+        const Box& box = detection.box_xyxy_source;
+        const bool valid_finite_box = std::isfinite(box.x1) && std::isfinite(box.y1) &&
+                                      std::isfinite(box.x2) && std::isfinite(box.y2);
+        if (detection.rank != index + 1U || detection.class_id < 0 ||
+            detection.class_name.empty() || !std::isfinite(detection.confidence) ||
+            detection.confidence < 0.0F || detection.confidence > 1.0F ||
+            !valid_finite_box || box.x1 < 0.0F || box.y1 < 0.0F ||
+            box.x2 > static_cast<float>(frame_width) ||
+            box.y2 > static_cast<float>(frame_height) || box.x2 <= box.x1 ||
+            box.y2 <= box.y1) {
+            throw std::runtime_error(
+                "invalid detection at frame " + std::to_string(frame_index) + ", rank " +
+                std::to_string(index + 1U)
+            );
+        }
+    }
+}
+
 PostprocessResult decode_yolov5_output(
     const std::vector<float>& raw_output,
     const std::vector<std::int64_t>& output_shape,

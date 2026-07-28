@@ -1,9 +1,9 @@
 #pragma once
 
 #include "edgeai/common/detection.hpp"
+#include "edgeai/common/filesystem.hpp"
 
 #include <array>
-#include <filesystem>
 #include <string>
 #include <vector>
 
@@ -27,6 +27,6 @@ struct InferenceConfig {
 
 const std::vector<std::string>& frozen_coco80_class_names();
 void validate_config(const InferenceConfig& config);
-InferenceConfig load_config(const std::filesystem::path& path);
+InferenceConfig load_config(const edgeai::filesystem::path& path);
 
 }  // namespace edgeai::common

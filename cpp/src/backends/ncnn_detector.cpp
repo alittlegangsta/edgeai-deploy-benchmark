@@ -6,7 +6,6 @@
 #include <array>
 #include <cmath>
 #include <cstdint>
-#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <limits>
@@ -174,8 +173,8 @@ std::vector<std::int64_t> required_shape(const cv::FileNode& parent, const char*
 }
 
 struct ManifestContract {
-    std::filesystem::path param_path;
-    std::filesystem::path bin_path;
+    edgeai::filesystem::path param_path;
+    edgeai::filesystem::path bin_path;
     std::string param_sha256;
     std::string bin_sha256;
     std::string runtime_version;
@@ -183,18 +182,18 @@ struct ManifestContract {
     NcnnTensorDescriptor output;
 };
 
-std::filesystem::path resolve_manifest_artifact(
-    const std::filesystem::path& manifest_path,
-    const std::filesystem::path& artifact_path
+edgeai::filesystem::path resolve_manifest_artifact(
+    const edgeai::filesystem::path& manifest_path,
+    const edgeai::filesystem::path& artifact_path
 ) {
     if (artifact_path.is_absolute()) {
         return artifact_path;
     }
-    std::filesystem::path ancestor = std::filesystem::absolute(manifest_path).parent_path();
+    edgeai::filesystem::path ancestor = edgeai::filesystem::absolute(manifest_path).parent_path();
     while (!ancestor.empty()) {
-        const std::filesystem::path candidate = ancestor / artifact_path;
-        if (std::filesystem::is_regular_file(candidate)) {
-            return candidate.lexically_normal();
+        const edgeai::filesystem::path candidate = ancestor / artifact_path;
+        if (edgeai::filesystem::is_regular_file(candidate)) {
+            return candidate;
         }
         if (ancestor == ancestor.root_path()) {
             break;
@@ -204,9 +203,10 @@ std::filesystem::path resolve_manifest_artifact(
     return artifact_path;
 }
 
-ManifestContract load_manifest(const std::filesystem::path& path) {
-    if (std::filesystem::is_symlink(path) || !std::filesystem::is_regular_file(path) ||
-        std::filesystem::file_size(path) == 0U) {
+ManifestContract load_manifest(const edgeai::filesystem::path& path) {
+    if (edgeai::filesystem::is_symlink(path) ||
+        !edgeai::filesystem::is_regular_file(path) ||
+        edgeai::filesystem::file_size(path) == 0U) {
         throw std::runtime_error("ncnn manifest is missing, empty, or a symlink: " + path.string());
     }
     cv::FileStorage storage(path.string(), cv::FileStorage::READ | cv::FileStorage::FORMAT_JSON);
@@ -294,12 +294,13 @@ std::size_t element_count(const std::vector<std::int64_t>& shape) {
 
 }  // namespace
 
-std::string ncnn_sha256_file(const std::filesystem::path& path) {
-    if (std::filesystem::is_symlink(path) || !std::filesystem::is_regular_file(path) ||
-        std::filesystem::file_size(path) == 0U) {
+std::string ncnn_sha256_file(const edgeai::filesystem::path& path) {
+    if (edgeai::filesystem::is_symlink(path) ||
+        !edgeai::filesystem::is_regular_file(path) ||
+        edgeai::filesystem::file_size(path) == 0U) {
         throw std::runtime_error("SHA256 input is missing, empty, or a symlink: " + path.string());
     }
-    std::ifstream input(path, std::ios::binary);
+    std::ifstream input(path.string(), std::ios::binary);
     if (!input) {
         throw std::runtime_error("failed to open SHA256 input: " + path.string());
     }
@@ -328,13 +329,23 @@ std::string ncnn_sha256_file(const std::filesystem::path& path) {
 }
 
 struct NcnnDetector::Impl {
-    explicit Impl(const std::filesystem::path& manifest_path, int threads) {
+    explicit Impl(
+        const edgeai::filesystem::path& manifest_path,
+        int threads,
+        const edgeai::filesystem::path& param_override,
+        const edgeai::filesystem::path& bin_override
+    ) {
         if (threads != 1) {
             throw std::runtime_error("Task 011 requires exactly one ncnn thread");
         }
+        if (param_override.empty() != bin_override.empty()) {
+            throw std::runtime_error("ncnn param/bin overrides must be supplied together");
+        }
         const ManifestContract manifest = load_manifest(manifest_path);
-        param = manifest.param_path;
-        bin = manifest.bin_path;
+        param = param_override.empty() ? manifest.param_path
+                                       : edgeai::filesystem::absolute(param_override);
+        bin = bin_override.empty() ? manifest.bin_path
+                                   : edgeai::filesystem::absolute(bin_override);
         param_sha = ncnn_sha256_file(param);
         bin_sha = ncnn_sha256_file(bin);
         if (param_sha != manifest.param_sha256 || bin_sha != manifest.bin_sha256) {
@@ -427,22 +438,27 @@ struct NcnnDetector::Impl {
 
     ncnn::Net network;
     NcnnRuntimeInfo info;
-    std::filesystem::path param;
-    std::filesystem::path bin;
+    edgeai::filesystem::path param;
+    edgeai::filesystem::path bin;
     std::string param_sha;
     std::string bin_sha;
 };
 
-NcnnDetector::NcnnDetector(const std::filesystem::path& manifest_path, int threads)
-    : impl_(std::make_unique<Impl>(manifest_path, threads)) {}
+NcnnDetector::NcnnDetector(
+    const edgeai::filesystem::path& manifest_path,
+    int threads,
+    const edgeai::filesystem::path& param_path,
+    const edgeai::filesystem::path& bin_path
+)
+    : impl_(std::make_unique<Impl>(manifest_path, threads, param_path, bin_path)) {}
 
 NcnnDetector::~NcnnDetector() = default;
 NcnnDetector::NcnnDetector(NcnnDetector&&) noexcept = default;
 NcnnDetector& NcnnDetector::operator=(NcnnDetector&&) noexcept = default;
 
 const NcnnRuntimeInfo& NcnnDetector::runtime_info() const { return impl_->info; }
-const std::filesystem::path& NcnnDetector::param_path() const { return impl_->param; }
-const std::filesystem::path& NcnnDetector::bin_path() const { return impl_->bin; }
+const edgeai::filesystem::path& NcnnDetector::param_path() const { return impl_->param; }
+const edgeai::filesystem::path& NcnnDetector::bin_path() const { return impl_->bin; }
 const std::string& NcnnDetector::param_sha256() const { return impl_->param_sha; }
 const std::string& NcnnDetector::bin_sha256() const { return impl_->bin_sha; }
 NcnnRawInferenceResult NcnnDetector::infer(const edgeai::common::InputTensor& tensor) {

@@ -2,13 +2,11 @@
 #include "edgeai/common/config.hpp"
 #include "edgeai/common/postprocess.hpp"
 #include "edgeai/common/preprocess.hpp"
-#include "edgeai/common/video_pipeline.hpp"
 #include "edgeai/common/visualize.hpp"
 
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
-#include <filesystem>
 #include <iomanip>
 #include <iostream>
 #include <map>
@@ -23,17 +21,44 @@ namespace {
 
 using Clock = std::chrono::steady_clock;
 
-std::map<std::string, std::filesystem::path> parse_args(int argc, char* argv[]) {
-    if (argc != 11) {
+struct Arguments {
+    edgeai::filesystem::path manifest;
+    edgeai::filesystem::path config;
+    edgeai::filesystem::path model_param;
+    edgeai::filesystem::path model_bin;
+    edgeai::filesystem::path input;
+    edgeai::filesystem::path output_image;
+    edgeai::filesystem::path output_json;
+    int threads{1};
+};
+
+int parse_threads(const std::string& value) {
+    std::size_t consumed = 0U;
+    int threads = 0;
+    try {
+        threads = std::stoi(value, &consumed);
+    } catch (const std::exception&) {
+        throw std::runtime_error("--threads must be an integer");
+    }
+    if (consumed != value.size() || threads != 1) {
+        throw std::runtime_error("--threads must remain exactly 1");
+    }
+    return threads;
+}
+
+Arguments parse_args(int argc, char* argv[]) {
+    if (argc < 11 || argc % 2 == 0) {
         throw std::runtime_error(
-            "usage: edgeai_ncnn_image --manifest PATH --config PATH --image PATH "
-            "--output-image PATH --output-json PATH"
+            "usage: edgeai_ncnn_image --manifest PATH --config PATH "
+            "[--model-param PATH --model-bin PATH] (--input PATH|--image PATH) "
+            "--output-image PATH --output-json PATH [--threads 1]"
         );
     }
     const std::vector<std::string> allowed{
-        "--manifest", "--config", "--image", "--output-image", "--output-json",
+        "--manifest", "--config", "--model-param", "--model-bin", "--input", "--image",
+        "--output-image", "--output-json", "--threads",
     };
-    std::map<std::string, std::filesystem::path> values;
+    std::map<std::string, std::string> values;
     for (int index = 1; index < argc; index += 2) {
         const std::string option = argv[index];
         if (std::find(allowed.begin(), allowed.end(), option) == allowed.end()) {
@@ -43,10 +68,35 @@ std::map<std::string, std::filesystem::path> parse_args(int argc, char* argv[]) 
             throw std::runtime_error("duplicate argument: " + option);
         }
     }
-    if (values.size() != allowed.size()) {
-        throw std::runtime_error("all five named arguments are required");
+    for (const std::string required :
+         {"--manifest", "--config", "--output-image", "--output-json"}) {
+        if (values.count(required) == 0U) {
+            throw std::runtime_error("missing required argument: " + required);
+        }
     }
-    return values;
+    const bool has_input = values.count("--input") != 0U;
+    const bool has_image = values.count("--image") != 0U;
+    if (has_input == has_image) {
+        throw std::runtime_error("exactly one of --input or --image is required");
+    }
+    const bool has_param = values.count("--model-param") != 0U;
+    const bool has_bin = values.count("--model-bin") != 0U;
+    if (has_param != has_bin) {
+        throw std::runtime_error("--model-param and --model-bin must be supplied together");
+    }
+    return {
+        values.at("--manifest"),
+        values.at("--config"),
+        has_param ? edgeai::filesystem::path(values.at("--model-param"))
+                  : edgeai::filesystem::path{},
+        has_bin ? edgeai::filesystem::path(values.at("--model-bin"))
+                : edgeai::filesystem::path{},
+        has_input ? edgeai::filesystem::path(values.at("--input"))
+                  : edgeai::filesystem::path(values.at("--image")),
+        values.at("--output-image"),
+        values.at("--output-json"),
+        values.count("--threads") != 0U ? parse_threads(values.at("--threads")) : 1,
+    };
 }
 
 double elapsed_ms(Clock::time_point start, Clock::time_point end) {
@@ -82,17 +132,20 @@ void write_descriptors(
 }
 
 void write_result(
-    const std::filesystem::path& path,
-    const std::map<std::string, std::filesystem::path>& arguments,
+    const edgeai::filesystem::path& path,
+    const Arguments& arguments,
     const edgeai::common::InferenceConfig& config,
     const edgeai::common::PreprocessResult& preprocess,
     const edgeai::backends::NcnnDetector& detector,
     const edgeai::common::PostprocessResult& postprocess,
     const edgeai::common::StageTimingsMs& timings,
+    double pipeline_total,
     const cv::Mat& source,
     const cv::Mat& rendered
 ) {
-    std::filesystem::create_directories(path.parent_path());
+    if (!path.parent_path().empty()) {
+        edgeai::filesystem::create_directories(path.parent_path());
+    }
     cv::FileStorage output(path.string(), cv::FileStorage::WRITE | cv::FileStorage::FORMAT_JSON);
     if (!output.isOpened()) {
         throw std::runtime_error("failed to open ncnn result JSON: " + path.string());
@@ -100,9 +153,9 @@ void write_result(
     const auto& runtime = detector.runtime_info();
     output << "schema_version" << 1 << "application" << "edgeai_cpp_ncnn_image";
     output << "model" << "{"
-           << "manifest_path" << arguments.at("--manifest").string()
+           << "manifest_path" << arguments.manifest.string()
            << "manifest_sha256"
-           << edgeai::backends::ncnn_sha256_file(arguments.at("--manifest"))
+           << edgeai::backends::ncnn_sha256_file(arguments.manifest)
            << "param_path" << detector.param_path().string() << "param_sha256"
            << detector.param_sha256() << "bin_path" << detector.bin_path().string()
            << "bin_sha256" << detector.bin_sha256() << "runtime_version" << runtime.version
@@ -113,17 +166,17 @@ void write_result(
     output << "runtime_outputs";
     write_descriptors(output, runtime.outputs);
     output << "}";
-    output << "configuration_file" << "{" << "path" << arguments.at("--config").string()
-           << "sha256" << edgeai::backends::ncnn_sha256_file(arguments.at("--config")) << "}";
+    output << "configuration_file" << "{" << "path" << arguments.config.string()
+           << "sha256" << edgeai::backends::ncnn_sha256_file(arguments.config) << "}";
     output << "configuration" << "{" << "schema_version" << config.schema_version
            << "input_size" << "[" << config.input_size.height << config.input_size.width << "]"
            << "confidence_threshold" << config.confidence_threshold << "iou_threshold"
            << config.iou_threshold << "class_aware_nms" << config.class_aware_nms
            << "max_detections" << config.max_detections << "}";
-    output << "source_image" << "{" << "path" << arguments.at("--image").string()
-           << "sha256" << edgeai::backends::ncnn_sha256_file(arguments.at("--image"))
+    output << "source_image" << "{" << "path" << arguments.input.string()
+           << "sha256" << edgeai::backends::ncnn_sha256_file(arguments.input)
            << "size_bytes"
-           << static_cast<double>(std::filesystem::file_size(arguments.at("--image")))
+           << static_cast<double>(edgeai::filesystem::file_size(arguments.input))
            << "shape_bgr" << "[" << source.rows << source.cols << source.channels() << "]" << "}";
     output << "preprocess" << "{" << "scale" << preprocess.metadata.scale << "padding" << "{"
            << "left" << preprocess.metadata.padding.left << "top" << preprocess.metadata.padding.top
@@ -153,17 +206,18 @@ void write_result(
         output << "}";
     }
     output << "]";
-    output << "output_image" << "{" << "path" << arguments.at("--output-image").string()
-           << "sha256" << edgeai::backends::ncnn_sha256_file(arguments.at("--output-image"))
+    output << "output_image" << "{" << "path" << arguments.output_image.string()
+           << "sha256" << edgeai::backends::ncnn_sha256_file(arguments.output_image)
            << "size_bytes"
-           << static_cast<double>(std::filesystem::file_size(arguments.at("--output-image")))
+           << static_cast<double>(edgeai::filesystem::file_size(arguments.output_image))
            << "shape_bgr" << "[" << rendered.rows << rendered.cols << rendered.channels() << "]"
            << "decode_validation" << "PASS" << "visual_review" << "PENDING_HUMAN_REVIEW" << "}";
     output << "timings_ms" << "{" << "measurement_type"
            << "single-run diagnostic, not a benchmark" << "input_read" << timings.input_read
            << "preprocess" << timings.preprocess << "inference" << timings.inference
            << "postprocess" << timings.postprocess << "visualization" << timings.visualization
-           << "output_write" << timings.output_write << "boundaries" << "{"
+           << "output_write" << timings.output_write << "pipeline_total" << pipeline_total
+           << "boundaries" << "{"
            << "inference" << "NcnnDetector::infer input bind, Extractor::extract, validation and copy"
            << "postprocess" << "shared YOLOv5 decode, threshold, NMS, inverse map and clipping"
            << "}" << "}";
@@ -175,15 +229,21 @@ void write_result(
 int main(int argc, char* argv[]) {
     try {
         const auto arguments = parse_args(argc, argv);
-        const auto config = edgeai::common::load_config(arguments.at("--config"));
+        const auto pipeline_start = Clock::now();
+        const auto config = edgeai::common::load_config(arguments.config);
         edgeai::common::StageTimingsMs timings;
         const auto read_start = Clock::now();
-        const cv::Mat source = edgeai::common::load_bgr_image(arguments.at("--image"));
+        const cv::Mat source = edgeai::common::load_bgr_image(arguments.input);
         timings.input_read = elapsed_ms(read_start, Clock::now());
         const auto preprocess_start = Clock::now();
         const auto preprocessed = edgeai::common::preprocess_image(source, config);
         timings.preprocess = elapsed_ms(preprocess_start, Clock::now());
-        edgeai::backends::NcnnDetector detector(arguments.at("--manifest"), 1);
+        edgeai::backends::NcnnDetector detector(
+            arguments.manifest,
+            arguments.threads,
+            arguments.model_param,
+            arguments.model_bin
+        );
         const auto inference_start = Clock::now();
         const auto raw = detector.infer(preprocessed.tensor);
         timings.inference = elapsed_ms(inference_start, Clock::now());
@@ -199,21 +259,30 @@ int main(int argc, char* argv[]) {
         const cv::Mat rendered = edgeai::common::draw_detections(source, postprocessed.detections);
         timings.visualization = elapsed_ms(visualization_start, Clock::now());
         const auto write_start = Clock::now();
-        edgeai::common::save_image(arguments.at("--output-image"), rendered);
-        const cv::Mat read_back = cv::imread(arguments.at("--output-image").string());
+        edgeai::common::save_image(arguments.output_image, rendered);
+        const cv::Mat read_back = cv::imread(arguments.output_image.string());
         if (read_back.empty() || read_back.size() != source.size() || read_back.type() != CV_8UC3) {
             throw std::runtime_error("ncnn output image read-back validation failed");
         }
         timings.output_write = elapsed_ms(write_start, Clock::now());
+        const double pipeline_total = elapsed_ms(pipeline_start, Clock::now());
         write_result(
-            arguments.at("--output-json"), arguments, config, preprocessed, detector,
-            postprocessed, timings, source, read_back
+            arguments.output_json, arguments, config, preprocessed, detector, postprocessed,
+            timings, pipeline_total, source, read_back
         );
         std::cout << "Application: edgeai_cpp_ncnn_image\n"
+                  << "Program contract: Task 014 single-image CPU/FP32\n"
                   << "ncnn version: " << detector.runtime_info().version << '\n'
-                  << "Execution provider: ncnn CPU\nThreads: 1\n"
+                  << "Execution provider: ncnn CPU\nThreads: " << arguments.threads << '\n'
+                  << "Param SHA256: " << detector.param_sha256() << '\n'
+                  << "Bin SHA256: " << detector.bin_sha256() << '\n'
+                  << "Input SHA256: " << edgeai::backends::ncnn_sha256_file(arguments.input)
+                  << '\n'
                   << "Input: in0 [1,3,640,640] float32\n"
-                  << "Output: out0 [1,25200,85] float32\n";
+                  << "Output: out0 [1,25200,85] float32\n"
+                  << "Confidence threshold: " << config.confidence_threshold << '\n'
+                  << "NMS IoU threshold: " << config.iou_threshold << '\n'
+                  << "Detection count: " << postprocessed.detections.size() << '\n';
         for (const auto& detection : postprocessed.detections) {
             std::cout << "Detection " << detection.rank << ": class=" << detection.class_name
                       << " class_id=" << detection.class_id << " confidence=" << std::fixed
@@ -224,7 +293,11 @@ int main(int argc, char* argv[]) {
         }
         std::cout << "Diagnostic timings only; not a benchmark: preprocess=" << timings.preprocess
                   << " inference=" << timings.inference << " postprocess=" << timings.postprocess
-                  << " ms\nVisual review: PENDING_HUMAN_REVIEW\n";
+                  << " pipeline=" << pipeline_total << " ms\n"
+                  << "Output JSON: " << arguments.output_json.string() << '\n'
+                  << "Output image: " << arguments.output_image.string() << '\n'
+                  << "Visual review: PENDING_HUMAN_REVIEW\n"
+                  << "Exit code: 0\n";
         return 0;
     } catch (const std::exception& error) {
         std::cerr << "edgeai_ncnn_image error: " << error.what() << '\n';

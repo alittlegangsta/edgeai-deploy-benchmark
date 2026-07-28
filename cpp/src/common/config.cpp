@@ -123,8 +123,8 @@ void validate_config(const InferenceConfig& config) {
     }
 }
 
-InferenceConfig load_config(const std::filesystem::path& path) {
-    if (!std::filesystem::is_regular_file(path) || std::filesystem::file_size(path) == 0U) {
+InferenceConfig load_config(const edgeai::filesystem::path& path) {
+    if (!edgeai::filesystem::is_regular_file(path) || edgeai::filesystem::file_size(path) == 0U) {
         throw std::runtime_error("configuration file is missing or empty: " + path.string());
     }
     cv::FileStorage storage(path.string(), cv::FileStorage::READ | cv::FileStorage::FORMAT_JSON);

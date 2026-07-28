@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "evidence_type": "task014_anlogic_arm_ncnn_single_image_validation",
+  "task": "014",
+  "status": "AUTOMATED_PASS_HUMAN_REVIEW_PENDING",
+  "scope": {
+    "single_image": true,
+    "cpu_only": true,
+    "fp32_runtime": true,
+    "batch": 1,
+    "input_size": [
+      640,
+      640
+    ],
+    "threads": 1,
+    "benchmark_run": false,
+    "video_run": false,
+    "camera_used": false,
+    "vulkan_used": false,
+    "quantization_used": false,
+    "npu_used": false,
+    "model_converted": false
+  },
+  "source": {
+    "base_commit": "6d50c6daad99b4faf779f991bba8059d95ff7328",
+    "ncnn_tag": "20240410",
+    "ncnn_commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "source_archive_sha256": "ad7adebb6e4ad9a4b93c7db40ef8dd626bf3467b9350c87ff6eeda588d8a422e"
+  },
+  "build": {
+    "cmake_version": "3.16.9",
+    "compiler": "Linaro GCC/G++ 7.5.0",
+    "target": "aarch64-linux-gnu",
+    "toolchain_file": "configs/toolchains/anlogic-dr1-aarch64.cmake",
+    "ncnn_library_sha256": "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a",
+    "application_sha256": "a4d3f1a405284881d2c2bd9790033b3997d02de69142644b4d2c24dbb55056f1",
+    "elf_class": "ELF64",
+    "machine": "AArch64",
+    "interpreter": "/lib/ld-linux-aarch64.so.1",
+    "maximum_glibc_requirement": "GLIBC_2.17",
+    "maximum_glibcxx_requirement": "GLIBCXX_3.4.21",
+    "unexpected_dependencies": []
+  },
+  "frozen_inputs": {
+    "manifest_sha256": "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff",
+    "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "input_blob": "in0",
+    "output_blob": "out0",
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45
+  },
+  "deployment": {
+    "remote_directory": "/root/edgeai/yolov5n-ncnn-single-image",
+    "deployment_manifest_sha256": "6d02105089d6a79c420f19cb66373f410e7098bd0366784ddc61754d4f76b173",
+    "sha256sums_sha256": "ab50df6e0ce70ff45845a4e753b29a79d7c7d79f57381fd1a49bd3c5ca911ae1",
+    "transfer_hash_validation": "PASS",
+    "chmod_hash_validation": "PASS",
+    "dependency_validation": "PASS",
+    "missing_dependencies": 0,
+    "system_library_modified": false
+  },
+  "board": {
+    "model": "MLK-F3P-CZ02-DR1M90",
+    "architecture": "aarch64",
+    "os": "Buildroot 2022.02.6",
+    "kernel": "6.1.111-rt42",
+    "libc": "glibc 2.25",
+    "clock_synchronized": false
+  },
+  "runtime": {
+    "exit_code": 0,
+    "stdout_sha256": "ad39b6bce8ca7f86457c7a688800b5eff673478199b2888808aa924978ca93c0",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runtime_version": "1.0.20240410",
+    "execution_provider": "ncnn CPU",
+    "threads": 1,
+    "vulkan": false,
+    "fp16": false,
+    "bf16": false,
+    "int8": false,
+    "detection_count": 5,
+    "classes_in_rank_order": [
+      "keyboard",
+      "tv",
+      "cup",
+      "mouse",
+      "mouse"
+    ],
+    "diagnostic_timing_only": true,
+    "formal_benchmark_data": false
+  },
+  "outputs": {
+    "detection_json": {
+      "path": "results/evidence/014/anlogic_arm_ncnn_detections.json",
+      "sha256": "e93a3489d24632a5ff9327a3364a9a62753cfb8d0969994bd62525dabe47dd2c"
+    },
+    "annotated_image": {
+      "path": "results/images/anlogic_arm_ncnn_reference.png",
+      "sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2",
+      "shape_bgr": [
+        960,
+        1280,
+        3
+      ],
+      "decode_validation": "PASS",
+      "byte_identical_to_pc_ncnn_golden": true,
+      "human_visual_review": "PENDING"
+    },
+    "comparison": {
+      "path": "results/evidence/014/anlogic_arm_ncnn_comparison.json",
+      "sha256": "fee041817ffd1bf36b9beae4bb98cc9cca7baad3773e19c006c3f0a01eac0e92"
+    }
+  },
+  "correctness": {
+    "json_parse": "PASS",
+    "finite_values": "PASS",
+    "valid_boxes": "PASS",
+    "detection_count_match": "PASS",
+    "class_match": "PASS",
+    "known_low_confidence_mouse_retained": true,
+    "minimum_class_matched_iou": 0.9999855075776749,
+    "maximum_confidence_delta": 5.0067901611328125e-06,
+    "target_minimum_iou": 0.99,
+    "target_maximum_confidence_delta": 0.01,
+    "automated_status": "PASS_TARGET"
+  },
+  "checks": {
+    "frozen_asset_hashes": "PASS",
+    "aarch64_elf_identity": "PASS",
+    "abi_compatibility": "PASS",
+    "deployment_hashes": "PASS",
+    "dependency_closure": "PASS",
+    "board_execution": "PASS",
+    "output_decode": "PASS",
+    "automated_correctness": "PASS_TARGET",
+    "human_visual_review": "PENDING"
+  }
+}

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "edgeai/common/detection.hpp"
+#include "edgeai/common/filesystem.hpp"
 
 #include <cstdint>
-#include <filesystem>
 #include <memory>
 #include <string>
 #include <vector>
@@ -40,11 +40,16 @@ struct NcnnRawInferenceResult {
     std::vector<std::int64_t> shape;
 };
 
-std::string ncnn_sha256_file(const std::filesystem::path& path);
+std::string ncnn_sha256_file(const edgeai::filesystem::path& path);
 
 class NcnnDetector {
 public:
-    explicit NcnnDetector(const std::filesystem::path& manifest_path, int threads = 1);
+    explicit NcnnDetector(
+        const edgeai::filesystem::path& manifest_path,
+        int threads = 1,
+        const edgeai::filesystem::path& param_path = {},
+        const edgeai::filesystem::path& bin_path = {}
+    );
     ~NcnnDetector();
 
     NcnnDetector(NcnnDetector&&) noexcept;
@@ -53,8 +58,8 @@ public:
     NcnnDetector& operator=(const NcnnDetector&) = delete;
 
     const NcnnRuntimeInfo& runtime_info() const;
-    const std::filesystem::path& param_path() const;
-    const std::filesystem::path& bin_path() const;
+    const edgeai::filesystem::path& param_path() const;
+    const edgeai::filesystem::path& bin_path() const;
     const std::string& param_sha256() const;
     const std::string& bin_sha256() const;
     NcnnRawInferenceResult infer(const edgeai::common::InputTensor& tensor);
