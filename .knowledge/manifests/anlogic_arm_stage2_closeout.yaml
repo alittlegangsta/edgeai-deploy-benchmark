@@ -1,0 +1,227 @@
+schema_version: "1"
+manifest_type: "anlogic_arm_stage2_closeout"
+recorded_at: "2026-07-28T16:27:42+08:00"
+completed_at: "2026-07-28T16:33:11+08:00"
+task: "015"
+task_status: "Completed"
+stage_status: "Completed"
+
+scope:
+  baseline: "Anlogic DR1 ARM CPU single-image deployment"
+  evidence_reconciliation_only: true
+  vm_accessed: false
+  board_accessed: false
+  inference_run: false
+  benchmark_run: false
+  video_run: false
+  camera_used: false
+  vulkan_used: false
+  quantization_used: false
+  npu_used: false
+  model_converted: false
+
+dependencies:
+  task_013: "Completed"
+  task_014: "Completed"
+
+environment_roles:
+  wsl:
+    role: "source control, frozen-asset checks, result management, and PC/ARM comparison"
+    required_for_closeout: true
+  vm:
+    role: "user-local CMake and AArch64 cross-build"
+    required_for_offline_closeout: false
+    required_for_clean_rebuild: true
+  board:
+    role: "dependency closure, runtime smoke, single-image execution, and output capture"
+    required_for_offline_closeout: false
+    required_for_clean_runtime_reproduction: true
+
+toolchain:
+  vm_os: "Ubuntu 18.04.4 LTS"
+  vm_architecture: "x86_64"
+  cmake:
+    version: "3.16.9"
+    source_archive_sha256: "1708361827a5a0de37d55f5c9698004c035abb1de6120a376d5d59a81630191f"
+    executable_sha256: "fa6d96ed54cbb20be01e16a275e6f86e97ed76953c113c8fffa2de18123f42b5"
+  compiler: "Linaro GCC/G++ 7.5.0"
+  target_triple: "aarch64-linux-gnu"
+  sysroot: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc"
+  sysroot_libc: "glibc 2.25"
+  dynamic_loader: "/lib/ld-linux-aarch64.so.1"
+  toolchain_file:
+    path: "configs/toolchains/anlogic-dr1-aarch64.cmake"
+    sha256: "8ba63b21a1fa6bb2d3ddb391c686e460ea08d39a521592540997e76edb5359b0"
+
+ncnn:
+  remote: "https://github.com/Tencent/ncnn.git"
+  tag: "20240410"
+  commit: "56775de50990ab7f16627efdcf5529b49541206f"
+  clean_source_archive_sha256: "81239dfeb25316afd526ccf3d7da20ee85b66d8ff613d3af61d4ae36dfdc5e45"
+  task_014_project_source_archive_sha256: "ad7adebb6e4ad9a4b93c7db40ef8dd626bf3467b9350c87ff6eeda588d8a422e"
+  options:
+    CMAKE_BUILD_TYPE: "Release"
+    NCNN_VERSION: "20240410"
+    NCNN_SHARED_LIB: false
+    NCNN_VULKAN: false
+    NCNN_PYTHON: false
+    NCNN_BUILD_TOOLS: false
+    NCNN_BUILD_EXAMPLES: false
+    NCNN_BUILD_BENCHMARK: false
+    NCNN_BUILD_TESTS: false
+    NCNN_OPENMP: false
+    NCNN_RUNTIME_CPU: true
+    NCNN_INT8: false
+    NCNN_BF16: true
+    NCNN_VFPV4: true
+    NCNN_ARM82: false
+  runtime_precision_note: "BF16 conversion code is compiled for fixed-revision compatibility; Task 013 and 014 runtime explicitly disables BF16, FP16, INT8, and Vulkan."
+  library_sha256: "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a"
+  smoke_elf_sha256: "cad23a736f86b0d1ae6f9cfd938dce55732a3fc983a5baaa5a31fde0e393b8f7"
+  board_runtime_smoke: "PASS"
+
+frozen_assets:
+  model_manifest:
+    path: "models/yolov5n-v7.0/ncnn_manifest.json"
+    sha256: "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff"
+  param:
+    path: "models/yolov5n-v7.0/yolov5n.ncnn.param"
+    sha256: "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4"
+    git_policy: "ignored deployment input"
+  bin:
+    path: "models/yolov5n-v7.0/yolov5n.ncnn.bin"
+    sha256: "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0"
+    git_policy: "ignored deployment input"
+  inference_config:
+    path: "configs/yolov5n_v7_inference.json"
+    sha256: "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+  input:
+    path: "data/samples/images/pc_reference.jpg"
+    sha256: "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+  pc_golden_json:
+    path: "results/acceptance/cpp_ncnn_reference.json"
+    sha256: "fb343f605218a5fa30a825a3f14e4d00137d6275e1b1af99c9029956e2492fa9"
+  pc_golden_png:
+    path: "results/acceptance/cpp_ncnn_reference.png"
+    sha256: "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2"
+  contract:
+    input: "FP32 [1,3,640,640]"
+    output: "FP32 [1,25200,85]"
+    input_blob: "in0"
+    output_blob: "out0"
+    confidence_threshold: 0.25
+    nms_iou_threshold: 0.45
+    classes: "COCO-80"
+    threads: 1
+
+board:
+  model: "MLK-F3P-CZ02-DR1M90"
+  architecture: "AArch64"
+  cpu: "two cores; CPU part 0xd04"
+  os: "Buildroot 2022.02.6"
+  kernel: "6.1.111-rt42"
+  libc: "glibc 2.25"
+  opencv: "4.7.0 core/imgproc/imgcodecs"
+  deployment_transport: "SSH/SCP through approved wrappers"
+  clock: "NOT_SYNCHRONIZED"
+
+task_014_result:
+  executable_sha256: "a4d3f1a405284881d2c2bd9790033b3997d02de69142644b4d2c24dbb55056f1"
+  exit_code: 0
+  detections: 5
+  classes_in_rank_order: ["keyboard", "tv", "cup", "mouse", "mouse"]
+  finite_values: "PASS"
+  valid_boxes: "PASS"
+  class_match: "PASS"
+  minimum_class_matched_iou: 0.9999855075776749
+  maximum_confidence_delta: 0.0000050067901611328125
+  automated_status: "PASS_TARGET"
+  png_byte_identical_to_pc_golden: true
+  human_visual_check: "PASS"
+  human_visual_approval_source: "user"
+
+tracked_evidence:
+  task_013_board_smoke:
+    path: "results/evidence/013/anlogic_ncnn_board_smoke.json"
+    sha256: "dd7ba7d247d7cf459cffe2662130e1af7ea6b57a04056bdaad861610c377021c"
+  task_014_detections:
+    path: "results/evidence/014/anlogic_arm_ncnn_detections.json"
+    sha256: "e93a3489d24632a5ff9327a3364a9a62753cfb8d0969994bd62525dabe47dd2c"
+  task_014_comparison:
+    path: "results/evidence/014/anlogic_arm_ncnn_comparison.json"
+    sha256: "fee041817ffd1bf36b9beae4bb98cc9cca7baad3773e19c006c3f0a01eac0e92"
+  task_014_validation:
+    path: "results/evidence/014/anlogic_arm_ncnn_validation.json"
+    sha256: "e5f7c13831cb7134064e6ca180c5aab30f5c15fe7b19ccf05f4812a23985b342"
+  task_014_image:
+    path: "results/images/anlogic_arm_ncnn_reference.png"
+    sha256: "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2"
+
+reproduction_entry_points:
+  ncnn_build:
+    command: "bash scripts/vendor/build_anlogic_aarch64_ncnn.sh --execute"
+    requires: ["WSL", "VM"]
+  ncnn_host_validation:
+    command: "bash scripts/vendor/validate_anlogic_aarch64_ncnn.sh"
+    requires: ["WSL", "VM"]
+  arm_application_build:
+    command: "bash scripts/vendor/build_anlogic_aarch64_yolov5n.sh --execute"
+    requires: ["WSL", "VM"]
+  package_deploy_run_collect:
+    command: "bash scripts/vendor/deploy_anlogic_aarch64_yolov5n.sh --execute"
+    requires: ["WSL", "board"]
+  pc_arm_compare:
+    command: "PYTHONPATH=python .venv/bin/python tests/python/compare_detections.py --reference results/acceptance/cpp_ncnn_reference.json --candidate results/evidence/014/anlogic_arm_ncnn_detections.json --profile ncnn-preregistered --min-iou 0.99 --max-confidence-delta 0.01 --output /tmp/anlogic_arm_ncnn_comparison.json"
+    requires: ["WSL"]
+
+artifact_policy:
+  tracked:
+    - "small manifests, task records, documentation, comparison JSON, validation JSON, and approved output PNG"
+  external_or_ignored:
+    - "CMake source/binary, ncnn archive/source/install tree, SDK, VM build tree, ARM ELF, model param/bin, deployment package, and raw runtime logs"
+
+validation:
+  yaml_parse: "PASS; 41 files / 42 documents"
+  json_parse: "PASS; 4 required Task 013-014 evidence files"
+  evidence_reconciliation: "PASS_TARGET; 5 detections"
+  frozen_asset_hashes: "PASS; 13 local tracked/ignored inputs and evidence files"
+  image_decode: "PASS; 1280x960x3 and byte-identical to PC ncnn golden"
+  markdown_links: "PASS; 10 relative links across 52 Markdown files"
+  bash_syntax: "PASS; all tracked shell scripts, plus POSIX sh board probe"
+  model_independent_release_build: "PASS; build/ci-cpp-local-release"
+  model_independent_ctest: "PASS; 4/4"
+  fully_configured_ctest: "PASS; 12/12"
+  python_unittest: "PASS; 64/64"
+  sensitive_information_scan: "PASS"
+  repository_hygiene: "PASS; ignored model binaries and no tracked prohibited artifacts"
+  git_diff_check: "PASS"
+
+future_work:
+  next_unused_task: "017"
+  proposed_title: "Anlogic DR1 ARM CPU benchmark"
+  status: "not started; separate authorization required"
+  npu: "HOLD"
+
+evidence_brief:
+  task: "Task 015 Anlogic DR1 ARM CPU single-image baseline closeout"
+  board: "MLK-F3P-CZ02-DR1M90"
+  sdk_tag: "SDK_2025_07 local asset identity; exact official repository tag compatibility unproven"
+  repository_tag_commit: "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f"
+  sources_consulted:
+    - "Tasks 013 and 014 contracts and execution records"
+    - "Task 013 and 014 tracked manifests"
+    - "Task 013 real-board runtime evidence"
+    - "Task 014 detections, comparison, validation, and user-approved PNG"
+  documented_facts:
+    - "The board identity and userspace come from real-board evidence."
+    - "The local vendor SDK identity is SDK_2025_07; exact official repository tag equivalence remains unproven."
+    - "No formal ARM benchmark exists in this baseline."
+  source_code_facts:
+    - "The ARM application uses the PC common preprocessing, postprocessing, visualization, and ncnn backend."
+    - "Existing scripts separate ncnn build, host validation, ARM application build, and board deployment/run/collection."
+  assumptions: []
+  conflicts:
+    - "The board clock is unsynchronized; WSL record times establish evidence order."
+    - "The original Task 014 detection JSON records visual review as pending at run time; later user approval is preserved in validation evidence and manifests."
+  unresolved_blockers: []
+  proposed_action: "Under separate authorization, define Task 017 benchmark methodology before collecting any ARM performance samples."

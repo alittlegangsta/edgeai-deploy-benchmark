@@ -19,3 +19,7 @@
   stability, position-effect, process CPU, Peak RSS, and limitation analysis.
 - Completed PC Stage 1 and received Checkpoint C approval while keeping the
   Anlogic DR1 ARM CPU stage explicitly `Not implemented / Planned`.
+- Completed the Anlogic DR1 ARM CPU single-image baseline with a frozen
+  AArch64 ncnn build, real-board runtime smoke, frozen YOLOv5n deployment,
+  PC/ARM `PASS_TARGET` correctness, byte-identical annotated output, and user
+  visual approval; formal ARM benchmarking and NPU remain out of scope.

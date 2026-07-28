@@ -1,15 +1,20 @@
 # EdgeAI Deploy Benchmark
 
 EdgeAI Deploy Benchmark is a reproducible PC deployment and measurement baseline
-for a fixed YOLOv5n v7.0 detector. The PC implementation contains Python ONNX
-Runtime, C++ ONNX Runtime, and C++ ncnn image/video paths with shared correctness
-and benchmark contracts.
+plus an Anlogic DR1 ARM CPU single-image deployment baseline for a fixed
+YOLOv5n v7.0 detector. The PC implementation contains Python ONNX Runtime, C++
+ONNX Runtime, and C++ ncnn image/video paths with shared correctness and
+benchmark contracts. The ARM implementation reuses the approved C++ ncnn
+single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–012 are completed, Checkpoint C is human-approved, and PC Stage 1 is
-complete. Stage 2 for the Anlogic DR1 ARM CPU has not been implemented or started.
-Its status remains `Not implemented / Planned`.
+Tasks 001–016 are completed. Checkpoint C is human-approved, PC Stage 1 is
+complete, and the Anlogic DR1 Stage 2 CPU single-image baseline is complete.
+Stage 2 covers the validated AArch64 toolchain, a CPU-only static ncnn build,
+real-board ncnn runtime smoke, frozen YOLOv5n single-image inference, PC/ARM
+correctness, and user-approved visual output. It does not include a formal ARM
+benchmark, video, camera, Vulkan, quantization, or NPU deployment.
 
 ## PC architecture and model lineage
 
@@ -37,9 +42,27 @@ The input contract is batch 1, FP32, NCHW `[1,3,640,640]`.
 - ORT intra/inter-op threads 1, ncnn threads 1, OpenCV threads 1.
 - `OMP_NUM_THREADS`, `OPENBLAS_NUM_THREADS`, `MKL_NUM_THREADS`, and
   `NUMEXPR_NUM_THREADS` are all 1.
+- ARM cross-build: Ubuntu 18.04.4 VM, user-local CMake 3.16.9, Linaro
+  GCC/G++ 7.5.0, target `aarch64-linux-gnu`, and glibc 2.25 sysroot.
+- ARM target: MLK-F3P-CZ02-DR1M90, AArch64 dual core, Buildroot 2022.02.6,
+  kernel 6.1.111-rt42, glibc 2.25, and OpenCV 4.7.0.
 
 The Python/C++ OpenCV version difference limits single-cause attribution of
 preprocess performance even though tensor and detection correctness pass.
+
+## Anlogic DR1 ARM CPU baseline
+
+The real board ran the frozen ncnn `20240410` CPU/FP32 pipeline with one thread,
+the same approved `.param`/`.bin`, fixed image, configuration, preprocessing,
+postprocessing, and PC C++ ncnn golden. It exited zero with five matching
+detections. The minimum class-matched IoU is `0.999985507578`, the maximum
+confidence delta is `0.00000500679016113`, the annotated PNG is byte-identical
+to the PC ncnn golden, and the user visual review is `PASS`.
+
+Use [the Stage 2 closeout guide](docs/vendor/ANLOGIC_ARM_STAGE2_CLOSEOUT.md) for
+the frozen identities, environment roles, phased build/deploy/run/collect/
+compare commands, tracked evidence, and artifact policy. Task 015 reconciles
+existing evidence only; no inference or benchmark was rerun during closeout.
 
 ## Repository structure
 
@@ -49,7 +72,7 @@ preprocess performance even though tensor and detection correctness pass.
 - `models/`: manifests; generated model binaries remain Git-ignored.
 - `tasks/`: auditable task state and execution records.
 - `results/`: committed small evidence and generated local outputs.
-- `docs/`: model, benchmark, and PC acceptance documentation.
+- `docs/`: model, benchmark, PC acceptance, and ARM deployment documentation.
 
 ## Model preparation
 
@@ -277,8 +300,12 @@ backend includes its Runtime, model, and input state.
   remain Git-ignored. Reproduction requires the exact recorded hashes and local
   tool versions.
 
-## Next stage
+## Stage boundary and future work
 
-Checkpoint C is approved, but Stage 2 remains `Not implemented / Planned` and
-requires separate authorization before work begins. No ARM build, deployment,
-compatibility, or performance result exists yet.
+PC Stage 1 and the DR1 ARM CPU single-image Stage 2 baseline are complete.
+No formal ARM performance result has been collected or published. A future,
+separately authorized ARM CPU benchmark should retain the frozen model and
+single-thread CPU/FP32 contract while preregistering warmup, repetitions,
+process rounds, timing boundaries, raw samples, Peak RSS, governor, frequency,
+and temperature. Video, camera, Vulkan, quantization, and NPU remain separate
+future work; NPU readiness remains `HOLD`.

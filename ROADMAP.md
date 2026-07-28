@@ -20,9 +20,25 @@ to ARM or other systems.
 
 ## Stage 2: Anlogic DR1 ARM CPU baseline
 
-This stage is `Not implemented / Planned`. Although Checkpoint C is approved,
-Task 013 and later ARM work require separate authorization and have not started.
+This stage is `Completed` for the correctness-first CPU single-image baseline:
+
+- Task 013 freezes the user-local CMake, Linaro AArch64 toolchain, glibc 2.25
+  sysroot, ncnn `20240410` CPU-only static build, and real-board runtime smoke.
+- Task 014 reuses the frozen YOLOv5n ncnn model and common C++ pipeline on the
+  MLK-F3P-CZ02-DR1M90, reaches the PC/ARM `PASS_TARGET` gate, returns a
+  byte-identical annotated PNG, and receives user visual approval.
+- Task 015 reconciles provenance, hashes, evidence, and the existing
+  build/deploy/run/compare entry points into the Stage 2 closeout.
+
+Stage 2 does not contain a formal ARM benchmark, video, camera, Vulkan,
+quantization, or NPU result.
 
 ## Future work: explicitly out of scope
 
-Work beyond the two stages above is outside the current roadmap.
+The next unused task number is 017. A future `Anlogic DR1 ARM CPU benchmark`
+task may be proposed under separate authorization using the unchanged
+YOLOv5n/ncnn CPU FP32 single-thread contract. It must preregister warmup,
+formal repetitions, independent process rounds, timing boundaries, P50/P90/FPS,
+Peak RSS, governor, frequency, temperature, and raw-sample retention before
+measurement. Video, camera, Vulkan, quantization, and NPU remain separate
+projects; NPU is `HOLD`.
