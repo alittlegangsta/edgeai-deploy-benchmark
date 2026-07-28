@@ -1,0 +1,186 @@
+schema_version: "1"
+manifest_type: "anlogic_arm_cpu_threading_experiment"
+task: "018"
+task_status: "In Progress"
+protocol_status: "FROZEN"
+formal_data_collection: "Pending"
+performance_values_published: false
+
+dependencies:
+  task_017:
+    status: "Completed"
+    evidence_policy: "immutable historical baseline"
+    pipeline_mean_ms: 3513.99235361
+    fps: 0.2845766010198282
+    raw_samples_sha256: "b39c3f1bc4883713a67ba8494c46d0d569894505ca12bc4cd1f92b72ef7f9c74"
+    summary_sha256: "81b5ca3adb512b4ee77559271523e5073535bc8cc1ff388378d54f410e29c4eb"
+    validation_sha256: "697dcb1279f4af360d11cd81a9611c33f5cbe0a7aef501878ec843c2c300a27e"
+
+target:
+  board: "MLK-F3P-CZ02-DR1M90"
+  architecture: "AArch64"
+  cpu: "two cores; CPU part 0xd04"
+  os: "Buildroot 2022.02.6"
+  kernel: "6.1.111-rt42"
+  libc: "glibc 2.25"
+
+runtime:
+  name: "ncnn"
+  tag: "20240410"
+  commit: "56775de50990ab7f16627efdcf5529b49541206f"
+  cpu_only: true
+  precision: "FP32"
+  batch: 1
+  input_size: [640, 640]
+  thread_conditions: [1, 2]
+  only_experimental_variable: "configured_threads"
+  opencv_threads: 1
+  vulkan: false
+  fp16: false
+  bf16: false
+  int8: false
+
+frozen_assets:
+  ncnn_manifest:
+    path: "models/yolov5n-v7.0/ncnn_manifest.json"
+    sha256: "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff"
+  param:
+    path: "models/yolov5n-v7.0/yolov5n.ncnn.param"
+    sha256: "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4"
+    git_policy: "ignored deployment input"
+  bin:
+    path: "models/yolov5n-v7.0/yolov5n.ncnn.bin"
+    sha256: "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0"
+    git_policy: "ignored deployment input"
+  input:
+    path: "data/samples/images/pc_reference.jpg"
+    sha256: "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+  inference_config:
+    path: "configs/yolov5n_v7_inference.json"
+    sha256: "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+  pc_ncnn_golden:
+    path: "results/acceptance/cpp_ncnn_reference.json"
+    sha256: "fb343f605218a5fa30a825a3f14e4d00137d6275e1b1af99c9029956e2492fa9"
+
+paired_sampling:
+  pair_count: 5
+  independent_processes_per_condition: 5
+  warmup_per_process: 10
+  measured_per_process: 20
+  measured_samples_per_condition: 100
+  total_independent_processes: 10
+  total_measured_samples: 200
+  order:
+    - {pair: 1, conditions: [1, 2]}
+    - {pair: 2, conditions: [2, 1]}
+    - {pair: 3, conditions: [1, 2]}
+    - {pair: 4, conditions: [2, 1]}
+    - {pair: 5, conditions: [1, 2]}
+  outlier_removal: false
+  invalid_attempts: "retain stdout, stderr, exit code, environment, and reason"
+
+timing:
+  authoritative_unit: "integer nanoseconds"
+  pipeline_formula: "preprocess_ns + inference_ns + postprocess_ns"
+  model_load_excluded: true
+  image_read_excluded: true
+  correctness_excluded: true
+  resource_sampling_excluded: true
+  output_writes_excluded: true
+
+statistics:
+  percentile: "nearest-rank"
+  standard_deviation: "sample; denominator count - 1"
+  fps: "1000 / aggregate mean pipeline_ms"
+  stability_gate_per_condition_percent: 10.0
+  formulas:
+    pipeline_speedup: "threads1_mean_pipeline_ms / threads2_mean_pipeline_ms"
+    inference_speedup: "threads1_mean_inference_ms / threads2_mean_inference_ms"
+    fps_gain_percent: "(threads2_fps / threads1_fps - 1) * 100"
+    rss_change_percent: "(threads2_peak_rss_kib / threads1_peak_rss_kib - 1) * 100"
+
+classification:
+  BENEFICIAL:
+    - "correctness and both stability gates PASS"
+    - "pipeline_speedup >= 1.05"
+    - "threads2 pipeline P90 <= threads1 pipeline P90"
+    - "no new runtime dependency or system modification"
+  NEUTRAL:
+    - "correctness and both stability gates PASS"
+    - "0.98 <= pipeline_speedup < 1.05"
+  REGRESSION:
+    - "pipeline_speedup < 0.98; or"
+    - "correctness/stability/runtime-resource gate fails; or"
+    - "pipeline_speedup >= 1.05 while threads2 P90 is worse"
+  rss_policy: "disclose change; no preregistered rejection threshold"
+
+correctness:
+  before_warmup: "required for every process"
+  after_measurement: "required for every process"
+  expected_detections: 5
+  minimum_class_matched_iou: 0.99
+  maximum_confidence_delta: 0.01
+  finite_values: "required"
+  valid_boxes: "required"
+  cross_condition_comparison: "required from captured detection snapshots"
+
+historical_consistency:
+  task017_pipeline_mean_ms: 3513.99235361
+  maximum_absolute_difference_percent: 10.0
+  status_when_exceeded: "WARNING_ENVIRONMENT_DRIFT"
+  effect_on_task018_samples: "warning only; do not discard or alter"
+
+tracked_protocol:
+  config:
+    path: "configs/benchmark_anlogic_arm_threading.json"
+    sha256: "901628d80a63ee5fa34d8a62db21d65796bb9e8c6284207c2490dc44379d13f9"
+  execution_order:
+    path: "results/evidence/018/execution_order.json"
+    sha256: "cf924d46e6bac1bba342ab9aac93bb62ad1703b81cca9aa443e84643e8d1c8a4"
+  contract:
+    path: "results/evidence/018/experiment_contract.json"
+    sha256: "c9e27bbba7b823668f31da4586adc019867be3680731541859c515b9de6431d8"
+  task: "tasks/018_anlogic_dr1_arm_cpu_threading_experiment.md"
+  document: "docs/vendor/ANLOGIC_ARM_CPU_THREADING_EXPERIMENT.md"
+
+reserved_formal_evidence:
+  - "results/evidence/018/threads1_raw_samples.json"
+  - "results/evidence/018/threads2_raw_samples.json"
+  - "results/evidence/018/process_environment.json"
+  - "results/evidence/018/threads1_summary.json"
+  - "results/evidence/018/threads2_summary.json"
+  - "results/evidence/018/comparison_summary.json"
+  - "results/evidence/018/experiment_validation.json"
+
+scope_boundary:
+  formal_collection_run: false
+  new_performance_numbers: false
+  task017_modified: false
+  video: false
+  camera: false
+  vulkan: false
+  quantization: false
+  npu: "HOLD"
+
+evidence_brief:
+  task: "Task 018 Anlogic DR1 ARM CPU threading experiment"
+  board: "MLK-F3P-CZ02-DR1M90"
+  sdk_tag: "SDK_2025_07 local asset identity; exact official repository tag compatibility unproven"
+  repository_tag_commit: "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f"
+  sources_consulted:
+    - "Task 017 protocol, raw samples, summary, validation, manifest, and document"
+    - "Tasks 013-015 ARM build, board runtime, and correctness evidence"
+    - "shared benchmark producer and ncnn adapter source"
+  documented_facts:
+    - "Task 017 is the approved one-thread historical baseline."
+    - "No Task 018 formal measurement exists."
+  source_code_facts:
+    - "Before Task 018, the ncnn adapter and ARM producer rejected any thread count other than one."
+    - "The Task 018 extension retains the same shared pipeline and accepts only one or two threads."
+  assumptions: []
+  conflicts:
+    - "The local SDK_2025_07 identity does not establish exact official SDK tag compatibility."
+  unresolved_blockers:
+    - "The shared AArch64 target must be rebuilt in the VM."
+    - "The paired experiment must be collected on the real board."
+  proposed_action: "Run the complete paired schedule under separate authorization, validate it offline, and request human review."

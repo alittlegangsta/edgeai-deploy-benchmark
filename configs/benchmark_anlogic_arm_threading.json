@@ -1,0 +1,208 @@
+{
+  "schema_version": 3,
+  "methodology_id": "task018-anlogic-dr1-arm-cpu-threading-v1",
+  "environment": {
+    "platform": "Anlogic DR1 board",
+    "board_model": "MLK-F3P-CZ02-DR1M90",
+    "architecture": "aarch64",
+    "cpu_affinity": "scheduler managed",
+    "cpu_pinning": "disabled",
+    "governor_policy": "observe only; do not modify",
+    "frequency_policy": "observe only; do not modify",
+    "required_environment_variables": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "workload": {
+    "batch": 1,
+    "precision": "FP32",
+    "input_size": [
+      640,
+      640
+    ],
+    "ncnn_manifest": {
+      "path": "model/ncnn_manifest.json",
+      "sha256": "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff"
+    },
+    "model_param": {
+      "path": "model/yolov5n.ncnn.param",
+      "sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4"
+    },
+    "model_bin": {
+      "path": "model/yolov5n.ncnn.bin",
+      "sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0"
+    },
+    "image": {
+      "path": "input/pc_reference.jpg",
+      "sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+    },
+    "inference_config": {
+      "path": "config/yolov5n_v7_inference.json",
+      "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+    },
+    "golden_result": {
+      "path": "reference/cpp_ncnn_reference.json",
+      "sha256": "fb343f605218a5fa30a825a3f14e4d00137d6275e1b1af99c9029956e2492fa9"
+    },
+    "input_blob": "in0",
+    "output_blob": "out0",
+    "input_contract": "FP32 [1,3,640,640]",
+    "output_contract": "FP32 [1,25200,85]",
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45,
+    "classes": "COCO-80"
+  },
+  "runtime": {
+    "name": "ncnn",
+    "version": "1.0.20240410",
+    "tag": "20240410",
+    "commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "execution_provider": "ncnn CPU",
+    "thread_conditions": [
+      1,
+      2
+    ],
+    "opencv_threads": 1,
+    "vulkan": 0,
+    "fp16": 0,
+    "bf16": 0,
+    "int8": 0,
+    "only_experimental_variable": "configured_threads"
+  },
+  "pairs": {
+    "count": 5,
+    "execution_order": [
+      {
+        "pair": 1,
+        "conditions": [
+          1,
+          2
+        ]
+      },
+      {
+        "pair": 2,
+        "conditions": [
+          2,
+          1
+        ]
+      },
+      {
+        "pair": 3,
+        "conditions": [
+          1,
+          2
+        ]
+      },
+      {
+        "pair": 4,
+        "conditions": [
+          2,
+          1
+        ]
+      },
+      {
+        "pair": 5,
+        "conditions": [
+          1,
+          2
+        ]
+      }
+    ]
+  },
+  "rounds": {
+    "count_per_condition": 5,
+    "warmup": 10,
+    "repeat": 20,
+    "independent_process_per_round": true,
+    "required_valid_sample_count_per_condition": 100,
+    "required_total_processes": 10,
+    "required_total_valid_sample_count": 200,
+    "retain_invalid_attempts": true,
+    "latency_outlier_removal": false
+  },
+  "timing": {
+    "clock_cpp": "std::chrono::steady_clock",
+    "stages": [
+      "preprocess",
+      "inference",
+      "postprocess",
+      "pipeline"
+    ],
+    "pipeline_total_formula": "preprocess_ns + inference_ns + postprocess_ns",
+    "excluded": [
+      "process_startup",
+      "image_file_read_and_decode",
+      "model_load_and_runtime_creation",
+      "correctness_checks",
+      "warmup_iterations",
+      "environment_collection",
+      "visualization_and_labels",
+      "image_write",
+      "json_write",
+      "ssh_transfer"
+    ],
+    "model_load_recorded_separately": true
+  },
+  "statistics": {
+    "percentile_method": "nearest-rank",
+    "standard_deviation": "sample; denominator count - 1",
+    "fps_formula": "1000 / aggregate_mean_pipeline_ms",
+    "maximum_round_mean_relative_difference_percent": 10.0,
+    "preserve_all_samples": true
+  },
+  "comparison": {
+    "pipeline_speedup_formula": "threads1_mean_pipeline_ms / threads2_mean_pipeline_ms",
+    "inference_speedup_formula": "threads1_mean_inference_ms / threads2_mean_inference_ms",
+    "fps_gain_percent_formula": "(threads2_fps / threads1_fps - 1) * 100",
+    "rss_change_percent_formula": "(threads2_peak_rss_kib / threads1_peak_rss_kib - 1) * 100",
+    "beneficial_minimum_pipeline_speedup": 1.05,
+    "neutral_minimum_pipeline_speedup": 0.98,
+    "threads2_p90_must_not_exceed_threads1_for_beneficial": true,
+    "rss_rejection_threshold": "none preregistered; disclose observed change",
+    "classification_values": [
+      "BENEFICIAL",
+      "NEUTRAL",
+      "REGRESSION"
+    ]
+  },
+  "historical_consistency": {
+    "task017_pipeline_mean_ms": 3513.99235361,
+    "task017_fps": 0.2845766010198282,
+    "maximum_absolute_mean_pipeline_difference_percent": 10.0,
+    "exceeding_threshold_is_warning_only": true
+  },
+  "resources": {
+    "peak_rss_source": "getrusage(RUSAGE_SELF).ru_maxrss",
+    "peak_rss_unit": "KiB on Linux",
+    "peak_rss_scope": "process startup through formal measurement completion",
+    "cpu_frequency_source": "/sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq",
+    "cpu_frequency_sample": "maximum readable value after each formal pipeline",
+    "temperature_source": "/sys/class/thermal/thermal_zone*/temp",
+    "temperature_sample": "maximum readable value after each formal pipeline",
+    "missing_value": "JSON null"
+  },
+  "correctness": {
+    "checks": [
+      "before_warmup",
+      "after_measurement"
+    ],
+    "expected_detection_count": 5,
+    "minimum_class_matched_iou": 0.99,
+    "maximum_absolute_confidence_difference": 0.01,
+    "finite_values_required": true,
+    "valid_boxes_required": true,
+    "cross_condition_comparison_required": true
+  },
+  "invalid_round_reasons": [
+    "nonzero_process_exit",
+    "ssh_disconnect",
+    "asset_hash_mismatch",
+    "malformed_json",
+    "system_reboot",
+    "collector_failure",
+    "correctness_failure"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "task": "018",
+  "title": "Anlogic DR1 ARM CPU threading experiment",
+  "status": "protocol_frozen_data_pending",
+  "methodology_id": "task018-anlogic-dr1-arm-cpu-threading-v1",
+  "experiment_config": "configs/benchmark_anlogic_arm_threading.json",
+  "experiment_config_sha256": "901628d80a63ee5fa34d8a62db21d65796bb9e8c6284207c2490dc44379d13f9",
+  "execution_order": "results/evidence/018/execution_order.json",
+  "execution_order_sha256": "cf924d46e6bac1bba342ab9aac93bb62ad1703b81cca9aa443e84643e8d1c8a4",
+  "historical_task017": {
+    "raw_samples": {
+      "path": "results/evidence/017/benchmark_raw_samples.json",
+      "sha256": "b39c3f1bc4883713a67ba8494c46d0d569894505ca12bc4cd1f92b72ef7f9c74"
+    },
+    "summary": {
+      "path": "results/evidence/017/benchmark_summary.json",
+      "sha256": "81b5ca3adb512b4ee77559271523e5073535bc8cc1ff388378d54f410e29c4eb"
+    },
+    "validation": {
+      "path": "results/evidence/017/benchmark_validation.json",
+      "sha256": "697dcb1279f4af360d11cd81a9611c33f5cbe0a7aef501878ec843c2c300a27e"
+    },
+    "pipeline_mean_ms": 3513.99235361,
+    "fps": 0.2845766010198282
+  },
+  "runtime": {
+    "name": "ncnn",
+    "tag": "20240410",
+    "commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "execution": "CPU-only FP32",
+    "thread_conditions": [
+      1,
+      2
+    ],
+    "only_experimental_variable": "configured_threads",
+    "vulkan": false,
+    "fp16": false,
+    "bf16": false,
+    "int8": false
+  },
+  "sampling": {
+    "paired_processes": 5,
+    "independent_processes_per_condition": 5,
+    "warmup_iterations_per_process": 10,
+    "measured_iterations_per_process": 20,
+    "required_valid_samples_per_condition": 100,
+    "required_total_processes": 10,
+    "required_total_valid_samples": 200,
+    "latency_outlier_removal": false
+  },
+  "reserved_outputs": [
+    "results/evidence/018/threads1_raw_samples.json",
+    "results/evidence/018/threads2_raw_samples.json",
+    "results/evidence/018/process_environment.json",
+    "results/evidence/018/threads1_summary.json",
+    "results/evidence/018/threads2_summary.json",
+    "results/evidence/018/comparison_summary.json",
+    "results/evidence/018/experiment_validation.json"
+  ],
+  "formal_data_collected": false,
+  "published_performance_values": false,
+  "next_action": "Rebuild the shared AArch64 target and run the complete paired schedule on the real board under separate authorization."
+}

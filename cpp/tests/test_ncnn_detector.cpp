@@ -42,6 +42,25 @@ void run_contract_test() {
         "explicit model paths differ from the manifest contract"
     );
 
+    edgeai::backends::NcnnDetector two_thread_detector(
+        manifest,
+        2,
+        repository / "models/yolov5n-v7.0/yolov5n.ncnn.param",
+        repository / "models/yolov5n-v7.0/yolov5n.ncnn.bin"
+    );
+    require(
+        two_thread_detector.runtime_info().threads == 2,
+        "two-thread experiment setting was not preserved"
+    );
+
+    bool invalid_threads_rejected = false;
+    try {
+        edgeai::backends::NcnnDetector invalid_detector(manifest, 3);
+    } catch (const std::runtime_error&) {
+        invalid_threads_rejected = true;
+    }
+    require(invalid_threads_rejected, "unsupported ncnn thread count was accepted");
+
     edgeai::common::InputTensor input;
     input.shape = {1, 3, 640, 640};
     input.values.assign(1U * 3U * 640U * 640U, 0.0F);

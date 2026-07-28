@@ -9,9 +9,9 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–017 are completed. Checkpoint C is human-approved, PC Stage 1 is
-complete, and the Anlogic DR1 Stage 2 CPU single-image and unoptimized benchmark
-baselines are complete.
+Tasks 001–017 are completed and Task 018 is in progress. Checkpoint C is
+human-approved, PC Stage 1 is complete, and the Anlogic DR1 Stage 2 CPU
+single-image and unoptimized benchmark baselines are complete.
 Stage 2 covers the validated AArch64 toolchain, a CPU-only static ncnn build,
 real-board ncnn runtime smoke, frozen YOLOv5n single-image inference, PC/ARM
 correctness, user-approved visual output, and the formal CPU/FP32 one-thread
@@ -25,6 +25,11 @@ statistics, Peak RSS, frequency/temperature observation, and before/after
 correctness. The complete 100-sample real-board session passed automated
 validation and user review and is published as the default unoptimized baseline.
 See [the ARM benchmark protocol](docs/vendor/ANLOGIC_ARM_CPU_BENCHMARK.md).
+
+Task 018 freezes a separate paired one-thread versus two-thread experiment.
+Its alternating 10-process/200-sample protocol and offline validator are ready,
+but no Task 018 performance data has been collected. See
+[the threading experiment protocol](docs/vendor/ANLOGIC_ARM_CPU_THREADING_EXPERIMENT.md).
 
 ## PC architecture and model lineage
 
@@ -323,6 +328,8 @@ backend includes its Runtime, model, and input state.
 
 PC Stage 1 and the DR1 ARM CPU single-image Stage 2 baseline are complete.
 Task 017 has completed the preregistered single-thread CPU/FP32 benchmark and
-published the validator- and user-approved unoptimized default baseline. Video,
-camera, multi-thread/NEON-specific optimization, Vulkan, quantization, and NPU
-remain separate future work; NPU readiness remains `HOLD`.
+published the validator- and user-approved unoptimized default baseline.
+Task 018 now preregisters a paired one-thread/two-thread comparison without
+changing that baseline; formal collection is pending. Video, camera,
+affinity/NEON-specific optimization, Vulkan, quantization, and NPU remain
+separate future work; NPU readiness remains `HOLD`.

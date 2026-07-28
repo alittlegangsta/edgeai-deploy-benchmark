@@ -46,6 +46,9 @@ struct Arguments {
     edgeai::filesystem::path model_bin;
     int round{0};
     edgeai::filesystem::path output;
+    std::optional<int> configured_threads;
+    std::optional<int> pair_index;
+    std::optional<int> execution_order;
 };
 
 struct Artifact {
@@ -55,6 +58,7 @@ struct Artifact {
 
 struct BenchmarkConfig {
     bool arm_task017{false};
+    bool arm_task018{false};
     std::string methodology_id;
     std::string evidence_type;
     std::string platform;
@@ -73,6 +77,10 @@ struct BenchmarkConfig {
     Artifact golden_result;
     std::map<std::string, std::string> required_environment;
 };
+
+bool is_arm_benchmark(const BenchmarkConfig& config) {
+    return config.arm_task017 || config.arm_task018;
+}
 
 struct PipelineResult {
     edgeai::common::BenchmarkSampleNs sample;
@@ -98,7 +106,8 @@ Arguments parse_args(int argc, char* argv[]) {
         throw std::runtime_error(
             "usage: edgeai_benchmark_ncnn --benchmark-config PATH --ncnn-manifest PATH "
             "--reference-detections PATH [--model-param PATH --model-bin PATH] "
-            "--round N --output PATH"
+            "--round N --output PATH "
+            "[--threads N --pair-index N --execution-order N]"
         );
     }
     std::map<std::string, std::string> values;
@@ -107,7 +116,8 @@ Arguments parse_args(int argc, char* argv[]) {
         if (option != "--benchmark-config" && option != "--ncnn-manifest" &&
             option != "--reference-detections" && option != "--round" &&
             option != "--output" && option != "--model-param" &&
-            option != "--model-bin") {
+            option != "--model-bin" && option != "--threads" &&
+            option != "--pair-index" && option != "--execution-order") {
             throw std::runtime_error("unknown argument: " + option);
         }
         if (!values.emplace(option, argv[index + 1]).second) {
@@ -131,6 +141,18 @@ Arguments parse_args(int argc, char* argv[]) {
     if (parsed != values.at("--round").size()) {
         throw std::runtime_error("round is not an integer");
     }
+    const auto optional_integer = [&values](const char* name) -> std::optional<int> {
+        const auto found = values.find(name);
+        if (found == values.end()) {
+            return std::nullopt;
+        }
+        std::size_t end = 0U;
+        const int value = std::stoi(found->second, &end);
+        if (end != found->second.size()) {
+            throw std::runtime_error(std::string(name) + " is not an integer");
+        }
+        return value;
+    };
     return {
         values.at("--benchmark-config"), values.at("--ncnn-manifest"),
         values.at("--reference-detections"),
@@ -139,6 +161,9 @@ Arguments parse_args(int argc, char* argv[]) {
         has_bin ? edgeai::filesystem::path(values.at("--model-bin"))
                 : edgeai::filesystem::path{},
         round, values.at("--output"),
+        optional_integer("--threads"),
+        optional_integer("--pair-index"),
+        optional_integer("--execution-order"),
     };
 }
 
@@ -185,14 +210,19 @@ BenchmarkConfig load_benchmark_config(const edgeai::filesystem::path& path) {
     const int schema_version = required_int(storage.root(), "schema_version");
     const std::string methodology = required_string(storage.root(), "methodology_id");
     const bool arm_task017 = methodology == "task017-anlogic-dr1-arm-cpu-v1";
-    if ((!arm_task017 && (schema_version != 1 || methodology != "task009-pc-ort-v1")) ||
-        (arm_task017 && schema_version != 2)) {
+    const bool arm_task018 =
+        methodology == "task018-anlogic-dr1-arm-cpu-threading-v1";
+    const bool arm_benchmark = arm_task017 || arm_task018;
+    if ((!arm_benchmark &&
+         (schema_version != 1 || methodology != "task009-pc-ort-v1")) ||
+        (arm_task017 && schema_version != 2) ||
+        (arm_task018 && schema_version != 3)) {
         throw std::runtime_error("benchmark schema or methodology differs");
     }
     const cv::FileNode environment = storage["environment"];
     const std::string platform = required_string(environment, "platform");
     require_equal(
-        platform, arm_task017 ? "Anlogic DR1 board" : "WSL2", "platform"
+        platform, arm_benchmark ? "Anlogic DR1 board" : "WSL2", "platform"
     );
     require_equal(
         required_string(environment, "cpu_affinity"), "scheduler managed", "CPU affinity"
@@ -201,11 +231,14 @@ BenchmarkConfig load_benchmark_config(const edgeai::filesystem::path& path) {
 
     BenchmarkConfig result;
     result.arm_task017 = arm_task017;
+    result.arm_task018 = arm_task018;
     result.methodology_id = methodology;
-    result.evidence_type =
-        arm_task017 ? "task017_anlogic_arm_raw_benchmark" : "task011_raw_benchmark";
+    result.evidence_type = arm_task018
+        ? "task018_anlogic_arm_threading_raw_benchmark"
+        : (arm_task017 ? "task017_anlogic_arm_raw_benchmark"
+                       : "task011_raw_benchmark");
     result.platform = platform;
-    result.expected_architecture = arm_task017 ? "aarch64" : "x86_64";
+    result.expected_architecture = arm_benchmark ? "aarch64" : "x86_64";
     const cv::FileNode environment_variables = environment["required_environment_variables"];
     for (const std::string name : {
              "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS", "OMP_NUM_THREADS",
@@ -225,7 +258,7 @@ BenchmarkConfig load_benchmark_config(const edgeai::filesystem::path& path) {
         static_cast<int>(input_size[0]) != 640 || static_cast<int>(input_size[1]) != 640) {
         throw std::runtime_error("benchmark input size must be 640x640");
     }
-    if (arm_task017) {
+    if (arm_benchmark) {
         result.ncnn_manifest = read_artifact(workload, "ncnn_manifest");
         result.model_param = read_artifact(workload, "model_param");
         result.model_bin = read_artifact(workload, "model_bin");
@@ -247,6 +280,18 @@ BenchmarkConfig load_benchmark_config(const edgeai::filesystem::path& path) {
             required_int(runtime, "int8") != 0) {
             throw std::runtime_error("Task 017 runtime contract differs");
         }
+    } else if (arm_task018) {
+        const cv::FileNode conditions = runtime["thread_conditions"];
+        if (!conditions.isSeq() || conditions.size() != 2U ||
+            static_cast<int>(conditions[0]) != 1 ||
+            static_cast<int>(conditions[1]) != 2 ||
+            required_int(runtime, "opencv_threads") != 1 ||
+            required_int(runtime, "vulkan") != 0 ||
+            required_int(runtime, "fp16") != 0 ||
+            required_int(runtime, "bf16") != 0 ||
+            required_int(runtime, "int8") != 0) {
+            throw std::runtime_error("Task 018 runtime contract differs");
+        }
     } else if (required_int(runtime, "intra_op_threads") != 1 ||
                required_int(runtime, "inter_op_threads") != 1 ||
                required_int(runtime, "opencv_threads") != 1) {
@@ -254,13 +299,37 @@ BenchmarkConfig load_benchmark_config(const edgeai::filesystem::path& path) {
     }
     result.opencv_threads = 1;
     const cv::FileNode rounds = storage["rounds"];
-    result.round_count = required_int(rounds, "count");
+    result.round_count = required_int(
+        rounds, arm_task018 ? "count_per_condition" : "count"
+    );
     result.warmup = required_int(rounds, "warmup");
     result.repeat = required_int(rounds, "repeat");
-    const int expected_repeat = arm_task017 ? 20 : 100;
+    const int expected_repeat = arm_benchmark ? 20 : 100;
     if (result.round_count != 5 || result.warmup != 10 ||
         result.repeat != expected_repeat) {
         throw std::runtime_error("benchmark rounds/warmup/repeat differ");
+    }
+    if (arm_task018) {
+        const cv::FileNode pairs = storage["pairs"];
+        if (required_int(pairs, "count") != 5) {
+            throw std::runtime_error("Task 018 pair count differs");
+        }
+        const cv::FileNode order = pairs["execution_order"];
+        if (!order.isSeq() || order.size() != 5U) {
+            throw std::runtime_error("Task 018 execution order differs");
+        }
+        for (int pair = 1; pair <= 5; ++pair) {
+            const cv::FileNode entry = order[static_cast<std::size_t>(pair - 1)];
+            const cv::FileNode conditions = entry["conditions"];
+            const int first = pair % 2 == 1 ? 1 : 2;
+            const int second = first == 1 ? 2 : 1;
+            if (required_int(entry, "pair") != pair || !conditions.isSeq() ||
+                conditions.size() != 2U ||
+                static_cast<int>(conditions[0]) != first ||
+                static_cast<int>(conditions[1]) != second) {
+                throw std::runtime_error("Task 018 alternating order differs");
+            }
+        }
     }
     const cv::FileNode timing = storage["timing"];
     require_equal(
@@ -403,9 +472,9 @@ utsname system_identity(const BenchmarkConfig& config) {
         throw std::runtime_error("uname failed");
     }
     const std::string machine = value.machine;
-    if (config.arm_task017) {
+    if (is_arm_benchmark(config)) {
         if (machine != "aarch64" && machine != "arm64") {
-            throw std::runtime_error("Task 017 benchmark requires an AArch64 target");
+            throw std::runtime_error("ARM benchmark requires an AArch64 target");
         }
     } else {
         std::string release = value.release;
@@ -487,13 +556,34 @@ void write_optional_integer(
 
 void write_comparison(
     std::ostringstream& output,
-    const edgeai::common::DetectionComparison& comparison
+    const edgeai::common::DetectionComparison& comparison,
+    const std::vector<edgeai::common::Detection>* detections = nullptr
 ) {
     output << "{\"status\":\"PASS_TARGET\",\"detection_count\":"
            << comparison.detection_count << ",\"minimum_class_matched_iou\":"
            << comparison.minimum_class_matched_iou
            << ",\"maximum_absolute_confidence_difference\":"
-           << comparison.maximum_absolute_confidence_difference << '}';
+           << comparison.maximum_absolute_confidence_difference;
+    if (detections != nullptr) {
+        output << ",\"detections\":[";
+        for (std::size_t index = 0; index < detections->size(); ++index) {
+            if (index != 0U) {
+                output << ',';
+            }
+            const auto& detection = detections->at(index);
+            output << "{\"rank\":" << detection.rank
+                   << ",\"class_id\":" << detection.class_id
+                   << ",\"class_name\":" << json_string(detection.class_name)
+                   << ",\"confidence\":" << detection.confidence
+                   << ",\"box_xyxy_source\":["
+                   << detection.box_xyxy_source.x1 << ','
+                   << detection.box_xyxy_source.y1 << ','
+                   << detection.box_xyxy_source.x2 << ','
+                   << detection.box_xyxy_source.y2 << "]}";
+        }
+        output << ']';
+    }
+    output << '}';
 }
 
 std::string executable_sha256() {
@@ -509,6 +599,9 @@ std::string executable_sha256() {
 
 std::string make_round_json(
     int round,
+    int configured_threads,
+    int pair_index,
+    int execution_order,
     std::int64_t process_started_unix_ns,
     const BenchmarkConfig& config,
     const edgeai::filesystem::path& ncnn_manifest,
@@ -518,13 +611,21 @@ std::string make_round_json(
     const std::vector<MeasuredSample>& samples,
     const ResourceMeasurement& resources,
     const edgeai::common::DetectionComparison& before,
-    const edgeai::common::DetectionComparison& after
+    const edgeai::common::DetectionComparison& after,
+    const std::vector<edgeai::common::Detection>& before_detections,
+    const std::vector<edgeai::common::Detection>& after_detections
 ) {
     const utsname system = system_identity(config);
     const auto& runtime = detector.runtime_info();
     std::ostringstream output;
     output << std::setprecision(17);
-    output << "{\"round\":" << round << ",\"process_id\":" << getpid()
+    output << "{\"round\":" << round;
+    if (config.arm_task018) {
+        output << ",\"pair_index\":" << pair_index
+               << ",\"execution_order\":" << execution_order
+               << ",\"thread_condition\":" << configured_threads;
+    }
+    output << ",\"process_id\":" << getpid()
            << ",\"process_started_unix_ns\":" << process_started_unix_ns
            << ",\"model_load_ms\":" << model_load_ms
            << ",\"executable_sha256\":" << json_string(executable_sha256())
@@ -542,7 +643,12 @@ std::string make_round_json(
     output << ",\"reference_detections_sha256\":"
            << json_string(edgeai::backends::ncnn_sha256_file(reference_detections));
     output << ",\"runtime\":{\"ncnn_version\":" << json_string(runtime.version)
-           << ",\"execution_provider\":\"ncnn CPU\",\"threads\":1"
+           << ",\"execution_provider\":\"ncnn CPU\",\"threads\":"
+           << configured_threads;
+    if (config.arm_task018) {
+        output << ",\"configured_threads\":" << configured_threads;
+    }
+    output
            << ",\"vulkan\":false,\"fp16\":false,\"bf16\":false,\"int8\":false"
            << ",\"input\":{\"name\":\"in0\",\"logical_shape\":[1,3,640,640],"
            << "\"dtype\":\"float32\"},\"output\":{\"name\":\"out0\","
@@ -586,9 +692,13 @@ std::string make_round_json(
            << ",\"peak_rss_is_process_level_not_model_only\":true"
            << ",\"language_scope_note\":\"includes executable and dynamic libraries\"}"
            << ",\"correctness\":{\"before_warmup\":";
-    write_comparison(output, before);
+    write_comparison(
+        output, before, config.arm_task018 ? &before_detections : nullptr
+    );
     output << ",\"after_measurement\":";
-    write_comparison(output, after);
+    write_comparison(
+        output, after, config.arm_task018 ? &after_detections : nullptr
+    );
     output << "},\"samples\":[";
     for (std::size_t index = 0; index < samples.size(); ++index) {
         if (index != 0U) {
@@ -603,7 +713,12 @@ std::string make_round_json(
                << ",\"inference_ns\":" << timings.inference
                << ",\"postprocess_ns\":" << timings.postprocess
                << ",\"pipeline_total_ns\":" << timings.pipeline_total;
-        if (config.arm_task017) {
+        if (config.arm_task018) {
+            output << ",\"pair_index\":" << pair_index
+                   << ",\"execution_order\":" << execution_order
+                   << ",\"configured_threads\":" << configured_threads;
+        }
+        if (is_arm_benchmark(config)) {
             output << ",\"preprocess_ms\":"
                    << static_cast<double>(timings.preprocess) / 1'000'000.0
                    << ",\"inference_ms\":"
@@ -622,6 +737,16 @@ std::string make_round_json(
     }
     output << "]}";
     return output.str();
+}
+
+int evidence_schema_version(const std::string& evidence_type) {
+    if (evidence_type == "task018_anlogic_arm_threading_raw_benchmark") {
+        return 3;
+    }
+    if (evidence_type == "task017_anlogic_arm_raw_benchmark") {
+        return 2;
+    }
+    return 1;
 }
 
 void append_round(
@@ -643,7 +768,7 @@ void append_round(
         }
         const std::string expected_schema =
             "\"schema_version\":" +
-            std::string(evidence_type == "task017_anlogic_arm_raw_benchmark" ? "2" : "1");
+            std::to_string(evidence_schema_version(evidence_type));
         const std::string expected_type = "\"evidence_type\":" + json_string(evidence_type);
         const std::string expected_backend = "\"backend\":" + json_string(kBackend);
         const std::string expected_config =
@@ -682,7 +807,7 @@ void append_round(
             throw std::runtime_error("first persisted ncnn benchmark round must be 1");
         }
         payload = "{\"schema_version\":" +
-                  std::string(evidence_type == "task017_anlogic_arm_raw_benchmark" ? "2" : "1") +
+                  std::to_string(evidence_schema_version(evidence_type)) +
                   ",\"evidence_type\":" + json_string(evidence_type) +
                   ",\"backend\":\"cpp_ncnn\","
                   "\"benchmark_config_sha256\":" +
@@ -709,6 +834,34 @@ int run(int argc, char* argv[]) {
     if (arguments.round < 1 || arguments.round > benchmark.round_count) {
         throw std::runtime_error("round is outside the configured range");
     }
+    int configured_threads = 1;
+    int pair_index = 0;
+    int execution_order = 0;
+    if (benchmark.arm_task018) {
+        if (!arguments.configured_threads || !arguments.pair_index ||
+            !arguments.execution_order) {
+            throw std::runtime_error(
+                "Task 018 requires --threads, --pair-index and --execution-order"
+            );
+        }
+        configured_threads = *arguments.configured_threads;
+        pair_index = *arguments.pair_index;
+        execution_order = *arguments.execution_order;
+        if ((configured_threads != 1 && configured_threads != 2) ||
+            pair_index != arguments.round || pair_index < 1 || pair_index > 5) {
+            throw std::runtime_error("Task 018 thread or pair identity differs");
+        }
+        const int expected_first = pair_index % 2 == 1 ? 1 : 2;
+        const int expected_order = configured_threads == expected_first ? 1 : 2;
+        if (execution_order != expected_order) {
+            throw std::runtime_error("Task 018 alternating execution order differs");
+        }
+    } else if (arguments.configured_threads || arguments.pair_index ||
+               arguments.execution_order) {
+        throw std::runtime_error(
+            "threading metadata is only valid for the Task 018 methodology"
+        );
+    }
     for (const auto& [name, expected] : benchmark.required_environment) {
         const char* observed = std::getenv(name.c_str());
         if (observed == nullptr || observed != expected) {
@@ -719,10 +872,10 @@ int run(int argc, char* argv[]) {
     if (cv::getNumThreads() != 1) {
         throw std::runtime_error("OpenCV thread count must be 1");
     }
-    if (benchmark.arm_task017) {
+    if (is_arm_benchmark(benchmark)) {
         if (arguments.model_param.empty() || arguments.model_bin.empty()) {
             throw std::runtime_error(
-                "Task 017 requires explicit --model-param and --model-bin"
+                "ARM benchmark requires explicit --model-param and --model-bin"
             );
         }
         require_hash(benchmark.ncnn_manifest, "ncnn manifest");
@@ -734,7 +887,7 @@ int run(int argc, char* argv[]) {
                 benchmark.model_param.sha256 ||
             edgeai::backends::ncnn_sha256_file(arguments.model_bin) !=
                 benchmark.model_bin.sha256) {
-            throw std::runtime_error("Task 017 explicit model paths differ");
+            throw std::runtime_error("ARM benchmark explicit model paths differ");
         }
     } else {
         require_hash(benchmark.frozen_onnx, "frozen ONNX");
@@ -749,19 +902,22 @@ int run(int argc, char* argv[]) {
         throw std::runtime_error("reference image dimensions differ from 1280x960 BGR");
     }
     const auto reference = load_golden(arguments.reference_detections);
-    if (benchmark.arm_task017 &&
+    if (is_arm_benchmark(benchmark) &&
         edgeai::backends::ncnn_sha256_file(arguments.reference_detections) !=
             benchmark.golden_result.sha256) {
-        throw std::runtime_error("Task 017 reference detections differ");
+        throw std::runtime_error("ARM benchmark reference detections differ");
     }
 
     const auto model_load_start = Clock::now();
     edgeai::backends::NcnnDetector detector(
-        arguments.ncnn_manifest, 1, arguments.model_param, arguments.model_bin
+        arguments.ncnn_manifest,
+        configured_threads,
+        arguments.model_param,
+        arguments.model_bin
     );
     const double model_load_ms =
         std::chrono::duration<double, std::milli>(Clock::now() - model_load_start).count();
-    if (benchmark.arm_task017) {
+    if (is_arm_benchmark(benchmark)) {
         // Discover readable sysfs nodes before correctness, warmup, and formal timing.
         static_cast<void>(maximum_cpu_frequency_khz());
         static_cast<void>(maximum_temperature_millicelsius());
@@ -786,8 +942,8 @@ int run(int argc, char* argv[]) {
         const auto pipeline = run_pipeline(image, detector, config);
         samples.push_back({
             pipeline.sample,
-            benchmark.arm_task017 ? maximum_cpu_frequency_khz() : std::nullopt,
-            benchmark.arm_task017 ? maximum_temperature_millicelsius() : std::nullopt,
+            is_arm_benchmark(benchmark) ? maximum_cpu_frequency_khz() : std::nullopt,
+            is_arm_benchmark(benchmark) ? maximum_temperature_millicelsius() : std::nullopt,
         });
     }
     const auto wall_end = Clock::now();
@@ -813,6 +969,9 @@ int run(int argc, char* argv[]) {
         edgeai::backends::ncnn_sha256_file(arguments.benchmark_config);
     const std::string round_json = make_round_json(
         arguments.round,
+        configured_threads,
+        pair_index,
+        execution_order,
         process_started_unix_ns,
         benchmark,
         arguments.ncnn_manifest,
@@ -822,7 +981,9 @@ int run(int argc, char* argv[]) {
         samples,
         resources,
         correctness_before,
-        correctness_after
+        correctness_after,
+        before_pipeline.detections,
+        after_pipeline.detections
     );
     append_round(
         arguments.output,
@@ -833,8 +994,13 @@ int run(int argc, char* argv[]) {
     );
     std::cout << std::fixed << std::setprecision(6)
               << "backend=" << kBackend << '\n'
-              << "round=" << arguments.round << '\n'
-              << "process_id=" << getpid() << '\n'
+              << "round=" << arguments.round << '\n';
+    if (benchmark.arm_task018) {
+        std::cout << "configured_threads=" << configured_threads << '\n'
+                  << "pair_index=" << pair_index << '\n'
+                  << "execution_order=" << execution_order << '\n';
+    }
+    std::cout << "process_id=" << getpid() << '\n'
               << "build_type=" << EDGEAI_BUILD_TYPE << '\n'
               << "model_load_ms=" << model_load_ms << '\n'
               << "formal_samples=" << samples.size() << '\n'

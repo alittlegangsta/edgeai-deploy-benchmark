@@ -54,8 +54,22 @@ round-mean spread, and user review. The unoptimized one-thread pipeline mean is
 `3513.992354 ms` and sequential batch-1 FPS is `0.284576601`; inference is the
 dominant stage.
 
+## Stage 2 CPU threading experiment
+
+Task 018, `Anlogic DR1 ARM CPU threading experiment`, is `In Progress`. Its
+protocol compares `configured_threads=1` and `configured_threads=2` while
+holding the Task 017 runtime, model, input, thresholds, executable, timing, and
+statistics constant. Five pairs alternate `1→2`, `2→1`, `1→2`, `2→1`, and
+`1→2`; each condition receives five independent processes and 100 retained
+samples.
+
+The offline producer, runner, validator, correctness/stability gates, speedup
+formulas, classification, and historical-drift warning are frozen. Formal
+real-board collection is pending. Task 017 remains the immutable historical
+baseline and no Task 018 performance result is published.
+
 ## Future work: explicitly out of scope
 
-Video, camera, Vulkan, quantization, multi-thread/affinity optimization, and NPU
-remain separate projects. None is part of the Task 017 unoptimized CPU
-baseline; NPU is `HOLD`.
+Video, camera, Vulkan, quantization, affinity/NEON tuning, concurrent requests,
+and NPU remain separate projects. Task 018 changes only ncnn's configured
+thread count and does not absorb those topics. NPU is `HOLD`.
