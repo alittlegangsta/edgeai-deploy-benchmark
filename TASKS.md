@@ -23,7 +23,7 @@ The authoritative execution rules are in
 | 015 | Stage 2 | 014 | Completed | Consolidate Tasks 013–014 provenance, reproduction, deployment, and correctness evidence, then close the DR1 CPU single-image baseline without adding benchmark, video, camera, Vulkan, quantization, or NPU claims. |
 | 016 | Vendor and board baseline | None | Completed | Inventory Anlogic DR1 sources and SDK 2025.07, validate the AArch64 toolchain and board C/C++/OpenCV userspace smoke, and record runtime/NPU readiness; ARM ncnn, ARM YOLO/benchmark, NPU deployment, and exact SDK/Demo tag matching remain out of scope. |
 | 017 | Stage 2 benchmark | 013 + 014 + 015 | Completed | Measure the frozen MLK-F3P-CZ02-DR1M90 CPU/FP32 single-thread baseline under the preregistered protocol; five independent processes and 100 retained samples pass correctness, deterministic validation, stability, and user review. NPU remains on hold. |
-| 018 | Stage 2 CPU experiment | 017 | In Progress | Compare contemporaneous one-thread and two-thread execution of the frozen DR1 ncnn pipeline under a paired alternating protocol; the contract and offline tools are frozen, while formal board collection is pending and Task 017 remains unchanged. |
+| 018 | Stage 2 CPU experiment | 017 | In Progress | Audit showed the retained 10-process/200-sample candidate used an OpenMP-off ncnn build with no effective operator-parallel backend. It is valid only as thread-parameter sensitivity evidence, not as a multithread performance comparison; a user decision on a separate multithread-enabled build is pending and Task 017 remains unchanged. |
 
 Batch A stops after Task 005, Batch B stops after Task 009, and Batch C stops
 after Task 012. A checkpoint requires explicit human review before the next batch.

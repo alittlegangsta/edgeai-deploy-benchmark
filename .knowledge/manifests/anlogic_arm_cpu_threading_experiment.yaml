@@ -3,8 +3,14 @@ manifest_type: "anlogic_arm_cpu_threading_experiment"
 task: "018"
 task_status: "In Progress"
 protocol_status: "FROZEN"
-formal_data_collection: "Pending"
+formal_data_collection: "PASS_RETAINED_NOT_VALID_AS_MULTITHREAD_COMPARISON"
 performance_values_published: false
+candidate_recorded_at: "2026-07-28T19:38:35+08:00"
+candidate_record_time_basis: "WSL record time; the board clock is unsynchronized"
+candidate_session_retained: true
+human_review: "PENDING"
+candidate_approved: false
+classification: "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON"
 
 dependencies:
   task_017:
@@ -143,18 +149,142 @@ tracked_protocol:
   task: "tasks/018_anlogic_dr1_arm_cpu_threading_experiment.md"
   document: "docs/vendor/ANLOGIC_ARM_CPU_THREADING_EXPERIMENT.md"
 
-reserved_formal_evidence:
-  - "results/evidence/018/threads1_raw_samples.json"
-  - "results/evidence/018/threads2_raw_samples.json"
-  - "results/evidence/018/process_environment.json"
-  - "results/evidence/018/threads1_summary.json"
-  - "results/evidence/018/threads2_summary.json"
-  - "results/evidence/018/comparison_summary.json"
-  - "results/evidence/018/experiment_validation.json"
+build_candidate:
+  source_archive_sha256: "540773f59afda16baa89538b33b5c5a8889f4105818a30e53e8c7b3b84a12f57"
+  executable_sha256: "40fdd3b777fccaf3bd45f3a9c59842de53e7bf42bcbd285fa73c37b86b457f2a"
+  executable_identity: "ELF64 AArch64; /lib/ld-linux-aarch64.so.1"
+  maximum_required_glibc: "GLIBC_2.17"
+  compiler: "Linaro GCC/G++ 7.5.0"
+  cmake: "3.16.9"
+  ncnn_static_library_sha256: "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a"
+  dependency_status: "PASS; private OpenCV 4.7.0 plus board system libraries, no not found"
+
+candidate_session:
+  session: 2
+  board_path: "/root/edgeai/anlogic-arm-threading-task018-session2"
+  status: "RETAINED_AFTER_THREAD_BACKEND_AUDIT"
+  raw_statistical_classification: "NEUTRAL"
+  publication_classification: "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON"
+  openmp_off_thread_parameter_sensitivity: "PASS"
+  multithread_performance_comparison: "INVALID"
+  human_review: "PENDING"
+  candidate_approved: false
+  valid_processes: 10
+  invalid_processes: 0
+  samples_per_condition: 100
+  total_samples: 200
+  correctness:
+    threads1: "PASS_TARGET"
+    threads2: "PASS_TARGET"
+    cross_condition: "PASS_TARGET"
+    minimum_class_matched_iou: 0.9999855075776749
+    maximum_confidence_delta: 0.0000050067901611328125
+  threads1:
+    fps: 0.2815073468486081
+    maximum_peak_rss_kib: 142572
+    model_load_ms: {mean: 644.9032742, min: 630.293556, max: 675.432396}
+    stability_percent: 3.343810125550009
+    stability_status: "PASS"
+  threads2:
+    fps: 0.28163327612748756
+    maximum_peak_rss_kib: 142872
+    model_load_ms: {mean: 647.9484844000001, min: 635.196576, max: 658.532376}
+    stability_percent: 3.2791492082843625
+    stability_status: "PASS"
+  comparison:
+    pipeline_speedup: 1.0004473392268058
+    inference_speedup: 1.000657684049391
+    fps_gain_percent: 0.04473392268058429
+    rss_change_percent: 0.2104199983166355
+  task017_historical_consistency:
+    absolute_pipeline_mean_difference_percent: 1.0902927421182582
+    status: "PASS"
+  environment_limits:
+    board_clock: "unsynchronized"
+    frequency_samples: "200/200 JSON null"
+    temperature_samples: "200/200 JSON null"
+    governor_or_frequency_modified: false
+    system_libraries_or_services_modified: false
+
+formal_evidence:
+  threads1_raw:
+    path: "results/evidence/018/threads1_raw_samples.json"
+    sha256: "7a2f96346f289860b0033ffdd5c635f572cd4c52306a9a13c2e39ec9f24f833c"
+  threads2_raw:
+    path: "results/evidence/018/threads2_raw_samples.json"
+    sha256: "d385cf4055b54da915fe710855a9e434e07f4434723b4a9a1bc6aa70e4005125"
+  process_environment:
+    path: "results/evidence/018/process_environment.json"
+    sha256: "14ce7a366527d5bb63db77233e16724130aacb7d44c2cffe1a58a48a08f8f9b2"
+  threads1_summary:
+    path: "results/evidence/018/threads1_summary.json"
+    sha256: "5b5039f6ce5bc663d93d4a3bd3732fd0996338027bf4667a076d59b7b4958ede"
+  threads2_summary:
+    path: "results/evidence/018/threads2_summary.json"
+    sha256: "520c99e8c1fe54929642c7247ccd2fbd09d3292650e3f26cd2c0b0440111590a"
+  comparison_summary:
+    path: "results/evidence/018/comparison_summary.json"
+    sha256: "3ac735e4ff474ec2f515b39cd7758e3289d94f028c54406609f54b2f63042de3"
+  validation:
+    path: "results/evidence/018/experiment_validation.json"
+    sha256: "de908a24ca5a2cc23648f16ca649a4b62c3cd3410468e0009c2a31a72de794b3"
+
+thread_backend_audit:
+  recorded_at: "2026-07-28T20:04:29+08:00"
+  record_time_basis: "WSL audit record time; not board runtime time"
+  fixed_revision: "ncnn 20240410 / 56775de50990ab7f16627efdcf5529b49541206f"
+  cmake_options:
+    NCNN_OPENMP: false
+    NCNN_THREADS: true
+    NCNN_SIMPLEOMP: false
+    OpenMP_CXX_FOUND: "NOT_EVALUATED_BECAUSE_NCNN_OPENMP_OFF"
+  compile_and_link:
+    fopenmp: false
+    gomp_or_omp_symbols: false
+    simpleomp_object: "EMPTY_GUARDED_OBJECT"
+    linked_thread_runtime: "libpthread via -pthread; no libgomp or libomp"
+  source_conclusion:
+    operator_parallelism: "OpenMP pragmas using opt.num_threads"
+    ncnn_threads_option: "pthread synchronization/thread abstractions, not an independent operator parallel-for backend"
+    set_num_threads: "network.opt.num_threads is written before load_param but cannot activate operator parallelism in this build"
+  diagnostic_build:
+    source_archive_sha256: "d5b5a6afe02243b96f15c527539303f1aae0252c7f8b9afcf5fb0fcdc7052849"
+    executable_sha256: "46b2b33d6854ec20dc9922d884f38d5df81c348699cbd4da4c1466f1faa39578"
+    identity: "ELF64 AArch64; /lib/ld-linux-aarch64.so.1; maximum GLIBC_2.17"
+    effective_parallel_backend: "none"
+  board_diagnostic:
+    protocol: "one process per condition; 2 warmups and 3 measured pipelines; not a formal benchmark"
+    threads1:
+      max_observed_process_threads: 1
+      cpu_time_to_wall_time_ratio: 0.9927591018688856
+      correctness: "PASS_TARGET"
+    threads2:
+      max_observed_process_threads: 1
+      cpu_time_to_wall_time_ratio: 0.9688177035962872
+      correctness: "PASS_TARGET"
+  conclusion: "CURRENT_BUILD_HAS_NO_EFFECTIVE_CPU_OPERATOR_PARALLEL_BACKEND"
+  audit_evidence:
+    path: "results/evidence/018/thread_backend_audit.json"
+    sha256: "f64c15ac22e34481eb870ea93eee974fdf08e5cd975a45ee0965ef9615513d0e"
+  threads1_diagnostic:
+    path: "results/evidence/018/thread_diagnostic_threads1.json"
+    sha256: "673dac321e20a0a0c23f62714a030051fd3c7bb14e34812c0204717b39949110"
+  threads2_diagnostic:
+    path: "results/evidence/018/thread_diagnostic_threads2.json"
+    sha256: "6fff4a82b4965878bca7ba98c98c5ad85527acd4dbb09d9c1657d2e02eaecc07"
+
+failed_collection:
+  session: 1
+  status: "PRESERVED_OUTSIDE_FORMAL_CANDIDATE"
+  accepted_before_failure: "pair 1 threads=1 and threads=2"
+  failed_condition: "pair 2 order 1 threads=2"
+  failed_attempts: 3
+  failure: "producer append validator expected process_id immediately after round"
+  disposition: "not spliced into session 2; board and external logs retained"
 
 scope_boundary:
-  formal_collection_run: false
-  new_performance_numbers: false
+  formal_collection_run: true
+  new_performance_numbers: true
   task017_modified: false
   video: false
   camera: false
@@ -173,14 +303,18 @@ evidence_brief:
     - "shared benchmark producer and ncnn adapter source"
   documented_facts:
     - "Task 017 is the approved one-thread historical baseline."
-    - "No Task 018 formal measurement exists."
+    - "Task 018 session 2 is retained in full and is not an approved multithread result."
   source_code_facts:
-    - "Before Task 018, the ncnn adapter and ARM producer rejected any thread count other than one."
-    - "The Task 018 extension retains the same shared pipeline and accepts only one or two threads."
+    - "ncnn 20240410 ARM operators use OpenMP pragmas parameterized by opt.num_threads."
+    - "The fixed static library has NCNN_OPENMP=OFF, NCNN_THREADS=ON, and NCNN_SIMPLEOMP=OFF."
+    - "NCNN_THREADS supplies pthread synchronization and thread abstractions but is not an independent operator parallel-for backend."
+  real_device_observations:
+    - "Both short diagnostic processes passed correctness before and after measurement."
+    - "Both configured thread conditions exposed one process thread throughout the successful external monitor retry."
+    - "CPU-time/wall-time ratios were 0.9927591018688856 and 0.9688177035962872 for configured threads 1 and 2."
   assumptions: []
   conflicts:
     - "The local SDK_2025_07 identity does not establish exact official SDK tag compatibility."
   unresolved_blockers:
-    - "The shared AArch64 target must be rebuilt in the VM."
-    - "The paired experiment must be collected on the real board."
-  proposed_action: "Run the complete paired schedule under separate authorization, validate it offline, and request human review."
+    - "The user must approve a separate ncnn rebuild with a verified multithread backend before a valid paired performance experiment can proceed."
+  proposed_action: "Preserve session 2 as an OpenMP-off parameter-sensitivity result, keep Task 018 In Progress, and request a route decision for a new multithread-enabled ncnn build."

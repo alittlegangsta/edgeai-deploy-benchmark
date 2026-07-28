@@ -3,10 +3,14 @@
 ## Status
 
 Task 018 is `In Progress`. The paired protocol, shared producer extension,
-offline runner, deterministic validator, and synthetic fixtures are frozen.
-Formal collection is `Pending`; this document contains no new measured ARM
-performance value. Task 017 remains the immutable approved one-thread
-historical baseline.
+runner, deterministic validator, and synthetic fixtures are frozen. A complete
+real-board candidate has 10 valid processes and 200 retained samples and passes
+the preregistered statistical checks. A later thread-backend audit proved that
+the fixed ncnn library has no effective operator-parallel backend, so the
+session is retained as OpenMP-off thread-parameter sensitivity evidence and is
+not a valid multithread performance comparison. It is not published or
+approved. Task 017 remains the immutable approved one-thread historical
+baseline.
 
 ## Question and only variable
 
@@ -145,12 +149,12 @@ bash scripts/vendor/run_anlogic_arm_threading_experiment.sh --check
 bash scripts/vendor/run_anlogic_arm_threading_experiment.sh --dry-run
 ```
 
-A later authorized `--execute` turn must first rebuild the shared AArch64
-`edgeai_benchmark_ncnn` target because the old ELF predates explicit Task 018
-thread metadata. The runner then creates a new isolated package and board path,
-executes the frozen schedule, retains failed attempts, returns hash-checked raw
-files, and calls the validator. It does not reuse or overwrite
-`results/evidence/017/`.
+The authorized collection turn rebuilt the shared AArch64
+`edgeai_benchmark_ncnn` target, created an isolated package and board path,
+executed the frozen schedule, retained failed attempts, returned hash-checked
+raw files, and called the validator. It did not reuse or overwrite
+`results/evidence/017/`. Do not rerun collection merely to complete human
+review; approval is an offline decision over the preserved candidate.
 
 Preregistered evidence:
 
@@ -169,12 +173,179 @@ comparison_summary.json
 experiment_validation.json
 ```
 
-Those seven formal files do not exist yet. Synthetic fixtures live only in
-temporary unittest objects and are not performance evidence.
+Those seven formal files now contain the complete session 2 candidate.
+Synthetic fixtures live only in temporary unittest objects and are not
+performance evidence.
+
+## Automatic candidate
+
+Recorded in WSL at `2026-07-28T19:38:35+08:00`. This is evidence record time,
+not board runtime time; the board clock was unsynchronized.
+
+The hash-verified executable is
+`40fdd3b777fccaf3bd45f3a9c59842de53e7bf42bcbd285fa73c37b86b457f2a`.
+It is ELF64 AArch64, uses `/lib/ld-linux-aarch64.so.1`, requires at most
+`GLIBC_2.17`, and resolved all private OpenCV 4.7 and board system dependencies.
+Both conditions used this same executable.
+
+Each table row is independently recomputed from all 100 retained samples:
+
+| Threads | Stage | Mean ms | P50 ms | P90 ms | Min ms | Max ms | Sample SD ms |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | preprocess | 43.184844 | 42.474930 | 44.597880 | 41.846340 | 44.861520 | 1.150449 |
+| 1 | inference | 3454.640931 | 3411.887794 | 3521.293595 | 3406.792144 | 3526.319855 | 54.530257 |
+| 1 | postprocess | 54.479381 | 53.800650 | 55.517131 | 53.738580 | 55.615560 | 0.845584 |
+| 1 | pipeline | 3552.305157 | 3507.941614 | 3621.351036 | 3502.856314 | 3626.291916 | 56.510796 |
+| 2 | preprocess | 43.889654 | 43.348470 | 44.781991 | 43.206931 | 45.175291 | 0.716340 |
+| 2 | inference | 3452.370362 | 3412.009714 | 3524.030555 | 3405.674524 | 3526.573205 | 54.430014 |
+| 2 | postprocess | 54.456765 | 53.804430 | 55.520760 | 53.742901 | 56.405010 | 0.839741 |
+| 2 | pipeline | 3550.716782 | 3509.071055 | 3624.286566 | 3502.723445 | 3627.243066 | 55.950511 |
+
+| Metric | Threads 1 | Threads 2 |
+| --- | ---: | ---: |
+| Sequential batch-1 FPS | 0.281507347 | 0.281633276 |
+| Maximum Peak RSS KiB | 142572 | 142872 |
+| Model-load mean ms | 644.903274 | 647.948484 |
+| Model-load min ms | 630.293556 | 635.196576 |
+| Model-load max ms | 675.432396 | 658.532376 |
+| Five-round mean spread | 3.343810% (`PASS`) | 3.279149% (`PASS`) |
+
+The paired comparison is:
+
+```text
+pipeline_speedup: 1.0004473392268058
+inference_speedup: 1.000657684049391
+fps_gain_percent: 0.04473392268058429
+rss_change_percent: 0.2104199983166355
+raw statistical classification: NEUTRAL
+validator status: PASS_CANDIDATE_REQUIRES_HUMAN_REVIEW
+```
+
+That `NEUTRAL` value is the unchanged output of the preregistered statistical
+classifier. It is not the publication classification after the build-capability
+audit.
+
+Both conditions pass correctness before and after every process with five
+detections, minimum golden IoU `0.9999855075776749`, and maximum confidence
+delta `0.0000050067901611328125`. Their captured detections match each other
+exactly (`IoU=1.0`, confidence delta `0.0`). The contemporaneous one-thread
+pipeline mean differs from Task 017 by `1.090292742%`, passing the historical
+10% drift check.
+
+All 200 per-sample frequency and temperature observations are JSON `null`
+because those sysfs nodes were unavailable. The 20 process environment events
+retain observed load averages. No governor, frequency, affinity, service,
+system library, model, threshold, or Runtime setting was modified.
+
+The first collection session is preserved outside the formal candidate. Pair 1
+completed, then pair 2's two-thread process exposed a producer append-validator
+defect on three retained attempts. That session was not spliced with later
+data. After correcting the Task 018 round marker and rebuilding a new ELF,
+session 2 restarted at pair 1 in a new board/shared directory and completed
+10/10 processes with no invalid attempt.
+
+Candidate evidence:
+
+- [`threads1_raw_samples.json`](../../results/evidence/018/threads1_raw_samples.json)
+- [`threads2_raw_samples.json`](../../results/evidence/018/threads2_raw_samples.json)
+- [`process_environment.json`](../../results/evidence/018/process_environment.json)
+- [`threads1_summary.json`](../../results/evidence/018/threads1_summary.json)
+- [`threads2_summary.json`](../../results/evidence/018/threads2_summary.json)
+- [`comparison_summary.json`](../../results/evidence/018/comparison_summary.json)
+- [`experiment_validation.json`](../../results/evidence/018/experiment_validation.json)
+
+## Fixed-revision thread-backend audit
+
+The user withheld approval because the frozen Task 013 build recorded
+`NCNN_OPENMP=OFF`. The audit used the exact ncnn `20240410` commit
+`56775de50990ab7f16627efdcf5529b49541206f`, not a current branch.
+
+Source-code facts:
+
+- the root CMake file defines `NCNN_OPENMP`, `NCNN_SIMPLEOMP`, and
+  `NCNN_THREADS` as separate options;
+- ARM inference operators contain OpenMP parallel-for regions parameterized by
+  `opt.num_threads`;
+- `NCNN_SIMPLEOMP` implements a minimal OpenMP runtime only when the OpenMP
+  compilation path is enabled;
+- `NCNN_THREADS` provides pthread-backed mutex, condition variable, thread, and
+  thread-local-storage primitives. It is not a separate operator
+  parallel-for backend;
+- the application correctly writes `network.opt.num_threads` before
+  `load_param`, but that value cannot activate compiled-out OpenMP regions.
+
+The real VM build records:
+
+```text
+NCNN_OPENMP=OFF
+NCNN_THREADS=ON
+NCNN_SIMPLEOMP=OFF
+OpenMP_CXX_FOUND=NOT_EVALUATED_BECAUSE_NCNN_OPENMP_OFF
+```
+
+Its ncnn compile flags contain `-pthread` but not `-fopenmp`. The installed
+`platform.h` defines `NCNN_THREADS 1` and `NCNN_SIMPLEOMP 0`; the installed
+CMake config records `NCNN_OPENMP OFF`. `libncnn.a` has pthread mutex/TLS
+references but no GOMP, libomp, or kmp symbols. Although the archive contains
+`simpleomp.cpp.o`, that guarded object has no implementation symbols in this
+build. The final executable link uses `-pthread` and no `libgomp` or `libomp`.
+
+The capability-aware diagnostic rebuild has SHA256
+`46b2b33d6854ec20dc9922d884f38d5df81c348699cbd4da4c1466f1faa39578`.
+It is ELF64 AArch64, uses `/lib/ld-linux-aarch64.so.1`, requires at most
+`GLIBC_2.17`, and reports:
+
+```json
+{
+  "ncnn_openmp_compiled": false,
+  "ncnn_threads_compiled": true,
+  "ncnn_simpleomp_compiled": false,
+  "compiler_openmp_macro_defined": false,
+  "effective_parallel_backend": "none"
+}
+```
+
+Two isolated short diagnostics used the unchanged model, input, pipeline, and
+correctness gates. Each performed two warmups and three measured pipelines;
+these are diagnostic observations, not formal benchmark values:
+
+| Configured threads | Internal threads before/after | External maximum | CPU time / wall time | Correctness |
+| ---: | --- | ---: | ---: | --- |
+| 1 | 1 / 1 | 1 | 0.992759102 | `PASS_TARGET` |
+| 2 | 1 / 1 | 1 | 0.968817704 | `PASS_TARGET` |
+
+The first external monitor attempt had a shell-quoting defect and recorded
+zeroes. It remains preserved outside Git. A separate retry corrected only the
+monitor command, wrote new evidence paths, and observed one process thread for
+both conditions. The application-level CPU and thread evidence was already
+valid in the first attempt.
+
+Audit evidence:
+
+- [`thread_backend_audit.json`](../../results/evidence/018/thread_backend_audit.json)
+- [`thread_diagnostic_threads1.json`](../../results/evidence/018/thread_diagnostic_threads1.json)
+- [`thread_diagnostic_threads2.json`](../../results/evidence/018/thread_diagnostic_threads2.json)
+
+The combined source, CMake-cache, generated-header, compile/link, symbol, CPU
+time, and `/proc` observations establish:
+
+```text
+OPENMP_OFF_THREAD_PARAMETER_SENSITIVITY: PASS
+MULTITHREAD_PERFORMANCE_COMPARISON: INVALID
+publication classification: INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON
+```
+
+Session 2 remains complete and byte-preserved. Its raw classifier result remains
+`NEUTRAL`, but it must not be presented as evidence that hardware two-thread
+execution is neutral.
 
 ## Current boundaries
 
-No VM or board was accessed, no AArch64 target was rebuilt, and no performance
-sample was collected during protocol freeze. Video, camera, affinity tuning,
-NEON rewriting, Vulkan, FP16/BF16/INT8 runtime, quantization, NPU, and system
-modification remain out of scope. NPU remains `HOLD`.
+The original automatic collection is retained, `human_review` is `PENDING`,
+`candidate_approved` remains `false`, and Task 018 remains `In Progress`.
+Proceeding requires a user decision to create a separate ncnn build with a
+verified multithread backend and then repeat the paired protocol using that new
+ELF. Such a rebuild must not alter Task 017 or splice any existing session.
+Video, camera, affinity tuning, NEON rewriting, Vulkan, FP16/BF16/INT8 runtime,
+quantization, NPU, and system modification remain out of scope. NPU remains
+`HOLD`.

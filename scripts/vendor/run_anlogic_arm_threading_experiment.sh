@@ -87,7 +87,17 @@ offline_check() {
   require_hash "$REFERENCE" "$EXPECTED_REFERENCE" "pc_ncnn_golden"
   if [[ -f "$BUILD_OUTPUT/edgeai_benchmark_ncnn" ]]; then
     file "$BUILD_OUTPUT/edgeai_benchmark_ncnn"
-    printf 'arm_benchmark_elf=PRESENT_REBUILD_REQUIRED_AFTER_TASK018_SOURCE_CHANGE\n'
+    if [[ -f "$BUILD_OUTPUT/BUILD_OUTPUT_SHA256SUMS" ]]; then
+      (
+        cd "$BUILD_OUTPUT"
+        sha256sum -c BUILD_OUTPUT_SHA256SUMS
+      )
+      printf 'arm_benchmark_elf=PRESENT_BUILD_OUTPUT_HASH_VERIFIED\n'
+      printf 'arm_benchmark_elf_sha256=%s\n' \
+        "$(sha256_of "$BUILD_OUTPUT/edgeai_benchmark_ncnn")"
+    else
+      printf 'arm_benchmark_elf=PRESENT_WITHOUT_BUILD_OUTPUT_MANIFEST\n'
+    fi
   else
     printf 'arm_benchmark_elf=BUILD_REQUIRED_IN_FORMAL_COLLECTION_TURN\n'
   fi
@@ -107,7 +117,7 @@ Alternating independent-process order:
   pair 5: threads=1 -> threads=2
 Each process: correctness before, 10 warmups, 20 measured samples, correctness after.
 Formal totals: 5 processes/100 samples per condition; 10 processes/200 samples overall.
-Future authorized stages:
+Execute-mode stages (not run by --dry-run):
   1. rebuild       rebuild the shared AArch64 producer from the Task 018 source
   2. package       hash one ELF, frozen assets, config, reference, and private OpenCV libs
   3. deploy        transfer into a new isolated board directory without overwrite

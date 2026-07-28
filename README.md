@@ -26,9 +26,14 @@ correctness. The complete 100-sample real-board session passed automated
 validation and user review and is published as the default unoptimized baseline.
 See [the ARM benchmark protocol](docs/vendor/ANLOGIC_ARM_CPU_BENCHMARK.md).
 
-Task 018 freezes a separate paired one-thread versus two-thread experiment.
-Its alternating 10-process/200-sample protocol and offline validator are ready,
-but no Task 018 performance data has been collected. See
+Task 018 has retained a separate configured-one-thread/configured-two-thread
+candidate, but a fixed-revision source, build, and board audit confirmed that
+its ncnn library was compiled with `NCNN_OPENMP=OFF`,
+`NCNN_THREADS=ON`, and `NCNN_SIMPLEOMP=OFF` and had no effective
+operator-parallel backend. The session is therefore parameter-sensitivity
+evidence, not a publishable multithread performance comparison; Task 018
+remains `In Progress` pending a user decision on a separate multithread-enabled
+build. See
 [the threading experiment protocol](docs/vendor/ANLOGIC_ARM_CPU_THREADING_EXPERIMENT.md).
 
 ## PC architecture and model lineage
@@ -329,7 +334,9 @@ backend includes its Runtime, model, and input state.
 PC Stage 1 and the DR1 ARM CPU single-image Stage 2 baseline are complete.
 Task 017 has completed the preregistered single-thread CPU/FP32 benchmark and
 published the validator- and user-approved unoptimized default baseline.
-Task 018 now preregisters a paired one-thread/two-thread comparison without
-changing that baseline; formal collection is pending. Video, camera,
+Task 018 now retains an automatically validated parameter-sensitivity candidate
+without changing that baseline. A thread-backend audit found no effective
+operator-parallel backend in that candidate, so a genuine multithread comparison
+requires a separately approved rebuild. Video, camera,
 affinity/NEON-specific optimization, Vulkan, quantization, and NPU remain
 separate future work; NPU readiness remains `HOLD`.

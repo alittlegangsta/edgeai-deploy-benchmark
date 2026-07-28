@@ -22,7 +22,8 @@ SPEC.loader.exec_module(VALIDATOR)
 def detections() -> list[dict]:
     values = []
     for rank, (class_id, class_name) in enumerate(
-        ((66, "keyboard"), (62, "tv"), (41, "cup"), (64, "mouse"), (64, "mouse"))
+        ((66, "keyboard"), (62, "tv"), (41, "cup"), (64, "mouse"), (64, "mouse")),
+        1,
     ):
         left = 100.0 + rank * 20.0
         top = 120.0 + rank * 15.0
@@ -171,9 +172,27 @@ class AnlogicArmThreadingExperimentTests(unittest.TestCase):
         cls.config_path = ROOT / "configs/benchmark_anlogic_arm_threading.json"
         cls.contract_path = ROOT / "results/evidence/018/experiment_contract.json"
         cls.order_path = ROOT / "results/evidence/018/execution_order.json"
+        cls.backend_audit_path = (
+            ROOT / "results/evidence/018/thread_backend_audit.json"
+        )
+        cls.thread_diagnostic_paths = {
+            configured_threads: (
+                ROOT
+                / "results/evidence/018"
+                / f"thread_diagnostic_threads{configured_threads}.json"
+            )
+            for configured_threads in (1, 2)
+        }
         cls.config = json.loads(cls.config_path.read_text(encoding="utf-8"))
         cls.contract = json.loads(cls.contract_path.read_text(encoding="utf-8"))
         cls.order = json.loads(cls.order_path.read_text(encoding="utf-8"))
+        cls.backend_audit = json.loads(
+            cls.backend_audit_path.read_text(encoding="utf-8")
+        )
+        cls.thread_diagnostics = {
+            configured_threads: json.loads(path.read_text(encoding="utf-8"))
+            for configured_threads, path in cls.thread_diagnostic_paths.items()
+        }
         cls.config_sha = VALIDATOR.sha256_file(cls.config_path)
 
     def summarize(
@@ -318,6 +337,84 @@ class AnlogicArmThreadingExperimentTests(unittest.TestCase):
             ),
             "REGRESSION",
         )
+
+    def test_backend_audit_blocks_multithread_publication(self) -> None:
+        actual_build = self.backend_audit["actual_build"]
+        candidate = self.backend_audit["candidate_session_2"]
+
+        self.assertFalse(actual_build["NCNN_OPENMP"])
+        self.assertTrue(actual_build["NCNN_THREADS"])
+        self.assertFalse(actual_build["NCNN_SIMPLEOMP"])
+        self.assertFalse(actual_build["fopenmp_present"])
+        self.assertFalse(actual_build["gomp_or_omp_symbols_present"])
+        self.assertEqual(
+            self.backend_audit["audit_conclusion"],
+            "CURRENT_BUILD_HAS_NO_EFFECTIVE_CPU_OPERATOR_PARALLEL_BACKEND",
+        )
+        self.assertTrue(candidate["retained"])
+        self.assertEqual(candidate["raw_statistical_classification"], "NEUTRAL")
+        self.assertEqual(candidate["human_review"], "PENDING")
+        self.assertFalse(candidate["candidate_approved"])
+        self.assertEqual(
+            candidate["publication_classification"],
+            "INVALID_FOR_MULTITHREAD_PERFORMANCE_COMPARISON",
+        )
+        self.assertEqual(candidate["openmp_off_parameter_sensitivity"], "PASS")
+        self.assertEqual(candidate["multithread_performance_comparison"], "INVALID")
+
+    def test_short_thread_diagnostics_report_no_parallel_backend(self) -> None:
+        for configured_threads, diagnostic in self.thread_diagnostics.items():
+            with self.subTest(configured_threads=configured_threads):
+                self.assertEqual(
+                    diagnostic["evidence_type"],
+                    "task018_thread_backend_diagnostic_summary",
+                )
+                self.assertEqual(
+                    diagnostic["configured_threads"], configured_threads
+                )
+                self.assertEqual(
+                    diagnostic["diagnostic_protocol"],
+                    {"warmup": 2, "repeat": 3, "formal_benchmark": False},
+                )
+
+                capabilities = diagnostic["build_capabilities"]
+                self.assertFalse(capabilities["ncnn_openmp_compiled"])
+                self.assertTrue(capabilities["ncnn_threads_compiled"])
+                self.assertFalse(capabilities["ncnn_simpleomp_compiled"])
+                self.assertFalse(capabilities["compiler_openmp_macro_defined"])
+                self.assertEqual(
+                    capabilities["effective_parallel_backend"], "none"
+                )
+
+                runtime = diagnostic["runtime_observation"]
+                self.assertEqual(runtime["thread_count_before_measurement"], 1)
+                self.assertEqual(runtime["thread_count_after_measurement"], 1)
+                self.assertEqual(runtime["external_max_observed_threads"], 1)
+                self.assertGreater(runtime["external_monitor_samples"], 0)
+                self.assertGreater(runtime["cpu_time_to_wall_time_ratio"], 0.0)
+                self.assertLessEqual(runtime["cpu_time_to_wall_time_ratio"], 1.2)
+
+                correctness_result = diagnostic["correctness"]
+                self.assertEqual(
+                    correctness_result["before_warmup"], "PASS_TARGET"
+                )
+                self.assertEqual(
+                    correctness_result["after_measurement"], "PASS_TARGET"
+                )
+                self.assertEqual(correctness_result["detection_count"], 5)
+
+                samples = diagnostic["samples"]
+                self.assertEqual(len(samples), 3)
+                for sample in samples:
+                    self.assertGreater(sample["preprocess_ns"], 0)
+                    self.assertGreater(sample["inference_ns"], 0)
+                    self.assertGreater(sample["postprocess_ns"], 0)
+                    self.assertEqual(
+                        sample["pipeline_ns"],
+                        sample["preprocess_ns"]
+                        + sample["inference_ns"]
+                        + sample["postprocess_ns"],
+                    )
 
 
 if __name__ == "__main__":

@@ -23,6 +23,7 @@
 #include <utility>
 #include <vector>
 
+#include <platform.h>
 #include <opencv2/core.hpp>
 #include <opencv2/core/persistence.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -49,6 +50,7 @@ struct Arguments {
     std::optional<int> configured_threads;
     std::optional<int> pair_index;
     std::optional<int> execution_order;
+    bool diagnostic_mode{false};
 };
 
 struct Artifact {
@@ -89,8 +91,12 @@ struct PipelineResult {
 
 struct ResourceMeasurement {
     double cpu_percent{0.0};
+    double process_user_cpu_seconds_delta{0.0};
+    double process_system_cpu_seconds_delta{0.0};
     double process_cpu_seconds_delta{0.0};
     double wall_clock_seconds_delta{0.0};
+    int thread_count_before_measurement{0};
+    int thread_count_after_measurement{0};
     std::uint64_t peak_rss_kib{0};
     std::uint64_t peak_rss_bytes{0};
 };
@@ -107,7 +113,8 @@ Arguments parse_args(int argc, char* argv[]) {
             "usage: edgeai_benchmark_ncnn --benchmark-config PATH --ncnn-manifest PATH "
             "--reference-detections PATH [--model-param PATH --model-bin PATH] "
             "--round N --output PATH "
-            "[--threads N --pair-index N --execution-order N]"
+            "[--threads N --pair-index N --execution-order N] "
+            "[--diagnostic-mode 0|1]"
         );
     }
     std::map<std::string, std::string> values;
@@ -117,7 +124,8 @@ Arguments parse_args(int argc, char* argv[]) {
             option != "--reference-detections" && option != "--round" &&
             option != "--output" && option != "--model-param" &&
             option != "--model-bin" && option != "--threads" &&
-            option != "--pair-index" && option != "--execution-order") {
+            option != "--pair-index" && option != "--execution-order" &&
+            option != "--diagnostic-mode") {
             throw std::runtime_error("unknown argument: " + option);
         }
         if (!values.emplace(option, argv[index + 1]).second) {
@@ -153,6 +161,10 @@ Arguments parse_args(int argc, char* argv[]) {
         }
         return value;
     };
+    const std::optional<int> diagnostic_mode = optional_integer("--diagnostic-mode");
+    if (diagnostic_mode && *diagnostic_mode != 0 && *diagnostic_mode != 1) {
+        throw std::runtime_error("--diagnostic-mode must be 0 or 1");
+    }
     return {
         values.at("--benchmark-config"), values.at("--ncnn-manifest"),
         values.at("--reference-detections"),
@@ -164,6 +176,7 @@ Arguments parse_args(int argc, char* argv[]) {
         optional_integer("--threads"),
         optional_integer("--pair-index"),
         optional_integer("--execution-order"),
+        diagnostic_mode.value_or(0) == 1,
     };
 }
 
@@ -420,6 +433,47 @@ double timeval_seconds(const timeval& value) {
     return static_cast<double>(value.tv_sec) + static_cast<double>(value.tv_usec) / 1'000'000.0;
 }
 
+int process_thread_count() {
+    std::ifstream input("/proc/self/status");
+    std::string key;
+    while (input >> key) {
+        if (key == "Threads:") {
+            int value = 0;
+            if (input >> value && value > 0) {
+                return value;
+            }
+            break;
+        }
+        std::string remainder;
+        std::getline(input, remainder);
+    }
+    return 0;
+}
+
+struct NcnnThreadCapabilities {
+    bool openmp;
+    bool threads;
+    bool simpleomp;
+    bool compiler_openmp;
+    std::string effective_parallel_backend;
+};
+
+NcnnThreadCapabilities ncnn_thread_capabilities() {
+    constexpr bool openmp = EDGEAI_NCNN_OPENMP_COMPILED != 0;
+    constexpr bool threads = NCNN_THREADS != 0;
+    constexpr bool simpleomp = NCNN_SIMPLEOMP != 0;
+#ifdef _OPENMP
+    constexpr bool compiler_openmp = true;
+#else
+    constexpr bool compiler_openmp = false;
+#endif
+    std::string backend = "none";
+    if (openmp && compiler_openmp) {
+        backend = simpleomp ? "simpleomp" : "openmp";
+    }
+    return {openmp, threads, simpleomp, compiler_openmp, std::move(backend)};
+}
+
 std::string json_string(const std::string& value) {
     std::ostringstream output;
     output << '"';
@@ -617,13 +671,19 @@ std::string make_round_json(
 ) {
     const utsname system = system_identity(config);
     const auto& runtime = detector.runtime_info();
+    const NcnnThreadCapabilities capabilities = ncnn_thread_capabilities();
     std::ostringstream output;
     output << std::setprecision(17);
     output << "{\"round\":" << round;
     if (config.arm_task018) {
         output << ",\"pair_index\":" << pair_index
                << ",\"execution_order\":" << execution_order
-               << ",\"thread_condition\":" << configured_threads;
+               << ",\"thread_condition\":" << configured_threads
+               << ",\"diagnostic_mode\":"
+               << (config.evidence_type ==
+                           "task018_anlogic_arm_threading_capability_diagnostic"
+                       ? "true"
+                       : "false");
     }
     output << ",\"process_id\":" << getpid()
            << ",\"process_started_unix_ns\":" << process_started_unix_ns
@@ -650,6 +710,16 @@ std::string make_round_json(
     }
     output
            << ",\"vulkan\":false,\"fp16\":false,\"bf16\":false,\"int8\":false"
+           << ",\"thread_capabilities\":{\"ncnn_openmp_compiled\":"
+           << (capabilities.openmp ? "true" : "false")
+           << ",\"ncnn_threads_compiled\":"
+           << (capabilities.threads ? "true" : "false")
+           << ",\"ncnn_simpleomp_compiled\":"
+           << (capabilities.simpleomp ? "true" : "false")
+           << ",\"compiler_openmp_macro_defined\":"
+           << (capabilities.compiler_openmp ? "true" : "false")
+           << ",\"effective_parallel_backend\":"
+           << json_string(capabilities.effective_parallel_backend) << '}'
            << ",\"input\":{\"name\":\"in0\",\"logical_shape\":[1,3,640,640],"
            << "\"dtype\":\"float32\"},\"output\":{\"name\":\"out0\","
            << "\"logical_shape\":[1,25200,85],\"dtype\":\"float32\"}}";
@@ -684,8 +754,16 @@ std::string make_round_json(
            << "drawing and writes\"}"
            << ",\"resource_measurement\":{"
            << "\"process_cpu_percent_one_core_basis\":" << resources.cpu_percent
+           << ",\"process_user_cpu_time_delta_seconds\":"
+           << resources.process_user_cpu_seconds_delta
+           << ",\"process_system_cpu_time_delta_seconds\":"
+           << resources.process_system_cpu_seconds_delta
            << ",\"process_cpu_time_delta_seconds\":" << resources.process_cpu_seconds_delta
            << ",\"wall_clock_time_delta_seconds\":" << resources.wall_clock_seconds_delta
+           << ",\"thread_count_before_measurement\":"
+           << resources.thread_count_before_measurement
+           << ",\"thread_count_after_measurement\":"
+           << resources.thread_count_after_measurement
            << ",\"peak_rss_kib\":" << resources.peak_rss_kib
            << ",\"peak_rss_bytes\":" << resources.peak_rss_bytes
            << ",\"peak_rss_scope\":\"process startup through formal measurement completion\""
@@ -740,6 +818,10 @@ std::string make_round_json(
 }
 
 int evidence_schema_version(const std::string& evidence_type) {
+    if (evidence_type ==
+        "task018_anlogic_arm_threading_capability_diagnostic") {
+        return 4;
+    }
     if (evidence_type == "task018_anlogic_arm_threading_raw_benchmark") {
         return 3;
     }
@@ -792,7 +874,10 @@ void append_round(
         for (std::size_t expected_round = 1U; expected_round <= existing_rounds;
              ++expected_round) {
             const std::string round_marker =
-                "{\"round\":" + std::to_string(expected_round) + ",\"process_id\":";
+                evidence_type == "task018_anlogic_arm_threading_raw_benchmark"
+                ? "{\"round\":" + std::to_string(expected_round) +
+                      ",\"pair_index\":" + std::to_string(expected_round) + ','
+                : "{\"round\":" + std::to_string(expected_round) + ",\"process_id\":";
             if (payload.find(round_marker) == std::string::npos) {
                 throw std::runtime_error("existing ncnn benchmark round identity differs");
             }
@@ -830,7 +915,18 @@ int run(int argc, char* argv[]) {
         throw std::runtime_error("formal ncnn benchmark requires Release");
     }
     const Arguments arguments = parse_args(argc, argv);
-    const BenchmarkConfig benchmark = load_benchmark_config(arguments.benchmark_config);
+    BenchmarkConfig benchmark = load_benchmark_config(arguments.benchmark_config);
+    if (arguments.diagnostic_mode) {
+        if (!benchmark.arm_task018) {
+            throw std::runtime_error(
+                "thread capability diagnostic requires the Task 018 methodology"
+            );
+        }
+        benchmark.warmup = 2;
+        benchmark.repeat = 3;
+        benchmark.evidence_type =
+            "task018_anlogic_arm_threading_capability_diagnostic";
+    }
     if (arguments.round < 1 || arguments.round > benchmark.round_count) {
         throw std::runtime_error("round is outside the configured range");
     }
@@ -857,7 +953,7 @@ int run(int argc, char* argv[]) {
             throw std::runtime_error("Task 018 alternating execution order differs");
         }
     } else if (arguments.configured_threads || arguments.pair_index ||
-               arguments.execution_order) {
+               arguments.execution_order || arguments.diagnostic_mode) {
         throw std::runtime_error(
             "threading metadata is only valid for the Task 018 methodology"
         );
@@ -932,6 +1028,7 @@ int run(int argc, char* argv[]) {
 
     rusage usage_before{};
     rusage usage_after{};
+    const int thread_count_before = process_thread_count();
     if (getrusage(RUSAGE_SELF, &usage_before) != 0) {
         throw std::runtime_error("getrusage failed before formal measurement");
     }
@@ -950,14 +1047,21 @@ int run(int argc, char* argv[]) {
     if (getrusage(RUSAGE_SELF, &usage_after) != 0) {
         throw std::runtime_error("getrusage failed after formal measurement");
     }
-    const double cpu_seconds =
-        timeval_seconds(usage_after.ru_utime) + timeval_seconds(usage_after.ru_stime) -
-        timeval_seconds(usage_before.ru_utime) - timeval_seconds(usage_before.ru_stime);
+    const int thread_count_after = process_thread_count();
+    const double user_cpu_seconds =
+        timeval_seconds(usage_after.ru_utime) - timeval_seconds(usage_before.ru_utime);
+    const double system_cpu_seconds =
+        timeval_seconds(usage_after.ru_stime) - timeval_seconds(usage_before.ru_stime);
+    const double cpu_seconds = user_cpu_seconds + system_cpu_seconds;
     const double wall_seconds = std::chrono::duration<double>(wall_end - wall_start).count();
     const ResourceMeasurement resources{
         edgeai::common::process_cpu_percent_one_core_basis(cpu_seconds, wall_seconds),
+        user_cpu_seconds,
+        system_cpu_seconds,
         cpu_seconds,
         wall_seconds,
+        thread_count_before,
+        thread_count_after,
         static_cast<std::uint64_t>(usage_after.ru_maxrss),
         static_cast<std::uint64_t>(usage_after.ru_maxrss) * 1024U,
     };
@@ -998,13 +1102,38 @@ int run(int argc, char* argv[]) {
     if (benchmark.arm_task018) {
         std::cout << "configured_threads=" << configured_threads << '\n'
                   << "pair_index=" << pair_index << '\n'
-                  << "execution_order=" << execution_order << '\n';
+                  << "execution_order=" << execution_order << '\n'
+                  << "diagnostic_mode="
+                  << (arguments.diagnostic_mode ? "true" : "false") << '\n';
     }
+    const NcnnThreadCapabilities capabilities = ncnn_thread_capabilities();
     std::cout << "process_id=" << getpid() << '\n'
               << "build_type=" << EDGEAI_BUILD_TYPE << '\n'
+              << "ncnn_openmp_compiled="
+              << (capabilities.openmp ? "true" : "false") << '\n'
+              << "ncnn_threads_compiled="
+              << (capabilities.threads ? "true" : "false") << '\n'
+              << "ncnn_simpleomp_compiled="
+              << (capabilities.simpleomp ? "true" : "false") << '\n'
+              << "compiler_openmp_macro_defined="
+              << (capabilities.compiler_openmp ? "true" : "false") << '\n'
+              << "effective_parallel_backend="
+              << capabilities.effective_parallel_backend << '\n'
               << "model_load_ms=" << model_load_ms << '\n'
               << "formal_samples=" << samples.size() << '\n'
               << "process_cpu_percent_one_core_basis=" << resources.cpu_percent << '\n'
+              << "process_user_cpu_time_delta_seconds="
+              << resources.process_user_cpu_seconds_delta << '\n'
+              << "process_system_cpu_time_delta_seconds="
+              << resources.process_system_cpu_seconds_delta << '\n'
+              << "process_cpu_time_delta_seconds="
+              << resources.process_cpu_seconds_delta << '\n'
+              << "wall_clock_time_delta_seconds="
+              << resources.wall_clock_seconds_delta << '\n'
+              << "thread_count_before_measurement="
+              << resources.thread_count_before_measurement << '\n'
+              << "thread_count_after_measurement="
+              << resources.thread_count_after_measurement << '\n'
               << "peak_rss_bytes=" << resources.peak_rss_bytes << '\n'
               << "correctness_before=PASS_TARGET\ncorrectness_after=PASS_TARGET\n"
               << "output=" << arguments.output.string() << '\n';

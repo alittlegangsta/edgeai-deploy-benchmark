@@ -288,7 +288,7 @@ def detection_iou(left: dict[str, Any], right: dict[str, Any]) -> float:
 def validate_detections(value: Any, description: str) -> list[dict[str, Any]]:
     require(isinstance(value, list) and len(value) == 5, f"{description} detections differ")
     result = []
-    for expected_rank, detection in enumerate(value):
+    for expected_rank, detection in enumerate(value, 1):
         require(isinstance(detection, dict), f"{description} detection must be an object")
         require(detection.get("rank") == expected_rank, f"{description} rank differs")
         integer(detection.get("class_id"), f"{description} class id")

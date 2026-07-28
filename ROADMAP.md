@@ -63,10 +63,16 @@ statistics constant. Five pairs alternate `1→2`, `2→1`, `1→2`, `2→1`, an
 `1→2`; each condition receives five independent processes and 100 retained
 samples.
 
-The offline producer, runner, validator, correctness/stability gates, speedup
-formulas, classification, and historical-drift warning are frozen. Formal
-real-board collection is pending. Task 017 remains the immutable historical
-baseline and no Task 018 performance result is published.
+The producer, runner, validator, correctness/stability gates, speedup formulas,
+classification, and historical-drift warning are frozen. A complete real-board
+10-process/200-sample session remains preserved, but a fixed-revision source,
+build-cache, symbol, and short board-runtime audit confirmed that it used
+`NCNN_OPENMP=OFF`, `NCNN_THREADS=ON`, and `NCNN_SIMPLEOMP=OFF` with no
+effective operator-parallel backend. It is therefore retained as configured
+thread-parameter sensitivity evidence, not published as a multithread
+performance comparison. Task 018 stays `In Progress` pending a user decision
+on a separately built, verified multithread backend. Task 017 remains the
+immutable historical baseline.
 
 ## Future work: explicitly out of scope
 
