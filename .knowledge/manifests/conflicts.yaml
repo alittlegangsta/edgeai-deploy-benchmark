@@ -1,0 +1,8 @@
+schema_version: "1"
+entries: []
+field_descriptions:
+  entries: "Reserved for reviewed source conflicts; no conflict has been resolved."
+  topic: "The subject for which sources disagree."
+  sources: "Source record identifiers involved in the disagreement."
+  decision: "An explicitly approved resolution; unknown until reviewed."
+  rationale: "Evidence and authority reasoning for the decision."

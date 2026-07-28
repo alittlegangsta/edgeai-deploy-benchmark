@@ -1,0 +1,144 @@
+schema_version: "1"
+inventory_scope:
+  purpose: "Read-only inventory of locally synchronized official Anlogic DR1 repositories."
+  body_fetch_from_wiki: false
+  demos_built: false
+  sdk_downloaded: false
+repositories:
+  - name: dr1_demo_prjs
+    remote_url: "https://gitee.com/anlogic/dr1_demo_prjs.git"
+    local_path: "/home/dministrator/vendor/anlogic-dr1-knowledge/anlogic/repos/dr1_demo_prjs"
+    default_branch: "2026.1"
+    checked_out_branch: "2026.1"
+    checked_out_commit: "4fc802664e09d18f015035f2c8ecc4811a8bb6d1"
+    origin_head_commit: "4fc802664e09d18f015035f2c8ecc4811a8bb6d1"
+    fetched_at: "2026-07-24T10:25:00+08:00"
+    working_tree_clean: true
+    branches:
+      - "2026.1"
+      - "origin/2026.1"
+      - "origin/HEAD -> origin/2026.1"
+      - "origin/master"
+    tags: []
+    sdk_related_tags: []
+    submodules: []
+    git_lfs:
+      used: false
+      client_status: "not_applicable"
+    license: "GNU General Public License, version 2 (from LICENSE)"
+    build_systems:
+      - "Makefiles in FD application/BSP/platform projects"
+      - "TD/FD vendor project files and Anlogic project metadata"
+    important_paths:
+      - "README.md"
+      - "LICENSE"
+      - "C3_HelloWorld/"
+      - "C4/"
+      - "C10/"
+      - "C11/"
+      - "C13/"
+      - "C14_AXI_UART/"
+      - "C15_AXI_RAM/"
+      - "C16_AXI_DNA/"
+      - "C17_AXI_DMA/"
+      - "C18_QSPI/"
+      - "C19_AXILite2APB/"
+      - "C20_AXI4_Full/"
+      - "C21_VDMA/"
+      - "C22_AXILite/"
+      - "C25_PLL/"
+      - "C27/"
+      - "D20_NPU_Demo/"
+      - "C4/wiki_links.md"
+    wiki_links:
+      - url: "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/WCuPymw"
+        source_path: "README.md"
+        context: "DR1 series example-project overview"
+      - url: "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/XKwEaVkZ"
+        source_path: "C4/wiki_links.md"
+        context: "C4 project explanation"
+    version_compatibility:
+      repository_statement: "README links each project to a Wiki page; no SDK tag compatibility rule is stated."
+      observed_branch: "2026.1"
+      sdk_tag_match: "unknown"
+    status: "synced_read_only"
+    notes:
+      - "No Git tags were present in the fetched repository."
+      - "The branch name 2026.1 is recorded as a branch, not promoted to an SDK tag."
+      - "D20_NPU_Demo contains TD NPU hardware projects for AD101V20 and AD103V20; no demo was built."
+      - "C21_VDMA contains FD/TD VDMA, HDMI and MIPI examples; no runtime behavior was inferred."
+
+  - name: dr1m90_npu
+    remote_url: "https://gitee.com/anlogic/dr1m90_npu.git"
+    local_path: "/home/dministrator/vendor/anlogic-dr1-knowledge/anlogic/repos/dr1m90_npu"
+    default_branch: "release"
+    checked_out_branch: "release"
+    checked_out_commit: "199ef4d71f453bb9a000102ff39def09c4cf73f9"
+    origin_head_commit: "199ef4d71f453bb9a000102ff39def09c4cf73f9"
+    fetched_at: "2026-07-24T10:25:00+08:00"
+    working_tree_clean: true
+    branches:
+      - "release"
+      - "origin/release"
+      - "origin/HEAD -> origin/release"
+    tags:
+      - "SDK_2026.01"
+    sdk_related_tags:
+      - "SDK_2026.01"
+    submodules: []
+    git_lfs:
+      used: true
+      patterns:
+        - "*.onnx"
+        - "*.jpg"
+        - "*.png"
+        - "*.tar"
+        - "*.tar.*"
+      client_status: "unavailable: git lfs commands failed because the git-lfs executable was not available"
+      pointer_files_observed: true
+      content_downloaded: false
+    license: unknown
+    build_systems:
+      - "CMake projects under npu_demo/demo_src, face_detection/src, obb/src and pose/src"
+      - "SDK-integrated shell build.sh scripts"
+      - "Linux kernel-driver Makefile integration under *_/src/linux_driver"
+    important_paths:
+      - "README.md"
+      - "npu_demo/readme.md"
+      - "npu_demo/build.sh"
+      - "npu_demo/demo_src/CMakeLists.txt"
+      - "npu_demo/demo_src/README.md"
+      - "npu_demo/scripts/README.md"
+      - "npu_demo/demo_scripts/"
+      - "npu_demo/demo_inputs/"
+      - "npu_demo/libs/"
+      - "face_detection/README.md"
+      - "face_detection/README2.md"
+      - "face_detection/build.sh"
+      - "face_detection/src/"
+      - "obb/README.md"
+      - "obb/README2.md"
+      - "obb/build.sh"
+      - "obb/src/"
+      - "pose/README.md"
+      - "pose/README2.md"
+      - "pose/build.sh"
+      - "pose/src/"
+    wiki_links:
+      - url: "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/GVKBLhkf"
+        source_path: "README.md"
+        context: "Linux SDK build, environment variables and cross compiler"
+      - url: "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/R7MPfrun"
+        source_path: "face_detection/README2.md"
+        context: "D21.1 Linux VDMA framebuffer; the same URL is repeated in obb/pose README files"
+    version_compatibility:
+      repository_statement: "README explicitly says the repository tag must match the SDK tag for correct compilation."
+      repository_tag_observed: "SDK_2026.01"
+      sdk_tag_match: "requires an SDK tag matching SDK_2026.01; SDK installation was not inspected"
+      dr1_demo_branch_reference: "2026.1 appears in documented HPF raw URLs; equivalence to SDK_2026.01 is not asserted"
+    status: "synced_read_only"
+    notes:
+      - "The release branch and SDK_2026.01 tag were inspected; no release merge or checkout was performed."
+      - "The repository contains 12 ONNX Git LFS pointer files; model content was not downloaded or executed."
+      - "README build scripts reference an SDK toolchains/aarch64-linux compiler, Arm NN libraries, and an AArch64 OpenCV 4.7.0 archive; their availability was not verified."
+      - "Observed Wiki and Gitee URLs were recorded without fetching their targets."

@@ -1,0 +1,165 @@
+schema_version: "1"
+inventory_type: "vm_aarch64_toolchain_setup"
+audited_at: "2026-07-27"
+audit_mode: "authorized_archive_extract_cross_compile_read_only_target_execution"
+execution_policy:
+  outer_sdk_modified: false
+  sdk_root_modified: false
+  baremetal_toolchain_extracted: false
+  vendor_scripts_run: false
+  buildroot_linux_uboot_fsbl_built: false
+  npu_demo_built: false
+  target_elf_executed: false
+  board_accessed: false
+  packages_installed: false
+  cmake_installed: false
+  qemu_installed: false
+  task_file_modified: false
+sources:
+  sdk_root: "/home/uisrc/vendor/anlogic/sdk/sdk"
+  outer_archive: "/home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz"
+  outer_archive_sha256: "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0"
+  remote_wrapper: "/home/dministrator/bin/anlogic-vm-ssh"
+outer_sdk_archive:
+  path: "/home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz"
+  size_bytes: 1368135226
+  sha256: "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0"
+  status: "unchanged"
+linux_toolchain_archive:
+  path: "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/dr1m_arm-gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar"
+  filename_format: ".tar"
+  detected_format: "XZ compressed data containing a tar stream"
+  size_bytes: 117896452
+  sha256: "3b6465fb91564b54bbdf9578b4cc3aa198dd363f7a43820eab06ea2932c8e0bf"
+  top_level_directory: "gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu"
+  member_count: 7575
+  path_traversal_members: 0
+  linux_compiler_member_count: 1
+  baremetal_compiler_member_count: 0
+  expected_target: "Linux AArch64"
+  identity_status: "CONFIRMED"
+extraction:
+  parent_directory: "/home/uisrc/vendor/anlogic/toolchains"
+  stable_root: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0"
+  method: "temporary_directory_then_atomic_directory_rename"
+  regular_files: 7152
+  directories: 330
+  symlinks: 93
+  other_file_types: 0
+  total_size_bytes: 784793189
+  original_archive_preserved: true
+  status: "PASS"
+  baremetal_target_present: false
+compiler:
+  root: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0"
+  cross_prefix: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-"
+  gcc: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-gcc"
+  gxx: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-g++"
+  ld: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-ld"
+  readelf: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-readelf"
+  strip: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-strip"
+  version: "7.5.0 (Linaro GCC 7.5-2019.12)"
+  target_triple: "aarch64-linux-gnu"
+  dumpversion: "7.5.0"
+  thread_model: "posix"
+  architecture: "AArch64 / ELF64"
+  status: "VERIFIED"
+sysroot:
+  path: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc"
+  compiler_print_sysroot: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/../aarch64-linux-gnu/libc"
+  c_headers:
+    - "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc/usr/include/stdio.h"
+    - "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc/usr/include/stdlib.h"
+  cxx_include: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/include/c++"
+  compiler_reported_files:
+    libc: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc/usr/lib/libc.so"
+    libstdcxx: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/lib64/libstdc++.so"
+    crt1: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc/usr/lib/crt1.o"
+    crti: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc/usr/lib/crti.o"
+    crtn: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc/usr/lib/crtn.o"
+    loader: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc/lib/ld-linux-aarch64.so.1"
+    libgcc: "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/lib64/libgcc_s.so.1"
+  libc_evidence: "glibc 2.25 ELF64 AArch64 runtime observed from libc-2.25.so and GLIBC_2.17-linked hello output"
+  linker_script_caveat: "libc.so and libstdc++.so are linker scripts/symlinks; compiler-reported paths and the target ELF runtime files were checked instead of treating linker scripts as ELF files."
+  status: "VERIFIED"
+runtime_elf:
+  libc: "ELF64 AArch64 DYN; SONAME libc.so.6; NEEDED ld-linux-aarch64.so.1"
+  libstdcxx: "ELF64 AArch64 DYN; SONAME libstdc++.so.6; NEEDED libm.so.6, libc.so.6, libgcc_s.so.1"
+  loader: "ELF64 AArch64 DYN; SONAME ld-linux-aarch64.so.1"
+  status: "VERIFIED"
+hello_smoke:
+  build_root: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke"
+  sources:
+    c: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke/hello_c.c"
+    cpp: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke/hello_cpp.cpp"
+  flags:
+    c: "-O2 -g -Wall -Wextra -Werror"
+    cpp: "-O2 -g -Wall -Wextra -Werror -std=c++14"
+  dynamic_c:
+    artifact: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke/hello_c"
+    status: "BUILT"
+    elf: "ELF64 AArch64 EXEC; interpreter /lib/ld-linux-aarch64.so.1; NEEDED libc.so.6"
+  dynamic_cpp:
+    artifact: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke/hello_cpp"
+    status: "BUILT"
+    elf: "ELF64 AArch64 EXEC; interpreter /lib/ld-linux-aarch64.so.1; NEEDED libstdc++.so.6, libm.so.6, libgcc_s.so.1, libc.so.6"
+  static_c:
+    artifact: "/home/uisrc/vendor/anlogic/builds/toolchain_smoke/hello_c_static"
+    status: "BUILT"
+    elf: "ELF64 AArch64 EXEC; statically linked; no interpreter or NEEDED entries"
+  target_execution: "NOT_RUN_BY_POLICY"
+  status: "PASS"
+decisions:
+  toolchain_archive_identity: "CONFIRMED"
+  compiler: "VERIFIED"
+  target_triple: "MATCH"
+  sysroot: "VERIFIED"
+  c_dynamic: "BUILT"
+  cpp_dynamic: "BUILT"
+  c_static: "BUILT"
+  transfer_to_board_for_execution: "HOLD"
+  install_cmake: "HOLD"
+  compile_npu_demo: "HOLD"
+  rationale:
+    - "The cross compiler, sysroot, and AArch64 ELF link outputs are verified."
+    - "The target board libc, loader, filesystem layout, and runtime library closure were not verified in this task."
+    - "CMake is not required for this smoke build and remains uninstalled."
+    - "NPU demo build remains outside this task and still has unresolved package and board-runtime prerequisites."
+evidence:
+  remote_log_root: "/home/uisrc/vendor/anlogic/logs/toolchain_setup"
+  files:
+    - "archive_identity.txt"
+    - "archive_members.txt"
+    - "compiler_versions.txt"
+    - "extraction_summary.txt"
+    - "hello_build_commands.txt"
+    - "hello_build_output.txt"
+    - "hello_elf_inspection.txt"
+    - "linux_toolchain_members.txt"
+    - "runtime_elf.txt"
+    - "sdk_archive_members.txt"
+    - "sysroot_inventory.txt"
+  local_scripts:
+    - "scripts/vendor/anlogic_vm_toolchain_env.sh"
+    - "scripts/vendor/validate_vm_aarch64_toolchain.sh"
+evidence_brief:
+  task: "SDK_2025_07 Linux AArch64 toolchain deployment and validation"
+  board: "Not connected; board identity/runtime not verified in this task"
+  sdk_tag: "SDK_2025_07 from existing SDK release marker"
+  repository_tag_commit: "not applicable; no vendor repository substitution"
+  sources_consulted:
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/dr1m_arm-gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar"
+    - "/home/uisrc/vendor/anlogic/logs/toolchain_setup"
+    - "/home/uisrc/vendor/anlogic/builds/toolchain_smoke"
+  documented_facts:
+    - "The nested archive contains a Linux aarch64-linux-gnu compiler family and no aarch64-none-elf-gcc member."
+    - "The compiler reports target aarch64-linux-gnu and version 7.5.0."
+    - "Dynamic and static C, plus dynamic C++, link to AArch64 ELF artifacts."
+  source_code_facts:
+    - "No vendor SDK build script was invoked."
+  assumptions: []
+  conflicts: []
+  unresolved_blockers:
+    - "Board-side loader, glibc compatibility, deployment transport, and runtime execution remain unverified."
+    - "NPU demo package closure and CMake prerequisites remain outside this task."
+  proposed_action: "Obtain an approved board-runtime check before executing the hello artifacts; keep CMake and NPU demo build on HOLD."

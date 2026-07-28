@@ -1,0 +1,16 @@
+schema_version: "1"
+board_model: unknown
+board_revision: unknown
+milianke_bundle_version: unknown
+anlogic_linux_sdk_tag: unknown
+dr1_demo_prjs_branch: unknown
+dr1_demo_prjs_commit: unknown
+dr1m90_npu_branch: unknown
+dr1m90_npu_tag: unknown
+dr1m90_npu_commit: unknown
+wiki_snapshot_date: unknown
+notes:
+  - "The official dr1m90_npu repository is tagged SDK_2026.01, but that tag is not evidence of a matching local Linux SDK."
+  - "The local soc_sdk/.metadata/version.ini explicitly identifies Eclipse platform 4.17.0.v20200902-1800, not an SDK release."
+  - "Local Makefiles explicitly select CHIP=dr1m90, ARMv8_STATE=64, ARCH_ABI=aarch64, armv8-a, and cortex-a35 source rules; compiler version, sysroot, libc, Buildroot, and Linux SDK tag remain unknown."
+  - "The local documents contain REV2025/REV2024 document revisions, but no explicit Linux SDK tag."

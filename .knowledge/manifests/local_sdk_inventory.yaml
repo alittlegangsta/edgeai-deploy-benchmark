@@ -1,0 +1,227 @@
+schema_version: "1"
+scan_root: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA"
+scanned_at: "2026-07-24T10:47:10+08:00"
+scan_mode: "metadata_and_small_text_only"
+body_parsing: false
+archives_extracted: false
+sdk_candidates:
+  - id: "secondary_development_soc_sdk"
+    path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo/soc_sdk"
+    type: "FPSoC bare-metal SDK/example workspace"
+    status: "candidate_not_linux_sdk"
+    file_size: unknown
+    modified_at: "2025-08-11"
+    sha256: unknown
+    evidence:
+      - path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo/soc_sdk/soc_base/Makefile"
+        lines: "11-13,23,76-88"
+        value: "SDK_ROOT=. and CHIP=dr1m90; COMPILE_PREFIX is empty by default; ARMv8_STATE=64 derives ARCH_ABI=aarch64 and includes tools/make/rules.mk."
+        strength: "explicit"
+      - path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo/soc_sdk/.metadata/version.ini"
+        lines: "1-3"
+        value: "org.eclipse.platform=4.17.0.v20200902-1800"
+        strength: "explicit"
+        interpretation: "Eclipse platform metadata, not a Linux SDK release identifier."
+    notes: "Contains FPSoC firmware/FSBL sources and generated platform artifacts; no Linux rootfs, Buildroot tree, sysroot, or packaged host compiler was identified."
+  - id: "soc_linux_course_tree"
+    path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux"
+    type: "Linux course/source tree with generated example outputs"
+    status: "not_complete_sdk"
+    file_size: unknown
+    modified_at: "2025-10-15"
+    sha256: unknown
+    evidence:
+      - path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/F3P_DR1M90G资料大纲.txt"
+        lines: "37-45"
+        value: "3-4_ex_soc_linux contains an ebook and two named Linux example archives: 01_ex_linux_base_F3P_DR1M90G and 02_ex_linux_drive_F3P_DR1M90G."
+        strength: "explicit"
+      - path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux/Sourcecode/1.HelloWorld/Makefile"
+        lines: "5,17"
+        value: "Example Makefile documents /home/uisrc/uisrc-lab-anlogic/tools/aarch64-linux/bin/aarch64-linux-gnu- as CROSS_COMPILE."
+        strength: "explicit"
+        interpretation: "A source/documented path only; the path is not present on this host and is not proof of an installed SDK."
+    notes: "The tree includes prebuilt .ko/.o/ELF artifacts and project-generated HPF/bitstream files; generated outputs were not treated as an SDK or runtime."
+  - id: "secondary_demo_archive"
+    path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo.zip"
+    type: "zip archive"
+    status: "candidate_unknown"
+    file_size: 114924599
+    modified_at: "2025-09-23 13:16:05+08:00"
+    sha256: "62b713f4bb0facb26544f5fe8e470866046234016ccc9c97d54debabccd263c9"
+    internal_listing: "not_read"
+    notes: "Archive name does not establish Linux SDK identity; not extracted."
+  - id: "linux_base_archive"
+    path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux/01_ex_linux_base_F3P_DR1M90G.zip"
+    type: "zip archive"
+    status: "candidate_unknown"
+    file_size: 121364628
+    modified_at: "2025-09-23 11:00:23+08:00"
+    sha256: "07f1ea03f8dcc60b73e2ecda8427a3238a50e2e8e414ef09659c101cf1161849"
+    internal_listing: "not_read"
+    notes: "The outline labels this as a Linux basics example archive, not a versioned SDK package; not extracted."
+  - id: "linux_driver_archive"
+    path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux/02_ex_linux_drive_F3P_DR1M90G.zip"
+    type: "zip archive"
+    status: "candidate_unknown"
+    file_size: 1040244482
+    modified_at: "2025-09-24 11:39:34+08:00"
+    sha256: "8e2482145481fd1eb9e3e7799371052f670d52005b9fb54e04281e0d2d4289ab"
+    internal_listing: "not_read"
+    notes: "The outline labels this as a Linux driver-development archive; it is not evidence of a matching SDK and was not extracted."
+selected_candidate: unknown
+sdk_version: unknown
+sdk_version_evidence:
+  - path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo/soc_sdk/.metadata/version.ini"
+    lines: "1-3"
+    raw_value: "org.eclipse.platform=4.17.0.v20200902-1800"
+    conclusion: "Not a Linux SDK version"
+    strength: "explicit"
+  - path: "qmd://milianke-dr1-p0/sdk/3-2-01-米联客2024版fpsoc-sdk入门篇.pdf"
+    lines: "7-9"
+    raw_value: "版本REV2025; 时间06/20/2025"
+    conclusion: "Document revision only; no SDK tag"
+    strength: "explicit"
+  - path: "qmd://milianke-dr1-p0/linux-ebook/ebook/3-4-01-米联客2024版安路f3p-cz02-fpsoc-linux基础入门篇.pdf"
+    lines: "7-9"
+    raw_value: "版本REV2024; 时间2025/05/27"
+    conclusion: "Document revision only; no SDK tag"
+    strength: "explicit"
+buildroot_version: unknown
+kernel_version: unknown
+target_arch: "aarch64"
+target_arch_evidence:
+  - path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo/soc_sdk/soc_base/tools/make/rules.mk"
+    lines: "37-42"
+    value: "ARMv8_STATE=64 derives armv8-a/aarch64 and MTUNE=cortex-a35."
+    strength: "explicit"
+    scope: "source build-rule configuration, not a verified board runtime fact"
+compiler:
+  path: unknown
+  documented_paths:
+    - "/home/uisrc/uisrc-lab-anlogic/tools/aarch64-linux/bin/aarch64-linux-gnu-gcc"
+    - "/home/uisrc/uisrc-lab-anlogic/tools/aarch64-linux/bin/aarch64-linux-gnu-g++"
+  host_command_names_found: []
+  documented_paths_present_on_host: false
+  version: unknown
+  target_triplet: unknown
+  sysroot: unknown
+  libc: unknown
+  notes: "The local files document a CROSS_COMPILE path, but no matching executable was found and no compiler was run."
+sysroot: unknown
+rootfs: unknown
+armnn:
+  status: missing
+  path: unknown
+  evidence: "The local materials contain no Arm NN library directory; the official repository expects SDK-provided npu_demo/libs/armnn_lib."
+opencv:
+  status: missing
+  path: unknown
+  expected_official_version: "4.7.0"
+  evidence: "No AArch64 OpenCV package or CMake package was found in the scanned local materials; the official build script expects ffmpeg_opencv4.7.0_aarch64."
+npu_runtime:
+  status: unknown
+  path: unknown
+  evidence:
+    - "The approved APUG1205 qmd result shows placeholder -lnpu_runtime flags, not a local path."
+    - "The official repository's NPU/model assets are Git LFS pointers; no runtime binary was downloaded."
+kernel_modules:
+  status: unknown
+  path: unknown
+  evidence: "Example .ko files exist in the Linux course tree, but no target kernel module set or kernel build tree was identified."
+hpf_bitstream:
+  status: present_generated_examples
+  path_examples:
+    - "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo/soc_hw/system.hpf"
+    - "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo/soc_sdk/soc_base/platform/system.bit"
+  compatibility: unknown
+  notes: "These are project outputs; no NPU-enabled HPF/bitstream identity matching SDK_2026.01 was established."
+archives:
+  - path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/01_start/02_start_Linux/04_secondary_developmemt/demo.zip"
+    file_type: zip
+    file_size: 114924599
+    modified_at: "2025-09-23 13:16:05+08:00"
+    sha256: "62b713f4bb0facb26544f5fe8e470866046234016ccc9c97d54debabccd263c9"
+    extracted: false
+  - path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux/01_ex_linux_base_F3P_DR1M90G.zip"
+    file_type: zip
+    file_size: 121364628
+    modified_at: "2025-09-23 11:00:23+08:00"
+    sha256: "07f1ea03f8dcc60b73e2ecda8427a3238a50e2e8e414ef09659c101cf1161849"
+    extracted: false
+  - path: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/03_demo/3-4_ex_soc_linux/02_ex_linux_drive_F3P_DR1M90G.zip"
+    file_type: zip
+    file_size: 1040244482
+    modified_at: "2025-09-24 11:39:34+08:00"
+    sha256: "8e2482145481fd1eb9e3e7799371052f670d52005b9fb54e04281e0d2d4289ab"
+    extracted: false
+compatibility_with_dr1m90_npu:
+  official_repository: "/home/dministrator/vendor/anlogic-dr1-knowledge/anlogic/repos/dr1m90_npu"
+  official_tag: "SDK_2026.01"
+  official_commit: "a06f09a23582900e2b8843d564ea28db679649a5"
+  official_tag_object: "05c0672ab564405248af2e7d09845960b6c389d3"
+  status: "unknown"
+  matrix:
+    - item: "SDK tag identity"
+      official_requirement: "SDK tag must match SDK_2026.01"
+      local_finding: "No explicit local Linux SDK tag"
+      status: "unknown"
+      evidence: "Official README.md:21; local version evidence above"
+    - item: "DR1M90 chip/source family"
+      official_requirement: "dr1m90_npu source"
+      local_finding: "Makefiles use CHIP=dr1m90"
+      status: "probable_match"
+      evidence: "soc_base/Makefile:13"
+    - item: "AArch64 target"
+      official_requirement: "aarch64-linux toolchain"
+      local_finding: "Rules derive armv8-a/aarch64 and cortex-a35"
+      status: "probable_match"
+      evidence: "soc_base/tools/make/rules.mk:37-42"
+    - item: "AArch64 compiler"
+      official_requirement: "toolchains/aarch64-linux/bin/aarch64-linux-gnu-gcc/g++"
+      local_finding: "No executable at documented path or in PATH"
+      status: "missing"
+      evidence: "Host command/path checks; no compiler invoked"
+    - item: "sysroot and libc"
+      official_requirement: "SDK-provided Linux target environment"
+      local_finding: "No sysroot or libc identity"
+      status: "missing"
+      evidence: "No sysroot/toolchain directory found in scanned roots"
+    - item: "Buildroot environment"
+      official_requirement: "SDK envsetup.sh/build.sh and Buildroot config"
+      local_finding: "Buildroot guide exists, but no Buildroot tree/envsetup/build.sh was found"
+      status: "missing"
+      evidence: "qmd searches and bounded filename scan"
+    - item: "Arm NN"
+      official_requirement: "npu_demo/libs/armnn_lib"
+      local_finding: "No local Arm NN library"
+      status: "missing"
+      evidence: "Official repo path check"
+    - item: "AArch64 OpenCV"
+      official_requirement: "ffmpeg_opencv4.7.0_aarch64"
+      local_finding: "No local AArch64 OpenCV package"
+      status: "missing"
+      evidence: "Official build.sh:22-23; local path scan"
+    - item: "NPU runtime"
+      official_requirement: "SDK/runtime libraries and kernel support"
+      local_finding: "No local runtime path; APUG1205 only has placeholder flags"
+      status: "unknown"
+      evidence: "APUG1205 qmd result; LFS content not downloaded"
+    - item: "HPF/bitstream"
+      official_requirement: "NPU-compatible HPF selected in SDK"
+      local_finding: "Generated example HPF/bit files exist; identity is unverified"
+      status: "unknown"
+      evidence: "Metadata-only path scan"
+unresolved_questions:
+  - "Which exact local archive or directory, if any, is the Linux SDK corresponding to SDK_2026.01?"
+  - "What are the SDK tag, Buildroot revision, kernel version, libc ABI, and sysroot path?"
+  - "Where is the matching aarch64-linux-gnu compiler and what are its --version and -print-sysroot outputs?"
+  - "Are the generated HPF/bitstream files intended for DR1M90 NPU use, and which SDK/revision produced them?"
+  - "Which Arm NN, OpenCV 4.7.0 AArch64, NPU runtime, kernel modules, and pkg-config/CMake files belong to the target SDK?"
+  - "Can the board boot the corresponding rootfs and accept the official repository's SDK_2026.01 build?"
+notes:
+  - "The official dr1m90_npu annotated tag SDK_2026.01 peels to a06f09a23582900e2b8843d564ea28db679649a5; the checked-out release branch is a later commit and is not an exact tag checkout."
+  - "The official dr1m90_npu tag SDK_2026.01 is not evidence that any local SDK has the same tag."
+  - "The pre-existing repositories.yaml records the release-branch HEAD as checked_out_commit; this audit records the tag object and peeled tag commit separately to avoid treating the branch HEAD as the SDK tag."
+  - "dr1_demo_prjs branch 2026.1 has no tag; the shared text 2026.1 is not promoted to compatibility with SDK_2026.01."
+  - "The local FPSoC SDK workspace is useful source-code evidence for DR1M90/aarch64 build rules but is not a verified Linux SDK."
+  - "No archive was extracted; no compilation, demo execution, SDK download, Git LFS download, or qmd embed/query/vector search was performed."

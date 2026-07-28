@@ -1,0 +1,195 @@
+schema_version: "1"
+inventory_type: "read_only_npu_demo_dependency_audit"
+audited_at: "2026-07-24"
+audit_mode: "metadata_and_small_text_only"
+execution_policy:
+  compiled: false
+  vendor_scripts_run: false
+  demo_run: false
+  sdk_extracted: false
+  packages_installed: false
+  kernel_modules_loaded: false
+  model_configured: false
+  task_file_modified: false
+sdk:
+  root: "/home/uisrc/vendor/anlogic/sdk/sdk"
+  archive: "/home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz"
+  archive_sha256: "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0"
+  release_marker:
+    path: "/home/uisrc/vendor/anlogic/sdk/sdk/buildroot/rel_ver"
+    value: "SDK_2025_07"
+    evidence_strength: "explicit"
+demo:
+  root: "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo"
+  regular_file_count: 1321
+  directory_count: 460
+  symlink_count: 0
+  tree_log: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/demo_tree.txt"
+  tree_summary_log: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/demo_tree_summary.txt"
+  notes:
+    - "The tree contains a Milianke PDF, boot artifacts, soc_prj hardware sources, soc_sdk firmware/FSBL sources, and face_detection.tar.gz."
+    - "No Linux Arm NN application source was found under the copied Demo tree; the Linux NPU build path is in the SDK app/npu tree."
+  model_and_run_assets:
+    model_archive: "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo/demo/sdk/face_detection.tar.gz"
+    model_archive_status: "present_not_opened"
+    sdk_run_script_directory: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/demo_scripts"
+    example_script_observed: "run_yolo_pic.sh"
+    scripts_executed: false
+build_dependencies:
+  compiler:
+    expected_prefixes:
+      - "aarch64-linux-gnu-"
+      - "aarch64-none-elf-"
+    expected_paths:
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/aarch64-linux/bin/aarch64-linux-gnu-gcc"
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/aarch64-linux/bin/aarch64-linux-gnu-g++"
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/aarch64-bm/bin/aarch64-none-elf-gcc"
+    status: "missing_not_extracted"
+    version: "unknown"
+    sysroot: "unknown"
+    evidence:
+      - "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/demo_build_references.txt"
+      - "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/toolchain_archive_inventory.txt"
+  sysroot:
+    status: "missing"
+    path: "unknown"
+    evidence: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/cmake_requirements.txt"
+  build_system:
+    demo_soc_sdk: "Makefiles for FPSoC firmware/FSBL; not a Linux CMake application"
+    sdk_linux_npu: "CMake invoked by SDK app/npu/build.sh"
+    build_command_reference: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/build.sh"
+  environment_variables:
+    - "Armnn_DIR"
+    - "OpenCV_DIR"
+    - "LD_LIBRARY_PATH"
+  build_evidence_log: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/demo_build_references.txt"
+runtime_components:
+  armnn:
+    status: "AARCH64_ARMNN_BUNDLE_CONFIRMED"
+    root: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib"
+    version: "32.1.0"
+    parser_version: "24.6.0"
+    architecture: "AArch64 ELF64 shared libraries"
+    evidence:
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib/include/armnn/Version.hpp"
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib/include/armnnOnnxParser/Version.hpp"
+      - "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/armnn_inventory.txt"
+      - "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/armnn_elf.txt"
+    observed_components:
+      - "include/armnn"
+      - "include/armnnOnnxParser"
+      - "lib/cmake/armnn/ArmnnConfig.cmake"
+      - "libarmnn.so.32.1"
+      - "libarmnnOnnxParser.so.24.6"
+      - "libarmnnBasePipeServer.so.32.1"
+      - "libarmnnUtils.a"
+      - "libprotobuf.so.23.0.0"
+    caveats:
+      - "Arm NN core/parser/backend ELF architecture and version are confirmed by headers and readelf."
+      - "ArmnnTargets-release.cmake refers to serializer/deserializer files not present in the inspected lib directory."
+      - "libprotoc.so.* is listed by build.sh but was not found."
+      - "Runtime load and board driver operation were not tested."
+  opencv:
+    status: "AARCH64_OPENCV_4_7_CONFIRMED"
+    root: "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64"
+    version: "4.7.0"
+    architecture: "AArch64 ELF64 shared libraries"
+    evidence:
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/include/opencv4/opencv2/core/version.hpp"
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/cmake/opencv4/OpenCVConfig.cmake"
+      - "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/opencv_inventory.txt"
+      - "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/opencv_elf.txt"
+    modules_observed:
+      - "core"
+      - "imgproc"
+      - "imgcodecs"
+      - "dnn"
+      - "videoio"
+      - "highgui"
+    caveats:
+      - "OpenCV libraries have a build-host RPATH referring to /home/rtxiao/repos/ffmpeg/ffmpeg_opencv4.7.0_aarch64/lib. Relocation and runtime loading remain unverified."
+      - "VideoIO libraries have FFmpeg dependencies."
+  npu_interface:
+    classification: "ARMNN_CUSTOM_BACKEND"
+    standalone_libnpu_runtime: "not_found"
+    backend_id_evidence: "Demo source selects BackendId string Alnpu,CpuAcc,CpuRef."
+    runtime_library_evidence:
+      - "libarmnn.so.32.1 contains AlnpuBackend, ALHardNPU and /dev/hard_npu strings."
+      - "SDK app/npu CMake links armnn, armnnUtils, armnnOnnxParser, protobuf and fmt; no libnpu_runtime is linked."
+    device_nodes_observed_in_strings:
+      - "/dev/hard_npu"
+      - "/dev/soft_npu"
+    evidence: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/npu_interface_inventory.txt"
+    caveat: "This is a source/ELF interface classification, not a successful board runtime observation."
+drivers_and_hardware:
+  kernel_module_binaries:
+    count: 0
+    status: "not_found"
+    evidence: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/driver_inventory.txt"
+  driver_sources:
+    status: "source_present_binary_missing"
+    paths:
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu/cma_mem_driver/cma_mem.c"
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu/hard_npu_driver/hard_npu.c"
+      - "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu/soft_npu_driver/soft_npu.c"
+  hpf_count: 21
+  bitstream_count: 25
+  boot_artifacts_observed: true
+  hardware_artifact_evidence: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/hardware_artifact_inventory.txt"
+  provenance_status: "unknown"
+toolchain_archives:
+  status: "MATCHING_TOOLCHAIN_ARCHIVE_FOUND"
+  entries:
+    - path: "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/dr1m_arm-gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar"
+      prefix: "aarch64-linux-gnu-"
+      version_marker: "GCC Linaro 7.5.0-2019.12"
+      extracted: false
+    - path: "/home/uisrc/vendor/anlogic/sdk/sdk/toolchains/dr1m_arm-gnu-toolchain-12.3.rel1-x86_64-aarch64-none-elf.tar.xz"
+      prefix: "aarch64-none-elf-"
+      version_marker: "12.3.rel1"
+      extracted: false
+  evidence: "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/toolchain_archive_inventory.txt"
+  caveat: "Archive prefixes match documented families, but compiler --version and sysroot were not validated because extraction is prohibited."
+cmake:
+  minimum_required_observed: "3.15"
+  current_vm_status: "not_found"
+  evidence:
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/demo_src/CMakeLists.txt"
+    - "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/demo_src/npu_flow/CMakeLists.txt"
+    - "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit/cmake_requirements.txt"
+compatibility:
+  classification: "DEMO_LIKELY_MATCHES_SDK_2025_07"
+  rationale:
+    - "SDK release marker is explicitly SDK_2025_07."
+    - "Demo IDE metadata says 2025.07 and its source rule carries SDK_VERSION=20250905."
+    - "Demo targets DR1M90GEG400 and uses the same AArch64/FPSoC source layout."
+  limitation: "No explicit Demo SDK tag or manifest proves exact release identity; filename/date and layout evidence are not promoted to an exact match."
+decisions:
+  extract_toolchain: "GO_NEXT_PHASE_WITH_APPROVAL"
+  install_cmake: "HOLD"
+  build_aarch64_hello_world: "HOLD"
+  build_minimal_npu_demo: "HOLD"
+  reason: "Compiler is unextracted, CMake is absent, sysroot and kernel modules are unvalidated, and Arm NN/OpenCV package closure has known missing files."
+evidence_brief:
+  task: "SDK_2025_07 and Milianke 05-5 NPU dependency audit"
+  board: "DR1M90GEG400 / Milianke 05-5 Demo context"
+  sdk_tag: "SDK_2025_07"
+  repository_tag_commit: "not used for this audit; SDK_2026.01 was not substituted"
+  sources_consulted:
+    - "/home/uisrc/vendor/anlogic/sdk/sdk"
+    - "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo"
+    - "/home/uisrc/vendor/anlogic/logs/npu_dependency_audit"
+  documented_facts:
+    - "SDK buildroot/rel_ver identifies SDK_2025_07."
+    - "SDK build.sh points to Arm NN and OpenCV 4.7 package directories."
+  source_code_facts:
+    - "Demo source selects Arm NN Alnpu backend identifiers."
+    - "Demo source contains DR1M90 and AArch64 build settings."
+  assumptions: []
+  conflicts:
+    - "Demo has 2025.07 IDE metadata and SDK_VERSION=20250905 but no explicit SDK_2025_07 tag."
+  unresolved_blockers:
+    - "Compiler/sysroot not extracted or validated."
+    - "No kernel module binaries and no runtime board observation."
+    - "Arm NN CMake target closure and OpenCV runtime relocation need validation."
+  proposed_action: "Obtain explicit approval to extract only the required toolchain metadata, then validate a minimal AArch64 build before any NPU demo build."

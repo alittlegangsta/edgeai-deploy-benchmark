@@ -1,0 +1,171 @@
+schema_version: "1"
+audit:
+  audited_at: "2026-07-24T16:57:28+08:00"
+  remote_wrapper: /home/dministrator/bin/anlogic-vm-ssh
+  staging_script: scripts/vendor/stage_vm_vendor_inputs.sh
+  current_script_can_extract: false
+  script_history_matches: []
+  operation_scan:
+    tar_extract: false
+    unzip: false
+    seven_zip_extract: false
+    rsync_to_sdk: false
+    cp_to_sdk: false
+    sdk_tree_creation: false
+    notes: "The script creates /home/uisrc/vendor/anlogic/sdk as a parent directory only; its cp -a operation targets the Demo destination."
+  history_note: "Only direct SDK-related history patterns were searched; shell history can be incomplete and does not prove that an unrecorded command never ran."
+archive:
+  path: /home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz
+  sha256: c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0
+  size_bytes: 1368135226
+  listing_exit_code: 0
+  member_count: 138211
+  directory_entries: 12577
+  non_directory_entries: 125634
+  top_level_entries:
+    - sdk
+  second_level_entries:
+    - sdk/app
+    - sdk/buildroot
+    - sdk/build.sh
+    - sdk/CHANGELOG.md
+    - sdk/device
+    - sdk/envsetup.sh
+    - sdk/fsbl
+    - sdk/.gitignore
+    - sdk/.gitmodules
+    - sdk/LICENSE
+    - sdk/linux
+    - sdk/opensbi
+    - sdk/README.md
+    - sdk/toolchains
+    - sdk/tools
+    - sdk/u-boot
+    - sdk/xenomai
+  logs:
+    members: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/archive_members.txt
+    paths: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/archive_paths.txt
+    structure: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/archive_structure.txt
+    listing_status: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/archive_listing_status.txt
+expanded_tree:
+  path: /home/uisrc/vendor/anlogic/sdk/sdk
+  stat:
+    birth: unknown
+    change: "2026-07-24 15:16:15.788723134 +0800"
+    modify: "2025-09-08 10:31:53 +0800"
+    access: "2026-07-24 15:16:26.541535756 +0800"
+    owner: uisrc
+    group: uisrc
+    mode: "0755"
+    type: directory
+    creation_time_interpretation: "Birth is unavailable; mtime is not a creation timestamp and ctime is a metadata-change timestamp."
+  counts:
+    regular_files: 125421
+    directories: 12577
+    symlinks: 213
+    other: 0
+    disk_usage: "3.0G"
+  logs:
+    filesystem_stat: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/filesystem_stat.txt
+    tree_summary: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/tree_summary.txt
+    paths: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/tree_paths.txt
+path_comparison:
+  archive_paths: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/archive_paths.txt
+  tree_paths: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/tree_paths.txt
+  only_in_archive: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/only_in_archive.txt
+  only_in_tree: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/only_in_tree.txt
+  only_in_archive_count: 0
+  only_in_tree_count: 0
+  status: exact_path_set_match
+tar_compare:
+  command: "tar -df /home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz -C /home/uisrc/vendor/anlogic/sdk"
+  exit_code: 1
+  difference_lines: 137998
+  content_difference_lines: 0
+  size_difference_lines: 0
+  type_or_missing_difference_lines: 0
+  metadata_difference_lines: 137998
+  metadata_difference_kind: mode_only
+  output: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit/tar_compare.txt
+  interpretation: "All reported differences are Mode differs. Path sets, entry types, sizes, and archive data comparison show no content or completeness difference."
+version_evidence:
+  sdk_version: SDK_2025_07
+  sdk_version_strength: explicit
+  records:
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/buildroot/rel_ver
+      line: 1
+      raw_value: SDK_2025_07
+      conclusion: "Explicit SDK release marker for the expanded tree and corresponding archive."
+      strength: explicit
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/README.md
+      lines: "1-45"
+      raw_value: "fpsoc-sdk; Ubuntu 18.04/20.04/22.04/23.04 support; documented toolchain paths"
+      conclusion: "Top-level SDK README; it does not state SDK_2026.01."
+      strength: explicit
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/README.md
+      lines: "45-47"
+      raw_value: "toolchains/aarch64-linux/bin/aarch64-linux-gnu-gcc and aarch64-bm/bin/aarch64-none-elf-gcc"
+      conclusion: "Documented paths only; the corresponding executable paths are not present in the tree."
+      strength: explicit
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/toolchains/dr1m_arm-gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar
+      raw_value: "filename identifies a Linaro 7.5.0/2019.12 AArch64 Linux toolchain archive"
+      conclusion: "Archive is present but not extracted or executed; compiler version remains unverified."
+      strength: filename_only
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/app/npu/build.sh
+      lines: "20-31"
+      raw_value: "aarch64-linux-gnu-gcc/g++ and ffmpeg_opencv4.7.0_aarch64"
+      conclusion: "NPU demo build-script references; script was not executed."
+      strength: explicit
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib
+      raw_value: "Arm NN headers, CMake files, and libraries are present"
+      conclusion: "Presence is verified by path metadata only; ABI and runtime compatibility are unverified."
+      strength: explicit
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64
+      raw_value: "AArch64 OpenCV/FFmpeg directory with OpenCV 4.7.0-named libraries"
+      conclusion: "Presence is verified by path metadata only; target compatibility is unverified."
+      strength: explicit
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/app/npu/readme.md
+      line: 60
+      raw_value: "DR1M90 uses buildroot/configs/anlogic_dr1m90_defconfig"
+      conclusion: "NPU demo documentation names the DR1M90 Buildroot defconfig; no SDK_2026.01 claim."
+      strength: explicit
+  toolchain_paths:
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/toolchains/aarch64-linux/bin/aarch64-linux-gnu-gcc
+      status: missing_not_extracted
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/toolchains/aarch64-linux/bin/aarch64-linux-gnu-g++
+      status: missing_not_extracted
+    - path: /home/uisrc/vendor/anlogic/sdk/sdk/toolchains/aarch64-bm/bin/aarch64-none-elf-gcc
+      status: missing_not_extracted
+compatibility:
+  official_repository: /home/dministrator/vendor/anlogic-dr1-knowledge/anlogic/repos/dr1m90_npu
+  official_tag: SDK_2026.01
+  official_commit: a06f09a23582900e2b8843d564ea28db679649a5
+  local_sdk_version: SDK_2025_07
+  status: mismatch
+  evidence: "Expanded tree buildroot/rel_ver explicitly reports SDK_2025_07; the official repository requires its SDK tag to match SDK_2026.01."
+assessment:
+  local_modifications: "No content, size, type, missing, or extra-entry differences detected; mode metadata differs for 137998 entries."
+  credibility: MATCH_WITH_METADATA_DIFFERENCES
+  decision: HOLD
+  rationale: "The tree is content-equivalent to the supplied archive, but metadata is not identical and the explicit SDK_2025_07 release marker does not match the official SDK_2026.01 requirement. Do not use it for SDK_2026.01 NPU work without human version approval."
+logs:
+  root: /home/uisrc/vendor/anlogic/logs/sdk_existing_tree_audit
+  required_files:
+    - filesystem_stat.txt
+    - tree_summary.txt
+    - history_matches.txt
+    - archive_members.txt
+    - archive_paths.txt
+    - tree_paths.txt
+    - only_in_archive.txt
+    - only_in_tree.txt
+    - tar_compare.txt
+    - version_evidence.txt
+    - summary.md
+safety:
+  archive_sha256_unchanged: true
+  expanded_tree_modified_by_audit: false
+  archive_reextracted: false
+  vendor_scripts_executed: false
+  compilation_performed: false
+  git_submission_performed: false

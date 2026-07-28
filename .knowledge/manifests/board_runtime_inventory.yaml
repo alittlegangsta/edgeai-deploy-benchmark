@@ -1,0 +1,146 @@
+schema_version: "1"
+inventory_type: board_runtime_inventory
+audited_at: "2026-07-27"
+audit_mode: ssh_read_only_board_runtime_and_emmc_audit
+execution_policy:
+  board_files_modified: false
+  modules_loaded_or_unloaded: false
+  vendor_demo_run: false
+  packages_installed: false
+  partitions_modified: false
+  task_file_modified: false
+  git_commit_created: false
+access:
+  wrapper: "/home/dministrator/bin/anlogic-board-ssh"
+  initial_probe: "PASS"
+  initial_probe_evidence: "results/logs/vendor/board_runtime/00_ssh_connectivity.log"
+identity:
+  user: "root"
+  hostname: "buildroot"
+  model: "Anlogic, DR1M90 FPSoc"
+  clock_observation: "Thu Jan 1 00:36:09 UTC 1970; board clock is not set"
+  evidence: "results/logs/vendor/board_runtime/01_runtime_environment.log"
+system:
+  os: "Buildroot"
+  os_version: "2022.02.6"
+  kernel: "6.1.111-rt42"
+  kernel_build: "#8 SMP PREEMPT Wed Jul 30 14:40:27 CST 2025"
+  architecture: "aarch64"
+  cpu:
+    architecture: "Armv8 / architecture 8"
+    implementer: "0x41"
+    part: "0xd04"
+    cores: 2
+  memory_total: "988.7M reported by free"
+  libc: "glibc 2.25"
+  compiler_in_kernel: "aarch64-linux-gnu-gcc (Linaro GCC 7.5-2019.12) 7.5.0"
+  evidence: "results/logs/vendor/board_runtime/01_runtime_environment.log"
+network:
+  eth0: "NO-CARRIER/down"
+  eth1: "UP/LOWER_UP, 192.168.50.2/24"
+  eth1_carrier: "1"
+  sshd: "OpenSSH_8.9p1, OpenSSL 1.1.1q 5 Jul 2022"
+  tcp22: "LISTEN on 0.0.0.0:22 and [::]:22"
+  evidence: "results/logs/vendor/board_runtime/01_runtime_environment.log"
+storage:
+  current_root: "/dev/mmcblk1p2"
+  current_root_fstype: "ext4"
+  boot_partition: "/dev/mmcblk1p1"
+  boot_partition_fstype: "vfat"
+  emmc_root_capacity: "7.0G"
+  emmc_boot_capacity: "97.5M"
+  cmdline: "root=/dev/mmcblk1p2 rootwait rootfstype=ext4 rw"
+  external_disk_boundary: "/dev/sda is an external Xilinx PetaLinux disk and is excluded"
+  boot_artifacts:
+    - path: "/mnt/mmcblk1p1/BOOT.bin"
+      sha256: "858cf78c03ae75c870587be77d70668e0ba4841448581273e5c996bf8f980706"
+    - path: "/mnt/mmcblk1p1/boot.scr"
+      sha256: "685f9f8cd4a1e43d79da0c78ab9591d3af1f744122e21a60b252b685ffad59d1"
+    - path: "/mnt/mmcblk1p1/system.dtb"
+      sha256: "aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f"
+    - path: "/mnt/mmcblk1p2/image/BOOT.bin"
+      sha256: "c9ddeb49b58c6d8f99b2a8d4bd5090ebd937428ca793860e6f78cfe86ce14089"
+    - path: "/mnt/mmcblk1p2/image/boot.scr"
+      sha256: "05825cd0060c9bedcc6d044d85993fd1dd342406a4ee95084b8684f630d81fed"
+    - path: "/mnt/mmcblk1p2/image/system.dtb"
+      sha256: "d27f44cd09514f881f1f884f517b369c27117f4b6409892f426384b9c5327e9e"
+  evidence:
+    - "results/logs/vendor/board_runtime/01_runtime_environment.log"
+    - "results/logs/vendor/board_runtime/04_emmc_tree_corrected.log"
+npu_observation:
+  device_nodes:
+    hard_npu: "NOT_PRESENT"
+    soft_npu: "NOT_PRESENT"
+    cma_mem: "NOT_PRESENT"
+  loaded_modules: "aic_load_fw only; no NPU module observed"
+  installed_module_metadata: "No NPU/CMA-specific module name found"
+  rootfs_name_search: "No NPU, Arm NN, runtime, kernel-module, HPF, bitstream, model, or demo marker found"
+  device_tree_model: "Anlogic, DR1M90 FPSoc"
+  config_gz: "NOT_AVAILABLE"
+  evidence:
+    - "results/logs/vendor/board_runtime/03_modules_and_npu.log"
+    - "results/logs/vendor/board_runtime/03b_module_matches.log"
+    - "results/logs/vendor/board_runtime/05_npu_search.log"
+    - "results/logs/vendor/board_runtime/01_runtime_environment.log"
+smoke:
+  expected_root: "/tmp/board_smoke"
+  previous_attempt: "NOT_RUN"
+  previous_blocker: "INPUT_PACKAGE_MISSING"
+  previous_permission_attempt:
+    execution_attempt: "BLOCKED_BEFORE_EXEC"
+    blocker: "FILE_NOT_EXECUTABLE"
+    shell_exit_code: 126
+    elf_runtime_result: "NOT_RUN"
+    note: "The shell rejected mode 0644 before entering the ELF; this was not an ELF runtime failure."
+  transfer:
+    source: "C:/Users/Administrator/Desktop/fpga_info/_generated/board_smoke_package"
+    method: "Windows OpenSSH scp.exe"
+    status: "PASS"
+    target: "/tmp/board_smoke"
+    file_count: 7
+  executable_permission_validation: "PASS"
+  permissions_before: "0644 for all three ELF files"
+  permissions_after: "0755 for all three ELF files"
+  hashes_before_equal_after: true
+  checksum_validation: "PASS"
+  status: "PASS"
+  static_c: "PASS; exit_code=0"
+  dynamic_c: "PASS; exit_code=0"
+  dynamic_cpp: "PASS; exit_code=0"
+  stdout:
+    static_c: "edgeai_arm_toolchain_hello_c; sizeof(void*)=8"
+    dynamic_c: "edgeai_arm_toolchain_hello_c; sizeof(void*)=8"
+    dynamic_cpp: "edgeai_arm_toolchain_hello_cpp\\nsizeof(void*)=8\\nvector_size=3"
+  stderr: "empty for all three programs"
+  evidence:
+    - "results/logs/vendor/board_runtime/06_smoke_execution.log"
+    - "results/logs/vendor/board_runtime/07_smoke_location.log"
+    - "results/logs/vendor/board_runtime/board_smoke_transfer.log"
+    - "results/logs/vendor/board_runtime/board_smoke_checksum.log"
+    - "results/logs/vendor/board_runtime/board_smoke_permissions.log"
+    - "results/logs/vendor/board_runtime/board_smoke_checksum_after_chmod.log"
+    - "results/logs/vendor/board_runtime/hello_c_static_runtime.log"
+    - "results/logs/vendor/board_runtime/board_smoke_summary.log"
+    - "results/logs/vendor/board_runtime/hello_c_dynamic_runtime.log"
+    - "results/logs/vendor/board_runtime/hello_cpp_dynamic_runtime.log"
+    - "results/logs/vendor/board_runtime/board_smoke_final_state.log"
+decisions:
+  board_toolchain_runtime: "PASS"
+  checksum_validation: "PASS"
+  static_c_runtime: "PASS"
+  dynamic_c_runtime: "PASS"
+  dynamic_cpp_runtime: "PASS"
+  board_toolchain_family_match: "CONFIRMED"
+  board_userspace_abi_compatibility: "CONFIRMED"
+  board_sdk_toolchain_match: "CONFIRMED"
+  board_full_sdk_match: "UNKNOWN"
+  board_npu_runtime_match: "NOT_APPLICABLE"
+  board_npu_device_ready: "NO"
+  board_npu_driver_present_on_disk: "NO"
+  board_npu_boot_asset_present: "UNKNOWN"
+  current_emmc_npu_ready: "NO"
+  notes:
+    - "Toolchain match is limited to the board kernel's Linaro GCC 7.5.0 identity and glibc 2.25; it does not prove the complete SDK package is installed on the board."
+    - "Generic BOOT.bin, boot.scr, and system.dtb files exist, but their opaque payload was not opened, so an NPU-specific boot asset is unknown."
+    - "The previous attempt was NOT_RUN because the input package was missing; it was not an execution failure."
+    - "The current package checksum passed; the authorized chmod 0755 changed only metadata, preserved all three SHA256 values, and enabled direct execution."

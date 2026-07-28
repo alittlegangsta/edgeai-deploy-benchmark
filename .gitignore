@@ -1,6 +1,10 @@
 build/
 cmake-build-*/
 .cache/
+.knowledge/local_paths.yaml
+.knowledge/cache/
+*.sqlite
+*.sqlite3
 .vscode/
 .idea/
 .venv/
@@ -26,4 +30,12 @@ models/**/*.torchscript
 results/videos/*
 data/samples/videos/*
 .agents/
+!.agents/
+.agents/*
+!.agents/skills/
+.agents/skills/*
+!.agents/skills/mineru-document-explorer/
+!.agents/skills/mineru-document-explorer/**
+!.agents/skills/dr1-vendor-doc-curator/
+!.agents/skills/dr1-vendor-doc-curator/**
 .codex/

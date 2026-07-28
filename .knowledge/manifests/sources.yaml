@@ -1,0 +1,42 @@
+schema_version: "1"
+sources:
+  - id: milianke_bundle
+    source_type: local_directory
+    authority_scope: board_level
+    source_location: "/mnt/c/Users/Administrator/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA"
+    local_location: "/home/dministrator/vendor/anlogic-dr1-knowledge/milianke/p0"
+    version: unknown
+    revision: unknown
+    retrieved_at: unknown
+    status: not_ingested
+    notes: "User-supplied local source location; contents have not been copied or audited."
+  - id: anlogic_wiki
+    source_type: official_wiki
+    authority_scope: chip_sdk_npu
+    source_location: "https://alwiki.anlogic.com"
+    local_location: "/home/dministrator/vendor/anlogic-dr1-knowledge/anlogic/wiki/snapshots"
+    version: unknown
+    revision: unknown
+    retrieved_at: unknown
+    status: not_snapshotted
+    notes: "Official location recorded for a future, separately authorized snapshot."
+  - id: dr1_demo_prjs
+    source_type: git_repository
+    authority_scope: sdk_examples_and_build
+    source_location: "https://gitee.com/anlogic/dr1_demo_prjs"
+    local_location: "/home/dministrator/vendor/anlogic-dr1-knowledge/anlogic/repos/dr1_demo_prjs"
+    version: unknown
+    revision: unknown
+    retrieved_at: unknown
+    status: not_cloned
+    notes: "Repository identity recorded; no network access or clone performed."
+  - id: dr1m90_npu
+    source_type: git_repository
+    authority_scope: npu_sdk_and_runtime
+    source_location: "https://gitee.com/anlogic/dr1m90_npu"
+    local_location: "/home/dministrator/vendor/anlogic-dr1-knowledge/anlogic/repos/dr1m90_npu"
+    version: unknown
+    revision: unknown
+    retrieved_at: unknown
+    status: not_cloned
+    notes: "Repository identity recorded; no network access or clone performed."

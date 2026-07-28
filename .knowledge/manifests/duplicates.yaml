@@ -1,0 +1,7 @@
+schema_version: "1"
+entries: []
+field_descriptions:
+  entries: "Reserved for reviewed duplicate groups; no deduplication has been performed."
+  canonical_id: "The selected canonical document identifier, when approved."
+  duplicate_ids: "Document identifiers proven to contain duplicate content."
+  evidence: "Hashes or comparison notes supporting the duplicate decision."
