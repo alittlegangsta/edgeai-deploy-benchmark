@@ -105,13 +105,14 @@ VideoTimingTotalsMs sum_video_timings(const std::vector<VideoFrameTimingsMs>& ti
 }
 
 VideoVerificationResult verify_video_file(
-    const std::filesystem::path& path,
+    const edgeai::filesystem::path& path,
     int expected_width,
     int expected_height,
     double expected_fps,
     std::size_t expected_frame_count
 ) {
-    if (!std::filesystem::is_regular_file(path) || std::filesystem::file_size(path) == 0U) {
+    if (!edgeai::filesystem::is_regular_file(path) ||
+        edgeai::filesystem::file_size(path) == 0U) {
         throw std::runtime_error("output video is missing or empty: " + path.string());
     }
     if (expected_width <= 0 || expected_height <= 0 || !std::isfinite(expected_fps) ||

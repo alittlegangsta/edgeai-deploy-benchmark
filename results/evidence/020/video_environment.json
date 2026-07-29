@@ -1,0 +1,37 @@
+{
+  "architecture": "aarch64",
+  "artifact_hashes": {
+    "executable": "8de717cc21e3a74f9072489d18bc32d56813d3bc37bef0f4782bf3cc8c725094",
+    "libncnn_a": "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3",
+    "private_libgomp": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91"
+  },
+  "board_clock": "Thu Jan  1 00:56:43 UTC 1970",
+  "board_model": "MLK-F3P-CZ02-DR1M90",
+  "deployment_directory": "/root/edgeai/yolov5n-ncnn-video-file-20260729T025346Z",
+  "device_tree_model": "Anlogic, DR1M90 FPSoc",
+  "execution": {
+    "exit_code": 0,
+    "stderr_empty": true,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "83aac07fc0e0a692f92b7c8ad5c96d8ee3110f27fdaa427278b49fd6475fdbe0"
+  },
+  "formal_benchmark": false,
+  "glibc": "ldd (GNU libc) 2.25",
+  "governor_or_frequency_modified": false,
+  "hostname": "buildroot",
+  "kernel": "Linux buildroot 6.1.111-rt42 #8 SMP PREEMPT Wed Jul 30 14:40:27 CST 2025 aarch64 GNU/Linux",
+  "ldd": {
+    "sha256": "e90bcca50c9913b41e1f4286b20a2b1a28c78f4f41df5b84a46e5227217fdc5c",
+    "status": "PASS"
+  },
+  "load_average": "0.41 0.31 0.13 1/75 518",
+  "memory": "MemTotal:        1012420 kB;MemAvailable:     931816 kB;",
+  "recorded_at_basis": "WSL run identifier; board clock retained separately and unsynchronized",
+  "recorded_by": "WSL collection script",
+  "run_id": "20260729T025346Z",
+  "runtime_profile": "recommended-dual-thread",
+  "schema_version": 1,
+  "system_libraries_replaced": false,
+  "system_modified": false,
+  "task": "020"
+}

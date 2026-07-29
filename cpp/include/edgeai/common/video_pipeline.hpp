@@ -1,11 +1,11 @@
 #pragma once
 
 #include "edgeai/common/detection.hpp"
+#include "edgeai/common/filesystem.hpp"
 
 #include <array>
 #include <cstddef>
 #include <cstdint>
-#include <filesystem>
 #include <string>
 #include <vector>
 
@@ -72,7 +72,7 @@ void validate_frame_detections(
 );
 VideoTimingTotalsMs sum_video_timings(const std::vector<VideoFrameTimingsMs>& timings);
 VideoVerificationResult verify_video_file(
-    const std::filesystem::path& path,
+    const edgeai::filesystem::path& path,
     int expected_width,
     int expected_height,
     double expected_fps,

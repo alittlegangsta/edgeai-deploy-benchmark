@@ -1,7 +1,6 @@
 #include "edgeai/common/video_pipeline.hpp"
 
 #include <cmath>
-#include <filesystem>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -82,8 +81,8 @@ void test_frames_detections_and_timings() {
     );
 }
 
-void test_real_video_verification(const std::filesystem::path& path) {
-    std::filesystem::remove(path);
+void test_real_video_verification(const edgeai::filesystem::path& path) {
+    edgeai::filesystem::remove(path);
     constexpr int width = 64;
     constexpr int height = 48;
     constexpr double fps = 30.0;
@@ -113,7 +112,7 @@ void test_real_video_verification(const std::filesystem::path& path) {
         [&path] { static_cast<void>(edgeai::common::verify_video_file(path, 63, 48, 30.0, 5U)); },
         "wrong expected video dimensions were accepted"
     );
-    std::filesystem::remove(path);
+    edgeai::filesystem::remove(path);
     require_throws(
         [&path] { static_cast<void>(edgeai::common::verify_video_file(path, 64, 48, 30.0, 5U)); },
         "missing video was accepted"
@@ -123,7 +122,7 @@ void test_real_video_verification(const std::filesystem::path& path) {
 }  // namespace
 
 int main() {
-    const std::filesystem::path test_video = "edgeai_video_pipeline_test.mp4";
+    const edgeai::filesystem::path test_video = "edgeai_video_pipeline_test.mp4";
     try {
         test_fourcc_and_metadata();
         test_frames_detections_and_timings();
@@ -131,7 +130,7 @@ int main() {
         std::cout << "edgeai_video_pipeline_tests: PASS\n";
         return 0;
     } catch (const std::exception& error) {
-        std::filesystem::remove(test_video);
+        edgeai::filesystem::remove(test_video);
         std::cerr << "edgeai_video_pipeline_tests: FAIL: " << error.what() << '\n';
         return 1;
     }
