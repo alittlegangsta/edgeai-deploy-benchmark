@@ -18,6 +18,13 @@
 namespace edgeai::backends {
 namespace {
 
+constexpr const char* kBaselineLibrarySha256 =
+    "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a";
+constexpr const char* kRecommendedLibrarySha256 =
+    "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3";
+constexpr const char* kRecommendedLibgompSha256 =
+    "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91";
+
 class Sha256 {
 public:
     void update(const std::uint8_t* data, std::size_t size) {
@@ -294,6 +301,80 @@ std::size_t element_count(const std::vector<std::int64_t>& shape) {
 
 }  // namespace
 
+NcnnBuildCapabilities ncnn_build_capabilities() {
+    NcnnBuildCapabilities capabilities;
+#if EDGEAI_NCNN_OPENMP_COMPILED
+    capabilities.openmp_compiled = true;
+#endif
+#if NCNN_THREADS
+    capabilities.threads_compiled = true;
+#endif
+#if NCNN_SIMPLEOMP
+    capabilities.simpleomp_compiled = true;
+#endif
+#ifdef _OPENMP
+    capabilities.compiler_openmp = true;
+#endif
+    if (capabilities.openmp_compiled && capabilities.simpleomp_compiled) {
+        capabilities.effective_parallel_backend = "simpleomp";
+    } else if (capabilities.openmp_compiled && capabilities.compiler_openmp) {
+        capabilities.effective_parallel_backend = "openmp";
+    }
+    capabilities.library_sha256 = EDGEAI_NCNN_LIBRARY_SHA256;
+    capabilities.private_libgomp_sha256 = EDGEAI_PRIVATE_LIBGOMP_SHA256;
+    return capabilities;
+}
+
+NcnnRuntimeProfile ncnn_runtime_profile(const std::string& name) {
+    if (name == "generic-default") {
+        return {name, 1, false, false, "", "", ""};
+    }
+    if (name == "baseline-single-thread") {
+        return {
+            name, 1, true, false, "none", kBaselineLibrarySha256, "",
+        };
+    }
+    if (name == "recommended-dual-thread") {
+        return {
+            name, 2, true, true, "openmp", kRecommendedLibrarySha256,
+            kRecommendedLibgompSha256,
+        };
+    }
+    throw std::runtime_error("unknown ncnn runtime profile: " + name);
+}
+
+void validate_ncnn_runtime_profile(
+    const NcnnRuntimeProfile& profile,
+    const NcnnBuildCapabilities& capabilities
+) {
+    if (!profile.requires_frozen_identity) {
+        return;
+    }
+    if (!capabilities.threads_compiled) {
+        throw std::runtime_error(
+            "runtime profile " + profile.name + " requires NCNN_THREADS=ON"
+        );
+    }
+    if (capabilities.effective_parallel_backend != profile.expected_parallel_backend) {
+        throw std::runtime_error(
+            "runtime profile " + profile.name + " requires parallel backend " +
+            profile.expected_parallel_backend + ", build reports " +
+            capabilities.effective_parallel_backend
+        );
+    }
+    if (capabilities.library_sha256 != profile.expected_library_sha256) {
+        throw std::runtime_error(
+            "runtime profile " + profile.name + " ncnn library identity mismatch"
+        );
+    }
+    if (profile.requires_private_libgomp &&
+        capabilities.private_libgomp_sha256 != profile.expected_private_libgomp_sha256) {
+        throw std::runtime_error(
+            "runtime profile " + profile.name + " private libgomp identity mismatch"
+        );
+    }
+}
+
 std::string ncnn_sha256_file(const edgeai::filesystem::path& path) {
     if (edgeai::filesystem::is_symlink(path) ||
         !edgeai::filesystem::is_regular_file(path) ||
@@ -356,6 +437,14 @@ struct NcnnDetector::Impl {
             throw std::runtime_error("ncnn runtime version differs from Task 010 manifest");
         }
         info.threads = threads;
+        const auto capabilities = ncnn_build_capabilities();
+        info.openmp_compiled = capabilities.openmp_compiled;
+        info.threads_compiled = capabilities.threads_compiled;
+        info.simpleomp_compiled = capabilities.simpleomp_compiled;
+        info.compiler_openmp = capabilities.compiler_openmp;
+        info.effective_parallel_backend = capabilities.effective_parallel_backend;
+        info.library_sha256 = capabilities.library_sha256;
+        info.private_libgomp_sha256 = capabilities.private_libgomp_sha256;
         info.inputs = {manifest.input};
         info.outputs = {manifest.output};
         network.opt.num_threads = threads;

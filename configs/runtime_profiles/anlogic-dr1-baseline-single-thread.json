@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "profile_name": "baseline-single-thread",
+  "status": "historical-baseline",
+  "recommended": false,
+  "target": {
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "architecture": "AArch64",
+    "userspace": "Buildroot 2022.02.6 / glibc 2.25"
+  },
+  "runtime": {
+    "name": "ncnn",
+    "tag": "20240410",
+    "commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "configured_threads": 1,
+    "cpu_only": true,
+    "precision": "FP32",
+    "batch": 1,
+    "input_size": [
+      640,
+      640
+    ],
+    "vulkan": false,
+    "fp16": false,
+    "bf16": false,
+    "int8": false
+  },
+  "build_identity": {
+    "NCNN_OPENMP": false,
+    "NCNN_THREADS": true,
+    "NCNN_SIMPLEOMP": false,
+    "effective_parallel_backend": "none",
+    "libncnn_a_sha256": "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a",
+    "requires_private_libgomp": false,
+    "private_libgomp_so_1_sha256": null
+  },
+  "frozen_assets": {
+    "model_manifest_sha256": "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff",
+    "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "inference_config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45
+  },
+  "evidence": {
+    "source_task": "017",
+    "manifest": ".knowledge/manifests/anlogic_arm_cpu_benchmark.yaml",
+    "validation": "results/evidence/017/benchmark_validation.json"
+  },
+  "limitations": [
+    "Historical OpenMP-off single-thread baseline; not the recommended DR1 deployment profile.",
+    "Task 017 and Task 018 use different ncnn builds and are not direct experimental groups."
+  ]
+}

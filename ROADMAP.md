@@ -81,8 +81,23 @@ pass correctness and stability; cross-thread detections have IoU `1.0` and
 confidence delta `0.0`. Task 017 remains the immutable different-build
 historical baseline.
 
+## Stage 2 ARM runtime profile
+
+Task 019, `Anlogic DR1M90 dual-thread ARM runtime profile`, is `Completed`.
+It preserves Task 017 as `baseline-single-thread` and makes the Task 018
+OpenMP build `recommended-dual-thread` for explicit DR1 deployments. Profile
+selection records thread/backend/build identity; the recommended profile fails
+closed when OpenMP or its private hash-pinned libgomp is absent. Generic PC
+defaults are unchanged.
+
+The lightweight board gate reused the approved Task 018 ELF in a new isolated
+directory and confirmed OpenMP, two observed process threads, `PASS_TARGET`
+correctness, five detections, and exit zero. No benchmark session was rerun and
+no new performance value was added.
+
 ## Future work: explicitly out of scope
 
 Video, camera, Vulkan, quantization, affinity/NEON tuning, concurrent requests,
-and NPU remain separate projects. Task 018 changes only ncnn's configured
-thread count and does not absorb those topics. NPU is `HOLD`.
+and NPU remain separate projects. Task 019 does not absorb those topics. NPU
+is `HOLD`. The next proposed task is Task 020, ARM video-file inference, with a
+separate contract and acceptance boundary.

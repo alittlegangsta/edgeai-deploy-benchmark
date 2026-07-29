@@ -328,6 +328,10 @@ if(EDGEAI_ENABLE_NCNN)
 add_library(edgeai_ncnn_backend STATIC
     src/backends/ncnn_detector.cpp
 )
+set(EDGEAI_NCNN_LIBRARY_SHA256 "" CACHE STRING
+    "SHA256 of the frozen libncnn.a linked into DR1 profile builds")
+set(EDGEAI_PRIVATE_LIBGOMP_SHA256 "" CACHE STRING
+    "SHA256 of the isolated private libgomp.so.1 required by a DR1 profile")
 target_compile_features(edgeai_ncnn_backend PUBLIC cxx_std_17)
 set_target_properties(edgeai_ncnn_backend PROPERTIES
     CXX_STANDARD 17
@@ -340,6 +344,19 @@ target_include_directories(edgeai_ncnn_backend PUBLIC
 target_link_libraries(edgeai_ncnn_backend PUBLIC
     edgeai_common
     ncnn
+)
+if(NCNN_OPENMP)
+    target_compile_definitions(edgeai_ncnn_backend PUBLIC
+        EDGEAI_NCNN_OPENMP_COMPILED=1
+    )
+else()
+    target_compile_definitions(edgeai_ncnn_backend PUBLIC
+        EDGEAI_NCNN_OPENMP_COMPILED=0
+    )
+endif()
+target_compile_definitions(edgeai_ncnn_backend PUBLIC
+    EDGEAI_NCNN_LIBRARY_SHA256="${EDGEAI_NCNN_LIBRARY_SHA256}"
+    EDGEAI_PRIVATE_LIBGOMP_SHA256="${EDGEAI_PRIVATE_LIBGOMP_SHA256}"
 )
 edgeai_enable_warnings(edgeai_ncnn_backend)
 
@@ -401,15 +418,6 @@ set_target_properties(edgeai_benchmark_ncnn PROPERTIES
 target_compile_definitions(edgeai_benchmark_ncnn PRIVATE
     EDGEAI_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
 )
-if(NCNN_OPENMP)
-    target_compile_definitions(edgeai_benchmark_ncnn PRIVATE
-        EDGEAI_NCNN_OPENMP_COMPILED=1
-    )
-else()
-    target_compile_definitions(edgeai_benchmark_ncnn PRIVATE
-        EDGEAI_NCNN_OPENMP_COMPILED=0
-    )
-endif()
 target_link_libraries(edgeai_benchmark_ncnn PRIVATE edgeai_ncnn_backend)
 edgeai_enable_warnings(edgeai_benchmark_ncnn)
 add_test(NAME edgeai_benchmark_ncnn_invalid_args COMMAND edgeai_benchmark_ncnn)

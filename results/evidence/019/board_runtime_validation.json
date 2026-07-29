@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "task": "019",
+  "evidence_type": "anlogic_arm_runtime_profile_lightweight_board_validation",
+  "recorded_at": "2026-07-29T10:16:50+08:00",
+  "record_time_basis": "WSL evidence record time; board clock is unsynchronized",
+  "status": "PASS",
+  "scope": "one non-benchmark Task 018 diagnostic reused in a new isolated Task 019 directory",
+  "new_formal_benchmark_data": false,
+  "vm_rebuild_performed": false,
+  "vm_rebuild_reason": "VM SSH timed out; the approved Task 018 ELF and isolated package already satisfy the lightweight runtime gate",
+  "board": {
+    "identity": "MLK-F3P-CZ02-DR1M90",
+    "architecture": "aarch64",
+    "kernel": "6.1.111-rt42",
+    "deployment_directory": "/root/edgeai/anlogic-arm-runtime-profile-task019",
+    "system_library_modified": false,
+    "governor_or_frequency_modified": false
+  },
+  "runtime_profile": {
+    "name": "recommended-dual-thread",
+    "configured_threads": 2,
+    "ncnn_openmp_compiled": true,
+    "ncnn_threads_compiled": true,
+    "ncnn_simpleomp_compiled": false,
+    "compiler_openmp_macro_defined": true,
+    "effective_parallel_backend": "openmp",
+    "observed_process_threads": 2,
+    "cpu_time_to_wall_time_ratio": 1.8491856753775673
+  },
+  "identity": {
+    "benchmark_elf_sha256": "19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2",
+    "private_libgomp_so_1_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+    "diagnostic_json_sha256": "8876e7ee63c342d66ca12e78e016f6530ee179fdb59032e4e9dd7645fa898bb4",
+    "ldd_sha256": "7ad88e08c05a1419e87ca2384aed7a56877c71790b8ab886761f0a8e9c32d39a",
+    "stdout_sha256": "a0c6c90b88e5521da940cd3a61633971c411d802411e3e9b7fb984cb07f65925",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "thread_monitor_sha256": "90b0c78cc421680cc660ddce29a52d0af6f0d72d9c54fe612d54f1d389e27919",
+    "ldd_not_found_count": 0
+  },
+  "frozen_assets": {
+    "model_manifest_sha256": "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff",
+    "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+  },
+  "diagnostic_protocol": {
+    "warmup_iterations": 2,
+    "measured_iterations": 3,
+    "performance_publication": "PROHIBITED; diagnostic timings are not a benchmark",
+    "exit_code": 0
+  },
+  "correctness": {
+    "before_warmup": "PASS_TARGET",
+    "after_measurement": "PASS_TARGET",
+    "detections": 5,
+    "classes": [
+      "keyboard",
+      "tv",
+      "cup",
+      "mouse",
+      "mouse"
+    ],
+    "minimum_class_matched_iou": 0.9999855075776749,
+    "maximum_confidence_delta": 0.0000050067901611328125
+  },
+  "task018_source_evidence_modified": false
+}

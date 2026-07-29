@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <map>
@@ -29,6 +30,7 @@ struct Arguments {
     edgeai::filesystem::path input;
     edgeai::filesystem::path output_image;
     edgeai::filesystem::path output_json;
+    std::string runtime_profile{"generic-default"};
     int threads{1};
 };
 
@@ -40,8 +42,8 @@ int parse_threads(const std::string& value) {
     } catch (const std::exception&) {
         throw std::runtime_error("--threads must be an integer");
     }
-    if (consumed != value.size() || threads != 1) {
-        throw std::runtime_error("--threads must remain exactly 1");
+    if (consumed != value.size() || (threads != 1 && threads != 2)) {
+        throw std::runtime_error("--threads must be 1 or 2");
     }
     return threads;
 }
@@ -51,12 +53,14 @@ Arguments parse_args(int argc, char* argv[]) {
         throw std::runtime_error(
             "usage: edgeai_ncnn_image --manifest PATH --config PATH "
             "[--model-param PATH --model-bin PATH] (--input PATH|--image PATH) "
-            "--output-image PATH --output-json PATH [--threads 1]"
+            "--output-image PATH --output-json PATH "
+            "[--runtime-profile baseline-single-thread|recommended-dual-thread] "
+            "[--threads 1|2]"
         );
     }
     const std::vector<std::string> allowed{
         "--manifest", "--config", "--model-param", "--model-bin", "--input", "--image",
-        "--output-image", "--output-json", "--threads",
+        "--output-image", "--output-json", "--runtime-profile", "--threads",
     };
     std::map<std::string, std::string> values;
     for (int index = 1; index < argc; index += 2) {
@@ -84,6 +88,23 @@ Arguments parse_args(int argc, char* argv[]) {
     if (has_param != has_bin) {
         throw std::runtime_error("--model-param and --model-bin must be supplied together");
     }
+    const std::string profile_name =
+        values.count("--runtime-profile") != 0U
+            ? values.at("--runtime-profile")
+            : "generic-default";
+    const auto profile = edgeai::backends::ncnn_runtime_profile(profile_name);
+    const int threads =
+        values.count("--threads") != 0U
+            ? parse_threads(values.at("--threads"))
+            : profile.configured_threads;
+    if (profile_name != "generic-default" && threads != profile.configured_threads) {
+        throw std::runtime_error(
+            "--threads differs from runtime profile " + profile_name
+        );
+    }
+    edgeai::backends::validate_ncnn_runtime_profile(
+        profile, edgeai::backends::ncnn_build_capabilities()
+    );
     return {
         values.at("--manifest"),
         values.at("--config"),
@@ -95,12 +116,28 @@ Arguments parse_args(int argc, char* argv[]) {
                   : edgeai::filesystem::path(values.at("--image")),
         values.at("--output-image"),
         values.at("--output-json"),
-        values.count("--threads") != 0U ? parse_threads(values.at("--threads")) : 1,
+        profile_name,
+        threads,
     };
 }
 
 double elapsed_ms(Clock::time_point start, Clock::time_point end) {
     return std::chrono::duration<double, std::milli>(end - start).count();
+}
+
+int observed_process_threads() {
+    std::ifstream status("/proc/self/status");
+    std::string label;
+    while (status >> label) {
+        if (label == "Threads:") {
+            int count = 0;
+            status >> count;
+            return count;
+        }
+        std::string remainder;
+        std::getline(status, remainder);
+    }
+    return -1;
 }
 
 void write_shape(cv::FileStorage& output, const std::vector<std::int64_t>& shape) {
@@ -140,6 +177,7 @@ void write_result(
     const edgeai::common::PostprocessResult& postprocess,
     const edgeai::common::StageTimingsMs& timings,
     double pipeline_total,
+    int process_threads,
     const cv::Mat& source,
     const cv::Mat& rendered
 ) {
@@ -151,7 +189,8 @@ void write_result(
         throw std::runtime_error("failed to open ncnn result JSON: " + path.string());
     }
     const auto& runtime = detector.runtime_info();
-    output << "schema_version" << 1 << "application" << "edgeai_cpp_ncnn_image";
+    output << "schema_version" << 1 << "application" << "edgeai_cpp_ncnn_image"
+           << "runtime_profile" << arguments.runtime_profile;
     output << "model" << "{"
            << "manifest_path" << arguments.manifest.string()
            << "manifest_sha256"
@@ -160,6 +199,14 @@ void write_result(
            << detector.param_sha256() << "bin_path" << detector.bin_path().string()
            << "bin_sha256" << detector.bin_sha256() << "runtime_version" << runtime.version
            << "execution_provider" << runtime.execution_provider << "threads" << runtime.threads
+           << "ncnn_openmp_compiled" << runtime.openmp_compiled
+           << "ncnn_threads_compiled" << runtime.threads_compiled
+           << "ncnn_simpleomp_compiled" << runtime.simpleomp_compiled
+           << "compiler_openmp" << runtime.compiler_openmp
+           << "effective_parallel_backend" << runtime.effective_parallel_backend
+           << "ncnn_library_sha256" << runtime.library_sha256
+           << "private_libgomp_sha256" << runtime.private_libgomp_sha256
+           << "observed_process_threads" << process_threads
            << "vulkan" << runtime.vulkan << "fp16" << runtime.fp16 << "bf16" << runtime.bf16
            << "int8" << runtime.int8 << "runtime_inputs";
     write_descriptors(output, runtime.inputs);
@@ -247,6 +294,13 @@ int main(int argc, char* argv[]) {
         const auto inference_start = Clock::now();
         const auto raw = detector.infer(preprocessed.tensor);
         timings.inference = elapsed_ms(inference_start, Clock::now());
+        const int process_threads = observed_process_threads();
+        if (arguments.runtime_profile == "recommended-dual-thread" &&
+            process_threads < 2) {
+            throw std::runtime_error(
+                "recommended-dual-thread did not observe at least two process threads"
+            );
+        }
         const auto postprocess_start = Clock::now();
         const auto postprocessed = edgeai::common::decode_yolov5_output(
             raw.values, raw.shape, config.class_names, preprocessed.metadata, config
@@ -268,12 +322,22 @@ int main(int argc, char* argv[]) {
         const double pipeline_total = elapsed_ms(pipeline_start, Clock::now());
         write_result(
             arguments.output_json, arguments, config, preprocessed, detector, postprocessed,
-            timings, pipeline_total, source, read_back
+            timings, pipeline_total, process_threads, source, read_back
         );
         std::cout << "Application: edgeai_cpp_ncnn_image\n"
-                  << "Program contract: Task 014 single-image CPU/FP32\n"
+                  << "Program contract: Task 019 profiled single-image CPU/FP32\n"
+                  << "Runtime profile: " << arguments.runtime_profile << '\n'
                   << "ncnn version: " << detector.runtime_info().version << '\n'
                   << "Execution provider: ncnn CPU\nThreads: " << arguments.threads << '\n'
+                  << "ncnn_openmp_compiled: "
+                  << (detector.runtime_info().openmp_compiled ? "true" : "false") << '\n'
+                  << "ncnn_threads_compiled: "
+                  << (detector.runtime_info().threads_compiled ? "true" : "false") << '\n'
+                  << "ncnn_simpleomp_compiled: "
+                  << (detector.runtime_info().simpleomp_compiled ? "true" : "false") << '\n'
+                  << "effective_parallel_backend: "
+                  << detector.runtime_info().effective_parallel_backend << '\n'
+                  << "observed_process_threads: " << process_threads << '\n'
                   << "Param SHA256: " << detector.param_sha256() << '\n'
                   << "Bin SHA256: " << detector.bin_sha256() << '\n'
                   << "Input SHA256: " << edgeai::backends::ncnn_sha256_file(arguments.input)

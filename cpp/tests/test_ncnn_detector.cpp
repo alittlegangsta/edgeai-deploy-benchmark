@@ -30,6 +30,58 @@ void run_contract_test() {
     require(runtime.inputs[0].name == "in0" && runtime.outputs[0].name == "out0",
             "unexpected blob names");
 
+    const edgeai::backends::NcnnBuildCapabilities openmp_capabilities{
+        true,
+        true,
+        false,
+        true,
+        "openmp",
+        "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3",
+        "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+    };
+    edgeai::backends::validate_ncnn_runtime_profile(
+        edgeai::backends::ncnn_runtime_profile("recommended-dual-thread"),
+        openmp_capabilities
+    );
+    auto invalid_openmp_capabilities = openmp_capabilities;
+    invalid_openmp_capabilities.openmp_compiled = false;
+    invalid_openmp_capabilities.compiler_openmp = false;
+    invalid_openmp_capabilities.effective_parallel_backend = "none";
+    bool invalid_profile_rejected = false;
+    try {
+        edgeai::backends::validate_ncnn_runtime_profile(
+            edgeai::backends::ncnn_runtime_profile("recommended-dual-thread"),
+            invalid_openmp_capabilities
+        );
+    } catch (const std::runtime_error&) {
+        invalid_profile_rejected = true;
+    }
+    require(invalid_profile_rejected, "OpenMP-off dual-thread profile was accepted");
+    auto wrong_library_capabilities = openmp_capabilities;
+    wrong_library_capabilities.library_sha256 = std::string(64U, '0');
+    bool wrong_library_rejected = false;
+    try {
+        edgeai::backends::validate_ncnn_runtime_profile(
+            edgeai::backends::ncnn_runtime_profile("recommended-dual-thread"),
+            wrong_library_capabilities
+        );
+    } catch (const std::runtime_error&) {
+        wrong_library_rejected = true;
+    }
+    require(wrong_library_rejected, "wrong ncnn library identity was accepted");
+    auto missing_libgomp_capabilities = openmp_capabilities;
+    missing_libgomp_capabilities.private_libgomp_sha256.clear();
+    bool missing_libgomp_rejected = false;
+    try {
+        edgeai::backends::validate_ncnn_runtime_profile(
+            edgeai::backends::ncnn_runtime_profile("recommended-dual-thread"),
+            missing_libgomp_capabilities
+        );
+    } catch (const std::runtime_error&) {
+        missing_libgomp_rejected = true;
+    }
+    require(missing_libgomp_rejected, "dual-thread profile without libgomp was accepted");
+
     edgeai::backends::NcnnDetector explicit_detector(
         manifest,
         1,
