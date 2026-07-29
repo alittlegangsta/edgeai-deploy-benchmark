@@ -1,0 +1,89 @@
+{
+  "automated_validation": "PASS_TARGET",
+  "candidate_approved": true,
+  "correctness": {
+    "classes_match": "PASS",
+    "detections_per_frame": 5,
+    "finite_values": "PASS",
+    "frames_validated": 30,
+    "maximum_absolute_confidence_difference": 5.0067901611328125e-06,
+    "maximum_cross_frame_confidence_difference": 0.0,
+    "minimum_class_matched_iou": 0.9999855075776749,
+    "minimum_cross_frame_iou": 1.0,
+    "status": "PASS_TARGET",
+    "valid_boxes": "PASS"
+  },
+  "frame_counts": {
+    "declared": 30,
+    "decoded": 30,
+    "failed": 0,
+    "processed": 30,
+    "verified": 30,
+    "written": 30
+  },
+  "human_review_recorded_at": "2026-07-29T11:18:31+08:00",
+  "human_review_recorded_at_basis": "WSL approval record time; not board run time",
+  "human_review_source": "user",
+  "human_video_review": "PASS",
+  "input_video": {
+    "codec": "FFV1 lossless",
+    "container": "AVI",
+    "path": "data/samples/videos/anlogic_arm_reference.avi",
+    "sha256": "3953653b6364a844e829be68df76fce8ce673add5c4bfaf9176c5fb205e5da49"
+  },
+  "output_video": {
+    "decode": {
+      "backend": "FFMPEG",
+      "decoded_frame_count": 30,
+      "fps": 5.0,
+      "height": 960,
+      "reported_frame_count": 30,
+      "width": 1280
+    },
+    "path": "results/videos/anlogic_arm_ncnn_reference.avi",
+    "sha256": "2669ec2fd0bd4eaaa1bf06f5ef3636e2100023f32bc0a77622f01fab5673a8bc"
+  },
+  "representative_frames": {
+    "0": {
+      "decode_status": "PASS",
+      "path": "results/images/020/frame_first.png",
+      "sha256": "d595945e490cdc2b72083a0d32c7e69c115361c9d9e088cf60c621a1857f52a8",
+      "shape_bgr": [
+        960,
+        1280,
+        3
+      ]
+    },
+    "15": {
+      "decode_status": "PASS",
+      "path": "results/images/020/frame_middle.png",
+      "sha256": "d58c42846dd63cdc75b80f0882930083952faa457fcdb94a0be5ab7f4acab671",
+      "shape_bgr": [
+        960,
+        1280,
+        3
+      ]
+    },
+    "29": {
+      "decode_status": "PASS",
+      "path": "results/images/020/frame_last.png",
+      "sha256": "d58c42846dd63cdc75b80f0882930083952faa457fcdb94a0be5ab7f4acab671",
+      "shape_bgr": [
+        960,
+        1280,
+        3
+      ]
+    }
+  },
+  "runtime_profile": "recommended-dual-thread",
+  "schema_version": 1,
+  "scope": {
+    "camera": false,
+    "formal_video_benchmark": false,
+    "npu": "HOLD",
+    "quantization": false,
+    "timings_are_diagnostic_only": true,
+    "vulkan": false
+  },
+  "task": "020"
+}

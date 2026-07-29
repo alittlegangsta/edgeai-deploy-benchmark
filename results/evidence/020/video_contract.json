@@ -1,0 +1,30 @@
+{
+  "generator": "OpenCV VideoWriter",
+  "opencv_version": "4.10.0",
+  "schema_version": 1,
+  "source_image": {
+    "channels": 3,
+    "height": 960,
+    "path": "data/samples/images/pc_reference.jpg",
+    "sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "width": 1280
+  },
+  "status": "PASS",
+  "task": "020",
+  "video": {
+    "capture_backend": "FFMPEG",
+    "container": "AVI",
+    "decoded_frame_count": 30,
+    "fps": 5.0,
+    "frame_count": 30,
+    "height": 960,
+    "maximum_absolute_pixel_delta_from_source": 0,
+    "path": "data/samples/videos/anlogic_arm_reference.avi",
+    "reported_fourcc_integer": 829843046,
+    "requested_codec": "FFV1 lossless",
+    "requested_fourcc": "FFV1",
+    "sha256": "3953653b6364a844e829be68df76fce8ce673add5c4bfaf9176c5fb205e5da49",
+    "size_bytes": 14767146,
+    "width": 1280
+  }
+}

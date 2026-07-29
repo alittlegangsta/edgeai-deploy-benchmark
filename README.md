@@ -9,14 +9,17 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–019 are completed. Checkpoint C is
+Tasks 001–020 are completed. Task 020 ARM video-file inference passed
+automated real-board validation and user playback review.
+Checkpoint C is
 human-approved, PC Stage 1 is complete, and the Anlogic DR1 Stage 2 CPU
 single-image and unoptimized benchmark baselines are complete.
 Stage 2 covers the validated AArch64 toolchain, a CPU-only static ncnn build,
 real-board ncnn runtime smoke, frozen YOLOv5n single-image inference, PC/ARM
 correctness, user-approved visual output, and the formal CPU/FP32 one-thread
 benchmark. It does not include video, camera, Vulkan, quantization, optimization,
-or NPU deployment.
+or NPU deployment. Task 020 is a functional video validation, not a formal
+video performance benchmark.
 
 Task 017 froze the separate formal DR1 ARM CPU benchmark protocol and offline
 collector/validator. It defines five independent processes, 10 warmups and 20
@@ -39,6 +42,13 @@ changing PC defaults: `baseline-single-thread` preserves Task 017, while
 private libgomp. DR1 deployments should select the recommended profile
 explicitly. See
 [the ARM runtime profile guide](docs/vendor/ANLOGIC_ARM_RUNTIME_PROFILES.md).
+
+Task 020 reuses that recommended dual-thread profile for a 30-frame lossless
+fixed-image video on the real board. All frames pass the PC ncnn golden gate,
+and the returned MJPEG/AVI decodes 30/30 frames in WSL. See
+[the ARM video-file guide](docs/vendor/ANLOGIC_ARM_VIDEO_FILE_INFERENCE.md).
+The user approved full playback, frame continuity, and annotations; Task 020 is
+`Completed`. This remains functional validation, not a formal video benchmark.
 
 ## PC architecture and model lineage
 

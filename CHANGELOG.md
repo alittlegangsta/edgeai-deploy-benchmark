@@ -36,3 +36,8 @@
   `baseline-single-thread` profile and a recommended Task 018
   `recommended-dual-thread` profile with fail-closed OpenMP, ncnn, thread, and
   private-libgomp identity validation. Generic PC defaults remain unchanged.
+- Added Task 020's profiled AArch64 video-file path and reproducible 30-frame
+  lossless fixture. The real board passes automated per-frame correctness and
+  output-video decode validation, and the user approved full playback plus the
+  representative frames. This is functional validation, not a formal video
+  performance benchmark.

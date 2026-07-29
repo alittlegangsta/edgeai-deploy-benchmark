@@ -97,7 +97,19 @@ no new performance value was added.
 
 ## Future work: explicitly out of scope
 
-Video, camera, Vulkan, quantization, affinity/NEON tuning, concurrent requests,
-and NPU remain separate projects. Task 019 does not absorb those topics. NPU
-is `HOLD`. The next proposed task is Task 020, ARM video-file inference, with a
-separate contract and acceptance boundary.
+Camera, Vulkan, quantization, affinity/NEON tuning, concurrent requests, and NPU
+remain separate projects. Task 019 does not absorb those topics. NPU is `HOLD`.
+
+## Stage 3 ARM video-file inference
+
+Task 020 is `Completed`. Its real-board phase uses the Task 019
+recommended OpenMP dual-thread profile and a 30-frame lossless FFV1/AVI
+generated from the frozen reference image. The board decoded, processed,
+annotated, wrote, and reopened all 30 frames; independent WSL validation reports
+`PASS_TARGET` for every frame and decodes the returned MJPEG/AVI completely.
+The user approved full playback and the representative first/middle/last
+frames.
+
+This is functional validation, not a formal video performance benchmark.
+USB camera, streaming, async pipelines, dropped-frame policy, Vulkan,
+quantization, and NPU remain outside Task 020.
