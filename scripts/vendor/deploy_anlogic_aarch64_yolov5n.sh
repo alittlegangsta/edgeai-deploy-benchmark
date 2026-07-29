@@ -1,11 +1,39 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-MODE="${1:---check}"
-case "$MODE" in
-  --check|--execute) ;;
+MODE="--check"
+RUNTIME_PROFILE="baseline-single-thread"
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+    --check|--execute)
+      MODE="$1"
+      ;;
+    --runtime-profile)
+      [[ "$#" -ge 2 ]] || { printf 'missing --runtime-profile value\n' >&2; exit 2; }
+      RUNTIME_PROFILE="$2"
+      shift
+      ;;
+    *)
+      printf 'usage: %s [--check|--execute] [--runtime-profile baseline-single-thread|recommended-dual-thread]\n' "$0" >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+case "$RUNTIME_PROFILE" in
+  baseline-single-thread)
+    CONFIGURED_THREADS=1
+    DEFAULT_SHARED_NAME="edgeai_arm_yolov5n"
+    REQUIRED_LIBGOMP_SHA256=""
+    ;;
+  recommended-dual-thread)
+    CONFIGURED_THREADS=2
+    DEFAULT_SHARED_NAME="edgeai_arm_runtime_profiles/recommended-dual-thread"
+    REQUIRED_LIBGOMP_SHA256="87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91"
+    ;;
   *)
-    printf 'usage: %s [--check|--execute]\n' "$0" >&2
+    printf 'unknown runtime profile: %s\n' "$RUNTIME_PROFILE" >&2
     exit 2
     ;;
 esac
@@ -15,24 +43,27 @@ BOARD_SSH="${ANLOGIC_BOARD_SSH:-/home/dministrator/bin/anlogic-board-ssh}"
 BOARD_SCP="${ANLOGIC_BOARD_SCP:-/mnt/c/Windows/System32/OpenSSH/scp.exe}"
 BOARD_KEY_WINDOWS="${ANLOGIC_BOARD_KEY_WINDOWS:-C:/Users/Administrator/.ssh/anlogic_board_ed25519}"
 BOARD_TARGET="${ANLOGIC_BOARD_TARGET:-root@192.168.50.2}"
-SHARED_LOCAL="${ANLOGIC_SHARED_LOCAL:-/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_yolov5n}"
-SHARED_WINDOWS="${ANLOGIC_SHARED_WINDOWS:-C:/Users/Administrator/Desktop/fpga_info/_generated/edgeai_arm_yolov5n}"
+SHARED_LOCAL="${ANLOGIC_SHARED_LOCAL:-/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/$DEFAULT_SHARED_NAME}"
+SHARED_WINDOWS="${ANLOGIC_SHARED_WINDOWS:-C:/Users/Administrator/Desktop/fpga_info/_generated/$DEFAULT_SHARED_NAME}"
 BUILD_OUTPUT="$SHARED_LOCAL/build-output"
-PACKAGE_LOCAL="$SHARED_LOCAL/package"
-PACKAGE_WINDOWS="$SHARED_WINDOWS/package"
-RETURN_LOCAL="$SHARED_LOCAL/returned"
-RETURN_WINDOWS="$SHARED_WINDOWS/returned"
-REMOTE_NEW="/root/edgeai/yolov5n-ncnn-single-image.new"
-REMOTE_DEST="/root/edgeai/yolov5n-ncnn-single-image"
+PACKAGE_LOCAL="$SHARED_LOCAL/package-$RUNTIME_PROFILE"
+PACKAGE_WINDOWS="$SHARED_WINDOWS/package-$RUNTIME_PROFILE"
+RETURN_LOCAL="$SHARED_LOCAL/returned-$RUNTIME_PROFILE"
+RETURN_WINDOWS="$SHARED_WINDOWS/returned-$RUNTIME_PROFILE"
+REMOTE_NEW="/root/edgeai/anlogic-arm-runtime-profile-$RUNTIME_PROFILE.new"
+REMOTE_DEST="/root/edgeai/anlogic-arm-runtime-profile-$RUNTIME_PROFILE"
 LOG_DIR="$REPO_ROOT/results/logs/vendor/arm_yolov5n"
-EVIDENCE_DIR="$REPO_ROOT/results/evidence/014"
-IMAGE_OUT="$REPO_ROOT/results/images/anlogic_arm_ncnn_reference.png"
+EVIDENCE_DIR="$REPO_ROOT/results/evidence/019"
+IMAGE_OUT="$RETURN_LOCAL/anlogic_arm_ncnn_reference.png"
 
 PARAM="$REPO_ROOT/models/yolov5n-v7.0/yolov5n.ncnn.param"
 BIN="$REPO_ROOT/models/yolov5n-v7.0/yolov5n.ncnn.bin"
 MODEL_MANIFEST="$REPO_ROOT/models/yolov5n-v7.0/ncnn_manifest.json"
 CONFIG="$REPO_ROOT/configs/yolov5n_v7_inference.json"
 INPUT="$REPO_ROOT/data/samples/images/pc_reference.jpg"
+REFERENCE="$REPO_ROOT/results/acceptance/cpp_ncnn_reference.json"
+PROFILE_CONFIG="$REPO_ROOT/configs/runtime_profiles/anlogic-dr1-$RUNTIME_PROFILE.json"
+PROFILE_VALIDATOR="$REPO_ROOT/scripts/vendor/validate_anlogic_arm_runtime_profile.py"
 
 EXPECTED_PARAM="72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4"
 EXPECTED_BIN="658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0"
@@ -40,13 +71,26 @@ EXPECTED_INPUT="625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071
 
 [[ -x "$BOARD_SSH" ]] || { printf 'board SSH wrapper is missing\n' >&2; exit 1; }
 [[ -x "$BOARD_SCP" ]] || { printf 'Windows scp is missing\n' >&2; exit 1; }
-for required in "$PARAM" "$BIN" "$MODEL_MANIFEST" "$CONFIG" "$INPUT" \
+for required in "$PARAM" "$BIN" "$MODEL_MANIFEST" "$CONFIG" "$INPUT" "$REFERENCE" \
+  "$PROFILE_CONFIG" "$PROFILE_VALIDATOR" \
   "$BUILD_OUTPUT/edgeai_ncnn_image" \
+  "$BUILD_OUTPUT/runtime_build_identity.json" \
   "$BUILD_OUTPUT/lib/libopencv_core.so.407" \
   "$BUILD_OUTPUT/lib/libopencv_imgproc.so.407" \
   "$BUILD_OUTPUT/lib/libopencv_imgcodecs.so.407"; do
   [[ -f "$required" ]] || { printf 'required deployment input is missing: %s\n' "$required" >&2; exit 1; }
 done
+if [[ "$RUNTIME_PROFILE" == "recommended-dual-thread" ]]; then
+  [[ -f "$BUILD_OUTPUT/lib/libgomp.so.1" ]] || {
+    printf 'required private libgomp is missing: %s\n' "$BUILD_OUTPUT/lib/libgomp.so.1" >&2
+    exit 1
+  }
+  [[ "$(sha256sum "$BUILD_OUTPUT/lib/libgomp.so.1" | awk '{print $1}')" == \
+      "$REQUIRED_LIBGOMP_SHA256" ]] || {
+    printf 'private libgomp SHA256 mismatch\n' >&2
+    exit 1
+  }
+fi
 
 [[ "$(sha256sum "$PARAM" | awk '{print $1}')" == "$EXPECTED_PARAM" ]]
 [[ "$(sha256sum "$BIN" | awk '{print $1}')" == "$EXPECTED_BIN" ]]
@@ -86,33 +130,45 @@ if [[ ! -e "$PACKAGE_LOCAL" ]]; then
   cp "$MODEL_MANIFEST" "$PACKAGE_LOCAL/model/ncnn_manifest.json"
   cp "$CONFIG" "$PACKAGE_LOCAL/config/yolov5n_v7_inference.json"
   cp "$INPUT" "$PACKAGE_LOCAL/input/pc_reference.jpg"
+  cp "$REFERENCE" "$PACKAGE_LOCAL/config/cpp_ncnn_reference.json"
+  cp "$PROFILE_CONFIG" "$PACKAGE_LOCAL/config/runtime_profile.json"
+  cp "$BUILD_OUTPUT/runtime_build_identity.json" \
+    "$PACKAGE_LOCAL/runtime_build_identity.json"
   cp "$BUILD_OUTPUT/lib/"*.so.407 "$PACKAGE_LOCAL/lib/"
+  if [[ "$RUNTIME_PROFILE" == "recommended-dual-thread" ]]; then
+    cp "$BUILD_OUTPUT/lib/libgomp.so.1" "$PACKAGE_LOCAL/lib/libgomp.so.1"
+  fi
 
-  cat > "$PACKAGE_LOCAL/run.sh" <<'RUN'
+  cat > "$PACKAGE_LOCAL/run.sh" <<RUN
 #!/bin/sh
 set -u
-ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-mkdir -p "$ROOT/results"
-LD_LIBRARY_PATH="$ROOT/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+ROOT=\$(CDPATH= cd -- "\$(dirname -- "\$0")" && pwd)
+mkdir -p "\$ROOT/results"
+LD_LIBRARY_PATH="\$ROOT/lib\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}"
 export LD_LIBRARY_PATH
-exec "$ROOT/edgeai_ncnn_image" \
-  --manifest "$ROOT/model/ncnn_manifest.json" \
-  --model-param "$ROOT/model/yolov5n.ncnn.param" \
-  --model-bin "$ROOT/model/yolov5n.ncnn.bin" \
-  --config "$ROOT/config/yolov5n_v7_inference.json" \
-  --input "$ROOT/input/pc_reference.jpg" \
-  --output-json "$ROOT/results/anlogic_arm_ncnn_detections.json" \
-  --output-image "$ROOT/results/anlogic_arm_ncnn_reference.png" \
-  --threads 1
+OMP_NUM_THREADS=$CONFIGURED_THREADS
+export OMP_NUM_THREADS
+exec "\$ROOT/edgeai_ncnn_image" \
+  --manifest "\$ROOT/model/ncnn_manifest.json" \
+  --model-param "\$ROOT/model/yolov5n.ncnn.param" \
+  --model-bin "\$ROOT/model/yolov5n.ncnn.bin" \
+  --config "\$ROOT/config/yolov5n_v7_inference.json" \
+  --input "\$ROOT/input/pc_reference.jpg" \
+  --output-json "\$ROOT/results/anlogic_arm_ncnn_detections.json" \
+  --output-image "\$ROOT/results/anlogic_arm_ncnn_reference.png" \
+  --runtime-profile "$RUNTIME_PROFILE" \
+  --threads "$CONFIGURED_THREADS"
 RUN
 
-  python3 - "$PACKAGE_LOCAL" <<'PY'
+  python3 - "$PACKAGE_LOCAL" "$RUNTIME_PROFILE" "$CONFIGURED_THREADS" <<'PY'
 import hashlib
 import json
 import pathlib
 import sys
 
 root = pathlib.Path(sys.argv[1])
+runtime_profile = sys.argv[2]
+threads = int(sys.argv[3])
 files = {}
 for path in sorted(item for item in root.rglob("*") if item.is_file()):
     relative = path.relative_to(root).as_posix()
@@ -122,9 +178,10 @@ for path in sorted(item for item in root.rglob("*") if item.is_file()):
     }
 payload = {
     "schema_version": 1,
-    "task": "014",
-    "deployment": "Anlogic DR1 YOLOv5n ncnn single-image CPU/FP32",
-    "threads": 1,
+    "task": "019",
+    "deployment": "Anlogic DR1 profiled YOLOv5n ncnn single-image CPU/FP32",
+    "runtime_profile": runtime_profile,
+    "threads": threads,
     "input_blob": "in0",
     "output_blob": "out0",
     "confidence_threshold": 0.25,
@@ -147,6 +204,9 @@ fi
   cd "$PACKAGE_LOCAL"
   sha256sum -c SHA256SUMS
 )
+python3 "$PROFILE_VALIDATOR" \
+  --profile "$RUNTIME_PROFILE" \
+  --package-dir "$PACKAGE_LOCAL"
 
 remote_mode="$("$BOARD_SSH" "
 if [ -d '$REMOTE_DEST' ]; then
@@ -169,11 +229,12 @@ elif [[ "$remote_mode" != "reuse" ]]; then
 fi
 
 set +e
-"$BOARD_SSH" 'sh -s -- '"$remote_mode" <<'REMOTE' 2>&1 | tee "$LOG_DIR/board_execution.log"
+"$BOARD_SSH" 'sh -s -- '"$remote_mode"' '"$RUNTIME_PROFILE"' '"$REMOTE_NEW"' '"$REMOTE_DEST" <<'REMOTE' 2>&1 | tee "$LOG_DIR/board_execution.log"
 set -u
 mode=$1
-new=/root/edgeai/yolov5n-ncnn-single-image.new
-dest=/root/edgeai/yolov5n-ncnn-single-image
+runtime_profile=$2
+new=$3
+dest=$4
 if [ "$mode" = "transfer" ]; then
   if [ ! -d "$new" ]; then
     echo "missing staged package: $new" >&2
@@ -219,9 +280,7 @@ if [ "$ldd_rc" -ne 0 ] || grep -q 'not found' results/ldd.txt; then
 fi
 echo 'dependency_validation=PASS'
 
-cat > results/run_command.txt <<'CMD'
-sh /root/edgeai/yolov5n-ncnn-single-image/run.sh
-CMD
+printf 'sh %s/run.sh\n' "$dest" > results/run_command.txt
 set +e
 sh "$dest/run.sh" > results/stdout.txt 2> results/stderr.txt
 rc=$?
@@ -237,6 +296,11 @@ if [ "$rc" -ne 0 ]; then
 fi
 test -s results/anlogic_arm_ncnn_detections.json
 test -s results/anlogic_arm_ncnn_reference.png
+grep -Fq "Runtime profile: $runtime_profile" results/stdout.txt || exit 1
+if [ "$runtime_profile" = recommended-dual-thread ]; then
+  grep -Fq 'effective_parallel_backend: openmp' results/stdout.txt || exit 1
+  grep -Eq 'observed_process_threads: ([2-9]|[1-9][0-9]+)' results/stdout.txt || exit 1
+fi
 sha256sum results/anlogic_arm_ncnn_detections.json \
   results/anlogic_arm_ncnn_reference.png > results/output_sha256.txt
 cat results/output_sha256.txt
@@ -254,10 +318,7 @@ mkdir -p "$RETURN_LOCAL"
   "$BOARD_TARGET:$REMOTE_DEST/results/." "$RETURN_WINDOWS" \
   2>&1 | tee "$LOG_DIR/result_transfer.log"
 
-mkdir -p "$EVIDENCE_DIR" "$(dirname "$IMAGE_OUT")"
-cp "$RETURN_LOCAL/anlogic_arm_ncnn_detections.json" \
-  "$EVIDENCE_DIR/anlogic_arm_ncnn_detections.json"
-cp "$RETURN_LOCAL/anlogic_arm_ncnn_reference.png" "$IMAGE_OUT"
+mkdir -p "$EVIDENCE_DIR"
 for returned_text in "$RETURN_LOCAL/"*.txt; do
   returned_name="$(basename "$returned_text" .txt)"
   cp "$returned_text" "$LOG_DIR/$returned_name.log"
@@ -265,6 +326,15 @@ done
 
 python_bin="$REPO_ROOT/.venv/bin/python"
 [[ -x "$python_bin" ]] || python_bin=python3
+"$python_bin" "$REPO_ROOT/tests/python/compare_detections.py" \
+  --reference "$REFERENCE" \
+  --candidate "$RETURN_LOCAL/anlogic_arm_ncnn_detections.json" \
+  --profile ncnn-preregistered \
+  --min-iou 0.99 \
+  --max-confidence-delta 0.01 \
+  --output "$EVIDENCE_DIR/board_correctness_comparison.json" \
+  | tee "$LOG_DIR/runtime_profile_correctness.log"
+
 "$python_bin" - "$IMAGE_OUT" <<'PY' | tee "$LOG_DIR/image_decode_validation.log"
 import hashlib
 import pathlib

@@ -32,3 +32,7 @@
   OpenMP-enabled ncnn build and private libgomp. The user-approved
   `BENEFICIAL` result records `1.845334x` pipeline speedup and preserves the
   original OpenMP-off session as invalid-for-comparison sensitivity evidence.
+- Added explicit DR1 ARM runtime profiles: a historical Task 017
+  `baseline-single-thread` profile and a recommended Task 018
+  `recommended-dual-thread` profile with fail-closed OpenMP, ncnn, thread, and
+  private-libgomp identity validation. Generic PC defaults remain unchanged.

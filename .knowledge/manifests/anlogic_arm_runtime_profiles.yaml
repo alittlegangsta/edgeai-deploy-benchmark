@@ -1,0 +1,107 @@
+schema_version: "1"
+manifest_type: "anlogic_arm_runtime_profiles"
+task: "019"
+task_status: "Completed"
+profile_contract_status: "PASS"
+recommended_profile: "recommended-dual-thread"
+generic_cli_default: "generic-default; one thread; no DR1 frozen-build claim"
+
+target:
+  board: "MLK-F3P-CZ02-DR1M90"
+  architecture: "AArch64"
+  os: "Buildroot 2022.02.6"
+  kernel: "6.1.111-rt42"
+  libc: "glibc 2.25"
+
+source:
+  runtime: "ncnn"
+  tag: "20240410"
+  commit: "56775de50990ab7f16627efdcf5529b49541206f"
+
+profiles:
+  baseline-single-thread:
+    config: "configs/runtime_profiles/anlogic-dr1-baseline-single-thread.json"
+    source_task: "017"
+    status: "historical-baseline"
+    configured_threads: 1
+    NCNN_OPENMP: false
+    NCNN_THREADS: true
+    NCNN_SIMPLEOMP: false
+    effective_parallel_backend: "none"
+    libncnn_a_sha256: "5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a"
+    private_libgomp_required: false
+    evidence_policy: "Task 017 remains immutable"
+  recommended-dual-thread:
+    config: "configs/runtime_profiles/anlogic-dr1-recommended-dual-thread.json"
+    source_task: "018"
+    status: "recommended"
+    configured_threads: 2
+    NCNN_OPENMP: true
+    NCNN_THREADS: true
+    NCNN_SIMPLEOMP: false
+    effective_parallel_backend: "openmp"
+    libncnn_a_sha256: "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3"
+    private_libgomp_required: true
+    private_libgomp_so_1_sha256: "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91"
+    task018_benchmark_elf_sha256: "19d28afc324d52bf9b3cc5c14bb31268afe517424aeff35efe2578691e1a55c2"
+    correctness: "PASS_TARGET"
+    task018_classification: "BENEFICIAL"
+    pipeline_speedup: 1.845334365110893
+    fps_gain_percent: 84.53343651108935
+
+runtime_policy:
+  explicit_selection: true
+  profile_emitted_to_stdout: true
+  profile_emitted_to_json: true
+  thread_profile_mismatch: "REJECT"
+  openmp_off_dual_profile: "REJECT"
+  wrong_ncnn_identity: "REJECT"
+  missing_or_wrong_private_libgomp: "REJECT"
+  pc_default_changed: false
+  system_library_install: false
+
+lightweight_board_validation:
+  status: "PASS"
+  evidence: "results/evidence/019/board_runtime_validation.json"
+  source_instrument: "approved Task 018 OpenMP ELF reused in an isolated Task 019 directory"
+  rebuilt_this_task: false
+  configured_threads: 2
+  effective_parallel_backend: "openmp"
+  observed_process_threads: 2
+  correctness: "PASS_TARGET"
+  exit_code: 0
+  formal_benchmark: false
+
+tracked_evidence:
+  profile_validation:
+    path: "results/evidence/019/runtime_profile_validation.json"
+    sha256: "8c880387b0faf5531dd91d48754242ab530fcf1c8bcba695b013ca941109c9e4"
+  board_runtime_validation:
+    path: "results/evidence/019/board_runtime_validation.json"
+    sha256: "42660945956bb107e75ff080ebb7aefec656e141897a7b58fc536998e0656420"
+  baseline_profile:
+    path: "configs/runtime_profiles/anlogic-dr1-baseline-single-thread.json"
+    sha256: "78568dc80218875d86a4386b2e0f3c0ebf0b0c83ab5d14de3fe51cbf13a72622"
+  recommended_profile:
+    path: "configs/runtime_profiles/anlogic-dr1-recommended-dual-thread.json"
+    sha256: "505966b392e3b704d3a933e5ffbe21c971b85f0a4ff984e94d873cc2820cb6af"
+
+scope_boundary:
+  task017_modified: false
+  task018_modified: false
+  new_formal_performance_data: false
+  video: false
+  camera: false
+  vulkan: false
+  quantization: false
+  npu: "HOLD"
+
+evidence_brief:
+  sdk_tag: "SDK_2025_07 local asset identity; exact official repository tag compatibility unproven"
+  sources_consulted:
+    - "Task 017 formal benchmark manifest and validation"
+    - "Task 018 OpenMP build provenance, paired validation, and user approval"
+    - "real-board isolated Task 019 lightweight correctness diagnostic"
+  conflicts:
+    - "Task 017 and Task 018 use different ncnn builds and are not direct experiment groups."
+  unresolved_blockers: []

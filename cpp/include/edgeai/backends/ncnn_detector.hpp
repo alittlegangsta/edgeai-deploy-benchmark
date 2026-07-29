@@ -27,6 +27,13 @@ struct NcnnRuntimeInfo {
     std::string version;
     std::string execution_provider{"ncnn CPU"};
     int threads{1};
+    bool openmp_compiled{false};
+    bool threads_compiled{false};
+    bool simpleomp_compiled{false};
+    bool compiler_openmp{false};
+    std::string effective_parallel_backend{"none"};
+    std::string library_sha256;
+    std::string private_libgomp_sha256;
     bool vulkan{false};
     bool fp16{false};
     bool bf16{false};
@@ -39,6 +46,33 @@ struct NcnnRawInferenceResult {
     std::vector<float> values;
     std::vector<std::int64_t> shape;
 };
+
+struct NcnnBuildCapabilities {
+    bool openmp_compiled{false};
+    bool threads_compiled{false};
+    bool simpleomp_compiled{false};
+    bool compiler_openmp{false};
+    std::string effective_parallel_backend{"none"};
+    std::string library_sha256;
+    std::string private_libgomp_sha256;
+};
+
+struct NcnnRuntimeProfile {
+    std::string name;
+    int configured_threads{1};
+    bool requires_frozen_identity{false};
+    bool requires_private_libgomp{false};
+    std::string expected_parallel_backend;
+    std::string expected_library_sha256;
+    std::string expected_private_libgomp_sha256;
+};
+
+NcnnBuildCapabilities ncnn_build_capabilities();
+NcnnRuntimeProfile ncnn_runtime_profile(const std::string& name);
+void validate_ncnn_runtime_profile(
+    const NcnnRuntimeProfile& profile,
+    const NcnnBuildCapabilities& capabilities
+);
 
 std::string ncnn_sha256_file(const edgeai::filesystem::path& path);
 

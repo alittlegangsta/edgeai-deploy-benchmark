@@ -1,0 +1,19 @@
+{
+  "profiles": [
+    {
+      "profile_path": "configs/runtime_profiles/anlogic-dr1-baseline-single-thread.json",
+      "profile_sha256": "78568dc80218875d86a4386b2e0f3c0ebf0b0c83ab5d14de3fe51cbf13a72622",
+      "runtime_profile": "baseline-single-thread",
+      "status": "PASS"
+    },
+    {
+      "profile_path": "configs/runtime_profiles/anlogic-dr1-recommended-dual-thread.json",
+      "profile_sha256": "505966b392e3b704d3a933e5ffbe21c971b85f0a4ff984e94d873cc2820cb6af",
+      "runtime_profile": "recommended-dual-thread",
+      "status": "PASS"
+    }
+  ],
+  "schema_version": 1,
+  "task": "019",
+  "validation": "PASS"
+}

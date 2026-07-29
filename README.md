@@ -9,7 +9,7 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–018 are completed. Checkpoint C is
+Tasks 001–019 are completed. Checkpoint C is
 human-approved, PC Stage 1 is complete, and the Anlogic DR1 Stage 2 CPU
 single-image and unoptimized benchmark baselines are complete.
 Stage 2 covers the validated AArch64 toolchain, a CPU-only static ncnn build,
@@ -32,6 +32,13 @@ records `1.845334x` pipeline speedup and `84.53%` FPS gain while preserving
 correctness. The earlier OpenMP-off session remains parameter-sensitivity
 evidence and is invalid for multithread performance comparison. See
 [the threading experiment protocol](docs/vendor/ANLOGIC_ARM_CPU_THREADING_EXPERIMENT.md).
+
+Task 019 turns the approved result into explicit deployment policy without
+changing PC defaults: `baseline-single-thread` preserves Task 017, while
+`recommended-dual-thread` binds the Task 018 OpenMP build, two threads, and its
+private libgomp. DR1 deployments should select the recommended profile
+explicitly. See
+[the ARM runtime profile guide](docs/vendor/ANLOGIC_ARM_RUNTIME_PROFILES.md).
 
 ## PC architecture and model lineage
 
@@ -96,6 +103,11 @@ corresponding to `1.845334x` speedup and an FPS increase from `0.275163303` to
 between thread conditions), and both stability gates pass. This is beneficial
 but not ideal `2x` scaling; serial pipeline work and scheduling overhead remain.
 Task 017 is a different-build historical reference and was not modified.
+
+For deployment, use `recommended-dual-thread`; use
+`baseline-single-thread` only when reproducing Task 017. The recommendation is
+specific to the verified DR1M90 CPU/FP32 single-image path and does not
+silently alter the generic PC CLI.
 
 Use [the Stage 2 closeout guide](docs/vendor/ANLOGIC_ARM_STAGE2_CLOSEOUT.md) for
 the frozen identities, environment roles, phased build/deploy/run/collect/
