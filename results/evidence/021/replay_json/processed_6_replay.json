@@ -1,0 +1,266 @@
+{
+    "schema_version": 1,
+    "application": "edgeai_cpp_ncnn_image",
+    "model": {
+        "manifest_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/ncnn_manifest.json",
+        "manifest_sha256": "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff",
+        "param_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.param",
+        "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+        "bin_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.bin",
+        "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+        "runtime_version": "1.0.20240410",
+        "execution_provider": "ncnn CPU",
+        "threads": 1,
+        "vulkan": 0,
+        "fp16": 0,
+        "bf16": 0,
+        "int8": 0,
+        "runtime_inputs": [
+            {
+                "name": "in0",
+                "dtype": "float32",
+                "logical_shape": [
+                    1,
+                    3,
+                    640,
+                    640
+                ],
+                "dims": 3,
+                "w": 640,
+                "h": 640,
+                "d": 1,
+                "c": 3,
+                "elempack": 1,
+                "elembits": 32
+            }
+        ],
+        "runtime_outputs": [
+            {
+                "name": "out0",
+                "dtype": "float32",
+                "logical_shape": [
+                    1,
+                    25200,
+                    85
+                ],
+                "dims": 2,
+                "w": 85,
+                "h": 25200,
+                "d": 1,
+                "c": 1,
+                "elempack": 1,
+                "elembits": 32
+            }
+        ]
+    },
+    "configuration_file": {
+        "path": "/home/dministrator/projects/edgeai-deploy-benchmark/configs/yolov5n_v7_inference.json",
+        "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+    },
+    "configuration": {
+        "schema_version": 1,
+        "input_size": [
+            640,
+            640
+        ],
+        "confidence_threshold": 2.5000000000000000e-01,
+        "iou_threshold": 4.5000000000000001e-01,
+        "class_aware_nms": 1,
+        "max_detections": 1000
+    },
+    "source_image": {
+        "path": "/home/dministrator/projects/edgeai-deploy-benchmark/results/logs/vendor/arm_uvc_camera/replay_frames/20260803T082616Z/processed_6_raw.png",
+        "sha256": "66bc7fba8368c9b577c1f446a3ac612bd39f4d02c10851c5955755a47e8aecaf",
+        "size_bytes": 453677.0,
+        "shape_bgr": [
+            480,
+            640,
+            3
+        ]
+    },
+    "preprocess": {
+        "scale": 1.0,
+        "padding": {
+            "left": 0,
+            "top": 80,
+            "right": 0,
+            "bottom": 80
+        },
+        "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+        ]
+    },
+    "candidate_counts": {
+        "raw_candidate_count": 25200,
+        "threshold_candidate_count": 51,
+        "nms_candidate_count": 5,
+        "invalid_box_count": 0
+    },
+    "detections": [
+        {
+            "rank": 1,
+            "candidate_index": 19945,
+            "class_id": 0,
+            "class_name": "person",
+            "objectness": 7.4813997745513916e-01,
+            "class_score": 9.8904299736022949e-01,
+            "confidence": 7.3994302749633789e-01,
+            "box_xywh_input": [
+                4.0888021850585938e+02,
+                2.8959890747070312e+02,
+                6.5308120727539062e+01,
+                8.0687583923339844e+01
+            ],
+            "box_xyxy_input": [
+                3.7622616577148438e+02,
+                2.4925511169433594e+02,
+                4.4153427124023438e+02,
+                3.2994268798828125e+02
+            ],
+            "box_xyxy_source": [
+                3.7622616577148438e+02,
+                1.6925511169433594e+02,
+                4.4153427124023438e+02,
+                2.4994268798828125e+02
+            ]
+        },
+        {
+            "rank": 2,
+            "candidate_index": 24502,
+            "class_id": 62,
+            "class_name": "tv",
+            "objectness": 6.3990098237991333e-01,
+            "class_score": 9.8852199316024780e-01,
+            "confidence": 6.3255602121353149e-01,
+            "box_xywh_input": [
+                6.2329460144042969e+01,
+                1.7443515014648438e+02,
+                1.3038821411132812e+02,
+                1.8729803466796875e+02
+            ],
+            "box_xyxy_input": [
+                -2.8646469116210938e+00,
+                8.0786132812500000e+01,
+                1.2752356719970703e+02,
+                2.6808416748046875e+02
+            ],
+            "box_xyxy_source": [
+                0.0,
+                7.8613299131393433e-01,
+                1.2752356719970703e+02,
+                1.8808416748046875e+02
+            ]
+        },
+        {
+            "rank": 3,
+            "candidate_index": 24618,
+            "class_id": 56,
+            "class_name": "chair",
+            "objectness": 5.4228198528289795e-01,
+            "class_score": 7.7665299177169800e-01,
+            "confidence": 4.2116498947143555e-01,
+            "box_xywh_input": [
+                5.9572772216796875e+02,
+                3.4376788330078125e+02,
+                8.9593688964843750e+01,
+                1.7826425170898438e+02
+            ],
+            "box_xyxy_input": [
+                5.5093090820312500e+02,
+                2.5463575744628906e+02,
+                6.4052453613281250e+02,
+                4.3290002441406250e+02
+            ],
+            "box_xyxy_source": [
+                5.5093090820312500e+02,
+                1.7463575744628906e+02,
+                640.0,
+                3.5290002441406250e+02
+            ]
+        },
+        {
+            "rank": 4,
+            "candidate_index": 24194,
+            "class_id": 0,
+            "class_name": "person",
+            "objectness": 4.2852100729942322e-01,
+            "class_score": 9.2570602893829346e-01,
+            "confidence": 3.9668399095535278e-01,
+            "box_xywh_input": [
+                4.6187313842773438e+02,
+                2.9858520507812500e+02,
+                5.1185058593750000e+01,
+                7.8809700012207031e+01
+            ],
+            "box_xyxy_input": [
+                4.3628060913085938e+02,
+                2.5918035888671875e+02,
+                4.8746566772460938e+02,
+                3.3799005126953125e+02
+            ],
+            "box_xyxy_source": [
+                4.3628060913085938e+02,
+                1.7918035888671875e+02,
+                4.8746566772460938e+02,
+                2.5799005126953125e+02
+            ]
+        },
+        {
+            "rank": 5,
+            "candidate_index": 24216,
+            "class_id": 56,
+            "class_name": "chair",
+            "objectness": 3.1302800774574280e-01,
+            "class_score": 8.2806199789047241e-01,
+            "confidence": 2.5920701026916504e-01,
+            "box_xywh_input": [
+                5.1238891601562500e+02,
+                3.2652770996093750e+02,
+                6.6855125427246094e+01,
+                5.7023429870605469e+01
+            ],
+            "box_xyxy_input": [
+                4.7896136474609375e+02,
+                2.9801599121093750e+02,
+                5.4581646728515625e+02,
+                3.5503942871093750e+02
+            ],
+            "box_xyxy_source": [
+                4.7896136474609375e+02,
+                2.1801599121093750e+02,
+                5.4581646728515625e+02,
+                2.7503942871093750e+02
+            ]
+        }
+    ],
+    "output_image": {
+        "path": "/home/dministrator/projects/edgeai-deploy-benchmark/results/evidence/021/replay_json/processed_6_replay.png",
+        "sha256": "2a9ae5464924f52d43c19f32aef0d4287f64166d2d440f1f494e9ffb44ce7d6f",
+        "size_bytes": 452191.0,
+        "shape_bgr": [
+            480,
+            640,
+            3
+        ],
+        "decode_validation": "PASS",
+        "visual_review": "PENDING_HUMAN_REVIEW"
+    },
+    "timings_ms": {
+        "measurement_type": "single-run diagnostic, not a benchmark",
+        "input_read": 4.9972870000000000e+00,
+        "preprocess": 2.9353449999999999e+00,
+        "inference": 8.4193071000000003e+01,
+        "postprocess": 4.0387060000000004e+00,
+        "visualization": 3.5160000000000002e-01,
+        "output_write": 1.1301022000000000e+01,
+        "pipeline_total": 1.3914490100000000e+02,
+        "boundaries": {
+            "inference": "NcnnDetector::infer input bind, Extractor::extract, validation and copy",
+            "postprocess": "shared YOLOv5 decode, threshold, NMS, inverse map and clipping"
+        }
+    }
+}

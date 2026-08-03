@@ -1,0 +1,110 @@
+{
+  "approval_recorded_at_wsl": "2026-08-03T16:50:00+08:00",
+  "approval_time_semantics": "WSL record time for user review; not camera capture time or board inference time",
+  "automated_validation": "PASS",
+  "candidate_approved": true,
+  "checks": {
+    "camera_identity": true,
+    "capability_audit": true,
+    "exit": true,
+    "frame_age": true,
+    "frame_sequences": true,
+    "latest_frame_slot": true,
+    "process_threads": true,
+    "raw_frames": true,
+    "replay": true,
+    "representative_frames": true,
+    "runtime_profile": true,
+    "shutdown_accounting": true,
+    "stderr_empty": true
+  },
+  "counts": {
+    "captured_frames": 113,
+    "dropped_frames": 101,
+    "invalid_capture_frames": 0,
+    "latest_frame_capacity": 1,
+    "overwritten_frames": 101,
+    "pending_frame_at_stop": 1,
+    "processed_frames": 10,
+    "published_frames": 112,
+    "unpublished_at_shutdown": 1
+  },
+  "formal_realtime_benchmark": false,
+  "human_camera_review": "PASS",
+  "human_review_source": "user",
+  "observed_process_threads_scope": "whole process including OpenCV/V4L2 and ncnn; not ncnn-only count",
+  "replay_failed_frames": 0,
+  "replay_status": "PASS_TARGET",
+  "replay_verified_frames": 10,
+  "representative_frames": {
+    "first_annotated": {
+      "path": "results/images/021/first_annotated.png",
+      "sha256": "8c4fa983a44ab4dcb1889a56987d49339b8dff1ab5c595e2593be85f0e966da7",
+      "shape": [
+        640,
+        480,
+        3
+      ]
+    },
+    "first_raw": {
+      "path": "results/images/021/first_raw.png",
+      "sha256": "ca7ef6edbf64379d523f7bb902977a21a942543085473700a0d1c2bd855c5c26",
+      "shape": [
+        640,
+        480,
+        3
+      ]
+    },
+    "last_annotated": {
+      "path": "results/images/021/last_annotated.png",
+      "sha256": "33754df9f462a4b3244f95551be067a9cb56874b0958fbeb670ce9b4e08b7e78",
+      "shape": [
+        640,
+        480,
+        3
+      ]
+    },
+    "last_raw": {
+      "path": "results/images/021/last_raw.png",
+      "sha256": "50d649093be7d7fd05cf2813c4ab3b3672d3e4e8841da80a9ad0fd8a590467a6",
+      "shape": [
+        640,
+        480,
+        3
+      ]
+    },
+    "middle_annotated": {
+      "path": "results/images/021/middle_annotated.png",
+      "sha256": "497f706a4ff04e56ec4aa2e98c319e2341bca9c96af62db10b5c46f7072d7731",
+      "shape": [
+        640,
+        480,
+        3
+      ]
+    },
+    "middle_raw": {
+      "path": "results/images/021/middle_raw.png",
+      "sha256": "1608368d194154e0dbd799f368a5a66e2e7e316190247d8fea56a1669ed6275d",
+      "shape": [
+        640,
+        480,
+        3
+      ]
+    }
+  },
+  "schema_version": 1,
+  "source_sequence": [
+    0,
+    11,
+    22,
+    34,
+    45,
+    56,
+    67,
+    78,
+    89,
+    100
+  ],
+  "status": "PASS",
+  "task": "021"
+}

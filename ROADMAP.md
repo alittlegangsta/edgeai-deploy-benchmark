@@ -113,3 +113,16 @@ frames.
 This is functional validation, not a formal video performance benchmark.
 USB camera, streaming, async pipelines, dropped-frame policy, Vulkan,
 quantization, and NPU remain outside Task 020.
+
+## Stage 3 ARM UVC camera inference
+
+Task 021 is `Completed` after automated validation and user representative-frame
+review. The real DR1M90 camera
+audit found two `uvcvideo` nodes and selected `/dev/video0` with V4L2 `YUYV`
+`640x480` at negotiated `5 FPS`. A capacity-one latest-frame-wins slot keeps
+capture bounded while the recommended Task 019 OpenMP dual-thread ncnn profile
+processes ten retained frames. All retained frames replay through the approved
+single-image path with `PASS_TARGET` equivalence; 101 overwritten frames are
+recorded rather than hidden. This is functional camera validation, not a
+realtime benchmark. Video streaming, camera performance benchmarking, Vulkan,
+quantization, and NPU remain out of scope.
