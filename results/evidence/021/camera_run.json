@@ -1,0 +1,991 @@
+{
+    "schema_version": 1,
+    "task": "021",
+    "application": "edgeai_ncnn_camera",
+    "automated_validation": "PASS_TARGET",
+    "human_camera_review": "PASS",
+    "human_review_source": "user",
+    "approval_recorded_at_wsl": "2026-08-03T16:50:00+08:00",
+    "approval_time_semantics": "WSL record time for user review; not camera capture time or board inference time",
+    "runtime": {
+        "profile": "recommended-dual-thread",
+        "version": "1.0.20240410",
+        "configured_threads": 2,
+        "ncnn_openmp_compiled": 1,
+        "ncnn_threads_compiled": 1,
+        "ncnn_simpleomp_compiled": 0,
+        "compiler_openmp": 1,
+        "effective_parallel_backend": "openmp",
+        "ncnn_library_sha256": "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3",
+        "private_libgomp_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+        "observed_process_threads": 6,
+        "cpu_only": 1,
+        "precision": "FP32",
+        "batch": 1,
+        "input_tensor": [
+            1,
+            3,
+            640,
+            640
+        ],
+        "vulkan": 0,
+        "fp16": 0,
+        "bf16": 0,
+        "int8": 0,
+        "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+        "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0"
+    },
+    "camera": {
+        "device": "/dev/video0",
+        "backend": "V4L2",
+        "requested_width": 640,
+        "requested_height": 480,
+        "requested_fps": 5.0,
+        "requested_fourcc": "YUYV",
+        "negotiated_width": 640,
+        "negotiated_height": 480,
+        "negotiated_fps": 5.0,
+        "negotiated_fourcc": "YUYV",
+        "capabilities_json": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/camera_capabilities.json"
+    },
+    "capture_capabilities": {
+        "device": "/dev/video0",
+        "driver": "uvcvideo",
+        "card": "USB 2.0 Camera: USB Camera",
+        "bus_info": "usb-f8180000.usb-1.3",
+        "format_count": 2
+    },
+    "configuration": {
+        "path": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/config/yolov5n_v7_inference.json",
+        "input_width": 640,
+        "input_height": 640,
+        "confidence_threshold": 2.5000000000000000e-01,
+        "nms_iou_threshold": 4.5000000000000001e-01
+    },
+    "counts": {
+        "captured_frames": 113,
+        "published_frames": 112,
+        "processed_frames": 10,
+        "overwritten_frames": 101,
+        "unpublished_at_shutdown": 1,
+        "dropped_frames": 101,
+        "invalid_capture_frames": 0,
+        "pending_frame_at_stop": 1,
+        "latest_frame_capacity": 1
+    },
+    "run_clock": {
+        "monotonic_start_ms": 1.7596209040870001e+06,
+        "monotonic_end_ms": 1.7864033596830000e+06,
+        "board_wall_clock_synchronization": "not required; board clock may be unsynchronized"
+    },
+    "frames": [
+        {
+            "processed_index": 0,
+            "source_sequence": 0.0,
+            "capture_monotonic_ms": 1.7622113790330000e+06,
+            "inference_start_monotonic_ms": 1.7622132130529999e+06,
+            "result_monotonic_ms": 1.7647143081280000e+06,
+            "frame_age_at_inference_start_ms": 1.8340199999511242e+00,
+            "end_to_end_age_ms": 2.5029290950000286e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_0_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_0_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 3.8580030000000001e+01,
+                "inference": 2.2348259020000000e+03,
+                "postprocess": 5.3952120999999998e+01,
+                "pipeline": 2.3273580529999999e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 6.9047397375106812e-01,
+                    "class_score": 9.2838299274444580e-01,
+                    "confidence": 6.4102399349212646e-01,
+                    "box_xyxy_source": [
+                        3.6679867553710938e+02,
+                        1.6894010925292969e+02,
+                        4.3455752563476562e+02,
+                        2.4575512695312500e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 5.4269099235534668e-01,
+                    "class_score": 9.7082197666168213e-01,
+                    "confidence": 5.2685600519180298e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        3.7553399801254272e-01,
+                        1.2817028808593750e+02,
+                        1.8389135742187500e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 5.7537597417831421e-01,
+                    "class_score": 8.9815598726272583e-01,
+                    "confidence": 5.1677697896957397e-01,
+                    "box_xyxy_source": [
+                        5.5126232910156250e+02,
+                        1.7212843322753906e+02,
+                        6.3961059570312500e+02,
+                        3.4987048339843750e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 4.3989300727844238e-01,
+                    "class_score": 9.5073801279067993e-01,
+                    "confidence": 4.1822299361228943e-01,
+                    "box_xyxy_source": [
+                        4.2927316284179688e+02,
+                        1.7873059082031250e+02,
+                        4.7809609985351562e+02,
+                        2.5512872314453125e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 6.2668901681900024e-01,
+                    "class_score": 5.7482701539993286e-01,
+                    "confidence": 3.6023798584938049e-01,
+                    "box_xyxy_source": [
+                        4.7319674682617188e+02,
+                        2.1993453979492188e+02,
+                        5.3895800781250000e+02,
+                        2.6985684204101562e+02
+                    ]
+                },
+                {
+                    "rank": 6,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 3.9561098814010620e-01,
+                    "class_score": 9.0065199136734009e-01,
+                    "confidence": 3.5630801320075989e-01,
+                    "box_xyxy_source": [
+                        5.8138128662109375e+02,
+                        2.6980667114257812e+02,
+                        640.0,
+                        3.7406027221679688e+02
+                    ]
+                },
+                {
+                    "rank": 7,
+                    "class_id": 63,
+                    "class_name": "laptop",
+                    "objectness": 5.2684599161148071e-01,
+                    "class_score": 5.0196498632431030e-01,
+                    "confidence": 2.6445800065994263e-01,
+                    "box_xyxy_source": [
+                        4.7290512084960938e+02,
+                        2.2029971313476562e+02,
+                        5.4065063476562500e+02,
+                        2.6949136352539062e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "processed_index": 1,
+            "source_sequence": 11.0,
+            "capture_monotonic_ms": 1.7645850529759999e+06,
+            "inference_start_monotonic_ms": 1.7647176762580001e+06,
+            "result_monotonic_ms": 1.7671445015620000e+06,
+            "frame_age_at_inference_start_ms": 1.3262328200018965e+02,
+            "end_to_end_age_ms": 2.5594485860001296e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_1_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_1_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 3.3147810000000000e+01,
+                "inference": 2.1496437209999999e+03,
+                "postprocess": 5.3878920999999998e+01,
+                "pipeline": 2.2366704519999998e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 6.8050402402877808e-01,
+                    "class_score": 9.8634201288223267e-01,
+                    "confidence": 6.7120897769927979e-01,
+                    "box_xyxy_source": [
+                        3.7561746215820312e+02,
+                        1.6928433227539062e+02,
+                        4.4165658569335938e+02,
+                        2.5022488403320312e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 5.8502799272537231e-01,
+                    "class_score": 9.8259800672531128e-01,
+                    "confidence": 5.7484799623489380e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        1.9426000118255615e-01,
+                        1.2501817321777344e+02,
+                        1.8691601562500000e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 5.1194697618484497e-01,
+                    "class_score": 7.8466999530792236e-01,
+                    "confidence": 4.0171000361442566e-01,
+                    "box_xyxy_source": [
+                        5.4720104980468750e+02,
+                        1.7455606079101562e+02,
+                        640.0,
+                        3.4978256225585938e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 4.3200299143791199e-01,
+                    "class_score": 8.8873702287673950e-01,
+                    "confidence": 3.8393700122833252e-01,
+                    "box_xyxy_source": [
+                        4.7877813720703125e+02,
+                        2.1783764648437500e+02,
+                        5.4556146240234375e+02,
+                        2.7754400634765625e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 3.8576200604438782e-01,
+                    "class_score": 9.2108100652694702e-01,
+                    "confidence": 3.5531800985336304e-01,
+                    "box_xyxy_source": [
+                        4.3606332397460938e+02,
+                        1.7649780273437500e+02,
+                        4.8939529418945312e+02,
+                        2.5788623046875000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "processed_index": 2,
+            "source_sequence": 22.0,
+            "capture_monotonic_ms": 1.7669610240799999e+06,
+            "inference_start_monotonic_ms": 1.7671482995020000e+06,
+            "result_monotonic_ms": 1.7695872170859999e+06,
+            "frame_age_at_inference_start_ms": 1.8727542200009339e+02,
+            "end_to_end_age_ms": 2.6261930060000159e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_2_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_2_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 2.7478079999999999e+01,
+                "inference": 2.1345430110000002e+03,
+                "postprocess": 6.3822571000000003e+01,
+                "pipeline": 2.2258436620000002e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 7.2205102443695068e-01,
+                    "class_score": 9.9145299196243286e-01,
+                    "confidence": 7.1587997674942017e-01,
+                    "box_xyxy_source": [
+                        3.7632595825195312e+02,
+                        1.6874824523925781e+02,
+                        4.4072244262695312e+02,
+                        2.4930731201171875e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 6.4264899492263794e-01,
+                    "class_score": 9.8668998479843140e-01,
+                    "confidence": 6.3409501314163208e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        7.3120099306106567e-01,
+                        1.2364021301269531e+02,
+                        1.8695635986328125e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 5.1994699239730835e-01,
+                    "class_score": 8.2143598794937134e-01,
+                    "confidence": 4.2710301280021667e-01,
+                    "box_xyxy_source": [
+                        5.4982678222656250e+02,
+                        1.7479280090332031e+02,
+                        640.0,
+                        3.5190179443359375e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 4.3271699547767639e-01,
+                    "class_score": 9.1811501979827881e-01,
+                    "confidence": 3.9728400111198425e-01,
+                    "box_xyxy_source": [
+                        4.3662191772460938e+02,
+                        1.7842831420898438e+02,
+                        4.8830709838867188e+02,
+                        2.5778073120117188e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "processed_index": 3,
+            "source_sequence": 34.0,
+            "capture_monotonic_ms": 1.7695524500259999e+06,
+            "inference_start_monotonic_ms": 1.7695913502160001e+06,
+            "result_monotonic_ms": 1.7719493477489999e+06,
+            "frame_age_at_inference_start_ms": 3.8900190000189468e+01,
+            "end_to_end_age_ms": 2.3968977230000310e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_3_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_3_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 3.0859290000000001e+01,
+                "inference": 2.0831595210000000e+03,
+                "postprocess": 5.7392851000000000e+01,
+                "pipeline": 2.1714116620000000e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 7.2137898206710815e-01,
+                    "class_score": 9.8878401517868042e-01,
+                    "confidence": 7.1328800916671753e-01,
+                    "box_xyxy_source": [
+                        3.7636651611328125e+02,
+                        1.6904995727539062e+02,
+                        4.4060870361328125e+02,
+                        2.4919692993164062e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 5.6593197584152222e-01,
+                    "class_score": 9.8662197589874268e-01,
+                    "confidence": 5.5836099386215210e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        5.9392499923706055e-01,
+                        1.2223985290527344e+02,
+                        1.8628906250000000e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 4.6626499295234680e-01,
+                    "class_score": 9.2313802242279053e-01,
+                    "confidence": 4.3042600154876709e-01,
+                    "box_xyxy_source": [
+                        4.3605163574218750e+02,
+                        1.7906710815429688e+02,
+                        4.8766717529296875e+02,
+                        2.5688302612304688e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 5.2760899066925049e-01,
+                    "class_score": 7.9492902755737305e-01,
+                    "confidence": 4.1941198706626892e-01,
+                    "box_xyxy_source": [
+                        5.4877020263671875e+02,
+                        1.7420863342285156e+02,
+                        640.0,
+                        3.5089544677734375e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "processed_index": 4,
+            "source_sequence": 45.0,
+            "capture_monotonic_ms": 1.7719289532089999e+06,
+            "inference_start_monotonic_ms": 1.7719530606090000e+06,
+            "result_monotonic_ms": 1.7743455986430000e+06,
+            "frame_age_at_inference_start_ms": 2.4107400000095367e+01,
+            "end_to_end_age_ms": 2.4166454340000637e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_4_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_4_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 2.7460740999999999e+01,
+                "inference": 2.1247128509999998e+03,
+                "postprocess": 5.3791739999999997e+01,
+                "pipeline": 2.2059653319999998e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 6.9007200002670288e-01,
+                    "class_score": 9.8925399780273438e-01,
+                    "confidence": 6.8265599012374878e-01,
+                    "box_xyxy_source": [
+                        3.7635601806640625e+02,
+                        1.6874609375000000e+02,
+                        4.4154803466796875e+02,
+                        2.4996667480468750e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 5.9433698654174805e-01,
+                    "class_score": 9.8602497577667236e-01,
+                    "confidence": 5.8603101968765259e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        4.3364000320434570e-01,
+                        1.2905609130859375e+02,
+                        1.8752734375000000e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 4.9464699625968933e-01,
+                    "class_score": 8.0488002300262451e-01,
+                    "confidence": 3.9813199639320374e-01,
+                    "box_xyxy_source": [
+                        5.4919055175781250e+02,
+                        1.7400711059570312e+02,
+                        640.0,
+                        3.5229995727539062e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 4.1522499918937683e-01,
+                    "class_score": 9.1528999805450439e-01,
+                    "confidence": 3.8005098700523376e-01,
+                    "box_xyxy_source": [
+                        4.3640258789062500e+02,
+                        1.7919268798828125e+02,
+                        4.8726416015625000e+02,
+                        2.5789794921875000e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 3.4875598549842834e-01,
+                    "class_score": 8.2627999782562256e-01,
+                    "confidence": 2.8817000985145569e-01,
+                    "box_xyxy_source": [
+                        4.7514355468750000e+02,
+                        2.1744982910156250e+02,
+                        5.4517437744140625e+02,
+                        2.7772772216796875e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "processed_index": 5,
+            "source_sequence": 56.0,
+            "capture_monotonic_ms": 1.7743051414230000e+06,
+            "inference_start_monotonic_ms": 1.7743493506829999e+06,
+            "result_monotonic_ms": 1.7767635377970000e+06,
+            "frame_age_at_inference_start_ms": 4.4209259999915957e+01,
+            "end_to_end_age_ms": 2.4583963740000036e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_5_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_5_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 2.7447391000000000e+01,
+                "inference": 2.1174752010000002e+03,
+                "postprocess": 6.0141419999999997e+01,
+                "pipeline": 2.2050640120000003e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 7.1611297130584717e-01,
+                    "class_score": 9.8856699466705322e-01,
+                    "confidence": 7.0792597532272339e-01,
+                    "box_xyxy_source": [
+                        3.7576000976562500e+02,
+                        1.6931848144531250e+02,
+                        4.4179766845703125e+02,
+                        2.4992254638671875e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 6.1764901876449585e-01,
+                    "class_score": 9.8740297555923462e-01,
+                    "confidence": 6.0986799001693726e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        5.7870501279830933e-01,
+                        1.2670149230957031e+02,
+                        1.8816003417968750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 4.9452298879623413e-01,
+                    "class_score": 9.4156098365783691e-01,
+                    "confidence": 4.6562400460243225e-01,
+                    "box_xyxy_source": [
+                        4.3762927246093750e+02,
+                        1.7918493652343750e+02,
+                        4.8785119628906250e+02,
+                        2.5840887451171875e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 5.4609900712966919e-01,
+                    "class_score": 7.9487901926040649e-01,
+                    "confidence": 4.3408301472663879e-01,
+                    "box_xyxy_source": [
+                        5.4922644042968750e+02,
+                        1.7458326721191406e+02,
+                        640.0,
+                        3.5512188720703125e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 3.7915799021720886e-01,
+                    "class_score": 8.8584500551223755e-01,
+                    "confidence": 3.3587500452995300e-01,
+                    "box_xyxy_source": [
+                        4.7815936279296875e+02,
+                        2.1753665161132812e+02,
+                        5.4599395751953125e+02,
+                        2.7707461547851562e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "processed_index": 6,
+            "source_sequence": 67.0,
+            "capture_monotonic_ms": 1.7766803288060001e+06,
+            "inference_start_monotonic_ms": 1.7767678522170000e+06,
+            "result_monotonic_ms": 1.7791438091909999e+06,
+            "frame_age_at_inference_start_ms": 8.7523410999914631e+01,
+            "end_to_end_age_ms": 2.4634803849998862e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_6_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_6_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 3.0845490999999999e+01,
+                "inference": 2.1048081499999998e+03,
+                "postprocess": 5.3838929999999998e+01,
+                "pipeline": 2.1894925709999998e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 7.4814099073410034e-01,
+                    "class_score": 9.8904198408126831e-01,
+                    "confidence": 7.3994302749633789e-01,
+                    "box_xyxy_source": [
+                        3.7622631835937500e+02,
+                        1.6925529479980469e+02,
+                        4.4153405761718750e+02,
+                        2.4994253540039062e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 6.3989901542663574e-01,
+                    "class_score": 9.8851901292800903e-01,
+                    "confidence": 6.3255202770233154e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        7.8672802448272705e-01,
+                        1.2752288818359375e+02,
+                        1.8808331298828125e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 5.4228001832962036e-01,
+                    "class_score": 7.7665299177169800e-01,
+                    "confidence": 4.2116299271583557e-01,
+                    "box_xyxy_source": [
+                        5.5093084716796875e+02,
+                        1.7463545227050781e+02,
+                        640.0,
+                        3.5289990234375000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 4.2852199077606201e-01,
+                    "class_score": 9.2570698261260986e-01,
+                    "confidence": 3.9668598771095276e-01,
+                    "box_xyxy_source": [
+                        4.3628048706054688e+02,
+                        1.7918032836914062e+02,
+                        4.8746554565429688e+02,
+                        2.5799002075195312e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 3.1303098797798157e-01,
+                    "class_score": 8.2805997133255005e-01,
+                    "confidence": 2.5920799374580383e-01,
+                    "box_xyxy_source": [
+                        4.7896157836914062e+02,
+                        2.1801602172851562e+02,
+                        5.4581628417968750e+02,
+                        2.7503939819335938e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "processed_index": 7,
+            "source_sequence": 78.0,
+            "capture_monotonic_ms": 1.7790568925000001e+06,
+            "inference_start_monotonic_ms": 1.7791475561609999e+06,
+            "result_monotonic_ms": 1.7815688214449999e+06,
+            "frame_age_at_inference_start_ms": 9.0663660999853164e+01,
+            "end_to_end_age_ms": 2.5119289449998178e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_7_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_7_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 2.7527460000000001e+01,
+                "inference": 2.1244914509999999e+03,
+                "postprocess": 6.0017730999999998e+01,
+                "pipeline": 2.2120366419999996e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 6.7379802465438843e-01,
+                    "class_score": 9.8787802457809448e-01,
+                    "confidence": 6.6562998294830322e-01,
+                    "box_xyxy_source": [
+                        3.7604394531250000e+02,
+                        1.6929649353027344e+02,
+                        4.4096032714843750e+02,
+                        2.4976403808593750e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 5.9901797771453857e-01,
+                    "class_score": 9.8427498340606689e-01,
+                    "confidence": 5.8959800004959106e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        5.4008501768112183e-01,
+                        1.2664168548583984e+02,
+                        1.8607873535156250e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 5.1792597770690918e-01,
+                    "class_score": 8.1627899408340454e-01,
+                    "confidence": 4.2277199029922485e-01,
+                    "box_xyxy_source": [
+                        5.4639172363281250e+02,
+                        1.7438287353515625e+02,
+                        640.0,
+                        3.5367840576171875e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 4.5792600512504578e-01,
+                    "class_score": 9.1228699684143066e-01,
+                    "confidence": 4.1776001453399658e-01,
+                    "box_xyxy_source": [
+                        4.3615014648437500e+02,
+                        1.7887976074218750e+02,
+                        4.8761175537109375e+02,
+                        2.5733013916015625e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "processed_index": 8,
+            "source_sequence": 89.0,
+            "capture_monotonic_ms": 1.7814362924840001e+06,
+            "inference_start_monotonic_ms": 1.7815729932450000e+06,
+            "result_monotonic_ms": 1.7839759589490001e+06,
+            "frame_age_at_inference_start_ms": 1.3670076099992730e+02,
+            "end_to_end_age_ms": 2.5396664650000166e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_8_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_8_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 3.0878640000000001e+01,
+                "inference": 2.1022166309999998e+03,
+                "postprocess": 6.0467671000000003e+01,
+                "pipeline": 2.1935629419999996e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 7.0899897813796997e-01,
+                    "class_score": 9.8721998929977417e-01,
+                    "confidence": 6.9993799924850464e-01,
+                    "box_xyxy_source": [
+                        3.7616625976562500e+02,
+                        1.6959692382812500e+02,
+                        4.4186907958984375e+02,
+                        2.5006030273437500e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 6.6832101345062256e-01,
+                    "class_score": 9.9029600620269775e-01,
+                    "confidence": 6.6183602809906006e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        5.0054901838302612e-01,
+                        1.2777279663085938e+02,
+                        1.8773834228515625e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 5.2838999032974243e-01,
+                    "class_score": 9.4287198781967163e-01,
+                    "confidence": 4.9820399284362793e-01,
+                    "box_xyxy_source": [
+                        4.3712527465820312e+02,
+                        1.7954321289062500e+02,
+                        4.8786654663085938e+02,
+                        2.5795776367187500e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 5.1833701133728027e-01,
+                    "class_score": 7.8960502147674561e-01,
+                    "confidence": 4.0928199887275696e-01,
+                    "box_xyxy_source": [
+                        5.4895043945312500e+02,
+                        1.7440222167968750e+02,
+                        640.0,
+                        3.5166711425781250e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 3.5067299008369446e-01,
+                    "class_score": 7.4526900053024292e-01,
+                    "confidence": 2.6134601235389709e-01,
+                    "box_xyxy_source": [
+                        4.7706875610351562e+02,
+                        2.2053793334960938e+02,
+                        5.4412554931640625e+02,
+                        2.7747647094726562e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "processed_index": 9,
+            "source_sequence": 100.0,
+            "capture_monotonic_ms": 1.7838146274669999e+06,
+            "inference_start_monotonic_ms": 1.7839801638090000e+06,
+            "result_monotonic_ms": 1.7863830147930000e+06,
+            "frame_age_at_inference_start_ms": 1.6553634200012311e+02,
+            "end_to_end_age_ms": 2.5683873260000255e+03,
+            "paths": {
+                "raw": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_9_raw.png",
+                "annotated": "/root/edgeai/yolov5n-ncnn-uvc-camera-20260803T082616Z/results/frames/processed_9_annotated.png"
+            },
+            "timings_ms": {
+                "preprocess": 3.0759540000000001e+01,
+                "inference": 2.1025898910000001e+03,
+                "postprocess": 6.0033811000000000e+01,
+                "pipeline": 2.1933832419999999e+03
+            },
+            "observed_process_threads": 6,
+            "detections": [
+                {
+                    "rank": 1,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 6.7592799663543701e-01,
+                    "class_score": 9.6119099855422974e-01,
+                    "confidence": 6.4969599246978760e-01,
+                    "box_xyxy_source": [
+                        3.6923391723632812e+02,
+                        1.6865783691406250e+02,
+                        4.4153329467773438e+02,
+                        2.4841412353515625e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 6.4081400632858276e-01,
+                    "class_score": 9.8725301027297974e-01,
+                    "confidence": 6.3264501094818115e-01,
+                    "box_xyxy_source": [
+                        0.0,
+                        6.0579699277877808e-01,
+                        1.2899072265625000e+02,
+                        1.8704608154296875e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "class_id": 0,
+                    "class_name": "person",
+                    "objectness": 4.6523499488830566e-01,
+                    "class_score": 9.3136602640151978e-01,
+                    "confidence": 4.3330401182174683e-01,
+                    "box_xyxy_source": [
+                        4.3622131347656250e+02,
+                        1.7909225463867188e+02,
+                        4.8704840087890625e+02,
+                        2.5688076782226562e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 5.0390201807022095e-01,
+                    "class_score": 7.2276598215103149e-01,
+                    "confidence": 3.6420300602912903e-01,
+                    "box_xyxy_source": [
+                        5.4684008789062500e+02,
+                        1.7419366455078125e+02,
+                        640.0,
+                        3.5660961914062500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "class_id": 56,
+                    "class_name": "chair",
+                    "objectness": 3.4393700957298279e-01,
+                    "class_score": 7.6330399513244629e-01,
+                    "confidence": 2.6252898573875427e-01,
+                    "box_xyxy_source": [
+                        4.7599890136718750e+02,
+                        2.1941983032226562e+02,
+                        5.4483636474609375e+02,
+                        2.7964004516601562e+02
+                    ]
+                }
+            ]
+        }
+    ],
+    "exit_code": 0,
+    "status": "CAPTURE_AND_INFERENCE_PASS"
+}

@@ -113,7 +113,10 @@ set(EDGEAI_COMMON_SOURCES
     src/common/visualize.cpp
 )
 if(EDGEAI_ENABLE_VIDEO)
-    list(APPEND EDGEAI_COMMON_SOURCES src/common/video_pipeline.cpp)
+    list(APPEND EDGEAI_COMMON_SOURCES
+        src/common/video_pipeline.cpp
+        src/common/camera_pipeline.cpp
+    )
 endif()
 
 add_library(edgeai_common STATIC ${EDGEAI_COMMON_SOURCES})
@@ -271,6 +274,19 @@ set_target_properties(edgeai_video_pipeline_tests PROPERTIES
 target_link_libraries(edgeai_video_pipeline_tests PRIVATE edgeai_common)
 edgeai_enable_warnings(edgeai_video_pipeline_tests)
 add_test(NAME edgeai_video_pipeline_tests COMMAND edgeai_video_pipeline_tests)
+
+add_executable(edgeai_camera_pipeline_tests
+    tests/test_camera_pipeline.cpp
+)
+target_compile_features(edgeai_camera_pipeline_tests PRIVATE cxx_std_17)
+set_target_properties(edgeai_camera_pipeline_tests PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_camera_pipeline_tests PRIVATE edgeai_common)
+edgeai_enable_warnings(edgeai_camera_pipeline_tests)
+add_test(NAME edgeai_camera_pipeline_tests COMMAND edgeai_camera_pipeline_tests)
 endif()
 
 if(EDGEAI_ENABLE_ORT)
@@ -404,6 +420,20 @@ target_link_libraries(edgeai_ncnn_video PRIVATE edgeai_ncnn_backend)
 edgeai_enable_warnings(edgeai_ncnn_video)
 add_test(NAME edgeai_ncnn_video_invalid_args COMMAND edgeai_ncnn_video)
 set_tests_properties(edgeai_ncnn_video_invalid_args PROPERTIES WILL_FAIL TRUE)
+
+add_executable(edgeai_ncnn_camera
+    apps/ncnn_camera.cpp
+)
+target_compile_features(edgeai_ncnn_camera PRIVATE cxx_std_17)
+set_target_properties(edgeai_ncnn_camera PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_ncnn_camera PRIVATE edgeai_ncnn_backend)
+edgeai_enable_warnings(edgeai_ncnn_camera)
+add_test(NAME edgeai_ncnn_camera_invalid_args COMMAND edgeai_ncnn_camera)
+set_tests_properties(edgeai_ncnn_camera_invalid_args PROPERTIES WILL_FAIL TRUE)
 endif()
 
 add_executable(edgeai_benchmark_ncnn

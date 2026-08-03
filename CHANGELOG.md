@@ -41,3 +41,7 @@
   output-video decode validation, and the user approved full playback plus the
   representative frames. This is functional validation, not a formal video
   performance benchmark.
+- Added Task 021's real-board UVC camera capability audit, V4L2 YUYV capture,
+  capacity-one latest-frame pipeline, ten-frame bounded run, and offline replay
+  evidence. Automated validation and user representative-frame review pass; the
+  task is complete. No realtime camera benchmark or NPU claim is made.

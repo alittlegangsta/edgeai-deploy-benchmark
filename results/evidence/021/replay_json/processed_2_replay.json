@@ -1,0 +1,239 @@
+{
+    "schema_version": 1,
+    "application": "edgeai_cpp_ncnn_image",
+    "model": {
+        "manifest_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/ncnn_manifest.json",
+        "manifest_sha256": "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff",
+        "param_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.param",
+        "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+        "bin_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.bin",
+        "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+        "runtime_version": "1.0.20240410",
+        "execution_provider": "ncnn CPU",
+        "threads": 1,
+        "vulkan": 0,
+        "fp16": 0,
+        "bf16": 0,
+        "int8": 0,
+        "runtime_inputs": [
+            {
+                "name": "in0",
+                "dtype": "float32",
+                "logical_shape": [
+                    1,
+                    3,
+                    640,
+                    640
+                ],
+                "dims": 3,
+                "w": 640,
+                "h": 640,
+                "d": 1,
+                "c": 3,
+                "elempack": 1,
+                "elembits": 32
+            }
+        ],
+        "runtime_outputs": [
+            {
+                "name": "out0",
+                "dtype": "float32",
+                "logical_shape": [
+                    1,
+                    25200,
+                    85
+                ],
+                "dims": 2,
+                "w": 85,
+                "h": 25200,
+                "d": 1,
+                "c": 1,
+                "elempack": 1,
+                "elembits": 32
+            }
+        ]
+    },
+    "configuration_file": {
+        "path": "/home/dministrator/projects/edgeai-deploy-benchmark/configs/yolov5n_v7_inference.json",
+        "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+    },
+    "configuration": {
+        "schema_version": 1,
+        "input_size": [
+            640,
+            640
+        ],
+        "confidence_threshold": 2.5000000000000000e-01,
+        "iou_threshold": 4.5000000000000001e-01,
+        "class_aware_nms": 1,
+        "max_detections": 1000
+    },
+    "source_image": {
+        "path": "/home/dministrator/projects/edgeai-deploy-benchmark/results/logs/vendor/arm_uvc_camera/replay_frames/20260803T082616Z/processed_2_raw.png",
+        "sha256": "4e954e7009706917dbdab1ece6abc0a2816a11a2804e696f074bd7ba59ca2b8b",
+        "size_bytes": 455263.0,
+        "shape_bgr": [
+            480,
+            640,
+            3
+        ]
+    },
+    "preprocess": {
+        "scale": 1.0,
+        "padding": {
+            "left": 0,
+            "top": 80,
+            "right": 0,
+            "bottom": 80
+        },
+        "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+        ]
+    },
+    "candidate_counts": {
+        "raw_candidate_count": 25200,
+        "threshold_candidate_count": 50,
+        "nms_candidate_count": 4,
+        "invalid_box_count": 0
+    },
+    "detections": [
+        {
+            "rank": 1,
+            "candidate_index": 19945,
+            "class_id": 0,
+            "class_name": "person",
+            "objectness": 7.2205299139022827e-01,
+            "class_score": 9.9145400524139404e-01,
+            "confidence": 7.1588301658630371e-01,
+            "box_xywh_input": [
+                4.0852432250976562e+02,
+                2.8902777099609375e+02,
+                6.4396469116210938e+01,
+                8.0559089660644531e+01
+            ],
+            "box_xyxy_input": [
+                3.7632608032226562e+02,
+                2.4874822998046875e+02,
+                4.4072256469726562e+02,
+                3.2930731201171875e+02
+            ],
+            "box_xyxy_source": [
+                3.7632608032226562e+02,
+                1.6874822998046875e+02,
+                4.4072256469726562e+02,
+                2.4930731201171875e+02
+            ]
+        },
+        {
+            "rank": 2,
+            "candidate_index": 24502,
+            "class_id": 62,
+            "class_name": "tv",
+            "objectness": 6.4265000820159912e-01,
+            "class_score": 9.8668998479843140e-01,
+            "confidence": 6.3409602642059326e-01,
+            "box_xywh_input": [
+                6.0620113372802734e+01,
+                1.7384384155273438e+02,
+                1.2604100036621094e+02,
+                1.8622547912597656e+02
+            ],
+            "box_xyxy_input": [
+                -2.4003870487213135e+00,
+                8.0731101989746094e+01,
+                1.2364060974121094e+02,
+                2.6695657348632812e+02
+            ],
+            "box_xyxy_source": [
+                0.0,
+                7.3110198974609375e-01,
+                1.2364060974121094e+02,
+                1.8695657348632812e+02
+            ]
+        },
+        {
+            "rank": 3,
+            "candidate_index": 24618,
+            "class_id": 56,
+            "class_name": "chair",
+            "objectness": 5.1994800567626953e-01,
+            "class_score": 8.2143598794937134e-01,
+            "confidence": 4.2710399627685547e-01,
+            "box_xywh_input": [
+                5.9523181152343750e+02,
+                3.4334725952148438e+02,
+                9.0810096740722656e+01,
+                1.7710978698730469e+02
+            ],
+            "box_xyxy_input": [
+                5.4982678222656250e+02,
+                2.5479235839843750e+02,
+                6.4063684082031250e+02,
+                4.3190216064453125e+02
+            ],
+            "box_xyxy_source": [
+                5.4982678222656250e+02,
+                1.7479235839843750e+02,
+                640.0,
+                3.5190216064453125e+02
+            ]
+        },
+        {
+            "rank": 4,
+            "candidate_index": 24194,
+            "class_id": 0,
+            "class_name": "person",
+            "objectness": 4.3271800875663757e-01,
+            "class_score": 9.1811901330947876e-01,
+            "confidence": 3.9728599786758423e-01,
+            "box_xywh_input": [
+                4.6246456909179688e+02,
+                2.9810455322265625e+02,
+                5.1685264587402344e+01,
+                7.9352432250976562e+01
+            ],
+            "box_xyxy_input": [
+                4.3662194824218750e+02,
+                2.5842834472656250e+02,
+                4.8830718994140625e+02,
+                3.3778076171875000e+02
+            ],
+            "box_xyxy_source": [
+                4.3662194824218750e+02,
+                1.7842834472656250e+02,
+                4.8830718994140625e+02,
+                2.5778076171875000e+02
+            ]
+        }
+    ],
+    "output_image": {
+        "path": "/home/dministrator/projects/edgeai-deploy-benchmark/results/evidence/021/replay_json/processed_2_replay.png",
+        "sha256": "a2fdb1c1308a6c4bed29cdabd511a380c572de8426efb0614e5eb62884e842c3",
+        "size_bytes": 454875.0,
+        "shape_bgr": [
+            480,
+            640,
+            3
+        ],
+        "decode_validation": "PASS",
+        "visual_review": "PENDING_HUMAN_REVIEW"
+    },
+    "timings_ms": {
+        "measurement_type": "single-run diagnostic, not a benchmark",
+        "input_read": 5.0555570000000003e+00,
+        "preprocess": 3.0067699999999999e+00,
+        "inference": 8.3786987999999994e+01,
+        "postprocess": 3.8083459999999998e+00,
+        "visualization": 3.5358299999999998e-01,
+        "output_write": 1.1211118000000001e+01,
+        "pipeline_total": 1.3841819100000001e+02,
+        "boundaries": {
+            "inference": "NcnnDetector::infer input bind, Extractor::extract, validation and copy",
+            "postprocess": "shared YOLOv5 decode, threshold, NMS, inverse map and clipping"
+        }
+    }
+}

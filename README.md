@@ -9,7 +9,8 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–020 are completed. Task 020 ARM video-file inference passed
+Tasks 001–021 are completed. Task 021 ARM UVC camera inference passed its
+automated stage and received user representative-frame approval. Task 020 ARM video-file inference passed
 automated real-board validation and user playback review.
 Checkpoint C is
 human-approved, PC Stage 1 is complete, and the Anlogic DR1 Stage 2 CPU
@@ -49,6 +50,15 @@ and the returned MJPEG/AVI decodes 30/30 frames in WSL. See
 [the ARM video-file guide](docs/vendor/ANLOGIC_ARM_VIDEO_FILE_INFERENCE.md).
 The user approved full playback, frame continuity, and annotations; Task 020 is
 `Completed`. This remains functional validation, not a formal video benchmark.
+
+Task 021 uses the real DR1M90 UVC camera at the audited `/dev/video0` V4L2
+`YUYV 640x480@5` configuration and a capacity-one latest-frame slot. Ten live
+frames were retained and independently replayed through the approved single-
+image path with `PASS_TARGET` equivalence. See
+[the ARM UVC camera guide](docs/vendor/ANLOGIC_ARM_UVC_CAMERA_INFERENCE.md) and
+the six user-approved representative files under `results/images/021/`. This
+is functional bounded-latency validation, not a realtime benchmark; YUYV 5 FPS
+is the camera capture setting, not an inference FPS result.
 
 ## PC architecture and model lineage
 
@@ -367,6 +377,8 @@ Task 017 has completed the preregistered single-thread CPU/FP32 benchmark and
 published the validator- and user-approved unoptimized default baseline.
 Task 018 completed the corrected OpenMP-enabled paired thread experiment without
 changing that baseline. Its original OpenMP-off session remains intact and
-invalid for multithread performance comparison. Video, camera,
-affinity/NEON-specific optimization, Vulkan, quantization, and NPU remain
-separate future work; NPU readiness remains `HOLD`.
+invalid for multithread performance comparison. Camera validation is now an
+independent completed functional Task 021 with user-approved representative
+frames; no camera timing is a formal realtime benchmark. Affinity/NEON-specific optimization, Vulkan,
+quantization, and NPU remain separate future work; NPU readiness remains
+`HOLD`.

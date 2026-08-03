@@ -1,0 +1,320 @@
+{
+    "schema_version": 1,
+    "application": "edgeai_cpp_ncnn_image",
+    "model": {
+        "manifest_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/ncnn_manifest.json",
+        "manifest_sha256": "9b3fa287c109a9d2d8928ed959ac363e559e3feea24364b31977b0fc85020cff",
+        "param_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.param",
+        "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+        "bin_path": "/home/dministrator/projects/edgeai-deploy-benchmark/models/yolov5n-v7.0/yolov5n.ncnn.bin",
+        "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+        "runtime_version": "1.0.20240410",
+        "execution_provider": "ncnn CPU",
+        "threads": 1,
+        "vulkan": 0,
+        "fp16": 0,
+        "bf16": 0,
+        "int8": 0,
+        "runtime_inputs": [
+            {
+                "name": "in0",
+                "dtype": "float32",
+                "logical_shape": [
+                    1,
+                    3,
+                    640,
+                    640
+                ],
+                "dims": 3,
+                "w": 640,
+                "h": 640,
+                "d": 1,
+                "c": 3,
+                "elempack": 1,
+                "elembits": 32
+            }
+        ],
+        "runtime_outputs": [
+            {
+                "name": "out0",
+                "dtype": "float32",
+                "logical_shape": [
+                    1,
+                    25200,
+                    85
+                ],
+                "dims": 2,
+                "w": 85,
+                "h": 25200,
+                "d": 1,
+                "c": 1,
+                "elempack": 1,
+                "elembits": 32
+            }
+        ]
+    },
+    "configuration_file": {
+        "path": "/home/dministrator/projects/edgeai-deploy-benchmark/configs/yolov5n_v7_inference.json",
+        "sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d"
+    },
+    "configuration": {
+        "schema_version": 1,
+        "input_size": [
+            640,
+            640
+        ],
+        "confidence_threshold": 2.5000000000000000e-01,
+        "iou_threshold": 4.5000000000000001e-01,
+        "class_aware_nms": 1,
+        "max_detections": 1000
+    },
+    "source_image": {
+        "path": "/home/dministrator/projects/edgeai-deploy-benchmark/results/logs/vendor/arm_uvc_camera/replay_frames/20260803T082616Z/processed_0_raw.png",
+        "sha256": "ca7ef6edbf64379d523f7bb902977a21a942543085473700a0d1c2bd855c5c26",
+        "size_bytes": 418773.0,
+        "shape_bgr": [
+            480,
+            640,
+            3
+        ]
+    },
+    "preprocess": {
+        "scale": 1.0,
+        "padding": {
+            "left": 0,
+            "top": 80,
+            "right": 0,
+            "bottom": 80
+        },
+        "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+        ]
+    },
+    "candidate_counts": {
+        "raw_candidate_count": 25200,
+        "threshold_candidate_count": 76,
+        "nms_candidate_count": 7,
+        "invalid_box_count": 0
+    },
+    "detections": [
+        {
+            "rank": 1,
+            "candidate_index": 24592,
+            "class_id": 0,
+            "class_name": "person",
+            "objectness": 6.9047498703002930e-01,
+            "class_score": 9.2838501930236816e-01,
+            "confidence": 6.4102697372436523e-01,
+            "box_xywh_input": [
+                4.0067816162109375e+02,
+                2.8734765625000000e+02,
+                6.7759056091308594e+01,
+                7.6815025329589844e+01
+            ],
+            "box_xyxy_input": [
+                3.6679864501953125e+02,
+                2.4894013977050781e+02,
+                4.3455767822265625e+02,
+                3.2575515747070312e+02
+            ],
+            "box_xyxy_source": [
+                3.6679864501953125e+02,
+                1.6894013977050781e+02,
+                4.3455767822265625e+02,
+                2.4575515747070312e+02
+            ]
+        },
+        {
+            "rank": 2,
+            "candidate_index": 24502,
+            "class_id": 62,
+            "class_name": "tv",
+            "objectness": 5.4268801212310791e-01,
+            "class_score": 9.7082197666168213e-01,
+            "confidence": 5.2685397863388062e-01,
+            "box_xywh_input": [
+                6.3734828948974609e+01,
+                1.7213343811035156e+02,
+                1.2887132263183594e+02,
+                1.8351756286621094e+02
+            ],
+            "box_xyxy_input": [
+                -7.0083200931549072e-01,
+                8.0374656677246094e+01,
+                1.2817048645019531e+02,
+                2.6389221191406250e+02
+            ],
+            "box_xyxy_source": [
+                0.0,
+                3.7465700507164001e-01,
+                1.2817048645019531e+02,
+                1.8389221191406250e+02
+            ]
+        },
+        {
+            "rank": 3,
+            "candidate_index": 20077,
+            "class_id": 0,
+            "class_name": "person",
+            "objectness": 5.7537698745727539e-01,
+            "class_score": 8.9815801382064819e-01,
+            "confidence": 5.1677900552749634e-01,
+            "box_xywh_input": [
+                5.9543646240234375e+02,
+                3.4099954223632812e+02,
+                8.8348304748535156e+01,
+                1.7774388122558594e+02
+            ],
+            "box_xyxy_input": [
+                5.5126232910156250e+02,
+                2.5212759399414062e+02,
+                6.3961059570312500e+02,
+                4.2987149047851562e+02
+            ],
+            "box_xyxy_source": [
+                5.5126232910156250e+02,
+                1.7212759399414062e+02,
+                6.3961059570312500e+02,
+                3.4987149047851562e+02
+            ]
+        },
+        {
+            "rank": 4,
+            "candidate_index": 24594,
+            "class_id": 0,
+            "class_name": "person",
+            "objectness": 4.3989500403404236e-01,
+            "class_score": 9.5074099302291870e-01,
+            "confidence": 4.1822600364685059e-01,
+            "box_xywh_input": [
+                4.5368463134765625e+02,
+                2.9692965698242188e+02,
+                4.8823204040527344e+01,
+                7.6398185729980469e+01
+            ],
+            "box_xyxy_input": [
+                4.2927304077148438e+02,
+                2.5873056030273438e+02,
+                4.7809622192382812e+02,
+                3.3512875366210938e+02
+            ],
+            "box_xyxy_source": [
+                4.2927304077148438e+02,
+                1.7873056030273438e+02,
+                4.7809622192382812e+02,
+                2.5512875366210938e+02
+            ]
+        },
+        {
+            "rank": 5,
+            "candidate_index": 21631,
+            "class_id": 56,
+            "class_name": "chair",
+            "objectness": 6.2668901681900024e-01,
+            "class_score": 5.7483202219009399e-01,
+            "confidence": 3.6024099588394165e-01,
+            "box_xywh_input": [
+                5.0607742309570312e+02,
+                3.2489572143554688e+02,
+                6.5762069702148438e+01,
+                4.9922863006591797e+01
+            ],
+            "box_xyxy_input": [
+                4.7319638061523438e+02,
+                2.9993429565429688e+02,
+                5.3895843505859375e+02,
+                3.4985714721679688e+02
+            ],
+            "box_xyxy_source": [
+                4.7319638061523438e+02,
+                2.1993429565429688e+02,
+                5.3895843505859375e+02,
+                2.6985714721679688e+02
+            ]
+        },
+        {
+            "rank": 6,
+            "candidate_index": 24659,
+            "class_id": 0,
+            "class_name": "person",
+            "objectness": 3.9561200141906738e-01,
+            "class_score": 9.0065300464630127e-01,
+            "confidence": 3.5630899667739868e-01,
+            "box_xywh_input": [
+                6.1072442626953125e+02,
+                4.0193359375000000e+02,
+                5.8686347961425781e+01,
+                1.0425399780273438e+02
+            ],
+            "box_xyxy_input": [
+                5.8138122558593750e+02,
+                3.4980657958984375e+02,
+                6.4006762695312500e+02,
+                4.5406060791015625e+02
+            ],
+            "box_xyxy_source": [
+                5.8138122558593750e+02,
+                2.6980657958984375e+02,
+                640.0,
+                3.7406060791015625e+02
+            ]
+        },
+        {
+            "rank": 7,
+            "candidate_index": 16063,
+            "class_id": 63,
+            "class_name": "laptop",
+            "objectness": 5.2684497833251953e-01,
+            "class_score": 5.0195997953414917e-01,
+            "confidence": 2.6445499062538147e-01,
+            "box_xywh_input": [
+                5.0677789306640625e+02,
+                3.2489553833007812e+02,
+                6.7745529174804688e+01,
+                4.9191738128662109e+01
+            ],
+            "box_xyxy_input": [
+                4.7290512084960938e+02,
+                3.0029968261718750e+02,
+                5.4065063476562500e+02,
+                3.4949139404296875e+02
+            ],
+            "box_xyxy_source": [
+                4.7290512084960938e+02,
+                2.2029968261718750e+02,
+                5.4065063476562500e+02,
+                2.6949139404296875e+02
+            ]
+        }
+    ],
+    "output_image": {
+        "path": "/home/dministrator/projects/edgeai-deploy-benchmark/results/evidence/021/replay_json/processed_0_replay.png",
+        "sha256": "8c4fa983a44ab4dcb1889a56987d49339b8dff1ab5c595e2593be85f0e966da7",
+        "size_bytes": 415527.0,
+        "shape_bgr": [
+            480,
+            640,
+            3
+        ],
+        "decode_validation": "PASS",
+        "visual_review": "PENDING_HUMAN_REVIEW"
+    },
+    "timings_ms": {
+        "measurement_type": "single-run diagnostic, not a benchmark",
+        "input_read": 4.8360539999999999e+00,
+        "preprocess": 2.8635619999999999e+00,
+        "inference": 1.1996909800000000e+02,
+        "postprocess": 3.9845619999999999e+00,
+        "visualization": 3.6126700000000000e-01,
+        "output_write": 1.0597187999999999e+01,
+        "pipeline_total": 1.7361247800000001e+02,
+        "boundaries": {
+            "inference": "NcnnDetector::infer input bind, Extractor::extract, validation and copy",
+            "postprocess": "shared YOLOv5 decode, threshold, NMS, inverse map and clipping"
+        }
+    }
+}
