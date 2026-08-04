@@ -72,3 +72,20 @@
   bitstream, board deployment, or project model was executed. The audit is
   complete, but deployment remains blocked and the vendor one-shot and project
   YOLOv5n conversion were not performed.
+
+- Continued Task 024's read-only MLK-F3P-CZ02 board mapping gate. A current
+  board read confirmed BOOT.bin, boot.scr, system.dtb and uImage.lz4 hashes,
+  active hard-NPU/CMA Device Tree semantics, and FPGA-manager operation. The
+  BOOT.bin payload/source identity, exact SDK/BoardConfig lineage, kernel symbol
+  provenance and rollback backup remain unresolved. Official dr1m90_npu,
+  toolchains, BoardImages and sdk repository metadata were recorded; AD101V20
+  images remain unsuitable as an unproven MLK substitute. No module, bitstream,
+  media or vendor program was changed or executed.
+
+- Completed and user-approved Task 024's board-mapping audit. The current
+  eMMC boot chain and system.dtb are identified, but the BOOT.bin FPGA payload
+  cannot be mapped to a known bitstream; the active DT has HardNPU but no
+  SoftNPU node, no NPU device nodes exist, and no driver is deployed. The
+  primary verdict remains `BLOCKED_ACTIVE_BITSTREAM_IDENTITY`; deployment is
+  not approved. Proposed next task: reproducible MLK SD-image build and
+  deployment preflight (Task 025). No board write or NPU execution occurred.

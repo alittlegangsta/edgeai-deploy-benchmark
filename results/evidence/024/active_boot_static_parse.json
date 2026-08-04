@@ -1,0 +1,97 @@
+{
+  "schema_version": "task024-active-boot-static-parse-v1",
+  "task": "024",
+  "captured_at": "2026-08-04T16:55:33+08:00",
+  "classification": "real_device_observation plus host_static_parse",
+  "collection": {
+    "board_wrapper": "/home/dministrator/bin/anlogic-board-ssh",
+    "read_only": true,
+    "board_route": "RESTORED_FOR_READ_ONLY_COLLECTION",
+    "mounts": {
+      "boot": "/dev/mmcblk1p1",
+      "root": "/dev/mmcblk1p2",
+      "root_filesystem": "ext4",
+      "boot_filesystem": "vfat"
+    },
+    "cmdline": "console=ttyS0,115200n8 earlycon=uart,mmio32,0xf8401000 loglevel=8 root=/dev/mmcblk1p2 rootwait rootfstype=ext4 rw"
+  },
+  "active_files": [
+    {
+      "path": "/mnt/mmcblk1p1/BOOT.bin",
+      "size_bytes": 4153472,
+      "sha256": "858cf78c03ae75c870587be77d70668e0ba4841448581273e5c996bf8f980706",
+      "host_file_type": "opaque data",
+      "static_markers": ["0x12345678 header", "ALGC at offset 0x64"],
+      "embedded_strings": [
+        "Release: 5.9.1 Build: 151508",
+        "Bitstream Export Time: 2025/05/23 13:50:22",
+        "HPF export marker with May 23 2025 date",
+        "board=evb_dr1m90",
+        "board_name=evb_dr1m90",
+        "soc=dr1m90",
+        "U-Boot 2021.01 (Jul 30 2025 - 14:46:18 +0800)"
+      ],
+      "bitstream_identity": "OPAQUE_NO_PAYLOAD_NAME_OR_HASH_MATCH",
+      "bootgen_or_equivalent_tool": "NOT_FOUND_LOCALLY; no container extraction performed"
+    },
+    {
+      "path": "/mnt/mmcblk1p1/boot.scr",
+      "size_bytes": 393,
+      "sha256": "685f9f8cd4a1e43d79da0c78ab9591d3af1f744122e21a60b252b685ffad59d1",
+      "host_file_type": "U-Boot legacy script image",
+      "script_semantics": [
+        "load uImage.lz4 at 0x10000000",
+        "load system.dtb at 0x14000000",
+        "bootm 0x10000000 - 0x14000000"
+      ]
+    },
+    {
+      "path": "/mnt/mmcblk1p1/system.dtb",
+      "size_bytes": 15207,
+      "sha256": "aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f",
+      "host_file_type": "Device Tree Blob v17",
+      "identity": "CURRENT_HASH_CONFIRMED"
+    },
+    {
+      "path": "/mnt/mmcblk1p1/uImage.lz4",
+      "size_bytes": 8724717,
+      "sha256": "12cd2ccb851376eb2870f1d3294f0d29f771e74d01a25d1b605378ea733bd7be",
+      "host_file_type": "U-Boot legacy Linux ARM64 image",
+      "kernel_string": "Linux 6.1.111-rt42 #8 SMP PREEMPT Wed Jul 30 14:40:27 CST 2025"
+    }
+  ],
+  "candidate_comparison": [
+    {
+      "candidate": "Milianke 05-5 NPU demo",
+      "boot_sha256": "567e14124fa17137e964ebcadd4680d8349058beacd4070377ba0ac3fc8c2585",
+      "dtb_sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+      "bitstream_sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912",
+      "hpf_sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+      "boot_metadata": "Release 6.2.1 Build 175876; export 2025/11/28",
+      "match": "NO_HASH_MATCH; semantic DT NPU subset is similar but adds soft_npu"
+    },
+    {
+      "candidate": "D21.1 NPU simple SD image",
+      "boot_sha256": "2e75f4dd165362eae3c0285e2364f9816277fc25b975f4307f5dcb2cfd05f35b",
+      "dtb_sha256": "4a5697010b9b19e633485be3107e313d084df8088c4c18acc92192f3e772aa56",
+      "boot_metadata": "Release 5.9.1 Build 173294; export 2025/09/24",
+      "match": "NO_HASH_MATCH; DT has soft_npu@80000000 and different FPGA-manager register"
+    },
+    {
+      "candidate": "Milianke 20.Lock source-line boot",
+      "boot_sha256": "7845826a7640023ea227c2eb62ba671a2342a075186f385f2a6b47646da92003",
+      "dtb_sha256": "6820e3458c3db2468cc1077562fa3485deee772c1e2d84fa86d0ca086ab17beb",
+      "hpf_sha256": "09f0da7fb1d1e5ada9743bf9611c6cc831f6457a2a65579cbf830d181310c406",
+      "bitstream_sha256": "3cbf26a5a7156bf6cb86c58f638b86f5d36d550591591b7483ec610e9bafcda8",
+      "boot_metadata": "Release 5.9.1 Build 151508; export 2025/06/06",
+      "match": "NO_HASH_MATCH; same TD build line and hard-NPU/CMA semantic subset, but not active identity"
+    }
+  ],
+  "conclusion": {
+    "active_boot_chain": "CURRENT_READ_CONFIRMED",
+    "active_kernel_dtb_hashes": "CONFIRMED",
+    "active_bitstream_identity": "BLOCKED_ACTIVE_BITSTREAM_IDENTITY",
+    "reason": "BOOT.bin is an Anlogic opaque container; the available local static tools did not expose a payload name or reproducible bitstream hash, and no candidate BOOT.bin hash matches.",
+    "writes_performed": false
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "schema_version": "task024-board-mapping-matrix-v2",
+  "task": "024",
+  "captured_at": "2026-08-04T16:55:33+08:00",
+  "target": "MLK-F3P-CZ02-DR1M90",
+  "rows": [
+    {
+      "item": "current board identity",
+      "current_active_asset": "Anlogic, DR1M90 FPSoc; MLK-F3P-CZ02-DR1M90 / DR1M90GEG400 remains the project hardware identity",
+      "source_or_candidate": "current /proc/device-tree/model plus approved hardware record",
+      "matching_evidence": "board SSH read succeeded; model string and CPU/ABI match",
+      "conflict": "physical board label to official SDK BoardConfig is not present in the SDK",
+      "confidence": "HIGH for silicon/model; MEDIUM for SDK mapping",
+      "status": "CURRENT_READ_CONFIRMED",
+      "controlled_deployment": false
+    },
+    {
+      "item": "root and boot media",
+      "current_active_asset": "/dev/mmcblk1p1 vfat boot and /dev/mmcblk1p2 ext4 root",
+      "source_or_candidate": "current /proc/cmdline and mount read",
+      "matching_evidence": "root=/dev/mmcblk1p2; boot files readable at /mnt/mmcblk1p1",
+      "conflict": "eMMC versus TF remains an engineering inference; U-Boot environment was not exposed",
+      "confidence": "HIGH for partition identity; MEDIUM for physical medium",
+      "status": "CURRENT_READ_CONFIRMED",
+      "controlled_deployment": false
+    },
+    {
+      "item": "active kernel",
+      "current_active_asset": "Linux 6.1.111-rt42; uImage.lz4 sha256 12cd2ccb851376eb2870f1d3294f0d29f771e74d01a25d1b605378ea733bd7be",
+      "source_or_candidate": "current uname and /mnt/mmcblk1p1/uImage.lz4",
+      "matching_evidence": "uname and file/hash agree; SDK Makefile is 6.1.111",
+      "conflict": "active kernel source/config/output and Module.symvers are not joined",
+      "confidence": "HIGH ABI; MEDIUM source provenance",
+      "status": "CURRENT_HASH_AND_UNAME_CONFIRMED",
+      "controlled_deployment": false
+    },
+    {
+      "item": "active DTB",
+      "current_active_asset": "system.dtb sha256 aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f",
+      "source_or_candidate": "current /mnt/mmcblk1p1/system.dtb and /proc/device-tree",
+      "matching_evidence": "hash, model, hard_npu compatible/reg/interrupt and CMA semantics parsed from current board",
+      "conflict": "no official source/BoardConfig/bitstream package matches normalized DTB hash",
+      "confidence": "HIGH current file and semantics; LOW source mapping",
+      "status": "CURRENT_HASH_AND_SEMANTICS_CONFIRMED_SOURCE_UNRESOLVED",
+      "controlled_deployment": false
+    },
+    {
+      "item": "active FPGA bitstream",
+      "current_active_asset": "opaque payload inside current BOOT.bin sha256 858cf78c03ae75c870587be77d70668e0ba4841448581273e5c996bf8f980706",
+      "source_or_candidate": "current boot partition and BOOT.bin static markers",
+      "matching_evidence": "ALGC container, Release 5.9.1 Build 151508, board=evb_dr1m90 and FPGA manager operating",
+      "conflict": "no local bootgen/parser recovered a bitstream name or payload hash; no candidate BOOT hash matches",
+      "confidence": "MEDIUM container metadata; LOW payload identity",
+      "status": "ACTIVE_PAYLOAD_IDENTITY_UNKNOWN",
+      "controlled_deployment": false
+    },
+    {
+      "item": "Milianke NPU project",
+      "current_active_asset": "none; candidate only",
+      "source_or_candidate": "NPU_info/03_demo/05-5_NPU演示; DR1M90GEG400",
+      "matching_evidence": "soc_prj.al exact GEG400 device; HPF, bitstream and DT source present; 2025.07 metadata",
+      "conflict": "BOOT/system.dtb/bitstream hashes differ from active files; exact official Git SDK tag is not proven",
+      "confidence": "HIGH candidate device lead; no active proof",
+      "status": "CANDIDATE_NOT_ACTIVE",
+      "controlled_deployment": false
+    },
+    {
+      "item": "D21.1 NPU SD image",
+      "current_active_asset": "none; candidate only",
+      "source_or_candidate": "NPU_info/03_demo/D21.1_NPU_Simple_demo_sd_image",
+      "matching_evidence": "DR1M90 hard/soft NPU strings and CMA in candidate DTB",
+      "conflict": "different FPGA-manager/resource layout and board/media/version mapping not proven",
+      "confidence": "MEDIUM candidate",
+      "status": "CANDIDATE_NOT_ACTIVE",
+      "controlled_deployment": false
+    },
+    {
+      "item": "D20.1 AD101V20/GEG484 examples",
+      "current_active_asset": "none",
+      "source_or_candidate": "BoardImages AD101V20 and TD_D20.1_AD101V20_2025.7/IPUG166",
+      "matching_evidence": "official example files and labels",
+      "conflict": "AD101V20 or DR1M90GEG484 differs from MLK-F3P-CZ02/GEG400; no MLK image in BoardImages",
+      "confidence": "HIGH mismatch",
+      "status": "BOARD_MISMATCH_UNSUITABLE_AS_SUBSTITUTE",
+      "controlled_deployment": false
+    },
+    {
+      "item": "official repository release line",
+      "current_active_asset": "none confirmed",
+      "source_or_candidate": "dr1m90_npu release HEAD 199ef4d (SDK_2026.01 lineage); sdk tag SDK_2025.07-linux6.1 commit beaee2c; toolchains SDK_2024.7 tag; BoardImages AD101V20 only",
+      "matching_evidence": "remote/HEAD/tag/submodule metadata captured in official_repository_inventory.json",
+      "conflict": "dirty trees, no exact 2025.07 Git mapping for Milianke package, no MLK BoardConfig/image",
+      "confidence": "HIGH repository identity; MEDIUM cross-project mapping",
+      "status": "MLK_TO_OFFICIAL_SDK_MAPPING_PARTIAL",
+      "controlled_deployment": false
+    },
+    {
+      "item": "kernel source/config/Module.symvers",
+      "current_active_asset": "SDK source and candidate defconfig only",
+      "source_or_candidate": "/home/uisrc/vendor/anlogic/sdk/sdk/linux plus current uname",
+      "matching_evidence": "Makefile 6.1.111; CONFIG_MODULES/CMA/DMA_CMA/KALLSYMS_ALL in defconfig",
+      "conflict": "active config unavailable; candidate defconfig does not set MODVERSIONS; no matching Module.symvers/System.map",
+      "confidence": "MEDIUM source candidate",
+      "status": "PROVENANCE_INCOMPLETE",
+      "controlled_deployment": false
+    },
+    {
+      "item": "NPU drivers",
+      "current_active_asset": "no hard_npu/soft_npu/cma_mem module loaded and no NPU device nodes",
+      "source_or_candidate": "three AArch64 module identities plus SDK Kconfig/source",
+      "matching_evidence": "vermagic 6.1.111-rt42 SMP preempt mod_unload aarch64; 51 undefined names present in board kallsyms",
+      "conflict": "no __versions/CRC/export proof, prior modpost warnings, active DT/FPGA mapping unknown",
+      "confidence": "MEDIUM static only",
+      "status": "STATIC_ONLY_NOT_LOADABLE_PROOF",
+      "controlled_deployment": false
+    },
+    {
+      "item": "Arm NN candidate path",
+      "current_active_asset": "none on board",
+      "source_or_candidate": "AArch64 libarmnn/ONNX demo from Task 023",
+      "matching_evidence": "isolated link/build; demo does not directly link native npu_runtime or read rt.bin/weight.bin",
+      "conflict": "board HPF/bitstream/DT/driver and runtime deployment mapping not closed",
+      "confidence": "MEDIUM build; LOW deployment",
+      "status": "ISOLATED_BUILD_ONLY",
+      "controlled_deployment": false
+    },
+    {
+      "item": "native npu_runtime path",
+      "current_active_asset": "none",
+      "source_or_candidate": "official documentation npu_runtime/convert_tool/al_ai_flow/rt.bin/weight.bin flow",
+      "matching_evidence": "documented path only",
+      "conflict": "runtime, converter, model pair and exact board release unavailable",
+      "confidence": "HIGH missing asset",
+      "status": "ASSET_BLOCKED",
+      "controlled_deployment": false
+    }
+  ],
+  "overall": {
+    "primary_verdict": "BLOCKED_ACTIVE_BITSTREAM_IDENTITY",
+    "secondary_blockers": [
+      "BLOCKED_ACTIVE_BITSTREAM_SOURCE_MAPPING",
+      "BLOCKED_ACTIVE_DTB_SOURCE_MAPPING",
+      "BLOCKED_KERNEL_SYMBOL_PROVENANCE",
+      "BLOCKED_SAFE_ROLLBACK_PLAN",
+      "CANDIDATE_ASSET_NOT_ACTIVE",
+      "MLK_TO_OFFICIAL_SDK_MAPPING_PARTIAL",
+      "OFFICIAL_REPOSITORY_TREES_DIRTY"
+    ],
+    "controlled_deployment_ready": false,
+    "active_board_read": "PASS_READ_ONLY; no deployment approval"
+  }
+}

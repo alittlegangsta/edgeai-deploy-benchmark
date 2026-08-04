@@ -103,6 +103,17 @@ The audit is complete; deployment remains blocked, the vendor one-shot was not
 executed, controlled board deployment was not approved, and project YOLOv5n
 conversion is not ready.
 
+Task 024 is the completed read-only MLK-F3P-CZ02 board-mapping audit. A current
+Buildroot 2022.02.6/Linux 6.1.111-rt42 read confirmed the boot partition,
+BOOT.bin, boot.scr, system.dtb and uImage.lz4 hashes, and parsed the active
+hard-NPU/CMA Device Tree semantics. The BOOT.bin FPGA payload/source remains
+opaque, and the supplied DR1M90GEG400 NPU project is a candidate rather than
+the active FPGA/Device Tree. Kernel symbol provenance and rollback readiness
+remain open; current eMMC NPU readiness is Not ready and controlled deployment
+is not approved. No module, bitstream, DTB, kernel, media, or vendor program was touched. See
+`docs/vendor/ANLOGIC_NPU_BOARD_MAPPING_AND_CONTROLLED_DEPLOYMENT.md` and
+`results/evidence/024/`.
+
 ## PC architecture and model lineage
 
 ```text
@@ -425,3 +436,9 @@ independent completed functional Task 021 with user-approved representative
 frames; no camera timing is a formal realtime benchmark. Affinity/NEON-specific optimization, Vulkan,
 quantization, and NPU remain separate future work; NPU readiness remains
 `HOLD`.
+
+Task 024 is `Completed` as an audit with primary verdict
+`BLOCKED_ACTIVE_BITSTREAM_IDENTITY`; active file hashes are read-confirmed but
+the payload/source mapping is unresolved. `candidate_approved: true` approves
+the audit record only, not SD writes, module loading or NPU execution. It is
+not an NPU execution or performance result.

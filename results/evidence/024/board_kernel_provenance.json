@@ -1,0 +1,111 @@
+{
+  "schema_version": "task024-board-kernel-provenance-v2",
+  "task": "024",
+  "captured_at": "2026-08-04T16:55:33+08:00",
+  "board_observed_abi": {
+    "classification": "real_device_observation",
+    "uname": "Linux buildroot 6.1.111-rt42 #8 SMP PREEMPT Wed Jul 30 14:40:27 CST 2025 aarch64 GNU/Linux",
+    "kernel": "6.1.111-rt42",
+    "buildroot": "2022.02.6",
+    "glibc": "2.25",
+    "architecture": "AArch64",
+    "cpu": "dual-core CPU part 0xd04",
+    "kernel_config_exposed": false,
+    "kernel_config_paths_checked": ["/proc/config.gz", "/boot/config-6.1.111-rt42", "/boot/config"]
+  },
+  "vm_provenance": {
+    "classification": "source_code_fact and host observation",
+    "os": "Ubuntu 18.04.4 LTS",
+    "architecture": "x86_64",
+    "glibc": "2.27",
+    "cmake": "/home/uisrc/.local/cmake-3.16.9/bin/cmake 3.16.9",
+    "compiler": "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-gcc Linaro GCC 7.5-2019.12",
+    "compiler_target": "aarch64-linux-gnu",
+    "sdk_kernel_source": "/home/uisrc/vendor/anlogic/sdk/sdk/linux",
+    "sdk_kernel_makefile_version": "6.1.111",
+    "defconfig": "/home/uisrc/vendor/anlogic/sdk/sdk/linux/arch/arm64/configs/anlogic_dr1m90_defconfig",
+    "defconfig_symbols": {
+      "CONFIG_MODULES": "y",
+      "CONFIG_CMA": "y",
+      "CONFIG_DMA_CMA": "y",
+      "CONFIG_KALLSYMS_ALL": "y",
+      "CONFIG_MODVERSIONS": "not set in candidate defconfig; active board value unknown"
+    },
+    "module_symvers": {
+      "present_in_sdk_source": false,
+      "status": "NOT_FOUND",
+      "generated_isolated_module_symvers_lines": 0
+    },
+    "system_map": {
+      "present_in_sdk_source": false,
+      "status": "NOT_FOUND"
+    },
+    "buildroot_output": {
+      "identified": false,
+      "status": "NO_MATCHING_OUTPUT_CONFIG_SYSTEM_MAP_OR_MODULE_SYMVERS"
+    },
+    "provenance_status": "PARTIAL; SDK source/defconfig and toolchain are identified, but active kernel source/config/output provenance is not joined"
+  },
+  "driver_static_compatibility": {
+    "modules": [
+      {
+        "name": "hard_npu.ko",
+        "sha256": "4270af6d1d152df5dfc4b1f12503e8042bf35068c699cc81596f37715b794b9a",
+        "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+        "architecture": "AArch64 relocatable",
+        "depends": "empty",
+        "has___versions": false,
+        "module_symvers": "empty generated file",
+        "loadability": "NOT_PROVEN"
+      },
+      {
+        "name": "soft_npu.ko",
+        "sha256": "129863a047450bff776b85b7b23022b1ed1f6b019025bc62b410272ca9cb5e1d",
+        "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+        "architecture": "AArch64 relocatable",
+        "depends": "empty",
+        "has___versions": false,
+        "module_symvers": "empty generated file",
+        "loadability": "NOT_PROVEN"
+      },
+      {
+        "name": "cma_mem.ko",
+        "sha256": "33fc8689d441db86a405f220789787c7084fb964d39c8f5ac3d40436f3fbf17d",
+        "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+        "architecture": "AArch64 relocatable",
+        "depends": "empty",
+        "has___versions": false,
+        "module_symvers": "empty generated file",
+        "loadability": "NOT_PROVEN"
+      }
+    ],
+    "undefined_symbol_audit": {
+      "unique_undefined_symbol_count": 51,
+      "board_kallsyms_name_matches": 51,
+      "board_export_status": "UNVERIFIED; /proc/kallsyms name presence is not proof of EXPORT_SYMBOL or CRC",
+      "symbol_crc_status": "UNVERIFIED",
+      "module_load_test": "NOT_RUN"
+    },
+    "kconfig_and_source": {
+      "npu_module_symbol": "CONFIG_NPU_MODULE",
+      "drivers": ["CONFIG_HARD_NPU_DRIVER", "CONFIG_SOFT_NPU_DRIVER", "CONFIG_CMA_MEM_DRIVER"],
+      "sdk_default_mode": "tristate subdirectories; exact built-in/module selection requires matched kernel .config",
+      "expected_order": "CMA allocator before applicable NPU driver, exact order release-dependent",
+      "expected_nodes": ["/dev/cma_mem", "/dev/hard_npu", "/dev/soft_npu"]
+    },
+    "limitations": [
+      "active kernel CONFIG_MODVERSIONS is unknown",
+      "SDK candidate defconfig does not set CONFIG_MODVERSIONS",
+      "no matching active Module.symvers or System.map",
+      "no __versions CRC proof in the three modules",
+      "previous isolated source build emitted modpost/unresolved-symbol warnings",
+      "active DT/FPGA source mapping remains unresolved"
+    ]
+  },
+  "verdict": "BLOCKED_KERNEL_SYMBOL_PROVENANCE",
+  "hashes": [
+    {"path": "hard_npu.ko external identity", "sha256": "4270af6d1d152df5dfc4b1f12503e8042bf35068c699cc81596f37715b794b9a"},
+    {"path": "soft_npu.ko external identity", "sha256": "129863a047450bff776b85b7b23022b1ed1f6b019025bc62b410272ca9cb5e1d"},
+    {"path": "cma_mem.ko external identity", "sha256": "33fc8689d441db86a405f220789787c7084fb964d39c8f5ac3d40436f3fbf17d"}
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "schema_version": "task024-board-device-tree-v2",
+  "task": "024",
+  "captured_at": "2026-08-04T16:55:33+08:00",
+  "classification_policy": "document_fact/source_code_fact/engineering_inference/real_device_observation",
+  "candidate_status": "CANDIDATE_NOT_ACTIVE",
+  "active_dtb": {
+    "classification": "real_device_observation",
+    "path": "/mnt/mmcblk1p1/system.dtb",
+    "sha256": "aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f",
+    "size_bytes": 15207,
+    "format": "Device Tree Blob v17",
+    "source_mapping": "UNRESOLVED; active file identity is confirmed but no matching official source/BoardConfig/bitstream package was identified"
+  },
+  "current_observation": {
+    "classification": "real_device_observation",
+    "board_model": "Anlogic, DR1M90 FPSoc",
+    "fpga_manager": {
+      "name": "Anlogic dr1m90 FPGA Manager",
+      "state": "operating"
+    },
+    "hard_npu": {
+      "present": true,
+      "compatible": "anlogic,hard_npu",
+      "reg": [
+        "0x63f00000 size 0x100000",
+        "0xf8800000 size 0x200",
+        "0xf8801000 size 0x100"
+      ],
+      "interrupt": "GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH",
+      "platform_device": "63f00000.hard_npu",
+      "driver_bound": false,
+      "driver_symlink": null
+    },
+    "soft_npu": {
+      "node_present": false,
+      "device_node": false
+    },
+    "cma": {
+      "compatible": "shared-dma-pool",
+      "linux_cma_default": true,
+      "size": "128 MiB",
+      "size_bytes": 134217728,
+      "dmesg_base": "0x0000000017c00000",
+      "cma_free_observed": "130128 kB"
+    },
+    "runtime_devices": [],
+    "dmesg_npu_probe": "no hard_npu/soft_npu/cma_mem probe observed; FPGA manager and CMA initialization observed"
+  },
+  "historical_observation": {
+    "source": "Task 022 real-device audit",
+    "classification": "real_device_observation",
+    "hard_npu_node_present": true,
+    "hard_npu_compatible": "anlogic,hard_npu",
+    "hard_npu_reg": [
+      "historical capture retained; superseded by current dtc parse above"
+    ],
+    "hard_npu_driver_symlink": null,
+    "hard_npu_waiting_for_supplier": "0",
+    "soft_npu_node_observed": false,
+    "cma_reserved": true,
+    "cma_size": "128 MiB",
+    "npu_or_cma_modules_loaded": false,
+    "npu_device_nodes": [],
+    "cma_device_nodes": [],
+    "no_npu_devices": true,
+    "dmesg_npu_probe": "not observed in captured audit"
+  },
+  "candidate_milianke": {
+    "classification": "source_code_fact",
+    "project_device": "DR1M90GEG400",
+    "hpf_sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+    "bitstream_sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912",
+    "dts": {
+      "file": "demo/sdk/anlogic-dr1m90-softip.dts",
+      "soft_npu_compatible": "anlogic,soft_npu",
+      "soft_npu_reg": "<0x1 0xf0000000 0x0 0x10000>",
+      "soft_npu_interrupt": "GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH",
+      "cma_size": "128 MiB in included board DTS"
+    },
+    "semantic_overlap": "hard_npu base address/interrupt and CMA size overlap the active parse, but normalized DTS hash and soft-NPU content differ",
+    "status": "candidate_for_exact_device_but_not_active_mapping"
+  },
+  "candidate_d21_1": {
+    "classification": "document_and_binary_static_fact",
+    "dtb_sha256": "4a5697010b9b19e633485be3107e313d084df8088c4c18acc92192f3e772aa56",
+    "strings_observed": [
+      "Anlogic, DR1M90 FPSoc",
+      "anlogic,dr1m90-pcap-fpga",
+      "hard_npu@63F00000",
+      "soft_npu@80000000",
+      "reserved-memory/linux,cma"
+    ],
+    "semantic_conflict": "different FPGA manager/resource layout and soft-NPU address; not an active mapping",
+    "status": "candidate_sd_image_not_active_mapping"
+  },
+  "candidate_20_lock": {
+    "classification": "source_code_fact",
+    "dtb_sha256": "6820e3458c3db2468cc1077562fa3485deee772c1e2d84fa86d0ca086ab17beb",
+    "bitstream_sha256": "3cbf26a5d9bbdcd52e200169ee45d10ce4fdd4b550aa6e29591389e9f5cb8e0c",
+    "status": "candidate_version_line_only_not_active"
+  },
+  "comparison": {
+    "active_current_read_available": true,
+    "candidate_dtb_hashes_equal_active": false,
+    "active_semantics_confirmed": true,
+    "active_source_project_mapping": "UNRESOLVED",
+    "conclusion": "The active DTB hash and NPU/CMA semantics are now confirmed by a read-only board capture. Candidate semantic overlap is not byte/source identity; active FPGA/DT source mapping remains open."
+  },
+  "hashes": [
+    {"path": "current /mnt/mmcblk1p1/system.dtb", "sha256": "aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f"},
+    {"path": "candidate Milianke system.dtb", "sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979"},
+    {"path": "candidate D21.1 dtb.bin", "sha256": "4a5697010b9b19e633485be3107e313d084df8088c4c18acc92192f3e772aa56"},
+    {"path": "candidate 20.Lock system.dtb", "sha256": "6820e3458c3db2468cc1077562fa3485deee772c1e2d84fa86d0ca086ab17beb"}
+  ]
+}
