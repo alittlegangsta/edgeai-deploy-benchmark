@@ -5,10 +5,25 @@ status: "Completed"
 automated_audit: "COMPLETE"
 audit_review: "PASS"
 audit_review_source: "user"
-approval_recorded_at: "2026-08-04T10:21:18+08:00"
-approval_time_note: "WSL record time; not VM audit time, board audit time, or NPU program runtime."
+approval_recorded_at: "2026-08-04T11:04:19+08:00"
+approval_time_note: "WSL record time for official Wiki incremental approval; not VM audit time, board audit time, or NPU program runtime."
 candidate_approved: true
 feasibility_verdict: "BLOCKED_DRIVER_OR_DEVICE"
+prior_audit_completion: "Completed"
+prior_audit_review_preserved: true
+prior_audit_review: "PASS"
+prior_audit_review_source: "user"
+prior_approval_recorded_at: "2026-08-04T10:21:18+08:00"
+prior_candidate_approved: true
+incremental_scope: "official_AlWiki_public_page_audit"
+incremental_scope_status: "Completed"
+wiki_incremental_audit: "COMPLETE"
+wiki_incremental_review: "PASS"
+wiki_review_source: "user"
+wiki_evidence_ref: "results/evidence/022/npu_official_wiki_audit.json"
+wiki_public_pages_readable: "7/7"
+wiki_auxiliary_status: "OFFICIAL_ASSETS_IDENTIFIED_ACCESS_PENDING"
+wiki_attachments_downloaded: false
 secondary_blockers:
   - "BLOCKED_MISSING_VENDOR_ASSETS"
   - "BLOCKED_RUNTIME_ABI_OR_IDENTITY_UNVERIFIED"
@@ -41,6 +56,7 @@ evidence:
   board_audit: "results/evidence/022/npu_board_audit.json"
   dependency_matrix: "results/evidence/022/npu_dependency_matrix.json"
   verdict: "results/evidence/022/npu_feasibility_verdict.json"
+  official_wiki_audit: "results/evidence/022/npu_official_wiki_audit.json"
   one_shot_run: "not_created_not_executed"
 vendor_one_shot:
   executed: false

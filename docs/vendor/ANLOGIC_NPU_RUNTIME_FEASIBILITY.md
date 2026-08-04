@@ -24,6 +24,11 @@ program runtime. The approval covers the feasibility audit only; it does not
 authorize driver loading, board changes, one-shot execution, or model
 conversion.
 
+The supplemental official AlWiki review was approved by the user at
+`2026-08-04T11:04:19+08:00` in WSL. This is the Wiki review record time, not a
+VM audit time, board audit time, or NPU program runtime. Task 022 is therefore
+complete as an audit; NPU deployment readiness remains blocked.
+
 The automatic result is a device/runtime readiness finding, not a claim that
 DR1 has no NPU. The board exposes a `hard_npu` device-tree/platform node and
 reserves 128 MiB CMA, but the current eMMC userspace has no bound NPU driver,
@@ -136,3 +141,51 @@ that the currently available vendor materials, VM, and eMMC image do not yet
 provide the complete safe execution contract. Project YOLOv5n conversion,
 NPU performance benchmarking, and UVC-camera NPU inference must remain blocked
 until the requested version-matched package and deployment plan are reviewed.
+
+## Incremental official AlWiki audit
+
+Task 022 is `Completed` as an audit after user approval of this supplemental
+public-source review; the prior local/VM/board audit approval remains
+preserved. Seven
+explicitly selected pages in organization `AzZaqNHH` / source `SdAMW8ED` were
+read serially through the anonymous official API, all returning HTTP 200. The
+page tree reported 526 pages, but no full crawl or search-result expansion was
+performed. Responses were parsed in memory with a field whitelist; raw
+responses, cookies, authorization values, and token values were not saved or
+hashed. No VM or board was accessed in this pass.
+
+The most actionable page is `D20.1 NPU 简单示例集合` (`7ZcKp5Wg`). Its explicit
+content names a DR1M90 Buildroot defconfig, an HPF assignment, enabling
+`hard_npu_driver`, `soft_npu_driver`, and `cma_mem_driver`, increasing the
+rootfs size from 128M to 300M for the example, building `app/npu` and the SDK
+image, and SD booting an NPU demo. It references
+`D21.1_NPU_Simple_demo_sd_image.zip` and `TD_D20.1_AD101V20_2025.7.zip`, but
+the public API exposed no download URL, size, SHA256, license, or permission
+state for those assets. The page therefore documents a flow, not possession
+of a deployable package for the current eMMC image.
+
+`D20.0 NPU接口文档` (`6Pb5TSd5`) documents `NPUExecutor`, quantization, and
+CMA buffer API symbols (`cma_mem_*`, `npu_input_quant_param_init`) and a
+backend/load/inference/postprocess flow. It does not identify a standalone
+runtime filename, version, ABI matrix, or headers package. The D20.3 UVC/HDMI
+page mentions DR1M90 but uses AD101V20 examples and supplies no current kernel
+or runtime mapping. `IPUG166_Video_NPU_IP用户手册` names DR1M90GEG484-2 and TD
+5.9.1 Beta1.0, which differs from the current MLK-F3P-CZ02-DR1M90,
+Buildroot 2022.02.6, Linux 6.1.111-rt42 contract. `APUG1205_NPU参考设计文档`
+and the D20 index add HardNPU/SoftNPU context but no downloadable package.
+
+No `.ko`, HPF/bitstream, runtime library/header package, one-shot ELF,
+`rt.bin`, `weight.bin`, converter, or other vendor file was obtained. A
+file-list embed exists on D20.1, but its filename/URL/size/permission metadata
+was not exposed. The auxiliary status is therefore
+`OFFICIAL_ASSETS_IDENTIFIED_ACCESS_PENDING`, while the primary verdict remains
+`BLOCKED_DRIVER_OR_DEVICE`. `vendor_one_shot.executed` remains `false` and no
+`npu_vendor_one_shot_run.json` exists. Browser-rendered/PDF export is optional
+and remains `PENDING`; it is not needed to establish the API audit result
+because the API content itself was readable.
+
+Evidence: [`npu_official_wiki_audit.json`](../../results/evidence/022/npu_official_wiki_audit.json).
+The next safe action is to request a version-matched vendor package and, if
+needed, a manual browser export of the referenced file-list assets. Do not
+convert the project YOLOv5n model or load a driver on the basis of this Wiki
+flow alone.

@@ -172,6 +172,46 @@
       "version_or_hash": null,
       "status": "DOCUMENTATION_GAP",
       "gap": "Obtain vendor permission/version terms before copying restricted binaries into a deployment package."
+    },
+    {
+      "requirement": "official AlWiki D20.1 build flow",
+      "official_requirement": "The selected public Wiki page describes HPF selection, rootfs integration, kernelmenuconfig NPU module selection, app/npu build, and SD image build.",
+      "local_vendor": "Wiki text and previously inventoried local SDK/demo candidates; no new file obtained",
+      "vm": "not re-audited in this incremental pass",
+      "board": "current eMMC has no matching modules/nodes; no deployment attempted",
+      "version_or_hash": "D20.1 page updated 2025-10-31; software text says 25.7",
+      "status": "DOCUMENTED_FLOW_ONLY",
+      "gap": "The runnable artifact is named for AD101V20 and no current MLK-F3P-CZ02-DR1M90 HPF/module/runtime identity is exposed."
+    },
+    {
+      "requirement": "official Wiki referenced SD/TD/HPF assets",
+      "official_requirement": "D20.1 text references D21.1_NPU_Simple_demo_sd_image.zip, TD_D20.1_AD101V20_2025.7.zip and D20_1_NPU_Pic_AD101V20_2025.1.hpf.",
+      "local_vendor": "Some similarly named local candidate assets exist, but Wiki attachment URL/size/permission and exact correspondence are unverified",
+      "vm": "not applicable",
+      "board": "not applied",
+      "version_or_hash": null,
+      "status": "OFFICIAL_ASSETS_IDENTIFIED_ACCESS_PENDING",
+      "gap": "Need a directly downloadable, versioned package or vendor export with hashes and board mapping."
+    },
+    {
+      "requirement": "official Wiki NPU API layer",
+      "official_requirement": "D20.0 documents NPUExecutor, quantization and CMA buffer APIs.",
+      "local_vendor": "SDK Arm NN/Alnpu candidates remain separate local evidence",
+      "vm": "not re-audited in this incremental pass",
+      "board": "runtime/device path remains blocked",
+      "version_or_hash": "D20.0 page updated 2026-05-31",
+      "status": "API_DOCUMENTATION_ONLY",
+      "gap": "No standalone npu_runtime filename/version/ABI or current-board deployment package is stated."
+    },
+    {
+      "requirement": "Wiki exact board/kernel compatibility",
+      "official_requirement": "Selected examples refer to DR1M90, AD101V20 or DR1M90GEG484-2 and do not state the current eMMC kernel identity.",
+      "local_vendor": "current board identity is independently recorded as MLK-F3P-CZ02-DR1M90/Linux 6.1.111-rt42",
+      "vm": "not applicable",
+      "board": "current image remains unverified for the selected Wiki assets",
+      "version_or_hash": null,
+      "status": "UNKNOWN_VERSION_MAPPING",
+      "gap": "Vendor must provide an explicit board, kernel, Buildroot, bitstream, driver and runtime compatibility matrix."
     }
   ],
   "one_shot_gate": {

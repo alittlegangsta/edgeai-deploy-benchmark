@@ -129,8 +129,10 @@ quantization, and NPU remain out of scope.
 
 ## Stage 4: Anlogic NPU runtime feasibility
 
-Task 022 is a completed, user-approved read-only feasibility audit. The result
-is `BLOCKED_DRIVER_OR_DEVICE`. APUG1205_0.1 and
+The prior Task 022 local/VM/board audit and its incremental official AlWiki
+scope are user-approved. Task 022 is complete as an audit, while NPU
+deployment remains blocked; the primary result is still
+`BLOCKED_DRIVER_OR_DEVICE`. APUG1205_0.1 and
 IPUG166_1.0 document a cooperating PS HardNPU/PL SoftNPU path, required
 SoftNPU bitstream, `hard_npu.ko`, `soft_npu.ko`, `cma_mem.ko`, CMA-backed
 runtime APIs, and official `rt.bin`/`weight.bin` artifacts. On the current
@@ -144,4 +146,11 @@ not ready; a version-matched vendor runtime release and safe deployment plan
 are required first. Secondary blockers are missing vendor assets, unverified
 runtime ABI/identity, missing host tools, documentation gaps, and unknown
 bitstream/Device Tree mapping. Task 023 should begin only after such a package
-is received and its provenance is reviewed.
+is received and its provenance is reviewed. The bounded public AlWiki audit
+read seven selected pages through the official API (`7/7` HTTP 200), adding a
+D20.1 DR1M90 Buildroot/HPF/module-selection flow and D20.0 NPU API evidence.
+It exposed no downloadable, hashable current-board driver/runtime, bitstream,
+one-shot, `rt.bin`/`weight.bin`, or host converter package; referenced example
+assets remain access-pending and exact MLK-F3P-CZ02-DR1M90/Linux 6.1.111-rt42
+mapping is unknown. No VM/board access or one-shot execution was performed in
+the incremental pass. Task 023 remains a future vendor-package intake task.

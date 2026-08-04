@@ -60,8 +60,10 @@ the six user-approved representative files under `results/images/021/`. This
 is functional bounded-latency validation, not a realtime benchmark; YUYV 5 FPS
 is the camera capture setting, not an inference FPS result.
 
-Task 022 is the completed, user-approved read-only Anlogic NPU runtime/official
-YOLO one-shot feasibility audit. Its result is `BLOCKED_DRIVER_OR_DEVICE`: the
+Task 022's prior local/VM/board audit and seven-page official AlWiki review are
+user-approved. The task is complete as an audit, while NPU deployment remains
+blocked; the primary result remains
+`BLOCKED_DRIVER_OR_DEVICE`: the
 board's hard-NPU device-tree node and CMA reservation are visible, but no
 matching NPU/CMA modules are loaded, no `/dev/hard_npu`, `/dev/soft_npu`, or
 `/dev/cma_mem` nodes exist, and the searched VM/SDK scope lacks a versioned
@@ -74,6 +76,15 @@ permanently lacks NPU support; a version-matched vendor package must be
 received and reviewed before any deployment change.
 See [the NPU feasibility audit](docs/vendor/ANLOGIC_NPU_RUNTIME_FEASIBILITY.md)
 and its structured evidence under `results/evidence/022/`.
+
+The selected public AlWiki API pages (seven pages, `7/7` HTTP 200) add an
+official D20.1 DR1M90 Buildroot/HPF/module-selection flow and D20.0 NPU API
+documentation. They do not expose a verified current-board driver/runtime,
+bitstream, one-shot, `rt.bin`/`weight.bin`, or host converter package. The
+examples mention AD101V20 or DR1M90GEG484-2 in places, so exact
+MLK-F3P-CZ02-DR1M90/Linux 6.1.111-rt42 applicability is still unknown. No
+attachment was downloaded; the supplemental Wiki review is complete, and
+project YOLOv5n conversion is still not ready.
 
 ## PC architecture and model lineage
 

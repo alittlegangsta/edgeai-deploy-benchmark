@@ -89,13 +89,16 @@ write the board, or perform an NPU benchmark.
   was resolved for this recovery turn; the approved VM and board probes now
   reach their target shells and the full read-only audit can continue.
 
-## Final status
+## Prior audit closeout
 
-The audit is `Completed` after user review of the automatic result. The NPU
-deployment readiness conclusion remains `BLOCKED_DRIVER_OR_DEVICE`.
+The original local/VM/board feasibility audit was completed after user review
+of the automatic result. Its NPU deployment readiness conclusion remains
+`BLOCKED_DRIVER_OR_DEVICE`. The incremental official AlWiki audit below
+reopens Task 022 only for that supplemental evidence scope; it does not undo
+the prior approval or change any Task 017–021 evidence.
 
 ```text
-Task 022: Completed
+Task 022 prior audit: Completed
 automated_audit: COMPLETE
 audit_review: PASS
 audit_review_source: user
@@ -109,6 +112,64 @@ Approval recorded at `2026-08-04T10:21:18+08:00` in WSL. This is an audit
 approval record time, not the VM audit time, board audit time, or an NPU program
 runtime. The user approved the feasibility conclusion only; no driver loading,
 one-shot execution, or project-model conversion was authorized.
+
+## Incremental official AlWiki audit
+
+The supplemental official AlWiki scope is now `Completed` after user review of
+the public Wiki evidence. The seven explicitly selected pages were read through
+the anonymous public API serially (`7/7` HTTP 200); no VM or board was accessed,
+no browser export was required for API content, and no attachment was
+downloaded. Raw response bodies remained memory-only. Sensitive response
+fields were removed by whitelist before any evidence was written.
+
+```text
+incremental scope: official AlWiki public-page audit
+automated_audit: COMPLETE
+wiki_incremental_review: PASS
+wiki_review_source: user
+candidate_approved_for_incremental_scope: true
+primary verdict: BLOCKED_DRIVER_OR_DEVICE (unchanged)
+auxiliary status: OFFICIAL_ASSETS_IDENTIFIED_ACCESS_PENDING
+vendor one-shot: NOT_EXECUTED
+project YOLOv5n conversion readiness: NOT_READY
+```
+
+The selected `D20.1 NPU 简单示例集合` page explicitly describes a DR1M90
+Buildroot flow, an HPF assignment, enabling `hard_npu_driver`,
+`soft_npu_driver`, and `cma_mem_driver`, increasing the rootfs size, and
+building an NPU application before an SD-boot example. It references
+AD101V20 example archives, but the public API did not expose a verified
+download URL, file size, hash, license, or exact MLK-F3P-CZ02-DR1M90 mapping.
+The `D20.0 NPU接口文档` page documents NPUExecutor, quantization, and CMA API
+symbols without a versioned standalone runtime/ABI package. The camera page
+also names AD101V20, while the IPUG166 page names DR1M90GEG484-2 and a TD
+5.9.1 example target; these are version/board differences, not current-board
+deployment proof. The root, D20 index, and APUG1205 pages add navigation and
+architecture context but no deployable driver/runtime/model package.
+
+No `.ko`, HPF/bitstream, runtime library/header package, one-shot ELF,
+`rt.bin`, `weight.bin`, converter, or other vendor file was obtained in this
+incremental pass. A file-list embed was observed on D20.1, but it exposed no
+download metadata or permission state. Thus the primary verdict is unchanged;
+the Wiki is additional official process/document evidence only.
+
+Evidence: `results/evidence/022/npu_official_wiki_audit.json`.
+
+## Incremental execution record
+
+- Public host: `alwiki.anlogic.com` only; seven selected pages, serial API
+  requests with at least one second between requests.
+- Page tree reported 526 pages, but no full crawl or search-result expansion
+  was performed.
+- No credentials, cookies, authorization headers, raw response, or token
+  value were saved or hashed.
+- No VM, board, module, bitstream, runtime, or vendor executable was accessed
+  or executed in this pass.
+- No Git commit, push, PR, or board change was performed.
+- User approval recorded at `2026-08-04T11:04:19+08:00` in WSL. This is the
+  Wiki review record time, not a VM audit time, board audit time, or NPU
+  runtime. A vendor package request or optional browser/PDF/export may be
+  considered later; do not convert the project YOLOv5n model yet.
 
 ## Historical Blocking Report (wrapper outage before recovery)
 
@@ -214,9 +275,13 @@ Buildroot 2022.02.6, Linux 6.1.111-rt42, and glibc 2.25 containing:
 - User approval: `PASS`, source `user`, recorded at
   `2026-08-04T10:21:18+08:00` in WSL. This timestamp is not a VM audit time,
   board audit time, or NPU program runtime.
-- `candidate_approved: true`; this approves the feasibility audit result only.
+- The official AlWiki increment was approved `PASS` by the user at
+  `2026-08-04T11:04:19+08:00` in WSL. This is the Wiki review record time,
+  not a VM audit time, board audit time, or NPU program runtime.
+- `candidate_approved: true`; this approves the completed feasibility audit
+  and Wiki evidence only, not NPU deployment.
 - `vendor_one_shot: executed=false, status=NOT_EXECUTED`.
-- Offline validator, focused tests (7), full Python unittest (115), Release
+- Offline validator, focused tests (10), full Python unittest (118), Release
   build, CTest (14), YAML/JSON parsing, syntax, hash/matrix, safety,
   immutability, sensitive-material, repository-hygiene, Markdown-link, and
   `git diff --check` validations passed. Details are in

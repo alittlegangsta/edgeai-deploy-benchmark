@@ -6,6 +6,7 @@ import json
 import re
 from pathlib import Path
 from typing import Any, Dict, List
+from urllib.parse import urlparse
 
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 VERDICTS = {
@@ -23,6 +24,7 @@ REQUIRED = (
     "npu_board_audit.json",
     "npu_dependency_matrix.json",
     "npu_feasibility_verdict.json",
+    "npu_official_wiki_audit.json",
 )
 SECONDARY_BLOCKERS = {
     "BLOCKED_MISSING_VENDOR_ASSETS",
@@ -30,6 +32,12 @@ SECONDARY_BLOCKERS = {
     "BLOCKED_TOOLCHAIN",
     "BLOCKED_DOCUMENTATION_GAP",
     "UNKNOWN_BITSTREAM_DT_MAPPING",
+}
+ALLOWED_WIKI_HOSTS = {
+    "alwiki.anlogic.com",
+    "anlogic.com",
+    "www.anlogic.com",
+    "tech.anlogic.com",
 }
 
 
@@ -56,6 +64,12 @@ def validate_consistency(docs: Dict[str, Any], evidence_dir: Path) -> List[str]:
             fail(errors, "completed audit lacks user PASS review")
         if verdict.get("candidate_approved") is not True:
             fail(errors, "completed audit must set candidate_approved=true")
+    if verdict.get("audit_status") == "In Progress":
+        review = verdict.get("audit_review", {})
+        if review.get("status") != "PENDING" or verdict.get("candidate_approved") is not False:
+            fail(errors, "in-progress incremental audit must remain pending and unapproved")
+        if verdict.get("prior_audit_status") != "Completed" or verdict.get("prior_candidate_approved") is not True:
+            fail(errors, "incremental audit must preserve the prior approved closeout")
 
     secondary = verdict.get("secondary_blockers", [])
     if not isinstance(secondary, list) or any(item not in SECONDARY_BLOCKERS for item in secondary):
@@ -103,6 +117,69 @@ def validate_consistency(docs: Dict[str, Any], evidence_dir: Path) -> List[str]:
     return errors
 
 
+def validate_official_wiki(wiki: Dict[str, Any], verdict: Dict[str, Any]) -> List[str]:
+    """Validate the bounded AlWiki supplement without treating docs as assets."""
+    errors: List[str] = []
+    api = wiki.get("api", {})
+    pages = wiki.get("pages", [])
+    if wiki.get("host_used") not in ALLOWED_WIKI_HOSTS:
+        fail(errors, "official Wiki host is outside the allowlist")
+    if api.get("selected_page_count") != 7 or len(pages) != 7:
+        fail(errors, "official Wiki audit must contain exactly seven selected pages")
+    if api.get("page_tree_http_status") != 200:
+        fail(errors, "official Wiki page tree was not HTTP 200")
+    if api.get("raw_response_persisted") is not False:
+        fail(errors, "official Wiki audit must not persist raw responses")
+    if api.get("credentials_used") is not False or api.get("cookies_or_authorization_used") is not False:
+        fail(errors, "official Wiki audit claims credentials or authorization use")
+    if api.get("attachments_followed") is not False or api.get("full_site_crawl") is not False:
+        fail(errors, "official Wiki audit exceeded its bounded scope")
+    for page in pages:
+        if not isinstance(page, dict):
+            fail(errors, "official Wiki page record is malformed")
+            continue
+        parsed = urlparse(str(page.get("url", "")))
+        if parsed.scheme != "https" or parsed.hostname not in ALLOWED_WIKI_HOSTS:
+            fail(errors, f"official Wiki page URL is outside the allowlist: {page.get('page_id')}")
+        if page.get("api_http_status") != 200:
+            fail(errors, f"official Wiki page is not HTTP 200: {page.get('page_id')}")
+        for field in ("page_level", "chapter_name", "applicable_chips", "applicable_boards", "software_versions", "linux_versions", "login_required", "download_permission"):
+            if field not in page:
+                fail(errors, f"official Wiki page lacks required metadata field {field}: {page.get('page_id')}")
+        if page.get("attachments") not in ([], None):
+            fail(errors, f"official Wiki page unexpectedly claims downloaded attachments: {page.get('page_id')}")
+        for asset in page.get("text_referenced_assets", []):
+            if asset.get("download_status") != "NOT_DOWNLOADED":
+                fail(errors, f"Wiki-referenced asset marked downloaded: {asset.get('name')}")
+            if asset.get("access_status") == "LOCAL_AVAILABLE":
+                fail(errors, f"unverified Wiki asset marked local: {asset.get('name')}")
+    acquisition = wiki.get("asset_acquisition", {})
+    if acquisition.get("files_downloaded") != [] or acquisition.get("files_obtained") != []:
+        fail(errors, "official Wiki audit claims locally obtained files")
+    if acquisition.get("attachments_downloaded") is not False:
+        fail(errors, "official Wiki audit claims attachment download")
+    wiki_verdict = verdict.get("official_wiki_incremental_audit", {})
+    if wiki_verdict.get("status") != "COMPLETE":
+        fail(errors, "verdict does not record completed Wiki incremental audit")
+    if wiki_verdict.get("current_scope_status") == "In Progress":
+        if wiki_verdict.get("candidate_approved_for_incremental_scope") is not False:
+            fail(errors, "in-progress Wiki incremental scope must not be approved")
+    elif wiki_verdict.get("current_scope_status") == "Completed":
+        if wiki_verdict.get("review_status") != "PASS" or wiki_verdict.get("review_source") != "user":
+            fail(errors, "completed Wiki incremental scope lacks user PASS review")
+        if wiki_verdict.get("candidate_approved_for_incremental_scope") is not True:
+            fail(errors, "completed Wiki incremental scope must be approved")
+    else:
+        fail(errors, "Wiki incremental scope has invalid status")
+    if wiki_verdict.get("pages_readable") != "7/7":
+        fail(errors, "verdict does not record 7/7 readable Wiki pages")
+    if wiki_verdict.get("primary_verdict_changed") is not False:
+        fail(errors, "Wiki evidence must not change the primary feasibility verdict")
+    if wiki_verdict.get("one_shot_executed") is not False:
+        fail(errors, "Wiki evidence must not claim a one-shot execution")
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--evidence-dir", type=Path, required=True)
@@ -122,6 +199,9 @@ def main() -> int:
     verdict = docs.get("npu_feasibility_verdict.json", {})
     verdict_name = verdict.get("verdict")
     errors.extend(validate_consistency(docs, args.evidence_dir))
+    wiki = docs.get("npu_official_wiki_audit.json")
+    if wiki is not None:
+        errors.extend(validate_official_wiki(wiki, verdict))
     if verdict_name == "PASS_VENDOR_ONE_SHOT":
         run = verdict.get("official_one_shot", {})
         if run.get("status") != "executed_successfully" or run.get("exit_code") != 0:

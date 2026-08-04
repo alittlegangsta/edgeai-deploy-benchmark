@@ -1,0 +1,325 @@
+{
+  "schema_version": "task022-npu-official-wiki-audit-v1",
+  "audit_type": "bounded_incremental_public_wiki_audit",
+  "captured_at": "2026-08-04T10:40:52+08:00",
+  "capture_time_note": "WSL record time; no VM or board access was used for this incremental audit.",
+  "allowed_hosts": [
+    "alwiki.anlogic.com",
+    "anlogic.com",
+    "www.anlogic.com",
+    "tech.anlogic.com"
+  ],
+  "host_used": "alwiki.anlogic.com",
+  "organization_id": "AzZaqNHH",
+  "source_id": "SdAMW8ED",
+  "api": {
+    "page_tree_url": "https://alwiki.anlogic.com/wiki/api/wiki/external/SdAMW8ED/pages",
+    "page_content_template": "https://alwiki.anlogic.com/wiki/api/wiki/external/SdAMW8ED/page/<page_id>/content",
+    "page_tree_http_status": 200,
+    "page_tree_reported_count": 526,
+    "selected_page_count": 7,
+    "requests_serial": true,
+    "minimum_interval_seconds": 1,
+    "raw_response_persisted": false,
+    "credentials_used": false,
+    "cookies_or_authorization_used": false,
+    "attachments_followed": false,
+    "full_site_crawl": false
+  },
+  "sensitive_handling": {
+    "response_body": "memory_only",
+    "token_values_saved": false,
+    "token_values_hashed": false,
+    "per_page_removed_fields": {
+      "sensitive_field_removed_count": 1,
+      "sensitive_field_classification": "SENSITIVE_FIELD_REMOVED",
+      "sensitive_value_type": "str",
+      "sensitive_string_length": 82,
+      "nonessential_null_authors_count": 1,
+      "nonessential_classification": "NOT_IN_CAPTURE_WHITELIST"
+    },
+    "url_query_parameters": "redacted_if_sensitive"
+  },
+  "pages": [
+    {
+      "page_id": "2LbyLqWe",
+      "page_level": "entry",
+      "chapter_name": "Anlogic Wiki entry",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/2LbyLqWe",
+      "title": "Anlogic Wiki",
+      "parent_page_id": null,
+      "page_updated_time": "2026-02-07T13:39:14.058Z",
+      "api_http_status": 200,
+      "content_format": "structured_rich_text_json",
+      "content_node_count": 91,
+      "content_node_types": {
+        "text": 46,
+        "known-link": 22,
+        "callout": 14,
+        "embed": 6,
+        "layout": 3
+      },
+      "applicable_chips": ["DR1M/DR1V navigation context only"],
+      "applicable_boards": [],
+      "software_versions": [],
+      "linux_versions": [],
+      "applicability": "general Anlogic Wiki entry; no NPU deployment contract",
+      "explicit_facts": [
+        "The entry describes DR1M/DR1V development-board, embedded Linux and SDK documentation sections."
+      ],
+      "attachments": [],
+      "attachment_status": "NO_TOP_LEVEL_ATTACHMENT_METADATA",
+      "login_required": "NOT_OBSERVED",
+      "download_permission": "NOT_VERIFIED"
+    },
+    {
+      "page_id": "7ZcKp5Wg",
+      "page_level": "application example",
+      "chapter_name": "D20 NPU应用 / D20.1 NPU简单示例集合",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/7ZcKp5Wg",
+      "title": "D20.1 NPU 简单示例集合",
+      "parent_page_id": "P8Xz9nVf",
+      "page_updated_time": "2025-10-31T00:16:13.479Z",
+      "api_http_status": 200,
+      "content_format": "structured_rich_text_json",
+      "content_node_count": 121,
+      "content_node_types": {
+        "text": 71,
+        "embed": 5,
+        "list": 21,
+        "table": 1,
+        "known-link": 15,
+        "code": 8
+      },
+      "applicable_chips": ["DR1M90 (defconfig/build flow explicitly named)"],
+      "applicable_boards": ["AD101V20 (runnable example explicitly named)"],
+      "applicability": "The page explicitly mentions a DR1M90 Buildroot configuration, but the runnable SD example is explicitly for AD101V20; exact MLK-F3P-CZ02-DR1M90 compatibility is UNKNOWN.",
+      "software_versions": ["25.7", "HPF filename contains 2025.1"],
+      "linux_versions": ["Buildroot defconfig and kernelmenuconfig flow named; exact release string not stated"],
+      "linux_requirements": [
+        "Set ANLOGIC_HPF to a generated device/anlogic_dr1m90/hpf/... HPF.",
+        "Set ANLOGIC_EXTRA_ROOTFS_DIR to the generated app/npu/rootfs_files directory.",
+        "Enable hard_npu_driver, soft_npu_driver and cma_mem_driver in kernelmenuconfig.",
+        "For DR1M90, the page names buildroot/configs/anlogic_dr1m90_defconfig.",
+        "The page instructs increasing BR2_TARGET_ROOTFS_EXT2_SIZE from 128M to 300M for this large demo."
+      ],
+      "build_and_run_facts": [
+        "Build app/npu to generate rootfs_files, then build the SDK image.",
+        "The example uses SD boot and runs scripts from an npu_demo directory."
+      ],
+      "text_referenced_assets": [
+        {
+          "name": "D21.1_NPU_Simple_demo_sd_image.zip",
+          "type": "zip archive",
+          "url": null,
+          "version": null,
+          "size_bytes": null,
+          "access_status": "NOT_EXPOSED_BY_PUBLIC_API",
+          "download_status": "NOT_DOWNLOADED"
+        },
+        {
+          "name": "TD_D20.1_AD101V20_2025.7.zip",
+          "type": "zip archive",
+          "url": null,
+          "version": "2025.7",
+          "size_bytes": null,
+          "access_status": "NOT_EXPOSED_BY_PUBLIC_API",
+          "download_status": "NOT_DOWNLOADED"
+        }
+      ],
+      "attachments": [],
+      "attachment_status": "FILE_LIST_EMBED_PRESENT_BUT_NO_FILENAME_URL_SIZE_OR_PERMISSION_METADATA",
+      "login_required": "NOT_OBSERVED",
+      "download_permission": "NOT_VERIFIED",
+      "inference_boundary": "The page documents a build flow; it does not establish that the current eMMC image has the matching HPF, kernel modules, runtime or model assets."
+    },
+    {
+      "page_id": "P8Xz9nVf",
+      "page_level": "application index",
+      "chapter_name": "D20 NPU应用",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/P8Xz9nVf",
+      "title": "D20 NPU应用",
+      "parent_page_id": "PNFa83vr",
+      "page_updated_time": "2025-03-26T01:47:43.557Z",
+      "api_http_status": 200,
+      "content_format": "structured_rich_text_json",
+      "content_node_count": 4,
+      "content_node_types": {"text": 3, "embed": 1},
+      "applicable_chips": [],
+      "applicable_boards": [],
+      "software_versions": [],
+      "linux_versions": [],
+      "applicability": "NPU example index; exact board/runtime applicability not specified on this page.",
+      "explicit_facts": ["The page aggregates NPU example applications."],
+      "attachments": [],
+      "attachment_status": "NO_TOP_LEVEL_ATTACHMENT_METADATA",
+      "login_required": "NOT_OBSERVED",
+      "download_permission": "NOT_VERIFIED"
+    },
+    {
+      "page_id": "6Pb5TSd5",
+      "page_level": "API documentation",
+      "chapter_name": "D20 NPU应用 / D20.0 NPU接口文档",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/6Pb5TSd5",
+      "title": "D20.0 NPU接口文档",
+      "parent_page_id": "P8Xz9nVf",
+      "page_updated_time": "2026-05-31T02:20:53.373Z",
+      "api_http_status": 200,
+      "content_format": "structured_rich_text_json",
+      "content_node_count": 363,
+      "content_node_types": {"text": 136, "list": 198, "code": 29},
+      "applicable_chips": [],
+      "applicable_boards": [],
+      "software_versions": [],
+      "linux_versions": [],
+      "applicability": "NPU API example layer; board, kernel and runtime release identity are not specified on this page.",
+      "explicit_facts": [
+        "The page documents NPUExecutor, quantization preparation, input/output tensor access and CMA buffer APIs.",
+        "It describes initializing CMA, selecting a backend/loading a model, preparing quantization parameters, running inference and postprocessing."
+      ],
+      "api_symbols_observed": [
+        "NPUExecutor",
+        "cma_mem_free",
+        "cma_mem_deinit",
+        "cma_mem_search_buffer",
+        "npu_input_quant_param_init"
+      ],
+      "runtime_identity": "No standalone npu_runtime filename, version or ABI matrix was stated in the captured page.",
+      "attachments": [],
+      "attachment_status": "NO_TOP_LEVEL_ATTACHMENT_METADATA",
+      "login_required": "NOT_OBSERVED",
+      "download_permission": "NOT_VERIFIED"
+    },
+    {
+      "page_id": "C3WjPRyU",
+      "page_level": "application example",
+      "chapter_name": "D20 NPU应用 / D20.3 USB摄像头和HDMI示例",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/C3WjPRyU",
+      "title": "D20.3 基于USB摄像头和HDMI的NPU应用示例",
+      "parent_page_id": "P8Xz9nVf",
+      "page_updated_time": "2026-06-05T01:13:56.722Z",
+      "api_http_status": 200,
+      "content_format": "structured_rich_text_json",
+      "content_node_count": 31,
+      "content_node_types": {"text": 14, "list": 11, "known-link": 3, "embed": 3},
+      "applicable_chips": ["DR1M90 (page text)"],
+      "applicable_boards": ["AD101V20 (example explicitly named)"],
+      "software_versions": [],
+      "linux_versions": [],
+      "applicability": "The page says DR1M90 and uses AD101V20 as the example board; exact MLK-F3P-CZ02-DR1M90 image compatibility is UNKNOWN.",
+      "explicit_facts": [
+        "The example combines a USB UVC camera, NPU and HDMI display for face detection.",
+        "It references a dr1m90_npu SDK example repository and recommends bringing up display, then npu_demo, then camera examples."
+      ],
+      "version_scope": "No current-board kernel, Buildroot, glibc, runtime or driver version was specified.",
+      "external_links": {
+        "observed": true,
+        "followed": false,
+        "reason": "The incremental network allowlist was limited to Anlogic official domains; external repository content was not fetched."
+      },
+      "attachments": [],
+      "attachment_status": "NO_TOP_LEVEL_ATTACHMENT_METADATA",
+      "login_required": "NOT_OBSERVED",
+      "download_permission": "NOT_VERIFIED"
+    },
+    {
+      "page_id": "JGc78Vrn",
+      "page_level": "IP user manual",
+      "chapter_name": "Video NPU IP user manual",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/JGc78Vrn",
+      "title": "IPUG166_Video_NPU_IP用户手册",
+      "parent_page_id": "Qm4aioXe",
+      "page_updated_time": "2026-08-01T07:34:51.810Z",
+      "api_http_status": 200,
+      "content_format": "structured_rich_text_json",
+      "content_node_count": 127,
+      "content_node_types": {"text": 104, "list": 20, "table": 3},
+      "applicable_chips": ["DR1M90 family context"],
+      "applicable_boards": ["DR1M90GEG484-2 (document target)"],
+      "software_versions": ["TD 5.9.1 Beta1.0"],
+      "linux_versions": [],
+      "applicability": "Document names target DR1M90GEG484-2 and TD 5.9.1 Beta1.0; this differs from the current MLK-F3P-CZ02-DR1M90 board identity and therefore is not a verified match.",
+      "explicit_facts": [
+        "Video NPU is described as PL-side SoftNPU plus CSC and Resize.",
+        "The text lists YOLOv3-tiny/v3/v4/v5s and Mobilefacenet, with int8/uint8 quantization."
+      ],
+      "attachments": [],
+      "attachment_status": "NO_TOP_LEVEL_ATTACHMENT_METADATA",
+      "login_required": "NOT_OBSERVED",
+      "download_permission": "NOT_VERIFIED",
+      "version_mismatch": "target board/example and TD version differ from the current board contract"
+    },
+    {
+      "page_id": "NKqzEirT",
+      "page_level": "reference design document",
+      "chapter_name": "NPU reference design",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/NKqzEirT",
+      "title": "APUG1205_NPU参考设计文档",
+      "parent_page_id": "Qm4aioXe",
+      "page_updated_time": "2026-08-01T07:48:35.565Z",
+      "api_http_status": 200,
+      "content_format": "structured_rich_text_json",
+      "content_node_count": 96,
+      "content_node_types": {"text": 70, "list": 17, "embed": 5, "table": 2, "known-link": 2},
+      "applicable_chips": ["DR1 family"],
+      "applicable_boards": [],
+      "software_versions": [],
+      "linux_versions": [],
+      "applicability": "Document describes the DR1 family HardNPU/SoftNPU architecture; exact MLK-F3P-CZ02-DR1M90 eMMC/runtime mapping is UNKNOWN.",
+      "explicit_facts": [
+        "The page describes HardNPU and SoftNPU as cooperating NPU units, with SoftNPU in PL.",
+        "It lists typical networks including YOLO variants and int8/uint8 support.",
+        "The page does not expose a versioned deployable runtime package or current-board module identity in the captured content."
+      ],
+      "attachments": [],
+      "attachment_status": "NO_TOP_LEVEL_ATTACHMENT_METADATA",
+      "login_required": "NOT_OBSERVED",
+      "download_permission": "NOT_VERIFIED"
+    }
+  ],
+  "global_findings": {
+    "softnpu_hardware_engine_or_bitstream": "The D20.1 page documents generating an HPF/bitstream and names an example HPF filename, but no downloadable HPF/bitstream URL, size, SHA256 or current-board mapping was exposed by the public API.",
+    "linux_and_buildroot": "D20.1 names a DR1M90 Buildroot defconfig, kernelmenuconfig NPU module selections and rootfs sizing; it does not prove those changes are present in the current eMMC image.",
+    "drivers_or_modules": "The Wiki documents selecting hard_npu_driver, soft_npu_driver and cma_mem_driver, but no .ko download or vermagic was exposed.",
+    "runtime_and_headers": "D20.0 documents API symbols and CMA/NPUExecutor usage, but no versioned standalone npu_runtime library/header package or ABI matrix was exposed.",
+    "one_shot_and_models": "The selected pages did not expose an official one-shot ELF, rt.bin, weight.bin, model hash or complete public download URL.",
+    "host_tools": "No convert_tool or al_ai_flow executable/package URL was exposed by the selected pages.",
+    "license_and_access": "No explicit license, account requirement or download permission for the referenced file-list assets was exposed by the public API."
+  },
+  "asset_acquisition": {
+    "files_downloaded": [],
+    "files_obtained": [],
+    "attachments_downloaded": false,
+    "login_required_observed": false,
+    "download_permission_verified": false,
+    "cli_dynamic_page_unreadable": false,
+    "browser_rendered_export": "PENDING",
+    "public_api_content_readable": "7/7"
+  },
+  "current_board_contract": {
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "architecture": "AArch64",
+    "kernel": "6.1.111-rt42",
+    "buildroot": "2022.02.6",
+    "glibc": "2.25",
+    "wiki_exact_match": false,
+    "reason": "Selected example assets target AD101V20 or DR1M90GEG484-2, and no current eMMC bitstream/module/runtime identity is exposed."
+  },
+  "verdict_effect": {
+    "primary_verdict_unchanged": "BLOCKED_DRIVER_OR_DEVICE",
+    "secondary_status": "OFFICIAL_ASSETS_IDENTIFIED_ACCESS_PENDING",
+    "interpretation": "Wiki provides additional official process/document evidence and references assets, but does not establish deployable current-board assets.",
+    "project_yolov5n_conversion_ready": false,
+    "vendor_one_shot_executed": false,
+    "next_task_suggestion": "Task 023: Anlogic NPU vendor package intake and static compatibility validation"
+  },
+  "safety": {
+    "vendor_binaries_executed": false,
+    "kernel_modules_loaded": false,
+    "bitstream_written": false,
+    "vm_accessed": false,
+    "board_accessed": false,
+    "downloads": false,
+    "raw_responses_saved": false
+  }
+}

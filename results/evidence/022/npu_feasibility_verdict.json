@@ -6,11 +6,19 @@
   "audit_review": {
     "status": "PASS",
     "source": "user",
-    "recorded_at": "2026-08-04T10:21:18+08:00",
-    "time_note": "WSL record time for audit approval; not VM audit time, board audit time, or NPU program runtime."
+    "recorded_at": "2026-08-04T11:04:19+08:00",
+    "time_note": "WSL record time for official Wiki incremental approval; not VM audit time, board audit time, or NPU program runtime."
   },
   "verdict": "BLOCKED_DRIVER_OR_DEVICE",
   "candidate_approved": true,
+  "prior_audit_status": "Completed",
+  "prior_audit_review": {
+    "status": "PASS",
+    "source": "user",
+    "recorded_at": "2026-08-04T10:21:18+08:00",
+    "time_note": "WSL record time for prior audit approval; not VM audit time, board audit time, or NPU program runtime."
+  },
+  "prior_candidate_approved": true,
   "secondary_blockers": [
     "BLOCKED_MISSING_VENDOR_ASSETS",
     "BLOCKED_RUNTIME_ABI_OR_IDENTITY_UNVERIFIED",
@@ -93,6 +101,22 @@
       "supported operators, version matrix, host OS/Python requirements, input/output formats, YOLO limitations and license/dongle requirements"
     ]
   },
+  "official_wiki_incremental_audit": {
+    "status": "COMPLETE",
+    "review_status": "PASS",
+    "review_source": "user",
+    "review_recorded_at": "2026-08-04T11:04:19+08:00",
+    "current_scope_status": "Completed",
+    "candidate_approved_for_incremental_scope": true,
+    "evidence_ref": "results/evidence/022/npu_official_wiki_audit.json",
+    "pages_readable": "7/7",
+    "auxiliary_status": "OFFICIAL_ASSETS_IDENTIFIED_ACCESS_PENDING",
+    "finding": "The selected public AlWiki pages add an official SoftNPU/Buildroot flow and NPU API documentation, but expose no verified current-board driver, runtime, model, host-tool or bitstream package.",
+    "primary_verdict_changed": false,
+    "one_shot_executed": false,
+    "dynamic_page_status": "API_CONTENT_READABLE",
+    "browser_rendered_export": "PENDING"
+  },
   "project_yolov5n_conversion_ready": false,
   "why_not_ready": "The vendor runtime/device contract is not established; converting the frozen project model now would create an unsupported, untestable path.",
   "evidence_refs": [
@@ -100,7 +124,8 @@
     "results/evidence/022/npu_document_requirements.json",
     "results/evidence/022/npu_vm_audit.json",
     "results/evidence/022/npu_board_audit.json",
-    "results/evidence/022/npu_dependency_matrix.json"
+    "results/evidence/022/npu_dependency_matrix.json",
+    "results/evidence/022/npu_official_wiki_audit.json"
   ],
   "safety": {
     "modules_loaded": false,

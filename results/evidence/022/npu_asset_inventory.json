@@ -2,6 +2,16 @@
   "schema_version": "task022-npu-asset-inventory-v1",
   "capture_method": "bounded_read_only_filesystem_scan",
   "executed_files": false,
+  "official_wiki_incremental_audit": {
+    "evidence_ref": "results/evidence/022/npu_official_wiki_audit.json",
+    "source_host": "alwiki.anlogic.com",
+    "selected_page_count": 7,
+    "public_api_content_readable": "7/7",
+    "attachments_downloaded": false,
+    "new_local_files_obtained": [],
+    "wiki_referenced_assets_are_not_local_assets": true,
+    "interpretation": "The selected Wiki pages reference HPF/SD/TD/demo assets and describe build steps, but no downloadable asset with verified identity and current-board applicability was obtained."
+  },
   "roots": [
     {
       "root_label": "approved_npu_demo",

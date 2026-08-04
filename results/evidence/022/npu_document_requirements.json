@@ -152,6 +152,28 @@
       "applies_to": "vendor reference only; not executed"
     }
   ],
+  "official_wiki_incremental": {
+    "source_host": "alwiki.anlogic.com",
+    "evidence_ref": "results/evidence/022/npu_official_wiki_audit.json",
+    "selected_pages": [
+      "2LbyLqWe",
+      "7ZcKp5Wg",
+      "P8Xz9nVf",
+      "6Pb5TSd5",
+      "C3WjPRyU",
+      "JGc78Vrn",
+      "NKqzEirT"
+    ],
+    "facts": [
+      "D20.1 explicitly describes generating an HPF/bitstream, setting ANLOGIC_HPF and ANLOGIC_EXTRA_ROOTFS_DIR, enabling hard_npu_driver, soft_npu_driver and cma_mem_driver, building app/npu, and building an SD image.",
+      "D20.1 names buildroot/configs/anlogic_dr1m90_defconfig but its runnable SD example and TD archive are explicitly for AD101V20; exact MLK-F3P-CZ02-DR1M90 compatibility is UNKNOWN.",
+      "D20.0 documents NPUExecutor, quantization and CMA buffer APIs but does not state a standalone npu_runtime version or ABI matrix.",
+      "D20.3 describes a DR1M90 USB-camera/HDMI NPU example using AD101V20 as the example board and references an external SDK repository; that repository was not fetched in this allowlisted audit.",
+      "The APUG1205 and IPUG166 Wiki pages add architecture and IP facts, but do not expose a current-board .ko, npu_runtime package, official rt.bin/weight.bin pair or converter executable."
+    ],
+    "asset_access": "Referenced ZIP/HPF/bitstream/demo assets had no public filename/URL/size/permission metadata in the selected API responses; none were downloaded.",
+    "license_access_and_version_mapping": "No explicit license, account permission, current kernel mapping or current eMMC bitstream mapping was exposed."
+  },
   "undocumented_items": [
     "Exact runtime release version and SHA256 for npu_runtime are not stated in the captured documents.",
     "Exact mapping between the local 2025.07 SDK tree, the board eMMC image, and the document revision is not stated.",
