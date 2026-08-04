@@ -1,0 +1,183 @@
+{
+  "schema_version": "task022-npu-document-requirements-v1",
+  "capture_method": "local_curated_pdf_text_extraction",
+  "sources": [
+    {
+      "source_id": "APUG1205_0.1",
+      "source_type": "official_vendor_reference_design_pdf",
+      "path": "<approved_local_vendor_root>/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/APUG1205_NPU参考设计文档.pdf",
+      "sha256": "54a25d9a5dc59b21e7f7253bc72adeeb2c8b3a4bc04c30bea81463026ef7c1f2",
+      "size_bytes": 1427207,
+      "document_date": "2023-12",
+      "extraction_reference": "qmd://milianke-dr1-p0/APUG1205_NPU参考设计文档.pdf",
+      "claims": [
+        {
+          "classification": "document_fact",
+          "topic": "architecture",
+          "text": "DR1 NPU is described as PS-side HardNPU plus PL-side SoftNPU working together."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "model_compilation",
+          "text": "The document names convert_tool and al_ai_flow; the documented outputs are rt.bin and weight.bin."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "softnpu_bitstream",
+          "text": "A bitstream containing the required SoftNPU operators is required before runtime inference."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "runtime_package",
+          "text": "The runtime release package is described as include, lib, and linux_driver; the library is named npu_runtime in the application-link example."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "drivers",
+          "text": "The documented driver preparation builds hard_npu.ko, soft_npu.ko, and cma_mem.ko and then uses insmod; corresponding device nodes are expected."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "one_shot",
+          "text": "The runtime reference-design list contains a yolo one-shot example including YUV-to-RGB, resize, neural-network execution, and result retrieval."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "api",
+          "text": "The documented flow includes npu_driver_init, npu_intr_init, npu_mem_init, load_model(rt.bin, weight.bin), input configuration/tensor access, run_graph, output access, and teardown."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "supported_models",
+          "text": "Typical supported networks include yolov3-tiny, yolov3, yolov4, yolov5s, and mobilefacenet; int8/uint8 quantization is described."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "host_tooling",
+          "text": "The example invokes a Docker image named anlogic/nn_compiler:tag_id for host-side conversion and flow generation."
+        }
+      ]
+    },
+    {
+      "source_id": "IPUG166_1.0",
+      "source_type": "official_vendor_video_npu_ip_pdf",
+      "path": "<approved_local_vendor_root>/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/IPUG166_Video_NPU_IP用户手册.pdf",
+      "sha256": "d13f70fa563c9d43bb568bcd80edab32ad74a8b6e4a868339119eba6f1945fb7",
+      "size_bytes": 976250,
+      "document_date": "2023-12",
+      "extraction_reference": "qmd://milianke-dr1-p0/IPUG166_Video_NPU_IP用户手册.pdf",
+      "claims": [
+        {
+          "classification": "document_fact",
+          "topic": "video_npu",
+          "text": "Video NPU IP is described as a PL-side IP containing SoftNPU, CSC, and Resize."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "target",
+          "text": "The document names target device DR1M90GEG484-2 and software TD5.9.1 Beta1.0 for its IP resource example."
+        },
+        {
+          "classification": "document_fact",
+          "topic": "network_support",
+          "text": "The listed networks include Yolov3-tiny, Yolov3, Yolov4, Yolov5s, and Mobilefacenet with int8/uint8 support."
+        }
+      ]
+    },
+    {
+      "source_id": "MLK_NPU_DEVELOPMENT_GUIDE",
+      "source_type": "third_party_board_guide_pdf",
+      "path": "<approved_local_vendor_root>/03_demo/05-5_NPU演示/05-5_米联客-安路F3P-CZ02开发板NPU开发.pdf",
+      "sha256": "f3fd89cc47e08cfce0bbced13a9194ab06dc6b153c90c0e08c8539edf4badb90",
+      "size_bytes": 2488900,
+      "document_date": "not_extracted_as_authoritative_version",
+      "claims": [
+        {
+          "classification": "source_reference_only",
+          "topic": "scope",
+          "text": "This board guide is retained as a local third-party reference; it is not treated as proof that the current eMMC image contains an NPU runtime."
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "architecture",
+      "document_requirement": "PS HardNPU and PL SoftNPU cooperate; Video NPU is a PL-side SoftNPU/CSC/Resize IP.",
+      "applies_to": "DR1 family; exact board image applicability remains to be verified"
+    },
+    {
+      "requirement_id": "bitstream",
+      "document_requirement": "Generate/load a bitstream containing required SoftNPU operators before runtime inference.",
+      "applies_to": "SoftNPU paths; current board bitstream provenance is not established"
+    },
+    {
+      "requirement_id": "device_tree",
+      "document_requirement": "The documents describe kernel/driver preparation but do not give a verified identity for the current board device tree.",
+      "applies_to": "current deployment; UNKNOWN"
+    },
+    {
+      "requirement_id": "kernel_modules",
+      "document_requirement": "hard_npu.ko, soft_npu.ko, and cma_mem.ko are built from the runtime package linux_driver directory and inserted in Linux.",
+      "applies_to": "current board; required before one-shot"
+    },
+    {
+      "requirement_id": "device_nodes",
+      "document_requirement": "The expected nodes after driver installation are /dev/hard_npu, /dev/soft_npu, and /dev/cma_mem.",
+      "applies_to": "current board; not observed"
+    },
+    {
+      "requirement_id": "cma",
+      "document_requirement": "The runtime uses CMA allocation APIs and the documentation requires CMA-backed buffers.",
+      "applies_to": "current board; CMA reservation is observed, allocator driver is not"
+    },
+    {
+      "requirement_id": "runtime_library",
+      "document_requirement": "The runtime release package supplies a library linked as npu_runtime in the documented application example.",
+      "applies_to": "current board; matching library package not located"
+    },
+    {
+      "requirement_id": "model_artifacts",
+      "document_requirement": "Host flow emits rt.bin and weight.bin from a converted tmfile and network configuration.",
+      "applies_to": "official model only; no project model substitution permitted"
+    },
+    {
+      "requirement_id": "host_converter",
+      "document_requirement": "convert_tool and al_ai_flow are documented inside a Docker-based compiler environment.",
+      "applies_to": "VM; Docker and executables not observed"
+    },
+    {
+      "requirement_id": "one_shot_flow",
+      "document_requirement": "The yolo one-shot reference includes image color conversion, resize, graph execution, and output retrieval.",
+      "applies_to": "vendor reference only; not executed"
+    }
+  ],
+  "official_wiki_incremental": {
+    "source_host": "alwiki.anlogic.com",
+    "evidence_ref": "results/evidence/022/npu_official_wiki_audit.json",
+    "selected_pages": [
+      "2LbyLqWe",
+      "7ZcKp5Wg",
+      "P8Xz9nVf",
+      "6Pb5TSd5",
+      "C3WjPRyU",
+      "JGc78Vrn",
+      "NKqzEirT"
+    ],
+    "facts": [
+      "D20.1 explicitly describes generating an HPF/bitstream, setting ANLOGIC_HPF and ANLOGIC_EXTRA_ROOTFS_DIR, enabling hard_npu_driver, soft_npu_driver and cma_mem_driver, building app/npu, and building an SD image.",
+      "D20.1 names buildroot/configs/anlogic_dr1m90_defconfig but its runnable SD example and TD archive are explicitly for AD101V20; exact MLK-F3P-CZ02-DR1M90 compatibility is UNKNOWN.",
+      "D20.0 documents NPUExecutor, quantization and CMA buffer APIs but does not state a standalone npu_runtime version or ABI matrix.",
+      "D20.3 describes a DR1M90 USB-camera/HDMI NPU example using AD101V20 as the example board and references an external SDK repository; that repository was not fetched in this allowlisted audit.",
+      "The APUG1205 and IPUG166 Wiki pages add architecture and IP facts, but do not expose a current-board .ko, npu_runtime package, official rt.bin/weight.bin pair or converter executable."
+    ],
+    "asset_access": "Referenced ZIP/HPF/bitstream/demo assets had no public filename/URL/size/permission metadata in the selected API responses; none were downloaded.",
+    "license_access_and_version_mapping": "No explicit license, account permission, current kernel mapping or current eMMC bitstream mapping was exposed."
+  },
+  "undocumented_items": [
+    "Exact runtime release version and SHA256 for npu_runtime are not stated in the captured documents.",
+    "Exact mapping between the local 2025.07 SDK tree, the board eMMC image, and the document revision is not stated.",
+    "The documents do not prove that the current board's loaded FPGA bitstream contains the required SoftNPU operators.",
+    "The captured documents do not establish redistribution terms for a runtime, module, bitstream, or model package."
+  ]
+}

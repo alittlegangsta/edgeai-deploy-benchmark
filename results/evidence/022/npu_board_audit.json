@@ -1,0 +1,74 @@
+{
+  "schema_version": "task022-npu-board-audit-v1",
+  "capture_method": "approved_board_ssh_read_only",
+  "captured_at": "2026-08-04T10:03:04+08:00",
+  "capture_time_note": "WSL record time; the board RTC is not used for event ordering.",
+  "board": {
+    "identity": "MLK-F3P-CZ02-DR1M90 (project baseline identity)",
+    "hostname": "buildroot",
+    "uname": "Linux buildroot 6.1.111-rt42 #8 SMP PREEMPT Wed Jul 30 14:40:27 CST 2025 aarch64 GNU/Linux",
+    "architecture": "aarch64",
+    "os": "Buildroot 2022.02.6",
+    "glibc": "2.25 (ldd --version; getconf is unavailable)",
+    "cpu_part": "0xd04",
+    "cpu_count": 2,
+    "mem_total_kib": 1012420,
+    "mem_available_kib": 934644,
+    "cma_total_kib": 131072,
+    "cma_free_kib": 130128,
+    "kernel_cmdline": "console=ttyS0,115200n8 earlycon=uart,mmio32,0xf8401000 loglevel=8 root=/dev/mmcblk1p2 rootwait rootfstype=ext4 rw"
+  },
+  "modules": {
+    "loaded": ["aic_load_fw"],
+    "npu_or_cma_modules_loaded": false,
+    "matching_module_files_under_lib_modules": [],
+    "modinfo_available": false,
+    "module_operation_performed": false
+  },
+  "devices": {
+    "npu_nodes": [],
+    "cma_nodes": [],
+    "runtime_library_candidates": [],
+    "rootfs_candidate_search": {
+      "roots": ["/lib", "/usr/lib", "/usr/local/lib", "/opt", "/root", "/home"],
+      "matches": []
+    }
+  },
+  "device_tree_and_sysfs": {
+    "hard_npu_platform_path": "/sys/devices/platform/soc/63f00000.hard_npu",
+    "hard_npu_platform_node_present": true,
+    "hard_npu_compatible": "anlogic,hard_npu",
+    "hard_npu_reg_observed": ["0x63f00000 size 0x1000", "0xf8800000 size 0x20000", "0xf8801000 size 0x1000"],
+    "hard_npu_driver_symlink": null,
+    "hard_npu_waiting_for_supplier": "0",
+    "device_tree_hard_npu_node_present": true,
+    "soft_npu_device_tree_node_observed": false,
+    "cma_reserved_memory_node_present": true,
+    "sysfs_npu_or_cma_matches": [
+      "/sys/devices/platform/soc/63f00000.hard_npu",
+      "/sys/bus/platform/devices/63f00000.hard_npu",
+      "/sys/firmware/devicetree/base/soc/hard_npu@63F00000",
+      "/sys/firmware/devicetree/base/reserved-memory/linux,cma"
+    ]
+  },
+  "kernel_log_observations": [
+    "Reserved memory: created CMA memory pool at 0x0000000017c00000, size 128 MiB",
+    "OF: reserved mem: initialized node linux,cma, compatible id shared-dma-pool",
+    "No NPU driver probe or device-node creation message matched the read-only dmesg filter"
+  ],
+  "safety": {
+    "sudo_used": false,
+    "insmod_modprobe_rmmod_used": false,
+    "device_tree_written": false,
+    "firmware_or_bitstream_changed": false,
+    "system_libraries_changed": false
+  },
+  "assessment": {
+    "board_is_aarch64": true,
+    "cma_reserved": true,
+    "npu_driver_loaded": false,
+    "npu_device_nodes_present": false,
+    "board_ready_for_vendor_one_shot": false,
+    "blocking_reason": "The current board image exposes a hard_npu device-tree/platform node and CMA reservation, but no matching NPU/CMA kernel modules are loaded or present under /lib/modules, no /dev NPU/CMA nodes exist, and no board-side runtime libraries or official model artifacts were found."
+  }
+}

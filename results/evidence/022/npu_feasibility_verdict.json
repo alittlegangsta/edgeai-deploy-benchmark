@@ -1,0 +1,138 @@
+{
+  "schema_version": "task022-npu-feasibility-verdict-v1",
+  "task": "022",
+  "audit_status": "Completed",
+  "automated_audit": "COMPLETE",
+  "audit_review": {
+    "status": "PASS",
+    "source": "user",
+    "recorded_at": "2026-08-04T11:04:19+08:00",
+    "time_note": "WSL record time for official Wiki incremental approval; not VM audit time, board audit time, or NPU program runtime."
+  },
+  "verdict": "BLOCKED_DRIVER_OR_DEVICE",
+  "candidate_approved": true,
+  "prior_audit_status": "Completed",
+  "prior_audit_review": {
+    "status": "PASS",
+    "source": "user",
+    "recorded_at": "2026-08-04T10:21:18+08:00",
+    "time_note": "WSL record time for prior audit approval; not VM audit time, board audit time, or NPU program runtime."
+  },
+  "prior_candidate_approved": true,
+  "secondary_blockers": [
+    "BLOCKED_MISSING_VENDOR_ASSETS",
+    "BLOCKED_RUNTIME_ABI_OR_IDENTITY_UNVERIFIED",
+    "BLOCKED_TOOLCHAIN",
+    "BLOCKED_DOCUMENTATION_GAP",
+    "UNKNOWN_BITSTREAM_DT_MAPPING"
+  ],
+  "official_one_shot": {
+    "executed": false,
+    "status": "NOT_EXECUTED",
+    "reason": "The official execution gate was not satisfied: matching kernel modules are absent/unloaded, the expected NPU/CMA device nodes are absent, the current bitstream provenance is unknown, and the documented npu_runtime/model artifact package is incomplete."
+  },
+  "vendor_one_shot": {
+    "executed": false,
+    "status": "NOT_EXECUTED",
+    "reason": "The official one-shot gate was not satisfied; no run evidence was created."
+  },
+  "confirmed_facts": [
+    "The real board is an AArch64 MLK-F3P-CZ02-DR1M90 running Buildroot 2022.02.6 and Linux 6.1.111-rt42.",
+    "The board reserves 128 MiB of CMA, but only aic_load_fw is loaded and no hard_npu, soft_npu, or cma_mem module is loaded.",
+    "The board exposes a hard_npu device-tree/platform node with compatible anlogic,hard_npu, but no bound driver and no /dev/hard_npu node.",
+    "No /dev/soft_npu or /dev/cma_mem node was observed, and the board rootfs candidate search found no NPU runtime libraries, model artifacts, or matching modules.",
+    "The VM is Ubuntu 18.04.4 x86_64 with GCC/G++ 7.5.0 and glibc 2.27, but no cmake, ninja, docker, convert_tool, or al_ai_flow executable was found in the searched scope.",
+    "The VM SDK contains AArch64 Arm NN/ONNX parser libraries and Alnpu symbols, but no standalone libnpu_runtime package or prebuilt NPU modules."
+  ],
+  "unconfirmed_or_inferred": [
+    {
+      "classification": "engineering_inference",
+      "statement": "The current eMMC image is not ready for the documented vendor one-shot path because its NPU driver/device prerequisites are absent.",
+      "basis": "npu_board_audit.json and APUG1205_0.1 requirements"
+    },
+    {
+      "classification": "unknown",
+      "statement": "The currently loaded FPGA bitstream may or may not contain SoftNPU logic; this audit did not inspect or alter the active bitstream.",
+      "basis": "No safe read-only identity mapping was available"
+    },
+    {
+      "classification": "unknown",
+      "statement": "The AArch64 Arm NN libraries may be ABI-compatible with the board, but their Alnpu backend cannot be validated without the matching runtime/driver/device path.",
+      "basis": "readelf identities plus absent board runtime"
+    }
+  ],
+  "blocking_gaps": [
+    "Kernel-compatible hard_npu.ko, soft_npu.ko, and cma_mem.ko package or a verified vendor image containing them",
+    "Verified /dev/hard_npu, /dev/soft_npu, and /dev/cma_mem nodes after a safe, approved driver deployment",
+    "Versioned standalone npu_runtime library and C API headers with AArch64/glibc/libstdc++ compatibility evidence",
+    "Official model artifact pair rt.bin and weight.bin plus its model/config identity",
+    "Host convert_tool and al_ai_flow package, or a vendor-supplied already converted official one-shot bundle",
+    "Verified mapping between the selected SoftNPU bitstream/DT and this exact DR1M90 eMMC image"
+  ],
+  "minimum_next_step": "Obtain from Anlogic/Milianke a version-matched DR1M90 Linux NPU runtime release for the current kernel/eMMC image: driver modules, npu_runtime headers/library, official one-shot ELF/source, official rt.bin/weight.bin and input, and the exact bitstream/DT provenance. Review and approve any board image or module-deployment change separately before execution.",
+  "vendor_request_checklist": {
+    "driver": [
+      "hard_npu.ko",
+      "soft_npu.ko",
+      "cma_mem.ko",
+      "complete matching source, Makefile, kernel configuration/build instructions, vermagic, module order/parameters, expected dmesg/device nodes, and rollback steps",
+      "target identity: MLK-F3P-CZ02-DR1M90, AArch64, Buildroot 2022.02.6, Linux 6.1.111-rt42, glibc 2.25"
+    ],
+    "runtime": [
+      "AArch64 npu_runtime shared/static libraries",
+      "C/C++ headers, version information, sample source and linking instructions",
+      "runtime configuration, license, dynamic dependencies, minimum glibc/libstdc++ requirements, Linux 6.1.111-rt42 compatibility matrix, API and error-code documentation"
+    ],
+    "fpga_and_device_tree": [
+      "DR1M90-compatible SoftNPU bitstream",
+      "HPF or hardware-platform file",
+      "matching Device Tree/overlay and kernel configuration",
+      "version mapping, safe load method, affected USB/network/eMMC functions, and rollback procedure"
+    ],
+    "official_one_shot": [
+      "official source or ELF",
+      "official test image, model identity, rt.bin, weight.bin, configuration, run script and expected output",
+      "hashes and version information"
+    ],
+    "host_tools": [
+      "convert_tool",
+      "al_ai_flow",
+      "quantization/model compiler package",
+      "supported operators, version matrix, host OS/Python requirements, input/output formats, YOLO limitations and license/dongle requirements"
+    ]
+  },
+  "official_wiki_incremental_audit": {
+    "status": "COMPLETE",
+    "review_status": "PASS",
+    "review_source": "user",
+    "review_recorded_at": "2026-08-04T11:04:19+08:00",
+    "current_scope_status": "Completed",
+    "candidate_approved_for_incremental_scope": true,
+    "evidence_ref": "results/evidence/022/npu_official_wiki_audit.json",
+    "pages_readable": "7/7",
+    "auxiliary_status": "OFFICIAL_ASSETS_IDENTIFIED_ACCESS_PENDING",
+    "finding": "The selected public AlWiki pages add an official SoftNPU/Buildroot flow and NPU API documentation, but expose no verified current-board driver, runtime, model, host-tool or bitstream package.",
+    "primary_verdict_changed": false,
+    "one_shot_executed": false,
+    "dynamic_page_status": "API_CONTENT_READABLE",
+    "browser_rendered_export": "PENDING"
+  },
+  "project_yolov5n_conversion_ready": false,
+  "why_not_ready": "The vendor runtime/device contract is not established; converting the frozen project model now would create an unsupported, untestable path.",
+  "evidence_refs": [
+    "results/evidence/022/npu_asset_inventory.json",
+    "results/evidence/022/npu_document_requirements.json",
+    "results/evidence/022/npu_vm_audit.json",
+    "results/evidence/022/npu_board_audit.json",
+    "results/evidence/022/npu_dependency_matrix.json",
+    "results/evidence/022/npu_official_wiki_audit.json"
+  ],
+  "safety": {
+    "modules_loaded": false,
+    "vendor_binaries_executed": false,
+    "board_modified": false,
+    "system_libraries_replaced": false,
+    "model_converted": false,
+    "benchmark_run": false
+  }
+}

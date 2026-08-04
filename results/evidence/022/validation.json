@@ -1,0 +1,135 @@
+{
+  "schema_version": "task022-validation-v1",
+  "validated_at": "2026-08-04T11:07:02+08:00",
+  "validation_time_note": "WSL record time; VM and board were not accessed for this approval and offline recheck.",
+  "audit_review": {
+    "status": "PASS",
+    "source": "user",
+    "recorded_at": "2026-08-04T11:04:19+08:00",
+    "time_note": "WSL record time for official Wiki incremental approval; not VM/board audit or NPU runtime time."
+  },
+  "prior_audit_review": {
+    "status": "PASS",
+    "source": "user",
+    "recorded_at": "2026-08-04T10:21:18+08:00",
+    "time_note": "WSL prior-audit approval record time, not VM/board audit or NPU runtime time."
+  },
+  "checks": {
+    "task022_validator": {
+      "status": "PASS",
+      "verdict": "BLOCKED_DRIVER_OR_DEVICE",
+      "command": "python3 scripts/vendor/validate_task022_npu_audit.py --evidence-dir results/evidence/022"
+    },
+    "task022_focused_unittest": {
+      "status": "PASS",
+      "tests": 10,
+      "includes_negative_safety_cases": true
+    },
+    "full_python_unittest": {
+      "status": "PASS",
+      "tests": 118
+    },
+    "release_build": {
+      "status": "PASS",
+      "command": "cmake --build build/pc-acceptance-release --parallel"
+    },
+    "ctest": {
+      "status": "PASS",
+      "tests": 14
+    },
+    "yaml_json_parse": {
+      "status": "PASS",
+      "yaml_files": 37,
+      "task022_json_files": 8
+    },
+    "python_compile": {
+      "status": "PASS"
+    },
+    "shell_syntax": {
+      "status": "PASS",
+      "files": [
+        "scripts/arm/audit_anlogic_npu_board.sh"
+      ]
+    },
+    "asset_hash_and_matrix": {
+      "status": "PASS"
+    },
+    "verdict_safety_reconciliation": {
+      "status": "PASS",
+      "checks": [
+        "missing device nodes cannot produce PASS_VENDOR_ONE_SHOT",
+        "executed one-shot requires npu_vendor_one_shot_run.json",
+        "Arm NN candidate cannot substitute for READY npu_runtime",
+        "NOT_EXECUTED requires executed=false"
+      ]
+    },
+    "official_wiki_audit": {
+      "status": "PASS",
+      "host": "alwiki.anlogic.com",
+      "selected_pages": 7,
+      "http_200_pages": "7/7",
+      "raw_responses_persisted": false,
+      "attachments_downloaded": false,
+      "dynamic_page_status": "API_CONTENT_READABLE"
+    },
+    "official_wiki_source_allowlist": {
+      "status": "PASS",
+      "allowed_hosts": [
+        "alwiki.anlogic.com",
+        "anlogic.com",
+        "www.anlogic.com",
+        "tech.anlogic.com"
+      ]
+    },
+    "official_wiki_attachment_policy": {
+      "status": "PASS",
+      "files_obtained": 0,
+      "unexposed_file_list_assets_not_marked_local": true
+    },
+    "wiki_verdict_reconciliation": {
+      "status": "PASS",
+      "primary_verdict_unchanged": true,
+      "official_assets_not_promoted_to_ready": true,
+      "one_shot_not_executed": true
+    },
+    "markdown_links": {
+      "status": "PASS",
+      "checked": [
+        "README.md",
+        "ROADMAP.md",
+        "CHANGELOG.md",
+        "docs/vendor/ANLOGIC_NPU_RUNTIME_FEASIBILITY.md"
+      ]
+    },
+    "task017_021_immutability": {
+      "status": "PASS",
+      "method": "git diff --quiet on task and results/evidence paths"
+    },
+    "sensitive_material_scan": {
+      "status": "PASS",
+      "scope": "Task 022 changed/new paths"
+    },
+    "repository_hygiene": {
+      "status": "PASS",
+      "large_vendor_assets_added": false,
+      "one_shot_run_evidence_created": false
+    },
+    "git_diff_check": {
+      "status": "PASS"
+    }
+  },
+  "result": "PASS",
+  "verdict_reconciled": "BLOCKED_DRIVER_OR_DEVICE",
+  "official_one_shot": {
+    "executed": false,
+    "status": "NOT_EXECUTED",
+    "run_evidence": "not_created"
+  },
+  "system_changes": false,
+  "task_status": "Completed",
+  "candidate_approved": true,
+  "prior_audit_completion_preserved": true,
+  "incremental_wiki_review": "PASS",
+  "incremental_wiki_review_source": "user",
+  "incremental_wiki_review_recorded_at": "2026-08-04T11:04:19+08:00"
+}

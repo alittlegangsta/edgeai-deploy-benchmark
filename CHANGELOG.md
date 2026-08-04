@@ -45,3 +45,17 @@
   capacity-one latest-frame pipeline, ten-frame bounded run, and offline replay
   evidence. Automated validation and user representative-frame review pass; the
   task is complete. No realtime camera benchmark or NPU claim is made.
+- Completed and user-approved Task 022's bounded, read-only Anlogic NPU runtime
+  and official YOLO one-shot feasibility audit. The result remains
+  `BLOCKED_DRIVER_OR_DEVICE`: current-board NPU/CMA modules and device nodes,
+  a versioned standalone `npu_runtime`, host converter tools, and official
+  runtime model artifacts were not established. No vendor one-shot or project
+  YOLOv5n NPU conversion was run; this is a current readiness block, not a
+  claim that DR1M90 permanently lacks NPU support.
+- Completed and user-approved the bounded official AlWiki incremental audit
+  for Task 022. Seven
+  selected public API pages were readable, documenting a D20.1 DR1M90
+  Buildroot/HPF/module-selection flow and D20.0 NPU API symbols, but no
+  verified current-board package or downloadable runtime assets. The primary
+  verdict remains `BLOCKED_DRIVER_OR_DEVICE`; no VM/board access, attachment
+  download, driver load, one-shot, or project-model conversion occurred.
