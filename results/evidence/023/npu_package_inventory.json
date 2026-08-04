@@ -1,0 +1,303 @@
+{
+  "schema_version": "task023-npu-package-inventory-v1",
+  "task": "023",
+  "captured_at": "2026-08-04T11:38:03+08:00",
+  "read_only": true,
+  "target": {
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "architecture": "AArch64",
+    "buildroot": "2022.02.6",
+    "kernel": "6.1.111-rt42",
+    "glibc": "2.25"
+  },
+  "roots": [
+    {
+      "root": "<windows-user>/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/NPU_info",
+      "path_note": "Windows user segment redacted in repository; local audit used the user-approved path.",
+      "source_type": "user_provided_vendor_material_root",
+      "source_claim": "F3P_DR1M90GEG400 FPGA/NPU_info",
+      "regular_file_count": 1800,
+      "regular_bytes": 886827911,
+      "copy_to_git": false,
+      "license_or_redistribution": "not established from the bounded audit"
+    },
+    {
+      "root": "/home/dministrator/vendor/anlogic-dr1-knowledge",
+      "source_type": "approved_read_only_private_knowledge_base",
+      "version_manifest": "VERSION_MATRIX.md",
+      "requested_versions_yaml": {
+        "path": ".knowledge/manifests/versions.yaml",
+        "present": false,
+        "impact": "version statements use VERSION_MATRIX.md and recorded manifests"
+      },
+      "copy_to_git": false
+    },
+    {
+      "root": "/tmp/task023-face_detection",
+      "source_type": "isolated_read_only_extraction_of_local_archive",
+      "source_archive": "NPU_info/05-5_NPU演示/demo/sdk/face_detection.tar.gz",
+      "source_archive_sha256": "33eb354f2cb41df81f42fe30d44898d99e2a4fcd8a69b8ae678c8622e473b82f",
+      "regular_file_count_observed": 871,
+      "copy_to_git": false,
+      "execution": "static inspection only; no contained program or module was run"
+    }
+  ],
+  "root_summary": {
+    "suffix_counts_selected": {
+      "hpf": 15,
+      "bit": 5,
+      "bin": 7,
+      "dts": 3,
+      "pdf": 3,
+      "md": 4,
+      "zip": 2,
+      "ko_direct_root": 0,
+      "rt_bin_direct_root": 0,
+      "weight_bin_direct_root": 0,
+      "convert_tool_direct_root": 0,
+      "al_ai_flow_direct_root": 0
+    },
+    "nested_archive_contents": {
+      "aarch64_kernel_modules": ["hard_npu.ko", "soft_npu.ko", "cma_mem.ko"],
+      "aarch64_runtime_candidates": ["libarmnn.so.32.1", "libarmnnOnnxParser.so.24.6"],
+      "headers": ["armnn", "armnnALUtils", "armnnOnnxParser"],
+      "demo_elf": "yolo_demo_hdmi_camera",
+      "official_runtime_model_pair": false,
+      "host_converter_executables": false
+    }
+  },
+  "selected_files": [
+    {
+      "relative_path": "APUG1205_NPU参考设计文档.pdf",
+      "source_root": "NPU_info",
+      "kind": "official_reference_document_candidate",
+      "size_bytes": 1427207,
+      "sha256": "54a25d9a5dc59b21e7f7253bc72adeeb2c8b3a4bc04c30bea81463026ef7c1f2",
+      "applicability": "DR1X90 reference flow; exact current-board package mapping not stated",
+      "git_copy": false
+    },
+    {
+      "relative_path": "IPUG166_Video_NPU_IP用户手册.pdf",
+      "source_root": "NPU_info",
+      "kind": "official_ip_document_candidate",
+      "size_bytes": 976250,
+      "sha256": "d13f70fa563c9d43bb568bcd80edab32ad74a8b6e4a868339119eba6f1945fb7",
+      "applicability": "document target DR1M90GEG484-2, TD 5.9.1 Beta1.0; version differs from current target",
+      "git_copy": false
+    },
+    {
+      "relative_path": "05-5_NPU演示/05-5_米联客-安路F3P-CZ02开发板NPU开发.pdf",
+      "source_root": "NPU_info",
+      "kind": "third_party_or_board_vendor_guide",
+      "size_bytes": 2488900,
+      "sha256": "f3fd89cc47e08cfce0bbced13a9194ab06dc6b153c90c0e08c8539edf4badb90",
+      "applicability": "F3P/DR1 demo guide; package project separately identifies DR1M90GEG400",
+      "git_copy": false
+    },
+    {
+      "relative_path": "05-5_NPU演示/demo.zip",
+      "source_root": "NPU_info",
+      "kind": "large_demo_archive",
+      "size_bytes": 279913795,
+      "sha256": "f754663eded613cf15ac2ceb241ac91533792d360c4fdb49ba4105d887ba70ae",
+      "applicability": "project contains DR1M90GEG400 identity and SoftNPU project files",
+      "git_copy": false
+    },
+    {
+      "relative_path": "05-5_NPU演示/demo/sdk/face_detection.tar.gz",
+      "source_root": "NPU_info",
+      "kind": "derived_demo_runtime_archive",
+      "size_bytes": 35082716,
+      "sha256": "33eb354f2cb41df81f42fe30d44898d99e2a4fcd8a69b8ae678c8622e473b82f",
+      "applicability": "AArch64 Arm NN/Alnpu demo package; exact current-board release provenance is not established",
+      "git_copy": false
+    },
+    {
+      "relative_path": "05-5_NPU演示/demo/sdk/anlogic-dr1m90-softip.dts",
+      "source_root": "NPU_info",
+      "kind": "demo_device_tree_fragment",
+      "size_bytes": 3706,
+      "sha256": "c6c79ccad82a41db52ce2829ecb971b286e6e868f8ba88e97dc17a8b99b6917a",
+      "applicability": "Milianke demo DTS; not proven to be the current eMMC DT",
+      "git_copy": false
+    },
+    {
+      "relative_path": "05-5_NPU演示/demo/soc_hw/soc_prj.hpf",
+      "source_root": "NPU_info",
+      "kind": "hpf",
+      "size_bytes": 1733079,
+      "sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+      "applicability": "paired with the DR1M90GEG400 Milianke project only until mapping is approved",
+      "git_copy": false
+    },
+    {
+      "relative_path": "05-5_NPU演示/demo/soc_prj/soc_prj_Runs/best_result/soc_prj.bit",
+      "source_root": "NPU_info",
+      "kind": "fpga_bitstream",
+      "size_bytes": 4052202,
+      "sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912",
+      "applicability": "DR1M90GEG400 project output; not approved for current board",
+      "git_copy": false
+    },
+    {
+      "relative_path": "D20_NPU_Demo/D20.1_NPU_Simple_Demo/TD_D20.1_AD101V20/D20.1_NPU_Simple_Demo_AD101V20.hpf",
+      "source_root": "NPU_info",
+      "kind": "hpf",
+      "size_bytes": 1216736,
+      "sha256": "43c508c96a91aff5753bd3225ff546a04197074bb362eab107d8439153c5d5d8",
+      "applicability": "AD101V20 example; not current-board proof",
+      "git_copy": false
+    },
+    {
+      "relative_path": "D20_NPU_Demo/D20.2_NPU_MIPI_HDMI/TD_D20.2_AD103V20/D20.2_NPU_MIPI_USB_HDMI_AD103V20.hpf",
+      "source_root": "NPU_info",
+      "kind": "hpf",
+      "size_bytes": 1590215,
+      "sha256": "199840edcae7dee8a61e3132d4e268fecfc3c7e5a82bb01ca0040de552809f74",
+      "applicability": "AD103V20 example; not current-board proof",
+      "git_copy": false
+    },
+    {
+      "relative_path": "D20_NPU_Demo/D20.3_NPU_USB_HDMI/TD_D20.3_AD101V20/D20.3_NPU_USB_HDMI_AD101V20.hpf",
+      "source_root": "NPU_info",
+      "kind": "hpf",
+      "size_bytes": 1346441,
+      "sha256": "3a6b6777d32247a7309150705ebec3fdc8336941c6b912677fa67c4b5f4a1215",
+      "applicability": "AD101V20 camera/HDMI example; not current-board proof",
+      "git_copy": false
+    },
+    {
+      "relative_path": "TD_D20.1_AD101V20_2025.7/D20.1_NPU_Simple_Demo_AD101V20_2025.7.hpf",
+      "source_root": "NPU_info",
+      "kind": "hpf",
+      "size_bytes": 1270352,
+      "sha256": "0d2c7f2592eb167a369c3a327a66b6b3e2cbad4450b5218c100870b68a18ef96",
+      "applicability": "AD101V20 2025.7 project; device metadata says DR1M90GEG484",
+      "git_copy": false
+    },
+    {
+      "relative_path": "D21.1_NPU_Simple_demo_sd_image/BOOT.bin",
+      "source_root": "NPU_info",
+      "kind": "sd_image_component",
+      "size_bytes": 4414528,
+      "sha256": "2e75f4dd165362eae3c0285e2364f9816277fc25b975f4307f5dcb2cfd05f35b",
+      "applicability": "AD101V20 example image; no current-board mapping",
+      "git_copy": false
+    },
+    {
+      "relative_path": "D21.1_NPU_Simple_demo_sd_image/kernel.bin",
+      "source_root": "NPU_info",
+      "kind": "sd_image_component",
+      "size_bytes": 8176833,
+      "sha256": "29f866a913c2621a4fc40025ab085f197fe686bad95e251a3468b40319d1f9b1",
+      "applicability": "example kernel image; version and board mapping not verified",
+      "git_copy": false
+    },
+    {
+      "relative_path": "D21.1_NPU_Simple_demo_sd_image/dtb.bin",
+      "source_root": "NPU_info",
+      "kind": "device_tree_blob",
+      "size_bytes": 15534,
+      "sha256": "4a5697010b9b19e633485be3107e313d084df8088c4c18acc92192f3e772aa56",
+      "applicability": "example DTB; not current eMMC DT proof",
+      "git_copy": false
+    },
+    {
+      "relative_path": "D21.1_NPU_Simple_demo_sd_image/rootfs.bin",
+      "source_root": "NPU_info",
+      "kind": "sd_image_component",
+      "size_bytes": 118858864,
+      "sha256": "dd5165a6ddbe9ee6f32590e624173747c497b17f167fec61bae6ce9b47e634b3",
+      "applicability": "example rootfs; not installed or executed",
+      "git_copy": false
+    },
+    {
+      "relative_path": "derived/face_detection/app/face_detection/build/bin/yolo_demo_hdmi_camera",
+      "source_root": "face_detection.tar.gz",
+      "kind": "prebuilt_aarch64_demo_elf",
+      "size_bytes": 623736,
+      "sha256": "39c97eb34bec957ca7d43f83d5e57beae682e686649a9cb8aefaf72f4bc93e72",
+      "applicability": "derived package; statically inspected, not executed",
+      "git_copy": false
+    },
+    {
+      "relative_path": "derived/face_detection/app/face_detection/src/linux_driver/hard_npu_driver/hard_npu.ko",
+      "source_root": "face_detection.tar.gz",
+      "kind": "prebuilt_aarch64_kernel_module",
+      "size_bytes": 416288,
+      "sha256": "f06a273535041d805b0daa0c7b7a1d1218f3837fc7b4c4bc9328eaa909d76dc5",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "applicability": "vermagic matches observed kernel text, but board/bitstream provenance is unverified",
+      "git_copy": false
+    },
+    {
+      "relative_path": "derived/face_detection/app/face_detection/src/linux_driver/soft_npu_driver/soft_npu.ko",
+      "source_root": "face_detection.tar.gz",
+      "kind": "prebuilt_aarch64_kernel_module",
+      "size_bytes": 414248,
+      "sha256": "e2c10bb6a74f59a3e4b3e225d6f6502cddf7003da6a7b0025429d32312279c1c",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "applicability": "vermagic matches observed kernel text, but board/bitstream provenance is unverified",
+      "git_copy": false
+    },
+    {
+      "relative_path": "derived/face_detection/app/face_detection/src/linux_driver/cma_mem_driver/cma_mem.ko",
+      "source_root": "face_detection.tar.gz",
+      "kind": "prebuilt_aarch64_kernel_module",
+      "size_bytes": 419560,
+      "sha256": "b2204e7127ff76c72faabcefd15fe4e2180934ec12a0003466000b328a5806fc",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "applicability": "vermagic matches observed kernel text, but board/bitstream provenance is unverified",
+      "git_copy": false
+    },
+    {
+      "relative_path": "derived/face_detection/app/face_detection/libs/armnn_lib/lib/libarmnn.so.32.1",
+      "source_root": "face_detection.tar.gz",
+      "kind": "aarch64_armnn_candidate_library",
+      "size_bytes": 13824312,
+      "sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+      "elf": "AArch64 shared object; GLIBC max observed 2.17; GLIBCXX max observed 3.4.22",
+      "version_marker": "ed5ae24",
+      "applicability": "ABI candidate only; not standalone APUG npu_runtime proof",
+      "git_copy": false
+    },
+    {
+      "relative_path": "derived/face_detection/app/face_detection/libs/armnn_lib/lib/libarmnnOnnxParser.so.24.6",
+      "source_root": "face_detection.tar.gz",
+      "kind": "aarch64_armnn_parser_candidate_library",
+      "size_bytes": 569216,
+      "sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+      "elf": "AArch64 shared object; GLIBC max observed 2.17; GLIBCXX max observed 3.4.21",
+      "applicability": "ABI candidate only; not standalone APUG npu_runtime proof",
+      "git_copy": false
+    },
+    {
+      "relative_path": "derived/face_detection/app/face_detection/inputs/yolo_face_uint8_15.onnx",
+      "source_root": "face_detection.tar.gz",
+      "kind": "example_model",
+      "size_bytes": 8709145,
+      "sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c",
+      "applicability": "Arm NN demo input; not the frozen project YOLOv5n model",
+      "git_copy": false
+    }
+  ],
+  "unavailable_direct_search_results": [
+    "hard_npu.ko",
+    "soft_npu.ko",
+    "cma_mem.ko",
+    "rt.bin",
+    "weight.bin",
+    "convert_tool",
+    "al_ai_flow",
+    "libnpu*",
+    "standalone_npu_runtime"
+  ],
+  "safety": {
+    "vendor_binaries_executed": false,
+    "kernel_modules_loaded": false,
+    "bitstreams_written": false,
+    "images_written": false,
+    "board_modified": false,
+    "project_model_converted": false
+  }
+}

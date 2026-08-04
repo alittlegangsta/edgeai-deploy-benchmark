@@ -59,3 +59,16 @@
   verified current-board package or downloadable runtime assets. The primary
   verdict remains `BLOCKED_DRIVER_OR_DEVICE`; no VM/board access, attachment
   download, driver load, one-shot, or project-model conversion occurred.
+- Completed and user-approved Task 023's read-only Anlogic NPU package intake.
+  The native
+  `npu_runtime`/`rt.bin`/`weight.bin` path remains asset-blocked, while the
+  Arm NN/ONNX face-demo path and three SDK driver sources were built in
+  isolated VM user workspaces. The driver objects have matching AArch64
+  vermagic but no Module.symvers/symbol-CRC proof; mixed
+  AD101V20/AD103V20/DR1M90GEG400/GEG484 identities and active FPGA/DT mapping
+  remain unresolved. The primary intake verdict is now
+  `BLOCKED_BOARD_HARDWARE_MAPPING`, with build, backend, deployment,
+  provenance and asset secondary blockers. No vendor binary, module,
+  bitstream, board deployment, or project model was executed. The audit is
+  complete, but deployment remains blocked and the vendor one-shot and project
+  YOLOv5n conversion were not performed.

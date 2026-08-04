@@ -1,0 +1,109 @@
+{
+  "schema_version": "task023-npu-wiki-source-map-v1",
+  "task": "023",
+  "captured_at": "2026-08-04T11:38:03+08:00",
+  "allowed_hosts": ["alwiki.anlogic.com", "anlogic.com", "www.anlogic.com", "tech.anlogic.com"],
+  "knowledge_base": {
+    "root": "/home/dministrator/vendor/anlogic-dr1-knowledge",
+    "read_only": true,
+    "content_capture": "previously approved sanitized AlWiki API capture",
+    "version_matrix": "VERSION_MATRIX.md",
+    "versions_yaml_present": false
+  },
+  "pages": [
+    {
+      "page_id": "2LbyLqWe",
+      "title": "Anlogic Wiki",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/2LbyLqWe",
+      "source_markdown": "sources/alwiki/anlogic/AzZaqNHH/pages/2LbyLqWe-anlogic-wiki.md",
+      "page_role": "root/navigation",
+      "page_fact": "root page of the captured AlWiki tree",
+      "attachments": "none in retained content",
+      "asset_status": "documentation_only"
+    },
+    {
+      "page_id": "P8Xz9nVf",
+      "title": "D20 NPU应用",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/P8Xz9nVf",
+      "source_markdown": "sources/alwiki/anlogic/AzZaqNHH/pages/P8Xz9nVf-d20-npu.md",
+      "page_role": "NPU example index",
+      "page_fact": "groups NPU example applications",
+      "attachments": "no downloadable package metadata retained",
+      "asset_status": "documentation_only"
+    },
+    {
+      "page_id": "6Pb5TSd5",
+      "title": "D20.0 NPU接口文档",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/6Pb5TSd5",
+      "source_markdown": "sources/alwiki/anlogic/AzZaqNHH/pages/6Pb5TSd5-d20.0-npu.md",
+      "page_role": "runtime/API documentation",
+      "explicit_facts": ["CMA initialization and allocation APIs", "quantization and preprocessing/postprocessing", "NPUExecutor", "Alnpu,CpuAcc,CpuRef backend order example"],
+      "attachments": "none with verified package metadata",
+      "asset_status": "documentation_only"
+    },
+    {
+      "page_id": "7ZcKp5Wg",
+      "title": "D20.1 NPU 简单示例集合",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/7ZcKp5Wg",
+      "source_markdown": "sources/alwiki/anlogic/AzZaqNHH/pages/7ZcKp5Wg-d20.1-npu.md",
+      "page_role": "build/deploy example flow",
+      "explicit_facts": ["D21.1 SD image and TD_D20.1_AD101V20_2025.7 are named", "HPF is placed under device/anlogic_dr1m90/hpf", "hard_npu_driver, soft_npu_driver, and cma_mem_driver are selected in kernelmenuconfig", "DR1M90 defconfig and enlarged rootfs are mentioned", "app/npu is built and added to rootfs"],
+      "attachments": "two names visible in page text; URL, size, hash, license and exact permission were not exposed in retained capture",
+      "asset_status": "official_assets_identified_but_not_verified_or_downloaded"
+    },
+    {
+      "page_id": "C3WjPRyU",
+      "title": "D20.3 基于USB摄像头和HDMI的NPU应用示例",
+      "url": "https://alwiki.anlogic.com/wiki/external/org/AzZaqNHH/#/page/SdAMW8ED/C3WjPRyU",
+      "source_markdown": "sources/alwiki/anlogic/AzZaqNHH/pages/C3WjPRyU-d20.3-usb-hdmi-npu.md",
+      "page_role": "camera/HDMI NPU application example",
+      "explicit_facts": ["describes a DR1M90 device with an AD101V20 example board", "references dr1_demo_prjs D20.3 and dr1m90_npu examples", "recommends bringing up display, npu_demo, then face_detection/pose/obb"],
+      "attachments": "linked project/repository references only in retained page text",
+      "asset_status": "documentation_and_source_reference_only"
+    }
+  ],
+  "official_repository_sources": [
+    {
+      "remote": "https://gitee.com/anlogic/dr1m90_npu.git",
+      "snapshot": "/home/dministrator/vendor/anlogic-dr1-knowledge/sources/repositories/anlogic/dr1m90_npu.git",
+      "source_revision": "SDK_2026.01 peeled commit a06f09a23582900e2b8843d564ea28db679649a5",
+      "release_ref": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+      "source_fact": "README requires repository tag to match the SDK tag; tree contains npu_demo and face_detection source paths",
+      "version_boundary": "knowledge VERSION_MATRIX records local SDK_2025_07; this is a separate SDK_2026.01 source line",
+      "lfs_payloads_downloaded": false
+    },
+    {
+      "remote": "https://gitee.com/anlogic/dr1_demo_prjs.git",
+      "source_reference": "D20.3 page reference to 2026.1 path",
+      "status": "reference only in this task; no new checkout or download"
+    }
+  ],
+  "attachment_mapping": [
+    {
+      "page_reference": "D20.1 page text",
+      "named_asset": "D21.1_NPU_Simple_demo_sd_image.zip",
+      "local_candidate": "NPU_info/D21.1_NPU_Simple_demo_sd_image",
+      "correspondence": "name-level candidate only; direct page attachment URL and exact hash mapping not verified",
+      "download_permission": "not established"
+    },
+    {
+      "page_reference": "D20.1 page text",
+      "named_asset": "TD_D20.1_AD101V20_2025.7.zip",
+      "local_candidate": "NPU_info/TD_D20.1_AD101V20_2025.7",
+      "correspondence": "name-level candidate; project metadata identifies DR1M90GEG484, not the current board",
+      "download_permission": "not established"
+    },
+    {
+      "page_reference": "D20.3 page text",
+      "named_asset": "dr1m90_npu repository",
+      "local_candidate": "knowledge mirror at SDK_2026.01",
+      "correspondence": "source reference; not a local SDK_2025_07 identity proof",
+      "download_permission": "public repository snapshot already present in read-only knowledge base"
+    }
+  ],
+  "interpretation_rules": [
+    "A Wiki flow is documentation evidence, not proof that the runtime, driver, HPF, bitstream or model is locally deployable.",
+    "A matching filename or device-tree compatible string does not prove board, kernel, bitstream and driver compatibility.",
+    "An Arm NN/Alnpu library is not the standalone npu_runtime named by APUG1205 without an API/version/deployment mapping."
+  ]
+}

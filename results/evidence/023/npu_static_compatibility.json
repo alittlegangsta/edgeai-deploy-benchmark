@@ -1,0 +1,104 @@
+{
+  "schema_version": "task023-npu-static-compatibility-v1",
+  "task": "023",
+  "captured_at": "2026-08-04T13:20:00+08:00",
+  "execution_policy": "file/readelf/objdump/nm/strings/modinfo-style static inspection only; no vendor executable or module was executed",
+  "checks": [
+    {
+      "path_class": "prebuilt_kernel_module",
+      "identity": "hard_npu.ko",
+      "file_output": "ELF 64-bit LSB relocatable, ARM aarch64, not stripped",
+      "sha256": "f06a273535041d805b0daa0c7b7a1d1218f3837fc7b4c4bc9328eaa909d76dc5",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "dependencies": "empty modinfo depends field",
+      "static_result": "architecture and vermagic match text of current board kernel; bitstream/DT/module provenance remains unverified"
+    },
+    {
+      "path_class": "prebuilt_kernel_module",
+      "identity": "soft_npu.ko",
+      "file_output": "ELF 64-bit LSB relocatable, ARM aarch64, not stripped",
+      "sha256": "e2c10bb6a74f59a3e4b3e225d6f6502cddf7003da6a7b0025429d32312279c1c",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "dependencies": "empty modinfo depends field",
+      "static_result": "architecture and vermagic match text of current board kernel; SoftNPU bitstream mapping remains unverified"
+    },
+    {
+      "path_class": "prebuilt_kernel_module",
+      "identity": "cma_mem.ko",
+      "file_output": "ELF 64-bit LSB relocatable, ARM aarch64, not stripped",
+      "sha256": "b2204e7127ff76c72faabcefd15fe4e2180934ec12a0003466000b328a5806fc",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "dependencies": "empty modinfo depends field",
+      "static_result": "architecture and vermagic match text of current board kernel; CMA allocator deployment remains unverified"
+    },
+    {
+      "path_class": "application",
+      "identity": "yolo_demo_hdmi_camera",
+      "file_output": "ELF 64-bit LSB executable, ARM aarch64, dynamically linked, interpreter /lib/ld-linux-aarch64.so.1",
+      "sha256": "39c97eb34bec957ca7d43f83d5e57beae682e686649a9cb8aefaf72f4bc93e72",
+      "dynamic_dependencies": ["libarmnn.so.32", "libarmnnOnnxParser.so.24", "libprotobuf.so.23", "OpenCV 4.7 modules", "libdrm", "libstdc++", "libgcc_s", "libatomic", "libpthread", "libdl", "libc", "libm"],
+      "embedded_rpath": "/home/uisrc/app/face_detection/...",
+      "static_result": "AArch64 identity is valid; embedded build-host RPATH and unverified runtime/device path prevent deployment approval"
+    },
+    {
+      "path_class": "runtime_candidate",
+      "identity": "libarmnn.so.32.1",
+      "file_output": "ELF 64-bit LSB shared object, ARM aarch64",
+      "sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+      "version_requirements": {"glibc_max_observed": "2.17", "glibcxx_max_observed": "3.4.22", "cxxabi_max_observed": "1.3.11"},
+      "static_result": "surface ABI is below board glibc 2.25, but this is only an Arm NN/Alnpu candidate and not a validated NPU runtime"
+    },
+    {
+      "path_class": "runtime_candidate",
+      "identity": "libarmnnOnnxParser.so.24.6",
+      "file_output": "ELF 64-bit LSB shared object, ARM aarch64",
+      "sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+      "version_requirements": {"glibc_max_observed": "2.17", "glibcxx_max_observed": "3.4.21"},
+      "static_result": "surface ABI is below board glibc 2.25; backend/driver/bitstream identity remains unverified"
+    }
+  ],
+  "source_build_checks": {
+    "hard_npu_make_target": "obj-m := hard_npu.o",
+    "soft_npu_make_target": "obj-m := soft_npu.o",
+    "cma_mem_make_target": "obj-m := cma_mem.o",
+    "source_default_kernel": "linux-5.10.142",
+    "prebuilt_vermagic_kernel": "6.1.111-rt42",
+    "source_default_cross_prefix": "aarch64-anlogic-11.3",
+    "current_board_kernel_source": "/home/uisrc/vendor/anlogic/sdk/sdk/linux (SDK candidate source, version Makefile 6.1.111)",
+    "toolchain": "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-gcc",
+    "isolated_build": {
+      "status": "PASS_WITH_SYMBOL_PROVENANCE_LIMITATION",
+      "workspace": "/home/uisrc/build/task023-driver-build-20260804",
+      "module_symvers_present": false,
+      "modpost_unresolved_symbol_warnings": true,
+      "output_vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64"
+    },
+    "result": "source compilation is reproducible in the isolated SDK workspace, but loadability and current-board reproducibility remain unproven without Module.symvers, active DT/HPF mapping and probe validation"
+  },
+  "additional_build_outputs": [
+    {
+      "path_class": "isolated_source_build_application",
+      "identity": "yolo_demo_hdmi_camera",
+      "sha256": "2c6e34cac0eb145e28ad94976fafab8f32cd5b5737857143388730cd5c8d0b8f",
+      "file_output": "ELF 64-bit LSB executable, ARM aarch64, dynamically linked",
+      "dynamic_dependencies": ["libarmnn.so.32", "libarmnnOnnxParser.so.24", "libprotobuf.so.23", "OpenCV 4.7 modules", "libdrm", "libstdc++", "libgcc_s", "libatomic", "libpthread", "libdl", "libc", "libm"],
+      "version_requirements": {"glibc_max_observed": "2.17", "glibcxx_max_observed": "3.4.22"},
+      "static_result": "source/link closure PASS; no execution or deployment approval"
+    }
+  ],
+  "negative_findings": {
+    "npu_runtime_named_by_apug": false,
+    "rt_bin": false,
+    "weight_bin": false,
+    "convert_tool": false,
+    "al_ai_flow": false,
+    "current_board_ldd": "not run; this focused phase forbids board access",
+    "module_load": false,
+    "vendor_elf_execution": false
+  },
+  "limitations": [
+    "A module vermagic match is not proof of matching Device Tree, HPF, register map, or hardware revision.",
+    "AArch64 GLIBC/GLIBCXX compatibility of a shared object is not proof that its Alnpu backend can open current-board devices.",
+    "Static inspection cannot establish active bitstream contents or driver probe success."
+  ]
+}

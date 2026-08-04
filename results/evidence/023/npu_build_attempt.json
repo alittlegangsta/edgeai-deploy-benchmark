@@ -1,0 +1,95 @@
+{
+  "schema_version": "task023-npu-build-attempt-v1",
+  "task": "023",
+  "captured_at": "2026-08-04T12:55:00+08:00",
+  "policy": {
+    "workspace": "VM user directories only",
+    "vendor_programs_executed": false,
+    "kernel_modules_loaded": false,
+    "board_accessed": false,
+    "bitstream_written": false,
+    "sdk_sources_modified": false
+  },
+  "host": {
+    "os": "Ubuntu 18.04.4 LTS",
+    "architecture": "x86_64",
+    "glibc": "2.27",
+    "cmake": {
+      "path": "/home/uisrc/.local/cmake-3.16.9/bin/cmake",
+      "version": "3.16.9",
+      "system_cmake": false
+    },
+    "ninja": false,
+    "generator": "Unix Makefiles",
+    "compiler": "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-g++",
+    "compiler_version": "Linaro GCC 7.5-2019.12",
+    "target_triple": "aarch64-linux-gnu"
+  },
+  "commands_executed": [
+    "make -C /home/uisrc/vendor/anlogic/sdk/sdk/linux O=/home/uisrc/build/task023-driver-build-20260804 ARCH=arm64 CROSS_COMPILE=/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu- anlogic_dr1m90_defconfig",
+    "make -C /home/uisrc/vendor/anlogic/sdk/sdk/linux O=/home/uisrc/build/task023-driver-build-20260804 ARCH=arm64 CROSS_COMPILE=/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu- modules_prepare",
+    "isolated CMake 3.16.9 Unix Makefiles configure/build/install for face_detection/src with BUILD_APPS=ON and BUILD_MODULES=OFF",
+    "isolated CMake 3.16.9 Unix Makefiles configure/build/install for app/npu/demo_src with BUILD_APPS=ON"
+  ],
+  "commands_not_run_due_to_scope": [
+    "insmod/modprobe",
+    "vendor build.sh",
+    "SDK image generation",
+    "convert_tool/al_ai_flow",
+    "vendor ELF execution"
+  ],
+  "attempts": [
+    {
+      "kind": "kernel_module_source_build",
+      "status": "PASS_WITH_SYMBOL_PROVENANCE_LIMITATION",
+      "source": "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu",
+      "kernel_source": "/home/uisrc/vendor/anlogic/sdk/sdk/linux",
+      "kernel_defconfig": "anlogic_dr1m90_defconfig",
+      "output_workspace": "/home/uisrc/build/task023-driver-build-20260804",
+      "config": {
+        "CONFIG_NPU_MODULE": "y",
+        "CONFIG_HARD_NPU_DRIVER": "m",
+        "CONFIG_SOFT_NPU_DRIVER": "m",
+        "CONFIG_CMA_MEM_DRIVER": "m",
+        "CONFIG_CMA": "y",
+        "CONFIG_DMA_CMA": "y"
+      },
+      "outputs": [
+        {"name": "hard_npu.ko", "sha256": "4270af6d1d152df5dfc4b1f12503e8042bf35068c699cc81596f37715b794b9a", "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64"},
+        {"name": "soft_npu.ko", "sha256": "129863a047450bff776b85b7b23022b1ed1f6b019025bc62b410272ca9cb5e1d", "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64"},
+        {"name": "cma_mem.ko", "sha256": "33fc8689d441db86a405f220789787c7084fb964d39c8f5ac3d40436f3fbf17d", "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64"}
+      ],
+      "limitation": "modules_prepare had no kernel Module.symvers; modpost emitted unresolved-symbol warnings and the outputs are not load approval"
+    },
+    {
+      "kind": "armnn_face_demo_build",
+      "status": "PASS",
+      "source": "/home/uisrc/vendor/anlogic/sdk/sdk/app/face_detection/src",
+      "output_workspace": "/home/uisrc/build/task023-face-build-20260804",
+      "options": {
+        "BUILD_APPS": "ON",
+        "BUILD_MODULES": "OFF",
+        "CMAKE_BUILD_TYPE": "Release",
+        "Armnn_DIR": "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib",
+        "OpenCV_DIR": "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/ffmpeg_opencv4.7.0_aarch64/lib/cmake/opencv4"
+      },
+      "target": "yolo_demo_hdmi_camera",
+      "output": {
+        "path": "/home/uisrc/build/task023-face-build-20260804/install/bin/yolo_demo_hdmi_camera",
+        "file": "AArch64 dynamically linked ELF",
+        "sha256": "2c6e34cac0eb145e28ad94976fafab8f32cd5b5737857143388730cd5c8d0b8f",
+        "glibc_max_observed": "2.17",
+        "glibcxx_max_observed": "3.4.22",
+        "needed": ["libarmnn.so.32", "libarmnnOnnxParser.so.24", "libprotobuf.so.23", "libdrm.so.2", "OpenCV 4.7 modules", "libstdc++.so.6", "libgcc_s.so.1", "libatomic.so.1", "libpthread.so.0", "libdl.so.2", "libc.so.6", "libm.so.6"]
+      },
+      "limitation": "build proves source/link closure only; no device-node, bitstream, driver, or demo execution validation"
+    }
+  ],
+  "not_attempted": [
+    "native npu_runtime build",
+    "convert_tool/al_ai_flow model conversion",
+    "SDK image build",
+    "vendor ELF execution",
+    "module load or board deployment"
+  ]
+}

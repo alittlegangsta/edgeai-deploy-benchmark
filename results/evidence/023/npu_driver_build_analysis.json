@@ -1,0 +1,135 @@
+{
+  "schema_version": "task023-npu-driver-build-analysis-v1",
+  "task": "023",
+  "captured_at": "2026-08-04T13:20:00+08:00",
+  "classification_note": "source-code facts are from the isolated face_detection archive; board facts are carried forward from the approved Task 022 read-only audit",
+  "documented_kernel_configuration": {
+    "symbols": ["hard_npu_driver", "soft_npu_driver", "cma_mem_driver"],
+    "source": "AlWiki D20.1 and dr1m90_npu README",
+    "selection_location": "Linux kernel menuconfig Device Drivers -> NPU Modules -> NPU related Modules",
+    "default_enabled": "not established from the supplied source/config snapshot",
+    "required_rootfs_change": "D20.1 text says DR1M90 rootfs size must be enlarged for the example"
+  },
+  "derived_package_source": {
+    "root": "/tmp/task023-face_detection/app/face_detection/src/linux_driver",
+    "cmake_sha256": "bb7e84b357719ca1786069f9232e3c55ad13b7ee7172217f78ff4981550add25",
+    "cmake_behavior": "glob Makefiles and invoke make during install; passes CROSS_PREFIX, KERNELDIR and ARCH",
+    "kernel_config_source": "no Kconfig or defconfig was present in this derived package",
+    "source_build_default_conflict": {
+      "makefile_kernel_default": "/data/home/szwang/workspace/embedded_linux_DE/embedded-linux/linux-5.10.142",
+      "makefile_cross_prefix_default": "/data/home/szwang/workspace/embedded_linux_DE/embedded-linux/aarch64-anlogic-11.3/bin/aarch64-anlogic-linux-gnu-",
+      "build_script_override": "build.sh names /home/uisrc/uisrc-lab-anlogic/sources/linux and an aarch64-linux-gnu toolchain, but does not provide those inputs",
+      "impact": "prebuilt module vermagic and source defaults do not form a reproducible current-board build"
+    }
+  },
+  "drivers": [
+    {
+      "name": "hard_npu",
+      "source": "hard_npu_driver/hard_npu.c",
+      "make_target": "obj-m := hard_npu.o",
+      "built_in_or_module": "module",
+      "compatible": "anlogic,hard_npu",
+      "device_name_source_fact": "hard_npu",
+      "prebuilt_sha256": "f06a273535041d805b0daa0c7b7a1d1218f3837fc7b4c4bc9328eaa909d76dc5",
+      "size_bytes": 416288,
+      "static_elf": "AArch64 relocatable ELF",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "depends": "",
+      "load_order": "documented APUG order is hard_npu, soft_npu, cma_mem; exact order needs vendor confirmation",
+      "current_board": "not loaded and no matching module was found in Task 022 board audit"
+    },
+    {
+      "name": "soft_npu",
+      "source": "soft_npu_driver/soft_npu.c",
+      "make_target": "obj-m := soft_npu.o",
+      "built_in_or_module": "module",
+      "compatible": "anlogic,soft_npu",
+      "device_name_source_fact": "soft_npu",
+      "prebuilt_sha256": "e2c10bb6a74f59a3e4b3e225d6f6502cddf7003da6a7b0025429d32312279c1c",
+      "size_bytes": 414248,
+      "static_elf": "AArch64 relocatable ELF",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "depends": "",
+      "load_order": "documented APUG order is hard_npu, soft_npu, cma_mem; exact order needs vendor confirmation",
+      "current_board": "not loaded and no matching module was found in Task 022 board audit"
+    },
+    {
+      "name": "cma_mem",
+      "source": "cma_mem_driver/cma_mem.c",
+      "make_target": "obj-m := cma_mem.o",
+      "built_in_or_module": "module",
+      "device_name_source_fact": "cma_mem miscdevice",
+      "prebuilt_sha256": "b2204e7127ff76c72faabcefd15fe4e2180934ec12a0003466000b328a5806fc",
+      "size_bytes": 419560,
+      "static_elf": "AArch64 relocatable ELF",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "depends": "",
+      "cma_requirement": "uses dma_alloc_coherent and exposes CMA allocation/sync ioctls",
+      "current_board": "CMA is reserved but cma_mem module and /dev/cma_mem were absent in Task 022 audit"
+    }
+  ],
+  "device_tree_and_hpf": {
+    "demo_dts": "NPU_info/05-5_NPU演示/demo/sdk/anlogic-dr1m90-softip.dts",
+    "demo_dts_sha256": "c6c79ccad82a41db52ce2829ecb971b286e6e868f8ba88e97dc17a8b99b6917a",
+    "source_fact": "contains soft_npu@1f0000000 with compatible anlogic,soft_npu, an interrupt and a register range",
+    "kernel_dts_candidate": "NPU_info/05-5_NPU演示/demo/soc_dts/kernel-dts/anlogic-dr1.dts",
+    "hpf_requirement": "D20.1 and APUG1205 require a SoftNPU-capable HPF/bitstream matching the runtime and drivers",
+    "current_board_mapping": "unknown; active bitstream identity was not inspected or changed"
+  },
+  "board_observation_reference": {
+    "source": "results/evidence/022/npu_board_audit.json",
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "kernel": "6.1.111-rt42",
+    "cma_total_kib": 131072,
+    "related_module_observed": ["aic_load_fw"],
+    "npu_or_cma_modules_loaded": false,
+    "device_nodes": [],
+    "hard_npu_dt_node": "present but not bound in the recorded audit"
+  },
+  "vm_sdk_source": {
+    "kernel_source": "/home/uisrc/vendor/anlogic/sdk/sdk/linux",
+    "kernel_version_makefile": "6.1.111",
+    "defconfig": "arch/arm64/configs/anlogic_dr1m90_defconfig",
+    "defconfig_cma": {"CONFIG_CMA": "y", "CONFIG_DMA_CMA": "y"},
+    "defconfig_npu_symbols": "not enabled by the supplied defconfig; isolated build enabled CONFIG_NPU_MODULE=y and the three driver symbols as modules",
+    "kconfig": "drivers/npu/Kconfig defines HARD_NPU_DRIVER, SOFT_NPU_DRIVER and CMA_MEM_DRIVER",
+    "makefiles": "drivers/npu/Makefile and per-driver Makefiles use obj-$(CONFIG_*)",
+    "device_tree_candidates": [
+      "arch/arm64/boot/dts/anlogic/anlogic-dr1m90.dtsi hard_npu@63F00000 compatible anlogic,hard_npu",
+      "arch/arm64/boot/dts/anlogic/anlogic-dr1m90-softip.dts soft_npu@1F0000000 compatible anlogic,soft_npu",
+      "arch/arm64/boot/dts/anlogic/anlogic-dr1m90-ad101-v20.dts includes softip and CMA"
+    ],
+    "toolchain": "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-gcc",
+    "source_fact_scope": "SDK candidate source; current active eMMC kernel configuration and bitstream mapping remain unverified"
+  },
+  "module_static_audit": {
+    "prebuilt_modinfo": {
+      "hard_npu": {"name": "hard_npu", "depends": "", "alias": "", "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64", "parm": ""},
+      "soft_npu": {"name": "soft_npu", "depends": "", "alias": "", "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64", "parm": ""},
+      "cma_mem": {"name": "cma_mem", "depends": "", "alias": "CMA mem driver", "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64", "parm": ""}
+    },
+    "undefined_symbols": {
+      "hard_npu": ["__arch_copy_from_user", "__arch_copy_to_user", "__class_create", "__devm_reset_control_get", "__init_waitqueue_head", "__msecs_to_jiffies", "__platform_driver_register", "__wake_up", "_dev_err", "_dev_info", "alloc_chrdev_region", "arm64_use_ng_mappings", "cdev_add", "cdev_del", "cdev_init", "class_destroy", "device_create", "device_destroy", "devm_ioremap_resource", "finish_wait", "free_irq", "init_wait_entry", "ioremap_prot", "iounmap", "memset", "platform_driver_unregister", "platform_get_irq", "platform_get_resource", "prepare_to_wait_event", "remap_pfn_range", "request_threaded_irq", "reset_control_assert", "reset_control_reset", "schedule_timeout", "unregister_chrdev_region"],
+      "soft_npu": ["__arch_copy_from_user", "__arch_copy_to_user", "__class_create", "__init_waitqueue_head", "__msecs_to_jiffies", "__platform_driver_register", "__wake_up", "_dev_err", "_dev_info", "alloc_chrdev_region", "cdev_add", "cdev_del", "cdev_init", "class_destroy", "device_create", "device_destroy", "devm_ioremap_resource", "finish_wait", "free_irq", "init_wait_entry", "memset", "platform_driver_unregister", "platform_get_irq", "platform_get_resource", "prepare_to_wait_event", "remap_pfn_range", "request_threaded_irq", "schedule_timeout", "unregister_chrdev_region"],
+      "cma_mem": ["__arch_copy_from_user", "__arch_copy_to_user", "_dev_err", "_dev_info", "_printk", "_raw_spin_lock", "_raw_spin_unlock", "dma_alloc_attrs", "dma_free_attrs", "dma_sync_single_for_cpu", "dma_sync_single_for_device", "down_interruptible", "kfree", "kmalloc_caches", "kmalloc_trace", "memset", "misc_deregister", "misc_register", "rb_erase", "rb_insert_color", "remap_pfn_range", "up"]
+    },
+    "symbol_versions": "absent: readelf --section-headers found no __versions section in the prebuilt modules or isolated outputs",
+    "modpost_warning": "isolated source build completed but reported Module.symvers missing/unresolved-symbol warnings",
+    "loadability_conclusion": "vermagic and AArch64 identity are positive static evidence only; symbol-version, active DT, HPF/bitstream and probe success remain unverified",
+    "module_load_order": "APUG documentation describes hard_npu, soft_npu and cma_mem; exact order and board-specific dependencies require vendor confirmation"
+  },
+  "build_status": {
+    "isolated_build_attempted": true,
+    "reason": "VM wrapper recovered; exact SDK kernel source/defconfig and Linaro toolchain were used in a user-directory build",
+    "build_output": {
+      "workspace": "/home/uisrc/build/task023-driver-build-20260804",
+      "status": "PASS_WITH_SYMBOL_PROVENANCE_LIMITATION",
+      "outputs": [
+        {"name": "hard_npu.ko", "sha256": "4270af6d1d152df5dfc4b1f12503e8042bf35068c699cc81596f37715b794b9a"},
+        {"name": "soft_npu.ko", "sha256": "129863a047450bff776b85b7b23022b1ed1f6b019025bc62b410272ca9cb5e1d"},
+        {"name": "cma_mem.ko", "sha256": "33fc8689d441db86a405f220789787c7084fb964d39c8f5ac3d40436f3fbf17d"}
+      ]
+    },
+    "module_load_test": "not performed"
+  }
+}

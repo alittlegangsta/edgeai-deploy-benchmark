@@ -1,0 +1,128 @@
+{
+  "schema_version": "task023-npu-runtime-demo-analysis-v1",
+  "task": "023",
+  "captured_at": "2026-08-04T11:38:03+08:00",
+  "documented_apug_flow": {
+    "document": "APUG1205_0.1",
+    "document_sha256": "54a25d9a5dc59b21e7f7253bc72adeeb2c8b3a4bc04c30bea81463026ef7c1f2",
+    "host_tools": [
+      {"name": "convert_tool", "documented_input": "pb/onnx/tflite", "documented_output": "tmfile"},
+      {"name": "al_ai_flow", "documented_input": "tmfile and net_config.json", "documented_output": ["rt.bin", "weight.bin"]}
+    ],
+    "runtime_package_layout": ["include", "lib", "linux_driver"],
+    "runtime_api_topics": ["npu_driver_init/deinit", "npu_intr_init/deinit", "CMA allocation/sync", "load_model(rt_path, weight_path)"],
+    "hardware_flow": "PS HardNPU and PL SoftNPU cooperate; a SoftNPU-capable FPGA bitstream is required",
+    "one_shot_reference": "document mentions yolo one-shot with preprocessing, resize, NN and result"
+  },
+  "alwiki_api_facts": {
+    "d20_0": {
+      "source": "6Pb5TSd5",
+      "facts": ["CMA initialization", "quantization", "pre/post process", "NPUExecutor", "backend preference Alnpu,CpuAcc,CpuRef", "YoloV5/YoloV8 postprocess topics"]
+    },
+    "d20_1": {
+      "source": "7ZcKp5Wg",
+      "facts": ["D21.1 SD image name", "AD101V20 TD example", "HPF path under device/anlogic_dr1m90/hpf", "three NPU driver menuconfig symbols", "app/npu and rootfs integration"]
+    },
+    "d20_3": {
+      "source": "C3WjPRyU",
+      "facts": ["DR1M90 device with AD101V20 example", "USB camera/HDMI face detection", "dr1m90_npu repository and four demo families"]
+    }
+  },
+  "derived_face_detection_package": {
+    "archive_sha256": "33eb354f2cb41df81f42fe30d44898d99e2a4fcd8a69b8ae678c8622e473b82f",
+    "source_classification": "derived Milianke package / shared files with official dr1m90_npu source; exact package release provenance incomplete",
+    "build_script_sha256": "fd152bd815853cbe38165838774b12ec7a232afeca25143572f8c5aa58c2c0b7",
+    "build_script_requirements": ["CMake >= documented 3.21.2 in board guide", "Ninja", "aarch64-linux-gnu toolchain", "kernel source", "Arm NN and OpenCV package roots"],
+    "cmake_source_sha256": "d1da6db4ba6144ccc21e69634d43ed62781b1bdc97edee47a6b74a036f5d4d3f",
+    "npu_flow_cmake_sha256": "addc0d90cbb2584579df35a2c8b2c98626fd9d8f0366826974ab84b4af0e4f7d",
+    "application": {
+      "name": "yolo_demo_hdmi_camera",
+      "sha256": "39c97eb34bec957ca7d43f83d5e57beae682e686649a9cb8aefaf72f4bc93e72",
+      "elf": "AArch64 dynamically linked; interpreter /lib/ld-linux-aarch64.so.1",
+      "model_input": "yolo_face_uint8_15.onnx",
+      "backend_default": "Alnpu,CpuAcc,CpuRef",
+      "io": "camera input and HDMI/DRM output; not the APUG rt.bin/weight.bin one-shot interface",
+      "execution": "not run"
+    },
+    "libraries": [
+      {"name": "libarmnn.so.32.1", "sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce", "version_marker": "ed5ae24", "abi": "AArch64, GLIBC <= 2.17 observed, GLIBCXX <= 3.4.22 observed"},
+      {"name": "libarmnnOnnxParser.so.24.6", "sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99", "abi": "AArch64, GLIBC <= 2.17 observed, GLIBCXX <= 3.4.21 observed"}
+    ],
+    "headers": ["armnn", "armnnALUtils/cma_mem.hpp", "armnnALUtils/cma_mem_init.hpp", "armnnOnnxParser"],
+    "models": [
+      {"name": "yolo_face_uint8_15.onnx", "sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c", "format": "ONNX", "status": "example_model_only"},
+      {"name": "rt.bin", "status": "not found"},
+      {"name": "weight.bin", "status": "not found"}
+    ],
+    "host_tools": {"convert_tool": "not found", "al_ai_flow": "not found"}
+  },
+  "official_repository_comparison": {
+    "remote": "https://gitee.com/anlogic/dr1m90_npu.git",
+    "revision": "SDK_2026.01 peeled a06f09a23582900e2b8843d564ea28db679649a5",
+    "shared_source_hashes": {
+      "face_detection/src/CMakeLists.txt": "d1da6db4ba6144ccc21e69634d43ed62781b1bdc97edee47a6b74a036f5d4d3f",
+      "face_detection/src/npu_flow/CMakeLists.txt": "addc0d90cbb2584579df35a2c8b2c98626fd9d8f0366826974ab84b4af0e4f7d"
+    },
+    "different_source_hashes": {
+      "face_detection/build.sh": {"archive": "fd152bd815853cbe38165838774b12ec7a232afeca25143572f8c5aa58c2c0b7", "official": "35c10b9f019fadf9c363b84898e11d2eb129e9d4ab3a7267de5ea1bb8b19ab1b"},
+      "face_detection/src/npu_flow/yolo_demo_hdmi_camera/main.cpp": {"archive": "66289f6eec83a6410723ee7e9840511a551a2bdff8f073a203acc01c44d7f0a3", "official": "1e0bab0e0ef577549406da35d0e4611e5c3b1d00334b1968dd39ecf535e16e2c"}
+    },
+    "interpretation": "shared build files establish lineage only; they do not establish a matching SDK, kernel, HPF, runtime or board deployment package"
+  },
+  "runtime_status": {
+    "standalone_apug_npu_runtime": "not located",
+    "armnn_alnpu_candidate": "present but not verified as standalone npu_runtime",
+    "runtime_api_headers": "Arm NN/Alnpu/CMA candidate headers present in derived archive; APUG C API package identity not established",
+    "license": "no applicable redistribution grant established",
+    "demo_execution": "not performed",
+    "project_yolov5n_conversion": "not ready"
+  },
+  "path_comparison": {
+    "native_npu_runtime_path": {
+      "inputs": ["convert_tool/al_ai_flow output", "rt.bin", "weight.bin"],
+      "application_contract": "APUG1205 npu_runtime C API with driver/CMA initialization and load_model(rt, weight)",
+      "direct_library_link": "-lnpu_runtime documented by APUG1205",
+      "assets_found": false,
+      "readiness": "BLOCKED_NATIVE_RUNTIME_ASSETS",
+      "fact_classification": "document_fact plus local_inventory_fact"
+    },
+    "armnn_onnx_path": {
+      "inputs": ["yolo_face_uint8_15.onnx", "usercfg JSON"],
+      "application_contract": "Arm NN ONNX parser -> Arm NN optimizer -> EnqueueWorkload with Alnpu,CpuAcc,CpuRef backend preferences",
+      "direct_library_links": ["libarmnn.so.32.1", "libarmnnOnnxParser.so.24.6", "libprotobuf.so.23"],
+      "npu_runtime_linked": false,
+      "rt_bin_or_weight_bin_read": false,
+      "embedded_backend_observation": "libarmnn.so contains Alnpu/driver/CMA symbols and references /dev/hard_npu, /dev/soft_npu, /dev/cma_mem and /dev/mem",
+      "readiness": "PASS_ISOLATED_BUILD_NOT_DEPLOYMENT_READY",
+      "fact_classification": "source_code_fact plus engineering_inference"
+    },
+    "shared_substrate": ["hard_npu/soft_npu kernel drivers", "cma_mem allocator", "matching Device Tree", "matching HPF/FPGA bitstream", "board ABI"],
+    "independence_statement": "The user-space model and API paths are distinct, but neither path is independent of the board-level driver, CMA, Device Tree and FPGA mapping. Missing native-runtime assets do not by themselves invalidate the Arm NN path; absent board hardware binding still blocks both."
+  },
+  "armnn_demo_static_call_graph": {
+    "entry": "yolo_demo_hdmi_camera main.cpp",
+    "model_load": "ONNX parser CreateNetworkFromBinaryFile -> Arm NN Optimize -> runtime Network/EnqueueWorkload",
+    "backend_preferences": ["Alnpu", "CpuAcc", "CpuRef"],
+    "cma_usage": "CmaResourceZone and armnnALUtils cma_mem helpers",
+    "capture_output": ["/dev/video0", "HDMI/DRM output"],
+    "required_runtime_nodes": ["/dev/hard_npu", "/dev/soft_npu", "/dev/cma_mem"],
+    "default_model": "yolo_face_uint8_15.onnx",
+    "run_script_limitation": "scripts/run_usbcam.sh sets private library paths but omits the required -s server argument; it is not treated as a complete deployment command",
+    "execution": "not performed"
+  },
+  "build_validation": {
+    "face_demo_source_build": {
+      "status": "PASS",
+      "output_sha256": "2c6e34cac0eb145e28ad94976fafab8f32cd5b5737857143388730cd5c8d0b8f",
+      "output_class": "AArch64 dynamically linked ELF",
+      "build_workspace": "/home/uisrc/build/task023-face-build-20260804",
+      "deployment_ready": false
+    },
+    "generic_armnn_demo_source_build": {
+      "status": "PASS",
+      "representative_output_sha256": "4ac203c171081c8a36022491fc984cb902caa434baffce7581eb43af28309863",
+      "deployment_ready": false
+    },
+    "native_runtime_build": "NOT_ATTEMPTED; required host tools and runtime package were not located"
+  }
+}
