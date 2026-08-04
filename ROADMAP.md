@@ -177,3 +177,28 @@ controlled deployment plan**. It should identify the active bitstream and DTB,
 map the MLK-F3P-CZ02 FPGA project and HPF/SDK version, obtain matching kernel
 source/config/Module.symvers, and prepare a module load and SD-card rollback
 plan. Any loading or flashing must remain behind a separate human approval.
+
+## Stage 4: MLK-F3P-CZ02 board mapping (Task 024)
+
+Task 024 is `Completed` as a read-only audit. A current board read confirmed the
+`/dev/mmcblk1p1` boot and `/dev/mmcblk1p2` root files, kernel/DTB hashes, the
+6.1.111-rt42/Buildroot 2022.02.6 ABI, the active 128 MiB CMA and hard-NPU
+Device Tree semantics. The current BOOT.bin has `evb_dr1m90`/Build151508
+markers but its FPGA payload/source identity remains opaque. The exact
+DR1M90GEG400 Milianke NPU candidate and the official SDK/BoardImages release
+line remain candidate metadata, not active proof. The primary verdict is
+`BLOCKED_ACTIVE_BITSTREAM_IDENTITY`; source mapping, kernel symbols and
+rollback evidence remain blocked. No module load, media write, bitstream
+write, or vendor NPU program execution occurred. Current eMMC NPU readiness is
+Not ready; controlled deployment is not approved and the SD-first strategy is
+only recommended.
+
+## Stage 4: NPU SD image preflight (Task 025)
+
+The next proposed task is **Task 025: MLK-F3P-CZ02 NPU SD image reproducible
+build and deployment preflight**. It should freeze clean SDK/toolchain/NPU
+project commits, confirm the MLK DR1M90GEG400 board project, build a matched
+BOOT.bin/DTB/kernel/rootfs/NPU candidate, verify HardNPU/SoftNPU/CMA and
+driver/Arm NN provenance, and stop for human approval before writing an SD
+card. It must not replace the current eMMC or load modules without separate
+approval.

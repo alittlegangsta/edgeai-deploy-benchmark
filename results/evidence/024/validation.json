@@ -1,0 +1,67 @@
+{
+  "schema_version": "task024-validation-v2",
+  "task": "024",
+  "validated_at": "2026-08-04T16:55:33+08:00",
+  "status": "PASS_WITH_ACTIVE_PAYLOAD_BLOCK",
+  "task_status": "Completed",
+  "audit_review": "PASS",
+  "audit_review_source": "user",
+  "candidate_approved": true,
+  "primary_verdict": "BLOCKED_ACTIVE_BITSTREAM_IDENTITY",
+  "secondary_blockers": [
+    "BLOCKED_ACTIVE_BITSTREAM_SOURCE_MAPPING",
+    "BLOCKED_ACTIVE_DTB_SOURCE_MAPPING",
+    "BLOCKED_KERNEL_SYMBOL_PROVENANCE",
+    "BLOCKED_SAFE_ROLLBACK_PLAN",
+    "CANDIDATE_ASSET_NOT_ACTIVE",
+    "MLK_TO_OFFICIAL_SDK_MAPPING_PARTIAL",
+    "OFFICIAL_REPOSITORY_TREES_DIRTY"
+  ],
+  "commands": [
+    {"command": "read-only board SSH collection", "result": "PASS", "detail": "current uname, cmdline, mounts, boot files, hashes, DT, FPGA manager, CMA, modules, devices and dmesg captured"},
+    {"command": "read-only VM identity/source probe", "result": "PASS", "detail": "Ubuntu 18.04.4 x86_64, CMake 3.16.9, Linaro GCC 7.5.0, SDK kernel Makefile 6.1.111 and defconfig inspected"},
+    {"command": "official repository inventory", "result": "PASS_WITH_DIRTY_SOURCE", "detail": "four remotes, HEAD/tag/branch, dirty counts, submodules, license status and BoardImages scope recorded"},
+    {"command": "active BOOT.bin static parse", "result": "PASS_WITH_OPAQUE_PAYLOAD", "detail": "current hash and Release 5.9.1 Build151508/evb_dr1m90 markers found; bitstream payload identity not recovered"},
+    {"command": "active DTB dtc semantic parse", "result": "PASS", "detail": "current hash, hard_npu resources, FPGA manager, no soft_npu node and 128 MiB CMA recorded"},
+    {"command": "kernel MODVERSIONS and driver symbol audit", "result": "PASS_WITH_UNVERIFIED_CRC", "detail": "candidate defconfig does not set MODVERSIONS; active config unknown; 51 undefined symbol names present in kallsyms, export/CRC not proven"},
+    {"command": "Task 024 JSON validator", "result": "PASS", "detail": "11 evidence files passed current-read, opaque-bitstream, DT, kernel-symbol, repository and no-write consistency checks"},
+    {"command": "Task 024 focused tests", "result": "PASS", "detail": "4 tests"},
+    {"command": "full Python unittest", "result": "PASS", "detail": "122 tests"},
+    {"command": "Release build and CTest", "result": "PASS", "detail": "ninja no work; 14/14 CTest tests passed"},
+    {"command": "JSON/YAML parse", "result": "PASS", "detail": "Task 024 JSON and repository YAML manifests parsed"},
+    {"command": "Bash/Python syntax", "result": "PASS", "detail": "audit shell, validator and focused test compiled"},
+    {"command": "Markdown links", "result": "PASS", "detail": "changed Task 024 Markdown links resolve"},
+    {"command": "sensitive-material and repository hygiene", "result": "PASS", "detail": "no credentials, private keys, SDK/binary payloads or large files in Task 024 changes"},
+    {"command": "frozen asset hash and external candidate hash checks", "result": "PASS", "detail": "recorded Milianke, D21.1 and 20.Lock candidate hashes recomputed outside Git"},
+    {"command": "Task 017-023 immutability check", "result": "PASS", "detail": "no tracked diff under Tasks 017-023 or results/evidence/017-023"},
+    {"command": "git diff --check", "result": "PASS", "detail": "no whitespace errors"},
+    {"command": "No-write safety audit", "result": "PASS", "detail": "no module load, vendor execution, bitstream/DTB/kernel/rootfs/media write or board modification"}
+  ],
+  "not_run": [
+    "insmod/modprobe",
+    "vendor ELF",
+    "NPU demo",
+    "bitstream/DTB/kernel/rootfs write",
+    "SD/eMMC write",
+    "project YOLOv5n conversion",
+    "U-Boot environment export because fw_printenv is absent",
+    "active kernel config export because board config interfaces are absent",
+    "bootgen payload extraction because no local bootgen/equivalent was found"
+  ],
+  "immutability": {
+    "task017_to_023_changed": false
+  },
+  "safety": {
+    "board_modified": false,
+    "vm_system_modified": false,
+    "vendor_assets_copied_to_git": false,
+    "commit_created": true
+  },
+  "final_state": {
+    "audit_status": "Completed",
+    "current_emmc_npu_readiness": "Not ready",
+    "controlled_deployment": "Not approved",
+    "sd_first_strategy": "Recommended; not executed",
+    "candidate_approved": true
+  }
+}

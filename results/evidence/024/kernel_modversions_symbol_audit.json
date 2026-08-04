@@ -1,0 +1,92 @@
+{
+  "schema_version": "task024-kernel-modversions-symbol-audit-v1",
+  "task": "024",
+  "captured_at": "2026-08-04T16:55:33+08:00",
+  "classification": "source_code_fact plus real_device_observation plus static_elf_fact",
+  "board_kernel": {
+    "uname": "Linux buildroot 6.1.111-rt42 #8 SMP PREEMPT Wed Jul 30 14:40:27 CST 2025 aarch64",
+    "config_file_exposed": false,
+    "checked_paths": ["/proc/config.gz", "/boot/config-6.1.111-rt42", "/boot/config"],
+    "config_modversions": "UNKNOWN_FOR_ACTIVE_KERNEL",
+    "reason": "The running image exposes no readable kernel config and no Module.symvers/System.map identity."
+  },
+  "official_sdk_defconfig": {
+    "source": "/home/uisrc/vendor/anlogic/sdk/sdk/linux/arch/arm64/configs/anlogic_dr1m90_defconfig",
+    "kernel_makefile_version": "6.1.111",
+    "CONFIG_MODULES": "y",
+    "CONFIG_CMA": "y",
+    "CONFIG_DMA_CMA": "y",
+    "CONFIG_KALLSYMS_ALL": "y",
+    "CONFIG_MODVERSIONS": "not set in this defconfig; no CONFIG_MODVERSIONS=y or # CONFIG_MODVERSIONS is not set line",
+    "interpretation": "This is a candidate SDK configuration, not proof of the active image's final .config."
+  },
+  "driver_modules": [
+    {
+      "name": "hard_npu.ko",
+      "sha256": "4270af6d1d152df5dfc4b1f12503e8042bf35068c699cc81596f37715b794b9a",
+      "architecture": "AArch64 ELF relocatable",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "depends": "",
+      "license": "GPL",
+      "has_versions_section": false,
+      "generated_Module.symvers_lines": 0
+    },
+    {
+      "name": "soft_npu.ko",
+      "sha256": "129863a047450bff776b85b7b23022b1ed1f6b019025bc62b410272ca9cb5e1d",
+      "architecture": "AArch64 ELF relocatable",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "depends": "",
+      "license": "GPL",
+      "has_versions_section": false,
+      "generated_Module.symvers_lines": 0
+    },
+    {
+      "name": "cma_mem.ko",
+      "sha256": "33fc8689d441db86a405f220789787c7084fb964d39c8f5ac3d40436f3fbf17d",
+      "architecture": "AArch64 ELF relocatable",
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "depends": "",
+      "license": "GPL",
+      "has_versions_section": false,
+      "generated_Module.symvers_lines": 0
+    }
+  ],
+  "symbol_comparison": {
+    "method": "nm -u on VM-built modules compared with board /proc/kallsyms by exact symbol name",
+    "undefined_symbol_count_checked": 51,
+    "all_checked_names_present_in_board_kallsyms": true,
+    "examples": [
+      "alloc_chrdev_region",
+      "devm_ioremap_resource",
+      "__platform_driver_register",
+      "platform_get_irq",
+      "remap_pfn_range",
+      "dma_alloc_attrs",
+      "dma_sync_single_for_device",
+      "misc_register",
+      "rb_insert_color"
+    ],
+    "board_modules.symbols": "available as a module alias index, not a complete built-in export/CRC table",
+    "symbol_crc_compatibility": "UNPROVEN",
+    "why": [
+      "active kernel CONFIG_MODVERSIONS is unknown",
+      "no active Module.symvers or exported CRC table was obtained",
+      "isolated build generated empty Module.symvers files and had modpost/unresolved-symbol warnings",
+      "matching vermagic and name presence in kallsyms do not prove module loadability"
+    ]
+  },
+  "driver_source_and_order": {
+    "kconfig": "drivers/npu/Kconfig exposes NPU_MODULE, HARD_NPU_DRIVER, SOFT_NPU_DRIVER and CMA_MEM_DRIVER",
+    "makefiles": "drivers/npu/Makefile is included by CONFIG_NPU_MODULE; each subdirectory uses its tristate symbol",
+    "expected_nodes": ["/dev/cma_mem", "/dev/hard_npu", "/dev/soft_npu"],
+    "source_dts_requirements": "hard_npu requires compatible anlogic,hard_npu; soft_npu requires compatible anlogic,soft_npu; CMA requires shared-dma-pool/linux,cma",
+    "load_order": "vendor release must specify exact order; no module was loaded"
+  },
+  "verdict": {
+    "KERNEL_SYMBOL_PROVENANCE": "PARTIAL_NAME_MATCH_ONLY",
+    "CONFIG_MODVERSIONS": "ACTIVE_UNKNOWN_SDK_DEFCONFIG_NOT_SET",
+    "deployment_ready": false,
+    "important_boundary": "absence of __versions is not treated as a standalone incompatibility finding when MODVERSIONS is not enabled; active config and export provenance remain unresolved"
+  }
+}

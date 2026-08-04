@@ -1,0 +1,94 @@
+{
+  "schema_version": "task024-active-device-tree-current-v1",
+  "task": "024",
+  "captured_at": "2026-08-04T16:55:33+08:00",
+  "classification": "real_device_observation plus host_dtc_static_parse",
+  "source": {
+    "path": "/mnt/mmcblk1p1/system.dtb",
+    "sha256": "aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f",
+    "size_bytes": 15207,
+    "decompiler": "VM /usr/bin/dtc via stdin",
+    "raw_proc_device_tree_cross_check": true
+  },
+  "root": {
+    "model": "Anlogic, DR1M90 FPSoc",
+    "compatible": "root compatible property not present in proc/device-tree readout",
+    "kernel_bootargs": "console=ttyS0,115200n8 earlycon=uart,mmio32,0xf8401000 loglevel=8"
+  },
+  "fpga": {
+    "manager_node": "fpga-mgr@F8082000",
+    "compatible": "anlogic,dr1m90-pcap-fpga",
+    "reg": "0xf8801000 size 0x1000",
+    "region": "base_fpga_region compatible fpga-region",
+    "sysfs_state": "operating",
+    "sysfs_name": "Anlogic dr1m90 FPGA Manager"
+  },
+  "hard_npu": {
+    "node": "hard_npu@63F00000",
+    "compatible": "anlogic,hard_npu",
+    "reg": [
+      "0x63f00000 size 0x100000",
+      "0xf8800000 size 0x200",
+      "0xf8801000 size 0x100"
+    ],
+    "interrupt": "GIC SPI 112, level high",
+    "status": "no status property in decompiled active node; platform device exists",
+    "platform_device": "/sys/bus/platform/devices/63f00000.hard_npu",
+    "driver_binding": "none; /sys/bus/platform/devices/63f00000.hard_npu/driver is absent",
+    "driver_directory": "/sys/bus/platform/drivers/hard_npu absent"
+  },
+  "soft_npu": {
+    "node": null,
+    "status": "NOT_PRESENT_IN_ACTIVE_DTB"
+  },
+  "cma": {
+    "node": "reserved-memory/linux,cma",
+    "compatible": "shared-dma-pool",
+    "linux_cma_default": true,
+    "reusable": true,
+    "alignment": "0x400000",
+    "alloc_ranges": "0x0..0x1fffffff",
+    "size": "128 MiB",
+    "board_meminfo": {
+      "CmaTotal_kib": 131072,
+      "CmaFree_kib": 130128
+    }
+  },
+  "runtime_state": {
+    "loaded_modules": ["aic_load_fw"],
+    "npu_modules_loaded": false,
+    "device_nodes": [],
+    "dmesg": [
+      "CMA pool created at 0x0000000017c00000, size 128 MiB",
+      "FPGA manager framework probed",
+      "base_fpga_region probed",
+      "no hard_npu or soft_npu driver probe observed"
+    ]
+  },
+  "candidate_semantic_comparison": {
+    "Milianke_demo": {
+      "hard_npu_reg": "same three-resource shape and SPI 112",
+      "cma": "same 128 MiB pattern",
+      "soft_npu": "candidate adds soft_npu@1f0000000",
+      "identity": "semantic subset match, not byte/hash identity"
+    },
+    "D21_1": {
+      "hard_npu_reg": "two-resource shape and SPI 112",
+      "cma": "same 128 MiB size",
+      "soft_npu": "candidate adds soft_npu@80000000",
+      "identity": "semantic and register differences; not active"
+    },
+    "20_Lock": {
+      "hard_npu_reg": "same three-resource shape and SPI 112",
+      "cma": "same 128 MiB pattern",
+      "soft_npu": "absent",
+      "identity": "same TD build line, but raw DTB hash differs"
+    }
+  },
+  "verdict": {
+    "active_dtb_identity": "CURRENT_HASH_AND_SEMANTICS_CONFIRMED",
+    "active_dtb_source_mapping": "UNRESOLVED",
+    "controlled_deployment": false,
+    "reason": "The active DTB is now captured and semantically parsed, but its exact SDK/project source and the matching active FPGA payload remain unclosed."
+  }
+}

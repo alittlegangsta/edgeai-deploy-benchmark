@@ -1,0 +1,50 @@
+{
+  "schema_version": "task024-controlled-deployment-plan-v1",
+  "task": "024",
+  "captured_at": "2026-08-04T16:55:33+08:00",
+  "approval": "NOT_GRANTED",
+  "executed": false,
+  "recommended_media": "isolated SD card first; untouched eMMC fallback",
+  "preconditions": [
+    "retain the successful read-only board capture and obtain serial/U-Boot access before any write",
+    "identify exact MLK-F3P-CZ02 HPF, bitstream payload/source, DTB source, kernel source/config and Module.symvers",
+    "verify driver symbol CRCs, vermagic, architecture and DT/FPGA compatible strings",
+    "obtain a version-matched Arm NN/runtime/demo/model release with provenance and license",
+    "record original boot-file hashes and obtain an external byte-level backup; current hashes are identities only"
+  ],
+  "backup_and_hash_plan_not_run": [
+    "read-only mount or image original boot/root media outside Git",
+    "sha256sum BOOT.bin boot.scr system.dtb kernel/rootfs identities",
+    "save U-Boot environment and serial console transcript",
+    "record media serial, partition table and free-space state"
+  ],
+  "deployment_sequence_after_separate_approval": [
+    "boot the isolated SD candidate while preserving the original eMMC",
+    "capture serial/U-Boot/kernel/DTB/bitstream and dmesg before module load",
+    "verify CMA and all expected DT resources",
+    "load the vendor-documented CMA allocator before applicable NPU driver(s); exact order must come from the matched release",
+    "expect only the applicable /dev/cma_mem, /dev/hard_npu and/or /dev/soft_npu nodes",
+    "run one functional vendor one-shot only after ABI, model, device and dmesg gates pass"
+  ],
+  "stop_conditions": [
+    "active bitstream payload/source or DTB source mapping remains unknown",
+    "module symbol CRC, vermagic or kernel config mismatch",
+    "unexpected compatible/reg/interrupt/resource values",
+    "missing CMA or device node",
+    "probe error, unresolved symbol, kernel warning, crash or boot loop",
+    "any request to write eMMC, change the current system, or force-load a module"
+  ],
+  "rollback": {
+    "normal": "power down, remove isolated SD, restore original boot selection and verify untouched eMMC hashes",
+    "boot_failure": "use serial/U-Boot recovery and return to the original eMMC path; do not overwrite media",
+    "required_before_execution": "documented switch position, serial access, original image backup and human approval",
+    "current_status": "NOT_READY; active BOOT/DTB file hashes are read-confirmed, but FPGA payload/source mapping, kernel provenance and rollback backup remain unresolved"
+  },
+  "safety": {
+    "module_load_performed": false,
+    "bitstream_write_performed": false,
+    "dtb_or_kernel_write_performed": false,
+    "sd_or_emmc_write_performed": false,
+    "vendor_demo_run": false
+  }
+}

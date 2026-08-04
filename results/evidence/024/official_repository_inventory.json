@@ -1,0 +1,134 @@
+{
+  "schema_version": "task024-official-repository-inventory-v1",
+  "task": "024",
+  "captured_at": "2026-08-04T16:55:33+08:00",
+  "classification_policy": "repository_metadata_fact/source_code_fact/engineering_inference",
+  "source_root": "<windows-user>/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA",
+  "repositories": [
+    {
+      "name": "dr1m90_npu",
+      "relative_path": "dr1m90_npu",
+      "remote": "https://gitee.com/anlogic/dr1m90_npu.git",
+      "branch": "release",
+      "head": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+      "describe": "SDK_2026.01-3-g199ef4d",
+      "tags_at_head": [],
+      "nearest_release_tag": {
+        "name": "SDK_2026.01",
+        "commit": "a06f09a23582900e2b8843d564ea28db679649a5"
+      },
+      "dirty_file_count": 2021,
+      "submodules": [],
+      "license": {
+        "top_level_license_file": null,
+        "status": "NO_TOP_LEVEL_LICENSE_FILE_FOUND"
+      }
+    },
+    {
+      "name": "toolchains",
+      "relative_path": "toolchains",
+      "remote": "https://gitee.com/anlogic/toolchains.git",
+      "branch": "master",
+      "head": "d1bc5fbe250e9f41b739bf2cdda7cdfdb91166a2",
+      "describe": "d1bc5fb",
+      "tags_at_head": [],
+      "nearest_release_tag": {
+        "name": "SDK_2024.7",
+        "commit": "d9c12f66319f82869b89c3257f028e26a7ad044f"
+      },
+      "dirty_file_count": 2,
+      "submodules": [],
+      "license": {
+        "top_level_license_file": null,
+        "status": "NO_TOP_LEVEL_LICENSE_FILE_FOUND"
+      }
+    },
+    {
+      "name": "boardimages",
+      "relative_path": "boardimages",
+      "remote": "https://gitee.com/anlogic/boardimages.git",
+      "branch": "master",
+      "head": "9964582b0a87db269832d4117852f5e5f640a483",
+      "describe": "9964582",
+      "tags_at_head": [],
+      "nearest_release_tag": null,
+      "dirty_file_count": 3,
+      "submodules": [],
+      "license": {
+        "top_level_license_file": null,
+        "status": "NO_TOP_LEVEL_LICENSE_FILE_FOUND"
+      },
+      "image_inventory": {
+        "relative_path": "ad101v20/linux/ad101v20_boot_tf.tar.gz",
+        "size_bytes": 24360960,
+        "sha256": "bb46165f6234821a5641aa541fd33c4072a05384a53c6d8ae48b762ac8f20eca",
+        "container_fact": "POSIX tar archive despite .tar.gz suffix",
+        "members": [
+          "image_boot_tf/boot.scr",
+          "image_boot_tf/BOOT.bin",
+          "image_boot_tf/fsbl.elf",
+          "image_boot_tf/dtb.bin",
+          "image_boot_tf/kernel.bin",
+          "image_boot_tf/rootfs.bin",
+          "image_boot_tf/u-boot.bin",
+          "image_boot_tf/AD101V20.hpf"
+        ],
+        "scope": "official AD10xV20 development boards; no MLK-F3P-CZ02 asset found"
+      }
+    },
+    {
+      "name": "sdk",
+      "relative_path": "sdk",
+      "remote": "https://gitee.com/anlogic/sdk.git",
+      "branch": "anlogic-linuxsdk",
+      "head": "5a693be7d78e2e156e425ef57ebc8b7efad25cd",
+      "describe": "SDK_2026.01-linux6.1-rel-3-g5a693be",
+      "tags_at_head": [],
+      "nearest_release_tag": {
+        "name": "SDK_2026.01-linux6.1-rel",
+        "commit": "300f3f158b2aaa1547c3308da990f212291de727"
+      },
+      "dirty_file_count": 2632,
+      "submodules_at_head": {
+        "buildroot": "280f9c6d7ac46ffc642730ba408626dcfeb218aa",
+        "fsbl": "5034ba1aca1cb7f0c3b4564d9900b68dc5de0ca2",
+        "linux": "47edebb7c473b5ec674c7b355ad5bddfcc9b8e0c",
+        "opensbi": "9719f89209db9d5ef7d94037fb39bdb49f5d02f4",
+        "toolchains": "9675d6b96de95477b0a16b2944fbc3a6b13c7765",
+        "u-boot": "0067800d0bcfcdb7d90cf3bda86586ca5848f215",
+        "xenomai": "95a2e322eab209cde2dbd5ea2d34ce903e8e4e4f4"
+      },
+      "license": {
+        "top_level_license_file": "LICENSE",
+        "sha256": "189b1af95d661151e054cea10c91b3d754e4de4d3fecfb074c1fb29476f7167b",
+        "size_bytes": 18431,
+        "status": "PRESENT"
+      },
+      "release_tag_comparison": {
+        "SDK_2025.07-linux6.1": {
+          "commit": "beaee2ce45161908403a92619e509f52220ac347",
+          "tag": "SDK_2025.07-linux6.1-rel",
+          "submodules": {
+            "buildroot": "3983a27764558375b8163d9c73624d22f97c74e4",
+            "fsbl": "5d3a412d6971f95cb5978d614258f53f602b808c",
+            "linux": "b2b757d56eaa923c19b29ebea26b706c62e089cc",
+            "opensbi": "1fbc5304f7094606671bce4931289de9bfe2749f",
+            "toolchains": "9675d6b96de95477b0a16b2944fbc3a6b13c7765",
+            "u-boot": "617860886db42064f81de9f6f230f69a1a144194",
+            "xenomai": "95a2e322eab209cde2dbd5ea2d34ce903e8e4e4f4"
+          }
+        },
+        "SDK_2026.01-linux6.1": {
+          "commit": "300f3f158b2aaa1547c3308da990f212291de727",
+          "tag": "SDK_2026.01-linux6.1-rel"
+        }
+      }
+    }
+  ],
+  "interpretation": {
+    "dirty_state": "All four working trees contain local modifications; HEAD/tag metadata are recorded, but the materialized trees are not pristine release snapshots.",
+    "sdk_2025_alignment": "The standalone Milianke demo's 2025.07/20250905 metadata is an alignment signal, not proof of exact SDK_2025.07 Git/submodule correspondence.",
+    "boardimages_scope": "The only official BoardImages payload is AD101V20; no MLK-F3P-CZ02/DR1M90GEG400 image is present.",
+    "git_license_scope": "Absence of a top-level license file is recorded as an audit fact, not a license grant. The SDK LICENSE is the only top-level license file found among these four repositories."
+  }
+}

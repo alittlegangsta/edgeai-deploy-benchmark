@@ -1,0 +1,67 @@
+schema_version: "task024-anlogic-npu-board-mapping-v1"
+task: "024"
+status: "Completed"
+captured_at: "2026-08-04T16:55:33+08:00"
+target:
+  board: "MLK-F3P-CZ02-DR1M90"
+  device: "DR1M90GEG400"
+  architecture: "AArch64"
+  buildroot: "2022.02.6"
+  kernel: "6.1.111-rt42"
+  glibc: "2.25"
+source_roots:
+  npu_info: "<windows-user>/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/NPU_info"
+  full_vendor_root: "<windows-user>/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA"
+  knowledge_base: "/home/dministrator/vendor/anlogic-dr1-knowledge"
+  vm_sdk: "/home/uisrc/vendor/anlogic/sdk/sdk"
+evidence:
+  boot_chain: "results/evidence/024/board_boot_chain.json"
+  device_tree: "results/evidence/024/board_device_tree.json"
+  kernel_provenance: "results/evidence/024/board_kernel_provenance.json"
+  mapping_matrix: "results/evidence/024/board_mapping_matrix.json"
+  deployment_plan: "results/evidence/024/controlled_deployment_plan.json"
+  official_repository_inventory: "results/evidence/024/official_repository_inventory.json"
+  official_repository_dependency_matrix: "results/evidence/024/official_repository_dependency_matrix.json"
+  active_boot_static_parse: "results/evidence/024/active_boot_static_parse.json"
+  active_device_tree_current: "results/evidence/024/active_device_tree_current.json"
+  kernel_modversions_symbol_audit: "results/evidence/024/kernel_modversions_symbol_audit.json"
+  validation: "results/evidence/024/validation.json"
+findings:
+  active_boot_chain: "CURRENT_READ_CONFIRMED"
+  active_boot_partition: "/mnt/mmcblk1p1"
+  active_boot_files: "BOOT.bin, boot.scr, system.dtb and uImage.lz4 hashes read on board"
+  active_bitstream: "UNKNOWN_OPAQUE_PAYLOAD_IN_CURRENT_BOOTBIN"
+  active_dtb: "CURRENT_HASH_AND_SEMANTICS_CONFIRMED_SOURCE_MAPPING_UNRESOLVED"
+  active_hard_npu: "compatible anlogic,hard_npu; platform device unbound"
+  active_soft_npu: "NODE_NOT_PRESENT"
+  active_cma: "128 MiB reserved; CMA allocator device not present"
+  historical_npu_modules_loaded: false
+  active_npu_device_nodes: []
+  board_ssh_currently_reachable: true
+  official_repositories: "FOUR_REPOSITORY_METADATA_CAPTURED_DIRTY_TREES"
+  kernel_modversions: "ACTIVE_UNKNOWN; SDK CANDIDATE_DEFCONFIG_NOT_SET"
+verdict:
+  primary: "BLOCKED_ACTIVE_BITSTREAM_IDENTITY"
+  secondary:
+    - "BLOCKED_ACTIVE_BITSTREAM_SOURCE_MAPPING"
+    - "BLOCKED_ACTIVE_DTB_SOURCE_MAPPING"
+    - "BLOCKED_KERNEL_SYMBOL_PROVENANCE"
+    - "BLOCKED_SAFE_ROLLBACK_PLAN"
+    - "CANDIDATE_ASSET_NOT_ACTIVE"
+    - "MLK_TO_OFFICIAL_SDK_MAPPING_PARTIAL"
+    - "OFFICIAL_REPOSITORY_TREES_DIRTY"
+  controlled_deployment_ready: false
+  task_state: "Completed"
+  audit_status: "Completed"
+  current_emmc_npu_readiness: "Not ready"
+  controlled_deployment: "Not approved"
+  sd_first_strategy: "Recommended; not executed"
+  candidate_approved: true
+safety:
+  read_only_audit: true
+  module_load: false
+  bitstream_write: false
+  dtb_kernel_rootfs_write: false
+  sd_emmc_write: false
+  vendor_program_execution: false
+  commit_created: true

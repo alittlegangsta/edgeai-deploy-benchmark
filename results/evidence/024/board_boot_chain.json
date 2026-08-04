@@ -1,0 +1,65 @@
+{
+  "schema_version": "task024-board-boot-chain-v1",
+  "task": "024",
+  "captured_at": "2026-08-04T16:55:33+08:00",
+  "classification_policy": "document_fact/source_code_fact/engineering_inference/real_device_observation",
+  "access": {
+    "current_board": {
+      "wrapper": "/home/dministrator/bin/anlogic-board-ssh",
+      "reachable": true,
+      "status": "READ_ONLY_COLLECTION_PASS",
+      "error": null,
+      "current_observation_valid": true,
+      "credentials_or_keys_recorded": false
+    },
+    "vm": {
+      "wrapper": "/home/dministrator/bin/anlogic-vm-ssh",
+      "read_only_probe": "PASS"
+    }
+  },
+  "active_boot_chain": {
+    "status": "CURRENT_READ_CONFIRMED",
+    "source": "read-only board collection plus host static parse",
+    "root_device": "/dev/mmcblk1p2",
+    "boot_partition": "/dev/mmcblk1p1",
+    "root_filesystem": "ext4",
+    "boot_filesystem": "vfat",
+    "likely_medium": "eMMC (engineering inference from mounted mmcblk1; boot switch/U-Boot environment was not exposed)",
+    "kernel": "Linux 6.1.111-rt42",
+    "architecture": "AArch64",
+    "buildroot": "2022.02.6",
+    "glibc": "2.25",
+    "cmdline": "console=ttyS0,115200n8 earlycon=uart,mmio32,0xf8401000 loglevel=8 root=/dev/mmcblk1p2 rootwait rootfstype=ext4 rw",
+    "active_bitstream_identity": "BLOCKED_ACTIVE_BITSTREAM_IDENTITY; BOOT.bin hash is current but its ALGC payload has no recoverable bitstream name/hash",
+    "active_dtb_identity": "CURRENT_HASH_AND_SEMANTICS_CONFIRMED; source project mapping remains unresolved",
+    "active_uboot_identity": "board=evb_dr1m90, board_name=evb_dr1m90, U-Boot 2021.01 Jul 30 2025",
+    "boot_script_semantics": "boot.scr loads uImage.lz4 and system.dtb from the same boot partition",
+    "active_fpga_manager": "Anlogic dr1m90 FPGA Manager state=operating"
+  },
+  "hashes": [
+    {"path": "current /mnt/mmcblk1p1/BOOT.bin", "sha256": "858cf78c03ae75c870587be77d70668e0ba4841448581273e5c996bf8f980706", "status": "current_read_only_observation"},
+    {"path": "current /mnt/mmcblk1p1/boot.scr", "sha256": "685f9f8cd4a1e43d79da0c78ab9591d3af1f744122e21a60b252b685ffad59d1", "status": "current_read_only_observation"},
+    {"path": "current /mnt/mmcblk1p1/system.dtb", "sha256": "aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f", "status": "current_read_only_observation"},
+    {"path": "current /mnt/mmcblk1p1/uImage.lz4", "sha256": "12cd2ccb851376eb2870f1d3294f0d29f771e74d01a25d1b605378ea733bd7be", "status": "current_read_only_observation"},
+    {"path": "last-known /mnt/mmcblk1p2/image/BOOT.bin", "sha256": "c9ddeb49b58c6d8f99b2a8d4bd5090ebd937428ca793860e6f78cfe86ce14089", "status": "historical_metadata"},
+    {"path": "last-known /mnt/mmcblk1p2/image/boot.scr", "sha256": "05825cd0060c9bedcc6d044d85993fd1dd342406a4ee95084b8684f630d81fed", "status": "historical_metadata"},
+    {"path": "last-known /mnt/mmcblk1p2/image/system.dtb", "sha256": "d27f44cd09514f881f1f884f517b369c27117f4b6409892f426384b9c5327e9e", "status": "historical_metadata"}
+  ],
+  "candidate_assets": [
+    {"name": "Milianke NPU demo BOOT.bin", "source": "NPU_info/03_demo/05-5_NPU演示/demo/boot/BOOT.bin", "sha256": "567e14124fa17137e964ebcadd4680d8349058beacd4070377ba0ac3fc8c2585", "status": "CANDIDATE_NOT_ACTIVE"},
+    {"name": "Milianke NPU demo system.dtb", "source": "NPU_info/03_demo/05-5_NPU演示/demo/boot/system.dtb", "sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979", "status": "CANDIDATE_NOT_ACTIVE"},
+    {"name": "Milianke NPU demo bitstream", "source": "NPU_info/03_demo/05-5_NPU演示/demo/soc_prj/soc_prj_Runs/best_result/soc_prj.bit", "sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912", "status": "CANDIDATE_NOT_WRITTEN"},
+    {"name": "D21.1 NPU SD dtb.bin", "source": "NPU_info/03_demo/D21.1_NPU_Simple_demo_sd_image/dtb.bin", "sha256": "4a5697010b9b19e633485be3107e313d084df8088c4c18acc92192f3e772aa56", "status": "CANDIDATE_NOT_ACTIVE"}
+  ],
+  "verdict": {
+    "primary": "BLOCKED_ACTIVE_BITSTREAM_IDENTITY",
+    "secondary": ["BLOCKED_ACTIVE_BITSTREAM_SOURCE_MAPPING", "BLOCKED_ACTIVE_DTB_SOURCE_MAPPING", "BLOCKED_KERNEL_SYMBOL_PROVENANCE", "BLOCKED_SAFE_ROLLBACK_PLAN", "CANDIDATE_ASSET_NOT_ACTIVE", "MLK_TO_OFFICIAL_SDK_MAPPING_PARTIAL"]
+  },
+  "safety": {
+    "writes_performed": false,
+    "modules_loaded": false,
+    "vendor_programs_executed": false,
+    "board_modified": false,
+    "task017_023_modified": false
+  }
+}
