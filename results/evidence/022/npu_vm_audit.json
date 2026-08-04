@@ -1,0 +1,108 @@
+{
+  "schema_version": "task022-npu-vm-audit-v1",
+  "capture_method": "approved_vm_ssh_read_only",
+  "captured_at": "2026-08-04T10:03:04+08:00",
+  "capture_time_note": "Timestamp is the WSL record time for the audit; VM and board clocks are not used to establish a shared event order.",
+  "host": {
+    "uname": "Linux ubuntu 4.15.0-91-generic #92-Ubuntu SMP Fri Feb 28 11:09:48 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux",
+    "os": "Ubuntu 18.04.4 LTS",
+    "architecture": "x86_64",
+    "glibc": "2.27",
+    "gcc": "7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)",
+    "g++": "7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)",
+    "python": "2.7.17",
+    "python3": "3.6.9",
+    "make": "/usr/bin/make",
+    "cmake": null,
+    "ninja": null,
+    "docker": null,
+    "rsync": "/usr/bin/rsync",
+    "scp": "/usr/bin/scp"
+  },
+  "search_scope": [
+    "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu",
+    "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu",
+    "/home/uisrc/vendor/anlogic/sdk/sdk/device/anlogic_dr1m90"
+  ],
+  "candidate_assets": [
+    {
+      "path": "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib/lib/libarmnn.so.32.1",
+      "kind": "AArch64 shared library",
+      "size_bytes": 13824312,
+      "sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+      "version_file": "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib/share/armnn/.version.txt",
+      "version_value": "ed5ae24",
+      "readelf_machine": "AArch64",
+      "needed": ["libdl.so.2", "libstdc++.so.6", "libm.so.6", "libgcc_s.so.1", "libc.so.6"],
+      "version_requirements_observed": ["GLIBC_2.17", "GLIBCXX_3.4.22"],
+      "applicability": "Arm NN/Alnpu candidate; not proof of a usable board NPU runtime"
+    },
+    {
+      "path": "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib/lib/libarmnnOnnxParser.so.24.6",
+      "kind": "AArch64 shared library",
+      "size_bytes": 569216,
+      "sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+      "readelf_machine": "AArch64",
+      "needed": ["libarmnn.so.32", "libprotobuf.so.23", "libdl.so.2", "libstdc++.so.6", "libm.so.6", "libgcc_s.so.1", "libc.so.6"],
+      "version_requirements_observed": ["GLIBC_2.17", "GLIBCXX_3.4.21"],
+      "applicability": "Arm NN ONNX parser candidate; not a standalone npu_runtime package"
+    },
+    {
+      "path": "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/libs/armnn_lib/lib/libprotobuf.so.23.0.0",
+      "kind": "AArch64 shared library",
+      "size_bytes": 2700312,
+      "sha256": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265",
+      "readelf_machine": "AArch64",
+      "applicability": "Arm NN dependency candidate"
+    },
+    {
+      "path": "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/demo_src/npu_flow/yolo_demo_pic/main.cpp",
+      "kind": "vendor source example",
+      "size_bytes": 8874,
+      "sha256_status": "not_hashed_in_this_read_only_summary",
+      "applicability": "Arm NN ONNX YOLO picture demo source; not the APUG1205 npu_runtime one-shot package"
+    },
+    {
+      "path": "/home/uisrc/vendor/anlogic/sdk/sdk/app/npu/demo_scripts/run_yolo_pic.sh",
+      "kind": "vendor shell script",
+      "size_bytes": 333,
+      "sha256": "97b8311a67dbf8ecc20f70684ed4e5cb9acf97ad1071a23b84dad9ce172a39de",
+      "applicability": "Vendor Arm NN demo launcher; not executed"
+    }
+  ],
+  "missing_or_not_found": [
+    "cmake executable on VM",
+    "docker executable on VM",
+    "convert_tool executable under the searched SDK tree",
+    "al_ai_flow executable under the searched SDK tree",
+    "libnpu_runtime or a standalone npu runtime library under the searched SDK tree",
+    "prebuilt hard_npu.ko, soft_npu.ko, or cma_mem.ko under the searched SDK tree",
+    "rt.bin and weight.bin under the searched SDK tree"
+  ],
+  "source_code_evidence": [
+    {
+      "path": "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu/hard_npu_driver/hard_npu.c",
+      "sha256": "0208695f618fc2545d35cf4fa39c1ed4777bb0dc04e4c2d07bdc0b03fc460fa7",
+      "kind": "driver source",
+      "built_module_present": false
+    },
+    {
+      "path": "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu/soft_npu_driver/soft_npu.c",
+      "sha256": "f45dee06108a34deee1711792fb023698a3360883bc7ab803c87b9768bb6e945",
+      "kind": "driver source",
+      "built_module_present": false
+    },
+    {
+      "path": "/home/uisrc/vendor/anlogic/sdk/sdk/linux/drivers/npu/cma_mem_driver/cma_mem.c",
+      "sha256": "a697a96afa221e46ffaa31246c7fcf570b724e5506b728acae3f6db0d974a484",
+      "kind": "driver source",
+      "built_module_present": false
+    }
+  ],
+  "execution_policy": {
+    "vendor_scripts_executed": false,
+    "binaries_executed": false,
+    "files_modified": false,
+    "downloads": false
+  }
+}

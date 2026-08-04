@@ -60,6 +60,21 @@ the six user-approved representative files under `results/images/021/`. This
 is functional bounded-latency validation, not a realtime benchmark; YUYV 5 FPS
 is the camera capture setting, not an inference FPS result.
 
+Task 022 is the completed, user-approved read-only Anlogic NPU runtime/official
+YOLO one-shot feasibility audit. Its result is `BLOCKED_DRIVER_OR_DEVICE`: the
+board's hard-NPU device-tree node and CMA reservation are visible, but no
+matching NPU/CMA modules are loaded, no `/dev/hard_npu`, `/dev/soft_npu`, or
+`/dev/cma_mem` nodes exist, and the searched VM/SDK scope lacks a versioned
+standalone `npu_runtime`, host converter executables, and official `rt.bin` /
+`weight.bin` artifacts. The AArch64 Arm NN/Alnpu libraries in the SDK are
+candidate assets, not proof of a deployable board runtime. No vendor one-shot
+was run and the frozen project YOLOv5n model has not been converted for NPU.
+This is a current asset/device readiness block, not a claim that DR1M90
+permanently lacks NPU support; a version-matched vendor package must be
+received and reviewed before any deployment change.
+See [the NPU feasibility audit](docs/vendor/ANLOGIC_NPU_RUNTIME_FEASIBILITY.md)
+and its structured evidence under `results/evidence/022/`.
+
 ## PC architecture and model lineage
 
 ```text

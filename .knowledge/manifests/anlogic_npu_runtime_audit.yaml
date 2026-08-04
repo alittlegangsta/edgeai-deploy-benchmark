@@ -1,0 +1,94 @@
+schema_version: "1"
+task: "022"
+title: "Anlogic DR1 NPU runtime and official YOLO one-shot feasibility audit"
+status: "Completed"
+automated_audit: "COMPLETE"
+audit_review: "PASS"
+audit_review_source: "user"
+approval_recorded_at: "2026-08-04T10:21:18+08:00"
+approval_time_note: "WSL record time; not VM audit time, board audit time, or NPU program runtime."
+candidate_approved: true
+feasibility_verdict: "BLOCKED_DRIVER_OR_DEVICE"
+secondary_blockers:
+  - "BLOCKED_MISSING_VENDOR_ASSETS"
+  - "BLOCKED_RUNTIME_ABI_OR_IDENTITY_UNVERIFIED"
+  - "BLOCKED_TOOLCHAIN"
+  - "BLOCKED_DOCUMENTATION_GAP"
+  - "UNKNOWN_BITSTREAM_DT_MAPPING"
+scope:
+  board: "MLK-F3P-CZ02-DR1M90"
+  runtime_target: "Anlogic vendor NPU runtime and official YOLO one-shot only"
+  project_model_conversion: false
+  internet_downloads: false
+  board_writes: false
+  module_loads: false
+sources:
+  local_vendor_root: "<approved_local_vendor_root>"
+  vm_sdk_root: "/home/uisrc/vendor/anlogic/sdk/sdk"
+  board_audit_wrapper: "/home/dministrator/bin/anlogic-board-ssh"
+  vm_audit_wrapper: "/home/dministrator/bin/anlogic-vm-ssh"
+  official_documents:
+    - id: "APUG1205_0.1"
+      path: "<approved_local_vendor_root>/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/APUG1205_NPU参考设计文档.pdf"
+      sha256: "54a25d9a5dc59b21e7f7253bc72adeeb2c8b3a4bc04c30bea81463026ef7c1f2"
+    - id: "IPUG166_1.0"
+      path: "<approved_local_vendor_root>/02_hardware/hardware_MLK_F3P_CZ02_DR1_20250526/IPUG166_Video_NPU_IP用户手册.pdf"
+      sha256: "d13f70fa563c9d43bb568bcd80edab32ad74a8b6e4a868339119eba6f1945fb7"
+evidence:
+  asset_inventory: "results/evidence/022/npu_asset_inventory.json"
+  document_requirements: "results/evidence/022/npu_document_requirements.json"
+  vm_audit: "results/evidence/022/npu_vm_audit.json"
+  board_audit: "results/evidence/022/npu_board_audit.json"
+  dependency_matrix: "results/evidence/022/npu_dependency_matrix.json"
+  verdict: "results/evidence/022/npu_feasibility_verdict.json"
+  one_shot_run: "not_created_not_executed"
+vendor_one_shot:
+  executed: false
+  status: "NOT_EXECUTED"
+  reason: "Driver modules, device nodes, versioned runtime, official model artifacts, host tools, and bitstream/DT mapping were not all established."
+observations:
+  board:
+    architecture: "aarch64"
+    os: "Buildroot 2022.02.6"
+    kernel: "6.1.111-rt42"
+    glibc: "2.25"
+    loaded_modules: ["aic_load_fw"]
+    hard_npu_dt_node: true
+    hard_npu_driver_bound: false
+    npu_device_nodes: []
+    cma_total_kib: 131072
+  vm:
+    os: "Ubuntu 18.04.4 LTS"
+    architecture: "x86_64"
+    glibc: "2.27"
+    gcc: "7.5.0"
+    cmake: "absent"
+    docker: "absent"
+    standalone_npu_runtime: "not_found"
+    prebuilt_npu_modules: "not_found"
+  sdk:
+    release: "SDK_2025_07"
+    armnn_candidate: "32.1.0 / build identity ed5ae24"
+    standalone_npu_runtime: "not_found"
+    driver_modules: "source_only"
+    official_model_artifacts_rt_weight: "not_found"
+decision:
+  official_one_shot_gate: "NOT_SATISFIED"
+  blocked_by:
+    - "missing/unloaded board NPU and CMA modules"
+    - "missing /dev/hard_npu, /dev/soft_npu, /dev/cma_mem"
+    - "missing versioned standalone npu_runtime package"
+    - "missing official rt.bin/weight.bin pair"
+    - "missing host converter executables"
+    - "unknown active SoftNPU bitstream provenance"
+  secondary_blockers:
+    - "BLOCKED_MISSING_VENDOR_ASSETS"
+    - "BLOCKED_RUNTIME_ABI_OR_IDENTITY_UNVERIFIED"
+    - "BLOCKED_TOOLCHAIN"
+    - "BLOCKED_DOCUMENTATION_GAP"
+    - "UNKNOWN_BITSTREAM_DT_MAPPING"
+  next_step: "Request a version-matched vendor runtime release and safe deployment plan; do not convert the project YOLOv5n model yet."
+immutability:
+  task_017_021_modified: false
+  project_model_modified: false
+  board_modified: false

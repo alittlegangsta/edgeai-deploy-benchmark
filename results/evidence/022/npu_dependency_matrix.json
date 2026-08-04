@@ -1,0 +1,189 @@
+{
+  "schema_version": "task022-npu-dependency-matrix-v1",
+  "captured_at": "2026-08-04T10:03:04+08:00",
+  "scope": "official Anlogic DR1 NPU runtime and vendor YOLO one-shot only; project ncnn model is not converted or substituted",
+  "items": [
+    {
+      "requirement": "NPU architecture / HardNPU + SoftNPU design",
+      "official_requirement": "APUG1205 describes PS HardNPU and PL SoftNPU cooperation.",
+      "local_vendor": "documented",
+      "vm": "source/document evidence only",
+      "board": "hard_npu device-tree node present; active runtime not proven",
+      "version_or_hash": "APUG1205_0.1 sha256 54a25d9a5dc59b21e7f7253bc72adeeb2c8b3a4bc04c30bea81463026ef7c1f2",
+      "status": "DOCUMENTED_NOT_READY",
+      "gap": "Current FPGA configuration containing required SoftNPU operators is not established."
+    },
+    {
+      "requirement": "Reference SoftNPU bitstream / HPF",
+      "official_requirement": "A bitstream with required SoftNPU operators is required before runtime inference.",
+      "local_vendor": "candidate HPF and bitstream artifacts exist under approved local materials",
+      "vm": "SDK contains generated HPF/bitstream artifacts",
+      "board": "current loaded bitstream provenance is unknown",
+      "version_or_hash": "candidate D20.1 HPF sha256 0d2c7f2592eb167a369c3a327a66b6b3e2cbad4450b5218c100870b68a18ef96",
+      "status": "BLOCKED_PROVENANCE",
+      "gap": "Cannot load or replace a bitstream in this audit."
+    },
+    {
+      "requirement": "hard_npu.ko",
+      "official_requirement": "Build from runtime package linux_driver and insert before use.",
+      "local_vendor": "driver C source and Makefile only",
+      "vm": "no prebuilt .ko found",
+      "board": "not loaded; no matching module file under /lib/modules",
+      "version_or_hash": "source sha256 0208695f618fc2545d35cf4fa39c1ed4777bb0dc04e4c2d07bdc0b03fc460fa7",
+      "status": "MISSING_DEPLOYABLE_MODULE",
+      "gap": "Matching, kernel-compatible module package is required."
+    },
+    {
+      "requirement": "soft_npu.ko",
+      "official_requirement": "Build from runtime package linux_driver and insert before use.",
+      "local_vendor": "driver C source and Makefile only",
+      "vm": "no prebuilt .ko found",
+      "board": "not loaded; no matching module file under /lib/modules",
+      "version_or_hash": "source sha256 f45dee06108a34deee1711792fb023698a3360883bc7ab803c87b9768bb6e945",
+      "status": "MISSING_DEPLOYABLE_MODULE",
+      "gap": "Matching, kernel-compatible module package is required."
+    },
+    {
+      "requirement": "cma_mem.ko",
+      "official_requirement": "Build from runtime package linux_driver and insert before use.",
+      "local_vendor": "driver C source and Makefile only",
+      "vm": "no prebuilt .ko found",
+      "board": "not loaded; no matching module file under /lib/modules",
+      "version_or_hash": "source sha256 a697a96afa221e46ffaa31246c7fcf570b724e5506b728acae3f6db0d974a484",
+      "status": "MISSING_DEPLOYABLE_MODULE",
+      "gap": "CMA reservation exists, but the documented allocator driver is absent."
+    },
+    {
+      "requirement": "/dev/hard_npu",
+      "official_requirement": "Expected after hard_npu driver installation.",
+      "local_vendor": "documented expectation",
+      "vm": "not applicable",
+      "board": "absent",
+      "version_or_hash": null,
+      "status": "BLOCKED_DRIVER_OR_DEVICE",
+      "gap": "No userspace node is available."
+    },
+    {
+      "requirement": "/dev/soft_npu",
+      "official_requirement": "Expected after soft_npu driver installation.",
+      "local_vendor": "documented expectation",
+      "vm": "not applicable",
+      "board": "absent",
+      "version_or_hash": null,
+      "status": "BLOCKED_DRIVER_OR_DEVICE",
+      "gap": "No userspace node is available."
+    },
+    {
+      "requirement": "/dev/cma_mem",
+      "official_requirement": "Expected after cma_mem driver installation.",
+      "local_vendor": "documented expectation",
+      "vm": "not applicable",
+      "board": "absent",
+      "version_or_hash": null,
+      "status": "BLOCKED_DRIVER_OR_DEVICE",
+      "gap": "No userspace node is available."
+    },
+    {
+      "requirement": "npu_runtime library and C API headers",
+      "official_requirement": "APUG1205 links applications against npu_runtime and uses the runtime API.",
+      "local_vendor": "not found; only Arm NN/Alnpu candidate libraries and headers were found",
+      "vm": "not found under searched SDK tree",
+      "board": "not found in rootfs candidate search",
+      "version_or_hash": null,
+      "status": "MISSING_VENDOR_ASSET",
+      "gap": "A versioned, board-compatible runtime release package is required."
+    },
+    {
+      "requirement": "Arm NN / Alnpu runtime candidate",
+      "official_requirement": "Not the standalone npu_runtime package named by APUG1205.",
+      "local_vendor": "AArch64 libarmnn.so.32.1 and ONNX parser exist in SDK",
+      "vm": "present",
+      "board": "not deployed and no NPU devices",
+      "version_or_hash": "libarmnn sha256 5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce; .version ed5ae24",
+      "status": "CANDIDATE_NOT_RUNTIME_PROOF",
+      "gap": "Backend/device ABI and board-side deployment remain unverified."
+    },
+    {
+      "requirement": "convert_tool",
+      "official_requirement": "Converts ONNX/TFLite/PB input into tmfile in the documented flow.",
+      "local_vendor": "not found as executable in approved SDK roots",
+      "vm": "not found",
+      "board": "not applicable",
+      "version_or_hash": null,
+      "status": "MISSING_HOST_TOOL",
+      "gap": "Cannot convert an official model without an identified tool package."
+    },
+    {
+      "requirement": "al_ai_flow",
+      "official_requirement": "Generates rt.bin and weight.bin from tmfile and net_config.json.",
+      "local_vendor": "not found as executable in approved SDK roots",
+      "vm": "not found",
+      "board": "not applicable",
+      "version_or_hash": null,
+      "status": "MISSING_HOST_TOOL",
+      "gap": "Cannot produce runtime model artifacts."
+    },
+    {
+      "requirement": "official model rt.bin / weight.bin",
+      "official_requirement": "Required inputs to load_model.",
+      "local_vendor": "no rt.bin or weight.bin found in searched SDK roots; ONNX examples exist",
+      "vm": "not found",
+      "board": "not found",
+      "version_or_hash": null,
+      "status": "MISSING_MODEL_ARTIFACTS",
+      "gap": "Need an official model artifact pair with documented model/version identity."
+    },
+    {
+      "requirement": "official YOLO one-shot source/application",
+      "official_requirement": "APUG1205 names a runtime yolo one-shot reference.",
+      "local_vendor": "Arm NN ONNX yolo_demo_pic source and launcher exist; APUG npu_runtime reference package not located",
+      "vm": "source present; no verified executable because CMake is absent and build was not run",
+      "board": "not deployed",
+      "version_or_hash": "launcher sha256 97b8311a67dbf8ecc20f70684ed4e5cb9acf97ad1071a23b84dad9ce172a39de",
+      "status": "PARTIAL_SOURCE_ONLY",
+      "gap": "Cannot equate the Arm NN sample with the documented npu_runtime one-shot."
+    },
+    {
+      "requirement": "kernel/device-tree integration",
+      "official_requirement": "A kernel configuration and compatible driver/device integration are required.",
+      "local_vendor": "SDK driver source and DT binding/source files exist",
+      "vm": "source tree present",
+      "board": "hard_npu DT node present but driver unbound; no soft_npu node observed",
+      "version_or_hash": null,
+      "status": "PARTIAL_BOARD_INTEGRATION",
+      "gap": "Current eMMC image is not a verified vendor NPU image."
+    },
+    {
+      "requirement": "CMA memory",
+      "official_requirement": "Runtime uses CMA-backed allocations.",
+      "local_vendor": "CMA driver source and API headers exist",
+      "vm": "source present",
+      "board": "CmaTotal=131072 KiB, CmaFree=130128 KiB",
+      "version_or_hash": null,
+      "status": "RESERVED_MEMORY_ONLY",
+      "gap": "CMA reservation does not prove that the NPU allocator driver is installed."
+    },
+    {
+      "requirement": "license and redistribution boundary",
+      "official_requirement": "A versioned runtime release and model package must have an applicable distribution permission.",
+      "local_vendor": "no machine-readable license or redistribution grant was established for the candidate runtime/bitstream/model artifacts",
+      "vm": "not established",
+      "board": "not applicable",
+      "version_or_hash": null,
+      "status": "DOCUMENTATION_GAP",
+      "gap": "Obtain vendor permission/version terms before copying restricted binaries into a deployment package."
+    }
+  ],
+  "one_shot_gate": {
+    "official_assets_identity": false,
+    "dr1m90_applicability": "partial",
+    "complete_documented_steps": false,
+    "safe_current_bitstream": false,
+    "required_modules_present_and_loaded": false,
+    "system_modification_needed": true,
+    "runtime_abi_verified": false,
+    "official_model_complete": false,
+    "isolated_execution_possible": false,
+    "gate_passed": false
+  }
+}

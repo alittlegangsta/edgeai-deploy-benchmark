@@ -1,0 +1,978 @@
+{
+  "schema_version": "task022-npu-asset-inventory-v1",
+  "capture_method": "bounded_read_only_filesystem_scan",
+  "executed_files": false,
+  "roots": [
+    {
+      "root_label": "approved_npu_demo",
+      "root_exists": true,
+      "candidates": [
+        {
+          "relative_path": "05-5_米联客-安路F3P-CZ02开发板NPU开发.pdf",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 2488900,
+          "mtime_epoch": 1780304845,
+          "mode": "0o777",
+          "sha256": "f3fd89cc47e08cfce0bbced13a9194ab06dc6b153c90c0e08c8539edf4badb90",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/al_ip/NPU_SOFT_0/.m_params_NPU_SOFT_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 236,
+          "mtime_epoch": 1719903442,
+          "mode": "0o777",
+          "sha256": "d4c55fa13d6fcb85f797962427aac5c6844dccc68463add170b64faad9857193",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/al_ip/NPU_SOFT_0/.params_NPU_SOFT_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1243,
+          "mtime_epoch": 1719903442,
+          "mode": "0o777",
+          "sha256": "23f10bd7c7a0c9d8c017246b793eb9e75ac5dfd128f2c2691237c39c10ee7dfc",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/al_ip/NPU_SOFT_0/.ports_NPU_SOFT_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1444,
+          "mtime_epoch": 1719903442,
+          "mode": "0o777",
+          "sha256": "19a23f2a45d386850c20cb01032e3e6e9521a4a416ca21b3996333c7c09ad355",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/AXI_Protocol_Converter_0/.m_params_AXI_Protocol_Converter_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 351,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "eb6c55429611850838c43a1a94aa454dc391854d6135c85a440110c50543171f",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/AXI_Protocol_Converter_0/.params_AXI_Protocol_Converter_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1193,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "71903c3ce050156387e99d66ba60d4454be3834a4e0cca283acb59dab29e0bd0",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/AXI_Protocol_Converter_0/.ports_AXI_Protocol_Converter_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1609,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "57240582090887a08b59f29babf0a45de86edeee293d04e88d1951460e015eae",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/AXI_Protocol_Converter_0/AXI_Protocol_Converter_0.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 6151,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "2e9145c765b36c383faa7485d3b13d4a2043a9633bcd73ca18b2fb538c2a1039",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/AXI_Protocol_Converter_0/AXI_Protocol_Converter_0.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 63293,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "7b6571d2b19a52ac96bd26a5df537cc583a5d638251cd893508dd2098313f873",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/AXI_Protocol_Converter_0/Design.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 29306,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "0ab299b86dabfbc34ee048549f505f2ccdea5fde2642b98818f8e437b9537cbd",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/AXI_Protocol_Converter_0/DesignConfiguration.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 990,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "54edd07ac60e61b32f23f22ac80f17d9673609aab89fccd54d69a70e9357d306",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/AXI_Protocol_Converter_0/RTL/axi_protocol_converter_merge_934165624b9c.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 307729,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "02b350475b20e47dcec0cad5584cfe949618a1d6c4ff3617738c1fb8c70f0bba",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/AXI_Protocol_Converter_0/RTL/include/define.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 0,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_AXI_Protocol_Converter_1/.m_params_design_0_AXI_Protocol_Converter_1.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 351,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "3a87641f32f3b0bc51f21ad016c9909746a2f457fa913a218c5c411353992d58",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_AXI_Protocol_Converter_1/.params_design_0_AXI_Protocol_Converter_1.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1193,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "d247bfb44ce03c7a485dc359ebd8495810879a4d6802d2d3cd8929574e68da05",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_AXI_Protocol_Converter_1/.ports_design_0_AXI_Protocol_Converter_1.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1609,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "57240582090887a08b59f29babf0a45de86edeee293d04e88d1951460e015eae",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_AXI_Protocol_Converter_1/Design.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 29311,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "eee1e53d7da20566bfa7583eb1a6c7af603fd21b7c3882aa7efa81d9e3775626",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_AXI_Protocol_Converter_1/DesignConfiguration.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 995,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "6a531c375f3f78f0398b5ca0a89ce3755bcba77bbc9ebdb306d74668c932123d",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_AXI_Protocol_Converter_1/design_0_AXI_Protocol_Converter_1.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 6160,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "1d5a3458b35238046e86e80e7683699225d2928a27ba8a3ed0a9b3eda4cd159e",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_AXI_Protocol_Converter_1/design_0_AXI_Protocol_Converter_1.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 63415,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "2fcdf7fbe0caa8228b3102a6d4d2984d72614a467f90767adc94736f26080845",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_AXI_Protocol_Converter_1/RTL/axi_protocol_converter_merge_809bc02bc44a.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 307729,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "66dcf63af0c88a04eb904ef98b16c1775f71b06d9de1c7f1248ff4e639b7805b",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_AXI_Protocol_Converter_1/RTL/include/define.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 0,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_Video_NPU_0/.m_params_design_0_Video_NPU_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 288,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "9b534cc291c9ef42409d23559cfadcce2ed0f0dda384b6ebfa694da4ddb29908",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_Video_NPU_0/.params_design_0_Video_NPU_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1243,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "23f10bd7c7a0c9d8c017246b793eb9e75ac5dfd128f2c2691237c39c10ee7dfc",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_Video_NPU_0/.ports_design_0_Video_NPU_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1444,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "6c82d802b0a08a5a27d6f8a109441601f8ca61fba1fa7c6c736374aacd243e93",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_Video_NPU_0/Design.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 28474,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "3f97a4c234011ff4ace415e9619c54809ca09b706327407b6c898d93a39516ad",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_Video_NPU_0/DesignConfiguration.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 963,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "b7bb7cb167a44b3702a107ea5106d09b2efe228b2ac25a3b8141e6c41140f113",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_Video_NPU_0/design_0_Video_NPU_0.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 6858,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "17b80f644211cf5554f7a0faf27ef9692d1154e84551a6e9101f7f81def564ec",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_Video_NPU_0/design_0_Video_NPU_0.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 119245,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "f0b846cfc4a32f0b7caa56894e2c3e787702f2c1bf329767e5858ff09472f753",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_Video_NPU_0/RTL/video_npu_top_77b8d5bfaa14.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 2050214,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "7ea80c5259b387797362838a4a3a4031566c6cf8b7c7f9761376ae09b4644d36",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/design_0/ip/design_0_Video_NPU_0/RTL/include/define.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 297,
+          "mtime_epoch": 1763535700,
+          "mode": "0o777",
+          "sha256": "6305f76830873cbb2effb5f071e0e1ef2759a1b9f73981f7a237cb0066526971",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_prj/src/ui_isp/demosaic_4x_2_0/mipi_to_raw_converter.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 2493,
+          "mtime_epoch": 1737098178,
+          "mode": "0o777",
+          "sha256": "b77e678034af9968d0969655f403cac3b992412b109dba889e8ccb3f6f224975",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/com.microsoft.copilot.eclipse.ui.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 59,
+          "mtime_epoch": 1764550886,
+          "mode": "0o777",
+          "sha256": "174325cd2e1ea1ca1a24f3b4ca61962b9da8106e5e603a6075058a4bb0dc4b42",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.cdt.core.prj-soc_base.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 58,
+          "mtime_epoch": 1764550935,
+          "mode": "0o777",
+          "sha256": "d30d4b13a832feee36cc4c27bc5e04fea8bc04940bc8f812431a3ffca3d43b34",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.cdt.core.prj-soc_fsbl.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 58,
+          "mtime_epoch": 1764551226,
+          "mode": "0o777",
+          "sha256": "d30d4b13a832feee36cc4c27bc5e04fea8bc04940bc8f812431a3ffca3d43b34",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.cdt.debug.core.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 783,
+          "mtime_epoch": 1764550884,
+          "mode": "0o777",
+          "sha256": "e7e6c6b21b4779983c0f4cd2a4b0ca074903aad15eca684c93ecdd3c7bf9cee8",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.cdt.managedbuilder.core.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 7295,
+          "mtime_epoch": 1764551234,
+          "mode": "0o777",
+          "sha256": "4b9006440e652d8ea879ad4a1cde0828cfec8a2c6d9341894b9f90b42665a8f2",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.cdt.ui.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 121,
+          "mtime_epoch": 1764551252,
+          "mode": "0o777",
+          "sha256": "22673400c5ce48be93fae71394eb43940b5fef0ad2383793771660b58f1881ab",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.resources.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 42,
+          "mtime_epoch": 1764550884,
+          "mode": "0o777",
+          "sha256": "1c2615d74b715e5eae556395c1127b0bd11aa8e2665fa9b8d298426da0804087",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.debug.core.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 640,
+          "mtime_epoch": 1764550909,
+          "mode": "0o777",
+          "sha256": "f8231297943e25c73eaa238d156a6af168f17f81580a93e65bc058477eb358ea",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.debug.ui.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 165,
+          "mtime_epoch": 1764550920,
+          "mode": "0o777",
+          "sha256": "07a77efcd93de06e3a4357d0f8b1198e8992fc003dec83376d8027dfa9ecee4c",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.e4.ui.css.swt.theme.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 79,
+          "mtime_epoch": 1764550880,
+          "mode": "0o777",
+          "sha256": "bb8f99658e5daa4fa6b9741fd2a8814511f64b06fd994452a7a8b26839c0a508",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jsch.core.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 89,
+          "mtime_epoch": 1764550882,
+          "mode": "0o777",
+          "sha256": "b68134a1ebd888e0ea3dcc585991e1cc80b7bede89736180102a64fb6d3465e6",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.launchbar.core.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 589,
+          "mtime_epoch": 1764551227,
+          "mode": "0o777",
+          "sha256": "bb3ef4aa61610262e15a95a0f89f86a51fceb9195b91a38b59aa8137e1fdfb47",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.lsp4e.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 88,
+          "mtime_epoch": 1764551252,
+          "mode": "0o777",
+          "sha256": "346f5691a0d25057221e58d9cb440ee52d2fba39b6e7f3017506bc603c14271d",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.context.core.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 62,
+          "mtime_epoch": 1764550882,
+          "mode": "0o777",
+          "sha256": "26965441a272ee1d2cb080d8c0a32030b5be5a1553f36d279fa15e5ee2930ddb",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.monitor.ui.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 97,
+          "mtime_epoch": 1764550882,
+          "mode": "0o777",
+          "sha256": "ac712c8591073a09f2ff9f667bd9ab170885a054df1415bdb2eaa320d06158fc",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.tasks.ui.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 194,
+          "mtime_epoch": 1764551251,
+          "mode": "0o777",
+          "sha256": "a1c5dcafabb2faaeec20203328477d93f2979bc31958a9da4abca7f4ef8194f4",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.tracecompass.tmf.analysis.xml.core.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 47,
+          "mtime_epoch": 1764551252,
+          "mode": "0o777",
+          "sha256": "73fee1fa27843b7cfad0cc9e591eb703ce7f11779e755255dff857b5f947fcaa",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.browser.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 281,
+          "mtime_epoch": 1764550886,
+          "mode": "0o777",
+          "sha256": "79e8b9fcc9fb7eb9393f37cc2f119be0e0fad07e4e7cc05ee0cc70c7aabccc69",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 101,
+          "mtime_epoch": 1764551252,
+          "mode": "0o777",
+          "sha256": "260e27d8a804dcaa76e85e29d8c60bb0fb4c4aa318936809484a5e1d4c5f4369",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.navigator.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 596,
+          "mtime_epoch": 1764550883,
+          "mode": "0o777",
+          "sha256": "f5cdc737ebda56bfd0999680e6b355aae644c971a64ce198522a40cc053bbe82",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 48,
+          "mtime_epoch": 1764550883,
+          "mode": "0o777",
+          "sha256": "0fd902cf873800a1b05058803e4494e4a30fe45157bf9c7e222b310f77a835a8",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 535,
+          "mtime_epoch": 1764551252,
+          "mode": "0o777",
+          "sha256": "94a75b08915935977ee20111bb81c02a0afa897c974fe1a686dfffb2159d9418",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/soc_base/dr1m90_fpsoc_cpu0/arch/arm/armv8/aarch32/inc/aarch64_start.bin",
+          "selection": "token_match",
+          "type": "binary_or_hardware_asset",
+          "size_bytes": 328,
+          "mtime_epoch": 1764550936,
+          "mode": "0o777",
+          "sha256": "5bed4595d6cb5ae194f98d5bb7e6b5eb0f9e972e6ecf154976aa7e568927afb6",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo/soc_sdk/soc_base/dr1m90_fpsoc_cpu0/inc/al_compiler.h",
+          "selection": "token_match",
+          "type": "source_or_script",
+          "size_bytes": 5842,
+          "mtime_epoch": 1764550936,
+          "mode": "0o777",
+          "sha256": "1a282aada1db0732c6de5638e9c79ad9319c1e1f1f7c071bf4e2644976d0c839",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "demo.zip",
+          "selection": "explicit",
+          "type": "file",
+          "size_bytes": 279913795,
+          "mtime_epoch": 1780304993,
+          "mode": "0o777",
+          "sha256": "f754663eded613cf15ac2ceb241ac91533792d360c4fdb49ba4105d887ba70ae",
+          "sha256_status": "computed"
+        }
+      ],
+      "root_status": "readable_directory",
+      "candidate_count": 57,
+      "scan_status": "bounded_complete"
+    },
+    {
+      "root_label": "approved_npu_hardware",
+      "root_exists": true,
+      "candidates": [
+        {
+          "relative_path": "APUG1205_NPU参考设计文档.pdf",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1427207,
+          "mtime_epoch": 1758879313,
+          "mode": "0o777",
+          "sha256": "54a25d9a5dc59b21e7f7253bc72adeeb2c8b3a4bc04c30bea81463026ef7c1f2",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "IPUG166_Video_NPU_IP用户手册.pdf",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 976250,
+          "mtime_epoch": 1758879312,
+          "mode": "0o777",
+          "sha256": "d13f70fa563c9d43bb568bcd80edab32ad74a8b6e4a868339119eba6f1945fb7",
+          "sha256_status": "computed"
+        }
+      ],
+      "root_status": "readable_directory",
+      "candidate_count": 2,
+      "scan_status": "bounded_complete"
+    },
+    {
+      "root_label": "approved_npu_sd_image",
+      "root_exists": true,
+      "candidates": [
+        {
+          "relative_path": "BOOT.bin",
+          "selection": "explicit",
+          "type": "binary_or_hardware_asset",
+          "size_bytes": 4414528,
+          "mtime_epoch": 1761867660,
+          "mode": "0o777",
+          "sha256": "2e75f4dd165362eae3c0285e2364f9816277fc25b975f4307f5dcb2cfd05f35b",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "dtb.bin",
+          "selection": "explicit",
+          "type": "binary_or_hardware_asset",
+          "size_bytes": 15534,
+          "mtime_epoch": 1761867658,
+          "mode": "0o777",
+          "sha256": "4a5697010b9b19e633485be3107e313d084df8088c4c18acc92192f3e772aa56",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "kernel.bin",
+          "selection": "explicit",
+          "type": "binary_or_hardware_asset",
+          "size_bytes": 8176833,
+          "mtime_epoch": 1761867660,
+          "mode": "0o777",
+          "sha256": "29f866a913c2621a4fc40025ab085f197fe686bad95e251a3468b40319d1f9b1",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "rootfs.bin",
+          "selection": "explicit",
+          "type": "binary_or_hardware_asset",
+          "size_bytes": 118858864,
+          "mtime_epoch": 1761867690,
+          "mode": "0o777",
+          "sha256": "dd5165a6ddbe9ee6f32590e624173747c497b17f167fec61bae6ce9b47e634b3",
+          "sha256_status": "computed"
+        }
+      ],
+      "root_status": "readable_directory",
+      "candidate_count": 4,
+      "scan_status": "bounded_complete"
+    },
+    {
+      "root_label": "approved_npu_project",
+      "root_exists": true,
+      "candidates": [
+        {
+          "relative_path": "D20.1_NPU_Simple_Demo_AD101V20_2025.7.al",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 3567,
+          "mtime_epoch": 1761805007,
+          "mode": "0o777",
+          "sha256": "92a0ceb1fd09338b0635b24e487f4ddbb776b0ae81918ae5e484343802c1c32f",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "D20.1_NPU_Simple_Demo_AD101V20_2025.7.hpf",
+          "selection": "token_match",
+          "type": "binary_or_hardware_asset",
+          "size_bytes": 1270352,
+          "mtime_epoch": 1761804945,
+          "mode": "0o777",
+          "sha256": "0d2c7f2592eb167a369c3a327a66b6b3e2cbad4450b5218c100870b68a18ef96",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_AXI_Protocol_Converter_0/.m_params_design_0_AXI_Protocol_Converter_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 351,
+          "mtime_epoch": 1742956086,
+          "mode": "0o777",
+          "sha256": "eb6c55429611850838c43a1a94aa454dc391854d6135c85a440110c50543171f",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_AXI_Protocol_Converter_0/.params_design_0_AXI_Protocol_Converter_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1193,
+          "mtime_epoch": 1742956086,
+          "mode": "0o777",
+          "sha256": "71903c3ce050156387e99d66ba60d4454be3834a4e0cca283acb59dab29e0bd0",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_AXI_Protocol_Converter_0/.ports_design_0_AXI_Protocol_Converter_0.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1609,
+          "mtime_epoch": 1742956086,
+          "mode": "0o777",
+          "sha256": "57240582090887a08b59f29babf0a45de86edeee293d04e88d1951460e015eae",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_AXI_Protocol_Converter_0/Design.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 29315,
+          "mtime_epoch": 1742956086,
+          "mode": "0o777",
+          "sha256": "0726b5d1dfe2da85c7012d4e902a74249ef647826664070a55268104e94ae24c",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_AXI_Protocol_Converter_0/DesignConfiguration.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 999,
+          "mtime_epoch": 1742956086,
+          "mode": "0o777",
+          "sha256": "f41f6a086e407ef5ba11af1ad77ac86a905a7a08880f8265d5cc8e64180af83e",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_AXI_Protocol_Converter_0/design_0_AXI_Protocol_Converter_0.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 6160,
+          "mtime_epoch": 1742956086,
+          "mode": "0o777",
+          "sha256": "d6bfad46bd43a84fc215cf2f56dcb2e24905d8fa33753f69c30ed743f09cb056",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_AXI_Protocol_Converter_0/design_0_AXI_Protocol_Converter_0.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 63419,
+          "mtime_epoch": 1742956086,
+          "mode": "0o777",
+          "sha256": "949da9f1795b6472914ce12fadfabda0a41225fa78b2f37ce38490e03b6c2545",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_AXI_Protocol_Converter_0/RTL/axi_protocol_converter_merge_1da2ff0a8c33.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 307729,
+          "mtime_epoch": 1742956086,
+          "mode": "0o777",
+          "sha256": "7c4efdc51bafd0858520ab6f00f4952f2040307bcf9829a64dc93679a64df7d9",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_AXI_Protocol_Converter_0/RTL/include/define.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 0,
+          "mtime_epoch": 1742956086,
+          "mode": "0o777",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_Video_NPU_1/.m_params_design_0_Video_NPU_1.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 288,
+          "mtime_epoch": 1758682643,
+          "mode": "0o777",
+          "sha256": "9b534cc291c9ef42409d23559cfadcce2ed0f0dda384b6ebfa694da4ddb29908",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_Video_NPU_1/.params_design_0_Video_NPU_1.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1303,
+          "mtime_epoch": 1758682643,
+          "mode": "0o777",
+          "sha256": "3665e7b26301c8ca40032bdef3b5c41abd33dfaa8dc312656da51b270da8f2b8",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_Video_NPU_1/.ports_design_0_Video_NPU_1.txt",
+          "selection": "token_match",
+          "type": "document",
+          "size_bytes": 1444,
+          "mtime_epoch": 1758682643,
+          "mode": "0o777",
+          "sha256": "19a23f2a45d386850c20cb01032e3e6e9521a4a416ca21b3996333c7c09ad355",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_Video_NPU_1/Design.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 28714,
+          "mtime_epoch": 1758682643,
+          "mode": "0o777",
+          "sha256": "57970d0affa3d4f49955b47460eccb9b4de3a4ac35d85b8d021209efecfd802b",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_Video_NPU_1/DesignConfiguration.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 989,
+          "mtime_epoch": 1758682643,
+          "mode": "0o777",
+          "sha256": "2a1ba27929c7c3932bea3826cdbd402d876cb7e57473702041c4ed24d9c32252",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_Video_NPU_1/design_0_Video_NPU_1.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 6858,
+          "mtime_epoch": 1758682648,
+          "mode": "0o777",
+          "sha256": "303647dcba08a66ba4c92d29ccd9350b4058164f3f70e4fd9812f875708a0bd5",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_Video_NPU_1/design_0_Video_NPU_1.xml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 119298,
+          "mtime_epoch": 1758682647,
+          "mode": "0o777",
+          "sha256": "ab4fd079f175c7162c71754c51e79284a31dcdeb4a7a50f7f3e45a0c707e5adc",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_Video_NPU_1/RTL/video_npu_top_57cae44a3c9f.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 2207269,
+          "mtime_epoch": 1758682645,
+          "mode": "0o777",
+          "sha256": "b8de4d79b7974ff4737eb1ceeea0334e143930aad1650b7bf2a61ed306ff19a1",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "design_0/ip/design_0_Video_NPU_1/RTL/include/define.v",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 292,
+          "mtime_epoch": 1758682644,
+          "mode": "0o777",
+          "sha256": "33dcb7f1db6eac46b20258744606ef55a2a33e816b8dc7e2599936a7c84e35b0",
+          "sha256_status": "computed"
+        }
+      ],
+      "root_status": "readable_directory",
+      "candidate_count": 20,
+      "scan_status": "bounded_complete"
+    },
+    {
+      "root_label": "repository_knowledge",
+      "root_exists": true,
+      "candidates": [
+        {
+          "relative_path": "manifests/anlogic_arm_runtime_profiles.yaml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 3849,
+          "mtime_epoch": 1785292432,
+          "mode": "0o644",
+          "sha256": "f6406db592290a648ae4fe7b0773738e2fba084bd7a73b4df748d861a98a12ad",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "manifests/anlogic_arm_yolov5n_single_image.yaml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 9414,
+          "mtime_epoch": 1785226821,
+          "mode": "0o644",
+          "sha256": "ff0d856876acd2127e14fe6b94618c640fb4f53e5a9fcf5858e9791d13ce2a26",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "manifests/anlogic_npu_runtime_audit.yaml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 2943,
+          "mtime_epoch": 1785809128,
+          "mode": "0o644",
+          "sha256": "57055e65d826793baed374474e8b7c44a665b9477a4d91553a3dddea6d7c295f",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "manifests/board_npu_readiness.yaml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 1791,
+          "mtime_epoch": 1785207281,
+          "mode": "0o644",
+          "sha256": "09494bca55176bb434956f7ed760ff3489fc8e5df930dec6b4ad7f95d29a2a93",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "manifests/board_opencv_runtime.yaml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 6187,
+          "mtime_epoch": 1785207281,
+          "mode": "0o644",
+          "sha256": "11ccf2d954d9022f8772f3ee20f4db4b8acc61a7e2700f9c0a7c7b43959b6ca9",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "manifests/board_runtime_inventory.yaml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 6535,
+          "mtime_epoch": 1785207281,
+          "mode": "0o644",
+          "sha256": "39d3cedd7aa6f2af4c1f9478fe4b84a6bcaeb84f75de19e22a616a9d4f63a4ee",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "manifests/board_toolchain_runtime_validation.yaml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 4319,
+          "mtime_epoch": 1785207281,
+          "mode": "0o644",
+          "sha256": "3000211cd81c8dab6943d9340cdb8d860e675435acb1299cd9f1b80bbea42012",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "manifests/npu_demo_dependency_inventory.yaml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 9733,
+          "mtime_epoch": 1785207281,
+          "mode": "0o644",
+          "sha256": "7c6963d0355fc0e100ebcbb89070ba3fc152f510911503cbfd77f219f7c6311d",
+          "sha256_status": "computed"
+        },
+        {
+          "relative_path": "manifests/vm_vendor_inputs.yaml",
+          "selection": "token_match",
+          "type": "file",
+          "size_bytes": 2623,
+          "mtime_epoch": 1785207281,
+          "mode": "0o644",
+          "sha256": "f987f849ebca2c25f91c95308b0e88266b06e4e314d7d9da929b782ec008aa62",
+          "sha256_status": "computed"
+        }
+      ],
+      "root_status": "readable_directory",
+      "candidate_count": 9,
+      "scan_status": "bounded_complete"
+    },
+    {
+      "root_label": "vm_vendor_mount",
+      "root_exists": false,
+      "candidates": [],
+      "root_status": "not_found"
+    }
+  ]
+}

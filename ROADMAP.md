@@ -126,3 +126,22 @@ single-image path with `PASS_TARGET` equivalence; 101 overwritten frames are
 recorded rather than hidden. This is functional camera validation, not a
 realtime benchmark. Video streaming, camera performance benchmarking, Vulkan,
 quantization, and NPU remain out of scope.
+
+## Stage 4: Anlogic NPU runtime feasibility
+
+Task 022 is a completed, user-approved read-only feasibility audit. The result
+is `BLOCKED_DRIVER_OR_DEVICE`. APUG1205_0.1 and
+IPUG166_1.0 document a cooperating PS HardNPU/PL SoftNPU path, required
+SoftNPU bitstream, `hard_npu.ko`, `soft_npu.ko`, `cma_mem.ko`, CMA-backed
+runtime APIs, and official `rt.bin`/`weight.bin` artifacts. On the current
+DR1M90 eMMC image, CMA is reserved and a hard-NPU device-tree node is present,
+but no matching modules or NPU/CMA device nodes are available. The VM SDK has
+Arm NN/Alnpu candidate libraries and demo source but no identified standalone
+`npu_runtime`, host converter executables, or official runtime model pair in
+the searched paths. No bitstream, kernel, device tree, system library, or
+vendor executable was changed or run. The project YOLOv5n NPU conversion is
+not ready; a version-matched vendor runtime release and safe deployment plan
+are required first. Secondary blockers are missing vendor assets, unverified
+runtime ABI/identity, missing host tools, documentation gaps, and unknown
+bitstream/Device Tree mapping. Task 023 should begin only after such a package
+is received and its provenance is reviewed.
