@@ -1,0 +1,151 @@
+schema_version: "task023-anlogic-npu-package-intake-v1"
+task: "023"
+status: Completed
+captured_at: "2026-08-04T13:45:30+08:00"
+automated_audit: COMPLETE
+audit_review: PASS
+audit_review_source: user
+candidate_approved: true
+audit_approval_time: "2026-08-04T13:45:30+08:00"
+audit_approval_time_semantics: WSL approval record time; not VM, board, or NPU execution time
+target:
+  board: MLK-F3P-CZ02-DR1M90
+  architecture: AArch64
+  buildroot: "2022.02.6"
+  kernel: 6.1.111-rt42
+  glibc: "2.25"
+source_roots:
+  npu_info:
+    path: "<windows-user>/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/NPU_info"
+    path_note: Windows user segment redacted in repository; local audit used the user-approved path.
+    provenance: user-provided local vendor material
+    regular_file_count: 1800
+    regular_bytes: 886827911
+    read_only: true
+    approved_for_copy: false
+  knowledge_base:
+    path: /home/dministrator/vendor/anlogic-dr1-knowledge
+    read_only: true
+    version_matrix: VERSION_MATRIX.md
+    versions_yaml_present: false
+  extracted_archive:
+    path: /tmp/task023-face_detection
+    source_archive: NPU_info/05-5_NPU演示/demo/sdk/face_detection.tar.gz
+    source_archive_sha256: 33eb354f2cb41df81f42fe30d44898d99e2a4fcd8a69b8ae678c8622e473b82f
+    read_only: true
+    copied_to_git: false
+official_sources:
+  - remote: https://gitee.com/anlogic/dr1m90_npu.git
+    revision: SDK_2026.01
+    commit: a06f09a23582900e2b8843d564ea28db679649a5
+    relation_to_local_sdk: separate source line; local SDK_2025_07 not proven identical
+  - remote: https://gitee.com/anlogic/dr1_demo_prjs.git
+    reference: D20.3 path 2026.1
+    checkout_performed: false
+official_wiki_pages:
+  - id: P8Xz9nVf
+    title: D20 NPU应用
+  - id: 6Pb5TSd5
+    title: D20.0 NPU接口文档
+  - id: 7ZcKp5Wg
+    title: D20.1 NPU 简单示例集合
+  - id: C3WjPRyU
+    title: D20.3 基于USB摄像头和HDMI的NPU应用示例
+source_map: results/evidence/023/npu_wiki_source_map.json
+asset_identity:
+  selected_hpf:
+    path: NPU_info/TD_D20.1_AD101V20_2025.7/D20.1_NPU_Simple_Demo_AD101V20_2025.7.hpf
+    sha256: 0d2c7f2592eb167a369c3a327a66b6b3e2cbad4450b5218c100870b68a18ef96
+    applicability: AD101V20/DR1M90GEG484 project candidate; not current-board proof
+  milianke_hpf:
+    path: NPU_info/05-5_NPU演示/demo/soc_hw/soc_prj.hpf
+    sha256: ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7
+    applicability: DR1M90GEG400 project candidate; not approved for current board
+  milianke_bitstream:
+    path: NPU_info/05-5_NPU演示/demo/soc_prj/soc_prj_Runs/best_result/soc_prj.bit
+    sha256: 0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912
+    applicability: DR1M90GEG400 project candidate; not written
+  derived_demo_elf:
+    path: face_detection.tar.gz::app/face_detection/build/bin/yolo_demo_hdmi_camera
+    sha256: 39c97eb34bec957ca7d43f83d5e57beae682e686649a9cb8aefaf72f4bc93e72
+    architecture: AArch64
+    executed: false
+  modules:
+    - name: hard_npu.ko
+      sha256: f06a273535041d805b0daa0c7b7a1d1218f3837fc7b4c4bc9328eaa909d76dc5
+      vermagic: 6.1.111-rt42 SMP preempt mod_unload aarch64
+      loaded: false
+    - name: soft_npu.ko
+      sha256: e2c10bb6a74f59a3e4b3e225d6f6502cddf7003da6a7b0025429d32312279c1c
+      vermagic: 6.1.111-rt42 SMP preempt mod_unload aarch64
+      loaded: false
+    - name: cma_mem.ko
+      sha256: b2204e7127ff76c72faabcefd15fe4e2180934ec12a0003466000b328a5806fc
+      vermagic: 6.1.111-rt42 SMP preempt mod_unload aarch64
+      loaded: false
+  runtime_candidates:
+    - name: libarmnn.so.32.1
+      sha256: 5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce
+      version_marker: ed5ae24
+      status: candidate_not_standalone_npu_runtime
+    - name: libarmnnOnnxParser.so.24.6
+      sha256: dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99
+      status: candidate_not_standalone_npu_runtime
+missing_or_unverified:
+  - standalone npu_runtime library and APUG C API package identity
+  - rt.bin and weight.bin official model pair
+  - convert_tool and al_ai_flow host executables
+  - complete Module.symvers and kernel symbol CRC provenance for loadable modules
+  - exact current-board HPF/bitstream/Device Tree mapping
+  - exact package release identity joining the supplied prebuilt archive to the SDK source
+  - applicable license and redistribution terms
+path_readiness:
+  native_runtime_path_readiness: BLOCKED_NATIVE_RUNTIME_ASSETS
+  armnn_demo_path_readiness: PASS_ISOLATED_BUILD_NOT_DEPLOYMENT_READY
+  driver_static_compatibility: AARCH64_VERMAGIC_MATCH_SYMBOL_CRC_UNVERIFIED
+  board_hardware_mapping: BLOCKED_BOARD_HARDWARE_MAPPING
+  source_build_reproducibility: PARTIAL_BUILD_VERIFIED
+  prebuilt_demo_deployment_readiness: BLOCKED_BOARD_HARDWARE_MAPPING
+build_evidence:
+  driver_source_build: PASS_WITH_SYMBOL_PROVENANCE_LIMITATION
+  armnn_face_demo_build: PASS
+  generic_armnn_demo_build: PASS
+  driver_build_workspace: /home/uisrc/build/task023-driver-build-20260804
+  face_demo_build_workspace: /home/uisrc/build/task023-face-build-20260804
+  module_symvers_present: false
+  native_runtime_build: NOT_ATTEMPTED
+verdict:
+  primary: BLOCKED_BOARD_HARDWARE_MAPPING
+  secondary:
+    - BLOCKED_NATIVE_RUNTIME_ASSETS
+    - BLOCKED_ARMNN_BACKEND_INCOMPLETE
+    - MODULE_SYMBOL_CRC_UNVERIFIED
+    - BLOCKED_BUILD_REPRODUCIBILITY
+    - BLOCKED_PREBUILT_DEMO_DEPLOYMENT
+    - BLOCKED_MODEL_ASSET_INCOMPLETE
+    - BLOCKED_PROVENANCE_OR_LICENSE
+    - BLOCKED_PACKAGE_RELEASE_IDENTITY
+    - BLOCKED_RUNTIME_INCOMPLETE
+    - BLOCKED_TOOLCHAIN
+    - ACTIVE_BITSTREAM_UNKNOWN
+    - ACTIVE_DEVICE_TREE_MAPPING_UNKNOWN
+deployment_readiness: BLOCKED
+vendor_one_shot: NOT_EXECUTED
+controlled_board_deployment: NOT_APPROVED
+project_yolov5n_conversion: NOT_READY
+evidence:
+  inventory: results/evidence/023/npu_package_inventory.json
+  wiki_source_map: results/evidence/023/npu_wiki_source_map.json
+  dependency_graph: results/evidence/023/npu_project_dependency_graph.json
+  driver_analysis: results/evidence/023/npu_driver_build_analysis.json
+  runtime_demo_analysis: results/evidence/023/npu_runtime_demo_analysis.json
+  static_compatibility: results/evidence/023/npu_static_compatibility.json
+  build_attempt: results/evidence/023/npu_build_attempt.json
+  validation: results/evidence/023/validation.json
+safety:
+  vendor_binaries_executed: false
+  kernel_modules_loaded: false
+  bitstreams_written: false
+  board_modified: false
+  project_model_converted: false
+  commit_created: false

@@ -1,0 +1,161 @@
+{
+  "schema_version": "task023-validation-v1",
+  "task": "023",
+  "validated_at": "2026-08-04T13:45:30+08:00",
+  "status": "PASS",
+  "task_status": "Completed",
+  "automated_audit": "COMPLETE",
+  "audit_review": "PASS",
+  "audit_review_source": "user",
+  "candidate_approved": true,
+  "deployment_readiness": "BLOCKED",
+  "vendor_one_shot": "NOT_EXECUTED",
+  "controlled_board_deployment": "NOT_APPROVED",
+  "project_yolov5n_conversion": "NOT_READY",
+  "approval_time_semantics": "WSL record time; not VM, board, or NPU execution time",
+  "commands": [
+    {
+      "command": "python3 -m py_compile scripts/vendor/audit_anlogic_npu_package.py scripts/vendor/validate_task023_npu_package.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 scripts/vendor/audit_anlogic_npu_package.py --npu-info <approved-local-NPU_info-root> --knowledge-root <approved-knowledge-root> --output /tmp/task023-audit-generated-final.json",
+      "exit_code": 0,
+      "result": "PASS; reported 1800 files, 886827911 bytes, 65 selected-pattern paths, versions.yaml absent; output remained outside the repository"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task023_npu_package.py --evidence-dir results/evidence/023",
+      "exit_code": 0,
+      "result": "PASS; required JSON evidence, path-readiness fields and recorded isolated build parsed; one-shot NOT_EXECUTED"
+    },
+    {
+      "command": "Python json.load for results/evidence/023/*.json and yaml.safe_load for .knowledge/manifests/anlogic_npu_package_intake.yaml",
+      "exit_code": 0,
+      "result": "PASS; 9 Task 023 JSON documents and the intake manifest parsed"
+    },
+    {
+      "command": "23 selected NPU_info and extracted-archive SHA256 comparisons",
+      "exit_code": 0,
+      "result": "PASS; current WSL recheck found all 23 files, and all 23 hashes matched recorded evidence"
+    },
+    {
+      "command": "python3 scripts/vendor/audit_anlogic_npu_package.py --npu-info <approved-local-NPU_info-root> --knowledge-root <approved-knowledge-root> --hash-selected",
+      "exit_code": 0,
+      "result": "PASS; current bounded inventory found 1,800 files and 65 selected-pattern paths; output remained outside the repository"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task022_npu_audit.py --evidence-dir results/evidence/022",
+      "exit_code": 0,
+      "result": "PASS; prior Task 022 verdict remains BLOCKED_DRIVER_OR_DEVICE and its evidence is unchanged"
+    },
+    {
+      "command": "static modinfo/readelf/nm audit of prebuilt and isolated hard_npu.ko, soft_npu.ko and cma_mem.ko",
+      "exit_code": 0,
+      "result": "PASS; AArch64 and vermagic match text recorded; undefined kernel symbols are present and __versions/Module.symvers CRC proof is absent"
+    },
+    {
+      "command": "yaml.safe_load for all .knowledge/manifests/*.yaml",
+      "exit_code": 0,
+      "result": "PASS; 31 YAML documents parsed"
+    },
+    {
+      "command": "bash -n scripts/vendor/*.sh scripts/arm/*.sh",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "PYTHONPATH=python ./.venv/bin/python -m unittest discover -s tests/python -p 'test_*.py'",
+      "exit_code": 0,
+      "result": "PASS; 118 tests"
+    },
+    {
+      "command": "read-only VM wrapper plus isolated driver-source build and Arm NN face-demo build",
+      "exit_code": 0,
+      "result": "PASS_WITH_LIMITATIONS; VM wrapper recovered; driver objects and yolo_demo_hdmi_camera built in /home/uisrc/build/task023-*; Module.symvers absent and no deployment was attempted"
+    },
+    {
+      "command": "cmake --build build/pc-all-release --config Release -j2",
+      "exit_code": 0,
+      "result": "PASS; existing PC Release targets rebuilt; no NPU assets used"
+    },
+    {
+      "command": "ctest --test-dir build/pc-all-release --output-on-failure",
+      "exit_code": 0,
+      "result": "PASS; 14/14 tests"
+    },
+    {
+      "command": "Task 017-022 immutability diff check",
+      "exit_code": 0,
+      "result": "PASS; no diff under prior task files or evidence"
+    },
+    {
+      "command": "sensitive-material scan over Task 023 docs, manifest and evidence",
+      "exit_code": 0,
+      "result": "PASS; no private-key, authorization, cookie or password material"
+    },
+    {
+      "command": "local Markdown-link existence check for Task 023 and root documents",
+      "exit_code": 0,
+      "result": "PASS; 7 local links resolved"
+    },
+    {
+      "command": "repository-hygiene check for changed paths",
+      "exit_code": 0,
+      "result": "PASS; 18 changed/untracked paths are allowed, non-empty, and below the evidence size limit"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "known_non_pass_attempts": [
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_*.py'",
+      "exit_code": 5,
+      "reason": "repository tests are under tests/python; no tests discovered at tests root"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/python -p 'test_*.py'",
+      "exit_code": 1,
+      "reason": "system Python lacks project dependencies; rerun with repository .venv and PYTHONPATH=python passed 118 tests"
+    },
+    {
+      "command": "/home/dministrator/bin/anlogic-vm-ssh '<read-only VM environment query>' (sandboxed invocation)",
+      "exit_code": 1,
+      "reason": "sandboxed invocation returned UtilBindVsockAnyPort: socket failed 1 before reaching VM; an escalated invocation of the same read-only wrapper succeeded"
+    }
+  ],
+  "static_inspection": {
+    "module_architecture": "AArch64 relocatable ELF",
+    "module_vermagic": "all three prebuilt modules contain 6.1.111-rt42 SMP preempt mod_unload aarch64",
+    "demo_architecture": "AArch64 dynamically linked ELF",
+    "armnn_surface_abi": "GLIBC <= 2.17 and GLIBCXX <= 3.4.22 observed for libarmnn.so.32.1",
+    "source_make_default_kernel": "5.10.142",
+    "direct_npu_info_missing": [".ko", "rt.bin", "weight.bin", "convert_tool", "al_ai_flow", "standalone runtime"],
+    "vendor_program_executed": false,
+    "module_loaded": false,
+    "bitstream_written": false,
+    "board_accessed": false
+  },
+  "prior_evidence_immutable": true,
+  "build_attempt": {
+    "attempted": true,
+    "evidence_file_created": true,
+    "status": "PASS_WITH_LIMITATIONS",
+    "driver_source_build": "PASS_WITH_SYMBOL_PROVENANCE_LIMITATION",
+    "armnn_face_demo_build": "PASS",
+    "native_runtime_build": "NOT_ATTEMPTED; host tools and runtime assets absent",
+    "module_symvers_present": false,
+    "reason": "isolated VM builds prove source/link closure only; board mapping, symbol CRCs and deployment remain unverified"
+  },
+  "path_readiness": {
+    "native_runtime_path_readiness": "BLOCKED_NATIVE_RUNTIME_ASSETS",
+    "armnn_demo_path_readiness": "PASS_ISOLATED_BUILD_NOT_DEPLOYMENT_READY",
+    "driver_static_compatibility": "AARCH64_VERMAGIC_MATCH_SYMBOL_CRC_UNVERIFIED",
+    "board_hardware_mapping": "BLOCKED_BOARD_HARDWARE_MAPPING",
+    "source_build_reproducibility": "PARTIAL_BUILD_VERIFIED",
+    "prebuilt_demo_deployment_readiness": "BLOCKED_BOARD_HARDWARE_MAPPING"
+  }
+}

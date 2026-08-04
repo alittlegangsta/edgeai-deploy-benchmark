@@ -9,7 +9,7 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–021 are completed. Task 021 ARM UVC camera inference passed its
+Tasks 001–023 are completed. Task 021 ARM UVC camera inference passed its
 automated stage and received user representative-frame approval. Task 020 ARM video-file inference passed
 automated real-board validation and user playback review.
 Checkpoint C is
@@ -85,6 +85,23 @@ examples mention AD101V20 or DR1M90GEG484-2 in places, so exact
 MLK-F3P-CZ02-DR1M90/Linux 6.1.111-rt42 applicability is still unknown. No
 attachment was downloaded; the supplemental Wiki review is complete, and
 project YOLOv5n conversion is still not ready.
+
+Task 023 is the completed, user-approved read-only Anlogic NPU package-intake
+audit. The user-provided
+`NPU_info` collection and approved AlWiki/Gitee sources now have a provenance
+and dependency map. The native `npu_runtime` path remains asset-blocked, while
+the Arm NN/ONNX demo path has been configured and linked in an isolated VM
+workspace; neither path is deployment-ready because the mixed
+DR1M90GEG400/AD101V20/AD103V20/GEG484 materials do not map to the active
+MLK-F3P-CZ02-DR1M90 FPGA/Device Tree. The primary status is
+`BLOCKED_BOARD_HARDWARE_MAPPING`; secondary build, symbol-CRC, runtime,
+release-identity and asset blockers remain. No driver, bitstream, vendor ELF,
+or project model was executed or added to this repository. See
+`docs/vendor/ANLOGIC_NPU_PACKAGE_AND_BUILD_CHAIN.md` and
+`results/evidence/023/` for the static intake.
+The audit is complete; deployment remains blocked, the vendor one-shot was not
+executed, controlled board deployment was not approved, and project YOLOv5n
+conversion is not ready.
 
 ## PC architecture and model lineage
 

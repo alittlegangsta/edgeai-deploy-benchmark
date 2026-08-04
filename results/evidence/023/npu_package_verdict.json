@@ -1,0 +1,115 @@
+{
+  "schema_version": "task023-npu-package-verdict-v1",
+  "task": "023",
+  "captured_at": "2026-08-04T13:45:30+08:00",
+  "task_status": "Completed",
+  "automated_intake": "COMPLETE",
+  "automated_audit": "COMPLETE",
+  "audit_review": "PASS",
+  "audit_review_source": "user",
+  "candidate_approved": true,
+  "audit_approval_time": "2026-08-04T13:45:30+08:00",
+  "audit_approval_time_semantics": "WSL record time for user approval; not VM audit time, board time, or NPU program time",
+  "primary_verdict": "BLOCKED_BOARD_HARDWARE_MAPPING",
+  "secondary_blockers": [
+    "BLOCKED_NATIVE_RUNTIME_ASSETS",
+    "BLOCKED_ARMNN_BACKEND_INCOMPLETE",
+    "MODULE_SYMBOL_CRC_UNVERIFIED",
+    "BLOCKED_BUILD_REPRODUCIBILITY",
+    "BLOCKED_PREBUILT_DEMO_DEPLOYMENT",
+    "BLOCKED_MODEL_ASSET_INCOMPLETE",
+    "BLOCKED_PROVENANCE_OR_LICENSE",
+    "BLOCKED_PACKAGE_RELEASE_IDENTITY",
+    "BLOCKED_RUNTIME_INCOMPLETE",
+    "BLOCKED_TOOLCHAIN",
+    "ACTIVE_BITSTREAM_UNKNOWN",
+    "ACTIVE_DEVICE_TREE_MAPPING_UNKNOWN"
+  ],
+  "target": {
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "architecture": "AArch64",
+    "buildroot": "2022.02.6",
+    "kernel": "6.1.111-rt42",
+    "glibc": "2.25"
+  },
+  "confirmed_facts": [
+    "NPU_info contains a DR1M90GEG400 Milianke FPGA project, AD101V20 and AD103V20 TD examples, a DR1M90GEG484-2 IPUG target, SD image components, and a derived Arm NN face-detection package.",
+    "The derived package contains AArch64 hard_npu.ko, soft_npu.ko, and cma_mem.ko whose embedded vermagic text is 6.1.111-rt42 SMP preempt mod_unload aarch64.",
+    "The same derived package's driver Makefiles default to Linux 5.10.142 and an aarch64-anlogic-11.3 toolchain, while the build script references an unprovided /home/uisrc/uisrc-lab-anlogic kernel/toolchain.",
+    "The derived package contains AArch64 Arm NN/ONNX parser libraries and a camera/HDMI demo ELF, not the standalone APUG npu_runtime package identity.",
+    "No rt.bin, weight.bin, convert_tool, or al_ai_flow was found in the bounded direct NPU_info or searched package paths.",
+    "The official dr1m90_npu source mirror is SDK_2026.01, while the knowledge version matrix records the local SDK baseline as SDK_2025_07; exact component alignment is not established.",
+    "The Arm NN demo path is statically buildable in an isolated VM workspace and is distinct from the APUG npu_runtime/rt.bin/weight.bin path; both paths still share the kernel-driver, CMA, Device Tree and FPGA hardware substrate.",
+    "The SDK kernel source and Linaro toolchain can produce AArch64 driver objects and the Arm NN demo can link, but missing Module.symvers and unresolved-symbol warnings prevent treating those outputs as loadable or deployment-ready."
+  ],
+  "engineering_inferences": [
+    {
+      "statement": "The supplied package cannot be rebuilt reproducibly for the current board from the recorded inputs.",
+      "basis": "source Makefile kernel/toolchain defaults conflict with prebuilt vermagic and the build entry's unprovided SDK paths"
+    },
+    {
+      "statement": "The candidate HPFs, bitstream, DT and modules cannot be approved for the current board solely from family names or vermagic.",
+      "basis": "AD101V20/AD103V20/GEG484/GEG400/current-board identity differences and unknown active bitstream mapping"
+    },
+    {
+      "statement": "The Arm NN/Alnpu candidate may be ABI-surface compatible but cannot be called a usable NPU runtime without devices, matching bitstream and API/version mapping.",
+      "basis": "static ELF identity plus missing current-board runtime path"
+    },
+    {
+      "statement": "The current source/build evidence advances the build question from unattempted to partial, but does not resolve board hardware mapping or module symbol provenance.",
+      "basis": "isolated driver and Arm NN builds completed; active bitstream/DT identity and Module.symvers remain unverified"
+    }
+  ],
+  "path_readiness": {
+    "native_runtime_path_readiness": "BLOCKED_NATIVE_RUNTIME_ASSETS",
+    "armnn_demo_path_readiness": "PASS_ISOLATED_BUILD_NOT_DEPLOYMENT_READY",
+    "driver_static_compatibility": "AARCH64_VERMAGIC_MATCH_SYMBOL_CRC_UNVERIFIED",
+    "board_hardware_mapping": "BLOCKED_BOARD_HARDWARE_MAPPING",
+    "source_build_reproducibility": "PARTIAL_BUILD_VERIFIED",
+    "prebuilt_demo_deployment_readiness": "BLOCKED_BOARD_HARDWARE_MAPPING"
+  },
+  "build": {
+    "attempted": true,
+    "status": "PASS_WITH_LIMITATIONS",
+    "reason": "The VM wrapper was recovered and read-only VM access plus user-local CMake, the exact SDK kernel source/defconfig and the Linaro AArch64 toolchain were available. Isolated driver-source and Arm NN demo builds completed, but Module.symvers was absent and no board deployment was attempted.",
+    "npu_build_attempt_evidence": "results/evidence/023/npu_build_attempt.json",
+    "commands_not_run": ["native npu_runtime build", "convert_tool/al_ai_flow model conversion", "SDK image build", "vendor ELF execution", "module load or board deployment"]
+  },
+  "build_evidence": {
+    "driver_source_build": "PASS_WITH_SYMBOL_PROVENANCE_LIMITATION",
+    "armnn_face_demo_build": "PASS",
+    "generic_armnn_demo_build": "PASS",
+    "module_symvers_present": false,
+    "deployment_approval": false
+  },
+  "deployment_readiness": "BLOCKED",
+  "controlled_board_deployment": "NOT_APPROVED",
+  "controlled_deployment_readiness": "NOT_READY",
+  "official_one_shot": {
+    "executed": false,
+    "status": "NOT_EXECUTED",
+    "reason": "Task scope prohibits module load, bitstream write and vendor executable execution; package/board mapping and active FPGA/DT identity are unresolved."
+  },
+  "project_yolov5n_conversion_ready": false,
+  "project_yolov5n_conversion": "NOT_READY",
+  "next_safe_step": "Obtain a vendor-signed/versioned package for MLK-F3P-CZ02-DR1M90, Buildroot 2022.02.6, Linux 6.1.111-rt42 and glibc 2.25 with matching driver source/modules, kernel config/source, HPF/bitstream/DT mapping, runtime headers/libraries, official model assets, host tools and license terms; then create a separate controlled-build approval.",
+  "evidence_refs": [
+    "results/evidence/023/npu_package_inventory.json",
+    "results/evidence/023/npu_wiki_source_map.json",
+    "results/evidence/023/npu_project_dependency_graph.json",
+    "results/evidence/023/npu_driver_build_analysis.json",
+    "results/evidence/023/npu_runtime_demo_analysis.json",
+    "results/evidence/023/npu_static_compatibility.json",
+    "results/evidence/023/npu_build_attempt.json",
+    "results/evidence/023/validation.json"
+  ],
+  "safety": {
+    "vendor_binaries_executed": false,
+    "kernel_modules_loaded": false,
+    "bitstreams_written": false,
+    "board_accessed": false,
+    "board_modified": false,
+    "project_model_converted": false,
+    "git_commit_created": false
+  }
+}

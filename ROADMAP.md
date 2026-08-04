@@ -153,4 +153,27 @@ It exposed no downloadable, hashable current-board driver/runtime, bitstream,
 one-shot, `rt.bin`/`weight.bin`, or host converter package; referenced example
 assets remain access-pending and exact MLK-F3P-CZ02-DR1M90/Linux 6.1.111-rt42
 mapping is unknown. No VM/board access or one-shot execution was performed in
-the incremental pass. Task 023 remains a future vendor-package intake task.
+the incremental pass. The completed Task 023 package-intake audit and its
+remaining deployment gate are recorded below.
+
+## Stage 4: Anlogic NPU package intake (Task 023)
+
+Task 023 is `Completed` as a user-approved audit. The bounded intake of the user-provided
+`NPU_info` package and the read-only AlWiki/Gitee sources reconstructed the
+HardNPU/SoftNPU/CMA → HPF/bitstream/DT → Linux SDK → Arm NN/demo chain. The
+native `npu_runtime`/`rt.bin`/`weight.bin` path remains unavailable, while the
+Arm NN/ONNX face-demo path and the three SDK driver sources were configured or
+compiled in isolated VM user workspaces. The driver outputs lack
+`Module.symvers` symbol-CRC provenance, and the mixed board identities and
+active FPGA/DT mapping remain unresolved. The primary verdict is
+`BLOCKED_BOARD_HARDWARE_MAPPING`, with native-runtime, Arm NN backend,
+deployment, build, release-identity, model and provenance blockers. No module
+load, bitstream write, vendor execution, board deployment, or project-model
+conversion was performed. Arm NN isolated build closure is verified, but board
+deployment remains blocked and NPU runtime execution was not performed.
+
+The next proposed task is **Task 024: MLK-F3P-CZ02 NPU board mapping and
+controlled deployment plan**. It should identify the active bitstream and DTB,
+map the MLK-F3P-CZ02 FPGA project and HPF/SDK version, obtain matching kernel
+source/config/Module.symvers, and prepare a module load and SD-card rollback
+plan. Any loading or flashing must remain behind a separate human approval.

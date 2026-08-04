@@ -1,0 +1,104 @@
+{
+  "schema_version": "task023-npu-project-dependency-graph-v1",
+  "task": "023",
+  "captured_at": "2026-08-04T13:20:00+08:00",
+  "target_board": "MLK-F3P-CZ02-DR1M90",
+  "graph_status": "partial_with_explicit_gaps",
+  "nodes": [
+    {"id": "wiki_d20_1", "kind": "official_document", "identity": "AlWiki D20.1 7ZcKp5Wg"},
+    {"id": "wiki_d20_0", "kind": "official_document", "identity": "AlWiki D20.0 6Pb5TSd5"},
+    {"id": "wiki_d20_3", "kind": "official_document", "identity": "AlWiki D20.3 C3WjPRyU"},
+    {"id": "apug1205", "kind": "official_document", "identity": "APUG1205_0.1"},
+    {"id": "ipug166", "kind": "official_document", "identity": "IPUG166 document target DR1M90GEG484-2"},
+    {"id": "milianke_project", "kind": "fpga_project", "identity": "05-5 demo soc_prj, device DR1M90GEG400"},
+    {"id": "ad101_simple", "kind": "fpga_project", "identity": "TD_D20.1_AD101V20 2025.7"},
+    {"id": "ad103_video", "kind": "fpga_project", "identity": "TD_D20.2_AD103V20"},
+    {"id": "ad101_camera", "kind": "fpga_project", "identity": "TD_D20.3_AD101V20"},
+    {"id": "hpf_and_bitstream", "kind": "hardware_asset", "identity": "candidate HPF and bitstream outputs"},
+    {"id": "sdk_buildroot", "kind": "linux_sdk", "identity": "D20.1 DR1M90 defconfig/rootfs/app-npu flow"},
+    {"id": "kernel_dt", "kind": "kernel_device_tree", "identity": "demo DTS and current-board DT observation"},
+    {"id": "drivers", "kind": "kernel_driver", "identity": "hard_npu, soft_npu, cma_mem"},
+    {"id": "cma", "kind": "memory_runtime", "identity": "CMA reservation plus cma_mem allocator"},
+    {"id": "apug_runtime", "kind": "runtime", "identity": "documented npu_runtime API/library"},
+    {"id": "armnn_candidate", "kind": "runtime_candidate", "identity": "AArch64 Arm NN/Alnpu library set ed5ae24"},
+    {"id": "official_models", "kind": "model_assets", "identity": "rt.bin and weight.bin pair"},
+    {"id": "armnn_demo", "kind": "application", "identity": "derived yolo_demo_hdmi_camera"},
+    {"id": "host_tools", "kind": "host_tool", "identity": "convert_tool and al_ai_flow"},
+    {"id": "current_board", "kind": "real_device", "identity": "MLK-F3P-CZ02-DR1M90 Linux 6.1.111-rt42"},
+    {"id": "native_npu_runtime_path", "kind": "execution_path", "identity": "APUG npu_runtime + rt.bin/weight.bin"},
+    {"id": "armnn_onnx_path", "kind": "execution_path", "identity": "Arm NN ONNX parser + embedded Alnpu backend"},
+    {"id": "isolated_build_outputs", "kind": "build_evidence", "identity": "SDK driver objects and Arm NN demo built in VM user workspaces"}
+  ],
+  "edges": [
+    {"from": "wiki_d20_1", "to": "hpf_and_bitstream", "relation": "documents_generate_and_place", "certainty": "document_fact"},
+    {"from": "wiki_d20_1", "to": "sdk_buildroot", "relation": "documents_defconfig_kernelmenuconfig_rootfs_flow", "certainty": "document_fact"},
+    {"from": "wiki_d20_0", "to": "apug_runtime", "relation": "documents_api_topics", "certainty": "document_fact"},
+    {"from": "wiki_d20_0", "to": "cma", "relation": "requires_cma_api_and_device", "certainty": "document_fact"},
+    {"from": "wiki_d20_3", "to": "ad101_camera", "relation": "references_example", "certainty": "document_fact"},
+    {"from": "apug1205", "to": "drivers", "relation": "requires_three_kernel_modules", "certainty": "document_fact"},
+    {"from": "apug1205", "to": "apug_runtime", "relation": "requires_linked_runtime", "certainty": "document_fact"},
+    {"from": "apug1205", "to": "official_models", "relation": "requires_rt_and_weight", "certainty": "document_fact"},
+    {"from": "apug1205", "to": "host_tools", "relation": "documents_conversion_flow", "certainty": "document_fact"},
+    {"from": "milianke_project", "to": "hpf_and_bitstream", "relation": "produces_candidate_outputs", "certainty": "source_code_fact"},
+    {"from": "milianke_project", "to": "kernel_dt", "relation": "ships_demo_dts", "certainty": "source_code_fact"},
+    {"from": "ad101_simple", "to": "hpf_and_bitstream", "relation": "produces_ad101_candidate_hpf", "certainty": "source_code_fact"},
+    {"from": "ad103_video", "to": "hpf_and_bitstream", "relation": "produces_ad103_candidate_hpf", "certainty": "source_code_fact"},
+    {"from": "ad101_camera", "to": "armnn_demo", "relation": "example_application_line", "certainty": "document_fact"},
+    {"from": "hpf_and_bitstream", "to": "kernel_dt", "relation": "must_be_version_mapped", "certainty": "engineering_inference"},
+    {"from": "kernel_dt", "to": "drivers", "relation": "compatible_nodes_enable_probe", "certainty": "source_code_fact"},
+    {"from": "drivers", "to": "cma", "relation": "creates_device_interfaces", "certainty": "source_code_fact"},
+    {"from": "cma", "to": "armnn_candidate", "relation": "demo_headers_use_cma_api", "certainty": "source_code_fact"},
+    {"from": "armnn_candidate", "to": "armnn_demo", "relation": "links_demo", "certainty": "source_code_fact"},
+    {"from": "host_tools", "to": "official_models", "relation": "would_generate_runtime_model_pair", "certainty": "document_fact"},
+    {"from": "current_board", "to": "drivers", "relation": "no_matching_modules_or_nodes_observed", "certainty": "real_device_observation"},
+    {"from": "current_board", "to": "hpf_and_bitstream", "relation": "active_bitstream_identity_unknown", "certainty": "real_device_observation"}
+    ,{"from": "host_tools", "to": "native_npu_runtime_path", "relation": "would_generate_runtime_assets", "certainty": "document_fact"}
+    ,{"from": "official_models", "to": "native_npu_runtime_path", "relation": "runtime_load_model_pair", "certainty": "document_fact"}
+    ,{"from": "native_npu_runtime_path", "to": "drivers", "relation": "requires_kernel_substrate", "certainty": "document_fact"}
+    ,{"from": "official_models", "to": "armnn_onnx_path", "relation": "not_direct_input; ArmNN path uses ONNX example model", "certainty": "source_code_fact"}
+    ,{"from": "armnn_candidate", "to": "armnn_onnx_path", "relation": "parser_optimizer_enqueue_workload", "certainty": "source_code_fact"}
+    ,{"from": "armnn_onnx_path", "to": "drivers", "relation": "embedded_Alnpu_backend_opens_device_nodes", "certainty": "source_code_fact"}
+    ,{"from": "isolated_build_outputs", "to": "drivers", "relation": "source_build_generated_objects_without_symbol_crc_proof", "certainty": "engineering_inference"}
+    ,{"from": "isolated_build_outputs", "to": "armnn_demo", "relation": "source_build_generated_AArch64_demo", "certainty": "engineering_inference"}
+  ],
+  "board_mapping": [
+    {
+      "example": "DR1M90GEG400",
+      "evidence": "milianke soc_prj.al <Device>DR1M90GEG400</Device>",
+      "current_target": "MLK-F3P-CZ02-DR1M90",
+      "relationship": "same DR1M90 family label but package-to-board mapping not proved",
+      "status": "UNVERIFIED"
+    },
+    {
+      "example": "AD101V20",
+      "evidence": "D20.1/D20.3 project names and Wiki text",
+      "current_target": "MLK-F3P-CZ02-DR1M90",
+      "relationship": "example board differs; no exact MLK mapping",
+      "status": "UNVERIFIED"
+    },
+    {
+      "example": "AD103V20",
+      "evidence": "D20.2 project name",
+      "current_target": "MLK-F3P-CZ02-DR1M90",
+      "relationship": "different example board",
+      "status": "NOT_APPLICABLE_UNVERIFIED"
+    },
+    {
+      "example": "DR1M90GEG484-2",
+      "evidence": "IPUG166 target and TD_D20.1 .al metadata DR1M90GEG484",
+      "current_target": "MLK-F3P-CZ02-DR1M90",
+      "relationship": "package/TD device variant differs from current board identity",
+      "status": "VERSION_DIFFERENCE"
+    }
+  ],
+  "unresolved_edges": [
+    "selected HPF/bitstream to current board active FPGA configuration",
+    "demo Device Tree to current eMMC Device Tree and kernel configuration",
+    "prebuilt modules to current board and current bitstream",
+    "Arm NN Alnpu backend to a running current-board NPU runtime",
+    "official rt.bin/weight.bin model pair to any local demo",
+    "SDK_2025_07 local tree to official dr1m90_npu SDK_2026.01 source line",
+    "isolated driver objects to a complete Module.symvers/kernel symbol CRC set",
+    "isolated ArmNN demo output to current board dynamic libraries and active NPU hardware"
+  ]
+}
