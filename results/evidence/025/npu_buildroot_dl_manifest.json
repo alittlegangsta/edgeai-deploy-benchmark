@@ -1,0 +1,41 @@
+{
+  "schema_version": "task025-buildroot-dl-manifest-v1",
+  "task": "025",
+  "captured_at": "2026-08-06T12:05:00+08:00",
+  "workspace": "<vm-task025>/sources/buildroot",
+  "manifest": {
+    "external_path": "<vm-task025>/results/task025-buildroot-dl-manifest.json",
+    "sha256": "e6920864711298f0b2f2b31d66e103acd1082dc0163538428d53323deb883baa",
+    "file_count": 141,
+    "archive_count": 70,
+    "lock_count": 70,
+    "local_source_files": 1,
+    "total_bytes": 268798198,
+    "lock_files_zero_bytes": true
+  },
+  "initial_download": {
+    "command": "make -C <vm-task025>/sources/buildroot BR2_PRIMARY_SITE=https://sources.buildroot.net BR2_PRIMARY_SITE_ONLY=y BR2_BACKUP_SITE= source",
+    "exit_code": 0,
+    "source": "official Buildroot HTTPS primary site",
+    "hash_checks": "passed by Buildroot"
+  },
+  "offline_recheck": {
+    "command": "make -C <vm-task025>/sources/buildroot BR2_PRIMARY_SITE=file:///__task025_no_network__ BR2_PRIMARY_SITE_ONLY=y BR2_BACKUP_SITE= source",
+    "exit_code": 0,
+    "new_download_requests": 0,
+    "cache_sufficient_for_formal_build": true
+  },
+  "formal_build_network_guard": {
+    "primary_site": "file:///__task025_no_network__",
+    "primary_site_only": true,
+    "backup_site": "",
+    "new_download_requests": 0
+  },
+  "not_committed": true,
+  "safety": {
+    "credentials_used": false,
+    "host_packages_installed": false,
+    "board_accessed": false,
+    "media_written": false
+  }
+}

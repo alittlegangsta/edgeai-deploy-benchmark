@@ -1,0 +1,17 @@
+{
+  "schema_version": "task025-uisrc-build-script-safety-v1",
+  "task": "025",
+  "source": "uisrc-lab-anlogicM-V4.0.1 isolated copy",
+  "workspace": "<vm-task025>/uisrc-lab-anlogic-pdf-20260805",
+  "scripts": [
+    {"name": "scripts/drcfg.sh", "classification": "SAFE_ISOLATED_BUILD", "executed": true, "effect": "sets user-local build variables and creates isolated directories"},
+    {"name": "scripts/other/move_files.sh", "classification": "SAFE_ISOLATED_BUILD", "executed": true, "exit_code": 0, "effect": "copies injected FSBL/bit/DTS into isolated source/output trees"},
+    {"name": "scripts/uboot/make_uboot.sh", "classification": "SAFE_ISOLATED_BUILD", "executed": false, "equivalent_manual_build": "PASS", "effect": "builds U-Boot only in isolated source tree"},
+    {"name": "scripts/kernel/make_kernel.sh", "classification": "SAFE_STATIC_ONLY", "executed": false, "reason": "unmodified script invokes sudo for module installation/rootfs packaging; equivalent no-sudo kernel build was used"},
+    {"name": "scripts/rootfs/buildroot/make_rootfs.sh", "classification": "SAFE_STATIC_ONLY", "executed": false, "reason": "full Buildroot build would use an empty local dl cache and could fetch dependencies; no network or implicit download was allowed"},
+    {"name": "scripts/rootfs/buildroot/create_dr1m_image.sh", "classification": "SAFE_ISOLATED_BUILD", "executed": true, "exit_code": 0, "effect": "runs bootgen and copies boot artifacts under isolated output/images"},
+    {"name": "scripts/rootfs/buildroot/make_parted.sh", "classification": "UNSAFE_DESTRUCTIVE", "executed": false, "reason": "partitions or formats media"},
+    {"name": "scripts/rootfs/buildroot/deploy_image.sh", "classification": "UNSAFE_DESTRUCTIVE", "executed": false, "reason": "writes deployment media"}
+  ],
+  "safety": {"board_accessed": false, "media_written": false, "module_loaded": false, "fpga_written": false, "vendor_npu_executed": false}
+}

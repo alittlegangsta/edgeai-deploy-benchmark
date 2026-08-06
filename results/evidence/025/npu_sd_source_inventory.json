@@ -1,0 +1,234 @@
+{
+  "schema_version": "task025-npu-sd-source-inventory-v1",
+  "task": "025",
+  "captured_at": "2026-08-04T17:59:17+08:00",
+  "classification_policy": "repository_metadata_fact/source_code_fact/document_fact/engineering_inference",
+  "target": {
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "device": "DR1M90GEG400",
+    "architecture": "AArch64",
+    "buildroot": "2022.02.6",
+    "kernel": "6.1.111-rt42",
+    "glibc": "2.25"
+  },
+  "source_roots": {
+    "vendor_root": {
+      "path": "<windows-user>/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA",
+      "provenance": "user-provided local vendor material",
+      "read_only": true,
+      "copied_to_git": false
+    },
+    "knowledge_base": {
+      "path": "/home/dministrator/vendor/anlogic-dr1-knowledge",
+      "read_only": true,
+      "copied_to_git": false
+    },
+    "npu_info_inventory": {
+      "regular_file_count": 1800,
+      "regular_bytes": 886827911,
+      "hpf_count": 15,
+      "bitstream_count": 5,
+      "top_level_bin_count": 7
+    }
+  },
+  "official_repositories": [
+    {
+      "name": "sdk",
+      "remote": "https://gitee.com/anlogic/sdk.git",
+      "branch": "anlogic-linuxsdk",
+      "working_head": "5a693be7d78e2e156e425ef57ebc8b7efad25cd",
+      "working_tree": "dirty",
+      "selected_release": {
+        "tag": "SDK_2025.07-linux6.1",
+        "commit": "beaee2ce45161908403a92619e509f52220ac347",
+        "archive_sha256": "a6a7e1dc8cddeb18638e17cd57ba22d3d7608f500edd69f99f044fae5f0c5d22",
+        "archive_note": "git archive contains gitlink directories but not submodule contents"
+      },
+      "submodules_at_selected_release": {
+        "linux": "b2b757d56eaa923c19b29ebea26b706c62e089cc",
+        "buildroot": "3983a27764558375b8163d9c73624d22f97c74e4",
+        "toolchains": "9675d6b96de95477b0a16b2944fbc3a6b13c7765",
+        "u-boot": "617860886db42064f81de9f6f230f69a1a144194",
+        "fsbl": "5d3a412d6971f95cb5978d614258f53f602b808c",
+        "opensbi": "1fbc5304f7094606671bce4931289de9bfe2749f",
+        "xenomai": "95a2e322eab209cde2dbd5ea2d34ce903e8e4f4e"
+      },
+      "license": {
+        "file": "LICENSE",
+        "sha256": "189b1af95d661151e054cea10c91b3d754e4de4d3fecfb074c1fb29476f7167b",
+        "status": "present"
+      }
+    },
+    {
+      "name": "dr1m90_npu",
+      "remote": "https://gitee.com/anlogic/dr1m90_npu.git",
+      "branch": "release",
+      "working_head": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+      "working_tree": "dirty",
+      "nearest_release": {
+        "tag": "SDK_2026.01",
+        "commit": "a06f09a23582900e2b8843d564ea28db679649a5"
+      },
+      "archive_sha256": "b53e6074f379e876f0c6600acde16766951a6971972e303a5b21121a0d2aace5",
+      "license": "no top-level license file found",
+      "relation_to_sdk_2025_07": "separate release line; exact pairing not proven"
+    },
+    {
+      "name": "toolchains",
+      "remote": "https://gitee.com/anlogic/toolchains.git",
+      "branch": "master",
+      "working_head": "d1bc5fbe250e9f41b739bf2cdda7cdfdb91166a2",
+      "working_tree": "dirty",
+      "nearest_release": {
+        "tag": "SDK_2024.7",
+        "commit": "d9c12f66319f82869b89c3257f028e26a7ad044f"
+      },
+      "archive_sha256": "b64926249f47b1c6fb1842b547d191f3a7bbd63c1e0f0244a0ad674b2aeab72d",
+      "license": "no top-level license file found",
+      "actual_build_toolchain": "Linaro GCC/G++ 7.5.0; aarch64-linux-gnu"
+    },
+    {
+      "name": "boardimages",
+      "remote": "https://gitee.com/anlogic/boardimages.git",
+      "branch": "master",
+      "working_head": "9964582b0a87db269832d4117852f5e5f640a483",
+      "working_tree": "dirty",
+      "license": "no top-level license file found",
+      "image_scope": "only AD101V20 payload found; no MLK-F3P-CZ02 payload",
+      "image_archive": {
+        "path": "ad101v20/linux/ad101v20_boot_tf.tar.gz",
+        "sha256": "bb46165f6234821a5641aa541fd33c4072a05384a53c6d8ae48b762ac8f20eca",
+        "container": "POSIX tar archive despite .tar.gz suffix",
+        "board_scope": "AD10xV20 only; not a safe MLK substitute"
+      }
+    }
+  ],
+  "source_snapshot_comparison": {
+    "official_git_snapshot": {
+      "workspace": "/tmp/task025-preflight/sdk-git-clean-20260804",
+      "tag": "SDK_2025.07-linux6.1",
+      "commit": "beaee2ce45161908403a92619e509f52220ac347",
+      "clone_checkout_sync": "PASS",
+      "submodule_update": {
+        "status": "FAIL_LOCAL_SUBMODULE_REPOSITORIES_UNAVAILABLE",
+        "command": "git submodule update --init --recursive --jobs=1",
+        "error_summary": "relative submodule repositories under the local Windows vendor checkout were not available to the WSL clone",
+        "gitlinks_uninitialized": ["linux", "buildroot", "toolchains", "u-boot", "fsbl", "opensbi", "xenomai"]
+      },
+      "dirty": false,
+      "complete_build_tree": false
+    },
+    "vendor_release_tarball": {
+      "path": "/home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz",
+      "sha256": "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0",
+      "size_bytes": 1368135226,
+      "extracted_workspace": "/home/uisrc/build/task025/sdk-release-tarball-20260804/sdk",
+      "top_level_components": ["app", "buildroot", "device", "fsbl", "linux", "opensbi", "toolchains", "tools", "u-boot", "xenomai"],
+      "regular_file_counts": {"linux": 78869, "buildroot": 13124, "u_boot": 17586, "fsbl": 11415, "toolchains": 8},
+      "git_metadata": "no .git directories found in the extracted payload",
+      "release_file_hashes": {
+        "sdk_license": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+        "linux_makefile": "b2c12d1eb8aa2e1ce64873172f92a66983e942b8e3099c22331caf1e3902e2e0",
+        "buildroot_rel_ver": "1ba52981efd7766d917d057232fae371e95690c8e476425a0194aadbb2e60d3d",
+        "build_script": "bb483f9ad09a7acc72814c3afbd7b4abced976d5e5dc23dfd74a783f4eb74809",
+        "npu_build_script": "252854d2b571c91cfa57ae578fb762b92721e5b267aae659ff6bcda211efde45"
+      },
+      "comparison_to_git_snapshot": "contains materially more source content than the git archive, including Linux/Buildroot/U-Boot/FSBL/toolchain payloads, but cannot prove the exact submodule commits"
+    },
+    "milianke_board_package": {
+      "source": "user-provided MLK/Milianke DR1M90GEG400 NPU project",
+      "project_sha256": "670b24a682b44fcc48ec4b652b6556cba99790b474a7f2b0c1370e40768a7e32",
+      "project_device": "DR1M90GEG400",
+      "linux_sdk_board_config": false,
+      "relation": "prebuilt FPGA/HPF/boot candidate; not an official SDK source snapshot"
+    }
+  },
+  "mlk_project": {
+    "relative_path": "03_demo/05-5_NPU演示/demo",
+    "project_file": {
+      "name": "soc_prj.al",
+      "sha256": "670b24a682b44fcc48ec4b652b6556cba99790b474a7f2b0c1370e40768a7e32",
+      "declared_family": "DR1",
+      "declared_device": "DR1M90GEG400",
+      "declared_speed": "-2",
+      "td_version": "6.2.175876"
+    },
+    "sdk_metadata": {
+      "ide_version": "2025.07",
+      "ide_build_id": "20250905",
+      "sdk_version": "20250905",
+      "hpf_version": "202507",
+      "source": "soc_sdk/.fdworkspace and soc_base/tools/make/rules.mk",
+      "exact_official_sdk_tag_mapping": "not proven"
+    },
+    "candidate_assets": {
+      "hpf": {
+        "relative_path": "soc_hw/soc_prj.hpf",
+        "sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+        "status": "candidate_not_active"
+      },
+      "bitstream": {
+        "relative_path": "soc_prj/soc_prj_Runs/best_result/soc_prj.bit",
+        "sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912",
+        "status": "candidate_not_written"
+      },
+      "boot": {
+        "BOOT.bin": "567e14124fa17137e964ebcadd4680d8349058beacd4070377ba0ac3fc8c2585",
+        "system.dtb": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+        "uImage.lz4": "b570c65a8deef13bbf7770038a779a2b94c97000afb564896ccdd3e6bba7fab9",
+        "uInitrd.lz4": "4dc1f9cfaadfa19cae2dd4b4cd9e0795e3289bbefd5f2d01af9adeada3ae074e"
+      },
+      "device_tree": "anlogic-dr1.dts includes anlogic-dr1m90.dts and anlogic-dr1m90-softip.dts; candidate only"
+    },
+    "relationship": "strong DR1M90GEG400 board-level lead, but no official SDK BoardConfig or active-boot identity closes the MLK mapping"
+  },
+  "download_asset_identity": {
+    "evidence": "results/evidence/025/uisrc_package_inventory.json",
+    "uisrc_lab_arm": {
+      "file_name": "uisrc-lab-anlogicM-V4.0.1.tar.gz",
+      "md5": "9ba0d5c69e1e127709a3c33958470688",
+      "sha256": "7214035eea18e0df67a1aaa401ad9d024c4a5560cb5843af50e5f75e9c81d292",
+      "expected_md5_match": true,
+      "embedded_sdk": "SDK_2025.1"
+    },
+    "uisrc_vm_installer": {
+      "file_name": "uisrc-ubuntu18x64.exe",
+      "md5": "a07728013c0d117e3793c8d1ad4d4fd2",
+      "sha256": "fd525f099eaf3d195fff2f7a7c12ee360d5f8e2ada365211b34c93d1aa4e3611",
+      "expected_md5_match": true
+    },
+    "anlogic_linuxsdk": {
+      "expected_md5": "eacb0d2428b9177407e4feeb42747001",
+      "found": false
+    },
+    "sdk_2025_7": {
+      "file_name": "sdk.2025.7.tar.gz",
+      "md5": "a85e6f1f52782a0a9b7e7444d7f8e968",
+      "sha256": "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0",
+      "identity_reused_without_rehash": true,
+      "distinct_from_expected_anlogic_linuxsdk": true
+    },
+    "impact": "The exact ARM Milianke package adds generic DR1M source/toolchain evidence but does not provide a version-matched MLK BoardConfig or NPU userspace closure."
+  },
+  "vm_audit": {
+    "evidence": [
+      "results/evidence/025/npu_vm_uisrc_environment_inventory.json",
+      "results/evidence/025/npu_vm_historical_mlk_bsp_assessment.json",
+      "results/evidence/025/npu_vm_05_5_provenance_comparison.json"
+    ],
+    "official_sdk_tree": "/home/uisrc/vendor/anlogic/sdk/sdk (SDK_2025.07 marker; superproject/submodule object provenance unavailable)",
+    "historical_uisrc_package": "not found",
+    "original_05_5_workspace": "not found; VM demo is provenance-identical copy of local 05-5 archive/tree",
+    "generic_base_dts": "found in official VM SDK, but MLK mapping unverified",
+    "mlk_boardconfig": "not found",
+    "candidate_sd_impact": "NOT_READY"
+  },
+  "policy": {
+    "vendor_assets_copied_to_git": false,
+    "physical_media_written": false,
+    "board_modified": false,
+    "modules_loaded": false,
+    "npu_program_executed": false,
+    "project_model_converted": false
+  }
+}

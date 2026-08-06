@@ -1,0 +1,79 @@
+{
+  "schema_version": "task025-boardconfig-recovery-assessment-v1",
+  "task": "025",
+  "target": {
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "device": "DR1M90GEG400",
+    "architecture": "AArch64"
+  },
+  "candidate_classes": {
+    "FOUND_COMPLETE_MLK_BOARDCONFIG": "not supported by the audited local evidence",
+    "RECOVERABLE_FROM_LOCAL_DEMOS": "not supported because the base Linux DTS/defconfig and board-specific build mapping are absent",
+    "PREBUILT_ASSETS_ONLY": "partially true for 05-5 and D21.1, but identity conflicts prevent treating the set as a safe MLK package",
+    "ASSET_IDENTITY_CONFLICT": "selected"
+  },
+  "board_config_search": {
+    "official_sdk_board_configs": ["AD101V20", "AD103V20"],
+    "milianke_board_cfg": "BOARD_DR1X90_AD101_V10",
+    "mlk_f3p_cz02_named_config_found": false,
+    "mlk_cz02_dr1m90_named_config_found": false,
+    "anlogic_dr1m90_base_dts_found_in_vendor_root": false,
+    "buildroot_mlk_defconfig_found": false,
+    "kernel_mlk_defconfig_found": false,
+    "scripted_bootgen_entry_found_for_05_5": false
+  },
+  "cross_directory_dependency_graph": [
+    {
+      "from": "05-5_NPU演示",
+      "to": "external Linux SDK / uisrc-lab-anlogic",
+      "evidence": "PDF and face_detection build flow refer to external boards/files, sources/linux and rootfs_overlay paths",
+      "closed": false
+    },
+    {
+      "from": "05-5_NPU演示",
+      "to": "3-4_ex_soc_linux",
+      "relation": "same generic TD/FSBL/Linux layout and AD101-labelled board macro; no direct file dependency proven",
+      "closed": false
+    },
+    {
+      "from": "05-5_NPU演示",
+      "to": "3-2_ex_fpsoc/03_boot_mode",
+      "relation": "same GEG400 device family and generic FSBL/HPF process; its BIF/bit is not the NPU chain",
+      "closed": false
+    },
+    {
+      "from": "05-5_NPU演示",
+      "to": "SDK_2025.07-linux6.1",
+      "relation": "version names in guide/rules are consistent with the general line, but exact commit/submodule mapping is absent",
+      "closed": false
+    }
+  ],
+  "asset_identity_table": {
+    "hpf": "DR1M90GEG400 declared; includes SoftNPU; candidate only",
+    "best_result_bitstream": "05-5 generated output; differs from HPF/platform copy",
+    "platform_bitstream": "same as HPF embedded bit; candidate only",
+    "boot_bin": "candidate; payload source unmapped",
+    "system_dtb": "contains HardNPU/SoftNPU/CMA strings; base DTS absent",
+    "kernel_and_modules": "prebuilt/reference candidates; same-source candidate build not established",
+    "armnn_package": "AArch64 Arm NN/ONNX source/link closure; board deployment not proven"
+  },
+  "decision": {
+    "mlk_board_project_identity": "PARTIAL_DIRECT_LEAD_NOT_CLOSED",
+    "base_linux_bsp_availability": "GENERIC_GEG400_REFERENCE_ONLY",
+    "boardconfig_recovery_feasibility": "ASSET_IDENTITY_CONFLICT",
+    "boot_chain_source_availability": "BLOCKED_BOOT_CHAIN_SOURCE_MISSING",
+    "candidate_kernel_module_buildability": "BLOCKED_CANDIDATE_KERNEL_MODULE_BUILD",
+    "candidate_sd_generation_readiness": "NOT_READY",
+    "primary_verdict": "BLOCKED_MLK_BOARD_PROJECT_IDENTITY",
+    "sd_write_approval": "NOT_READY"
+  },
+  "minimum_missing_set": [
+    "MLK-F3P-CZ02-specific BoardConfig or board selector",
+    "complete anlogic-dr1m90.dts/base DTS used by 05-5",
+    "matching Linux and Buildroot defconfigs",
+    "exact SDK/submodule commit mapping for the Milianke package",
+    "BIF/bootgen source tying BOOT.bin to the selected FSBL and bitstream",
+    "unambiguous HPF/bitstream/DTB identity for the MLK board"
+  ],
+  "conclusion": "The additional supporting trees improve the generic DR1M90GEG400 process evidence but do not recover a complete MLK BoardConfig. The correct classification remains ASSET_IDENTITY_CONFLICT and the candidate SD build is not ready."
+}

@@ -1,0 +1,112 @@
+{
+  "schema_version": "task025-03-demo-archive-inventory-v1",
+  "task": "025",
+  "source_root": "<vendor-root>/03_demo",
+  "read_only": true,
+  "extraction_performed": false,
+  "snapshot": {
+    "source_file": "/tmp/task025-archive-inventory-20260805.json",
+    "source_file_sha256": "ffb0e4e6f73be84d2165ca2df47c219adc4e5c20fad01f14ba304f333ab3a074",
+    "generated_at": "2026-08-05T00:00:00+08:00",
+    "archive_count": 151,
+    "total_bytes": 4263567836
+  },
+  "listing_capabilities": {
+    "zip": "PASS_python_zipfile_and_unzip",
+    "tar_gz": "PASS_tarfile_for_selected_nested_package",
+    "rar": "NOT_AVAILABLE_NO_LOCAL_READER",
+    "7z": "NOT_AVAILABLE_NO_LOCAL_READER",
+    "rar_policy": "RAR v5 files were identified with file/sha256; no strings-derived path was treated as an authoritative listing.",
+    "seven_zip_policy": "No 7z reader was present; no extraction was attempted."
+  },
+  "selection_policy": {
+    "A": "direct NPU or MLK package; deep audit required",
+    "B": "possible shared FPSoC/Linux build context; targeted audit",
+    "C": "comparison or documentation payload; identity only",
+    "D": "unrelated/generated/tool payload; no deep audit"
+  },
+  "selected_archives": [
+    {
+      "relative_path": "05-5_NPU演示/demo.zip",
+      "priority": "A",
+      "format": "zip",
+      "size_bytes": 279913795,
+      "sha256": "f754663eded613cf15ac2ceb241ac91533792d360c4fdb49ba4105d887ba70ae",
+      "listing": {
+        "status": "PASS",
+        "entry_count": 1777,
+        "uncompressed_bytes": 430275543,
+        "top_level_entries": ["boot/", "driver/", "sdk/", "soc_dts/", "soc_hw/", "soc_prj/", "soc_sdk/"],
+        "nested_archives": ["sdk/face_detection.tar.gz"]
+      },
+      "decision": "selected; direct Milianke NPU project and Arm NN package"
+    },
+    {
+      "relative_path": "05-5_NPU演示/demo/sdk/face_detection.tar.gz",
+      "priority": "A",
+      "format": "tar.gz",
+      "size_bytes": 35082716,
+      "sha256": "33eb354f2cb41df81f42fe30d44898d99e2a4fcd8a69b8ae678c8622e473b82f",
+      "decision": "selected; nested Arm NN/ONNX demo package"
+    },
+    {
+      "relative_path": "3-2_ex_fpsoc/3_2_01_sdk_base.rar",
+      "priority": "B",
+      "format": "rar-v5",
+      "size_bytes": 900414885,
+      "sha256": "e003ee89664ce8eb5c317fed507fe8a207b0a8a2425f504b9a4a646596b2472e",
+      "listing": {
+        "status": "NOT_AVAILABLE_NO_LOCAL_READER",
+        "file_type": "RAR archive data, v5",
+        "strings_hints": ["08_ps_uart_intr/soc_hw/fpga_prj.hpf", "soc_sdk", "dr1m90_fpsoc_cpu0"],
+        "strings_hints_authoritative": false
+      },
+      "decision": "highest-value deferred SDK archive; targeted 03_boot_mode tree already audited"
+    },
+    {
+      "relative_path": "3-2_ex_fpsoc/3_2_02_sdk_adv.rar",
+      "priority": "B",
+      "format": "rar-v5",
+      "size_bytes": 815163471,
+      "sha256": "b10e6c25d5efd3849597f9d40ed08129183de1355116cff4391a684328fbd5d4",
+      "listing": {
+        "status": "NOT_AVAILABLE_NO_LOCAL_READER",
+        "file_type": "RAR archive data, v5"
+      },
+      "decision": "highest-value deferred SDK archive; no NPU-specific hit can be established without a reader"
+    },
+    {
+      "relative_path": "3-1_ex_fpga/3_1_01_ex_fpga_base/3_1_01_fpga_base.zip",
+      "priority": "C",
+      "format": "zip",
+      "size_bytes": 224751300,
+      "sha256": "afe22aec080473d36220ec324aa6c428c1377fa893680ba9cc1d70c559de7d63",
+      "decision": "deferred; generic FPGA example without bounded NPU/Linux dependency"
+    },
+    {
+      "relative_path": "3-1_ex_fpga/3_1_02_ex_fpga_udp/3_1_02_fpga_udp.zip",
+      "priority": "C",
+      "format": "zip",
+      "size_bytes": 521296346,
+      "sha256": "9ae9320d0e80575b1ad33effd35c986134325cb0abf215fa08ffa3e85a8b347a",
+      "decision": "deferred; generic FPGA/UDP example"
+    }
+  ],
+  "supporting_directory_decisions": [
+    {
+      "path": "3-4_ex_soc_linux",
+      "decision": "deep targeted audit; no large SDK archive was found in the current directory scan"
+    },
+    {
+      "path": "D21.1_NPU_Simple_demo_sd_image",
+      "decision": "identity-only prebuilt image comparison; not an MLK source tree"
+    },
+    {
+      "path": "TD_D20.1_AD101V20_2025.7",
+      "decision": "identity-only AD101/GEG484 comparison; excluded from MLK construction"
+    }
+  ],
+  "reproducible_audit_command": "python3 scripts/vendor/audit_task025_demo_archives.py --root <vendor-root>/03_demo --output <external-or-evidence-json>",
+  "vendor_material_copied_to_git": false,
+  "conclusion": "The direct NPU ZIP was listed and selectively analyzed. The two large FPSoc RAR SDK archives remain identity-recorded but not expanded because no local RAR reader is available; their omission does not establish an MLK BoardConfig. Supporting Linux/FPSoc trees therefore remain the authoritative static references for this pass, with their limitations recorded separately."
+}

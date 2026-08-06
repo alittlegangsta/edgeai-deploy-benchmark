@@ -1,0 +1,161 @@
+{
+  "schema_version": "task025-vm-05-5-provenance-comparison-v1",
+  "task": "025",
+  "captured_at": "2026-08-05T17:34:41+08:00",
+  "read_only": true,
+  "sources": {
+    "local_05_5_source": {
+      "path": "<vendor-root>/03_demo/05-5_NPU演示",
+      "archive_path": "<vendor-root>/03_demo/05-5_NPU演示/demo.zip",
+      "archive_size_bytes": 279913795,
+      "archive_sha256": "f754663eded613cf15ac2ceb241ac91533792d360c4fdb49ba4105d887ba70ae",
+      "archive_entry_count": 1777,
+      "tree_digest": "c82767562ba9e07d8ca6bf3842b32b366d08bc5b9cafa113bdaadd908882202a"
+    },
+    "vm_demo_copy": {
+      "path": "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo",
+      "archive_path": "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo/demo.zip",
+      "archive_size_bytes": 279913795,
+      "archive_sha256": "f754663eded613cf15ac2ceb241ac91533792d360c4fdb49ba4105d887ba70ae",
+      "archive_entry_count": 1777,
+      "tree_digest": "c82767562ba9e07d8ca6bf3842b32b366d08bc5b9cafa113bdaadd908882202a",
+      "copy_status": "BYTE_AND_TREE_IDENTITY_MATCH"
+    }
+  },
+  "version_and_project_markers": {
+    "project_file": {
+      "path": "demo/soc_prj/soc_prj.al",
+      "declared_device": "DR1M90GEG400",
+      "declared_speed": "-2",
+      "td_version_from_logs": "6.2.175876"
+    },
+    "workspace": {
+      "path": "demo/soc_sdk/.fdworkspace",
+      "IDE_Version": "2025.07",
+      "IDE_Build_Id": "20250905"
+    },
+    "sdk_version": {
+      "path": "demo/soc_sdk/soc_base/tools/make/rules.mk",
+      "SDK_VERSION": "20250905"
+    },
+    "hpf": {
+      "path": "demo/soc_hw/soc_prj.hpf",
+      "sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+      "reported_hpf_version": "202507"
+    },
+    "td_log": {
+      "tool_path": "TD_6.2.1_Release_6.2.175.876",
+      "device_log_identity": "DR1M90GEG400",
+      "conflict": "one saved TD log records Unknown device name DR1M90GEG400"
+    }
+  },
+  "candidate_assets_in_vm_copy": {
+    "boot_bin": {
+      "path": "demo/boot/BOOT.bin",
+      "size_bytes": 5179264,
+      "sha256": "567e14124fa17137e964ebcadd4680d8349058beacd4070377ba0ac3fc8c2585",
+      "status": "PREBUILT_ONLY"
+    },
+    "system_dtb": {
+      "path": "demo/boot/system.dtb",
+      "size_bytes": 16899,
+      "sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+      "status": "PREBUILT_ONLY"
+    },
+    "boot_script": {
+      "path": "demo/boot/boot.scr",
+      "sha256": "c48444ee51a8d26660807a94fb8ae7cd620e06622e9ea0f57b969422952d0d6c",
+      "status": "PREBUILT_ONLY"
+    },
+    "platform_hpf": {
+      "path": "demo/soc_hw/soc_prj.hpf",
+      "sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+      "status": "PROJECT_EXPORT_CANDIDATE"
+    },
+    "softip_dts": {
+      "path": "demo/sdk/anlogic-dr1m90-softip.dts",
+      "sha256": "c6c79ccad82a41db52ce2829ecb971b286e6e868f8ba88e97dc17a8b99b6917a",
+      "status": "FRAGMENT_ONLY"
+    },
+    "kernel_dts_fragment": {
+      "path": "demo/soc_dts/kernel-dts/anlogic-dr1.dts",
+      "sha256": "4d8b261cde9ee0ab6f41509a6aaa98beac14554acfe549c82bd08010fcd6e019",
+      "status": "FRAGMENT_WITH_EXTERNAL_BASE_INCLUDE"
+    },
+    "face_detection_package": {
+      "path": "demo/sdk/face_detection.tar.gz",
+      "size_bytes": 35082716,
+      "sha256": "33eb354f2cb41df81f42fe30d44898d99e2a4fcd8a69b8ae678c8622e473b82f",
+      "status": "ARMNN_ONNX_PACKAGE_CANDIDATE"
+    }
+  },
+  "path_relationship": {
+    "software_route": "Arm NN / ONNX / Alnpu; no native npu_runtime route identified in the copied package",
+    "native_runtime_assets": {
+      "npu_runtime": false,
+      "convert_tool": false,
+      "al_ai_flow": false,
+      "rt.bin": false,
+      "weight.bin": false
+    },
+    "linux_bsp": "not included as a complete source/config tree; demo points to external SDK headers and build paths",
+    "boot_chain": "prebuilt BOOT.bin/DTB/kernel/rootfs files exist, but no packaged BIF/bootgen source maps them to a reproducible MLK build",
+    "original_workspace": "not found; VM copy is explicitly staged from the local 05-5 path"
+  },
+  "comparison": {
+    "local_and_vm_archive_match": true,
+    "vm_copy_is_more_complete_than_local": false,
+    "exact_2025_07_uisrc_lab_provenance": false,
+    "exact_official_sdk_git_tag_mapping": false,
+    "mlk_boardconfig_recovered": false,
+    "candidate_sd_generation_readiness": "NOT_READY",
+    "classification": "RECOVERABLE_STRUCTURE_VERSION_MISMATCH"
+  },
+  "task025_impact": {
+    "historical_package_availability": "BLOCKED_HISTORICAL_UISRC_PACKAGE_MISSING",
+    "original_npu_workspace_availability": "BLOCKED_ORIGINAL_WORKSPACE_MISSING",
+    "candidate_boot_chain_reproducibility": "BLOCKED_MLK_BOARD_PROJECT_IDENTITY",
+    "primary_verdict": "BLOCKED_MLK_BOARD_PROJECT_IDENTITY"
+  },
+  "safety": {
+    "archive_executed": false,
+    "vendor_program_executed": false,
+    "installer_executed": false,
+    "build_script_executed": false,
+    "vm_modified": false,
+    "board_accessed": false,
+    "media_written": false
+  },
+  "task": "025",
+  "board": "MLK-F3P-CZ02-DR1M90",
+  "sdk_tag": "SDK_2025.07 markers in demo; exact repository tag unknown",
+  "repository_tag_commit": "unknown",
+  "sources_consulted": [
+    "/home/uisrc/vendor/anlogic/logs/input_staging/npu_demo_summary.txt",
+    "/home/uisrc/vendor/anlogic/logs/input_staging/staging_summary.md",
+    "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo/demo/.fdworkspace",
+    "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo/demo/soc_sdk/soc_base/tools/make/rules.mk",
+    "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo/demo/soc_prj",
+    "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo/demo/boot"
+  ],
+  "documented_facts": [
+    "The VM staging log records the local 05-5 source path and matching tree digest.",
+    "The copied project contains 2025.07/20250905 IDE markers and DR1M90GEG400 project metadata."
+  ],
+  "source_code_facts": [
+    "The copied kernel fragment includes an external generic base DTS and a SoftNPU fragment.",
+    "The copied project contains prebuilt boot artifacts but no complete Linux SDK BoardConfig or bootgen source manifest."
+  ],
+  "assumptions": [
+    "An exact archive match establishes copy provenance, not the provenance of the original generated BOOT.bin payload."
+  ],
+  "conflicts": [
+    "The copy carries a DR1M90GEG400 project label while its software board macro is AD101-labelled and its saved logs contain an unknown-device error."
+  ],
+  "unresolved_blockers": [
+    "historical MLK board package with matching SDK/submodule identity",
+    "complete BoardConfig/base DTS/rootfs/bootgen source chain",
+    "payload mapping of BOOT.bin to a known bitstream"
+  ],
+  "proposed_action": "Treat the VM tree as a provenance-identical copy of the local 05-5 package, not as a recovered historical build workspace; obtain the missing MLK BSP source before SD preflight can proceed."
+}

@@ -1,0 +1,333 @@
+{
+  "schema_version": "task025-validation-v1",
+  "task": "025",
+  "validated_at": "2026-08-06T12:23:09+08:00",
+  "status": "PASS_TASK025_COMPLETED_READY_FOR_SD_WRITE_APPROVAL",
+  "automated_preflight": "COMPLETE",
+  "task_status": "Completed",
+  "primary_verdict": "READY_FOR_SD_WRITE_APPROVAL",
+  "candidate_approved": true,
+  "deployment_approval": "PENDING",
+  "candidate_sd_image": "NOT_PARTITIONED_IMAGE",
+  "candidate_approval_semantics": "static-audit approval only; does not authorize formatting, partitioning or writing real media",
+  "commit_created": true,
+  "evidence_files": [
+    "npu_sd_source_inventory.json",
+    "npu_sd_build_chain.json",
+    "npu_sd_build_attempt.json",
+    "npu_sd_armnn_rootfs_dependency.json",
+    "npu_sd_candidate_identity.json",
+    "npu_sd_deployment_plan.json",
+    "npu_sd_image_verdict.json",
+    "npu_demo_directory_screening.json",
+    "milianke_npu_demo_audit.json",
+    "npu_demo_archive_inventory.json",
+    "npu_mlk_linux_bsp_audit.json",
+    "npu_hpf_bitstream_provenance.json",
+    "npu_boardconfig_recovery_assessment.json",
+    "uisrc_package_inventory.json",
+    "npu_vm_uisrc_environment_inventory.json",
+    "npu_vm_historical_mlk_bsp_assessment.json",
+    "npu_vm_05_5_provenance_comparison.json",
+    "npu_pdf_workflow_extraction.json",
+    "npu_pdf_input_closure.json",
+    "npu_uisrc_build_script_safety.json",
+    "npu_pdf_isolated_reproduction.json",
+    "npu_pdf_candidate_artifact_validation.json",
+    "npu_buildroot_config_identity.json",
+    "npu_buildroot_dl_manifest.json",
+    "npu_formal_rootfs_build.json",
+    "npu_formal_rootfs_runtime_closure.json",
+    "npu_final_candidate_artifact_manifest.json"
+  ],
+  "commands": [
+    {
+      "command": "python3 scripts/vendor/validate_task025_npu_sd_preflight.py --evidence-dir results/evidence/025",
+      "result": "PASS",
+      "detail": "thirteen required Task 025 evidence files, safety flags, source identities, bounded archive inventory, 3-2/3-4 BSP audit, HPF/bitstream provenance, BoardConfig recovery assessment, Milianke deep audit, Arm NN dependency closure, partial app build and deployment plan are consistent"
+    },
+    {
+      "command": "python3 scripts/vendor/audit_task025_npu_sd_preflight.py --root /tmp/task025-preflight/source/sdk-2025.07 --output /tmp/task025-preflight/sdk_inventory.json",
+      "result": "PASS",
+      "detail": "2,763 regular files and 208,496,898 bytes inventoried outside Git"
+    },
+    {
+      "command": "git clone/checkout/sync/submodule update in /tmp/task025-preflight/sdk-git-clean-20260804",
+      "result": "PARTIAL",
+      "detail": "exact SDK superproject clone passed; local relative submodule repositories were unavailable, so gitlinks remained uninitialized"
+    },
+    {
+      "command": "sha256sum and tar extraction of /home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz",
+      "result": "PASS_SOURCE_PAYLOAD_PARTIAL_PROVENANCE",
+      "detail": "1,368,135,226-byte release payload extracted in the VM; no .git metadata and no MLK BoardConfig"
+    },
+    {
+      "command": "readelf -d/readelf --version-info over yolo_demo_pic, Arm NN/parser/protobuf and supplied shared objects",
+      "result": "PASS_STATIC_CLOSURE",
+      "detail": "all non-system DT_NEEDED names resolve in the candidate package; libprotoc names are packaging-only, while OpenCV absolute RPATH remains a relocation caveat"
+    },
+    {
+      "command": "python3 scripts/vendor/audit_task025_npu_sd_preflight.py --root <windows-user>/Desktop/fpga_info/02_F3P_DR1M90GEG400_FPGA/NPU_info --output /tmp/task025-preflight/npu_info_inventory.json",
+      "result": "PASS",
+      "detail": "1,800 regular files and 886,827,911 bytes inventoried outside Git"
+    },
+    {
+      "command": "sha256sum of nine selected 05-5_NPU演示 artifacts and six duplicate NPU_info artifacts",
+      "result": "PASS",
+      "detail": "recorded hashes match the bounded Milianke deep-audit evidence and the duplicate package is byte-identical for the selected artifacts"
+    },
+    {
+      "command": "read-only 03_demo archive snapshot cross-check",
+      "result": "PASS",
+      "detail": "151 archive-like files and 4,263,567,836 bytes recorded; snapshot SHA256 ffb0e4e6f73be84d2165ca2df47c219adc4e5c20fad01f14ba304f333ab3a074; 05-5 ZIP listing has 1,777 entries"
+    },
+    {
+      "command": "static 3-2/3-4 project, HPF, BIF, DTS and BoardConfig audit",
+      "result": "PASS_WITH_IDENTITY_BLOCK",
+      "detail": "generic GEG400/FSBL/Linux context was confirmed; no MLK BoardConfig or base anlogic-dr1m90.dts was found; 3-2 BIF maps generic FSBL/bit/hello_world"
+    },
+    {
+      "command": "python3 -m py_compile and python3 scripts/vendor/audit_task025_demo_archives.py --help",
+      "result": "PASS",
+      "detail": "new archive inventory and validator sources compile; no vendor tree was written"
+    },
+    {
+      "command": "python3 scripts/vendor/audit_task025_demo_archives.py --root /tmp/task025-preflight --output /tmp/task025-demo-archive-script-smoke.json",
+      "result": "PASS",
+      "detail": "read-only script smoke produced 7 archive records outside Git; no vendor source was modified"
+    },
+    {
+      "command": "python3 -m unittest tests/python/test_task025_npu_sd_preflight.py -v",
+      "result": "PASS",
+      "detail": "5 focused tests, including archive bounds, 3-2/3-4 BSP classification, 03_demo screening and Milianke Arm NN/native-runtime path split"
+    },
+    {
+      "command": "PYTHONPATH=python .venv/bin/python -m unittest discover -s tests/python -p 'test_*.py'",
+      "result": "PASS",
+      "detail": "127 Python tests"
+    },
+    {
+      "command": "cmake --build build/pc-all-release --config Release -j2",
+      "result": "PASS",
+      "detail": "ninja no work; existing model-independent Release build remains clean"
+    },
+    {
+      "command": "ctest --test-dir build/pc-all-release --output-on-failure",
+      "result": "PASS",
+      "detail": "14/14 tests"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task022_npu_audit.py --evidence-dir results/evidence/022",
+      "result": "PASS",
+      "detail": "Task 022 verdict and official Wiki audit remain consistent"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task023_npu_package.py --evidence-dir results/evidence/023",
+      "result": "PASS",
+      "detail": "Task 023 package-chain evidence remains consistent and one-shot is not executed"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task024_npu_mapping.py --evidence-dir results/evidence/024",
+      "result": "PASS",
+      "detail": "Task 024 board mapping evidence remains immutable and valid"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_anlogic_arm_runtime_profile.py --check-all",
+      "result": "PASS",
+      "detail": "Task 019 baseline and recommended dual-thread profiles remain valid"
+    },
+    {
+      "command": "JSON/YAML parse, Python compile, Bash syntax, git diff --check",
+      "result": "PASS",
+      "detail": "all Task 025 evidence/manifests/scripts parse or compile, including the 03_demo screening and deep-audit evidence"
+    },
+    {
+      "command": "changed Markdown local-link check",
+      "result": "PASS",
+      "detail": "README, ROADMAP, Task 025 and vendor preflight links resolve"
+    },
+    {
+      "command": "Task 017-024 immutability and repository hygiene scan",
+      "result": "PASS",
+      "detail": "no prior task evidence was modified; no vendor binaries, models, SDKs or credentials were added"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task025_npu_sd_preflight.py --evidence-dir results/evidence/025",
+      "result": "PASS",
+      "detail": "13 required evidence files; primary BLOCKED_MLK_BOARD_PROJECT_IDENTITY; candidate approval and physical-operation safety flags remain false"
+    },
+    {
+      "command": "python3 -m unittest -v tests.python.test_task025_npu_sd_preflight",
+      "result": "PASS",
+      "detail": "5 focused tests"
+    },
+    {
+      "command": "JSON/YAML parse, Python compile, Markdown local links, changed-file sensitive scan, git diff --check",
+      "result": "PASS",
+      "detail": "all new archive/BSP/HPF/BoardConfig evidence and scripts pass offline checks"
+    },
+    {
+      "command": "bounded local package identity search and static selective audit",
+      "result": "PASS_WITH_VERSION_BLOCK",
+      "detail": "exact ARM uisrc-lab-anlogicM-V4.0.1 and VM installer MD5 identities found; expected anlogic-linuxsdk MD5 not found; ARM package is generic DR1M SDK_2025.1 structure without MLK BoardConfig or NPU userspace assets"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task025_npu_sd_preflight.py --evidence-dir results/evidence/025",
+      "result": "PASS",
+      "detail": "fourteen required evidence files; uisrc package identity, expected-download absence and safety flags are consistent; primary BLOCKED_MLK_BOARD_PROJECT_IDENTITY"
+    },
+    {
+      "command": "python3 -m unittest -v tests.python.test_task025_npu_sd_preflight",
+      "result": "PASS",
+      "detail": "6 focused tests including exact ARM package identity and preservation of the MLK board blocker"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task025_npu_sd_preflight.py --evidence-dir results/evidence/025",
+      "result": "PASS",
+      "detail": "17 required evidence files; VM identity, generic base-DTS increment, copied 05-5 provenance and safety flags are consistent; primary BLOCKED_MLK_BOARD_PROJECT_IDENTITY"
+    },
+    {
+      "command": "python3 -m unittest -v tests.python.test_task025_npu_sd_preflight",
+      "result": "PASS",
+      "detail": "7 focused tests including VM historical-workspace and generic-DTS evidence"
+    },
+    {
+      "command": "python3 - <<'PY' JSON/YAML parse + py_compile + bash -n",
+      "result": "PASS",
+      "detail": "17 Task 025 evidence JSON files and manifest parsed; Task 025 Python sources/tests compiled; all repository shell scripts passed bash -n"
+    },
+    {
+      "command": "PYTHONPATH=python .venv/bin/python -m unittest discover -s tests/python -p 'test_*.py'",
+      "result": "PASS",
+      "detail": "129 Python tests"
+    },
+    {
+      "command": "cmake --build build/pc-all-release --config Release -j2 && ctest --test-dir build/pc-all-release --output-on-failure",
+      "result": "PASS",
+      "detail": "Release build required no work; CTest 14/14"
+    },
+    {
+      "command": "Task 022/023/024 validators and Task 019 runtime-profile validator",
+      "result": "PASS",
+      "detail": "all prior-task validators passed; prior evidence remains unchanged"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS",
+      "detail": "no whitespace errors"
+    },
+    {
+      "command": "Task 017-024 evidence immutability check",
+      "result": "PASS",
+      "detail": "no prior-task evidence paths changed"
+    },
+    {
+      "command": "changed-file sensitive-material scan and repository hygiene scan",
+      "result": "PASS",
+      "detail": "no credentials or forbidden vendor binaries/SDKs/models/build outputs detected"
+    },
+    {
+      "command": "changed Markdown local-link check",
+      "result": "PASS",
+      "detail": "all local links in Task 025 documentation resolve"
+    },
+    {
+      "command": "Buildroot make source with official HTTPS primary and hash verification",
+      "result": "PASS",
+      "detail": "70 source archives plus 70 lock files and one local source entry; 141 manifest entries and 268798198 bytes"
+    },
+    {
+      "command": "Buildroot offline make source recheck with file-only primary site",
+      "result": "PASS",
+      "detail": "exit 0 with zero new download requests"
+    },
+    {
+      "command": "formal Buildroot 2022.02.6 rootfs build with network guard",
+      "result": "PASS",
+      "detail": "exit 0; rootfs.tar.gz, rootfs.cpio.lz4 and uInitrd.lz4 generated in isolated VM workspace"
+    },
+    {
+      "command": "formal rootfs static ELF and DT_NEEDED closure audit",
+      "result": "PASS",
+      "detail": "353 AArch64 ELF, zero x86_64 ELF, 78 DT_NEEDED names and no missing dependencies; target not executed"
+    },
+    {
+      "command": "candidate file-set SHA256 manifest verification",
+      "result": "PASS",
+      "detail": "13 external entries verified; partitioned SD image and SD write not performed"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task025_npu_sd_preflight.py --evidence-dir results/evidence/025",
+      "result": "PASS",
+      "detail": "27 evidence files; primary READY_FOR_SD_WRITE_APPROVAL; formal Buildroot rootfs and complete external candidate file set are consistent"
+    },
+    {
+      "command": "python3 -m unittest -v tests.python.test_task025_npu_sd_preflight.py",
+      "result": "PASS",
+      "detail": "9 focused tests"
+    },
+    {
+      "command": "PYTHONPATH=python .venv/bin/python -m unittest discover -s tests/python -p 'test_*.py'",
+      "result": "PASS",
+      "detail": "131 Python tests"
+    },
+    {
+      "command": "cmake --build build/pc-all-release --config Release -j2 && ctest --test-dir build/pc-all-release --output-on-failure",
+      "result": "PASS",
+      "detail": "Release build no work; CTest 14/14"
+    },
+    {
+      "command": "JSON/YAML parse, Python compile, Bash syntax, Markdown links, immutability, sensitive scan and git diff --check",
+      "result": "PASS",
+      "detail": "WSL-only offline validation; VM, board and media not accessed"
+    }
+  ],
+  "immutability": {
+    "task017_to_024_changed": false
+  },
+  "pdf_workflow_increment": {
+    "validator_status": "PASS",
+    "primary_verdict": "READY_FOR_SD_WRITE_APPROVAL",
+    "boot_kernel_modules_static": "PASS",
+    "armnn_source_build": "PASS",
+    "buildroot_rootfs": "PASS_FORMAL_BUILDROOT_ROOTFS",
+    "complete_sd_file_set": true,
+    "sd_write": "NOT_PERFORMED"
+  },
+  "formal_buildroot_increment": {
+    "config_identity": "results/evidence/025/npu_buildroot_config_identity.json",
+    "download_manifest": "results/evidence/025/npu_buildroot_dl_manifest.json",
+    "rootfs_build": "results/evidence/025/npu_formal_rootfs_build.json",
+    "runtime_closure": "results/evidence/025/npu_formal_rootfs_runtime_closure.json",
+    "candidate_manifest": "results/evidence/025/npu_final_candidate_artifact_manifest.json",
+    "rootfs_sha256": "ae64bbd125a47f54df445a084485466336f1df60f5137ad61b44b8eb22c64f39",
+    "uinitrd_sha256": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268",
+    "static_validation": "PASS_STATIC_FORMAL_ROOTFS_CLOSURE_NOT_DEPLOYMENT_READY"
+  },
+  "latest_offline_validation": {
+    "captured_at": "2026-08-06T12:23:09+08:00",
+    "task025_validator": "PASS",
+    "focused_tests": "9 PASS",
+    "full_python_unittest": "131 PASS",
+    "release_build": "PASS_NO_WORK",
+    "ctest": "14/14 PASS",
+    "json_yaml_parse": "PASS",
+    "python_compile": "PASS",
+    "bash_syntax": "PASS",
+    "markdown_links": "PASS",
+    "prior_task_immutability": "PASS",
+    "sensitive_material_and_repository_hygiene": "PASS",
+    "git_diff_check": "PASS",
+    "vm_board_and_media_access": "NOT_PERFORMED"
+  },
+  "safety": {
+    "sd_written": false,
+    "emmc_modified": false,
+    "modules_loaded": false,
+    "fpga_written": false,
+    "vendor_npu_executed": false,
+    "vendor_assets_copied_to_git": false,
+    "vendor_sources_modified": false,
+    "project_model_converted": false
+  }
+}

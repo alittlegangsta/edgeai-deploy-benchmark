@@ -1,0 +1,209 @@
+{
+  "schema_version": "task025-npu-sd-build-chain-v1",
+  "task": "025",
+  "captured_at": "2026-08-04T17:59:17+08:00",
+  "target": {
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "device": "DR1M90GEG400",
+    "architecture": "AArch64",
+    "kernel": "6.1.111-rt42",
+    "buildroot": "2022.02.6",
+    "glibc": "2.25"
+  },
+  "chain": [
+    {
+      "stage": "official_git_snapshot",
+      "identity": "SDK_2025.07-linux6.1 / beaee2ce45161908403a92619e509f52220ac347",
+      "status": "SUPERPROJECT_CLEAN_SUBMODULES_UNMATERIALIZED",
+      "evidence": ["clean clone checkout passed", "git submodule sync passed", "git submodule update failed because local relative submodule repositories were unavailable"],
+      "candidate_sd_role": "source identity only; not a complete build tree"
+    },
+    {
+      "stage": "vendor_release_tarball",
+      "identity": "sdk.2025.7.tar.gz",
+      "sha256": "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0",
+      "status": "FULL_SOURCE_PAYLOAD_PROVENANCE_PARTIAL",
+      "evidence": ["Linux/Buildroot/U-Boot/FSBL/toolchains payloads extracted", "no .git metadata in extracted tree", "same AD101/AD103 BoardConfig set and no MLK BoardConfig"],
+      "candidate_sd_role": "usable for isolated source inspection, not sufficient to prove an exact reproducible MLK release"
+    },
+    {
+      "stage": "milianke_uisrc_lab_package",
+      "identity": "uisrc-lab-anlogicM-V4.0.1 / Milianke 4.0.1 / Anlogic SDK_2025.1 / ARM64",
+      "md5": "9ba0d5c69e1e127709a3c33958470688",
+      "sha256": "7214035eea18e0df67a1aaa401ad9d024c4a5560cb5843af50e5f75e9c81d292",
+      "status": "GENERIC_DR1M_STRUCTURE_VERSION_MISMATCH",
+      "evidence": [
+        "generic DR1M Linux/Buildroot/U-Boot/OpenSBI source snapshots",
+        "AArch64 Linaro GCC 7.5 toolchain and bootgen/image scripts",
+        "source-only hard_npu, soft_npu and cma_mem drivers",
+        "no MLK BoardConfig, board HPF/bitstream, Arm NN userspace or native runtime assets"
+      ],
+      "candidate_sd_role": "structural reference only; not a version-matched MLK candidate source set"
+    },
+    {
+      "stage": "vm_historical_uisrc_audit",
+      "identity": "official SDK_2025.07 tree plus generic Milianke V4.0.1 tree and copied 05-5 project",
+      "status": "OFFICIAL_SDK_2025_07_PLUS_COPIED_05_5_NO_HISTORICAL_MLK_BSP",
+      "evidence": [
+        "results/evidence/025/npu_vm_uisrc_environment_inventory.json",
+        "results/evidence/025/npu_vm_historical_mlk_bsp_assessment.json",
+        "results/evidence/025/npu_vm_05_5_provenance_comparison.json"
+      ],
+      "candidate_sd_role": "generic base DTS and source context only; no MLK BoardConfig or historical 05-5 build workspace",
+      "base_dts_availability": "GENERIC_OFFICIAL_BASE_PRESENT_MLK_MAPPING_UNVERIFIED",
+      "historical_uisrc_package_availability": "V4_0_1_ONLY_NO_05_5_2025_07_MATCH",
+      "original_npu_workspace_availability": "COPIED_05_5_ONLY"
+    },
+    {
+      "stage": "mlk_fpga_project",
+      "identity": "Milianke soc_prj.al DR1M90GEG400 speed -2",
+      "status": "STRONG_CANDIDATE",
+      "evidence": ["soc_prj.al", "TD 6.2.175876", "DR1M90GEG400 device declaration"]
+    },
+    {
+      "stage": "hpf_bitstream",
+      "identity": "soc_hw/soc_prj.hpf and soc_prj_Runs/best_result/soc_prj.bit",
+      "status": "CANDIDATE_NOT_ACTIVE",
+      "evidence": ["hashes recorded in npu_sd_source_inventory.json"],
+      "mapping_to_active_boot": "not proven"
+    },
+    {
+      "stage": "device_tree",
+      "identity": "Milianke anlogic-dr1.dts plus anlogic-dr1m90-softip.dts",
+      "status": "CANDIDATE_NOT_ACTIVE",
+      "features": ["hard_npu", "soft_npu", "128 MiB CMA"]
+    },
+    {
+      "stage": "official_sdk",
+      "identity": "SDK_2025.07-linux6.1 / beaee2ce45161908403a92619e509f52220ac347",
+      "status": "VERSION_LINE_AVAILABLE_NOT_MLK_READY",
+      "board_configs": "AD101V20/AD103V20 only; no MLK-F3P-CZ02 BoardConfig",
+      "submodule_contents": "not present in clean git archive; VM extracted source lacks verifiable superproject provenance"
+    },
+    {
+      "stage": "linux_and_buildroot",
+      "identity": "Linux Makefile 6.1.111; buildroot rel_ver SDK_2025_07",
+      "status": "SOURCE_PRESENT_IN_VM_EXTRACT_NOT_CLEANLY_REPRODUCIBLE",
+      "defconfig": "anlogic_dr1m90_defconfig",
+      "missing_proof": ["exact submodule commit materialization", "MLK BoardConfig", "full clean output provenance"]
+    },
+    {
+      "stage": "npu_drivers",
+      "identity": "hard_npu_driver, soft_npu_driver, cma_mem_driver",
+      "status": "SOURCE_AND_PRIOR_ISOLATED_BUILD_ONLY",
+      "kconfig": ["CONFIG_NPU_MODULE", "CONFIG_HARD_NPU_DRIVER", "CONFIG_SOFT_NPU_DRIVER", "CONFIG_CMA_MEM_DRIVER"],
+      "module_mode": "m in prior isolated candidate build",
+      "loadability": "not proven; Module.symvers/symbol CRC provenance unavailable"
+    },
+    {
+      "stage": "armnn_demo",
+      "identity": "SDK app/npu demo_src and supplied Arm NN/OpenCV libraries",
+      "status": "AARCH64_SOURCE_LINK_CLOSURE_VERIFIED_IN_ISOLATION",
+      "runtime": "Arm NN/ONNX parser candidate; not standalone native npu_runtime",
+      "board_execution": "not performed",
+      "rootfs_dynamic_dependency_status": "PASS_STATIC_NON_SYSTEM_CLOSURE_NOT_DEPLOYMENT_READY",
+      "libprotoc_status": "packaging-only names; not DT_NEEDED in inspected yolo/Arm NN/parser/protobuf closure",
+      "relocation_caveat": "OpenCV objects retain an absolute build RPATH; isolated LD_LIBRARY_PATH or a rebuilt relocatable package is required"
+    },
+    {
+      "stage": "milianke_05_5_npu_demo",
+      "identity": "03_demo/05-5_NPU演示/demo; soc_prj.al declares DR1M90GEG400, TD 6.2.175876",
+      "status": "DIRECT_NPU_PROJECT_PARTIAL_BOARD_MAPPING",
+      "evidence": [
+        "byte-identical package copy under NPU_info",
+        "soc_hw/soc_prj.hpf and SoftNPU IP/design metadata",
+        "candidate BOOT.bin/system.dtb/bitstream",
+        "Arm NN/ONNX demo source and AArch64 package",
+        "Milianke guide describing external Linux SDK integration"
+      ],
+      "conflicts": [
+        "soc_sdk/platform/board_cfg.mk defines BOARD_DR1X90_AD101_V10",
+        "generated IP XML contains DR1M90GEG484/DR1M90MEG484",
+        "design_0.info.xml contains AD103V20 and MLKPAI source paths",
+        "base anlogic-dr1m90.dts is not packaged",
+        "TD logs record Unknown device name DR1M90GEG400"
+      ],
+      "candidate_sd_role": "strong lead and static integration reference; not a reproducible MLK BoardConfig/build source"
+    },
+    {
+      "stage": "supporting_linux_fpsoc_examples",
+      "identity": "03_demo/3-4_ex_soc_linux/Sourcecode/project and 3-2_ex_fpsoc/03_boot_mode",
+      "status": "SHARED_PROCESS_CONTEXT_ONLY",
+      "evidence": [
+        "generic DR1M90GEG400 project metadata",
+        "HPF/FSBL/boot-mode files and Linux DTS layout",
+        "same AD101-labelled board_cfg macro"
+      ],
+      "limitation": "no 05-5 SoftNPU integration, no matched Arm NN package, and no MLK-specific BoardConfig"
+    },
+    {
+      "stage": "03_demo_archive_followup",
+      "identity": "bounded archive inventory plus targeted 3-2/3-4 static audit",
+      "status": "GENERIC_REFERENCE_CONTEXT_ONLY",
+      "evidence": [
+        "05-5/demo.zip was listed at 1777 entries and selectively audited",
+        "3-2 SDK base/adv RAR v5 archives were hashed but not expanded because no local reader exists",
+        "3-4 current tree contains no large SDK/project archive and was audited directly",
+        "3-2 output.bif maps a generic FSBL + fpga_prj.bit + hello_world chain"
+      ],
+      "board_config_recovery": "ASSET_IDENTITY_CONFLICT",
+      "candidate_sd_role": "does not close MLK BoardConfig or matched boot-chain source"
+    },
+    {
+      "stage": "sd_image",
+      "identity": "BOOT.bin + DTB + kernel + rootfs + boot script",
+      "status": "NOT_GENERATED_FROM_MATCHED_CHAIN",
+      "reason": "no MLK BoardConfig and no exact materialized SDK submodules"
+    }
+  ],
+  "candidate_sd_identity": {
+    "current_emmc_identity": "known only from Task 024 read-only evidence; not used as candidate source",
+    "candidate_sd_identity": "formal Buildroot file set from PDF-injected isolated workspace; no partitioned image",
+    "candidate_boot_chain_reproducibility": "PASS_BOOT_AND_FORMAL_ROOTFS_FILE_SET_NOT_PARTITIONED",
+    "candidate_kernel_module_compatibility": "PASS_SAME_SOURCE_STATIC_COMPATIBILITY",
+    "candidate_armnn_runtime_closure": "PASS_STATIC_FORMAL_ROOTFS_CLOSURE_NOT_DEPLOYMENT_READY",
+    "base_linux_bsp_availability": "GENERIC_GEG400_REFERENCE_ONLY",
+    "boardconfig_recovery_feasibility": "ASSET_IDENTITY_CONFLICT",
+    "hpf_bitstream_relationship": "PARTIAL_NOT_CLOSED",
+    "candidate_sd_generation_readiness": "READY_FOR_SD_WRITE_APPROVAL"
+  },
+  "formal_buildroot_increment": {
+    "config_identity": "results/evidence/025/npu_buildroot_config_identity.json",
+    "download_manifest": "results/evidence/025/npu_buildroot_dl_manifest.json",
+    "rootfs_build": "results/evidence/025/npu_formal_rootfs_build.json",
+    "runtime_closure": "results/evidence/025/npu_formal_rootfs_runtime_closure.json",
+    "candidate_manifest": "results/evidence/025/npu_final_candidate_artifact_manifest.json",
+    "status": "READY_FOR_SD_WRITE_APPROVAL",
+    "partitioned_sd_image": false,
+    "sd_write": "NOT_PERFORMED"
+  },
+  "npu_configuration": {
+    "sdk_kconfig": {
+      "CONFIG_NPU_MODULE": "visible in Kconfig; selected in prior isolated source build, not selected by the generic release defconfig",
+      "CONFIG_HARD_NPU_DRIVER": "m in prior isolated source build",
+      "CONFIG_SOFT_NPU_DRIVER": "m in prior isolated source build",
+      "CONFIG_CMA_MEM_DRIVER": "m in prior isolated source build",
+      "CONFIG_CMA": "y",
+      "CONFIG_DMA_CMA": "y"
+    },
+    "device_tree_required": ["hard_npu compatible/reg/interrupts", "soft_npu compatible/reg/interrupts", "reserved-memory/CMA"],
+      "current_board_mapping": "active DT has hard_npu and 128 MiB CMA, no soft_npu, no NPU device nodes; this is current-eMMC context, not the candidate-SD identity"
+  },
+  "current_emmc_observation_reused_from_task024": {
+    "boot": "/dev/mmcblk1p1",
+    "root": "/dev/mmcblk1p2",
+    "kernel": "Linux 6.1.111-rt42",
+    "system_dtb_sha256": "aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f",
+    "hard_npu_node": "anlogic,hard_npu present but unbound",
+    "soft_npu_node": "absent",
+    "cma": "128 MiB reserved",
+    "device_nodes": ["/dev/hard_npu absent", "/dev/soft_npu absent", "/dev/cma_mem absent"],
+    "observation_status": "read-only prior-task evidence; not modified"
+  },
+  "version_conflicts": [
+    "Milianke IDE/SDK metadata says 2025.07/20250905, but no exact Git tag/submodule mapping was proven",
+    "dr1m90_npu local release line is SDK_2026.01, not SDK_2025.07",
+    "official SDK BoardConfig names AD101V20/AD103V20 and does not name MLK-F3P-CZ02",
+    "BoardImages contains AD101V20 payload only"
+  ]
+}

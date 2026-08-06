@@ -1,0 +1,184 @@
+{
+  "schema_version": "task025-vm-historical-mlk-bsp-assessment-v1",
+  "task": "025",
+  "captured_at": "2026-08-05T17:34:41+08:00",
+  "read_only": true,
+  "scope": {
+    "vm_paths": [
+      "/home/uisrc/uisrc-lab-anlogic",
+      "/home/uisrc/vendor/anlogic",
+      "/home/uisrc/build/task025",
+      "/home/uisrc/build"
+    ],
+    "excluded": ["browser data", "credentials", "SSH keys", "unrelated home dot-directories"],
+    "method": "bounded filename, version-marker, source-text and metadata search; no vendor scripts, installers, demos or build commands executed"
+  },
+  "candidate_trees": [
+    {
+      "id": "official_sdk_2025_07_vm_tree",
+      "path": "/home/uisrc/vendor/anlogic/sdk/sdk",
+      "identity": "SDK_2025.07 marker in CHANGELOG.md; superproject commit unavailable",
+      "board_configs": {
+        "names_observed": [
+          "BoardConfig-ad101v10_ad103v20-nor-usb_device.mk",
+          "BoardConfig-ad101v20_ad103v20-emmc1-fat.mk",
+          "BoardConfig-ad101v20_ad103v20-emmc1-fat-openamp.mk",
+          "BoardConfig-ad101v20_ad103v20-tf.mk",
+          "BoardConfig-ad101v20_ad103v20-tf-openamp.mk",
+          "BoardConfig-ad101v20_ad103v20-tf-openamp-rtlinux.mk",
+          "BoardConfig-ad101v20_ad103v20-tf-fat32-ext4.mk",
+          "BoardConfig-ad101v20_ad103v20-united-image.mk",
+          "BoardConfig-ad102v20_ad104v20-emmc1-fat.mk",
+          "BoardConfig-ad102v20_ad104v20-tf.mk",
+          "BoardConfig-ad102v20_ad104v20-united-image.mk"
+        ],
+        "mlk_f3p_cz02_found": false,
+        "dr1m90geg400_boardconfig_found": false,
+        "interpretation": "generic DR1M90 device configs with AD-series board identities, not an MLK board configuration"
+      },
+      "kernel_and_boot_sources": {
+        "linux_dts_base": {
+          "path": "linux/arch/arm64/boot/dts/anlogic/anlogic-dr1m90.dts",
+          "sha256": "4b819178160298d88ccfe0bf272b203941a7ec71de87ea5609af144e5bf98b68",
+          "status": "GENERIC_BASE_PRESENT"
+        },
+        "linux_dtsi_base": {
+          "path": "linux/arch/arm64/boot/dts/anlogic/anlogic-dr1m90.dtsi",
+          "sha256": "b4ea069ca544348ffcfc585a7ef5b84be30dbc78c2de4af5428bb6bb907b2d2c",
+          "status": "GENERIC_DR1M90_BASE_PRESENT"
+        },
+        "u_boot_dts_base": {
+          "path": "u-boot/arch/arm/dts/anlogic-dr1m90.dts",
+          "sha256": "17cb0edc962acaef9fd7dd47608428a9a7678726eded487fd10242c671e04447",
+          "status": "GENERIC_BASE_PRESENT"
+        },
+        "build_entry": "README documents source envsetup.sh, build.sh lunch and build.sh all; execution was prohibited",
+        "hpf_and_bitstream": "AD101V20/AD103V20 SDK assets only; no MLK-specific pair identified"
+      },
+      "npu_mapping": {
+        "generic_linux_base_has_hard_npu": true,
+        "generic_linux_base_has_soft_npu": false,
+        "softip_fragment_exists": "anlogic-dr1m90-softip.dts is present in the generic SDK tree",
+        "mlk_soft_npu_mapping": false
+      }
+    },
+    {
+      "id": "milianke_v4_0_1_vm_tree",
+      "path": "/home/uisrc/uisrc-lab-anlogic",
+      "identity": "Milianke 4.0.1 / Anlogic SDK_2025.1 / ARM64",
+      "board_configs": {
+        "mlk_f3p_cz02_found": false,
+        "equivalent_config": "generic scripts/drcfg.sh and boards/DR1M defconfigs",
+        "dr1m90geg400_specific_hpf_bitstream": false
+      },
+      "kernel_and_boot_sources": {
+        "generic_anlogic_dr1m90_dtsi": {
+          "path": "sources/linux/arch/arm64/boot/dts/anlogic/anlogic-dr1m90.dtsi",
+          "sha256": "7bdac1b03c1956cf39373b11fc841f2b82f261dec0c6077a8011cd0fb4696feb"
+        },
+        "generic_uboot_dts": {
+          "path": "sources/u-boot/arch/arm/dts/anlogic-dr1m90.dts",
+          "sha256": "afc6216153582829543fc26f713db7549b3e0552233a6b30293d1949a9beafee"
+        },
+        "image_script": "scripts/rootfs/buildroot/create_dr1m_image.sh",
+        "image_inputs": ["fsbl.elf", "system.bit", "u-boot.bin", "uImage.lz4", "system.dtb"],
+        "mlk_inputs": "not present"
+      },
+      "interpretation": "generic source/build structure only; SDK_2025.1 differs from the 05-5 2025.07 markers"
+    },
+    {
+      "id": "milianke_05_5_vm_copy",
+      "path": "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo",
+      "identity": "copied 05-5 project; DR1M90GEG400 declaration, IDE 2025.07, build 20250905, TD 6.2.175876",
+      "board_configs": {
+        "board_cfg_path": "demo/soc_sdk/soc_base/platform/board_cfg.mk",
+        "board_macro": "BOARD_DR1X90_AD101_V10",
+        "mlk_boardconfig_found": false
+      },
+      "kernel_and_boot_sources": {
+        "kernel_fragment": "demo/soc_dts/kernel-dts/anlogic-dr1.dts",
+        "kernel_fragment_includes": ["anlogic-dr1m90.dts", "anlogic-dr1m90-softip.dts"],
+        "base_dts_packaged": false,
+        "boot_files_present": ["boot/BOOT.bin", "boot/boot.scr", "boot/system.dtb", "boot/uImage.lz4", "boot/uInitrd.lz4"],
+        "bif_or_bootgen_source": false,
+        "rootfs_build_entry": false
+      },
+      "hardware_project": {
+        "device_declaration": "DR1M90GEG400",
+        "hpf": "demo/soc_hw/soc_prj.hpf",
+        "soft_npu_ip": true,
+        "best_result_bitstream": true,
+        "mapping_to_official_sdk_boardconfig": false
+      },
+      "interpretation": "prebuilt/project lead copied from local 05-5 material, not a complete MLK Linux BSP"
+    }
+  ],
+  "original_workspace_search": {
+    "searched_names": [
+      "uisrc-lab-anlogic",
+      "SDK_2025.07",
+      "20250905",
+      "05-5_NPU",
+      "face_detection",
+      "yolo_demo_pic",
+      "BoardConfig",
+      "MLK-F3P-CZ02",
+      "DR1M90GEG400"
+    ],
+    "original_2025_07_uisrc_workspace": false,
+    "original_05_5_workspace": false,
+    "only_known_demo_tree": "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo",
+    "only_known_generic_sdk_tree": "/home/uisrc/vendor/anlogic/sdk/sdk",
+    "isolated_build_workspaces_excluded_as_history": true
+  },
+  "assessment": {
+    "base_dts_availability": "GENERIC_OFFICIAL_BASE_PRESENT_MLK_MAPPING_UNVERIFIED",
+    "mlk_boardconfig_availability": "NOT_FOUND",
+    "base_linux_bsp_availability": "GENERIC_OFFICIAL_AND_MILIANKE_STRUCTURE_ONLY",
+    "boardconfig_recovery_feasibility": "RECOVERABLE_STRUCTURE_VERSION_MISMATCH_WITH_ASSET_IDENTITY_CONFLICT",
+    "candidate_boot_chain_reproducibility": "BLOCKED_MLK_BOARD_PROJECT_IDENTITY",
+    "candidate_sd_generation_readiness": "NOT_READY",
+    "historical_package_requirement": "EXACT_05_5_MLK_2025_07_BSP_OR_BOARDCONFIG_REQUIRED"
+  },
+  "conflicts": [
+    "The official SDK tree has a generic anlogic-dr1m90.dts, but no MLK board configuration.",
+    "The V4.0.1 package has generic DR1M structure and SDK_2025.1 identity, not the 05-5 2025.07/20250905 identity.",
+    "The 05-5 copy's board macro is AD101-labelled despite its DR1M90GEG400 project declaration."
+  ],
+  "next_minimum_files": [
+    "historical MLK-F3P-CZ02/DR1M90GEG400 BoardConfig or equivalent scripts",
+    "matching SDK/submodule commits or release manifest for the 05-5 build",
+    "MLK-specific HPF and bitstream source mapping",
+    "matching kernel/Buildroot/U-Boot/FSBL output provenance and reproducible bootgen/BIF entry"
+  ],
+  "task": "025",
+  "board": "MLK-F3P-CZ02-DR1M90",
+  "sdk_tag": "SDK_2025.07-linux6.1 (generic VM tree)",
+  "repository_tag_commit": "unknown: submodule object stores and SDK superproject metadata absent",
+  "sources_consulted": [
+    "/home/uisrc/vendor/anlogic/sdk/sdk/device/anlogic_dr1m90",
+    "/home/uisrc/vendor/anlogic/sdk/sdk/linux/arch/arm64/boot/dts/anlogic",
+    "/home/uisrc/uisrc-lab-anlogic/scripts/drcfg.sh",
+    "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo/demo/soc_dts",
+    "/home/uisrc/vendor/anlogic/demos/milianke_npu_demo/demo/soc_sdk"
+  ],
+  "documented_facts": [
+    "The SDK README documents generic envsetup/build.sh workflow and AD-series BoardConfig examples.",
+    "The V4.0.1 version file explicitly identifies SDK_2025.1."
+  ],
+  "source_code_facts": [
+    "The official VM SDK includes a generic hard_npu-capable DR1M90 base DTS and AD101/AD103 board configs.",
+    "The 05-5 kernel fragment depends on an external base DTS and softip fragment; it does not package a complete Linux source/config chain.",
+    "The V4.0.1 image script accepts generic fsbl/bit/u-boot/kernel/dtb inputs but does not identify MLK assets."
+  ],
+  "assumptions": [
+    "The official SDK tree's generic base DTS is not promoted to MLK identity without a BoardConfig/HPF/bitstream mapping.",
+    "The VM's generated Task 025 build outputs do not establish historical package provenance."
+  ],
+  "unresolved_blockers": [
+    "MLK-specific board configuration",
+    "exact 05-5 SDK/submodule provenance",
+    "matched HPF/bitstream/DTB/bootgen source chain"
+  ],
+  "proposed_action": "Request the historical MLK 2025.07 package or a signed BoardConfig/boot-chain manifest before attempting a candidate SD build."
+}

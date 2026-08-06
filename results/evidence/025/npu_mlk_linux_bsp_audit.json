@@ -1,0 +1,123 @@
+{
+  "schema_version": "task025-mlk-linux-bsp-audit-v1",
+  "task": "025",
+  "source_root": "<vendor-root>/03_demo",
+  "read_only": true,
+  "selected_trees": [
+    {
+      "path": "3-4_ex_soc_linux/Sourcecode/project",
+      "role": "generic Linux/FSBL/HPF process reference",
+      "project_identity": {
+        "project_file": "soc_prj/system.al",
+        "sha256": "cc6894da21d28384c66c9ba8c44ed13d0cc0569143a3901527b1436e13007ea2",
+        "device": "DR1M90GEG400",
+        "speed": "-2",
+        "td_version": "6.2.168116"
+      },
+      "platform": {
+        "hpf": "soc_hw/system.hpf",
+        "hpf_sha256": "2b9547f70a4e53c02945bc36e19c87601efe0f2c3688c454aaad09c09b6d1217",
+        "hpf_info_device": "DR1M90GEG400",
+        "hpf_info_version": "202501",
+        "hpf_info_time": "202508121021",
+        "hpf_compile_time": "Jul  9 2025 15:19:18",
+        "bitstream": "not separately identified from a reproducible Linux build entry"
+      },
+      "software": {
+        "kernel_dts": "soc_dts/kernel-dts/anlogic-dr1.dts",
+        "kernel_dts_includes": ["anlogic-dr1m90.dts"],
+        "kernel_dts_softip_include": "commented_out",
+        "uboot_dts": "soc_dts/uboot-dts/anlogic-dr1.dts",
+        "uboot_dts_includes": ["anlogic-dr1m90.dts"],
+        "base_dts_present_in_selected_tree": false,
+        "npu_nodes_in_selected_base": false,
+        "board_cfg": {
+          "path": "soc_sdk/soc_base/platform/board_cfg.mk",
+          "macro": "BOARD_DR1X90_AD101_V10",
+          "sha256": "78d097997fe90d1e5ddadd9a22464e85e552975a2ab7436c40e017b04fa3e8f7"
+        },
+        "soc_platform_header": {
+          "path": "soc_sdk/soc_base/platform/inc/soc_plat.h",
+          "sha256": "456e87ebf9ae79a41bb710922cddb1e477218c94854d517c2fa712472c722fe3",
+          "ide_version": "Release: 6.2.1 Build: 168116",
+          "hpf_version": "202507",
+          "hpf_export_time": "2025/08/12 10:21:18"
+        }
+      },
+      "boot_reference": {
+        "boot_file": "boot/BOOT.bin",
+        "boot_sha256": "63ddc2aea7a9ec4ac7a8f9e29730abfe48e509f53e9c2993b1fb75095d85fad4",
+        "dtb_file": "boot/system.dtb",
+        "dtb_sha256": "d27f44cd09514f881f1f884f517b369c27117f4b6409892f426384b9c5327e9e",
+        "boot_script": "loads uImage.lz4, uInitrd.lz4 and system.dtb, then bootm",
+        "bif_or_bootgen_entry_found": false
+      },
+      "finding": "This is a generic GEG400 reference tree with an AD101-labelled standalone board macro and a missing base DTS. It is not a complete MLK Linux BoardConfig or NPU-enabled Linux BSP."
+    },
+    {
+      "path": "3-4_ex_soc_linux/Linux Base Appendix/Chapter 3",
+      "role": "tutorial/reference Linux and FSBL flow",
+      "finding": "Documents a TD HPF -> FSBL -> external Linux SDK workflow and supplies reference boot files, but no MLK BoardConfig, Buildroot defconfig, base DTS or NPU integration."
+    },
+    {
+      "path": "3-2_ex_fpsoc/03_boot_mode",
+      "role": "generic GEG400 FPSoc boot-mode reference",
+      "project_identity": {
+        "project_file": "soc_prj/fpga_prj.al",
+        "sha256": "00062637a11a3c134a22563ee4916e746ed7c9476227153845628765a3dc5aaa",
+        "device": "DR1M90GEG400",
+        "speed": "-2",
+        "td_version": "6.2.168116"
+      },
+      "hpf": {
+        "path": "soc_hw/fpga_prj.hpf",
+        "sha256": "8aca18a66e721213966502141fa5617aceffbb220fb141a846e5addead8090fb",
+        "hpf_info_device": "DR1M90GEG400",
+        "hpf_info_time": "202506061452"
+      },
+      "board_cfg": {
+        "path": "soc_sdk/soc_base/platform/board_cfg.mk",
+        "macro": "BOARD_DR1X90_AD101_V10"
+      },
+      "boot_entry": {
+        "path": "soc_prj/uisrc/05_boot/output.bif",
+        "sha256": "b1ee6e547e1fd430589f24d42ffc94d39c9f6e7dda7e6f661f30c4943e52f3aa",
+        "partitions": ["FSBL.elf", "fpga_prj_Runs/phy_1/fpga_prj.bit", "hello_world.elf"],
+        "npu_partition": false
+      },
+      "finding": "The BIF proves a generic FSBL + GEG400 bitstream + hello_world chain, not the 05-5 SoftNPU chain and not an MLK-specific BoardConfig."
+    }
+  ],
+  "search_results": {
+    "anlogic_dr1m90_dts_found_in_vendor_root": false,
+    "boardconfig_or_equivalent_mlk_found": false,
+    "linux_defconfig_for_mlk_found": false,
+    "buildroot_defconfig_for_mlk_found": false,
+    "bootgen_or_scripted_boot_bin_entry_in_selected_trees": false,
+    "rootfs_overlay_for_mlk_found": false
+  },
+  "recovery_assessment": {
+    "base_linux_bsp_availability": "GENERIC_GEG400_REFERENCE_ONLY",
+    "boardconfig_recovery_feasibility": "NOT_RECOVERABLE_FROM_SELECTED_TREES",
+    "can_merge_05_5_npu_fragments_safely": false,
+    "reason": "The shared trees omit anlogic-dr1m90.dts and use AD101-labelled platform configuration; 05-5 supplies SoftNPU fragments but no matching base Linux source/config."
+  },
+  "vm_followup": {
+    "evidence": [
+      "results/evidence/025/npu_vm_uisrc_environment_inventory.json",
+      "results/evidence/025/npu_vm_historical_mlk_bsp_assessment.json"
+    ],
+    "generic_official_base_dts": {
+      "linux_path": "/home/uisrc/vendor/anlogic/sdk/sdk/linux/arch/arm64/boot/dts/anlogic/anlogic-dr1m90.dts",
+      "linux_sha256": "4b819178160298d88ccfe0bf272b203941a7ec71de87ea5609af144e5bf98b68",
+      "dtsi_path": "/home/uisrc/vendor/anlogic/sdk/sdk/linux/arch/arm64/boot/dts/anlogic/anlogic-dr1m90.dtsi",
+      "dtsi_sha256": "b4ea069ca544348ffcfc585a7ef5b84be30dbc78c2de4af5428bb6bb907b2d2c",
+      "mapping_status": "GENERIC_OFFICIAL_BASE_PRESENT_MLK_MAPPING_UNVERIFIED"
+    },
+    "historical_uisrc_package": "NOT_FOUND",
+    "original_05_5_workspace": "NOT_FOUND",
+    "mlk_boardconfig": "NOT_FOUND",
+    "candidate_sd_impact": "generic base DTS availability does not close MLK board identity or candidate boot-chain reproducibility"
+  },
+  "conclusion": "3-4_ex_soc_linux and 3-2_ex_fpsoc close the generic DR1M90GEG400/TD/FSBL process context, but neither supplies the missing MLK Linux BoardConfig and base DTS needed for a reproducible NPU SD build."
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": "task025-formal-rootfs-build-v1",
+  "task": "025",
+  "captured_at": "2026-08-06T12:05:00+08:00",
+  "status": "PASS_FORMAL_BUILDROOT_ROOTFS",
+  "workspace": "<vm-task025>/",
+  "build": {
+    "output_dir": "<vm-task025>/results/task025-buildroot-output-20260806",
+    "log": "<vm-task025>/results/task025-buildroot-formal-build-20260806.log",
+    "command": "make -C sources/buildroot O=results/task025-buildroot-output-20260806 CROSS_COMPILE=tools/aarch64-linux/bin/aarch64-linux-gnu- ANLOGIC_EXTRA_ROOTFS_DIR=results/task025-formal-rootfs-overlay-20260806 BR2_PRIMARY_SITE=file:///__task025_no_network__ BR2_PRIMARY_SITE_ONLY=y BR2_BACKUP_SITE= -j2",
+    "exit_code": 0,
+    "new_download_requests": 0,
+    "buildroot_generated": true,
+    "rootfs_archive": {
+      "path": "<vm-task025>/results/task025-buildroot-output-20260806/images/rootfs.tar.gz",
+      "size_bytes": 94414131,
+      "sha256": "ae64bbd125a47f54df445a084485466336f1df60f5137ad61b44b8eb22c64f39"
+    },
+    "rootfs_cpio_lz4": {
+      "path": "<vm-task025>/results/task025-buildroot-output-20260806/images/rootfs.cpio.lz4",
+      "size_bytes": 111711558,
+      "sha256": "1fdfd264d49e4d7cdc95d68952e9b332525efb493917fdbdbbc26e0de914848a"
+    },
+    "uinitrd_lz4": {
+      "path": "<vm-task025>/results/task025-buildroot-output-20260806/images/uInitrd.lz4",
+      "size_bytes": 111711622,
+      "sha256": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268",
+      "creation_command": "mkimage -A arm64 -T ramdisk -C lz4 -n Initrd -d images/rootfs.cpio.lz4 images/uInitrd.lz4",
+      "exit_code": 0
+    }
+  },
+  "staging": {
+    "source": "<vm-task025>/results/task025-formal-rootfs-overlay-20260806",
+    "source_type": "isolated extracted application/module staging",
+    "source_archive_sha256": "b837e2b4bbf4a81b2e4f8a9e32bf7f6701e263492e7e676f3474fa5fa5113e3e",
+    "buildroot_customdata_used": true,
+    "formal_rootfs_replaced_smoke_rootfs": true
+  },
+  "safety": {
+    "make_parted_executed": false,
+    "deploy_image_executed": false,
+    "dd_executed": false,
+    "real_block_device_touched": false,
+    "board_accessed": false,
+    "modules_loaded": false,
+    "npu_executed": false
+  }
+}
