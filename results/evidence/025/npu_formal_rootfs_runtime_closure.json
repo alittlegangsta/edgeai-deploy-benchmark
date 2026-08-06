@@ -1,0 +1,53 @@
+{
+  "schema_version": "task025-formal-rootfs-runtime-closure-v1",
+  "task": "025",
+  "captured_at": "2026-08-06T12:05:00+08:00",
+  "status": "PASS_STATIC_FORMAL_ROOTFS_CLOSURE_NOT_DEPLOYMENT_READY",
+  "rootfs": {
+    "archive_sha256": "ae64bbd125a47f54df445a084485466336f1df60f5137ad61b44b8eb22c64f39",
+    "extracted_path": "<vm-task025>/results/task025-formal-rootfs-extract-20260806",
+    "elf_count": 353,
+    "aarch64_elf_count": 353,
+    "x86_64_elf_count": 0,
+    "dynamic_needed_name_count": 78,
+    "missing_dt_needed": [],
+    "dynamic_loader": "/lib/ld-linux-aarch64.so.1",
+    "all_target_elf_aarch64": true,
+    "static_only": true,
+    "target_execution": false
+  },
+  "application": {
+    "path": "opt/face_detection/build/bin/yolo_demo_hdmi_camera",
+    "sha256": "ac339db043721ea0516555c7c1e5c9068f4b7cedf485895251afc9c0c7b40318",
+    "model_path": "opt/face_detection/inputs/yolo_face_uint8_15.onnx",
+    "model_sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c",
+    "elf": "AArch64 ELF64",
+    "interpreter": "/lib/ld-linux-aarch64.so.1",
+    "runtime_path": "LD_LIBRARY_PATH supplied by the existing run scripts"
+  },
+  "armnn_libraries": {
+    "libarmnn.so.32.1": "6825740b1331304ba2d86eb387ffbfb6a4f4b77b23659c16561ebebaf9ab18ac",
+    "libarmnnOnnxParser.so.24.6": "3f994377ce4dd6de02ed888fd15f3089f1cedc95a2ee5021d3b577ece9e24f0b",
+    "libprotobuf.so.23.0.0": "d2e296ccff2a1c66c0ade5a5c2d51d1764295428651c0914b7c8728de82b0870"
+  },
+  "module_install": {
+    "directory": "lib/modules/6.1.111-rt42/extra",
+    "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+    "config_modversions": false,
+    "hard_npu.ko": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d",
+    "soft_npu.ko": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380",
+    "cma_mem.ko": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b",
+    "same_source_symbol_imports_missing": 0
+  },
+  "rpath": {
+    "formal_rootfs_nonempty_rpath_or_runpath": false,
+    "library_resolution_method": "same-rootfs filename resolution plus existing LD_LIBRARY_PATH scripts",
+    "missing_non_system_dependencies": []
+  },
+  "not_claimed": [
+    "board boot success",
+    "driver probe or device-node creation",
+    "NPU execution",
+    "runtime correctness on the board"
+  ]
+}

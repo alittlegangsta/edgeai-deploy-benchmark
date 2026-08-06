@@ -1,0 +1,271 @@
+{
+  "schema_version": "task025-milianke-npu-demo-audit-v1",
+  "task": "025",
+  "captured_at": "2026-08-05T11:59:27+08:00",
+  "source": {
+    "relative_package": "03_demo/05-5_NPU演示/demo",
+    "archive_relative_path": "03_demo/05-5_NPU演示/demo.zip",
+    "archive_size_bytes": 279913795,
+    "archive_sha256": "f754663eded613cf15ac2ceb241ac91533792d360c4fdb49ba4105d887ba70ae",
+    "archive_uncompressed_bytes": 430275543,
+    "archive_entry_count": 1777,
+    "guide_relative_path": "03_demo/05-5_NPU演示/05-5_米联客-安路F3P-CZ02开发板NPU开发.pdf",
+    "guide_size_bytes": 2488900,
+    "guide_sha256": "f3fd89cc47e08cfce0bbced13a9194ab06dc6b153c90c0e08c8539edf4badb90",
+    "guide_pages": 20,
+    "guide_creation_date": "2025-12-01",
+    "duplicate_with_npu_info": {
+      "checked_assets": [
+        "soc_prj/soc_prj.al",
+        "soc_hw/soc_prj.hpf",
+        "soc_prj/soc_prj_Runs/best_result/soc_prj.bit",
+        "boot/BOOT.bin",
+        "boot/system.dtb",
+        "sdk/face_detection.tar.gz"
+      ],
+      "all_checked_hashes_equal": true,
+      "interpretation": "The two local vendor packages are byte-identical for the checked assets; this establishes package provenance, not active-board provenance."
+    }
+  },
+  "package_structure": {
+    "top_level_directories": ["boot", "driver", "sdk", "soc_dts", "soc_hw", "soc_prj", "soc_sdk"],
+    "kind": "mixed source project, prebuilt boot assets, generated FPGA outputs, FSBL/platform project and prebuilt Arm NN application package",
+    "base_dts_present": false,
+    "nested_archive": "sdk/face_detection.tar.gz",
+    "external_path_markers": [
+      "D:/test/npu/F3P-NPU/soc_prj",
+      "/home/uisrc/app/face_detection",
+      "/home/uisrc/uisrc-lab-anlogic"
+    ]
+  },
+  "declared_identity": {
+    "project_file": {
+      "path": "soc_prj/soc_prj.al",
+      "sha256": "670b24a682b44fcc48ec4b652b6556cba99790b474a7f2b0c1370e40768a7e32",
+      "family": "DR1",
+      "device": "DR1M90GEG400",
+      "speed": "-2",
+      "td_version": "6.2.175876"
+    },
+    "workspace": {
+      "path": "soc_sdk/.fdworkspace",
+      "ide_version": "2025.07",
+      "ide_build_id": "20250905"
+    },
+    "software_rules": {
+      "path": "soc_sdk/soc_base/tools/make/rules.mk",
+      "sdk_version": "20250905",
+      "hpf_version": "202507",
+      "architecture": "AArch64/cortex-a35",
+      "default_hpf_path": "C11_PL_FullScale_AD101V20.hpf"
+    },
+    "board_config": {
+      "path": "soc_sdk/soc_base/platform/board_cfg.mk",
+      "macro": "BOARD_DR1X90_AD101_V10",
+      "interpretation": "AD101-labelled software macro conflicts with the top-level GEG400 declaration; it is not proof of MLK board identity."
+    }
+  },
+  "hardware_chain": {
+    "hpf": {
+      "path": "soc_hw/soc_prj.hpf",
+      "size_bytes": 1733079,
+      "sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+      "status": "candidate_package_asset"
+    },
+    "bitstreams": [
+      {
+        "path": "soc_prj/soc_prj_Runs/best_result/soc_prj.bit",
+        "size_bytes": 4052202,
+        "sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912",
+        "status": "generated_output_candidate"
+      },
+      {
+        "path": "soc_sdk/soc_base/platform/soc_prj.bit",
+        "size_bytes": 4052202,
+        "sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+        "status": "platform_copy_candidate",
+        "same_as_best_result": false
+      }
+    ],
+    "boot_candidates": [
+      {
+        "path": "boot/BOOT.bin",
+        "size_bytes": 5179264,
+        "sha256": "567e14124fa17137e964ebcadd4680d8349058beacd4070377ba0ac3fc8c2585",
+        "status": "candidate_not_active"
+      },
+      {
+        "path": "boot/system.dtb",
+        "size_bytes": 16899,
+        "sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+        "status": "candidate_not_active",
+        "static_strings": ["Anlogic, DR1M90 FPSoc", "anlogic,hard_npu", "anlogic,soft_npu", "linux,cma"]
+      },
+      {
+        "path": "boot/uImage.lz4",
+        "size_bytes": 8362070,
+        "sha256": "b570c65a8deef13bbf7770038a779a2b94c97000afb564896ccdd3e6bba7fab9",
+        "status": "candidate_not_active"
+      },
+      {
+        "path": "boot/uInitrd.lz4",
+        "size_bytes": 75774898,
+        "sha256": "4dc1f9cfaadfa19cae2dd4b4cd9e0795e3289bbefd5f2d01af9adeada3ae074e",
+        "status": "candidate_not_active"
+      }
+    ],
+    "boot_script": {
+      "path": "boot/boot.scr",
+      "static_behavior": "loads uImage.lz4, uInitrd.lz4 and system.dtb from the boot partition and calls bootm",
+      "no_generation_script_in_package": true
+    },
+    "guide_build_flow": [
+      "open soc_prj.al in TD",
+      "export HPF and bitstream",
+      "create soc_base platform project from HPF",
+      "create soc_fsbl",
+      "copy system.bit and soc_fsbl.elf to the external SDK boards/files directory",
+      "copy kernel/uboot DTS fragments and softip DTS into the external Linux SDK",
+      "run external kernel/rootfs/image scripts"
+    ],
+    "reproducibility": "partial; package documents GUI and external SDK steps but does not include the full BoardConfig, base DTS, Buildroot defconfig or BOOT.bin generation command"
+  },
+  "device_tree": {
+    "kernel_fragment": {
+      "path": "soc_dts/kernel-dts/anlogic-dr1.dts",
+      "includes": ["anlogic-dr1m90.dts", "anlogic-dr1m90-softip.dts"],
+      "included_base_present_in_package": false,
+      "cma_size_bytes": 134217728
+    },
+    "softip_fragment": {
+      "path": "sdk/anlogic-dr1m90-softip.dts",
+      "soft_npu": {
+        "compatible": "anlogic,soft_npu",
+        "reg": "0x1f0000000+0x10000",
+        "interrupt": 97,
+        "status": "okay"
+      },
+      "other_nodes": ["anlogic,axi-vdma", "anlogic,mipicam", "anlogic,vdmafb", "anlogic,dynclk"]
+    },
+    "uboot_fragment": {
+      "path": "soc_dts/uboot-dts/anlogic-dr1.dts",
+      "includes_base_dts": true,
+      "model": "Anlogic dr1m90 demo board",
+      "compatible": "anlogic, dr1m90-fpga"
+    },
+    "hard_npu_source": "hard_npu is present in candidate DTB strings and the Arm NN package's driver source, but its base DTS resource tuple is in the missing anlogic-dr1m90.dts and was not reconstructed here."
+  },
+  "hardware_design": {
+    "soft_npu_ip_parameters": {
+      "path": "soc_prj/al_ip/NPU_SOFT_0/.params_NPU_SOFT_0.txt",
+      "SOFT_NN": 1,
+      "NPU_SOFT": 1,
+      "SOFT_RESIZE": 1,
+      "SOFT_YOLO": 1,
+      "PRE_PROCESS": 1,
+      "POST_PROCESS": 0,
+      "YOLOV3TINY": 1
+    },
+    "address_map": {
+      "soft_npu": "0x1f0000000..0x1f000ffff",
+      "axi_vdma": "0x80200000",
+      "mipicam": "0x80300000",
+      "vdmafb": "0x80100000"
+    },
+    "generated_identity_conflicts": [
+      {
+        "evidence": "soc_prj/design_0/design_0.info.xml references AD103V20 and MLKPAI source paths",
+        "meaning": "provenance clue only; it does not identify the physical MLK-F3P-CZ02 board"
+      },
+      {
+        "evidence": "generated IP XML contains DR1M90GEG484/DR1M90MEG484 while platform Design.xml contains DR1M90GEG400",
+        "meaning": "mixed generated metadata prevents a single closed board/package identity"
+      },
+      {
+        "evidence": "board_cfg.mk defines BOARD_DR1X90_AD101_V10",
+        "meaning": "software board macro is AD101-labelled despite GEG400 project metadata"
+      },
+      {
+        "evidence": "TD logs contain PRJ-9003 Unknown device name DR1M90GEG400",
+        "meaning": "the saved project was not independently re-opened successfully in the recorded TD environment"
+      }
+    ]
+  },
+  "software_path": {
+    "path": "Arm NN / ONNX / Alnpu candidate",
+    "entrypoint": "app/face_detection/build.sh",
+    "build_requirements": [
+      "external /home/uisrc/uisrc-lab-anlogic SDK tree",
+      "external Linux kernel source path",
+      "AArch64 cross compiler under tools/aarch64-linux",
+      "CMake 3.21.2 according to the guide/package workflow",
+      "OpenCV 4.7 AArch64 package",
+      "Arm NN libraries and headers"
+    ],
+    "backend_default": ["Alnpu", "CpuAcc", "CpuRef"],
+    "model_input": {
+      "path": "inputs/yolo_face_uint8_15.onnx",
+      "size_bytes": 8709145,
+      "sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c"
+    },
+    "model_config": {
+      "path": "inputs/example_yolo_face.json",
+      "sha256": "f671a2298e48fc4e3fee56a53df0bcff1caaa6a4482b86ae11b74d32d28e3267"
+    },
+    "source_calls": [
+      "libarmnnOnnxParser loads the ONNX file",
+      "Arm NN Optimize selects Alnpu/CpuAcc/CpuRef backends",
+      "CmaAllocator/CmaBuf are used for tensor buffers",
+      "EnqueueWorkload executes the optimized network"
+    ],
+    "direct_native_runtime_dependency": false,
+    "native_runtime_assets_found_in_package": false,
+    "native_runtime_names_not_found": ["npu_runtime", "rt.bin", "weight.bin", "convert_tool", "al_ai_flow"],
+    "drivers_in_nested_package": [
+      "hard_npu.ko",
+      "soft_npu.ko",
+      "cma_mem.ko",
+      "jpu.ko",
+      "mipicam.ko"
+    ],
+    "run_scripts": ["run_usbcam.sh", "run_usbcam_fb.sh", "run_mipicam.sh", "run_mipicam_fb.sh"],
+    "unsafe_actions_not_performed": ["insmod", "vendor ELF execution", "camera/NPU run"]
+  },
+  "linked_demo_directories": [
+    {
+      "path": "3-4_ex_soc_linux/Sourcecode/project",
+      "role": "generic DR1M90GEG400 Linux/FSBL/HPF process reference",
+      "relation": "similar directory layout and board macro, but no 05-5 SoftNPU DTS or Arm NN package; not a direct dependency"
+    },
+    {
+      "path": "3-4_ex_soc_linux/Linux Base Appendix/Chapter 3",
+      "role": "Linux build and FSBL tutorial reference",
+      "relation": "documents the same external SDK-style flow; kernel DTS comments out SoftNPU"
+    },
+    {
+      "path": "3-2_ex_fpsoc/03_boot_mode",
+      "role": "DR1M90GEG400 HPF/FSBL/SD boot-mode reference",
+      "relation": "shows generic boot/FSBL concepts and GEG400 metadata, but does not contain the NPU IP or runtime"
+    }
+  ],
+  "missing_for_reproducible_mlk_sd_chain": [
+    "MLK-F3P-CZ02-specific BoardConfig",
+    "complete base anlogic-dr1m90.dts used by the NPU project",
+    "exact SDK/Linux/Buildroot commit mapping for the Milianke package",
+    "unambiguous GEG400 versus GEG484/AD101/AD103 generated-asset resolution",
+    "scripted BOOT.bin/FSBL/bitstream generation with source provenance",
+    "candidate kernel config selecting all three NPU drivers",
+    "same-source kernel Module.symvers and module compatibility proof",
+    "relocatable Arm NN/OpenCV rootfs package with board ABI verification"
+  ],
+  "status": {
+    "mlk_board_project_identity": "PARTIAL_DIRECT_LEAD_NOT_CLOSED",
+    "mlk_board_config": "NOT_FOUND",
+    "candidate_boot_chain_reproducibility": "BLOCKED_MLK_BOARD_PROJECT_IDENTITY",
+    "candidate_kernel_module_buildability": "BLOCKED_CANDIDATE_KERNEL_MODULE_BUILD",
+    "armnn_deployment_package": "PASS_STATIC_SOURCE_LINK_CLOSURE_NOT_DEPLOYMENT_READY",
+    "native_runtime_asset_availability": "BLOCKED_NATIVE_RUNTIME_ASSETS",
+    "candidate_sd_generation_readiness": "NOT_READY"
+  },
+  "conclusion": "05-5_NPU演示 is a substantive Milianke DR1M90GEG400 NPU project and supplies the Arm NN/ONNX path plus candidate hardware artifacts. Its mixed generated metadata, missing base Linux files and external SDK build assumptions prevent treating it as a reproducible MLK-F3P-CZ02 SD source. The primary Task 025 blocker remains board-project identity, not absence of an NPU demo."
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": "task025-buildroot-config-identity-v1",
+  "task": "025",
+  "captured_at": "2026-08-06T12:05:00+08:00",
+  "source": {
+    "buildroot_release": "2022.02.6",
+    "source_identity": "<vm-task025>/sources/buildroot release Makefile BR2_VERSION",
+    "source_git_commit": null,
+    "source_git_commit_note": "The isolated vendor source tree has no usable Git object provenance; the release version is recorded instead."
+  },
+  "config": {
+    "path": "<vm-task025>/results/task025-buildroot-output-20260806/.config",
+    "size_bytes": 112032,
+    "sha256": "1c09289906374a04eeff6fe44c20751f637f174fb916021c991b99016287c84c",
+    "defconfig_path": "<vm-task025>/sources/buildroot/configs/anlogic_dr1_buildroot_defconfig",
+    "defconfig_sha256": "bbc691bdca2852786e73d6011c3b7cfbaa191e46aa09b21f9f23ef7daeb30526",
+    "target_architecture": "aarch64",
+    "toolchain": {
+      "mode": "external preinstalled",
+      "prefix": "aarch64-linux-gnu",
+      "gcc": "Linaro GCC/G++ 7.5.0",
+      "kernel_headers": "4.10",
+      "c_library": "glibc",
+      "target_glibc": "2.25"
+    },
+    "rootfs_formats": ["tar.gz", "cpio.lz4", "uInitrd.lz4"],
+    "rootfs_overlay": {
+      "br2_rootfs_overlay": "",
+      "injected_overlay_variable": "ANLOGIC_EXTRA_ROOTFS_DIR",
+      "path": "<vm-task025>/results/task025-formal-rootfs-overlay-20260806",
+      "purpose": "isolated customdata package staging for NPU modules and Arm NN application"
+    },
+    "download_dir": "<vm-task025>/sources/buildroot/dl",
+    "global_patch_dir": "",
+    "package_override_file": "$(CONFIG_DIR)/local.mk",
+    "selected_runtime_relevant_packages": [
+      "customdata",
+      "openssh",
+      "qt5base",
+      "libdrm",
+      "eudev",
+      "kmod",
+      "tar",
+      "cpio",
+      "lz4"
+    ],
+    "protobuf_selected": false,
+    "modules_install_support": true,
+    "system_init": "busybox"
+  },
+  "download_policy": {
+    "classification": "SAFE_BUILDROOT_DOWNLOAD",
+    "primary_site": "https://sources.buildroot.net",
+    "primary_site_only": true,
+    "hash_validation": "Buildroot package hash files",
+    "credentials_used": false,
+    "tls_verification_disabled": false
+  },
+  "safety": {
+    "vendor_tree_modified": false,
+    "board_accessed": false,
+    "media_written": false,
+    "target_executed": false
+  }
+}

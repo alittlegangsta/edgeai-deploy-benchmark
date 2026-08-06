@@ -1,0 +1,33 @@
+{
+  "schema_version": "task025-pdf-workflow-extraction-v1",
+  "task": "025",
+  "document": {
+    "path": "/mnt/data/05-5_米联客-安路F3P-CZ02开发板NPU开发.pdf",
+    "status": "NOT_ACCESSIBLE_IN_SESSION",
+    "source_type": "user_provided_workflow_summary",
+    "page_numbers": null,
+    "note": "The workflow facts below are transcribed from the user's supplied PDF summary and checked against the isolated scripts and local 05-5 assets; no PDF page text was independently extracted in this session."
+  },
+  "workflow": [
+    {"step": 1, "action": "export HPF with bitstream from demo/soc_prj", "required": true},
+    {"step": 2, "action": "create platform from HPF in FD and generate FSBL", "required": true},
+    {"step": 3, "action": "copy soc_fsbl.elf and soc_base/platform/system.bit to boards/files", "required": true},
+    {"step": 4, "action": "copy kernel-dts and uboot-dts to boards/files", "required": true},
+    {"step": 5, "action": "replace anlogic-dr1m90-softip.dts in the Linux DTS tree", "required": true},
+    {"step": 6, "action": "add framebuffer driver", "required": true},
+    {"step": 7, "action": "enable HardNPU, SoftNPU, CMA and JPU drivers", "required": true},
+    {"step": 8, "action": "run move_files.sh, make_uboot.sh, make_kernel.sh and create_image.sh", "required": true},
+    {"step": 9, "action": "compile face_detection.tar.gz", "required": true},
+    {"step": 10, "action": "inject application and libraries into Buildroot rootfs overlay", "required": true},
+    {"step": 11, "action": "run make_rootfs.sh and create_image.sh", "required": true},
+    {"step": 12, "action": "make_parted.sh and deploy_image.sh write real media", "required": false, "status": "FORBIDDEN_NOT_RUN"}
+  ],
+  "source_checks": {
+    "workflow_script_family": "uisrc-lab-anlogicM-V4.0.1 generic DR1M flow",
+    "pdf_inputs_checked_against_local_05_5": true,
+    "all_mutations_confined_to_isolated_vm_workspace": true,
+    "board_accessed": false,
+    "media_written": false,
+    "npu_executed": false
+  }
+}

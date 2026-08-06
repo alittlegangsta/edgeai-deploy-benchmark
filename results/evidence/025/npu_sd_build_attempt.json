@@ -1,0 +1,190 @@
+{
+  "schema_version": "task025-npu-sd-build-attempt-v1",
+  "task": "025",
+  "captured_at": "2026-08-04T17:59:17+08:00",
+  "policy": {
+    "workspace": "isolated VM user directories and WSL /tmp snapshots",
+    "vendor_sources_modified": false,
+    "board_accessed": false,
+    "physical_media_written": false,
+    "modules_loaded": false,
+    "vendor_npu_executed": false
+  },
+  "clean_source_snapshot": {
+    "sdk_tag": "SDK_2025.07-linux6.1",
+    "commit": "beaee2ce45161908403a92619e509f52220ac347",
+    "archive": "/tmp/task025-preflight/snapshots/sdk-SDK_2025.07-linux6.1.tar",
+    "sha256": "a6a7e1dc8cddeb18638e17cd57ba22d3d7608f500edd69f99f044fae5f0c5d22",
+    "submodule_policy": "gitlinks are present but linux/buildroot/u-boot/fsbl/toolchain contents are not in the archive",
+    "full_sdk_reproducibility": "BLOCKED"
+  },
+  "host": {
+    "vm_os": "Ubuntu 18.04.4",
+    "vm_architecture": "x86_64",
+    "vm_glibc": "2.27",
+    "cmake": {
+      "path": "/home/uisrc/.local/cmake-3.16.9/bin/cmake",
+      "version": "3.16.9",
+      "system_cmake": false
+    },
+    "ninja": false,
+    "compiler": "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-g++",
+    "compiler_version": "Linaro GCC 7.5-2019.12",
+    "target_triple": "aarch64-linux-gnu",
+    "sysroot": "/home/uisrc/vendor/anlogic/toolchains/linaro-aarch64-linux-gnu-7.5.0/aarch64-linux-gnu/libc"
+  },
+  "attempts": [
+    {
+      "kind": "clean_git_clone_and_submodule_materialization",
+      "workspace": "/tmp/task025-preflight/sdk-git-clean-20260804",
+      "commands": [
+        "git clone --no-checkout --reference-if-able <existing-local-sdk> <existing-local-sdk> /tmp/task025-preflight/sdk-git-clean-20260804",
+        "git checkout --detach SDK_2025.07-linux6.1",
+        "git submodule sync --recursive",
+        "GIT_TERMINAL_PROMPT=0 git submodule update --init --recursive --jobs=1"
+      ],
+      "clone_checkout_sync": "PASS",
+      "submodule_update": "FAIL_LOCAL_SUBMODULE_REPOSITORIES_UNAVAILABLE",
+      "uninitialized_gitlinks": ["linux", "buildroot", "toolchains", "u-boot", "fsbl", "opensbi", "xenomai"],
+      "interpretation": "a clean exact superproject identity was reconstructed, but a complete clean build tree cannot be made from the local no-network object set"
+    },
+    {
+      "kind": "vendor_release_tarball_extraction_and_source_audit",
+      "source": "/home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz",
+      "sha256": "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0",
+      "size_bytes": 1368135226,
+      "workspace": "/home/uisrc/build/task025/sdk-release-tarball-20260804/sdk",
+      "status": "PASS_SOURCE_PAYLOAD_EXTRACTION_PROVENANCE_PARTIAL",
+      "file_counts": {"linux": 78869, "buildroot": 13124, "u_boot": 17586, "fsbl": 11415, "toolchains": 8},
+      "git_metadata": "no .git directories found",
+      "board_config_result": "AD101/AD103 only; no MLK BoardConfig",
+      "config_probe": {
+        "buildroot_defconfig": ["CONFIG_MODULES=y", "CONFIG_CMA=y", "CONFIG_DMA_CMA=y"],
+        "linux_arm64_defconfig_npu_or_module_lines": [],
+        "module_symvers_files": 0,
+        "system_map_files": 0
+      },
+      "interpretation": "the release tarball is fuller than the git archive and supports source inspection, but cannot establish exact submodule commit provenance or an MLK build entry"
+    },
+    {
+      "kind": "clean_sdk_archive_info",
+      "command": "cd /tmp/task025-preflight/source/sdk-2025.07 && bash ./build.sh info",
+      "status": "FAIL_EXPECTED",
+      "exit_code": 1,
+      "error": "please select board config first",
+      "interpretation": "clean archive has no selected BoardConfig and its submodule directories are empty"
+    },
+    {
+      "kind": "official_app_npu_build",
+      "workspace": "/home/uisrc/build/task025/app-attempt3",
+      "command": "export PATH=/home/uisrc/.local/cmake-3.16.9/bin:$PATH; bash ./build.sh",
+      "status": "PASS_TARGETS_PARTIAL_PACKAGE",
+      "exit_code": 0,
+      "source": "VM copy of /home/uisrc/vendor/anlogic/sdk/sdk/app/npu",
+      "compiler": "Linaro GCC/G++ 7.5.0",
+      "cmake_cache_sha256": "7fee563f6e17051ad083ac539557600c624d0e421b752723a386284c192513bd",
+      "output_tree": {
+        "file_count": 127,
+        "regular_bytes": 174462450,
+        "streamed_tar_sha256": "35955ee79da7111d6cf2029d8101118203405e992b88548fe43a465140934ffa",
+        "note": "diagnostic tree hash; build directory and tree remain outside Git"
+      },
+      "targets": {
+        "yolo_demo_pic": {
+          "sha256": "0ddc58b44bad80081dfb40ea3f4f8b8813e19b474f31357c9cdc04136d9e88e0",
+          "architecture": "AArch64 ELF"
+        },
+        "demo_crnn": {
+          "sha256": "9d86175d7c634e5b3593d19a7f6901b9b735fdac6ab59cc544c1c454d52d6ba6",
+          "architecture": "AArch64 ELF"
+        }
+      },
+      "runtime_libraries": {
+        "libarmnn.so.32.1": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+        "libarmnnOnnxParser.so.24.6": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+        "libprotobuf.so.23.0.0": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265"
+      },
+      "packaging_errors": [
+        "cp: cannot stat ./libs/armnn_lib/lib/libprotoc.so",
+        "cp: cannot stat ./libs/armnn_lib/lib/libprotoc.so.23",
+        "cp: cannot stat ./libs/armnn_lib/lib/libprotoc.so.23.0.0"
+      ],
+      "interpretation": "CMake configure/link and AArch64 demo targets passed; vendor packaging script is incomplete and its zero exit code does not prove a complete rootfs package"
+    },
+    {
+      "kind": "armnn_rootfs_dynamic_dependency_audit",
+      "workspace": "/home/uisrc/build/task025/app-attempt3/sdk/app/npu/rootfs_files/npu_demo",
+      "command": "readelf -d/version-info over yolo_demo_pic, Arm NN/parser/protobuf and all supplied shared objects",
+      "status": "PASS_STATIC_NON_SYSTEM_CLOSURE_NOT_DEPLOYMENT_READY",
+      "result": "all 18 unique non-system DT_NEEDED names resolve to supplied AArch64 package files; no missing package dependency was found",
+      "libprotoc": "not DT_NEEDED by yolo_demo_pic, libarmnn.so.32.1, libarmnnOnnxParser.so.24.6 or libprotobuf.so.23.0.0; packaging-only missing names",
+      "abi": "observed maximum GLIBC_2.17, GLIBCXX_3.4.22 and CXXABI_1.3.11 requirements",
+      "caveat": "OpenCV objects contain an absolute build RPATH and no board runtime test was performed"
+    },
+    {
+      "kind": "kernel_dtb_bootrootfs",
+      "status": "NOT_ATTEMPTED",
+      "reason": "no MLK BoardConfig; clean SDK archive lacks materialized submodules; attempting an AD101 BoardConfig would violate board-identity boundary"
+    },
+    {
+      "kind": "bootgen_and_sd_image",
+      "status": "NOT_ATTEMPTED",
+      "reason": "no version-matched MLK HPF/BoardConfig chain and no approval to generate or write a physical image"
+    },
+    {
+      "kind": "native_runtime_and_model_conversion",
+      "status": "NOT_ATTEMPTED",
+      "reason": "convert_tool, al_ai_flow, npu_runtime, rt.bin and weight.bin are not available in the approved local scope"
+    },
+    {
+      "kind": "pdf_documented_uisrc_injection_reproduction",
+      "workspace": "<vm-task025>/uisrc-lab-anlogic-pdf-20260805",
+      "source": "user-provided 05-5 workflow summary plus local 05-5 assets",
+      "status": "PASS_PARTIAL_CANDIDATE_NOT_SD_READY",
+      "inputs": {
+        "fsbl_sha256": "be0a66928221a70c12187e229a9867f2c9f7e7b10b64909f3dc7b289b5a76f49",
+        "system_bit_sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+        "kernel_dts_sha256": "4d8b261cde9ee0ab6f41509a6aaa98beac14554acfe549c82bd08010fcd6e019",
+        "uboot_dts_sha256": "df2106dcf9694a537c36402c07de3c879de8de7f11d89d1948eac0a67063526d",
+        "softip_dts_sha256": "c6c79ccad82a41db52ce2829ecb971b286e6e868f8ba88e97dc17a8b99b6917a",
+        "face_detection_sha256": "33eb354f2cb41df81f42fe30d44898d99e2a4fcd8a69b8ae678c8622e473b82f"
+      },
+      "steps": {
+        "move_files": "PASS",
+        "kernel_dtb_modules": "PASS_AFTER_THREE_REPAIR_ATTEMPTS",
+        "uboot": "PASS",
+        "bootgen_create_image": "PASS",
+        "face_detection_source_build": "PASS",
+        "buildroot_make_rootfs": "NOT_RUN_EMPTY_DL_CACHE",
+        "derived_rootfs_overlay": "PASS_ISOLATED_ONLY",
+        "media_write": "FORBIDDEN_NOT_RUN"
+      },
+      "artifacts_evidence": "results/evidence/025/npu_pdf_candidate_artifact_validation.json"
+    },
+    {
+      "kind": "formal_buildroot_rootfs_and_candidate_fileset",
+      "workspace": "<vm-task025>/uisrc-lab-anlogic-pdf-20260805",
+      "command": "make -C sources/buildroot O=results/task025-buildroot-output-20260806 CROSS_COMPILE=tools/aarch64-linux/bin/aarch64-linux-gnu- ANLOGIC_EXTRA_ROOTFS_DIR=results/task025-formal-rootfs-overlay-20260806 BR2_PRIMARY_SITE=file:///__task025_no_network__ BR2_PRIMARY_SITE_ONLY=y BR2_BACKUP_SITE= -j2",
+      "status": "PASS_FORMAL_BUILDROOT_ROOTFS",
+      "exit_code": 0,
+      "download_cache_manifest": "results/evidence/025/npu_buildroot_dl_manifest.json",
+      "rootfs_sha256": "ae64bbd125a47f54df445a084485466336f1df60f5137ad61b44b8eb22c64f39",
+      "rootfs_cpio_lz4_sha256": "1fdfd264d49e4d7cdc95d68952e9b332525efb493917fdbdbbc26e0de914848a",
+      "uinitrd_sha256": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268",
+      "static_validation": "results/evidence/025/npu_formal_rootfs_runtime_closure.json",
+      "network_requests_during_build": 0,
+      "real_media_or_board_access": false
+    }
+  ],
+  "generated_candidate": {
+    "sd_image": false,
+    "complete_file_set": true,
+    "partial_isolated_file_set": true,
+    "boot_artifacts_generated": true,
+    "rootfs_artifact_derived_not_buildroot_generated": false,
+    "formal_buildroot_rootfs_generated": true,
+    "candidate_manifest": "results/evidence/025/npu_final_candidate_artifact_manifest.json",
+    "prebuilt_milianke_files": "external candidate references only; not a generated or approved image",
+    "git_artifacts": false
+  }
+}

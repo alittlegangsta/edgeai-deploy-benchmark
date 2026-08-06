@@ -1,0 +1,75 @@
+{
+  "schema_version": "task025-hpf-bitstream-provenance-v1",
+  "task": "025",
+  "read_only": true,
+  "assets": [
+    {
+      "name": "05-5 Milianke NPU HPF",
+      "path": "03_demo/05-5_NPU演示/demo/soc_hw/soc_prj.hpf",
+      "sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+      "declared_device": "DR1M90GEG400",
+      "hpf_version": "202501",
+      "embedded_platform_bit": {
+        "path_inside_hpf": "HPFs/soc_prj.bit",
+        "sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5"
+      },
+      "embedded_npu_metadata": ["HPFs/soc_plat_dts.h", "HPFs/soc_plat_pl.dtsi", "HPFs/static/data/softip.js", "HPFs/drivers/axi_soft_npu/al_axi_soft_npu_cfg.c"],
+      "finding": "The HPF is a real SoftNPU platform package and embeds the platform-copy bitstream."
+    },
+    {
+      "name": "05-5 generated best-result bitstream",
+      "path": "03_demo/05-5_NPU演示/demo/soc_prj/soc_prj_Runs/best_result/soc_prj.bit",
+      "sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912",
+      "same_as_hpf_embedded_platform_bit": false,
+      "finding": "A separate generated output exists; its byte identity differs from the bitstream embedded in the HPF/platform copy."
+    },
+    {
+      "name": "05-5 platform bitstream copy",
+      "path": "03_demo/05-5_NPU演示/demo/soc_sdk/soc_base/platform/soc_prj.bit",
+      "sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+      "same_as_hpf_embedded_platform_bit": true
+    },
+    {
+      "name": "05-5 BOOT.bin",
+      "path": "03_demo/05-5_NPU演示/demo/boot/BOOT.bin",
+      "sha256": "567e14124fa17137e964ebcadd4680d8349058beacd4070377ba0ac3fc8c2585",
+      "payload_mapping": "UNRESOLVED",
+      "reason": "No BIF or bootgen source is packaged; static byte search is not sufficient to prove which of the two differing bitstream copies was embedded."
+    },
+    {
+      "name": "05-5 candidate system.dtb",
+      "path": "03_demo/05-5_NPU演示/demo/boot/system.dtb",
+      "sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+      "static_features": ["anlogic,hard_npu", "anlogic,soft_npu", "linux,cma"],
+      "mapping": "candidate_only; base DTS source absent"
+    },
+    {
+      "name": "3-2 generic boot-mode BIF",
+      "path": "03_demo/3-2_ex_fpsoc/03_boot_mode/soc_prj/uisrc/05_boot/output.bif",
+      "sha256": "b1ee6e547e1fd430589f24d42ffc94d39c9f6e7dda7e6f661f30c4943e52f3aa",
+      "mapped_bitstream": "3-2_ex_fpsoc/03_boot_mode/soc_prj/fpga_prj_Runs/phy_1/fpga_prj.bit",
+      "finding": "This is a generic FSBL/bit/hello_world chain and is not the 05-5 NPU BOOT source."
+    },
+    {
+      "name": "D21.1 prebuilt NPU image",
+      "path": "03_demo/D21.1_NPU_Simple_demo_sd_image",
+      "identity": {
+        "BOOT.bin": "2e75f4dd165362eae3c0285e2364f9816277fc25b975f4307f5dcb2cfd05f35b",
+        "dtb.bin": "4a5697010b9b19e633485be3107e313d084df8088c4c18acc92192f3e772aa56",
+        "kernel.bin": "29f866a913c2621a4fc40025ab085f197fe686bad95e251a3468b40319d1f9b1",
+        "rootfs.bin": "dd5165a6ddbe9ee6f32590e624173747c497b17f167fec61bae6ce9b47e634b3"
+      },
+      "static_dtb_features": ["hard_npu@63F00000", "soft_npu@80000000", "linux,cma"],
+      "mapping": "prebuilt comparison only; no MLK-F3P-CZ02 provenance"
+    }
+  ],
+  "identity_conflicts": [
+    "05-5 project declares DR1M90GEG400 but board_cfg.mk defines BOARD_DR1X90_AD101_V10",
+    "05-5 generated metadata includes DR1M90GEG484/DR1M90MEG484 and AD103V20/MLKPAI path markers",
+    "05-5 HPF/platform bit differs from best-result bit",
+    "05-5 BOOT.bin has no packaged BIF/bootgen source",
+    "3-2 BIF is generic and cannot be used to infer the 05-5 BOOT payload"
+  ],
+  "hpf_bitstream_relationship": "PARTIAL_NOT_CLOSED",
+  "candidate_boot_chain_reproducibility": "BLOCKED_MLK_BOARD_PROJECT_IDENTITY"
+}

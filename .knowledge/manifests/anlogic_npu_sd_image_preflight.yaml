@@ -1,0 +1,206 @@
+schema_version: task025-anlogic-npu-sd-image-preflight-v1
+task: "025"
+title: MLK-F3P-CZ02 NPU SD image reproducible build and deployment preflight
+status: Completed
+automated_preflight: COMPLETE
+candidate_approved: true
+deployment_approval: PENDING
+candidate_sd_image: NOT_PARTITIONED_IMAGE
+candidate_approval_semantics: "static-audit approval only; does not authorize formatting, partitioning or writing real media"
+target:
+  board: MLK-F3P-CZ02-DR1M90
+  device: DR1M90GEG400
+  architecture: AArch64
+  buildroot: "2022.02.6"
+  kernel: 6.1.111-rt42
+  glibc: "2.25"
+source_line:
+  sdk_tag: SDK_2025.07-linux6.1
+  sdk_commit: beaee2ce45161908403a92619e509f52220ac347
+  sdk_archive_sha256: a6a7e1dc8cddeb18638e17cd57ba22d3d7608f500edd69f99f044fae5f0c5d22
+  official_git_snapshot:
+    clone_checkout_sync: PASS
+    submodule_update: FAIL_LOCAL_SUBMODULE_REPOSITORIES_UNAVAILABLE
+    complete_tree: false
+  vendor_release_tarball:
+    path: /home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz
+    sha256: c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0
+    size_bytes: 1368135226
+    extracted_payload: true
+    git_metadata: absent
+    provenance: partial
+  dr1m90_npu_nearest_tag: SDK_2026.01
+  toolchain: Linaro GCC/G++ 7.5.0 aarch64-linux-gnu
+  submodules_materialized_in_clean_archive: false
+  source_payload_comparison: vendor_release_tarball_contains_fuller_source_than_git_archive_but_not_exact_commit_provenance
+mlk_candidate:
+  project_device: DR1M90GEG400
+  td_version: 6.2.175876
+  ide_version: "2025.07"
+  ide_build_id: "20250905"
+  sdk_version: "20250905"
+  hpf_version: "202507"
+  hpf_sha256: ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7
+  bitstream_sha256: 0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912
+  status: candidate_not_active_and_no_official_sdk_board_config
+  official_sdk_mlk_board_config_found: false
+candidate_paths:
+  current_emmc_identity: KNOWN_FROM_TASK024_READ_ONLY_NOT_A_CANDIDATE_BLOCKER
+  candidate_sd_identity: FORMAL_BUILDROOT_FILE_SET_READY_FOR_SD_WRITE_APPROVAL
+  candidate_boot_chain_reproducibility: PASS_BOOT_AND_FORMAL_ROOTFS_FILE_SET_NOT_PARTITIONED
+  candidate_kernel_module_compatibility: PASS_SAME_SOURCE_STATIC_COMPATIBILITY
+  candidate_armnn_runtime_closure: PASS_STATIC_FORMAL_ROOTFS_CLOSURE_NOT_DEPLOYMENT_READY
+  candidate_sd_generation_readiness: READY_FOR_SD_WRITE_APPROVAL
+buildroot_formal_increment:
+  config_identity: results/evidence/025/npu_buildroot_config_identity.json
+  download_manifest: results/evidence/025/npu_buildroot_dl_manifest.json
+  formal_rootfs_build: results/evidence/025/npu_formal_rootfs_build.json
+  runtime_closure: results/evidence/025/npu_formal_rootfs_runtime_closure.json
+  candidate_artifact_manifest: results/evidence/025/npu_final_candidate_artifact_manifest.json
+  rootfs_sha256: ae64bbd125a47f54df445a084485466336f1df60f5137ad61b44b8eb22c64f39
+  rootfs_cpio_lz4_sha256: 1fdfd264d49e4d7cdc95d68952e9b332525efb493917fdbdbbc26e0de914848a
+  uinitrd_sha256: c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268
+  download_entries: 141
+  download_bytes: 268798198
+  offline_recheck_new_downloads: 0
+  static_elf_count: 353
+  static_x86_64_elf_count: 0
+  static_missing_dt_needed: []
+  partitioned_sd_image: false
+  sd_write: NOT_PERFORMED
+pdf_workflow:
+  workflow: results/evidence/025/npu_pdf_workflow_extraction.json
+  input_closure: results/evidence/025/npu_pdf_input_closure.json
+  script_safety: results/evidence/025/npu_uisrc_build_script_safety.json
+  reproduction: results/evidence/025/npu_pdf_isolated_reproduction.json
+  artifact_validation: results/evidence/025/npu_pdf_candidate_artifact_validation.json
+  status: FORMAL_BUILDROOT_ROOTFS_PASS_COMPLETE_FILE_SET_READY
+package_increment:
+  evidence: results/evidence/025/uisrc_package_inventory.json
+  uisrc_lab_arm:
+    file: uisrc-lab-anlogicM-V4.0.1.tar.gz
+    md5: 9ba0d5c69e1e127709a3c33958470688
+    sha256: 7214035eea18e0df67a1aaa401ad9d024c4a5560cb5843af50e5f75e9c81d292
+    version: Milianke 4.0.1 / Anlogic SDK_2025.1 / ARM64
+    boardconfig: GENERIC_DR1M_ONLY
+    mlk_board_config: false
+    classification: RECOVERABLE_STRUCTURE_VERSION_MISMATCH
+  sdk_2025_7:
+    file: sdk.2025.7.tar.gz
+    md5: a85e6f1f52782a0a9b7e7444d7f8e968
+    sha256: c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0
+    identity: user_confirmed_and_prior_audit_reused_without_rehash
+  anlogic_linuxsdk:
+    expected_md5: eacb0d2428b9177407e4feeb42747001
+    local_match: false
+  uisrc_ubuntu18x64:
+    file: uisrc-ubuntu18x64.exe
+    md5: a07728013c0d117e3793c8d1ad4d4fd2
+    sha256: fd525f099eaf3d195fff2f7a7c12ee360d5f8e2ada365211b34c93d1aa4e3611
+    executed: false
+demo_audit:
+  screening: results/evidence/025/npu_demo_directory_screening.json
+  deep_audit: results/evidence/025/milianke_npu_demo_audit.json
+  direct_target: 03_demo/05-5_NPU演示/demo
+  mlk_board_project_identity: PARTIAL_DIRECT_LEAD_NOT_CLOSED
+  board_config_found: false
+  software_path: armnn_onnx_alnpu
+  native_runtime_assets_found: false
+  candidate_boot_chain_reproducibility: PASS_BOOT_GENERATED_FROM_PDF_INJECTED_INPUTS_NOT_FULL_SD
+  candidate_kernel_module_buildability: PASS_SAME_SOURCE_STATIC_BUILD_NOT_DEPLOYMENT_READY
+  candidate_sd_generation_readiness: BLOCKED_CANDIDATE_IMAGE_BUILD
+  archive_followup: results/evidence/025/npu_demo_archive_inventory.json
+  linux_bsp_followup: results/evidence/025/npu_mlk_linux_bsp_audit.json
+  hpf_bitstream_followup: results/evidence/025/npu_hpf_bitstream_provenance.json
+  boardconfig_recovery_followup: results/evidence/025/npu_boardconfig_recovery_assessment.json
+  uisrc_package_followup: results/evidence/025/uisrc_package_inventory.json
+  vm_uisrc_environment: results/evidence/025/npu_vm_uisrc_environment_inventory.json
+  vm_historical_bsp: results/evidence/025/npu_vm_historical_mlk_bsp_assessment.json
+  vm_05_5_provenance: results/evidence/025/npu_vm_05_5_provenance_comparison.json
+  archive_count: 151
+  archive_listing_limitations:
+    rar_v5: no_local_reader_no_extraction
+    seven_zip: no_local_reader_no_extraction
+  base_linux_bsp_availability: GENERIC_GEG400_REFERENCE_ONLY
+  boardconfig_recovery_feasibility: ASSET_IDENTITY_CONFLICT
+  hpf_bitstream_relationship: PARTIAL_NOT_CLOSED
+  vm_increment:
+    environment_identity: OFFICIAL_SDK_2025_07_TREE_PLUS_GENERIC_MILIANKE_V4_0_1
+    historical_uisrc_package: V4_0_1_ONLY_NO_05_5_2025_07_MATCH
+    original_05_5_workspace: COPIED_05_5_ONLY
+    generic_base_dts: GENERIC_OFFICIAL_BASE_PRESENT_MLK_MAPPING_UNVERIFIED
+    mlk_boardconfig: NOT_FOUND
+    candidate_sd_generation_readiness: BLOCKED_CANDIDATE_IMAGE_BUILD
+    evidence:
+      - results/evidence/025/npu_vm_uisrc_environment_inventory.json
+      - results/evidence/025/npu_vm_historical_mlk_bsp_assessment.json
+      - results/evidence/025/npu_vm_05_5_provenance_comparison.json
+  identity_conflicts:
+    - BOARD_DR1X90_AD101_V10 macro in board_cfg.mk
+    - generated DR1M90GEG484/DR1M90MEG484 metadata
+    - AD103V20/MLKPAI source paths in design_0.info.xml
+    - missing anlogic-dr1m90.dts base include
+    - platform bitstream differs from best_result bitstream
+    - saved TD Unknown device name DR1M90GEG400 errors
+armnn_isolated_build:
+  status: PASS_TARGETS_PARTIAL_PACKAGE
+  workspace: /home/uisrc/build/task025/app-attempt3
+  cmake: 3.16.9
+  compiler: Linaro GCC/G++ 7.5.0
+  yolo_demo_pic_sha256: 0ddc58b44bad80081dfb40ea3f4f8b8813e19b474f31357c9cdc04136d9e88e0
+  libarmnn_sha256: 5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce
+  libarmnn_onnx_parser_sha256: dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99
+  packaging_missing: [libprotoc.so, libprotoc.so.23, libprotoc.so.23.0.0]
+  packaging_missing_classification: not_DT_NEEDED_in_inspected_entrypoint_closure
+  non_system_dt_needed_missing: []
+  max_glibc: GLIBC_2.17
+  max_glibcxx: GLIBCXX_3.4.22
+  absolute_rpath: /home/rtxiao/repos/ffmpeg/ffmpeg_opencv4.7.0_aarch64/lib
+verdict:
+  primary: READY_FOR_SD_WRITE_APPROVAL
+  secondary:
+    - BLOCKED_CLEAN_SOURCE_RECONSTRUCTION
+    - BLOCKED_LICENSE_OR_PROVENANCE
+    - BLOCKED_NATIVE_RUNTIME_ASSETS
+    - MODULE_SYMBOL_CRC_UNVERIFIED
+    - ARMNN_PACKAGE_RELOCATION_UNVERIFIED
+  candidate_approval: true
+  sd_write: NOT_PERFORMED
+deployment:
+  media: independent SD first; eMMC untouched
+  status: NOT_APPROVED
+  sd_written: false
+  emmc_modified: false
+  commit_created: true
+evidence:
+  inventory: results/evidence/025/npu_sd_source_inventory.json
+  build_chain: results/evidence/025/npu_sd_build_chain.json
+  build_attempt: results/evidence/025/npu_sd_build_attempt.json
+  candidate_identity: results/evidence/025/npu_sd_candidate_identity.json
+  armnn_dependency: results/evidence/025/npu_sd_armnn_rootfs_dependency.json
+  deployment_plan: results/evidence/025/npu_sd_deployment_plan.json
+  verdict: results/evidence/025/npu_sd_image_verdict.json
+  demo_screening: results/evidence/025/npu_demo_directory_screening.json
+  demo_audit: results/evidence/025/milianke_npu_demo_audit.json
+  demo_archive_inventory: results/evidence/025/npu_demo_archive_inventory.json
+  mlk_linux_bsp_audit: results/evidence/025/npu_mlk_linux_bsp_audit.json
+  hpf_bitstream_provenance: results/evidence/025/npu_hpf_bitstream_provenance.json
+  boardconfig_recovery_assessment: results/evidence/025/npu_boardconfig_recovery_assessment.json
+  uisrc_package_inventory: results/evidence/025/uisrc_package_inventory.json
+  validation: results/evidence/025/validation.json
+  pdf_workflow: results/evidence/025/npu_pdf_workflow_extraction.json
+  pdf_inputs: results/evidence/025/npu_pdf_input_closure.json
+  pdf_script_safety: results/evidence/025/npu_uisrc_build_script_safety.json
+  pdf_reproduction: results/evidence/025/npu_pdf_isolated_reproduction.json
+  pdf_artifact_validation: results/evidence/025/npu_pdf_candidate_artifact_validation.json
+  buildroot_config_identity: results/evidence/025/npu_buildroot_config_identity.json
+  buildroot_dl_manifest: results/evidence/025/npu_buildroot_dl_manifest.json
+  formal_rootfs_build: results/evidence/025/npu_formal_rootfs_build.json
+  formal_rootfs_runtime_closure: results/evidence/025/npu_formal_rootfs_runtime_closure.json
+  final_candidate_artifact_manifest: results/evidence/025/npu_final_candidate_artifact_manifest.json
+safety:
+  vendor_assets_copied_to_git: false
+  modules_loaded: false
+  fpga_written: false
+  npu_executed: false
+  project_model_converted: false

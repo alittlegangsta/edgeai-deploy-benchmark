@@ -1,0 +1,224 @@
+{
+  "schema_version": "task025-uisrc-package-inventory-v1",
+  "task": "025",
+  "captured_at": "2026-08-05T17:12:57+08:00",
+  "read_only": true,
+  "search_scope": {
+    "root": "<windows-user>/Desktop/fpga_info",
+    "additional_local_scope": [
+      "/home/uisrc/vendor/anlogic",
+      "/home/dministrator/vendor"
+    ],
+    "method": "bounded filename, size, format and digest search; no installer or vendor script execution",
+    "vendor_tree_modified": false,
+    "known_sdk_archive_rehashed": false
+  },
+  "expected_downloads": {
+    "uisrc_lab_anlogic_arm": {
+      "expected_md5": "9ba0d5c69e1e127709a3c33958470688",
+      "status": "FOUND_EXACT"
+    },
+    "anlogic_linuxsdk": {
+      "expected_md5": "eacb0d2428b9177407e4feeb42747001",
+      "status": "NOT_FOUND_IN_BOUNDED_LOCAL_SCOPE",
+      "filename_candidates_found": [],
+      "interpretation": "No local file was promoted to anlogic-linuxsdk from a filename or digest match; the expected MD5 is not assigned to sdk.2025.7.tar.gz."
+    },
+    "uisrc_ubuntu18x64": {
+      "expected_md5": "a07728013c0d117e3793c8d1ad4d4fd2",
+      "status": "FOUND_EXACT"
+    }
+  },
+  "packages": [
+    {
+      "id": "uisrc_lab_anlogicM_V4_0_1_arm",
+      "source_path": "<windows-user>/Desktop/fpga_info/uisrc-lab-anlogicM-V4.0.1.tar.gz",
+      "file_name": "uisrc-lab-anlogicM-V4.0.1.tar.gz",
+      "format": "gzip-compressed POSIX tar archive",
+      "size_bytes": 1466912417,
+      "md5": "9ba0d5c69e1e127709a3c33958470688",
+      "sha256": "7214035eea18e0df67a1aaa401ad9d024c4a5560cb5843af50e5f75e9c81d292",
+      "expected_md5_match": true,
+      "version_file": {
+        "path": "uisrc-lab-anlogic/version",
+        "text": [
+          "milianke version: 4.0.1",
+          "Anlogic version: SDK_2025.1",
+          "build target: ARM64"
+        ]
+      },
+      "archive_inventory": {
+        "member_count": 152407,
+        "regular_file_count": 139489,
+        "directory_count": 12466,
+        "symlink_count": 452,
+        "regular_file_bytes": 282195207,
+        "top_level_directories": [
+          "boards",
+          "packages",
+          "scripts",
+          "sources",
+          "tools"
+        ],
+        "selective_extraction": "/tmp/task025-uisrc-arm-focused",
+        "extraction_in_git": false
+      },
+      "classification": {
+        "class": "E_MIXED_GENERIC_SDK_WITH_DR1M_BUILD_SCRIPTS",
+        "basis": "The archive contains Linux, Buildroot, U-Boot, OpenSBI source snapshots, an AArch64 GCC 7.5 toolchain and image scripts, but no MLK-F3P-CZ02-specific BoardConfig, HPF, bitstream, DTB or NPU userspace package."
+      },
+      "board_identity": {
+        "family": "DR1M",
+        "generic_device_labels": ["DR1M90"],
+        "mlk_f3p_cz02_label_found": false,
+        "mlk_cz02_dr1m90_label_found": false,
+        "dr1m90geg400_label_found": false,
+        "board_config_equivalent": "generic scripts/drcfg.sh plus boards/DR1M/buildroot configs",
+        "board_config_is_mlk_specific": false
+      },
+      "build_chain_evidence": {
+        "drcfg": {
+          "path": "scripts/drcfg.sh",
+          "board_family": "DR1M",
+          "rootfs": "buildroot",
+          "kernel_defconfig": "anlogic_dr1_kernel_defconfig",
+          "buildroot_defconfig": "anlogic_dr1_buildroot_defconfig",
+          "uboot_defconfig": "anlogic_dr1_uboot_defconfig",
+          "kernel_dts": "anlogic-dr1.dts",
+          "dtb": "anlogic-dr1.dtb",
+          "cross_compile_prefix": "tools/aarch64-linux/bin/aarch64-linux-gnu-",
+          "bootgen": "tools/bootgen"
+        },
+        "orchestration": {
+          "all_script": "scripts/other/make_all.sh",
+          "image_script": "scripts/rootfs/buildroot/create_dr1m_image.sh",
+          "image_inputs": ["fsbl.elf", "system.bit", "u-boot.bin", "uImage.lz4", "system.dtb"],
+          "bootgen_arch": "dr1m90",
+          "bif_generated_by_script": true,
+          "board_specific_hpf_or_bitstream_source": false
+        },
+        "source_snapshots": {
+          "linux": "present with embedded .git pointer but no packaged git object database",
+          "buildroot": "present with embedded .git pointer but no packaged git object database",
+          "u_boot": "present with embedded .git pointer but no packaged git object database",
+          "opensbi": "present with embedded .git pointer but no packaged git object database"
+        }
+      },
+      "npu_and_runtime_assets": {
+        "driver_source_paths": [
+          "sources/linux/drivers/npu/hard_npu_driver/hard_npu.c",
+          "sources/linux/drivers/npu/soft_npu_driver/soft_npu.c",
+          "sources/linux/drivers/npu/cma_mem_driver/cma_mem.c"
+        ],
+        "driver_symbols": ["NPU_MODULE", "HARD_NPU_DRIVER", "SOFT_NPU_DRIVER", "CMA_MEM_DRIVER"],
+        "driver_source_hashes": {
+          "hard_npu.c": "84a3410378c2f64a478d919965025ef5d6452be3e3465a7b151efaf804e48f9d",
+          "soft_npu.c": "f0c626842da5bb067f319d7cacf79a7f1e0ab554e93b23057f0493b4546c3abb",
+          "cma_mem.c": "d328179f815bd716e18b79807660310d28d69f1493bb8f2648522dc9b21443ee"
+        },
+        "prebuilt_modules_found": false,
+        "armnn_or_alnpu_library_found": false,
+        "native_runtime_assets_found": false,
+        "model_assets_found": false,
+        "matching_member_path_search": "no matching armnn/alnpu/npu_runtime/rt.bin/weight.bin/convert_tool/al_ai_flow/onnx/yolo/face paths"
+      },
+      "relation_to_sdk_2025_7": {
+        "embedded_sdk_version": "SDK_2025.1",
+        "sdk_2025_7_tarball_member_found": false,
+        "wraps_or_calls_sdk_2025_7": "not evidenced by archive paths or inspected scripts",
+        "role": "independent Milianke-distributed generic DR1M source/toolchain snapshot, not an exact SDK_2025.07 package"
+      },
+      "license": {
+        "top_level_license": "GNU GPL v2 text",
+        "license_path": "uisrc-lab-anlogic/LICENSE",
+        "redistribution_status": "component/toolchain licenses still require review; no vendor binary was copied to Git"
+      },
+      "assessment": {
+        "mlk_boardconfig_available": false,
+        "generic_bsp_structure_available": true,
+        "complete_mlk_linux_bsp_available": false,
+        "candidate_sd_generation_ready": false,
+        "classification": "RECOVERABLE_STRUCTURE_VERSION_MISMATCH",
+        "blocking_reason": "The package supplies a generic DR1M build skeleton and source drivers, but its SDK_2025.1 identity and lack of MLK-specific hardware assets cannot close the 2025.07/MLK/NPU boot chain."
+      }
+    },
+    {
+      "id": "uisrc_lab_anlogicV_V4_0_1",
+      "source_path": "<windows-user>/Desktop/fpga_info/uisrc-lab-anlogicV-V4.0.1.tar.gz",
+      "file_name": "uisrc-lab-anlogicV-V4.0.1.tar.gz",
+      "format": "gzip-compressed POSIX tar archive",
+      "size_bytes": 1892132022,
+      "md5": "47b41afa3ccae35df0b72be32bce1604",
+      "sha256": "d11ae6b2e00e265fec3815288fb0dd5e495e89d3e28d776870cdf0510099550d",
+      "expected_md5_match": false,
+      "target_indicators": ["riscv64-linux", "riscv64-bm", "anlogic_dr1v90_defconfig", "arch/riscv"],
+      "assessment": "not the expected ARM package; retained as a separate V-series comparison asset and not used for the MLK ARM candidate"
+    },
+    {
+      "id": "uisrc_ubuntu18x64_installer",
+      "source_path": "<windows-user>/Desktop/fpga_info/uisrc-ubuntu18x64.exe",
+      "file_name": "uisrc-ubuntu18x64.exe",
+      "format": "PE32 GUI Intel 80386 Windows installer",
+      "size_bytes": 2850802873,
+      "md5": "a07728013c0d117e3793c8d1ad4d4fd2",
+      "sha256": "fd525f099eaf3d195fff2f7a7c12ee360d5f8e2ada365211b34c93d1aa4e3611",
+      "expected_md5_match": true,
+      "assessment": "VM installer identity only; not executed or imported into Git"
+    },
+    {
+      "id": "sdk_2025_7_known_vendor_release",
+      "source_path": "<windows-user>/Desktop/fpga_info/sdk.2025.7.tar.gz",
+      "prior_vendor_copy_path": "/home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz",
+      "file_name": "sdk.2025.7.tar.gz",
+      "format": "gzip-compressed POSIX tar archive",
+      "size_bytes": 1368135226,
+      "md5": "a85e6f1f52782a0a9b7e7444d7f8e968",
+      "sha256": "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0",
+      "hash_method": "reused user-confirmed and prior Task 025 identity; not re-extracted or rehashed in this increment",
+      "relation": "known Anlogic vendor release payload; distinct from the expected anlogic-linuxsdk MD5 and distinct from the Milianke V4.0.1 package"
+    },
+    {
+      "id": "anlogic_linuxsdk_expected_download",
+      "file_name": "anlogic-linuxsdk",
+      "expected_md5": "eacb0d2428b9177407e4feeb42747001",
+      "status": "NOT_FOUND",
+      "search_result": "No file with this name or a bounded local candidate carrying the expected MD5 was found under the supplied fpga_info root or the checked local vendor directories.",
+      "role_not_assigned": true
+    }
+  ],
+  "architecture_assessment": {
+    "uisrc_lab_arm": "full generic DR1M Linux/source/toolchain package with image scripts; not a complete MLK board package and not an Arm NN/NPU userspace package",
+    "sdk_2025_7": "Anlogic base SDK release payload previously audited; no exact identity with the Milianke SDK_2025.1 snapshot",
+    "anlogic_linuxsdk": "expected official AD-series download not locally acquired in this audit",
+    "uisrc_ubuntu18x64": "host VM installer identity only"
+  },
+  "task025_impact": {
+    "sdk_2025_7_role": "base Anlogic release payload; not proven to be wrapped by the V4.0.1 package",
+    "uisrc_lab_boardconfig_availability": "GENERIC_DR1M_ORCHESTRATOR_ONLY",
+    "mlk_linux_bsp_availability": "GENERIC_DR1M_SOURCE_ONLY",
+    "boardconfig_recovery_feasibility": "RECOVERABLE_STRUCTURE_VERSION_MISMATCH",
+    "historical_package_requirement": "A V4.0.1 package is present, but its embedded SDK_2025.1 identity does not establish the 2025.07 05-5 provenance; an exact historical MLK package or board mapping is still required",
+    "candidate_boot_chain_reproducibility": "BLOCKED_MLK_BOARD_PROJECT_IDENTITY",
+    "candidate_sd_generation_readiness": "NOT_READY",
+    "primary_verdict_unchanged": "BLOCKED_MLK_BOARD_PROJECT_IDENTITY",
+    "secondary_blockers": [
+      "BLOCKED_ASSET_VERSION_MISMATCH",
+      "BLOCKED_NATIVE_RUNTIME_ASSETS",
+      "BLOCKED_BOOT_CHAIN_SOURCE_MISSING",
+      "BLOCKED_MLK_LINUX_BSP_MISSING"
+    ]
+  },
+  "safety": {
+    "vendor_archives_executed": false,
+    "vendor_scripts_executed": false,
+    "vendor_binaries_executed": false,
+    "board_accessed": false,
+    "vm_accessed": false,
+    "vendor_tree_modified": false,
+    "vendor_assets_copied_to_git": false,
+    "sd_written": false,
+    "emmc_modified": false,
+    "modules_loaded": false,
+    "npu_executed": false
+  }
+}

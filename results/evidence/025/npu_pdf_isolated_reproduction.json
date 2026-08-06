@@ -1,0 +1,36 @@
+{
+  "schema_version": "task025-pdf-isolated-reproduction-v1",
+  "task": "025",
+  "captured_at": "2026-08-05T18:36:25+08:00",
+  "source_package": {"identity": "Milianke 4.0.1 / Anlogic SDK_2025.1 / ARM64", "sha256": "7214035eea18e0df67a1aaa401ad9d024c4a5560cb5843af50e5f75e9c81d292"},
+  "workspace": {"path": "<vm-task025>/uisrc-lab-anlogic-pdf-20260805", "creation": "cp -a from /home/uisrc/uisrc-lab-anlogic", "original_tree_modified": false, "all_mutations_isolated": true},
+  "injection": {
+    "move_files_exit_code": 0,
+    "board_inputs": ["soc_fsbl.elf", "system.bit", "kernel-dts/anlogic-dr1.dts", "uboot-dts/anlogic-dr1.dts", "anlogic-dr1m90-softip.dts", "framebuffer driver"],
+    "move_log": "<vm-task025>/task025-move-files-attempt1.log",
+    "injection_manifest": "<vm-task025>/task025-isolated-injection.txt"
+  },
+  "kernel": {
+    "attempt_1": {"status": "FAIL_MISSING_BASE_DTS", "exit_code": 2},
+    "attempt_2": {"status": "FAIL_MODPOST_UNRESOLVED_FRAMEBUFFER_DMA_SYMBOLS", "exit_code": 2},
+    "repair_1": {"status": "FAIL_VMLINUX_VIDEOMODE_HELPERS_UNRESOLVED", "exit_code": 2},
+    "repair_2": {"status": "FAIL_VMLINUX_VIDEOMODE_HELPERS_UNRESOLVED", "exit_code": 2},
+    "repair_3": {"status": "PASS", "exit_code": 0, "fix": "isolated framebuffer Kconfig selects VIDEOMODE_HELPERS"},
+    "build_log": "<vm-task025>/task025-kernel-build-repair3.log",
+    "version": "6.1.111-rt42",
+    "config": {"CONFIG_MODULES": "y", "CONFIG_MODVERSIONS": "not set", "CONFIG_CMA": "y", "CONFIG_DMA_CMA": "y", "CONFIG_CMA_SIZE_MBYTES": 16, "CONFIG_NPU_MODULE": "y", "CONFIG_HARD_NPU_DRIVER": "m", "CONFIG_SOFT_NPU_DRIVER": "m", "CONFIG_CMA_MEM_DRIVER": "m", "CONFIG_JPU_ANLOGIC": "y", "CONFIG_ANLOGIC_DMA": "y", "CONFIG_AXI_VDMA": "y", "CONFIG_FB_ANLOGIC": "y", "CONFIG_VIDEOMODE_HELPERS": "y"}
+  },
+  "uboot": {"version": "2021.01", "defconfig": "anlogic_dr1_uboot_defconfig", "device_tree": "anlogic-dr1", "build_status": "PASS", "build_log": "<vm-task025>/task025-uboot-build.log", "sha256": "2f8e24a96e21395e042feed4777b14409e901d2764c9819a83366fc1bf2efe47"},
+  "image": {"create_dr1m_image_exit_code": 0, "log": "<vm-task025>/task025-create-image-final3.log", "bootgen": "tools/bootgen/linux64/bin/albg", "bif": "<vm-task025>/boards/DR1M/buildroot/output/boot.bif", "bif_payload_bit": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5"},
+  "rootfs": {"make_rootfs_script": "NOT_RUN", "reason": "Buildroot output dl cache contains zero files; avoiding implicit network fetch", "derived_candidate_status": "DERIVED_FROM_EXISTING_GENERIC_ROOTFS_WITH_ISOLATED_OVERLAY", "source_rootfs_sha256": "71432392c81d627d85c16ac4252394980bf096866a27eea2c6c561d13e14da63", "candidate_rootfs_sha256": "b837e2b4bbf4a81b2e4f8a9e32bf7f6701e263492e7e676f3474fa5fa5113e3e", "candidate_initrd_sha256": "be76f41f7de9b8b25ef1b5ff4dae8c380a2f7c3ebbbc9a4614ac1fc54cc6a937", "same_source_modules_injected": true, "face_detection_source_build": "PASS", "face_detection_build_log": "<vm-task025>/task025-face-build-repair1.log", "compiled_demo_sha256": "c1342fee336abd5da5c8472b58e42ddf7e6a370f97c6dfe8509622f19ccf9a26"},
+  "formal_buildroot_increment": {
+    "config_identity": "results/evidence/025/npu_buildroot_config_identity.json",
+    "download_manifest": "results/evidence/025/npu_buildroot_dl_manifest.json",
+    "rootfs_build": "results/evidence/025/npu_formal_rootfs_build.json",
+    "runtime_closure": "results/evidence/025/npu_formal_rootfs_runtime_closure.json",
+    "candidate_manifest": "results/evidence/025/npu_final_candidate_artifact_manifest.json",
+    "status": "PASS_FORMAL_BUILDROOT_ROOTFS_COMPLETE_FILE_SET",
+    "historical_rootfs_not_run_preserved": true
+  },
+  "safety": {"board_accessed": false, "media_written": false, "modules_loaded": false, "fpga_written": false, "vendor_npu_executed": false, "project_yolov5n_converted": false}
+}

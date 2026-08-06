@@ -1,0 +1,24 @@
+{
+  "schema_version": "task025-pdf-input-closure-v1",
+  "task": "025",
+  "source_root": "<vendor-root>/03_demo/05-5_NPU演示",
+  "inputs": [
+    {"role": "TD project", "path": "demo/soc_prj/soc_prj.al", "type": "TD project", "sha256": "670b24a682b44fcc48ec4b652b6556cba99790b474a7f2b0c1370e40768a7e32", "available": true, "tutorial_destination": "FD HPF export source"},
+    {"role": "HPF", "path": "demo/soc_prj/system.hpf", "type": "HPF", "sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7", "available": true, "tutorial_destination": "FD platform import"},
+    {"role": "FSBL", "path": "soc_sdk/soc_fsbl/build/soc_fsbl.elf", "type": "AArch64 ELF", "sha256": "be0a66928221a70c12187e229a9867f2c9f7e7b10b64909f3dc7b289b5a76f49", "available": true, "tutorial_destination": "boards/files/soc_fsbl.elf"},
+    {"role": "platform bitstream", "path": "soc_sdk/soc_base/platform/soc_prj.bit", "type": "FPGA bitstream", "sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5", "available": true, "tutorial_destination": "boards/files/system.bit", "matches_known_hpf_platform_bit": true, "matches_known_best_result_bit": false},
+    {"role": "best-result bitstream", "path": "soc_sdk/soc_base/platform/best_result.bit", "type": "FPGA bitstream", "sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912", "available": true, "tutorial_destination": "not copied by the documented boards/files step", "matches_known_hpf_platform_bit": false},
+    {"role": "kernel DTS", "path": "demo/soc_dts/kernel-dts/anlogic-dr1.dts", "type": "DTS", "sha256": "4d8b261cde9ee0ab6f41509a6aaa98beac14554acfe549c82bd08010fcd6e019", "available": true, "tutorial_destination": "boards/files/kernel-dts/anlogic-dr1.dts"},
+    {"role": "U-Boot DTS", "path": "demo/soc_dts/uboot-dts/anlogic-dr1.dts", "type": "DTS", "sha256": "df2106dcf9694a537c36402c07de3c879de8de7f11d89d1948eac0a67063526d", "available": true, "tutorial_destination": "boards/files/uboot-dts/anlogic-dr1.dts"},
+    {"role": "SoftIP DTS include", "path": "sdk/anlogic-dr1m90-softip.dts", "type": "DTSI-style include", "sha256": "c6c79ccad82a41db52ce2829ecb971b286e6e868f8ba88e97dc17a8b99b6917a", "available": true, "tutorial_destination": "Linux arch/arm64/boot/dts/anlogic/anlogic-dr1m90-softip.dts"},
+    {"role": "framebuffer driver", "path": "sdk/framebuffer-driver", "type": "C source and Kconfig/Makefile additions", "sha256": null, "available": true, "components": {"anlogic-vdmafb.c": "bed56832dc458525670b10a6a3928b027a9ddb89676e2380e54ebd5f886680b7", "anlogic-dynclk.c": "e0ec46e7d6e8135be801edc0858bdd3e9ba566c94a9c391bf856b5d7914cf44d", "anlogic-vtc.h": "d4fd8c0c603f7971ce0d0588ab2486e33b7bf34a4baa438e4b34af0ebfbdd577"}, "tutorial_destination": "Linux drivers/video/fbdev/anlogic"},
+    {"role": "Arm NN demo package", "path": "demo/face_detection.tar.gz", "type": "tar.gz", "sha256": "33eb354f2cb41df81f42fe30d44898d99e2a4fcd8a69b8ae678c8622e473b82f", "available": true, "tutorial_destination": "Buildroot rootfs overlay input", "software_path": "Arm NN/ONNX/Alnpu"}
+  ],
+  "closure": {
+    "required_fd_generated_inputs": ["soc_fsbl.elf", "system.bit"],
+    "required_fd_inputs_available": true,
+    "system_bit_selected_by_tutorial": "soc_sdk/soc_base/platform/soc_prj.bit",
+    "native_runtime_assets_found": false,
+    "native_runtime_assets": ["npu_runtime", "convert_tool", "al_ai_flow", "rt.bin", "weight.bin"]
+  }
+}

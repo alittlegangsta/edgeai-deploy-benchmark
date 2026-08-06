@@ -195,10 +195,77 @@ only recommended.
 
 ## Stage 4: NPU SD image preflight (Task 025)
 
-The next proposed task is **Task 025: MLK-F3P-CZ02 NPU SD image reproducible
-build and deployment preflight**. It should freeze clean SDK/toolchain/NPU
-project commits, confirm the MLK DR1M90GEG400 board project, build a matched
-BOOT.bin/DTB/kernel/rootfs/NPU candidate, verify HardNPU/SoftNPU/CMA and
-driver/Arm NN provenance, and stop for human approval before writing an SD
-card. It must not replace the current eMMC or load modules without separate
-approval.
+**Task 025: MLK-F3P-CZ02 NPU SD image reproducible build and deployment
+preflight** freezes clean SDK/toolchain/NPU project inputs, confirms the MLK
+DR1M90GEG400 board project, attempts a matched BOOT.bin/DTB/kernel/rootfs/NPU
+candidate, verifies HardNPU/SoftNPU/CMA and driver/Arm NN provenance, and stops
+for human approval before writing an SD card. It must not replace the current
+eMMC or load modules without separate approval.
+
+Task 025 is `Completed`. The official SDK_2025.07-linux6.1 source line and
+the Milianke DR1M90GEG400 FPGA lead are frozen by hash. An exact Git
+superproject clone was made, but local relative submodules cannot be
+materialized without the unavailable source repositories; the fuller vendor
+release tarball was extracted but has no `.git` provenance and also contains no
+MLK BoardConfig. The Arm NN application targets link as AArch64 binaries in an
+isolated VM workspace, and recursive static analysis resolves all supplied
+non-system `DT_NEEDED` libraries. The packaging script's `libprotoc.so*`
+warnings are packaging-only for the inspected closure; OpenCV absolute RPATH
+relocation remains a deployment caveat. The PDF-guided injection increment then
+generated a same-workspace BOOT.bin, DTB, kernel and three NPU modules and
+compiled the Arm NN demo in an isolated copy. A 141-entry Buildroot 2022.02.6
+download cache was then hash-checked and reused with a network guard to build a
+formal rootfs. Static inspection found 353 AArch64 ELF files, zero x86_64 files
+and no missing DT_NEEDED names. The current primary result is
+`READY_FOR_SD_WRITE_APPROVAL` for a complete external file set, not for a
+partitioned image or board boot; no SD/eMMC write, module load, FPGA write,
+vendor NPU execution or project-model conversion occurred. `candidate_approved`
+is true only for static audit admission to a controlled deployment workflow;
+`deployment_approval` remains `PENDING` and no real medium may be formatted,
+partitioned or written without the separate Task 026 gate. The bounded
+`03_demo` audit deep-audited
+`05-5_NPU演示` and retained its substantive Arm NN/ONNX and
+DR1M90GEG400-declared assets, while confirming mixed AD101/GEG484 metadata,
+missing base DTS, differing platform/best-result bitstreams, and no native
+`npu_runtime` or MLK BoardConfig. Those findings refine but do not close the
+candidate identity blocker.
+
+The bounded archive follow-up listed the direct 05-5 ZIP and recorded the two
+large 3-2 FPSoc RAR SDK archives without extraction because no local RAR reader
+is available. The deeper 3-2/3-4 audit found generic GEG400/FSBL/Linux
+references but no MLK BoardConfig or base `anlogic-dr1m90.dts`. The 05-5 HPF
+embeds the platform-copy bit, which differs from its best-result bit, and its
+BOOT payload cannot be mapped without a packaged BIF/bootgen source. The
+pre-injection candidate classification was `ASSET_IDENTITY_CONFLICT` and the
+source-only verdict was `BLOCKED_MLK_BOARD_PROJECT_IDENTITY`; the later
+PDF-guided partial build is recorded below.
+
+The exact expected ARM `uisrc-lab-anlogicM-V4.0.1` package is now identified
+and provides generic DR1M source/toolchain/image-script structure, but its
+embedded identity is SDK_2025.1 and it has no MLK BoardConfig or NPU userspace
+closure. The expected `anlogic-linuxsdk` package was not found in the bounded
+local scope. This is a `RECOVERABLE_STRUCTURE_VERSION_MISMATCH`, not a matched
+candidate SD source; considered alone, that package-only increment left the
+Task 025 primary block and `NOT_READY` status unchanged before the later formal
+Buildroot increment.
+
+The read-only VM history increment found the generic SDK_2025.07 tree and
+generic `anlogic-dr1m90` base DTS, but no MLK BoardConfig or historical 2025.07
+uisrc/05-5 source workspace. The VM demo is byte/tree-identical to the local
+05-5 copy, so it does not close provenance. The formal Buildroot increment now
+provides a complete external candidate file set; no partitioned SD image or
+board runtime result is claimed.
+
+## Task 026: MLK-F3P-CZ02 NPU controlled SD deployment and first-boot validation
+
+Task 026 is the next planned, approval-gated activity. Before any destructive
+operation it must identify the real SD device path, capacity, model, serial
+number and `removable` attribute, and explicitly exclude the system disk, WSL
+virtual disk, Windows system disk and the current development-board eMMC. It
+must statically audit `make_parted.sh` and `deploy_image.sh`, perform only a
+dry-run and candidate-file hash recheck, then stop until the user names the
+target device and approves writing it. After approved writing, it must read
+back and verify partitions, files and SHA256 values, boot from SD through the
+serial console, validate the system and NPU drivers first, and only then
+consider the official NPU Demo. The task must include a backup, serial recovery
+and rollback plan and must never assume that a detected block device is safe.

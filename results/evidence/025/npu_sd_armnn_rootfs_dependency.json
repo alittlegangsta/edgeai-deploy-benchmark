@@ -1,0 +1,123 @@
+{
+  "schema_version": "task025-armnn-rootfs-dependency-v1",
+  "task": "025",
+  "captured_at": "2026-08-04T18:51:46+08:00",
+  "workspace": "/home/uisrc/build/task025/app-attempt3/sdk/app/npu/rootfs_files/npu_demo",
+  "entrypoint": {
+    "path": "bin/yolo_demo_pic",
+    "sha256": "0ddc58b44bad80081dfb40ea3f4f8b8813e19b474f31357c9cdc04136d9e88e0",
+    "elf": "AArch64 ELF64",
+    "direct_dt_needed": [
+      "libarmnn.so.32",
+      "libarmnnOnnxParser.so.24",
+      "libprotobuf.so.23",
+      "libopencv_core.so.407",
+      "libopencv_imgproc.so.407",
+      "libopencv_imgcodecs.so.407",
+      "libopencv_dnn.so.407",
+      "libopencv_videoio.so.407",
+      "libopencv_gapi.so.407",
+      "libopencv_highgui.so.407",
+      "libopencv_ml.so.407",
+      "libopencv_objdetect.so.407",
+      "libopencv_photo.so.407",
+      "libopencv_stitching.so.407",
+      "libopencv_video.so.407",
+      "libopencv_calib3d.so.407",
+      "libopencv_features2d.so.407",
+      "libopencv_flann.so.407",
+      "libpthread.so.0",
+      "libatomic.so.1",
+      "libdl.so.2",
+      "libm.so.6",
+      "libc.so.6",
+      "libstdc++.so.6",
+      "libgcc_s.so.1"
+    ]
+  },
+  "armnn_libraries": [
+    {
+      "path": "libs/libarmnn.so.32.1",
+      "sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+      "elf": "AArch64 shared object",
+      "soname": "libarmnn.so.32",
+      "dt_needed": ["libdl.so.2", "libstdc++.so.6", "libm.so.6", "libgcc_s.so.1", "libc.so.6"],
+      "npu_backend_observation": "Alnpu symbols and device-path strings are present in the library; no separate Alnpu DT_NEEDED shared object was observed"
+    },
+    {
+      "path": "libs/libarmnnOnnxParser.so.24.6",
+      "sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+      "elf": "AArch64 shared object",
+      "soname": "libarmnnOnnxParser.so.24",
+      "dt_needed": ["libarmnn.so.32", "libprotobuf.so.23", "libdl.so.2", "libstdc++.so.6", "libm.so.6", "libgcc_s.so.1", "libc.so.6"]
+    },
+    {
+      "path": "libs/libprotobuf.so.23.0.0",
+      "sha256": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265",
+      "elf": "AArch64 shared object",
+      "soname": "libprotobuf.so.23",
+      "dt_needed": ["libstdc++.so.6", "libm.so.6", "libc.so.6", "libgcc_s.so.1"]
+    }
+  ],
+  "closure": {
+    "package_file_count": 80,
+    "unique_dt_needed_count": 24,
+    "non_system_needed": [
+      "libarmnn.so.32",
+      "libavcodec.so.58",
+      "libavfilter.so.7",
+      "libavformat.so.58",
+      "libavutil.so.56",
+      "libopencv_calib3d.so.407",
+      "libopencv_core.so.407",
+      "libopencv_dnn.so.407",
+      "libopencv_features2d.so.407",
+      "libopencv_flann.so.407",
+      "libopencv_imgcodecs.so.407",
+      "libopencv_imgproc.so.407",
+      "libopencv_video.so.407",
+      "libpostproc.so.55",
+      "libprotobuf.so.23",
+      "libswresample.so.3",
+      "libswscale.so.5",
+      "libx264.so.157"
+    ],
+    "non_system_needed_missing_from_candidate_lib_dir": [],
+    "system_abi_needed": [
+      "libatomic.so.1",
+      "libc.so.6",
+      "libdl.so.2",
+      "libgcc_s.so.1",
+      "libm.so.6",
+      "libpthread.so.0",
+      "libstdc++.so.6"
+    ],
+    "dynamic_loader": "/lib/ld-linux-aarch64.so.1",
+    "version_requirements_observed": {
+      "max_glibc": "GLIBC_2.17",
+      "max_glibcxx": "GLIBCXX_3.4.22",
+      "max_cxxabi": "CXXABI_1.3.11",
+      "comparison_to_target": "surface requirements are below the target glibc 2.25; board libstdc++ ABI still requires target-rootfs verification"
+    }
+  },
+  "libprotoc_check": {
+    "names": ["libprotoc.so", "libprotoc.so.23", "libprotoc.so.23.0.0"],
+    "packaging_script_reported_missing": true,
+    "dt_needed_in_yolo_armnn_parser_protobuf_closure": false,
+    "classification": "packaging_only_not_runtime_dt_needed",
+    "caveat": "The vendor packaging script is incomplete, but the missing names are not evidence of a dynamic runtime dependency for the inspected entrypoint and core Arm NN/parser/protobuf closure"
+  },
+  "relocation": {
+    "absolute_rpath_observed": "/home/rtxiao/repos/ffmpeg/ffmpeg_opencv4.7.0_aarch64/lib",
+    "objects": "OpenCV 4.7 shared objects in the supplied package",
+    "impact": "candidate package is not self-contained by RPATH alone; an approved isolated LD_LIBRARY_PATH or rebuilt relocatable package is still required",
+    "runtime_test": "not performed"
+  },
+  "status": "PASS_STATIC_NON_SYSTEM_CLOSURE_NOT_DEPLOYMENT_READY",
+  "not_claimed": [
+    "board runtime execution",
+    "driver/device-node availability",
+    "active FPGA/Device Tree mapping",
+    "complete vendor rootfs packaging"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": "task025-npu-sd-deployment-plan-v1",
+  "task": "025",
+  "status": "PLAN_ONLY_NOT_EXECUTED",
+  "recommended_media": "independent SD card first; preserve eMMC untouched",
+  "pre_write_approval": "NOT_GRANTED",
+  "current_emmc_reference": {
+    "boot_device": "/dev/mmcblk1p1",
+    "root_device": "/dev/mmcblk1p2",
+    "kernel": "Linux 6.1.111-rt42",
+    "BOOT.bin_sha256": "858cf78c03ae75c870587be77d70668e0ba4841448581273e5c996bf8f980706",
+    "boot.scr_sha256": "685f9f8cd4a1e43d79da0c78ab9591d3af1f744122e21a60b252b685ffad59d1",
+    "system.dtb_sha256": "aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f",
+    "uImage.lz4_sha256": "12cd2ccb851376eb2870f1d3294f0d29f771e74d01a25d1b605378ea733bd7be"
+  },
+  "backup_plan": [
+    "record board serial/identity and WSL approval timestamp",
+    "read and hash current eMMC boot files BOOT.bin, boot.scr, system.dtb, uImage.lz4",
+    "capture current rootfs identity, /proc/cmdline, mounts, DTB semantics, CMA and module state",
+    "store backups outside Git with read-only permissions and a SHA256SUMS file",
+    "record serial console settings and a known-good eMMC boot path"
+  ],
+  "candidate_sd_contents": [
+    "BOOT.bin generated from the matched MLK HPF/bitstream/FSBL/U-Boot chain",
+    "matching system.dtb containing hard_npu, soft_npu and CMA/reserved-memory",
+    "matching kernel image and rootfs",
+    "boot.scr/U-Boot environment for the candidate",
+    "matching driver modules or built-in configuration",
+    "Arm NN libraries, demo and model assets with a deployment manifest"
+  ],
+  "write_and_boot_sequence": [
+    "stop and obtain explicit human approval after all static and isolated-build gates pass",
+    "write only an independently identified SD device after a destructive-device confirmation",
+    "hash the written partitions and compare to the candidate manifest",
+    "boot with the board's documented SD selector and serial console attached",
+    "before loading modules, verify kernel, DTB, FPGA manager and CMA identities",
+    "verify module vermagic, symbol compatibility, compatible/reg/interrupt resources and dmesg",
+    "load order is vendor-confirmed only; candidate inference is cma_mem then hard_npu/soft_npu",
+    "verify /dev/cma_mem and the required NPU nodes before any demo",
+    "run at most one vendor-approved functional demo, not a benchmark"
+  ],
+  "stop_conditions": [
+    "board/device or package identity differs from the manifest",
+    "BOOT.bin/DTB/bitstream hash mismatch",
+    "missing or unverified Module.symvers/symbol CRC compatibility",
+    "unexpected DT status/reg/interrupt/CMA values",
+    "module probe failure, kernel warning, timeout or new device node mismatch",
+    "any request to modify eMMC, current rootfs, governor, kernel parameters or system libraries"
+  ],
+  "rollback": [
+    "power off without modifying eMMC",
+    "remove the candidate SD and restore the documented eMMC boot selector",
+    "boot the previously hashed eMMC files",
+    "compare uname, cmdline, DTB hash, mount layout, CMA and module state to the backup record",
+    "if SD boot altered persistent configuration, stop and use serial recovery; do not overwrite eMMC automatically"
+  ],
+  "execution": {
+    "sd_written": false,
+    "emmc_modified": false,
+    "bitstream_written": false,
+    "dtb_replaced": false,
+    "kernel_replaced": false,
+    "rootfs_replaced": false,
+    "modules_loaded": false,
+    "demo_executed": false
+  }
+}

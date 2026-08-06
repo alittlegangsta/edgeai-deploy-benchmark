@@ -1,0 +1,52 @@
+{
+  "schema_version": "task025-final-candidate-artifact-manifest-v1",
+  "task": "025",
+  "captured_at": "2026-08-06T12:05:00+08:00",
+  "status": "READY_FOR_SD_WRITE_APPROVAL",
+  "candidate_approved": true,
+  "candidate_sd_image": "NOT_PARTITIONED_IMAGE",
+  "candidate_approval_semantics": "static-audit approval only; does not authorize formatting, partitioning or writing real media",
+  "candidate_root": "<vm-task025>/results/task025-candidate-sd-fileset-20260806",
+  "checksum_manifest": {
+    "path": "<vm-task025>/results/task025-candidate-sd-fileset-20260806/SHA256SUMS",
+    "sha256": "65e4d98db58e20c407b7e65e443bfe1774b692ccb49a0fd1b6f7062ebcf73ddd",
+    "entries": 13,
+    "self_excluded": true
+  },
+  "files": {
+    "BOOT.bin": {"size_bytes": 5179264, "sha256": "e25f98e00a68ea76f9e96736ba88fb7c169e2f8b769d60af55e3e69639880016"},
+    "system.bit": {"size_bytes": 4052202, "sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5"},
+    "soc_fsbl.elf": {"size_bytes": 1767704, "sha256": "be0a66928221a70c12187e229a9867f2c9f7e7b10b64909f3dc7b289b5a76f49"},
+    "system.dtb": {"size_bytes": 16899, "sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979"},
+    "uImage.lz4": {"size_bytes": 8148020, "sha256": "b6ff1dd519ce342d4739a18fa4e03b3f108c0c4c30e432f94afac9704fb8b4b0"},
+    "boot.scr": {"size_bytes": 466, "sha256": "99d1c6d7e5bead893c495f9b5c8c796e1186108d4decd47915c06680f6f4b012"},
+    "u-boot.bin": {"size_bytes": 926280, "sha256": "2f8e24a96e21395e042feed4777b14409e901d2764c9819a83366fc1bf2efe47"},
+    "rootfs.tar.gz": {"size_bytes": 94414131, "sha256": "ae64bbd125a47f54df445a084485466336f1df60f5137ad61b44b8eb22c64f39"},
+    "rootfs.cpio.lz4": {"size_bytes": 111711558, "sha256": "1fdfd264d49e4d7cdc95d68952e9b332525efb493917fdbdbbc26e0de914848a"},
+    "uInitrd.lz4": {"size_bytes": 111711622, "sha256": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268"},
+    "hard_npu.ko": {"size_bytes": 419000, "sha256": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d"},
+    "soft_npu.ko": {"size_bytes": 414296, "sha256": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380"},
+    "cma_mem.ko": {"size_bytes": 419560, "sha256": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b"}
+  },
+  "provenance": {
+    "platform_system_bit": "05-5 tutorial platform copy",
+    "bootgen_inputs": ["soc_fsbl.elf", "system.bit", "u-boot.bin"],
+    "kernel_dtb_modules": "same isolated injected source/config build",
+    "rootfs": "formal Buildroot 2022.02.6 output using frozen dl cache",
+    "application": "isolated Arm NN/ONNX package staged through Buildroot customdata"
+  },
+  "readiness": {
+    "complete_file_set": true,
+    "partitioned_sd_image": false,
+    "sd_write": "NOT_PERFORMED",
+    "human_sd_write_approval": "PENDING"
+  },
+  "safety": {
+    "board_accessed": false,
+    "modules_loaded": false,
+    "fpga_written": false,
+    "sd_written": false,
+    "emmc_modified": false,
+    "npu_executed": false
+  }
+}

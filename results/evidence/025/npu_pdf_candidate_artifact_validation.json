@@ -1,0 +1,39 @@
+{
+  "schema_version": "task025-pdf-candidate-artifact-validation-v1",
+  "task": "025",
+  "status": "PASS_PARTIAL_CANDIDATE_NOT_SD_READY",
+  "artifacts": {
+    "fsbl.elf": {"sha256": "be0a66928221a70c12187e229a9867f2c9f7e7b10b64909f3dc7b289b5a76f49", "type": "AArch64 ELF", "source": "05-5 FD output copied into isolated boards/files"},
+    "system.bit": {"sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5", "source": "05-5 soc_base/platform/soc_prj.bit; selected by tutorial"},
+    "u-boot.bin": {"sha256": "2f8e24a96e21395e042feed4777b14409e901d2764c9819a83366fc1bf2efe47", "type": "AArch64 U-Boot output"},
+    "BOOT.bin": {"sha256": "e25f98e00a68ea76f9e96736ba88fb7c169e2f8b769d60af55e3e69639880016", "type": "bootgen output", "bif_payloads": ["fsbl.elf", "system.bit", "u-boot.bin"]},
+    "system.dtb": {"sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979", "type": "DTB", "semantic_checks": {"model": "Anlogic, DR1M90 FPSoc", "hard_npu": {"compatible": "anlogic,hard_npu", "reg": "0x63f00000/0x100000 plus 0xf8800000 and 0xf8801000", "interrupt": 112}, "soft_npu": {"compatible": "anlogic,soft_npu", "reg": "0x1f0000000/0x10000", "interrupt": 97, "status": "okay"}, "cma": {"compatible": "shared-dma-pool", "linux_cma_default": true, "size": "0x8000000"}, "vdmafb": {"compatible": "anlogic,vdmafb", "status": "okay"}}},
+    "uImage.lz4": {"sha256": "b6ff1dd519ce342d4739a18fa4e03b3f108c0c4c30e432f94afac9704fb8b4b0", "type": "AArch64 legacy U-Boot kernel image"},
+    "rootfs-candidate.tar.gz": {"sha256": "b837e2b4bbf4a81b2e4f8a9e32bf7f6701e263492e7e676f3474fa5fa5113e3e", "type": "derived rootfs archive", "buildroot_generated": false},
+    "uInitrd.lz4": {"sha256": "be76f41f7de9b8b25ef1b5ff4dae8c380a2f7c3ebbbc9a4614ac1fc54cc6a937", "type": "derived cpio/lz4 initrd", "buildroot_generated": false},
+    "hard_npu.ko": {"sha256": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d", "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64", "same_source_module_symvers_missing_symbols": 0},
+    "soft_npu.ko": {"sha256": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380", "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64", "same_source_module_symvers_missing_symbols": 0},
+    "cma_mem.ko": {"sha256": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b", "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64", "same_source_module_symvers_missing_symbols": 0},
+    "Module.symvers": {"sha256": "e8856c5180d36b26e8c663740755fbf3c8832e39f558f30411b00c1ecded31d8", "config_modversions": "not set", "interpretation": "same-build exported symbol names resolve all module imports; no CRC metadata is expected"},
+    "Image": {"sha256": "03fb7a20377fa1a93d49a5d8c0309aa892070fdc06e3b096f203d03e135c007d", "type": "AArch64 Linux kernel Image"},
+    "System.map": {"sha256": "5477644a222de9f1eba42ecc97941572ef1b40aba732c50cea548ca559c8c5fd", "type": "kernel symbol map"},
+    "yolo_demo_hdmi_camera": {"sha256": "c1342fee336abd5da5c8472b58e42ddf7e6a370f97c6dfe8509622f19ccf9a26", "type": "AArch64 ELF compiled from face_detection source", "executed": false}
+  },
+  "runtime_closure": {"entrypoint": "yolo_demo_hdmi_camera", "non_system_dt_needed_missing_in_full_candidate_rootfs": [], "libprotoc_dt_needed": false, "board_runtime_test": false, "absolute_rpath": false, "note": "The compiled install output clears the source package absolute RPATH; closure is static only."},
+  "readiness": {"kernel_dtb_modules": "PASS_SAME_SOURCE_STATIC", "boot_bin": "PASS_ISOLATED_BOOTGEN", "rootfs": "BLOCKED_NOT_BUILT_BY_BUILDROOT", "complete_sd_file_set": false, "sd_write": "NOT_PERFORMED"},
+  "formal_buildroot_increment": {
+    "evidence": {
+      "config_identity": "results/evidence/025/npu_buildroot_config_identity.json",
+      "download_manifest": "results/evidence/025/npu_buildroot_dl_manifest.json",
+      "rootfs_build": "results/evidence/025/npu_formal_rootfs_build.json",
+      "runtime_closure": "results/evidence/025/npu_formal_rootfs_runtime_closure.json",
+      "candidate_manifest": "results/evidence/025/npu_final_candidate_artifact_manifest.json"
+    },
+    "rootfs_sha256": "ae64bbd125a47f54df445a084485466336f1df60f5137ad61b44b8eb22c64f39",
+    "rootfs_cpio_lz4_sha256": "1fdfd264d49e4d7cdc95d68952e9b332525efb493917fdbdbbc26e0de914848a",
+    "uinitrd_sha256": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268",
+    "status": "READY_FOR_SD_WRITE_APPROVAL",
+    "partitioned_sd_image": false,
+    "sd_write": "NOT_PERFORMED"
+  }
+}

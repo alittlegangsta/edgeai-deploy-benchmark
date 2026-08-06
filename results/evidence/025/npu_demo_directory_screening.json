@@ -1,0 +1,97 @@
+{
+  "schema_version": "task025-npu-demo-directory-screening-v1",
+  "task": "025",
+  "captured_at": "2026-08-05T11:59:27+08:00",
+  "source_root": "<vendor-root>/03_demo",
+  "read_only": true,
+  "method": {
+    "selection": "bounded directory inventory followed by targeted text and archive-name searches",
+    "deep_audit_target": "05-5_NPU演示",
+    "large_tree_policy": "full recursive byte counts were not required for large mounted trees; selected artifacts retain path, type, size and SHA256",
+    "vendor_scripts_executed": false,
+    "vendor_binaries_executed": false
+  },
+  "top_level_inventory": [
+    {
+      "name": "05-5_NPU演示",
+      "priority": "A",
+      "scan_status": "deep_audited",
+      "observed_regular_file_count": 1321,
+      "observed_du_size": "682M",
+      "reason": "Direct Milianke DR1M90GEG400 NPU package with TD project, HPF, boot candidates, DTS fragments, FSBL project, drivers and Arm NN demo archive.",
+      "task025_gap": "board project identity, boot-chain source mapping, NPU software closure"
+    },
+    {
+      "name": "3-0_book_all",
+      "priority": "C",
+      "scan_status": "shallow_inventory",
+      "observed_regular_file_count": 6,
+      "observed_du_size": "151M",
+      "reason": "Course PDFs; no build inputs selected for this pass.",
+      "task025_gap": "background documentation only"
+    },
+    {
+      "name": "3-1_ex_fpga",
+      "priority": "D",
+      "scan_status": "bounded_inventory",
+      "reason": "General FPGA/HDMI/MIPI examples; no direct NPU, Linux or board-chain dependency found in the bounded search.",
+      "task025_gap": "none identified"
+    },
+    {
+      "name": "3-2_ex_fpsoc",
+      "priority": "B",
+      "scan_status": "bounded_inventory_and_targeted_search",
+      "reason": "Generic FPSoc projects provide useful HPF, FSBL, GEG400 and boot-mode patterns; 03_boot_mode is a supporting reference, not the NPU project.",
+      "task025_gap": "common board/FSBL/HPF process context"
+    },
+    {
+      "name": "3-4_ex_soc_linux",
+      "priority": "B",
+      "scan_status": "deep_targeted_supporting_audit",
+      "reason": "General Linux/Device Tree/FSBL project contains a DR1M90GEG400 source project and boot candidates, but its kernel DTS comments out SoftNPU, its base DTS is absent, and it has no 05-5 NPU integration.",
+      "task025_gap": "common Linux build-template context, not a matched NPU chain"
+    },
+    {
+      "name": "D21.1_NPU_Simple_demo_sd_image",
+      "priority": "C",
+      "scan_status": "identity_only",
+      "reason": "Prebuilt NPU SD image retained for comparison; no evidence that it targets MLK-F3P-CZ02 rather than the AD101-family example.",
+      "task025_gap": "comparison payload only; cannot substitute for MLK"
+    },
+    {
+      "name": "TD_D20.1_AD101V20_2025.7",
+      "priority": "C",
+      "scan_status": "identity_only",
+      "reason": "Explicit AD101V20 TD/HPF example; excluded from MLK construction decisions.",
+      "task025_gap": "comparison payload only; cannot substitute for MLK"
+    }
+  ],
+  "selected_for_deep_audit": [
+    "05-5_NPU演示",
+    "3-2_ex_fpsoc/03_boot_mode",
+    "3-4_ex_soc_linux/Sourcecode/project",
+    "3-4_ex_soc_linux/Linux Base Appendix/Chapter 3",
+    "D21.1_NPU_Simple_demo_sd_image",
+    "TD_D20.1_AD101V20_2025.7"
+  ],
+  "skipped_or_deferred": [
+    {
+      "path": "3-1_ex_fpga",
+      "reason": "No direct NPU/Linux/BoardConfig hit in bounded search; FPGA examples are not needed to interpret the 05-5 package."
+    },
+    {
+      "path": "3-2_ex_fpsoc bulk archives 3_2_01_sdk_base.rar and 3_2_02_sdk_adv.rar",
+      "reason": "Large archives were not expanded because the selected boot-mode project already supplied the relevant GEG400/HPF/FSBL process evidence; archive identity remains outside Git."
+    },
+    {
+      "path": "3-4_ex_soc_linux archive candidates",
+      "reason": "The current directory-level scan found no large SDK/project archive in 3-4_ex_soc_linux; its extracted Sourcecode/project and Chapter 3 trees were audited directly."
+    },
+    {
+      "path": "3-2_ex_fpsoc/3_2_01_sdk_base.rar and 3_2_02_sdk_adv.rar",
+      "reason": "Both high-value RAR v5 SDK archives were hashed and identity-recorded, but no local RAR reader is available. Their contents were not inferred from non-authoritative strings hints; 03_boot_mode was audited instead."
+    }
+  ],
+  "selected_artifact_policy": "BOOT.bin, DTB, HPF, bitstream, kernel/rootfs images, modules, ELF, Arm NN libraries and models are identity-recorded only and are not copied into Git.",
+  "conclusion": "05-5_NPU演示 is the only direct NPU board-package target. Supporting Linux/FPSoc directories add process context but do not close its missing or conflicting MLK board mapping."
+}

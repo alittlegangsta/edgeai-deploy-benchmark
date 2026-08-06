@@ -89,3 +89,74 @@
   primary verdict remains `BLOCKED_ACTIVE_BITSTREAM_IDENTITY`; deployment is
   not approved. Proposed next task: reproducible MLK SD-image build and
   deployment preflight (Task 025). No board write or NPU execution occurred.
+
+- Continued Task 025's read-only MLK-F3P-CZ02 SD-image preflight. The exact
+  SDK_2025.07-linux6.1 superproject clone is reproducible, but local relative
+  submodules cannot be materialized; the fuller official release tarball has
+  no `.git` provenance and contains no MLK BoardConfig. Recursive static Arm NN
+  dependency analysis resolves all supplied non-system `DT_NEEDED` libraries;
+  the packaging script's `libprotoc.so*` warnings are not runtime dependencies
+  for the inspected closure, while absolute OpenCV RPATH relocation remains
+  unverified. The full matched SD chain remains blocked by
+  `BLOCKED_MLK_BOARD_PROJECT_IDENTITY`; no media, board, module, bitstream or
+  vendor NPU program was changed or executed.
+
+- Extended Task 025 with a bounded `03_demo` screening and deep audit of
+  `05-5_NPU演示`. The Milianke package is a substantive DR1M90GEG400 Arm
+  NN/ONNX and SoftNPU lead, but its mixed AD101/GEG484 metadata, missing base
+  DTS, differing bitstream copies, and absent MLK BoardConfig/native runtime
+  assets keep the candidate SD chain at
+  `BLOCKED_MLK_BOARD_PROJECT_IDENTITY`. No vendor binary, driver, board or
+  storage media was executed or modified.
+
+- Completed the bounded archive follow-up for Task 025 without changing its
+  status or creating a commit. The 05-5 ZIP is listed and the large FPSoc RAR
+  SDK archives are hash-recorded but not expanded because no local RAR reader
+  is available. The deeper 3-2/3-4 audit confirms generic GEG400 process
+  context, not a recoverable MLK BoardConfig; the 05-5 HPF embeds its platform
+  bit while the saved best-result bit differs and BOOT payload mapping remains
+  unresolved. Primary verdict remains
+  `BLOCKED_MLK_BOARD_PROJECT_IDENTITY`.
+
+- Added a WSL-only Task 025 package identity increment. The exact expected
+  ARM `uisrc-lab-anlogicM-V4.0.1` archive is present (MD5-matched) and was
+  statically shown to contain a generic DR1M SDK_2025.1 source/toolchain and
+  image-script skeleton, not an MLK BoardConfig or complete NPU userspace
+  package. The expected `anlogic-linuxsdk` MD5 was not found locally; the
+  candidate SD chain remains `BLOCKED_MLK_BOARD_PROJECT_IDENTITY` and no
+  vendor or board binary was executed.
+
+- Added a read-only VM history increment for Task 025. The VM contains a
+  generic SDK_2025.07 marker tree with generic `anlogic-dr1m90` DTS files, but
+  no MLK BoardConfig or recoverable submodule object provenance. Its Milianke
+  V4.0.1 tree remains SDK_2025.1, and its 05-5 demo is an exact copy of the
+  local package rather than an independently retained historical workspace.
+  The primary candidate-SD verdict remains
+  `BLOCKED_MLK_BOARD_PROJECT_IDENTITY`; no VM source, vendor program, board or
+  media was modified or executed.
+
+- Added a PDF-guided Task 025 injection reproduction in a fresh VM copy of the
+  Milianke ARM package. The documented 05-5 FSBL, platform bitstream, DTS
+  fragments and framebuffer sources produced same-workspace kernel/DTB, three
+  NPU modules, U-Boot and `BOOT.bin`; the Arm NN demo also compiled as AArch64.
+  The local Buildroot download cache was empty, so `make_rootfs.sh` was
+  deliberately not run and no network fetch was attempted. The derived rootfs
+  staging is not a Buildroot result, leaving the candidate at
+  `BLOCKED_CANDIDATE_IMAGE_BUILD`. No board, media, FPGA or NPU program was
+  touched.
+
+- Continued Task 025 with a controlled Buildroot dependency closure. The
+  2022.02.6 configuration used a 141-entry, hash-checked download cache; an
+  offline-guarded build generated formal `rootfs.tar.gz`, `rootfs.cpio.lz4`
+  and `uInitrd.lz4` outputs. Static validation found 353 AArch64 ELF files,
+  zero x86_64 files and no missing DT_NEEDED names. The external candidate file
+  set is `READY_FOR_SD_WRITE_APPROVAL`, but no partitioned SD image, SD/eMMC
+  write, board boot, module load, FPGA write or NPU execution was performed.
+
+- Completed and user-approved Task 025's static MLK SD-image preflight. The
+  13-file external candidate set has a frozen checksum manifest and is
+  `READY_FOR_SD_WRITE_APPROVAL`; `candidate_approved: true` admits it to a
+  controlled deployment workflow only. `deployment_approval` remains
+  `PENDING`, `candidate_sd_image` is `NOT_PARTITIONED_IMAGE`, and no physical
+  medium, board, module, FPGA or NPU runtime was touched. Task 026 is planned
+  for device identification, dry-run validation, and first-boot approval gates.

@@ -1,0 +1,200 @@
+{
+  "schema_version": "task025-candidate-identity-v1",
+  "task": "025",
+  "captured_at": "2026-08-04T18:51:46+08:00",
+  "current_emmc_identity": {
+    "status": "KNOWN_FROM_TASK024_READ_ONLY",
+    "boot_device": "/dev/mmcblk1p1",
+    "root_device": "/dev/mmcblk1p2",
+    "kernel": "Linux 6.1.111-rt42",
+    "system_dtb_sha256": "aba027eadce165ed492ac67c9259ce8d9eacac19c5c6e9f42ca09ec47b0d646f",
+    "active_bitstream_source": "not required for candidate-SD decision; Task 024 activity-source uncertainty retained as historical context",
+    "candidate_relation": "not used as the candidate SD build identity"
+  },
+  "candidate_sd_identity": {
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "device": "DR1M90GEG400",
+    "strongest_board_project": {
+      "source": "milianke_board_package",
+      "project": "03_demo/05-5_NPU演示/demo/soc_prj/soc_prj.al",
+      "project_sha256": "670b24a682b44fcc48ec4b652b6556cba99790b474a7f2b0c1370e40768a7e32",
+      "declared_device": "DR1M90GEG400",
+      "hpf_sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+      "bitstream_sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912",
+      "candidate_boot_sha256": "567e14124fa17137e964ebcadd4680d8349058beacd4070377ba0ac3fc8c2585",
+      "candidate_dtb_sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+      "status": "candidate_prebuilt_not_generated_from_MLK_SDK_BoardConfig"
+    },
+    "milianke_05_5_deep_audit": {
+      "evidence_file": "results/evidence/025/milianke_npu_demo_audit.json",
+      "project_identity": "direct NPU-oriented DR1M90GEG400 lead",
+      "board_mapping_status": "PARTIAL_DIRECT_LEAD_NOT_CLOSED",
+      "hardware_metadata_conflicts": [
+        "AD101-labelled BOARD_DR1X90_AD101_V10 macro",
+        "generated IP XML contains DR1M90GEG484/DR1M90MEG484",
+        "design_0.info.xml references AD103V20 and MLKPAI source paths",
+        "saved TD logs report Unknown device name DR1M90GEG400"
+      ],
+      "missing_base_dts": true,
+      "platform_bit_sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+      "best_result_bit_sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912",
+      "platform_and_best_result_bit_match": false,
+      "interpretation": "The package is substantive and reproducible as a vendor package identity, but not closed as a single MLK-F3P-CZ02 board/SDK/boot-chain identity."
+    },
+    "official_sdk_board_config_inventory": {
+      "release": "SDK_2025.07-linux6.1",
+      "board_config_names": [
+        "ad101v10_ad103v20-nor-usb_device",
+        "ad101v20_ad103v20-emmc1-fat",
+        "ad101v20_ad103v20-emmc1-fat-openamp",
+        "ad101v20_ad103v20-nor-16MB-tf",
+        "ad101v20_ad103v20-nor-32MB",
+        "ad101v20_ad103v20-nor-32MB-openamp",
+        "ad101v20_ad103v20-tf-fat32-ext4",
+        "ad101v20_ad103v20-tf",
+        "ad101v20_ad103v20-tf-openamp",
+        "ad101v20_ad103v20-tf-openamp-rtlinux",
+        "ad101v20_ad103v20-united-image",
+        "ad102v20_ad104v20-emmc1-fat",
+        "ad102v20_ad104v20-nor-16MB-tf",
+        "ad102v20_ad104v20-nor-32MB",
+        "ad102v20_ad104v20-tf",
+        "ad102v20_ad104v20-united-image"
+      ],
+      "mlk_board_config_found": false,
+      "status": "BLOCKED_MLK_BOARD_PROJECT_IDENTITY"
+    },
+    "followup_boardconfig_assessment": {
+      "evidence": "results/evidence/025/npu_boardconfig_recovery_assessment.json",
+      "base_linux_bsp_availability": "GENERIC_GEG400_REFERENCE_ONLY",
+      "boardconfig_recovery_feasibility": "ASSET_IDENTITY_CONFLICT",
+      "anlogic_dr1m90_base_dts_found": false,
+      "candidate_sd_generation_readiness": "NOT_READY"
+    },
+    "vm_historical_environment_assessment": {
+      "evidence": [
+        "results/evidence/025/npu_vm_uisrc_environment_inventory.json",
+        "results/evidence/025/npu_vm_historical_mlk_bsp_assessment.json",
+        "results/evidence/025/npu_vm_05_5_provenance_comparison.json"
+      ],
+      "vm_development_environment_identity": "OFFICIAL_SDK_2025_07_TREE_PLUS_GENERIC_MILIANKE_V4_0_1",
+      "historical_uisrc_package_availability": "V4_0_1_ONLY_NO_05_5_2025_07_MATCH",
+      "original_npu_workspace_availability": "COPIED_05_5_ONLY",
+      "vm_generic_base_dts_found": true,
+      "vm_generic_base_dts_sha256": [
+        "4b819178160298d88ccfe0bf272b203941a7ec71de87ea5609af144e5bf98b68",
+        "b4ea069ca544348ffcfc585a7ef5b84be30dbc78c2de4af5428bb6bb907b2d2c"
+      ],
+      "mlk_boardconfig_availability": "NOT_FOUND",
+      "candidate_sd_generation_readiness": "NOT_READY"
+    }
+  },
+  "candidate_boot_chain_reproducibility": {
+    "official_git_snapshot": {
+      "tag": "SDK_2025.07-linux6.1",
+      "commit": "beaee2ce45161908403a92619e509f52220ac347",
+      "clone_workspace": "/tmp/task025-preflight/sdk-git-clean-20260804",
+      "clone_checkout_sync": "PASS",
+      "submodule_update": "FAIL_LOCAL_SUBMODULE_REPOSITORIES_UNAVAILABLE",
+      "submodule_status": "all seven selected gitlinks remained uninitialized",
+      "status": "BLOCKED_CLEAN_SOURCE_RECONSTRUCTION"
+    },
+    "vendor_release_tarball": {
+      "path": "/home/uisrc/vendor/anlogic/packages/sdk.2025.7.tar.gz",
+      "sha256": "c5a6d9f1e6c5e3182bedafb0adb049bb99b6c0d4cc4ff79a3edc85746bcaa5d0",
+      "size_bytes": 1368135226,
+      "extracted_workspace": "/home/uisrc/build/task025/sdk-release-tarball-20260804/sdk",
+      "payload_file_counts": {
+        "linux": 78869,
+        "buildroot": 13124,
+        "u_boot": 17586,
+        "fsbl": 11415,
+        "toolchains": 8
+      },
+      "git_metadata": "no .git directories; exact submodule commits not recoverable from tarball",
+      "status": "SOURCE_PAYLOAD_COMPLETE_PROVENANCE_PARTIAL"
+    },
+    "milianke_board_package": {
+      "linux_sdk_build_script": false,
+      "board_config": false,
+      "status": "PREBUILT_FPGA_AND_BOOT_CANDIDATE_ONLY"
+    },
+    "status": "PASS_BOOT_AND_FORMAL_ROOTFS_FILE_SET_NOT_PARTITIONED",
+    "historical_pdf_only_status": "PASS_BOOT_GENERATED_FROM_PDF_INJECTED_INPUTS_NOT_FULL_SD",
+    "pdf_workflow_evidence": "results/evidence/025/npu_pdf_isolated_reproduction.json",
+    "full_sd_chain_status": "READY_FOR_SD_WRITE_APPROVAL",
+    "formal_buildroot_evidence": "results/evidence/025/npu_formal_rootfs_build.json",
+    "formal_candidate_manifest": "results/evidence/025/npu_final_candidate_artifact_manifest.json"
+  },
+  "candidate_kernel_module_compatibility": {
+    "candidate_kernel_source": "present in vendor release tarball; no exact Git commit metadata",
+    "candidate_defconfig": "anlogic_dr1m90_defconfig",
+    "linux_defconfig": "arch/arm64/configs/anlogic_dr1m90_defconfig (no inspected NPU/module/CMA selections)",
+    "config_modules": "y",
+    "config_modversions": "not enabled in the inspected defconfig; no Module.symvers/System.map in release payload",
+    "config_cma": "y",
+    "config_dma_cma": "y",
+    "npu_driver_symbols_in_defconfig": "not selected by default",
+    "same_source_candidate_modules": "built from the injected candidate kernel source/config in an isolated workspace",
+    "prior_module_vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64 (Task 023 isolated outputs)",
+    "vermagic_interpretation": "current-eMMC vermagic match is not reused as candidate-SD proof",
+    "status": "PASS_SAME_SOURCE_STATIC_COMPATIBILITY",
+    "build_evidence": "results/evidence/025/npu_pdf_candidate_artifact_validation.json",
+    "kernel_sha256": "03fb7a20377fa1a93d49a5d8c0309aa892070fdc06e3b096f203d03e135c007d",
+    "dtb_sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+    "module_sha256": {
+      "hard_npu.ko": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d",
+      "soft_npu.ko": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380",
+      "cma_mem.ko": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b"
+    },
+    "same_source_module_symvers_missing_symbols": 0,
+    "modversions_note": "CONFIG_MODVERSIONS being absent means missing __versions is not by itself a candidate blocker; same-build exported symbol names resolve all three module imports, but runtime load is not approved"
+  },
+  "candidate_armnn_runtime_closure": {
+    "evidence": "results/evidence/025/npu_sd_armnn_rootfs_dependency.json",
+    "status": "PASS_STATIC_FORMAL_ROOTFS_CLOSURE_NOT_DEPLOYMENT_READY",
+    "formal_rootfs_evidence": "results/evidence/025/npu_formal_rootfs_runtime_closure.json",
+    "libprotoc": "packaging-only names; not DT_NEEDED in yolo_demo_pic, libarmnnOnnxParser or libprotobuf",
+    "remaining_gates": ["absolute OpenCV RPATH relocation", "candidate rootfs ABI verification", "NPU driver/device nodes", "MLK boot/DT mapping"]
+  },
+  "uisrc_lab_package_identity": {
+    "evidence": "results/evidence/025/uisrc_package_inventory.json",
+    "arm_package": "uisrc-lab-anlogicM-V4.0.1.tar.gz",
+    "arm_package_md5": "9ba0d5c69e1e127709a3c33958470688",
+    "arm_package_sha256": "7214035eea18e0df67a1aaa401ad9d024c4a5560cb5843af50e5f75e9c81d292",
+    "embedded_anlogic_sdk": "SDK_2025.1",
+    "mlk_boardconfig_found": false,
+    "generic_dr1m_source_and_image_scripts_found": true,
+    "armnn_userspace_found": false,
+    "native_runtime_assets_found": false,
+    "candidate_classification": "RECOVERABLE_STRUCTURE_VERSION_MISMATCH",
+    "candidate_sd_readiness": "NOT_READY",
+    "interpretation": "The package provides a generic DR1M source/build skeleton, not a version-matched MLK-F3P-CZ02 NPU SD source set."
+  },
+  "native_runtime_path": {
+    "required": ["npu_runtime", "convert_tool", "al_ai_flow", "rt.bin", "weight.bin"],
+    "status": "BLOCKED_NATIVE_RUNTIME_ASSETS",
+    "does_not_block_armnn_static_closure": true
+  },
+  "pdf_workflow_assessment": {
+    "workflow_evidence": "results/evidence/025/npu_pdf_workflow_extraction.json",
+    "input_closure": "results/evidence/025/npu_pdf_input_closure.json",
+    "script_safety": "results/evidence/025/npu_uisrc_build_script_safety.json",
+    "artifact_validation": "results/evidence/025/npu_pdf_candidate_artifact_validation.json",
+    "status": "PARTIAL_PDF_WORKFLOW_BOOT_GENERATED_ROOTFS_BLOCKED",
+    "candidate_boot_sha256": "e25f98e00a68ea76f9e96736ba88fb7c169e2f8b769d60af55e3e69639880016",
+    "candidate_rootfs_sha256": "b837e2b4bbf4a81b2e4f8a9e32bf7f6701e263492e7e676f3474fa5fa5113e3e",
+    "candidate_sd_generation_readiness": "BLOCKED_CANDIDATE_IMAGE_BUILD"
+  },
+  "formal_buildroot_increment": {
+    "config_identity": "results/evidence/025/npu_buildroot_config_identity.json",
+    "download_manifest": "results/evidence/025/npu_buildroot_dl_manifest.json",
+    "rootfs_build": "results/evidence/025/npu_formal_rootfs_build.json",
+    "runtime_closure": "results/evidence/025/npu_formal_rootfs_runtime_closure.json",
+    "candidate_artifact_manifest": "results/evidence/025/npu_final_candidate_artifact_manifest.json",
+    "status": "READY_FOR_SD_WRITE_APPROVAL",
+    "partitioned_sd_image": false,
+    "sd_write": "NOT_PERFORMED"
+  },
+  "overall_candidate_sd_identity": "FORMAL_BUILDROOT_COMPLETE_FILE_SET_NOT_PARTITIONED"
+}

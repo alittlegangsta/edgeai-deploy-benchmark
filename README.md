@@ -114,6 +114,58 @@ is not approved. No module, bitstream, DTB, kernel, media, or vendor program was
 `docs/vendor/ANLOGIC_NPU_BOARD_MAPPING_AND_CONTROLLED_DEPLOYMENT.md` and
 `results/evidence/024/`.
 
+Task 025 is the completed SD-image preflight. The Milianke project is a strong
+`DR1M90GEG400` board-level lead and its candidate HPF/bitstream/DT/boot hashes
+are retained outside Git. The exact `SDK_2025.07-linux6.1` superproject clone
+is reproducible, but local relative submodules cannot be materialized; the
+fuller vendor release tarball has no `.git` provenance and the official SDK has
+no MLK-F3P-CZ02 BoardConfig. Arm NN application targets link as AArch64
+binaries in isolation, and their recursive non-system `DT_NEEDED` closure is
+static-pass; the packaging step's `libprotoc.so*` names are not runtime
+dependencies for the inspected closure, while absolute OpenCV RPATH
+relocation remains unverified. The PDF-guided injection flow was then exercised
+in a fresh isolated VM copy: the same workspace generated `BOOT.bin`,
+`system.dtb`, kernel and the three NPU modules, and compiled the Arm NN demo.
+The Buildroot 2022.02.6 dependency cache is now frozen and hash-checked, and a
+formal rootfs was built offline in the isolated VM workspace. Static inspection
+found only AArch64 ELF files and no missing DT_NEEDED names. A complete
+external candidate file set (but no partitioned SD image) is recorded as
+`READY_FOR_SD_WRITE_APPROVAL`; `candidate_approved: true` admits the static
+13-file set to a controlled deployment workflow only. It does not authorize
+formatting, partitioning or writing real media; `deployment_approval` remains
+`PENDING`. No SD/eMMC write, module load, FPGA write, vendor NPU execution or
+project-model conversion was performed. See
+[the Task 025 preflight](docs/vendor/ANLOGIC_NPU_SD_IMAGE_PREFLIGHT.md) and
+`results/evidence/025/`.
+
+The bounded `03_demo` follow-up audit selected `05-5_NPU演示` as the direct
+Milianke NPU lead. It confirms an Arm NN/ONNX package and candidate
+DR1M90GEG400 HPF/bitstream/boot assets, but also records mixed AD101/GEG484
+metadata, a missing base DTS, differing platform and best-result bitstream
+hashes, and no MLK BoardConfig or native `npu_runtime` assets. The candidate
+source identity remains mixed, but the documented injection workflow and
+formal Buildroot rootfs are separately evidenced. Source provenance, board
+boot and runtime execution remain unverified; the screening, deep-audit, PDF
+workflow and formal rootfs evidence is in `results/evidence/025/`.
+
+The subsequent bounded archive audit listed the 05-5 package and hash-recorded
+the two large FPSoc RAR SDK archives; no local RAR reader was available, so no
+RAR extraction was attempted. Direct 3-2/3-4 inspection confirms only generic
+GEG400/FSBL/Linux context, while the 05-5 HPF/platform bit and best-result bit
+are different and its BOOT payload has no packaged BIF/bootgen source. This
+keeps candidate BoardConfig recovery at `ASSET_IDENTITY_CONFLICT`; the
+formal candidate file set is now ready for a separate SD-write approval, but
+no partitioned image or board boot is claimed.
+
+The exact expected ARM Milianke package `uisrc-lab-anlogicM-V4.0.1.tar.gz`
+was then identified by MD5 and statically inspected. It is a generic DR1M
+SDK_2025.1 source/toolchain snapshot with image scripts and NPU driver source,
+not an MLK-F3P-CZ02 BoardConfig or complete Arm NN/NPU runtime package. The
+expected `anlogic-linuxsdk` download was not found locally; this increment is
+classified `RECOVERABLE_STRUCTURE_VERSION_MISMATCH`; that package-only
+increment did not itself provide the rootfs inputs needed by the later
+PDF-guided candidate build.
+
 ## PC architecture and model lineage
 
 ```text
@@ -423,6 +475,19 @@ backend includes its Runtime, model, and input state.
 - Generated models, SDKs, logs, videos, and other large reproducible artifacts
   remain Git-ignored. Reproduction requires the exact recorded hashes and local
   tool versions.
+
+Task 025's read-only VM history audit found a generic SDK_2025.07 tree and
+generic `anlogic-dr1m90` base DTS files, but no MLK BoardConfig, exact
+submodule provenance, historical 2025.07 uisrc package or original 05-5
+workspace. The VM 05-5 tree is an exact copy of the local demo package, not an
+independent build workspace. The later PDF-guided isolated build generated
+boot/kernel/module artifacts, and the subsequent offline Buildroot build
+generated the formal rootfs. The current candidate is a complete external file
+set without a partitioned SD image and is `READY_FOR_SD_WRITE_APPROVAL`;
+`candidate_approved: true` admits the static 13-file set to a controlled
+deployment workflow only. It does not authorize formatting, partitioning or
+writing real media; `deployment_approval` remains `PENDING`, and no board boot
+or runtime result is claimed.
 
 ## Stage boundary and future work
 
