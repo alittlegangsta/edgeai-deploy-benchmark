@@ -1,0 +1,32 @@
+#!/bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+[ -r /etc/edgeai/runtime.conf ] && . /etc/edgeai/runtime.conf
+
+case "$1" in
+start)
+    if [ -x /sbin/ip ]; then
+        /sbin/ip link set eth0 up 2>/dev/null || true
+        /sbin/ip -4 addr replace "$EDGEAI_ETH0_ADDRESS" dev eth0 2>/dev/null || {
+            echo "edgeai-network: failed to set eth0 $EDGEAI_ETH0_ADDRESS" >&2
+            exit 1
+        }
+        echo "edgeai-network: eth0=$EDGEAI_ETH0_ADDRESS"
+    else
+        echo "edgeai-network: /sbin/ip is missing" >&2
+        exit 1
+    fi
+    ;;
+stop)
+    ;;
+restart|reload)
+    "$0" stop
+    "$0" start
+    ;;
+*)
+    echo "Usage: $0 {start|stop|restart|reload}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

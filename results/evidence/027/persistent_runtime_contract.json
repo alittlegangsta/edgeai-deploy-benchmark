@@ -1,0 +1,80 @@
+{
+  "schema_version": "task027-persistent-runtime-contract-v1",
+  "task": "027",
+  "captured_at": "2026-08-07T12:44:13+08:00",
+  "task_state": "Completed",
+  "deployment_readiness": "COMPLETED_VALIDATED",
+  "sd_update": "KEYFIX3_UPDATED_BOARD_VALIDATED",
+  "initial_candidate_sd_update": "COMPLETED",
+  "board_rebooted": true,
+  "initial_candidate_boot_validation": "PASS",
+  "keyfix_candidate_booted": true,
+  "keyfix_candidate_health": "FAIL_HEALTHCHECK_FAT_MASK",
+  "keyfix3_candidate_booted": true,
+  "keyfix3_candidate_health": "PASS",
+  "keyfix3_candidate_uinitrd_sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+  "keyfix3_candidate_sd_update": "COMPLETED_BOARD_VALIDATED",
+  "keyfix3_update": {
+    "status": "KEYFIX3_SD_UPDATE_COMPLETED_BOARD_BOOT_VALIDATED",
+    "uinitrd_sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+    "board_boot_validation": {
+      "cold_boot": "PASS",
+      "reboot": "PASS",
+      "healthcheck": "PASS",
+      "mount_options": "fmask=0177,dmask=0077",
+      "etc_private_key_mode": "600",
+      "etc_public_sidecar_mode": "644",
+      "host_key_fingerprint_match": true,
+      "eth0": "192.168.50.2/24",
+      "sshd": "running",
+      "npu_modules": ["cma_mem", "hard_npu", "soft_npu"],
+      "device_nodes": ["/dev/cma_mem", "/dev/hard_npu", "/dev/soft_npu"],
+      "platform_binding": {"hard_npu": "bound", "soft_npu": "bound"}
+    }
+  },
+  "keyfix_update": {
+    "status": "COMPLETED_BOARD_BOOT_FAILED_HEALTHCHECK",
+    "uinitrd_sha256": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+    "board_boot_validation": {
+      "cold_boot": "FAIL_HEALTHCHECK_FAT_MASK",
+      "reboot": "FAIL_HEALTHCHECK_FAT_MASK",
+      "healthcheck_exit_code": 1,
+      "mount_options_observed": "fmask=0022,dmask=0022",
+      "network_sshd_npu_status": "PASS"
+    }
+  },
+  "board_accessed_for_task027": true,
+  "camera_autostart": false,
+  "target": {
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "architecture": "AArch64",
+    "buildroot": "2022.02.6",
+    "kernel": "6.1.111-rt42",
+    "glibc": "2.25"
+  },
+  "eth0": {
+    "cidr": "192.168.50.2/24",
+    "default_route_added": false,
+    "configuration": "Buildroot ifupdown interfaces plus S41edgeai-network idempotent fallback"
+  },
+  "ssh": {
+    "daemon": "OpenSSH",
+    "existing_start_script": "/etc/init.d/S50sshd",
+    "key_install_script": "/etc/init.d/S49edgeai-ssh-keys",
+    "authorized_keys_source": "/etc/edgeai/authorized_keys",
+    "host_key_persistence": "/mnt/mmcblk0p1/edgeai-runtime/ssh",
+    "mount_options": "fmask=0177,dmask=0077",
+    "expected_ed25519_fingerprint": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "public_sidecars_generated_from_private": true,
+    "private_key_committed": false,
+    "host_private_keys_generated_at_runtime": true
+  },
+  "npu_module_order": [
+    "cma_mem",
+    "hard_npu",
+    "soft_npu"
+  ],
+  "healthcheck": "/usr/bin/edgeai-npu-healthcheck",
+  "manual_camera_wrapper": "/usr/bin/edgeai-camera-demo-manual",
+  "source_tasks": ["025", "026"]
+}

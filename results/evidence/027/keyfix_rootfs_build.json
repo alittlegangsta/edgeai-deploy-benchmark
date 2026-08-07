@@ -1,0 +1,53 @@
+{
+  "schema_version": "task027-keyfix-rootfs-build-v1",
+  "task": "027",
+  "status": "PASS_OFFLINE_KEYFIX_BUILDROOT",
+  "captured_at": "2026-08-07T12:42:57+08:00",
+  "vm": {
+    "workspace": "/home/uisrc/task027-repro/uisrc-lab-anlogic-task027-keyfix2-20260807",
+    "buildroot": "2022.02.6",
+    "network_requests": 0,
+    "source_overlay": "/home/uisrc/task027-repro/task027-keyfix-overlay-20260807",
+    "build_command": "build_task027_persistent_runtime-keyfix-20260807.sh --build"
+  },
+  "repair": {
+    "reason": "restore public host-key sidecars from private keys and enforce secure FAT mount masks",
+    "previous_candidate_uinitrd_sha256": "a84cb5a26b8639782cb86ea211b77410528d15d4bfbd4a13d499e2791c74b2f6",
+    "candidate_uinitrd_sha256": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+    "candidate_sd_update": "NOT_PERFORMED"
+  },
+  "artifacts": {
+    "rootfs_tar_gz": {
+      "sha256": "dcd96fb90af07d34d7e988478cb9ca30d919c233ce83f7e7a8a1fb7dd7c509ea",
+      "size_bytes": 94904046
+    },
+    "rootfs_cpio_lz4": {
+      "sha256": "723699855b09ee34507e5896d6ecd4d7b7293b55d76783ea5617b55877849587",
+      "size_bytes": 112291345
+    },
+    "uinitrd_lz4": {
+      "sha256": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+      "size_bytes": 112291409
+    }
+  },
+  "overlay": {
+    "runtime_conf_sha256": "68560dea7a22268c35c683d58cb5fff20df0b68cbccc3e87dffd98364fe26020",
+    "ssh_script_sha256": "bd9e89bffcfd0c7cadb68e5529fc2dc3ead0614f4845efb9044aef2d256be5f7",
+    "healthcheck_sha256": "146b60c2b1687c3f6ca1f9dbd5bd34886810d24d0c5e6574296997ccdc4a054c",
+    "mount_options": "fmask=0177,dmask=0077",
+    "expected_host_key_fingerprint": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "public_sidecars_derived_at_boot": true,
+    "camera_autostart": false
+  },
+  "runtime": {
+    "elf_count": 353,
+    "aarch64_elf_count": 353,
+    "x86_64_elf_count": 0,
+    "dt_needed_count": 78,
+    "missing_dt_needed": [],
+    "same_source_npu_modules": true,
+    "target_execution": false
+  },
+  "sd_update": "NOT_PERFORMED",
+  "emmc_modified": false
+}

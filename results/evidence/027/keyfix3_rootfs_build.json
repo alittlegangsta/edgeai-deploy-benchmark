@@ -1,0 +1,52 @@
+{
+  "schema_version": "task027-keyfix3-rootfs-build-v1",
+  "task": "027",
+  "status": "PASS_OFFLINE_KEYFIX3_BUILDROOT",
+  "captured_at": "2026-08-07T13:42:10+08:00",
+  "vm": {
+    "workspace": "/home/uisrc/task027-repro/uisrc-lab-anlogic-task027-keyfix3-20260807",
+    "buildroot": "2022.02.6",
+    "network_requests": 0,
+    "source_overlay": "/home/uisrc/task027-repro/task027-keyfix-overlay-20260807",
+    "build_command": "build_task027_persistent_runtime-keyfix-20260807.sh --build"
+  },
+  "repair": {
+    "reason": "replace ineffective FAT remount with verified unmount and secure remount",
+    "previous_deployed_uinitrd_sha256": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+    "candidate_uinitrd_sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+    "candidate_sd_update": "NOT_PERFORMED",
+    "previous_candidate_boot_failure": "FAT_MASK_REMAINED_0022_HEALTHCHECK_FAILED"
+  },
+  "artifacts": {
+    "rootfs_tar_gz": {
+      "sha256": "47a22414be41e8c4d63749a7041448841f4a15c8d8a6e006d07231bbd4a3736d",
+      "size_bytes": 94905464
+    },
+    "rootfs_cpio_lz4": {
+      "sha256": "86f1d6a02ebccca3fc97456da657bb093809ca6d5ef23bd229a5a7882cac94bf",
+      "size_bytes": 112290898
+    },
+    "uinitrd_lz4": {
+      "sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+      "size_bytes": 112290962
+    }
+  },
+  "overlay": {
+    "ssh_script_sha256": "1d0de0641ec10438479c583df8a9e9ac9f526a124e46e08b6ce67dd061b8a184",
+    "mount_policy": "verified unmount then fmask=0177,dmask=0077 mount",
+    "expected_host_key_fingerprint": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "camera_autostart": false
+  },
+  "runtime": {
+    "elf_total": 352,
+    "aarch64_elf_count": 352,
+    "x86_64_elf_count": 0,
+    "target_non_overlay_hashes_identical_to_keyfix2": true,
+    "excluded_rebuild_variants": ["etc/init.d/S49edgeai-ssh-keys", "etc/shadow"],
+    "dt_needed_closure": "INHERITED_FROM_IDENTICAL_KEYFIX2_TARGET_ASSETS",
+    "same_source_npu_modules": true,
+    "target_execution": false
+  },
+  "sd_update": "NOT_PERFORMED",
+  "emmc_modified": false
+}

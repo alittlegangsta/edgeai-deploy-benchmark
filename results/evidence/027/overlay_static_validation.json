@@ -1,0 +1,43 @@
+{
+  "schema_version": "task027-overlay-static-validation-v1",
+  "status": "PASS",
+  "overlay": "configs/task027/rootfs_overlay",
+  "files": [
+    "etc/dhcpcd.conf",
+    "etc/edgeai/authorized_keys",
+    "etc/edgeai/runtime.conf",
+    "etc/init.d/S41edgeai-network",
+    "etc/init.d/S49edgeai-ssh-keys",
+    "etc/init.d/S98edgeai-npu",
+    "etc/network/interfaces",
+    "usr/bin/edgeai-camera-demo-manual",
+    "usr/bin/edgeai-npu-healthcheck"
+  ],
+  "file_sha256": {
+    "etc/network/interfaces": "83a0d0283d7dc243cc6159b98bd97a25cec25c129076857d629133d352fcebbd",
+    "etc/dhcpcd.conf": "bec87a976df6454b57cd297cce922c08d91a908e8274c545c20a5dea74224961",
+    "etc/edgeai/runtime.conf": "68560dea7a22268c35c683d58cb5fff20df0b68cbccc3e87dffd98364fe26020",
+    "etc/edgeai/authorized_keys": "d2858f3898d2754b712a6a70f06f0af8c9f7c163f2f8dee43083ad4245bcb3d5",
+    "etc/init.d/S41edgeai-network": "57154ad561c9b2c32aa47a0dc03f292e77542b5d7abc8e333a6c0ded2917d6a5",
+    "etc/init.d/S49edgeai-ssh-keys": "bd9e89bffcfd0c7cadb68e5529fc2dc3ead0614f4845efb9044aef2d256be5f7",
+    "etc/init.d/S98edgeai-npu": "09505e16bd4156be8b739b639adae7297217083e619f6905dde787df6b3541ba",
+    "usr/bin/edgeai-npu-healthcheck": "146b60c2b1687c3f6ca1f9dbd5bd34886810d24d0c5e6574296997ccdc4a054c",
+    "usr/bin/edgeai-camera-demo-manual": "b749bc7c361767c5dbda9d2a1d1c8e04e79dd28675fa5c7bbe4728659a83e8b2"
+  },
+  "authorized_key_type": "ssh-ed25519",
+  "authorized_key_sha256": "d2858f3898d2754b712a6a70f06f0af8c9f7c163f2f8dee43083ad4245bcb3d5",
+  "authorized_key_fingerprint": "SHA256:/wcdACD1eS/K/4oMVs5jlM8L8ETjLXDU8wj9mhWUsak",
+  "private_key_files": [],
+  "script_syntax": "PASS",
+  "camera_autostart": false,
+  "npu_order_literal": "cma_mem -> hard_npu -> soft_npu",
+  "healthcheck_contract": [
+    "modules",
+    "device_nodes",
+    "platform_binding",
+    "CMA",
+    "eth0",
+    "sshd",
+    "persistent_host_keys"
+  ]
+}

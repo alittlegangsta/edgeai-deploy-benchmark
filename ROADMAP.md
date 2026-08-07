@@ -269,3 +269,18 @@ back and verify partitions, files and SHA256 values, boot from SD through the
 serial console, validate the system and NPU drivers first, and only then
 consider the official NPU Demo. The task must include a backup, serial recovery
 and rollback plan and must never assume that a detected block device is safe.
+
+## Task 027: Anlogic DR1 persistent board runtime
+
+Task 027 is `Completed`. The initial single-file candidate update and boot
+validation are recorded separately: `eth0` is `192.168.50.2/24`, OpenSSH
+reconnects with the expected host identity, and source-derived
+`cma_mem -> hard_npu -> soft_npu` startup binds all three NPU devices. Key-fix2
+was written as the sole FAT-root update and completed cold boot plus one reboot,
+but both boots retained `fmask=0022,dmask=0022`, so the persistent-key
+fingerprint health gate failed. Key-fix3 (`0da5…`) is rebuilt offline with a
+verified unmount-before-secure-remount fix and has now been written as the
+sole FAT-root update with
+readback and safe unmount; board cold-boot and reboot validation both pass,
+including secure FAT masks, host-key persistence and NPU health. The camera
+Demo remains manual and is never started by init.

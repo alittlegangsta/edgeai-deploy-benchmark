@@ -1,0 +1,120 @@
+{
+  "schema_version": "task027-ssh-host-key-repair-v1",
+  "task": "027",
+  "captured_at": "2026-08-07T12:44:13+08:00",
+  "status": "REPAIR_STATIC_VALIDATION_PASS",
+  "running_image": {
+    "candidate_uinitrd_sha256": "a84cb5a26b8639782cb86ea211b77410528d15d4bfbd4a13d499e2791c74b2f6",
+    "public_sidecar_present": false,
+    "private_keys_restored": true,
+    "sshd_config_test": "PASS",
+    "sshd_running": true,
+    "eth0": "192.168.50.2/24",
+    "npu_modules": ["cma_mem", "hard_npu", "soft_npu"],
+    "device_nodes": ["/dev/cma_mem", "/dev/hard_npu", "/dev/soft_npu"],
+    "platform_binding": {"hard_npu": "bound", "soft_npu": "bound"},
+    "fat_mount_options_observed": "fmask=0022,dmask=0022",
+    "healthcheck_before_repair": "PASS"
+  },
+  "fingerprint": {
+    "algorithm": "ssh-keygen -y followed by ssh-keygen -lf",
+    "key_type": "ssh-ed25519",
+    "expected": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "current": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "persistent": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "current_matches_expected": true,
+    "persistent_matches_current": true
+  },
+  "direct_recheck": {
+    "status": "PASS",
+    "captured_at": "2026-08-07T12:57:04+08:00",
+    "current_sha256": "fed0e99a3838dbda46f2c3cde2b16fa0895c7fb9aa01aee58aef0f43fca2527e",
+    "persistent_sha256": "fed0e99a3838dbda46f2c3cde2b16fa0895c7fb9aa01aee58aef0f43fca2527e",
+    "current_fingerprint": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "persistent_fingerprint": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "persistent_key_permission_workaround": "temporary_mode_600_copy_in_tmpfs_only"
+  },
+  "private_key_sha256": {
+    "current_matches_persistent": true,
+    "ed25519": {
+      "current": "fed0e99a3838dbda46f2c3cde2b16fa0895c7fb9aa01aee58aef0f43fca2527e",
+      "persistent": "fed0e99a3838dbda46f2c3cde2b16fa0895c7fb9aa01aee58aef0f43fca2527e"
+    },
+    "dsa": {
+      "current": "27da557b35d9648f135193cb33f5a3bed8ee3bc0218ae4f2f1e6d09478af1a22",
+      "persistent": "27da557b35d9648f135193cb33f5a3bed8ee3bc0218ae4f2f1e6d09478af1a22"
+    },
+    "ecdsa": {
+      "current": "808ec5a7edc2fb7e4e26303536dc16b4db5f75b6edf079bad7d5b70d2a368b05",
+      "persistent": "808ec5a7edc2fb7e4e26303536dc16b4db5f75b6edf079bad7d5b70d2a368b05"
+    },
+    "rsa": {
+      "current": "17e560c48a854a6f4945e7f38c00191103837eac1db201edc494f76fc21f47f5",
+      "persistent": "17e560c48a854a6f4945e7f38c00191103837eac1db201edc494f76fc21f47f5"
+    }
+  },
+  "repair": {
+    "restores_all_private_keys": true,
+    "generates_missing_public_sidecars": true,
+    "public_sidecar_generation": "ssh-keygen -y -f private_key",
+    "private_mode": "600",
+    "public_sidecar_mode": "644",
+    "sshd_test_before_service": true,
+    "healthcheck_uses_private_key_fingerprint": true,
+    "healthcheck_requires_public_sidecar": false
+  },
+  "security": {
+    "candidate_mount_options": "fmask=0177,dmask=0077",
+    "running_mount_private_key_mode": "FAT fmask=0022 observed as executable/readable by non-root",
+    "candidate_private_key_physical_read_risk_reduced": true,
+    "private_key_committed": false
+  },
+  "keyfix2_validation": {
+    "candidate_uinitrd_sha256": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+    "cold_boot": "FAIL_HEALTHCHECK_FAT_MASK",
+    "reboot": "FAIL_HEALTHCHECK_FAT_MASK",
+    "healthcheck_exit_code": 1,
+    "mount_options_observed": "fmask=0022,dmask=0022",
+    "current_host_key_sha256": "fed0e99a3838dbda46f2c3cde2b16fa0895c7fb9aa01aee58aef0f43fca2527e",
+    "persistent_host_key_sha256": "fed0e99a3838dbda46f2c3cde2b16fa0895c7fb9aa01aee58aef0f43fca2527e",
+    "host_key_sha_match": true,
+    "persistent_fingerprint": "",
+    "host_key_fingerprint": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "host_key_fingerprint_match": false,
+    "network_sshd_npu_status": "PASS",
+    "keyfix3_candidate_booted": false,
+    "keyfix3_candidate_uinitrd_sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+    "keyfix3_sd_update": "COMPLETED_BOARD_VALIDATED"
+  },
+  "second_reboot": {
+    "running_image_ssh_reconnected": true,
+    "host_key_changed": false,
+    "source": "user_report",
+    "keyfix_candidate_booted": true,
+    "requires_keyfix_board_boot_validation": false,
+    "keyfix_sd_update": "COMPLETED_BOARD_BOOT_FAILED_HEALTHCHECK"
+  },
+  "keyfix3_validation": {
+    "candidate_uinitrd_sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+    "cold_boot": "PASS",
+    "reboot": "PASS",
+    "mount_options": "fmask=0177,dmask=0077",
+    "etc_private_key_mode": "600",
+    "etc_public_sidecar_mode": "644",
+    "persistent_private_key_mode_view": "600",
+    "persistent_public_sidecar_mode_view": "600",
+    "current_private_key_sha256": "fed0e99a3838dbda46f2c3cde2b16fa0895c7fb9aa01aee58aef0f43fca2527e",
+    "persistent_private_key_sha256": "fed0e99a3838dbda46f2c3cde2b16fa0895c7fb9aa01aee58aef0f43fca2527e",
+    "host_key_fingerprint": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "persistent_host_key_fingerprint": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+    "host_key_sha_match": true,
+    "host_key_fingerprint_match": true,
+    "healthcheck": "PASS",
+    "eth0": "192.168.50.2/24",
+    "sshd": "running",
+    "npu_modules": ["cma_mem", "hard_npu", "soft_npu"],
+    "device_nodes": ["/dev/cma_mem", "/dev/hard_npu", "/dev/soft_npu"],
+    "platform_binding": {"hard_npu": "bound", "soft_npu": "bound"}
+  },
+  "sd_update": "KEYFIX3_UPDATED_BOARD_VALIDATED"
+}

@@ -1,0 +1,49 @@
+#!/bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+[ -r /etc/edgeai/runtime.conf ] && . /etc/edgeai/runtime.conf
+
+LOG=/run/edgeai-npu.log
+MODULE_DIR="$EDGEAI_MODULE_DIR/$(uname -r)/extra"
+
+log() { echo "edgeai-npu: $*" | tee -a "$LOG"; }
+
+load_one() {
+    name="$1"
+    module="$MODULE_DIR/$name.ko"
+    if [ -d "/sys/module/$name" ]; then
+        log "$name already loaded"
+        return 0
+    fi
+    [ -f "$module" ] || { log "$name missing: $module" >&2; return 1; }
+    /sbin/insmod "$module" >>"$LOG" 2>&1 || {
+        log "$name insmod failed"
+        return 1
+    }
+    log "$name loaded"
+    return 0
+}
+
+case "$1" in
+start)
+    : > "$LOG"
+    # The source and Task 026 board evidence establish this order.  Stop on the
+    # first failure; do not load a dependent stage after an unsafe failure.
+    if load_one cma_mem && load_one hard_npu && load_one soft_npu; then
+        log "module sequence cma_mem -> hard_npu -> soft_npu completed"
+    else
+        log "module sequence failed; camera/NPU demos remain manual"
+    fi
+    if [ -x /usr/bin/edgeai-npu-healthcheck ]; then
+        /usr/bin/edgeai-npu-healthcheck --json > /run/edgeai-npu-health.json 2>>"$LOG" || log "healthcheck reported failure"
+    fi
+    ;;
+stop|restart|reload)
+    ;;
+*)
+    echo "Usage: $0 {start|stop|restart|reload}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0
