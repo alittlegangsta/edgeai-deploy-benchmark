@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Deliberately not referenced by any init script.  Invoke this wrapper manually
+# after reviewing health-check output and connecting a supported camera.
+set -eu
+BIN=/opt/face_detection/runtime-root/bin/yolo_demo_hdmi_camera
+MODEL=/opt/face_detection/runtime-root/inputs/yolo_face_uint8_15.onnx
+CONFIG=/opt/face_detection/runtime-root/inputs/example_yolo_face.json
+LIBS=/opt/face_detection/runtime-root/armnn_lib/lib:/opt/face_detection/runtime-root/ffmpeg_opencv4.7.0_aarch64/lib
+[ -x "$BIN" ] || { echo "camera demo is missing: $BIN" >&2; exit 1; }
+if [ "$#" -eq 0 ]; then
+    set -- -i /dev/video0 --geometry 640x480 -l 1
+fi
+echo "manual camera demo: backend=Alnpu; no automatic camera start"
+exec env LD_LIBRARY_PATH="$LIBS${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" "$BIN" -m "$MODEL" -u "$CONFIG" -b Alnpu "$@"

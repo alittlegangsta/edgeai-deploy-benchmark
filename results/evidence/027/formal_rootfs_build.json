@@ -1,0 +1,70 @@
+{
+  "schema_version": "task027-formal-rootfs-build-v1",
+  "status": "PASS_OFFLINE_BUILDROOT",
+  "captured_at": "2026-08-07T11:51:11+08:00",
+  "vm": {
+    "os": "Ubuntu 18.04.4",
+    "kernel": "4.15.0-91-generic",
+    "architecture": "x86_64",
+    "workspace": "/home/uisrc/task027-repro/uisrc-lab-anlogic-task027-final3-20260807",
+    "buildroot_source": "/home/uisrc/task025-repro/uisrc-lab-anlogic-pdf-20260805/sources/buildroot",
+    "buildroot_version": "2022.02.6",
+    "base_output": "/home/uisrc/task025-repro/uisrc-lab-anlogic-pdf-20260805/results/task025-buildroot-output-20260806",
+    "download_cache": "Task 025 verified 141-entry cache"
+  },
+  "commands": [
+    "cp -a <task025-buildroot-output> <new-task027-output>",
+    "make -C <buildroot> O=<new-output> BR2_PRIMARY_SITE=file:///__task027_no_network__ BR2_BACKUP_SITE= olddefconfig",
+    "make -C <buildroot> O=<new-output> BR2_PRIMARY_SITE=file:///__task027_no_network__ BR2_BACKUP_SITE=",
+    "/usr/bin/mkimage -A arm64 -T ramdisk -C lz4 -n Initrd -d images/rootfs.cpio.lz4 images/uInitrd.lz4"
+  ],
+  "network_policy": {
+    "primary_site": "file:///__task027_no_network__",
+    "backup_site": "",
+    "network_requests_during_build": 0,
+    "package_install": false
+  },
+  "config": {
+    "BR2_ROOTFS_OVERLAY": "<task027-isolated-rootfs-overlay>",
+    "architecture": "aarch64",
+    "toolchain": "preinstalled Linaro AArch64 GCC 7 / glibc 2.25",
+    "rootfs_formats": ["tar.gz", "cpio.lz4"]
+  },
+  "artifacts": {
+    "rootfs_tar_gz": {
+      "sha256": "5a94d0b0736638e027165dceca451c9c11accc8e97c1ebd7cde9f351df2eed8e",
+      "size_bytes": 94906786
+    },
+    "rootfs_cpio_lz4": {
+      "sha256": "02c06b460bc360e7d7ce7b679353707768f45be03f685943d010474a980cac77",
+      "size_bytes": 112289595
+    },
+    "uinitrd_lz4": {
+      "sha256": "a84cb5a26b8639782cb86ea211b77410528d15d4bfbd4a13d499e2791c74b2f6",
+      "size_bytes": 112289659
+    }
+  },
+  "rootfs_format": "cpio.lz4+uInitrd.lz4",
+  "same_source_npu_modules_injected": true,
+  "target_execution": false,
+  "repair_attempts": [
+    {
+      "attempt": 1,
+      "issue": "new output parent directory was not created",
+      "repair": "create the output parent before cp -a",
+      "result": "repaired"
+    },
+    {
+      "attempt": 2,
+      "issue": "Buildroot target omitted same-source modules",
+      "repair": "inject Task 025 formal module staging into isolated overlay",
+      "result": "repaired"
+    },
+    {
+      "attempt": 3,
+      "issue": "Buildroot customdata runtime overlay was not copied into target",
+      "repair": "inject Task 025 formal customdata overlay before Task 027 files",
+      "result": "final build passed"
+    }
+  ]
+}

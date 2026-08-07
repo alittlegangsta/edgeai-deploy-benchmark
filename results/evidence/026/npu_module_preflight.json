@@ -1,0 +1,213 @@
+{
+  "schema_version": "task026-npu-module-preflight-v1",
+  "task": "026",
+  "recorded_at_wsl": "2026-08-07T10:55:42+08:00",
+  "kernel": {
+    "uname_r": "6.1.111-rt42",
+    "config_exposed_on_board": false,
+    "config_observation": "Neither /proc/config.gz nor /boot/config-6.1.111-rt42 was exposed by the running rootfs.",
+    "candidate_config_from_task025": {
+      "CONFIG_MODVERSIONS": "not enabled",
+      "same_source_module_unresolved_symbols": 0
+    }
+  },
+  "modules": [
+    {
+      "name": "hard_npu.ko",
+      "path": "/lib/modules/6.1.111-rt42/extra/hard_npu.ko",
+      "sha256": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d",
+      "expected_task025_sha256": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d",
+      "size_bytes": 419000,
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "embedded_depends": "",
+      "hash_match": true
+    },
+    {
+      "name": "soft_npu.ko",
+      "path": "/lib/modules/6.1.111-rt42/extra/soft_npu.ko",
+      "sha256": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380",
+      "expected_task025_sha256": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380",
+      "size_bytes": 414296,
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "embedded_depends": "",
+      "hash_match": true
+    },
+    {
+      "name": "cma_mem.ko",
+      "path": "/lib/modules/6.1.111-rt42/extra/cma_mem.ko",
+      "sha256": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b",
+      "expected_task025_sha256": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b",
+      "size_bytes": 419560,
+      "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64",
+      "embedded_depends": "",
+      "hash_match": true
+    }
+  ],
+  "loaded_state": {
+    "lsmod_npu_entries": [
+      "soft_npu               16384  0",
+      "hard_npu               16384  0",
+      "cma_mem                16384  0"
+    ],
+    "sys_module_npu_entries": ["/sys/module/cma_mem", "/sys/module/hard_npu", "/sys/module/soft_npu"],
+    "platform_devices": [
+      {"path": "/sys/bus/platform/devices/63f00000.hard_npu", "modalias": "of:Nhard_npuT(null)Canlogic,hard_npu", "driver": "../../../../bus/platform/drivers/hard_npu"},
+      {"path": "/sys/bus/platform/devices/1f0000000.soft_npu", "modalias": "of:Nsoft_npuT(null)Canlogic,soft_npu", "driver": "../../../../bus/platform/drivers/soft_npu"}
+    ],
+    "device_nodes": {
+      "/dev/hard_npu": "present c 237,0 mode 0600",
+      "/dev/soft_npu": "present c 236,0 mode 0600",
+      "/dev/cma_mem": "present c 10,0 mode 0600"
+    }
+  },
+  "load_attempts": [
+    {
+      "sequence": 1,
+      "module": "cma_mem.ko",
+      "path": "/lib/modules/6.1.111-rt42/extra/cma_mem.ko",
+      "command": "insmod /lib/modules/6.1.111-rt42/extra/cma_mem.ko",
+      "return_code": 0,
+      "dmesg_delta": ["misc cma_mem: registered."],
+      "lsmod_after": ["cma_mem 16384 0"],
+      "platform_binding_after": [],
+      "device_nodes_after": {"/dev/cma_mem": "present", "/dev/hard_npu": "absent", "/dev/soft_npu": "absent"},
+      "severe_error_observed": false
+    },
+    {
+      "sequence": 2,
+      "module": "hard_npu.ko",
+      "path": "/lib/modules/6.1.111-rt42/extra/hard_npu.ko",
+      "command": "insmod /lib/modules/6.1.111-rt42/extra/hard_npu.ko",
+      "return_code": 0,
+      "dmesg_delta": [
+        "hard_npu 63f00000.hard_npu: drv_hard_npu_probe",
+        "hard_npu 63f00000.hard_npu: find irq num: 42",
+        "hard_npu 63f00000.hard_npu: mem start addr: 63f00000",
+        "hard_npu 63f00000.hard_npu: mem size: 1048576"
+      ],
+      "lsmod_after": ["hard_npu 16384 0", "cma_mem 16384 0"],
+      "platform_binding_after": {"/sys/bus/platform/devices/63f00000.hard_npu": "../../../../bus/platform/drivers/hard_npu"},
+      "device_nodes_after": {"/dev/cma_mem": "present", "/dev/hard_npu": "present", "/dev/soft_npu": "absent"},
+      "severe_error_observed": false
+    },
+    {
+      "sequence": 3,
+      "module": "soft_npu.ko",
+      "path": "/lib/modules/6.1.111-rt42/extra/soft_npu.ko",
+      "command": "insmod /lib/modules/6.1.111-rt42/extra/soft_npu.ko",
+      "return_code": 0,
+      "dmesg_delta": [
+        "soft_npu 1f0000000.soft_npu: drv_soft_npu_probe",
+        "soft_npu 1f0000000.soft_npu: find irq num: 43",
+        "soft_npu 1f0000000.soft_npu: mem start addr: 1f0000000",
+        "soft_npu 1f0000000.soft_npu: mem size: 65536"
+      ],
+      "lsmod_after": ["soft_npu 16384 0", "hard_npu 16384 0", "cma_mem 16384 0"],
+      "platform_binding_after": {"/sys/bus/platform/devices/1f0000000.soft_npu": "../../../../bus/platform/drivers/soft_npu"},
+      "device_nodes_after": {"/dev/cma_mem": "present", "/dev/hard_npu": "present", "/dev/soft_npu": "present"},
+      "severe_error_observed": false
+    }
+  ],
+  "static_tool_limits": {
+    "modinfo": "not installed on candidate rootfs; vermagic and embedded depends were read from module strings",
+    "modules_dep_order_files": "modules.dep, modules.order and modules.alias were absent"
+  },
+  "load_order_gate": {
+    "status": "PASS_INFERRED_ORDER",
+    "approved_runtime_sequence": [
+      "cma_mem.ko",
+      "hard_npu.ko",
+      "soft_npu.ko"
+    ],
+    "order_basis": "inferred_from_source_and_build_order_not_explicit_vendor_runtime_documentation",
+    "source_paths": [
+      "/home/uisrc/task025-repro/uisrc-lab-anlogic-pdf-20260805/sources/linux/drivers/npu/Makefile",
+      "/home/uisrc/task025-repro/uisrc-lab-anlogic-pdf-20260805/sources/linux/drivers/npu/cma_mem_driver/cma_mem.c",
+      "/home/uisrc/task025-repro/uisrc-lab-anlogic-pdf-20260805/sources/linux/drivers/npu/hard_npu_driver/hard_npu.c",
+      "/home/uisrc/task025-repro/uisrc-lab-anlogic-pdf-20260805/sources/linux/drivers/npu/soft_npu_driver/soft_npu.c"
+    ],
+    "source_order_evidence": [
+      "linux/drivers/npu/Makefile lists cma_mem_driver before hard_npu_driver before soft_npu_driver",
+      "cma_mem_driver module_init registers the cma_mem misc device; hard_npu and soft_npu module_init register OF platform drivers",
+      "hard_npu and soft_npu have no inter-module undefined symbols or embedded module dependencies",
+      "vendor D20.1 records Kconfig symbols but does not document an insmod/modprobe sequence"
+    ],
+    "searched": [
+      "/etc/init.d",
+      "/opt/face_detection/scripts",
+      "/opt/face_detection/runtime-root/scripts",
+      "/opt/face_detection/runtime-root",
+      "VM Task 025 isolated build/vendor trees (text files only)",
+      "approved local D20.0/D20.1 documentation"
+    ],
+    "result": "The installed demo scripts only load mipicam.ko; no NPU module insertion sequence is present. D20.1 lists the three kernel configuration symbols but does not specify a runtime insmod/modprobe order. The sequence is therefore an explicit, reversible inference from the source Makefile and module_init semantics, not a vendor-documented fact.",
+    "vendor_documented_order": false,
+    "modules_loaded": true,
+    "reason_for_inferred_order": "No vendor runtime sequence was found; the reversible sequence was authorized after source/build-order review and succeeded without severe errors."
+  },
+  "official_demo": {
+    "status": "PASS_ALNPU",
+    "executed": true,
+    "exit_code": 0,
+    "static_assets": {
+      "runtime_demo": "/opt/face_detection/runtime-root/bin/yolo_demo_hdmi_camera present",
+      "onnx_model": "/opt/face_detection/runtime-root/inputs/yolo_face_uint8_15.onnx present",
+      "runtime_scripts": "/opt/face_detection/runtime-root/scripts present",
+      "primary_script_layout_issue": "/opt/face_detection/scripts refer to ../bin, while the executable is under runtime-root/bin"
+    },
+    "prior_attempt": {
+      "status": "BLOCKED_NO_CAMERA",
+      "exit_code": 255,
+      "reason": "The first bounded attempt occurred before the UVC camera enumerated; neither /dev/video0 nor /dev/mipicam was present."
+    },
+    "camera": {
+      "device": "/dev/video0",
+      "secondary_device": "/dev/video1",
+      "usb_id": "0c45:636b",
+      "manufacturer": "Sonix Technology Co., Ltd.",
+      "product": "USB 2.0 Camera",
+      "serial": "SN0001",
+      "driver": "uvcvideo",
+      "bus_info": "usb-f8180000.usb-1.3",
+      "formats": ["Motion-JPEG", "YUYV 4:2:2"],
+      "negotiated_format": "Motion-JPEG",
+      "width": 640,
+      "height": 480,
+      "fps": 30,
+      "buffer_count": 1
+    },
+    "command": "/opt/face_detection/runtime-root/bin/yolo_demo_hdmi_camera -m /opt/face_detection/runtime-root/inputs/yolo_face_uint8_15.onnx -u /opt/face_detection/runtime-root/inputs/example_yolo_face.json -b Alnpu -s 127.0.0.1:12345 -i /dev/video0 --geometry 640x480 -l 1",
+    "bounded_run_seconds": 10,
+    "stdout_excerpt": [
+      "摄像头打开成功.",
+      "Device /dev/video0: supports capture.",
+      "Device /dev/video0: supports streaming.",
+      "摄像头实际输出的图像尺寸:x=640,y=480",
+      "当前摄像头支持MJPEG格式图像输出!",
+      "当前摄像头实际采集帧率: 1秒30帧",
+      "Info: ArmNN v32.1.0",
+      "Guid|Backend |LayerType",
+      "135|Alnpu   |ALHardNPU",
+      "134|Alnpu   |ALHardNPU",
+      "126|Alnpu   |ALHardNPU",
+      "Memory Usage Info: after Load Network(id=0), CMA Mem Usage: weight=8.85MB",
+      "[stream_input.cpp:475] finally decoder output:640x480",
+      "[solution.cpp:116] get workload fot yolo post process"
+    ],
+    "stderr_excerpt": [],
+    "dmesg_delta": [
+      "hard_npu 63f00000.hard_npu: map_to_register: phys_addr: 63f00000",
+      "soft_npu 1f0000000.soft_npu: map_to_register: phys_addr: 1f0000000"
+    ],
+    "backend_assignment": "Alnpu",
+    "backend_requested": ["Alnpu"],
+    "cpu_fallback_allowed": false,
+    "alnpu_execution_confirmed": true,
+    "npu_inference_executed": true,
+    "frames_observed": "at least one decoder output/workload completion; demo exited cleanly after newline",
+    "network_safety": "UDP endpoint was confined to 127.0.0.1:12345; no external destination was used."
+  },
+  "board_write_or_module_operation": true,
+  "demo_process_attempted": true,
+  "npu_execution": true
+}

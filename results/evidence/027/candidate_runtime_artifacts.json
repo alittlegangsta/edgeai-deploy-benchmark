@@ -1,0 +1,74 @@
+{
+  "schema_version": "task027-candidate-runtime-artifacts-v1",
+  "status": "STATIC_VALIDATION_PASS",
+  "candidate_root": "<vm-task027>/results/task027-buildroot-output",
+  "boot_assets_unchanged_from_task025": {
+    "BOOT.bin": "e25f98e00a68ea76f9e96736ba88fb7c169e2f8b769d60af55e3e69639880016",
+    "system.bit": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+    "system.dtb": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+    "uImage.lz4": "b6ff1dd519ce342d4739a18fa4e03b3f108c0c4c30e432f94afac9704fb8b4b0",
+    "boot.scr": "99d1c6d7e5bead893c495f9b5c8c796e1186108d4decd47915c06680f6f4b012",
+    "u-boot.bin": "2f8e24a96e21395e042feed4777b14409e901d2764c9819a83366fc1bf2efe47"
+  },
+  "task027_rootfs_artifacts": {
+    "rootfs.tar.gz": "dcd96fb90af07d34d7e988478cb9ca30d919c233ce83f7e7a8a1fb7dd7c509ea",
+    "rootfs.cpio.lz4": "723699855b09ee34507e5896d6ecd4d7b7293b55d76783ea5617b55877849587",
+    "uInitrd.lz4": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028"
+  },
+  "superseded_initial_candidate": {
+    "uInitrd.lz4": "a84cb5a26b8639782cb86ea211b77410528d15d4bfbd4a13d499e2791c74b2f6",
+    "sd_update_status": "INITIAL_CANDIDATE_WRITTEN",
+    "keyfix_sd_update_status": "NOT_PERFORMED"
+  },
+  "modules": {
+    "same_source": true,
+    "kernel": "6.1.111-rt42",
+    "cma_mem.ko": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b",
+    "hard_npu.ko": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d",
+    "soft_npu.ko": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380",
+    "vermagic": "6.1.111-rt42 SMP preempt mod_unload aarch64"
+  },
+  "runtime": {
+    "demo_present": true,
+    "model_present": true,
+    "armnn_libraries_present": true,
+    "opencv_ffmpeg_runtime_present": true,
+    "elf_count": 353,
+    "aarch64_elf_count": 353,
+    "x86_64_elf_count": 0,
+    "dt_needed_count": 78,
+    "missing_dt_needed": [],
+    "target_execution": false
+  },
+  "overlay": {
+    "eth0_cidr": "192.168.50.2/24",
+    "authorized_keys_installed_before_sshd": true,
+    "host_key_persistence": "/mnt/mmcblk0p1/edgeai-runtime/ssh",
+    "npu_module_order": ["cma_mem", "hard_npu", "soft_npu"],
+    "healthcheck": "/usr/bin/edgeai-npu-healthcheck",
+    "camera_autostart": false,
+    "manual_camera_wrapper": "/usr/bin/edgeai-camera-demo-manual",
+    "host_key_repair": {
+      "expected_ed25519_fingerprint": "SHA256:4Dz+I9j354/XGF2bCFAUTz1qrSGqGQhHJoVCEos3hi8",
+      "public_sidecars_generated_from_private": true,
+      "secure_fat_mount_options": "fmask=0177,dmask=0077"
+    }
+  },
+  "minimal_sd_update_files": ["uInitrd.lz4"],
+  "rootfs_archives_not_written": true,
+  "sd_write": "INITIAL_CANDIDATE_COMPLETED",
+  "keyfix_sd_update": "COMPLETED_BOARD_BOOT_FAILED_HEALTHCHECK",
+  "keyfix_sd_update_uinitrd_sha256": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+  "keyfix_boot_status": "FAIL_HEALTHCHECK_FAT_MASK",
+  "keyfix_boot_mount_options_observed": "fmask=0022,dmask=0022",
+  "keyfix_boot_network_sshd_npu_status": "PASS",
+  "keyfix3_candidate": {
+    "uinitrd_lz4_sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+    "sd_update": "COMPLETED_BOARD_VALIDATED",
+    "boot_validation": "PASS_COLD_BOOT_AND_REBOOT"
+  },
+  "keyfix3_sd_update": "COMPLETED_BOARD_VALIDATED",
+  "keyfix3_healthcheck": "PASS",
+  "emmc_modified": false,
+  "board_rebooted": true
+}
