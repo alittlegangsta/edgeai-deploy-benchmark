@@ -1,0 +1,51 @@
+{
+  "schema_version": "task026-candidate-manifest-verification-v1",
+  "task": "026",
+  "captured_at": "2026-08-06T13:38:05+08:00",
+  "status": "PASS_HASHES_RECOMPUTED",
+  "source_manifest": "results/evidence/025/npu_final_candidate_artifact_manifest.json",
+  "candidate_root_declared": "<vm-task025>/results/task025-candidate-sd-fileset-20260806",
+  "candidate_root_override": "/home/uisrc/task025-repro/uisrc-lab-anlogic-pdf-20260805/results/task025-candidate-sd-fileset-20260806",
+  "candidate_root_reachable": true,
+  "manifest_structure": {
+    "status": "PASS",
+    "entry_count": 13,
+    "expected_entries": 13
+  },
+  "sha256sum_manifest": {
+    "path": "/home/uisrc/task025-repro/uisrc-lab-anlogic-pdf-20260805/results/task025-candidate-sd-fileset-20260806/SHA256SUMS",
+    "sha256": "65e4d98db58e20c407b7e65e443bfe1774b692ccb49a0fd1b6f7062ebcf73ddd",
+    "expected_sha256": "65e4d98db58e20c407b7e65e443bfe1774b692ccb49a0fd1b6f7062ebcf73ddd",
+    "match": true,
+    "entries": 13,
+    "sha256sum_c_status": "PASS"
+  },
+  "aggregate_manifest": {
+    "sha256": "65e4d98db58e20c407b7e65e443bfe1774b692ccb49a0fd1b6f7062ebcf73ddd",
+    "expected_sha256": "65e4d98db58e20c407b7e65e443bfe1774b692ccb49a0fd1b6f7062ebcf73ddd",
+    "match": true
+  },
+  "files": {
+    "BOOT.bin": {"path": "boot/BOOT.bin", "size_bytes": 5179264, "sha256": "e25f98e00a68ea76f9e96736ba88fb7c169e2f8b769d60af55e3e69639880016", "expected_sha256": "e25f98e00a68ea76f9e96736ba88fb7c169e2f8b769d60af55e3e69639880016", "match": true, "file_type": "data"},
+    "boot.scr": {"path": "boot/boot.scr", "size_bytes": 466, "sha256": "99d1c6d7e5bead893c495f9b5c8c796e1186108d4decd47915c06680f6f4b012", "expected_sha256": "99d1c6d7e5bead893c495f9b5c8c796e1186108d4decd47915c06680f6f4b012", "match": true, "file_type": "U-Boot legacy ARM64 script"},
+    "soc_fsbl.elf": {"path": "boot/soc_fsbl.elf", "size_bytes": 1767704, "sha256": "be0a66928221a70c12187e229a9867f2c9f7e7b10b64909f3dc7b289b5a76f49", "expected_sha256": "be0a66928221a70c12187e229a9867f2c9f7e7b10b64909f3dc7b289b5a76f49", "match": true, "file_type": "AArch64 ELF"},
+    "system.bit": {"path": "boot/system.bit", "size_bytes": 4052202, "sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5", "expected_sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5", "match": true, "file_type": "FPGA bitstream data"},
+    "system.dtb": {"path": "boot/system.dtb", "size_bytes": 16899, "sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979", "expected_sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979", "match": true, "file_type": "Device Tree Blob v17"},
+    "u-boot.bin": {"path": "boot/u-boot.bin", "size_bytes": 926280, "sha256": "2f8e24a96e21395e042feed4777b14409e901d2764c9819a83366fc1bf2efe47", "expected_sha256": "2f8e24a96e21395e042feed4777b14409e901d2764c9819a83366fc1bf2efe47", "match": true, "file_type": "binary"},
+    "uImage.lz4": {"path": "boot/uImage.lz4", "size_bytes": 8148020, "sha256": "b6ff1dd519ce342d4739a18fa4e03b3f108c0c4c30e432f94afac9704fb8b4b0", "expected_sha256": "b6ff1dd519ce342d4739a18fa4e03b3f108c0c4c30e432f94afac9704fb8b4b0", "match": true, "file_type": "U-Boot legacy ARM64 kernel image"},
+    "cma_mem.ko": {"path": "modules/cma_mem.ko", "size_bytes": 419560, "sha256": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b", "expected_sha256": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b", "match": true, "file_type": "AArch64 relocatable kernel module"},
+    "hard_npu.ko": {"path": "modules/hard_npu.ko", "size_bytes": 419000, "sha256": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d", "expected_sha256": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d", "match": true, "file_type": "AArch64 relocatable kernel module"},
+    "soft_npu.ko": {"path": "modules/soft_npu.ko", "size_bytes": 414296, "sha256": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380", "expected_sha256": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380", "match": true, "file_type": "AArch64 relocatable kernel module"},
+    "rootfs.cpio.lz4": {"path": "rootfs/rootfs.cpio.lz4", "size_bytes": 111711558, "sha256": "1fdfd264d49e4d7cdc95d68952e9b332525efb493917fdbdbbc26e0de914848a", "expected_sha256": "1fdfd264d49e4d7cdc95d68952e9b332525efb493917fdbdbbc26e0de914848a", "match": true, "file_type": "LZ4 compressed rootfs"},
+    "rootfs.tar.gz": {"path": "rootfs/rootfs.tar.gz", "size_bytes": 94414131, "sha256": "ae64bbd125a47f54df445a084485466336f1df60f5137ad61b44b8eb22c64f39", "expected_sha256": "ae64bbd125a47f54df445a084485466336f1df60f5137ad61b44b8eb22c64f39", "match": true, "file_type": "gzip rootfs archive"},
+    "uInitrd.lz4": {"path": "rootfs/uInitrd.lz4", "size_bytes": 111711622, "sha256": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268", "expected_sha256": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268", "match": true, "file_type": "U-Boot legacy ARM64 initrd image"}
+  },
+  "missing_or_unavailable": [],
+  "recompute_performed": true,
+  "source_commands": [
+    "sha256sum <candidate-root>/**/*",
+    "(cd <candidate-root> && sha256sum -c SHA256SUMS)",
+    "sha256sum SHA256SUMS"
+  ],
+  "safety": {"write_attempted": false, "media_modified": false}
+}

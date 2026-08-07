@@ -1,0 +1,113 @@
+{
+  "schema_version": "task026-sd-write-plan-v1",
+  "task": "026",
+  "captured_at": "2026-08-06T13:46:21+08:00",
+  "status": "SD_WRITE_COMPLETED_FIRST_BOOT_PENDING",
+  "deployment_approval": "APPROVED_BY_USER",
+  "sd_write": "COMPLETED",
+  "target_device": {
+    "path": "/dev/sdb",
+    "stable_id": "/dev/disk/by-id/usb-Mass_Storage_Device_121220160204-0:0",
+    "size_bytes": 31299993600,
+    "vendor": "Mass",
+    "model": "Storage Device",
+    "serial": "121220160204",
+    "transport": "usb",
+    "removable": 1,
+    "read_only": 0,
+    "existing_partition_table": "dos",
+    "existing_partition": "/dev/sdb1",
+    "existing_filesystem": "vfat",
+    "existing_label": "EDGEAI_DATA",
+    "existing_mountpoint": "/media/uisrc/EDGEAI_DATA"
+  },
+  "required_identity_match": {
+    "path": "/dev/sdb",
+    "stable_id": "/dev/disk/by-id/usb-Mass_Storage_Device_121220160204-0:0",
+    "size_bytes": 31299993600,
+    "vendor": "Mass",
+    "model": "Storage Device",
+    "serial": "121220160204",
+    "transport": "usb",
+    "removable_value": 1,
+    "read_only_value": 0,
+    "one_time_confirmation": true
+  },
+  "destructive_warning": "Writing this candidate will erase the existing DOS partition table and all data on /dev/sdb1, including the EDGEAI_DATA volume.",
+  "expected_layout": {
+    "source": "make_parted.sh static branch with boards/DR1M/configs/.cfg MLK_BOOTSCR_NAME=parameter-tf-fat.txt",
+    "partition_table": "msdos",
+    "partitions": [
+      {"number": 1, "path": "/dev/sdb1", "range": "0%-100%", "filesystem": "FAT32", "label": "BOOT", "boot_flag": true}
+    ],
+    "not_created": "No ext4 partition is created by this parameter-tf-fat branch. deploy_image.sh partition-2 logic is therefore not applicable unless a different approved boot configuration is selected."
+  },
+  "candidate_file_destinations": {
+    "boot_partition_root": [
+      "BOOT.bin",
+      "boot.scr",
+      "soc_fsbl.elf",
+      "system.bit",
+      "system.dtb",
+      "u-boot.bin",
+      "uImage.lz4",
+      "uInitrd.lz4 (source candidate path rootfs/uInitrd.lz4)"
+    ],
+    "rootfs_tar_gz": "Not copied by deploy_image.sh for the one-partition parameter-tf-fat branch; retained as candidate/rootfs provenance and alternate ext4 deployment input.",
+    "kernel_modules": "Embedded in the candidate rootfs/uInitrd; not copied as separate files by deploy_image.sh.",
+    "source_mapping": "The reviewed parameter-tf-fat boot script loads uInitrd.lz4 from the FAT root. The candidate staging tree stores the same frozen uInitrd under rootfs/, so the controlled deployment wrapper maps rootfs/uInitrd.lz4 to the FAT-root destination uInitrd.lz4 without changing bytes."
+  },
+  "candidate_assembly_normalization": {
+    "required": true,
+    "reason": "candidate staging path differs from the parameter-tf-fat boot-root contract",
+    "source": "rootfs/uInitrd.lz4",
+    "destination": "boot-partition-root/uInitrd.lz4",
+    "sha256": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268",
+    "candidate_manifest_unchanged": true,
+    "model_or_kernel_bytes_changed": false
+  },
+  "write_sequence_after_separate_approval": [
+    "Re-enumerate /dev/sdb and match path, stable_id, size_bytes, model, serial, transport, removable=1 and read_only=0.",
+    "Obtain a second explicit confirmation that all EDGEAI_DATA contents will be destroyed.",
+    "Only then run the reviewed make_parted.sh path to create the msdos/FAT32 BOOT partition.",
+    "Re-read the partition table and verify exactly one bootable FAT32 partition.",
+    "Run the controlled reviewed deployment wrapper to copy the boot directory, map rootfs/uInitrd.lz4 to boot-root/uInitrd.lz4, and sync.",
+    "Re-read the mounted partition and compare every boot file SHA256 to the frozen candidate manifest.",
+    "Keep the candidate source SHA256SUMS and write log; do not proceed to board boot if any check differs."
+  ],
+  "post_write_verification": [
+    "lsblk -b -J -O /dev/sdb",
+    "blkid /dev/sdb1",
+    "verify msdos table, one FAT32 BOOT partition and boot flag",
+    "read back each boot destination and compare SHA256",
+    "verify candidate source SHA256SUMS remains unchanged",
+    "verify no unexpected partition or filesystem"
+  ],
+  "stop_conditions": [
+    "any path/stable-id/size/model/serial/transport/removable/read-only mismatch",
+    "serial or stable identity becomes unavailable",
+    "candidate hash mismatch or missing source file",
+    "existing partition remains mounted when a write phase begins",
+    "script requests an unreviewed command or unexpected partition",
+    "parted/mkfs/dd/mount/rsync/tar/sync error",
+    "device disconnect, I/O error or any unexpected filesystem"
+  ],
+  "recovery": [
+    "stop immediately and do not retry on another device",
+    "retain command output and hashes",
+    "do not remove the SD until I/O is quiescent",
+    "restore the original eMMC boot selection only after separate physical approval",
+    "use serial recovery and a known-good eMMC path if SD boot fails"
+  ],
+  "serial_first_boot": [
+    "connect the documented serial console",
+    "select SD boot without modifying eMMC",
+    "verify kernel, DTB, FPGA, CMA and partition identities",
+    "verify driver probe and expected device nodes",
+    "stop on any mismatch before loading or running NPU software"
+  ],
+  "exact_approval_format": "APPROVE TASK 026 SD WRITE: device=/dev/sdb; stable_id=/dev/disk/by-id/usb-Mass_Storage_Device_121220160204-0:0; size=31299993600; vendor=Mass; model=Storage_Device; serial=121220160204; transport=usb; removable=1; candidate_manifest_sha256=65e4d98db58e20c407b7e65e443bfe1774b692ccb49a0fd1b6f7062ebcf73ddd; confirm=ERASE-AND-WRITE-ONCE",
+  "awaiting_explicit_sd_write_approval": false,
+  "execution_evidence": "results/evidence/026/sd_write_execution.json",
+  "first_boot_approval": "PENDING"
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": "task026-sd-write-execution-v1",
+  "task": "026",
+  "evidence_captured_at": "2026-08-06T13:46:21+08:00",
+  "approval": {
+    "source": "user_message",
+    "exact_confirmation": "APPROVE TASK 026 SD WRITE: device=/dev/sdb; stable_id=/dev/disk/by-id/usb-Mass_Storage_Device_121220160204-0:0; size=31299993600; vendor=Mass; model=Storage_Device; serial=121220160204; transport=usb; removable=1; candidate_manifest_sha256=65e4d98db58e20c407b7e65e443bfe1774b692ccb49a0fd1b6f7062ebcf73ddd; confirm=ERASE-AND-WRITE-ONCE",
+    "scope": "approved SD media erase, partition, format, copy and readback only; no board boot approval"
+  },
+  "status": "SD_WRITE_COMPLETED_FIRST_BOOT_PENDING",
+  "device": {
+    "path": "/dev/sdb",
+    "stable_id": "/dev/disk/by-id/usb-Mass_Storage_Device_121220160204-0:0",
+    "size_bytes": 31299993600,
+    "vendor": "Mass",
+    "model": "Storage Device",
+    "serial": "121220160204",
+    "transport": "usb",
+    "removable": 1,
+    "read_only": 0
+  },
+  "pre_write_state": {
+    "partition": "/dev/sdb1",
+    "filesystem": "vfat",
+    "label": "EDGEAI_DATA",
+    "mountpoint": "/media/uisrc/EDGEAI_DATA",
+    "data_loss": "all existing EDGEAI_DATA content was approved for erasure"
+  },
+  "post_write_state": {
+    "partition_table": "dos",
+    "partition": "/dev/sdb1",
+    "partition_size_bytes": 31298945024,
+    "filesystem": "vfat",
+    "label": "BOOT",
+    "uuid": "F638-E8BB",
+    "partuuid": "d751935a-01",
+    "part_type": "0xc",
+    "boot_flag": "0x80",
+    "mounted_after_verification": false
+  },
+  "written_files": {
+    "BOOT.bin": "e25f98e00a68ea76f9e96736ba88fb7c169e2f8b769d60af55e3e69639880016",
+    "boot.scr": "99d1c6d7e5bead893c495f9b5c8c796e1186108d4decd47915c06680f6f4b012",
+    "soc_fsbl.elf": "be0a66928221a70c12187e229a9867f2c9f7e7b10b64909f3dc7b289b5a76f49",
+    "system.bit": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+    "system.dtb": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+    "u-boot.bin": "2f8e24a96e21395e042feed4777b14409e901d2764c9819a83366fc1bf2efe47",
+    "uImage.lz4": "b6ff1dd519ce342d4739a18fa4e03b3f108c0c4c30e432f94afac9704fb8b4b0",
+    "uInitrd.lz4": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268"
+  },
+  "candidate_assembly_normalization": {
+    "source": "rootfs/uInitrd.lz4",
+    "destination": "FAT-root/uInitrd.lz4",
+    "sha256_unchanged": true
+  },
+  "verification": {
+    "read_only_mount": "PASS",
+    "all_8_boot_root_hashes": "PASS",
+    "lsblk_and_udevadm_partition_metadata": "PASS",
+    "blkid_nonprivileged_probe": "UNAVAILABLE_EMPTY_OUTPUT",
+    "partition_remained_unmounted": true,
+    "wrapper_completion_marker": "NOT_REACHED_AFTER_WRITE; final nonprivileged blkid assertion did not yield a value",
+    "destructive_write_commands": "executed only after exact user approval",
+    "board_accessed": false,
+    "npu_executed": false
+  },
+  "next_gate": "first-boot serial/board validation requires a separate explicit approval"
+}
