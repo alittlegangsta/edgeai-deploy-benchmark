@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "B",
+  "path": "APUG1205_native_yolov5s_positive_control",
+  "status": "NOT_EXECUTED",
+  "reason": "The documented compiler, runtime headers/library, conversion config and positive-control model are not present in the audited local or VM scopes.",
+  "required_sequence": [
+    "yolov5s_320_sigmoid.onnx",
+    "convert_tool -> yolov5s_320_sigmoid.tmfile",
+    "al_ai_flow with net_config_yolov5s.json",
+    "rt.bin + weight.bin",
+    "npu_c_api.h/libnpu_runtime.a native runner",
+    "board run with the native runtime"
+  ],
+  "required_inputs": {
+    "yolov5s_320_sigmoid.onnx": false,
+    "net_config_yolov5s.json": false,
+    "convert_tool": false,
+    "al_ai_flow": false,
+    "tmfile": false,
+    "rt.bin": false,
+    "weight.bin": false,
+    "npu_c_api.h": false,
+    "libnpu_runtime.a": false
+  },
+  "outputs": {
+    "tmfile": "not_generated",
+    "rt_bin": "not_generated",
+    "weight_bin": "not_generated",
+    "native_board_result": "not_run"
+  },
+  "benchmark": "NOT_RUN",
+  "safety": {
+    "alternate_model_substituted": false,
+    "cpu_fallback_used": false,
+    "vendor_binary_executed": false
+  },
+  "next_minimum_action": "Obtain the versioned APUG1205 nn_compiler image or release archive, native runtime headers/library, net_config_yolov5s.json and the documented positive-control model before attempting conversion."
+}

@@ -166,6 +166,99 @@ classified `RECOVERABLE_STRUCTURE_VERSION_MISMATCH`; that package-only
 increment did not itself provide the rootfs inputs needed by the later
 PDF-guided candidate build.
 
+Task 028 keeps the ArmNN/Alnpu result as Track A: the AArch64 runner forces
+`Alnpu`/`ALHardNPU` and rejects CPU fallback, but the frozen FP32 graph is
+rejected at `/model.11/Floor`. The completed C3c binary audit now scopes Track
+A to `CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE` for the
+matched backend. Track B retains the independent APUG1205
+native result `BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE`: its documented
+`convert_tool` -> `.tmfile` -> `al_ai_flow` -> `rt.bin`/`weight.bin` and
+`libnpu_runtime.a` assets remain unavailable. Track C is now the active
+official `AL_onnx_pass` path. Its host dependencies are closed in a separate
+vendor-requirements venv and the unmodified frozen-model entry emits the
+documented Detect-cropped FP32 and uint8 QDQ graphs. The uint8 host golden gate
+fails (minimum IoU `0.8421554845490358`, maximum confidence delta
+`0.09312496031303408`), so the host accuracy status is `NOT_ACCEPTED`. No quantized Alnpu correctness or FPS
+benchmark is published. A deterministic 500-image host calibration smoke also
+fails the golden gate (minimum IoU `0.8891731303877853`, confidence delta
+`0.11366653714614872`). The 05-5 platform bitstream
+does statically carry `NPU_SOFT=1` and `SOFT_YOLO=1`, which is hardware-side
+evidence only. Track C is split into C1 official conversion `PASS`, C2
+quantized host accuracy `NOT_ACCEPTED`, C3 board compatibility
+`CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE`, and C4 benchmark `NOT_RUN`. The
+best opset14 uint8 candidate was run once from board `/tmp` with Alnpu-only and
+CPU fallback disabled; ArmNN rejected QAsymmU8 Conv2d, Activation and
+ElementwiseBinary during Optimize, before LoadNetwork. The corresponding
+opset14 INT8 candidate rejected QSymmS8 Conv2d, Activation and
+ElementwiseBinary, while the release YOLOv8n control rejected QAsymmU8
+Splitter. See [the ArmNN/Alnpu
+bring-up record](docs/vendor/ANLOGIC_YOLOV5N_ARMNN_ALNPU.md) and
+`results/evidence/028/`.
+
+Track C2 preserves the frozen opset12 FP32 baseline and adds same-weight
+static-640 opset13/14 exports. All four pass ONNX/ORT raw checks and the
+unchanged official conversion produces checker/ORT-valid uint8 and int8 graphs,
+resolving the opset12 int8 `DequantizeLinear(axis=...)` dialect error. An
+independent eight-image held-out teacher-relative gate still fails both
+quantized types (class-multiset agreement is 87.5% for both); no local ground
+truth exists, so true precision/recall/mAP is not claimed. Host preprocessing
+is exactly equal to the project baseline on the frozen 1280x960 input, while
+vendor calibration uses `scaleup=False`; the requested YOLOv5s positive-control
+assets were not found and the release picture demo uses a separate
+`yolov8n.quant.onnx` graph. The existing `43` in the test summary is a test
+count, not a 43-image golden set.
+
+The current C3 focus is runtime/toolchain compatibility. The release
+`armnn_lib.tar.xz` (version marker `ed5ae24`) and six compared ArmNN/Parser/
+protobuf/timeline libraries are byte-identical to the board's loaded runtime.
+An `LD_LIBRARY_PATH`/`LD_DEBUG=libs` temporary `/tmp` run proved those
+candidate files were loaded: the face positive control completed with
+Alnpu-only, while the matched-runtime vendor `yolov8n.quant.onnx` control still
+failed Alnpu `Optimize` on `QAsymmU8 Splitter`. Because the available NEW
+runtime is the same identity as the OLD runtime, runtime-version skew is not
+proven; this does not close the YOLOv5n compatibility gate. See
+`results/evidence/028/trackc3_runtime_compatibility_matrix.json`. C4 remains
+`NOT_RUN` and no benchmark or CPU fallback is claimed.
+The audited release HEAD is untagged and three commits after its nearest
+`SDK_2026.01` ancestor; the Task 026 tutorial `system.bit`/`system.dtb` and
+static `NPU_SOFT=1`, `SOFT_YOLO=1` context are recorded separately, so neither
+an SDK tag nor a bitstream mismatch is being inferred from the model failure.
+The focused D20.1 comparison shows that its AD101V20/DR1M90GEG484 HPF uses a
+different package, SoftNPU address/IRQ, VDMA topology and `SOFT_RESIZE` setting
+than the 05-5 DR1M90GEG400 platform; it is not a valid substitute. Evidence:
+`results/evidence/028/trackc3_hpf_d20_comparison.json`.
+
+The C3 support-boundary audit statically inspected the matched AArch64
+`libarmnn.so.32.1`: Alnpu-specific overrides cover a finite whitelist, while
+Conv2d, Activation, Splitter, Addition and Multiplication vtable slots resolve
+to generic `LayerSupportBase` rejection methods. This matches the retained real
+graph results: vendor YOLOv8n fails first on `QAsymmU8 Splitter`, and YOLOv5n
+UINT8/INT8 fail on quantized Conv2d/Activation/ElementwiseBinary. The face
+positive control has no Split and remains a separate Alnpu/ALHardNPU positive.
+The board wrapper was unavailable in this audit turn (`UtilBindVsockAnyPort:
+307: socket failed 1`); no new board workload was claimed. See
+`results/evidence/028/trackc3_support_boundary_audit.json`.
+
+The completed C3c audit records the full ten-method AlnpuLayerSupport override
+set and scopes the result to this exact compiled backend:
+`CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE`. The face PASS is
+explained by the measured three `Alnpu|ALHardNPU` fused/custom workload
+assignments, not by generic Conv2d support. All available ArmNN library copies
+were byte-identical; no alternate backend implementing the generic YOLO slots
+was found. The wrapper failure is environment-only. See
+`results/evidence/028/trackc3_capability_face_path_audit.json`.
+
+Task 028 is now `Completed` with primary verdict
+`BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`. The blocker
+`CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE` is scoped to the
+audited AArch64 ArmNN binary only. Track A remains raw-ONNX
+`BLOCKED_UNSUPPORTED_ALNPU_GRAPH`; Track B remains
+`BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE`; C1 is `PASS`; C2 is
+`NOT_ACCEPTED_PAUSED`; C3 stops at Alnpu LayerSupport before LoadNetwork; and
+C4 is `NOT_RUN`. Reopening requires a supported generic-YOLO Alnpu backend,
+APUG1205 compiler/native runtime, or an official DR1M90 GEG400 YOLO deployment
+chain. No CPU fallback or NPU benchmark is claimed.
+
 ## PC architecture and model lineage
 
 ```text

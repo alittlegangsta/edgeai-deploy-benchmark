@@ -15,7 +15,32 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(EDGEAI_ENABLE_ORT "Build targets that require the ONNX Runtime C/C++ SDK" ON)
 option(EDGEAI_ENABLE_NCNN "Build targets that require the pinned ncnn SDK" ON)
 option(EDGEAI_ENABLE_VIDEO "Build targets and tests that require OpenCV videoio" ON)
+option(EDGEAI_ENABLE_ARMNN "Build targets that require the Arm NN/Alnpu SDK" OFF)
 set(EDGEAI_OPENCV_ROOT "" CACHE PATH "Optional explicit target OpenCV install root")
+
+if(EDGEAI_ENABLE_ARMNN)
+    set(ARMNN_ROOT "" CACHE PATH "Absolute root of the approved Arm NN/Alnpu SDK")
+    if(NOT IS_ABSOLUTE "${ARMNN_ROOT}")
+        message(FATAL_ERROR "ARMNN_ROOT must be an explicit absolute SDK path")
+    endif()
+    get_filename_component(ARMNN_ROOT "${ARMNN_ROOT}" REALPATH)
+    foreach(armnn_required
+            "${ARMNN_ROOT}/include/armnn/ArmNN.hpp"
+            "${ARMNN_ROOT}/include/armnnOnnxParser/IOnnxParser.hpp"
+            "${ARMNN_ROOT}/include/armnnALUtils/cma_mem_init.hpp"
+            "${ARMNN_ROOT}/lib/libarmnn.so"
+            "${ARMNN_ROOT}/lib/libarmnnOnnxParser.so"
+            "${ARMNN_ROOT}/lib/libprotobuf.so")
+        if(NOT EXISTS "${armnn_required}")
+            message(FATAL_ERROR "Required Arm NN SDK artifact is missing: ${armnn_required}")
+        endif()
+    endforeach()
+    set(EDGEAI_ARMNN_BUILD_ID "" CACHE STRING
+        "Provenance identifier for the approved Arm NN/Alnpu SDK")
+    set(EDGEAI_ARMNN_LIBRARY_SHA256 "" CACHE STRING
+        "SHA256 of the approved libarmnn.so used for a DR1 build")
+    message(STATUS "Arm NN root: ${ARMNN_ROOT}")
+endif()
 
 set(EDGEAI_OPENCV_COMPONENTS core imgproc imgcodecs)
 if(EDGEAI_ENABLE_VIDEO)
@@ -104,6 +129,52 @@ function(edgeai_enable_warnings target_name)
         )
     endif()
 endfunction()
+
+if(EDGEAI_ENABLE_ARMNN)
+add_library(edgeai_armnn_backend STATIC
+    src/backends/armnn_detector.cpp
+)
+target_compile_features(edgeai_armnn_backend PUBLIC cxx_std_17)
+set_target_properties(edgeai_armnn_backend PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_include_directories(edgeai_armnn_backend PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_include_directories(edgeai_armnn_backend SYSTEM PRIVATE
+    ${ARMNN_ROOT}/include
+)
+target_compile_definitions(edgeai_armnn_backend PUBLIC
+    EDGEAI_ARMNN_BUILD_ID="${EDGEAI_ARMNN_BUILD_ID}"
+    EDGEAI_ARMNN_LIBRARY_SHA256="${EDGEAI_ARMNN_LIBRARY_SHA256}"
+)
+target_link_libraries(edgeai_armnn_backend PUBLIC
+    edgeai_common
+    ${ARMNN_ROOT}/lib/libarmnn.so
+    ${ARMNN_ROOT}/lib/libarmnnOnnxParser.so
+    ${ARMNN_ROOT}/lib/libprotobuf.so
+    dl
+    pthread
+)
+edgeai_enable_warnings(edgeai_armnn_backend)
+
+add_executable(edgeai_armnn_image
+    apps/armnn_image.cpp
+)
+target_compile_features(edgeai_armnn_image PRIVATE cxx_std_17)
+set_target_properties(edgeai_armnn_image PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    # Keep the artifact relocatable.  The deployment wrapper supplies an
+    # explicit LD_LIBRARY_PATH containing the approved Arm NN/OpenCV trees.
+    SKIP_BUILD_RPATH TRUE
+)
+target_link_libraries(edgeai_armnn_image PRIVATE edgeai_armnn_backend)
+edgeai_enable_warnings(edgeai_armnn_image)
+endif()
 
 set(EDGEAI_COMMON_SOURCES
     src/common/benchmark.cpp

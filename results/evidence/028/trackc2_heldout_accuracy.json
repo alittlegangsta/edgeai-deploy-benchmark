@@ -1,0 +1,578 @@
+{
+  "calibration": {
+    "heldout_overlap": false,
+    "manifest": "/tmp/task028-trackc/calibration-500-generation.json",
+    "source_count": 27
+  },
+  "candidates": {
+    "int8": {
+      "aggregate": {
+        "all_matched_max_confidence_delta50": 0.21382483839988708,
+        "all_matched_mean_iou50": 0.8587191198801907,
+        "all_matched_min_iou50": 0.6684800834668555,
+        "candidate_detections": 6,
+        "exact_class_agreement_images": 7,
+        "exact_class_agreement_rate": 0.875,
+        "exact_count_agreement_images": 8,
+        "exact_count_agreement_rate": 1.0,
+        "micro_matches_iou50": 5,
+        "micro_matches_iou75": 4,
+        "micro_precision_iou50": 0.8333333333333334,
+        "micro_precision_iou75": 0.6666666666666666,
+        "micro_recall_iou50": 0.8333333333333334,
+        "micro_recall_iou75": 0.6666666666666666,
+        "proxy_iou_thresholds": [
+          0.5,
+          0.55,
+          0.6,
+          0.65,
+          0.7,
+          0.75,
+          0.8,
+          0.8500000000000001,
+          0.9,
+          0.95
+        ],
+        "proxy_precision_by_iou": [
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.6666666666666666,
+          0.6666666666666666,
+          0.6666666666666666,
+          0.6666666666666666,
+          0.3333333333333333,
+          0.0
+        ],
+        "proxy_recall_by_iou": [
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.6666666666666666,
+          0.6666666666666666,
+          0.6666666666666666,
+          0.6666666666666666,
+          0.3333333333333333,
+          0.0
+        ],
+        "reference_detections": 6,
+        "teacher_relative_proxy_mAP50": 0.6944444444444445,
+        "teacher_relative_proxy_mAP50_95": 0.4666666666666666
+      },
+      "heldout_count": 8,
+      "model_sha256": "8ff448f1fd250a198b0a4a44a1eca9d09c50a68a4da459788960282ba98c3ad9",
+      "per_image": [
+        {
+          "candidate_classes": [
+            0,
+            0,
+            27
+          ],
+          "candidate_count": 3,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 168949,
+            "label": "/home/dministrator/src/yolov5-v7.0/data/images/zidane.jpg",
+            "sha256": "356dad2107bb0254e4e4a81bc1d9c7140043e88569d546e5b404b19bffa77d0a"
+          },
+          "matched_confidence_delta50": [
+            0.04055052995681763,
+            0.21382483839988708,
+            0.08874151110649109
+          ],
+          "matched_iou50": [
+            0.9175628788205992,
+            0.8888532518917572,
+            0.6684800834668555
+          ],
+          "matches_iou50": 3,
+          "matches_iou75": 2,
+          "max_confidence_delta50": 0.21382483839988708,
+          "min_iou50": 0.6684800834668555,
+          "reference_classes": [
+            0,
+            0,
+            27
+          ],
+          "reference_count": 3
+        },
+        {
+          "candidate_classes": [
+            0
+          ],
+          "candidate_count": 1,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 31682,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/yolo_pose/input.jpg",
+            "sha256": "0c6f0aaeb2369835abe9eb82e3f1f9177fcc509dfb8ac00130e95911652297c2"
+          },
+          "matched_confidence_delta50": [
+            0.03980660438537598
+          ],
+          "matched_iou50": [
+            0.898945308771595
+          ],
+          "matches_iou50": 1,
+          "matches_iou75": 1,
+          "max_confidence_delta50": 0.03980660438537598,
+          "min_iou50": 0.898945308771595,
+          "reference_classes": [
+            0
+          ],
+          "reference_count": 1
+        },
+        {
+          "candidate_classes": [
+            0
+          ],
+          "candidate_count": 1,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 130544,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/gesture/input.jpg",
+            "sha256": "919bece586e76fee225cbc18693f7ad4859cb5789b4482c152afd6321534eef4"
+          },
+          "matched_confidence_delta50": [
+            0.11017686128616333
+          ],
+          "matched_iou50": [
+            0.9197540764501471
+          ],
+          "matches_iou50": 1,
+          "matches_iou75": 1,
+          "max_confidence_delta50": 0.11017686128616333,
+          "min_iou50": 0.9197540764501471,
+          "reference_classes": [
+            0
+          ],
+          "reference_count": 1
+        },
+        {
+          "candidate_classes": [],
+          "candidate_count": 0,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 217625,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/leaf/input.jpg",
+            "sha256": "f2db8f7d768d404d8d7c6a03e5aa745679263faa0c9f840e5f1870c6013a31c0"
+          },
+          "matched_confidence_delta50": [],
+          "matched_iou50": [],
+          "matches_iou50": 0,
+          "matches_iou75": 0,
+          "max_confidence_delta50": null,
+          "min_iou50": null,
+          "reference_classes": [],
+          "reference_count": 0
+        },
+        {
+          "candidate_classes": [],
+          "candidate_count": 0,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 15842,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/wind_turbine/input.jpg",
+            "sha256": "6b353c6b97af9d29cef89637030faf742ccbc051e7b57bc45faaf4aff57cfbcc"
+          },
+          "matched_confidence_delta50": [],
+          "matched_iou50": [],
+          "matches_iou50": 0,
+          "matches_iou75": 0,
+          "max_confidence_delta50": null,
+          "min_iou50": null,
+          "reference_classes": [],
+          "reference_count": 0
+        },
+        {
+          "candidate_classes": [],
+          "candidate_count": 0,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 4296,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/crnn/input.jpg",
+            "sha256": "96d541594a5df542becadbb6220dadd046ff237165a1986a93f7c1b1320693c7"
+          },
+          "matched_confidence_delta50": [],
+          "matched_iou50": [],
+          "matches_iou50": 0,
+          "matches_iou75": 0,
+          "max_confidence_delta50": null,
+          "min_iou50": null,
+          "reference_classes": [],
+          "reference_count": 0
+        },
+        {
+          "candidate_classes": [
+            61
+          ],
+          "candidate_count": 1,
+          "class_multiset_agreement": false,
+          "image": {
+            "bytes": 6226,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/distance_estimate/input.jpg",
+            "sha256": "c529d98b9f9366de7c4e9fd358fce31e0f3d6d6d4c5d36e2623ab539cbedeaca"
+          },
+          "matched_confidence_delta50": [],
+          "matched_iou50": [],
+          "matches_iou50": 0,
+          "matches_iou75": 0,
+          "max_confidence_delta50": null,
+          "min_iou50": null,
+          "reference_classes": [
+            41
+          ],
+          "reference_count": 1
+        },
+        {
+          "candidate_classes": [],
+          "candidate_count": 0,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 8205,
+            "label": "results/images/anlogic_opencv_smoke.png",
+            "sha256": "bb460edbcf75e07f96d1a09bad2d6d44d5be6d2e2f9cf2098d6f3e3e6a208898"
+          },
+          "matched_confidence_delta50": [],
+          "matched_iou50": [],
+          "matches_iou50": 0,
+          "matches_iou75": 0,
+          "max_confidence_delta50": null,
+          "min_iou50": null,
+          "reference_classes": [],
+          "reference_count": 0
+        }
+      ],
+      "task_accuracy_gate": {
+        "ground_truth_available": false,
+        "pass": false,
+        "reason": "exact count and exact class agreement, all IoU >=0.99, max confidence delta <=0.01 and teacher-relative proxies >=0.99 are required",
+        "reference": "FP32 teacher; teacher-relative proxies are not dataset mAP",
+        "thresholds": {
+          "exact_class_agreement_rate": 1.0,
+          "exact_count_agreement_rate": 1.0,
+          "maximum_confidence_delta50": 0.01,
+          "minimum_matched_iou50": 0.99,
+          "proxy_mAP50_95": 0.99,
+          "proxy_precision_iou50": 0.99,
+          "proxy_recall_iou50": 0.99
+        },
+        "true_precision_recall_map": "NOT_COMPUTABLE"
+      }
+    },
+    "uint8": {
+      "aggregate": {
+        "all_matched_max_confidence_delta50": 0.1588631272315979,
+        "all_matched_mean_iou50": 0.9451335766238795,
+        "all_matched_min_iou50": 0.9194650385230412,
+        "candidate_detections": 5,
+        "exact_class_agreement_images": 7,
+        "exact_class_agreement_rate": 0.875,
+        "exact_count_agreement_images": 7,
+        "exact_count_agreement_rate": 0.875,
+        "micro_matches_iou50": 5,
+        "micro_matches_iou75": 5,
+        "micro_precision_iou50": 1.0,
+        "micro_precision_iou75": 1.0,
+        "micro_recall_iou50": 0.8333333333333334,
+        "micro_recall_iou75": 0.8333333333333334,
+        "proxy_iou_thresholds": [
+          0.5,
+          0.55,
+          0.6,
+          0.65,
+          0.7,
+          0.75,
+          0.8,
+          0.8500000000000001,
+          0.9,
+          0.95
+        ],
+        "proxy_precision_by_iou": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.4
+        ],
+        "proxy_recall_by_iou": [
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.8333333333333334,
+          0.3333333333333333
+        ],
+        "reference_detections": 6,
+        "teacher_relative_proxy_mAP50": 0.8333333333333334,
+        "teacher_relative_proxy_mAP50_95": 0.7633333333333334
+      },
+      "heldout_count": 8,
+      "model_sha256": "3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3",
+      "per_image": [
+        {
+          "candidate_classes": [
+            0,
+            0
+          ],
+          "candidate_count": 2,
+          "class_multiset_agreement": false,
+          "image": {
+            "bytes": 168949,
+            "label": "/home/dministrator/src/yolov5-v7.0/data/images/zidane.jpg",
+            "sha256": "356dad2107bb0254e4e4a81bc1d9c7140043e88569d546e5b404b19bffa77d0a"
+          },
+          "matched_confidence_delta50": [
+            0.008912324905395508,
+            0.09898823499679565
+          ],
+          "matched_iou50": [
+            0.9458343723159616,
+            0.9194650385230412
+          ],
+          "matches_iou50": 2,
+          "matches_iou75": 2,
+          "max_confidence_delta50": 0.09898823499679565,
+          "min_iou50": 0.9194650385230412,
+          "reference_classes": [
+            0,
+            0,
+            27
+          ],
+          "reference_count": 3
+        },
+        {
+          "candidate_classes": [
+            0
+          ],
+          "candidate_count": 1,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 31682,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/yolo_pose/input.jpg",
+            "sha256": "0c6f0aaeb2369835abe9eb82e3f1f9177fcc509dfb8ac00130e95911652297c2"
+          },
+          "matched_confidence_delta50": [
+            0.03268033266067505
+          ],
+          "matched_iou50": [
+            0.9672
+          ],
+          "matches_iou50": 1,
+          "matches_iou75": 1,
+          "max_confidence_delta50": 0.03268033266067505,
+          "min_iou50": 0.9672,
+          "reference_classes": [
+            0
+          ],
+          "reference_count": 1
+        },
+        {
+          "candidate_classes": [
+            0
+          ],
+          "candidate_count": 1,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 130544,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/gesture/input.jpg",
+            "sha256": "919bece586e76fee225cbc18693f7ad4859cb5789b4482c152afd6321534eef4"
+          },
+          "matched_confidence_delta50": [
+            0.061381638050079346
+          ],
+          "matched_iou50": [
+            0.965821901883283
+          ],
+          "matches_iou50": 1,
+          "matches_iou75": 1,
+          "max_confidence_delta50": 0.061381638050079346,
+          "min_iou50": 0.965821901883283,
+          "reference_classes": [
+            0
+          ],
+          "reference_count": 1
+        },
+        {
+          "candidate_classes": [],
+          "candidate_count": 0,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 217625,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/leaf/input.jpg",
+            "sha256": "f2db8f7d768d404d8d7c6a03e5aa745679263faa0c9f840e5f1870c6013a31c0"
+          },
+          "matched_confidence_delta50": [],
+          "matched_iou50": [],
+          "matches_iou50": 0,
+          "matches_iou75": 0,
+          "max_confidence_delta50": null,
+          "min_iou50": null,
+          "reference_classes": [],
+          "reference_count": 0
+        },
+        {
+          "candidate_classes": [],
+          "candidate_count": 0,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 15842,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/wind_turbine/input.jpg",
+            "sha256": "6b353c6b97af9d29cef89637030faf742ccbc051e7b57bc45faaf4aff57cfbcc"
+          },
+          "matched_confidence_delta50": [],
+          "matched_iou50": [],
+          "matches_iou50": 0,
+          "matches_iou75": 0,
+          "max_confidence_delta50": null,
+          "min_iou50": null,
+          "reference_classes": [],
+          "reference_count": 0
+        },
+        {
+          "candidate_classes": [],
+          "candidate_count": 0,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 4296,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/crnn/input.jpg",
+            "sha256": "96d541594a5df542becadbb6220dadd046ff237165a1986a93f7c1b1320693c7"
+          },
+          "matched_confidence_delta50": [],
+          "matched_iou50": [],
+          "matches_iou50": 0,
+          "matches_iou75": 0,
+          "max_confidence_delta50": null,
+          "min_iou50": null,
+          "reference_classes": [],
+          "reference_count": 0
+        },
+        {
+          "candidate_classes": [
+            41
+          ],
+          "candidate_count": 1,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 6226,
+            "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/distance_estimate/input.jpg",
+            "sha256": "c529d98b9f9366de7c4e9fd358fce31e0f3d6d6d4c5d36e2623ab539cbedeaca"
+          },
+          "matched_confidence_delta50": [
+            0.1588631272315979
+          ],
+          "matched_iou50": [
+            0.9273465703971121
+          ],
+          "matches_iou50": 1,
+          "matches_iou75": 1,
+          "max_confidence_delta50": 0.1588631272315979,
+          "min_iou50": 0.9273465703971121,
+          "reference_classes": [
+            41
+          ],
+          "reference_count": 1
+        },
+        {
+          "candidate_classes": [],
+          "candidate_count": 0,
+          "class_multiset_agreement": true,
+          "image": {
+            "bytes": 8205,
+            "label": "results/images/anlogic_opencv_smoke.png",
+            "sha256": "bb460edbcf75e07f96d1a09bad2d6d44d5be6d2e2f9cf2098d6f3e3e6a208898"
+          },
+          "matched_confidence_delta50": [],
+          "matched_iou50": [],
+          "matches_iou50": 0,
+          "matches_iou75": 0,
+          "max_confidence_delta50": null,
+          "min_iou50": null,
+          "reference_classes": [],
+          "reference_count": 0
+        }
+      ],
+      "task_accuracy_gate": {
+        "ground_truth_available": false,
+        "pass": false,
+        "reason": "exact count and exact class agreement, all IoU >=0.99, max confidence delta <=0.01 and teacher-relative proxies >=0.99 are required",
+        "reference": "FP32 teacher; teacher-relative proxies are not dataset mAP",
+        "thresholds": {
+          "exact_class_agreement_rate": 1.0,
+          "exact_count_agreement_rate": 1.0,
+          "maximum_confidence_delta50": 0.01,
+          "minimum_matched_iou50": 0.99,
+          "proxy_mAP50_95": 0.99,
+          "proxy_precision_iou50": 0.99,
+          "proxy_recall_iou50": 0.99
+        },
+        "true_precision_recall_map": "NOT_COMPUTABLE"
+      }
+    }
+  },
+  "heldout": {
+    "ground_truth_available": false,
+    "images": [
+      {
+        "bytes": 168949,
+        "label": "/home/dministrator/src/yolov5-v7.0/data/images/zidane.jpg",
+        "sha256": "356dad2107bb0254e4e4a81bc1d9c7140043e88569d546e5b404b19bffa77d0a"
+      },
+      {
+        "bytes": 31682,
+        "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/yolo_pose/input.jpg",
+        "sha256": "0c6f0aaeb2369835abe9eb82e3f1f9177fcc509dfb8ac00130e95911652297c2"
+      },
+      {
+        "bytes": 130544,
+        "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/gesture/input.jpg",
+        "sha256": "919bece586e76fee225cbc18693f7ad4859cb5789b4482c152afd6321534eef4"
+      },
+      {
+        "bytes": 217625,
+        "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/leaf/input.jpg",
+        "sha256": "f2db8f7d768d404d8d7c6a03e5aa745679263faa0c9f840e5f1870c6013a31c0"
+      },
+      {
+        "bytes": 15842,
+        "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/wind_turbine/input.jpg",
+        "sha256": "6b353c6b97af9d29cef89637030faf742ccbc051e7b57bc45faaf4aff57cfbcc"
+      },
+      {
+        "bytes": 4296,
+        "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/crnn/input.jpg",
+        "sha256": "96d541594a5df542becadbb6220dadd046ff237165a1986a93f7c1b1320693c7"
+      },
+      {
+        "bytes": 6226,
+        "label": "vendor/dr1m90_npu/npu_demo/demo_inputs/distance_estimate/input.jpg",
+        "sha256": "c529d98b9f9366de7c4e9fd358fce31e0f3d6d6d4c5d36e2623ab539cbedeaca"
+      },
+      {
+        "bytes": 8205,
+        "label": "results/images/anlogic_opencv_smoke.png",
+        "sha256": "bb460edbcf75e07f96d1a09bad2d6d44d5be6d2e2f9cf2098d6f3e3e6a208898"
+      }
+    ],
+    "selection": "deterministic local images not present in calibration manifest"
+  },
+  "schema_version": 1,
+  "status": "HOST_QUANT_ACCURACY_GATE_BLOCKED",
+  "task": "028",
+  "teacher": {
+    "ground_truth_available": false,
+    "model_sha256": "7046d67bfcdb62ad16066abaa4e26bfebbb286f6180cafe829e5fe77b7e6db1a"
+  },
+  "track": "C2"
+}

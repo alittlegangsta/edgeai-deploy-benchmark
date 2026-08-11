@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "HOST_UINT8_REFERENCE_READY",
+  "candidate": {
+    "model_sha256": "3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3",
+    "model_path_name": "yolov5n_opset14_static640_simplify_on_sim_quant_uint8.onnx",
+    "opset": 14,
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "input_contract": {
+      "shape": [
+        1,
+        3,
+        640,
+        640
+      ],
+      "dtype": "float32",
+      "preprocess": {
+        "original_size": {
+          "width": 1280,
+          "height": 960
+        },
+        "target_size": {
+          "width": 640,
+          "height": 640
+        },
+        "scale": 0.5,
+        "resized_size": {
+          "width": 640,
+          "height": 480
+        },
+        "padding": {
+          "left": 0,
+          "top": 80,
+          "right": 0,
+          "bottom": 80
+        },
+        "pad_color_bgr": [
+          114,
+          114,
+          114
+        ],
+        "interpolation": "cv2.INTER_LINEAR",
+        "transforms": [
+          "BGR_TO_RGB",
+          "HWC_TO_CHW",
+          "uint8_TO_float32",
+          "divide_by_255",
+          "add_batch_dimension"
+        ]
+      }
+    },
+    "graph": {
+      "path_name": "yolov5n_opset14_static640_simplify_on_sim_quant_uint8.onnx",
+      "sha256": "3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3",
+      "size_bytes": 2089159,
+      "ir_version": 7,
+      "opsets": [
+        {
+          "domain": "",
+          "version": 14
+        }
+      ],
+      "node_count": 719,
+      "operator_counts": {
+        "Add": 7,
+        "Concat": 13,
+        "Conv": 60,
+        "DequantizeLinear": 320,
+        "MaxPool": 3,
+        "Mul": 57,
+        "QuantizeLinear": 200,
+        "Resize": 2,
+        "Sigmoid": 57
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "images",
+            "dtype": "FLOAT",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "name": "/Conv_57_output_0",
+            "dtype": "FLOAT",
+            "shape": [
+              1,
+              255,
+              80,
+              80
+            ]
+          },
+          {
+            "name": "/Conv_58_output_0",
+            "dtype": "FLOAT",
+            "shape": [
+              1,
+              255,
+              40,
+              40
+            ]
+          },
+          {
+            "name": "/Conv_59_output_0",
+            "dtype": "FLOAT",
+            "shape": [
+              1,
+              255,
+              20,
+              20
+            ]
+          }
+        ]
+      },
+      "quant_axis_attributes": []
+    }
+  },
+  "raw_heads": [
+    {
+      "index": 0,
+      "shape": [
+        1,
+        255,
+        80,
+        80
+      ],
+      "dtype": "float32",
+      "elements": 1632000,
+      "finite": true,
+      "min": -19.128751754760742,
+      "max": 4.356052398681641,
+      "mean": -5.651916027069092,
+      "sample_sd": 2.233895060094507,
+      "sha256": "94cdae67cbcb85c0791323f0ac13e20f7f54217d4751bd878afe886eac307cb1",
+      "path": "/tmp/task028-c3-host-heads/head_0.f32"
+    },
+    {
+      "index": 1,
+      "shape": [
+        1,
+        255,
+        40,
+        40
+      ],
+      "dtype": "float32",
+      "elements": 408000,
+      "finite": true,
+      "min": -17.50385093688965,
+      "max": 5.142883777618408,
+      "mean": -5.625860214233398,
+      "sample_sd": 2.062385477588109,
+      "sha256": "c7e075b769763120e1f222144bb3a08895833b398c8d6e2024168a6cf09954c1",
+      "path": "/tmp/task028-c3-host-heads/head_1.f32"
+    },
+    {
+      "index": 2,
+      "shape": [
+        1,
+        255,
+        20,
+        20
+      ],
+      "dtype": "float32",
+      "elements": 102000,
+      "finite": true,
+      "min": -14.353643417358398,
+      "max": 4.938888072967529,
+      "mean": -6.032565116882324,
+      "sample_sd": 2.0591997081858553,
+      "sha256": "6ffc38b77ed7062e4b9fe35f1b250264fe6fb718250b2c503a504f271515ede8",
+      "path": "/tmp/task028-c3-host-heads/head_2.f32"
+    }
+  ],
+  "detections": [
+    {
+      "class_id": 66,
+      "confidence": 0.890293538570404,
+      "box_xyxy": [
+        415.0,
+        633.0,
+        785.0,
+        750.0
+      ]
+    },
+    {
+      "class_id": 62,
+      "confidence": 0.7956953644752502,
+      "box_xyxy": [
+        401.0,
+        253.0,
+        889.0,
+        542.0
+      ]
+    },
+    {
+      "class_id": 41,
+      "confidence": 0.7797055244445801,
+      "box_xyxy": [
+        249.0,
+        612.0,
+        349.0,
+        769.9999999999999
+      ]
+    },
+    {
+      "class_id": 64,
+      "confidence": 0.3676389455795288,
+      "box_xyxy": [
+        189.0,
+        673.0,
+        255.0,
+        714.0
+      ]
+    },
+    {
+      "class_id": 64,
+      "confidence": 0.3619665503501892,
+      "box_xyxy": [
+        872.0,
+        715.0,
+        964.0,
+        786.0
+      ]
+    }
+  ],
+  "runtime": {
+    "provider": "CPUExecutionProvider",
+    "onnxruntime": "1.28.0"
+  },
+  "board_comparison": {
+    "status": "NOT_AVAILABLE_BOARD_ALNPU_OPTIMIZATION_REJECTED",
+    "reason": "Board ArmNN Optimize with Alnpu-only rejected QAsymmU8 Conv2d, Activation and ElementwiseBinary before LoadNetwork; no board raw heads or detections were produced."
+  }
+}

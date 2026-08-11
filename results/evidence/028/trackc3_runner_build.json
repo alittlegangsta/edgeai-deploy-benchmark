@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "PASS_ISOLATED_AARCH64_BUILD",
+  "source_copy": "<VM_TASK028_C3_SOURCE_ROOT>",
+  "build_dir": "<VM_TASK028_C3_BUILD_ROOT>",
+  "build_command": "cmake -S <VM_TASK028_C3_SOURCE_ROOT>/cpp -B <VM_TASK028_C3_BUILD_ROOT> -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=<VM_TASK028_SOURCE_ROOT>/configs/toolchains/anlogic-dr1-aarch64.cmake -DCMAKE_MAKE_PROGRAM=/usr/bin/gmake -DEDGEAI_ENABLE_ORT=OFF -DEDGEAI_ENABLE_NCNN=OFF -DEDGEAI_ENABLE_VIDEO=OFF -DEDGEAI_ENABLE_ARMNN=ON ... && cmake --build ... --target edgeai_armnn_image -- -j2",
+  "vm": {
+    "cmake": "3.16.9",
+    "compiler": "Linaro GCC 7.5.0",
+    "armnn_root": "<VM_TASK025_ARMNN_LIB_ROOT>",
+    "opencv_root": "<VM_TASK025_OPENCV_LIB_ROOT>"
+  },
+  "source_hashes": {
+    "cpp/CMakeLists.txt": "a94cd37712f810292340efb51124cb47e8caf5cee5fbd945efd7eef7d0ca8380",
+    "cpp/apps/armnn_image.cpp": "8370937e8e2b1ea98b6afdba28533da3ac7977dffbf29ebd14c0a41e7315b76c",
+    "cpp/include/edgeai/backends/armnn_detector.hpp": "25c41908f06173a83f8bbf2fac1737de59b2f13a5969a43e07492ad2ed864463",
+    "cpp/src/backends/armnn_detector.cpp": "1e30ff930000e01bb7ae1d2ceba3ec1e2a373a7d4af4c2a3cb52dca3b5167a43"
+  },
+  "runner": {
+    "sha256": "c6c55b1df88d89a4507a2526f2198a7cbddb2ccc7bf8e881cf38d40e3f1a2d02",
+    "file": "ELF 64-bit LSB executable, ARM aarch64",
+    "purpose": "multi-output raw-head capture and AL_onnx_pass [1,255,H,W] decode for compatibility smoke"
+  },
+  "changes": [
+    "ArmNN detector now binds all model outputs instead of assuming one output",
+    "runner captures raw output heads to optional temporary binary files",
+    "runner decodes three YOLOv5 heads using the unchanged anchor/stride contract",
+    "no CPU fallback; no benchmark"
+  ],
+  "vendor_binaries_committed": false
+}

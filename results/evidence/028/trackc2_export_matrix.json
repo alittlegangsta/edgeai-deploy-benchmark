@@ -1,0 +1,477 @@
+{
+  "frozen_baseline": {
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "opset": 12
+  },
+  "matrix": [
+    {
+      "export_status": "PASS",
+      "graph": {
+        "io": {
+          "inputs": [
+            {
+              "dtype": "FLOAT",
+              "name": "images",
+              "shape": [
+                1,
+                3,
+                640,
+                640
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "dtype": "FLOAT",
+              "name": "output0",
+              "shape": [
+                1,
+                25200,
+                85
+              ]
+            }
+          ]
+        },
+        "ir_version": 7,
+        "node_count": 355,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 2,
+          "Concat": 27,
+          "Constant": 71,
+          "Conv": 60,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 28
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 13
+          }
+        ],
+        "path_name": "yolov5n_opset13_static640_simplify_off.onnx",
+        "quant_axis_attributes": [],
+        "sha256": "e3fc7bc728840f09b93e46629715f78a3ba8b89e68aa0dabdd474f1bd5f97f12",
+        "size_bytes": 7919572
+      },
+      "name": "yolov5n_opset13_static640_simplify_off",
+      "onnx_checker": "PASS",
+      "opset": 13,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset13_static640_simplify_off.onnx",
+      "sha256": "e3fc7bc728840f09b93e46629715f78a3ba8b89e68aa0dabdd474f1bd5f97f12",
+      "simplify_requested": "off",
+      "size_bytes": 7919572,
+      "source_frozen_onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "source_torchscript_sha256": "1ea5813fac07158ca4ff5eb98b273353b1bf5baafdd46f1ced4ab33835247892"
+    },
+    {
+      "export_status": "PASS",
+      "graph": {
+        "io": {
+          "inputs": [
+            {
+              "dtype": "FLOAT",
+              "name": "images",
+              "shape": [
+                1,
+                3,
+                640,
+                640
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "dtype": "FLOAT",
+              "name": "output0",
+              "shape": [
+                1,
+                25200,
+                85
+              ]
+            }
+          ]
+        },
+        "ir_version": 7,
+        "node_count": 293,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 2,
+          "Concat": 21,
+          "Constant": 39,
+          "Conv": 60,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 4
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 13
+          }
+        ],
+        "path_name": "yolov5n_opset13_static640_simplify_on.onnx",
+        "quant_axis_attributes": [],
+        "sha256": "840170b5cdd0b7e147d8c9aa2b127db704605313266f45e7d2d77c3087b8c544",
+        "size_bytes": 7907769
+      },
+      "name": "yolov5n_opset13_static640_simplify_on",
+      "onnx_checker": "PASS",
+      "opset": 13,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset13_static640_simplify_on.onnx",
+      "sha256": "840170b5cdd0b7e147d8c9aa2b127db704605313266f45e7d2d77c3087b8c544",
+      "simplify_requested": "on",
+      "size_bytes": 7907769,
+      "source_frozen_onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "source_torchscript_sha256": "1ea5813fac07158ca4ff5eb98b273353b1bf5baafdd46f1ced4ab33835247892"
+    },
+    {
+      "export_status": "PASS",
+      "graph": {
+        "io": {
+          "inputs": [
+            {
+              "dtype": "FLOAT",
+              "name": "images",
+              "shape": [
+                1,
+                3,
+                640,
+                640
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "dtype": "FLOAT",
+              "name": "output0",
+              "shape": [
+                1,
+                25200,
+                85
+              ]
+            }
+          ]
+        },
+        "ir_version": 7,
+        "node_count": 355,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 2,
+          "Concat": 27,
+          "Constant": 71,
+          "Conv": 60,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 28
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 14
+          }
+        ],
+        "path_name": "yolov5n_opset14_static640_simplify_off.onnx",
+        "quant_axis_attributes": [],
+        "sha256": "72822d919b5a701ea215911cee35ea82a5bebbf39804fd3583711a0792f71a9e",
+        "size_bytes": 7913293
+      },
+      "name": "yolov5n_opset14_static640_simplify_off",
+      "onnx_checker": "PASS",
+      "opset": 14,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset14_static640_simplify_off.onnx",
+      "sha256": "72822d919b5a701ea215911cee35ea82a5bebbf39804fd3583711a0792f71a9e",
+      "simplify_requested": "off",
+      "size_bytes": 7913293,
+      "source_frozen_onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "source_torchscript_sha256": "1ea5813fac07158ca4ff5eb98b273353b1bf5baafdd46f1ced4ab33835247892"
+    },
+    {
+      "export_status": "PASS",
+      "graph": {
+        "io": {
+          "inputs": [
+            {
+              "dtype": "FLOAT",
+              "name": "images",
+              "shape": [
+                1,
+                3,
+                640,
+                640
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "dtype": "FLOAT",
+              "name": "output0",
+              "shape": [
+                1,
+                25200,
+                85
+              ]
+            }
+          ]
+        },
+        "ir_version": 7,
+        "node_count": 293,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 2,
+          "Concat": 21,
+          "Constant": 39,
+          "Conv": 60,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 4
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 14
+          }
+        ],
+        "path_name": "yolov5n_opset14_static640_simplify_on.onnx",
+        "quant_axis_attributes": [],
+        "sha256": "2c6bd9f4c9fee4a8f9be4b1ce9204aaf548c9677043a2da9a5b11c8042dd288b",
+        "size_bytes": 7907877
+      },
+      "name": "yolov5n_opset14_static640_simplify_on",
+      "onnx_checker": "PASS",
+      "opset": 14,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset14_static640_simplify_on.onnx",
+      "sha256": "2c6bd9f4c9fee4a8f9be4b1ce9204aaf548c9677043a2da9a5b11c8042dd288b",
+      "simplify_requested": "on",
+      "size_bytes": 7907877,
+      "source_frozen_onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "source_torchscript_sha256": "1ea5813fac07158ca4ff5eb98b273353b1bf5baafdd46f1ced4ab33835247892"
+    }
+  ],
+  "purpose": "opset13/14 static640 deployment candidates; opset12 remains the frozen baseline",
+  "schema_version": 1,
+  "task": "028",
+  "track": "C2"
+}

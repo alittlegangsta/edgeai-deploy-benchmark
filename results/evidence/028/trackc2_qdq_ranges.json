@@ -1,0 +1,452 @@
+{
+  "branch_note": "Equal per-tensor branch scales are reported explicitly; this is not a graph rewrite or correctness result.",
+  "fp32_model_sha256": "7046d67bfcdb62ad16066abaa4e26bfebbb286f6180cafe829e5fe77b7e6db1a",
+  "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+  "model9_branch_scale_mismatch_observed": false,
+  "model9_maxpool_branch_scales": {
+    "int8": [
+      [
+        0.04709700495004654
+      ],
+      [
+        0.04709700495004654
+      ],
+      [
+        0.04709700495004654
+      ]
+    ],
+    "uint8": [
+      [
+        0.02454817108809948
+      ],
+      [
+        0.02454817108809948
+      ],
+      [
+        0.02454817108809948
+      ]
+    ]
+  },
+  "models": {
+    "int8": {
+      "model_sha256": "8ff448f1fd250a198b0a4a44a1eca9d09c50a68a4da459788960282ba98c3ad9",
+      "tensors": {
+        "/Concat_4_output_0": {
+          "abs_error_max": 2.799682177603245,
+          "abs_error_mean": 0.22429361005974668,
+          "fp32_range": [
+            -0.2784641981124878,
+            5.981321334838867
+          ],
+          "qdq": {
+            "inputs": [
+              "/Concat_4_output_0_QuantizeLinear_Output",
+              "/Concat_4_output_0_scale",
+              "/Concat_4_output_0_zero_point"
+            ],
+            "node": "/Concat_4_output_0_DequantizeLinear",
+            "scale": [
+              0.04709700495004654
+            ],
+            "zero_point": [
+              0.0
+            ]
+          },
+          "quantized_dequant_range": [
+            -0.28258204460144043,
+            5.79293155670166
+          ],
+          "relative_max_over_fp32_absmax": 0.4680708527220764,
+          "rmse": 0.33678552164707326,
+          "shape": [
+            1,
+            512,
+            20,
+            20
+          ]
+        },
+        "/MaxPool_1_output_0": {
+          "abs_error_max": 1.6445504426956177,
+          "abs_error_mean": 0.20602170869766268,
+          "fp32_range": [
+            0.1833905279636383,
+            5.981321334838867
+          ],
+          "qdq": {
+            "inputs": [
+              "/MaxPool_1_output_0_QuantizeLinear_Output",
+              "/Mul_31_output_0_scale",
+              "/Mul_31_output_0_zero_point"
+            ],
+            "node": "/MaxPool_1_output_0_DequantizeLinear",
+            "scale": [
+              0.04709700495004654
+            ],
+            "zero_point": [
+              0.0
+            ]
+          },
+          "quantized_dequant_range": [
+            0.18838801980018616,
+            5.79293155670166
+          ],
+          "relative_max_over_fp32_absmax": 0.27494768306736456,
+          "rmse": 0.295574624864792,
+          "shape": [
+            1,
+            128,
+            20,
+            20
+          ]
+        },
+        "/MaxPool_2_output_0": {
+          "abs_error_max": 1.6314220428466797,
+          "abs_error_mean": 0.17997432390693574,
+          "fp32_range": [
+            0.7553717494010925,
+            5.981321334838867
+          ],
+          "qdq": {
+            "inputs": [
+              "/MaxPool_2_output_0_QuantizeLinear_Output",
+              "/Mul_31_output_0_scale",
+              "/Mul_31_output_0_zero_point"
+            ],
+            "node": "/MaxPool_2_output_0_DequantizeLinear",
+            "scale": [
+              0.04709700495004654
+            ],
+            "zero_point": [
+              0.0
+            ]
+          },
+          "quantized_dequant_range": [
+            0.6593580842018127,
+            5.79293155670166
+          ],
+          "relative_max_over_fp32_absmax": 0.27275278346007076,
+          "rmse": 0.25295621479118346,
+          "shape": [
+            1,
+            128,
+            20,
+            20
+          ]
+        },
+        "/MaxPool_output_0": {
+          "abs_error_max": 1.9826409816741943,
+          "abs_error_mean": 0.24783239881131522,
+          "fp32_range": [
+            -0.07328063249588013,
+            5.981321334838867
+          ],
+          "qdq": {
+            "inputs": [
+              "/MaxPool_output_0_QuantizeLinear_Output",
+              "/Mul_31_output_0_scale",
+              "/Mul_31_output_0_zero_point"
+            ],
+            "node": "/MaxPool_output_0_DequantizeLinear",
+            "scale": [
+              0.04709700495004654
+            ],
+            "zero_point": [
+              0.0
+            ]
+          },
+          "quantized_dequant_range": [
+            -0.04709700495004654,
+            5.79293155670166
+          ],
+          "relative_max_over_fp32_absmax": 0.3314720729223744,
+          "rmse": 0.3620442275453725,
+          "shape": [
+            1,
+            128,
+            20,
+            20
+          ]
+        },
+        "/Resize_1_output_0": {
+          "abs_error_max": 2.3790045380592346,
+          "abs_error_mean": 0.11503028079598444,
+          "fp32_range": [
+            -0.27846458554267883,
+            6.013779163360596
+          ],
+          "qdq": {
+            "inputs": [
+              "/Resize_1_output_0_QuantizeLinear_Output",
+              "/Mul_39_output_0_scale",
+              "/Mul_39_output_0_zero_point"
+            ],
+            "node": "/Resize_1_output_0_DequantizeLinear",
+            "scale": [
+              0.047352612018585205
+            ],
+            "zero_point": [
+              0.0
+            ]
+          },
+          "quantized_dequant_range": [
+            -0.28411567211151123,
+            5.919076442718506
+          ],
+          "relative_max_over_fp32_absmax": 0.3955922679291425,
+          "rmse": 0.18586123924359746,
+          "shape": [
+            1,
+            64,
+            80,
+            80
+          ]
+        },
+        "/Resize_output_0": {
+          "abs_error_max": 2.6458713561296463,
+          "abs_error_mean": 0.1500623155154302,
+          "fp32_range": [
+            -0.27846458554267883,
+            7.913653373718262
+          ],
+          "qdq": {
+            "inputs": [
+              "/Resize_output_0_QuantizeLinear_Output",
+              "/Mul_33_output_0_scale",
+              "/Mul_33_output_0_zero_point"
+            ],
+            "node": "/Resize_output_0_DequantizeLinear",
+            "scale": [
+              0.06231221556663513
+            ],
+            "zero_point": [
+              0.0
+            ]
+          },
+          "quantized_dequant_range": [
+            -0.31156107783317566,
+            7.103592395782471
+          ],
+          "relative_max_over_fp32_absmax": 0.33434258883721346,
+          "rmse": 0.2534839245226474,
+          "shape": [
+            1,
+            128,
+            40,
+            40
+          ]
+        }
+      }
+    },
+    "uint8": {
+      "model_sha256": "3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3",
+      "tensors": {
+        "/Concat_4_output_0": {
+          "abs_error_max": 1.5888561010360718,
+          "abs_error_mean": 0.12448612916062424,
+          "fp32_range": [
+            -0.2784641981124878,
+            5.981321334838867
+          ],
+          "qdq": {
+            "inputs": [
+              "/Concat_4_output_0_QuantizeLinear_Output",
+              "/Concat_4_output_0_scale",
+              "/Concat_4_output_0_zero_point"
+            ],
+            "node": "/Concat_4_output_0_DequantizeLinear",
+            "scale": [
+              0.02454817108809948
+            ],
+            "zero_point": [
+              11.0
+            ]
+          },
+          "quantized_dequant_range": [
+            -0.27002987265586853,
+            5.768820285797119
+          ],
+          "relative_max_over_fp32_absmax": 0.2656363054399599,
+          "rmse": 0.16310740124511247,
+          "shape": [
+            1,
+            512,
+            20,
+            20
+          ]
+        },
+        "/MaxPool_1_output_0": {
+          "abs_error_max": 0.8198717832565308,
+          "abs_error_mean": 0.12226911854522768,
+          "fp32_range": [
+            0.1833905279636383,
+            5.981321334838867
+          ],
+          "qdq": {
+            "inputs": [
+              "/MaxPool_1_output_0_QuantizeLinear_Output",
+              "/Mul_31_output_0_scale",
+              "/Mul_31_output_0_zero_point"
+            ],
+            "node": "/MaxPool_1_output_0_DequantizeLinear",
+            "scale": [
+              0.02454817108809948
+            ],
+            "zero_point": [
+              11.0
+            ]
+          },
+          "quantized_dequant_range": [
+            0.3436743915081024,
+            5.768820285797119
+          ],
+          "relative_max_over_fp32_absmax": 0.13707201759600507,
+          "rmse": 0.15798970112398894,
+          "shape": [
+            1,
+            128,
+            20,
+            20
+          ]
+        },
+        "/MaxPool_2_output_0": {
+          "abs_error_max": 0.8198717832565308,
+          "abs_error_mean": 0.12183989814831875,
+          "fp32_range": [
+            0.7553717494010925,
+            5.981321334838867
+          ],
+          "qdq": {
+            "inputs": [
+              "/MaxPool_2_output_0_QuantizeLinear_Output",
+              "/Mul_31_output_0_scale",
+              "/Mul_31_output_0_zero_point"
+            ],
+            "node": "/MaxPool_2_output_0_DequantizeLinear",
+            "scale": [
+              0.02454817108809948
+            ],
+            "zero_point": [
+              11.0
+            ]
+          },
+          "quantized_dequant_range": [
+            0.7364451289176941,
+            5.768820285797119
+          ],
+          "relative_max_over_fp32_absmax": 0.13707201759600507,
+          "rmse": 0.15655436477439974,
+          "shape": [
+            1,
+            128,
+            20,
+            20
+          ]
+        },
+        "/MaxPool_output_0": {
+          "abs_error_max": 1.024480938911438,
+          "abs_error_mean": 0.1267630191159151,
+          "fp32_range": [
+            -0.07328063249588013,
+            5.981321334838867
+          ],
+          "qdq": {
+            "inputs": [
+              "/MaxPool_output_0_QuantizeLinear_Output",
+              "/Mul_31_output_0_scale",
+              "/Mul_31_output_0_zero_point"
+            ],
+            "node": "/MaxPool_output_0_DequantizeLinear",
+            "scale": [
+              0.02454817108809948
+            ],
+            "zero_point": [
+              11.0
+            ]
+          },
+          "quantized_dequant_range": [
+            0.0,
+            5.768820285797119
+          ],
+          "relative_max_over_fp32_absmax": 0.17128003689486873,
+          "rmse": 0.1652532522774459,
+          "shape": [
+            1,
+            128,
+            20,
+            20
+          ]
+        },
+        "/Resize_1_output_0": {
+          "abs_error_max": 1.0458431243896484,
+          "abs_error_mean": 0.06949033376938613,
+          "fp32_range": [
+            -0.27846458554267883,
+            6.013779163360596
+          ],
+          "qdq": {
+            "inputs": [
+              "/Resize_1_output_0_QuantizeLinear_Output",
+              "/Mul_39_output_0_scale",
+              "/Mul_39_output_0_zero_point"
+            ],
+            "node": "/Resize_1_output_0_DequantizeLinear",
+            "scale": [
+              0.02467547357082367
+            ],
+            "zero_point": [
+              11.0
+            ]
+          },
+          "quantized_dequant_range": [
+            -0.27143019437789917,
+            5.82341194152832
+          ],
+          "relative_max_over_fp32_absmax": 0.17390780339280712,
+          "rmse": 0.09854442019370625,
+          "shape": [
+            1,
+            64,
+            80,
+            80
+          ]
+        },
+        "/Resize_output_0": {
+          "abs_error_max": 1.3379735946655273,
+          "abs_error_mean": 0.07263973134685711,
+          "fp32_range": [
+            -0.27846458554267883,
+            7.913653373718262
+          ],
+          "qdq": {
+            "inputs": [
+              "/Resize_output_0_QuantizeLinear_Output",
+              "/Mul_33_output_0_scale",
+              "/Mul_33_output_0_zero_point"
+            ],
+            "node": "/Resize_output_0_DequantizeLinear",
+            "scale": [
+              0.032125942409038544
+            ],
+            "zero_point": [
+              9.0
+            ]
+          },
+          "quantized_dequant_range": [
+            -0.2891334891319275,
+            7.6138482093811035
+          ],
+          "relative_max_over_fp32_absmax": 0.1690715440113731,
+          "rmse": 0.11308850676489832,
+          "shape": [
+            1,
+            128,
+            40,
+            40
+          ]
+        }
+      }
+    }
+  },
+  "schema_version": 1,
+  "status": "DIAGNOSTIC_ONLY"
+}

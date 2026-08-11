@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "B",
+  "status": "BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE",
+  "primary_track": "native_apug1205",
+  "recorded_at": "2026-08-07 Asia/Shanghai",
+  "scope": "Read-only provenance and availability audit for the APUG1205 native NPU compiler/runtime path",
+  "apug1205_document": {
+    "logical_path": "NPU_info/APUG1205_NPU参考设计文档.pdf",
+    "sha256": "54a25d9a5dc59b21e7f7253bc72adeeb2c8b3a4bc04c30bea81463026ef7c1f2",
+    "size_bytes": 1427207,
+    "documented_flow": [
+      "convert_tool -f onnx -m model.onnx -o model.tmfile",
+      "al_ai_flow -i net_config.json -m model.tmfile",
+      "rt.bin and weight.bin are emitted for the runtime"
+    ],
+    "documented_compiler_container": "anlogic/nn_compiler:<tag_id>",
+    "documented_runtime": "include/npu_c_api.h plus lib/libnpu_runtime.a",
+    "documented_positive_model": "yolov5s_320_sigmoid.onnx",
+    "documented_runtime_requirements": ["hard_npu.ko", "soft_npu.ko", "cma_mem.ko", "/dev/hard_npu", "/dev/soft_npu", "/dev/cma_mem"]
+  },
+  "asset_search": {
+    "search_terms": [
+      "convert_tool",
+      "al_ai_flow",
+      "nn_compiler",
+      "net_config_yolov5s.json",
+      "yolov5s_320_sigmoid.onnx",
+      "*.tmfile",
+      "rt.bin",
+      "weight.bin",
+      "libnpu_runtime",
+      "npu_c_api.h",
+      "yolo_one_shot",
+      "one-shot",
+      "oneshot"
+    ],
+    "scopes": [
+      {"root": "NPU_info", "result": "no native compiler/runtime asset found"},
+      {"root": "03_demo", "result": "no native compiler/runtime asset found"},
+      {"root": "dr1m90_npu (all refs/tags reachable locally)", "result": "no exact native asset path found"},
+      {"root": "sdk (all refs/tags reachable locally)", "result": "no exact native asset path found"},
+      {"root": "toolchains", "result": "toolchain sources only; no native compiler/runtime asset found"},
+      {"root": "anlogic-dr1-knowledge", "result": "documentation references only; no native compiler/runtime asset found"},
+      {"root": "VM vendor roots and standard SDK search roots", "result": "no exact native asset path found"}
+    ],
+    "docker_or_container_cache": {
+      "docker_command": "not found",
+      "podman_command": "not found",
+      "nerdctl_command": "not found",
+      "known_cache_roots": "not found"
+    }
+  },
+  "repository_identities": {
+    "dr1m90_npu": {
+      "remote": "https://gitee.com/anlogic/dr1m90_npu.git",
+      "branch": "release",
+      "head": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+      "sdk_2026_01_tag_object": "05c0672ab564405248af2e7d09845960b6c389d3",
+      "sdk_2026_01_peeled_commit": "a06f09a23582900e2b8843d564ea28db679649a5",
+      "native_asset_paths_found": false,
+      "npu_demo_role": "ArmNN/ONNX demo; AL_onnx_pass.py produces quantized/simplified ONNX variants"
+    },
+    "sdk": {
+      "remote": "https://gitee.com/anlogic/sdk.git",
+      "head": "5a693bed7d78e2e156e425ef57ebc8b7efad25cd",
+      "sdk_2025_07_linux6_1": "beaee2ce45161908403a92619e509f52220ac347",
+      "sdk_2026_01_linux6_1": "300f3f158b2aaa1547c3308da990f212291de727",
+      "native_asset_paths_found": false
+    }
+  },
+  "asset_availability": {
+    "native_compiler_container": false,
+    "convert_tool": false,
+    "al_ai_flow": false,
+    "nn_compiler": false,
+    "positive_yolov5s_320_sigmoid_onnx": false,
+    "net_config_yolov5s_json": false,
+    "tmfile": false,
+    "rt_bin": false,
+    "weight_bin": false,
+    "libnpu_runtime": false,
+    "npu_c_api_h": false,
+    "native_one_shot_source_or_elf": false,
+    "armnn_assets_are_native_substitute": false
+  },
+  "path_separation": {
+    "native_runtime": "APUG1205 convert_tool/al_ai_flow output consumed by npu_c_api.h/libnpu_runtime.a",
+    "armnn_runtime": "ArmNN OnnxParser/NPUExecutor path using libarmnn, libarmnnOnnxParser and Alnpu",
+    "observed_armnn_demo": "dr1m90_npu/npu_demo and face_detection; no npu_runtime, rt.bin or weight.bin references",
+    "conclusion": "ArmNN assets do not establish availability of the native compiler or native runtime"
+  },
+  "limitations": [
+    "The APUG1205 document describes the compiler/runtime contract but does not provide the private release payload in the audited roots.",
+    "No compiler command was executed and no vendor binary was executed.",
+    "The missing native compiler/runtime prevents the positive YOLOv5s conversion from being reproduced and prevents a native YOLOv5n runner from being built."
+  ],
+  "safety": {
+    "vendor_binary_executed": false,
+    "board_accessed": false,
+    "driver_loaded": false,
+    "fpga_or_media_modified": false,
+    "network_download_performed": false,
+    "vendor_assets_copied_to_git": false
+  }
+}

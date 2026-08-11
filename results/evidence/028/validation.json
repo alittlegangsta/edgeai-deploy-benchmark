@@ -1,0 +1,490 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "overall": "PASS_WITH_EXTERNAL_VENDOR_DEPENDENCY_BLOCK",
+  "commands": [
+    {
+      "command": "JSON parse results/evidence/028/*.json",
+      "status": "PASS"
+    },
+    {
+      "command": "PyYAML parse .knowledge/manifests/anlogic_yolov5n_armnn_alnpu.yaml",
+      "status": "PASS"
+    },
+    {
+      "command": "bash -n scripts/vendor/build_task028_armnn_runner.sh scripts/vendor/run_task028_armnn_probe.sh",
+      "status": "PASS"
+    },
+    {
+      "command": "python3 -m py_compile Task028 Python scripts including prepare_task028_graph_matrix.py",
+      "status": "PASS"
+    },
+    {
+      "command": "prepare_task028_graph_matrix.py official-positive diff and export matrix",
+      "status": "PASS",
+      "matrix_passes": 6,
+      "matrix_failures": 0,
+      "parser_probe_models": 7
+    },
+    {
+      "command": "validate_task028_graph_matrix.py",
+      "status": "PASS",
+      "checks": [
+        "positive-control dialect",
+        "six export candidates",
+        "board gates",
+        "minimal QDQ control",
+        "full-graph SIGSEGV"
+      ]
+    },
+    {
+      "command": "board Alnpu-only parser bisection and six export candidates",
+      "status": "PASS_EXPECTED_BLOCKS",
+      "export_candidates_rejected_at": "Floor",
+      "minimal_qdq": "PASS_ALNPU_LOAD",
+      "full_floor_rewrite": "SIGSEGV_reproduced"
+    },
+    {
+      "command": "prepare_task028_floor_identity_model.py fixed-resize-scales",
+      "status": "PASS",
+      "output_sha256": "acfad8dbd631d61f47458a6a5639ed6804c3f1c53f6a177e2af08c7078b034da"
+    },
+    {
+      "command": "quantize_task028_yolov5n.py with frozen image",
+      "status": "PASS",
+      "output_sha256": "3ce1e58b3d024ac890eef24e0704265aae12a7c58d005aeed288ff4c4aba4b76"
+    },
+    {
+      "command": "cmake Release build with ORT/NCNN/VIDEO disabled",
+      "status": "PASS",
+      "build_dir": "build/task028-pc-release"
+    },
+    {
+      "command": "CTest model-independent Release suite",
+      "status": "PASS",
+      "tests": 3
+    },
+    {
+      "command": "full existing CTest suite",
+      "status": "PASS",
+      "tests": 14
+    },
+    {
+      "command": "PYTHONPATH=python .venv/bin/python -m unittest discover -s tests/python",
+      "status": "PASS",
+      "tests": 131
+    },
+    {
+      "command": "validate_task028_armnn.py against blocked FP32 evidence",
+      "status": "PASS_EXPECTED_REJECTION",
+      "reason": "validator rejected non-success runner status"
+    },
+    {
+      "command": "read-only APUG1205/native exact-name audit across local roots, reachable repository refs/tags, knowledge base and VM roots",
+      "status": "PASS_EXPECTED_BLOCK",
+      "native_compiler": "not found",
+      "native_runtime": "not found"
+    },
+    {
+      "command": "static 05-5 SoftNPU Design.xml/parameter/tutorial system.bit audit",
+      "status": "PASS",
+      "npu_soft": 1,
+      "soft_yolo": 1,
+      "tutorial_system_bit_sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5"
+    },
+    {
+      "command": "python3 scripts/vendor/validate_task028_native.py",
+      "status": "PASS",
+      "track_a": "BLOCKED_UNSUPPORTED_ALNPU_GRAPH",
+      "track_a_scoped_backend": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+      "track_b": "BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE"
+    },
+    {
+      "command": "official AL_onnx_pass.py on frozen YOLOv5n FP32 in isolated vendor environment",
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": [
+        "sim",
+        "quant_uint8"
+      ],
+      "softnpu_ops": [
+        "Add",
+        "MaxPool",
+        "Concat",
+        "Resize"
+      ]
+    },
+    {
+      "command": "Track C environment recheck",
+      "status": "PASS",
+      "pip_check": "PASS",
+      "venv": "/home/dministrator/.venvs/anlogic-al-onnx-pass"
+    },
+    {
+      "command": "host frozen FP32 reference",
+      "status": "PASS_TARGET",
+      "detection_count": 5,
+      "min_iou": 1.0,
+      "max_confidence_delta": 0.0
+    },
+    {
+      "command": "onnx.checker.check_model on frozen graph and source-equivalent Detect crop",
+      "status": "PASS",
+      "frozen_nodes": 292,
+      "detect_crop_nodes": 231
+    },
+    {
+      "command": "official sim FP32 yolo_model_inference.py host smoke",
+      "status": "PASS_SEMANTIC_WITH_INTEGER_BOX_GATE_OPEN",
+      "detection_count": 5,
+      "classes_match": true,
+      "min_box_iou": 0.95506547868033,
+      "execution_provider": "CPUExecutionProvider"
+    },
+    {
+      "command": "official uint8 QDQ yolo_model_inference.py host smoke",
+      "status": "FAIL_FROZEN_GOLDEN_GATE",
+      "detection_count": 5,
+      "min_box_iou": 0.8421554845490358,
+      "max_confidence_delta": 0.09312496031303408,
+      "execution_provider": "CPUExecutionProvider"
+    },
+    {
+      "command": "deterministic 500-image calibration generation and official uint8 host smoke",
+      "status": "FAIL_FROZEN_GOLDEN_GATE",
+      "calibration_count": 500,
+      "min_box_iou": 0.8891731303877853,
+      "max_confidence_delta": 0.11366653714614872
+    },
+    {
+      "command": "official int8 QDQ checker/ORT probe",
+      "status": "FAIL_INVALID_OPSET12_DQ_AXIS"
+    },
+    {
+      "command": "diagnostic-only QDQ activation probe on one frozen calibration image",
+      "status": "PASS_DIAGNOSTIC",
+      "largest_error_path": "/model.9/Concat_output_0",
+      "related_paths": [
+        "/model.9/m*/MaxPool_output_0",
+        "/model.11/Resize_output_0",
+        "/model.15/Resize_output_0"
+      ],
+      "candidate_promoted": false
+    },
+    {
+      "command": "scripts/vendor/validate_task028_trackc.py",
+      "status": "PASS",
+      "primary_track": "official AL_onnx_pass Track C",
+      "primary_status": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+      "c1": "PASS",
+      "c2": "NOT_ACCEPTED",
+      "c3": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+      "c4": "NOT_RUN"
+    },
+    {
+      "command": "prepare_task028_graph_matrix.py --opsets 13 14",
+      "status": "PASS",
+      "matrix_passes": 4,
+      "matrix_failures": 0,
+      "raw_output": "exact_equal_vs_frozen"
+    },
+    {
+      "command": "unmodified AL_onnx_pass.py on Track C2 opset13/14 uint8/int8 candidates",
+      "status": "PASS",
+      "graphs": 8,
+      "checker": "PASS",
+      "ort": "PASS",
+      "int8_axis": "resolved_for_opset13_14"
+    },
+    {
+      "command": "validate_task028_trackc2.py",
+      "status": "PASS",
+      "heldout_gate": "BLOCKED_FOR_BOTH_QUANT_TYPES",
+      "board": "NOT_EXECUTED"
+    },
+    {
+      "command": "Track C2 held-out teacher-relative accuracy",
+      "status": "FAIL_TASK_LEVEL_GATE",
+      "images": 8,
+      "ground_truth": "NOT_AVAILABLE",
+      "true_map": "NOT_COMPUTABLE",
+      "class_agreement": {
+        "uint8": 0.875,
+        "int8": 0.875
+      }
+    },
+    {
+      "command": "Track C2 MaxPool/Concat/Resize QDQ range diagnostic",
+      "status": "PASS_DIAGNOSTIC_ONLY",
+      "branch_scale_mismatch": false
+    },
+    {
+      "command": "validate_task022 through validate_task027 and Task019 profile checks",
+      "status": "PASS"
+    },
+    {
+      "command": "git diff --check",
+      "status": "PASS"
+    },
+    {
+      "command": "isolated VM multi-output ArmNN runner build",
+      "status": "PASS",
+      "runner_sha256": "c6c55b1df88d89a4507a2526f2198a7cbddb2ccc7bf8e881cf38d40e3f1a2d02",
+      "abi": "AArch64 ELF64",
+      "fallback": "disabled"
+    },
+    {
+      "command": "host opset14 uint8 raw-head reference",
+      "status": "PASS",
+      "model_sha256": "3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3",
+      "head_count": 3,
+      "detection_count": 5,
+      "provider": "CPUExecutionProvider"
+    },
+    {
+      "command": "board opset14 uint8 Alnpu-only compatibility smoke",
+      "status": "PASS_EXPECTED_BLOCK",
+      "exit_code": 1,
+      "parser": "PASS",
+      "network": "PASS",
+      "optimize": "FAIL",
+      "load_network": "NOT_REACHED",
+      "unsupported_layers": [
+        "QAsymmU8 Conv2d",
+        "QAsymmU8 Activation",
+        "QAsymmU8 ElementwiseBinary"
+      ],
+      "cpu_fallback": false,
+      "board_result": "results/evidence/028/trackc3_board_smoke.json"
+    },
+    {
+      "command": "vendor preprocessing identity audit",
+      "status": "PASS_DIAGNOSTIC",
+      "frozen_input_max_abs_delta": 0.0,
+      "vendor_scaleup": false
+    },
+    {
+      "command": "board opset14 INT8 Alnpu-only compatibility smoke",
+      "status": "PASS_EXPECTED_BLOCK",
+      "exit_code": 1,
+      "parser": "PASS",
+      "network": "PASS",
+      "optimize": "FAIL",
+      "load_network": "NOT_REACHED",
+      "unsupported_layers": [
+        "QSymmS8 Conv2d",
+        "QSymmS8 Activation",
+        "QSymmS8 ElementwiseBinary"
+      ],
+      "cpu_fallback": false,
+      "board_result": "results/evidence/028/trackc3_board_int8_smoke.json"
+    },
+    {
+      "command": "12-entry UINT8/INT8 synthetic QDQ operator probe matrix",
+      "status": "PASS_DIAGNOSTIC_INCONCLUSIVE",
+      "entries": 12,
+      "all_local_onnx_checker": true,
+      "board_result": "all exited 139 after parser_created; no severe dmesg delta",
+      "board_result_file": "results/evidence/028/trackc3_quant_operator_probe_matrix.json"
+    },
+    {
+      "command": "vendor YOLOv8n Alnpu-only parser/Optimize/LoadNetwork control",
+      "status": "PASS_EXPECTED_BLOCK",
+      "exit_code": 1,
+      "parser": "PASS",
+      "network": "PASS",
+      "optimize": "FAIL",
+      "load_network": "NOT_REACHED",
+      "unsupported_layer": "QAsymmU8 Splitter",
+      "cpu_fallback": false,
+      "model_sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96"
+    },
+    {
+      "command": "dr1m90_npu to board ArmNN/OnnxParser version and ABI identity audit",
+      "status": "PASS_STATIC",
+      "runtime_skew": "NOT_PROVEN",
+      "result_file": "results/evidence/028/trackc3_runtime_version_audit.json"
+    },
+    {
+      "command": "vendor YOLOv5s positive-control search",
+      "status": "PASS_EXPECTED_BLOCK",
+      "status_detail": "requested yolov5s_320_sigmoid.onnx/net_config_yolov5s.json absent; current run_yolo_pic uses yolov8n.quant.onnx"
+    },
+    {
+      "command": "43-image golden regression",
+      "status": "NOT_RUN",
+      "reason": "No 43-image annotated golden set was found; 43 in tests is a test count, not an image set"
+    },
+    {
+      "command": "validate_task028_graph_matrix.py --graph graph_dialect_diff.json --matrix export_matrix.json --board board_export_matrix.json --bisection parser_bisection.json",
+      "status": "PASS",
+      "checks": [
+        "positive-control dialect",
+        "six export candidates",
+        "board rejection gates",
+        "minimal QDQ Alnpu load",
+        "full-graph SIGSEGV evidence"
+      ]
+    },
+    {
+      "command": "validate_task028_armnn.py --result trackc3_board_smoke.json --golden tests/fixtures/python_ort_golden.json --mode correctness",
+      "status": "PASS_EXPECTED_REJECTION",
+      "exit_code": 1,
+      "reason": "validator correctly rejected BOARD_ALNPU_COMPATIBILITY_BLOCKED because LoadNetwork was not reached"
+    },
+    {
+      "command": "Task 022-027 focused validators",
+      "status": "PASS",
+      "validators": [
+        "validate_task022_npu_audit.py",
+        "validate_task023_npu_package.py",
+        "validate_task024_npu_mapping.py",
+        "validate_task025_npu_sd_preflight.py",
+        "validate_task026_sd_preflight.py",
+        "validate_task027_persistent_runtime.py"
+      ]
+    },
+    {
+      "command": "Task028 CMake Release build and CTest",
+      "status": "PASS",
+      "task028_tests": 3,
+      "full_tests": 14
+    },
+    {
+      "command": "scripts/vendor/validate_task028_trackc.py --json (extended C3 evidence coverage)",
+      "status": "PASS",
+      "checks": [
+        "INT8 full-model Optimize rejection",
+        "12-entry UINT8/INT8 probe matrix is parser-dialect inconclusive",
+        "board runtime version identity and skew-not-proven status",
+        "YOLOv8n and vendor-face control comparison"
+      ],
+      "fallback": "disabled",
+      "benchmark": "not run"
+    },
+    {
+      "command": "temporary matched-runtime ArmNN/YOLOv8n and face Alnpu-only matrix",
+      "status": "PASS_EXPECTED_BLOCK",
+      "runtime_identity": "candidate archive is byte-identical to board runtime",
+      "loader": "ldd PASS_NO_NOT_FOUND; LD_DEBUG paths prove /tmp/task028-runtime libraries",
+      "face": "parser/Optimize/LoadNetwork completed without exception",
+      "yolov8n": "Optimize FAIL QAsymmU8 Splitter; LoadNetwork not reached",
+      "fallback": false,
+      "benchmark": "not run",
+      "evidence": "results/evidence/028/trackc3_runtime_compatibility_matrix.json"
+    },
+    {
+      "command": "scripts/vendor/validate_task028_trackc.py --json (runtime compatibility matrix)",
+      "status": "PASS",
+      "checks": [
+        "six compared runtime library hashes exact-match board",
+        "temporary loader path proof",
+        "four matrix rows and matched-runtime YOLOv8n critical gate",
+        "runtime/toolchain skew remains not proven"
+      ],
+      "fallback": "disabled",
+      "benchmark": "not run"
+    },
+    {
+      "command": "scripts/vendor/validate_task028_trackc.py --json (D20.1/05-5 HPF and SoftNPU comparison)",
+      "status": "PASS",
+      "checks": [
+        "05-5 tutorial package is DR1M90GEG400 with NPU_SOFT/SOFT_YOLO",
+        "D20.1 control is DR1M90GEG484 with different SoftNPU resources",
+        "AD101V20/GEG484 direct substitution rejected",
+        "runtime version skew remains not proven"
+      ],
+      "board_or_media_change": false
+    },
+    {
+      "command": "PYTHONPATH=python .venv/bin/python -m unittest discover -s tests/python",
+      "status": "PASS",
+      "tests": 131
+    },
+    {
+      "command": "JSON/YAML parse and git diff --check",
+      "status": "PASS",
+      "json_files": 40
+    },
+    {
+      "command": "scripts/vendor/validate_task028_trackc.py --json (release tag ancestry audit)",
+      "status": "PASS",
+      "checks": [
+        "release HEAD is untagged",
+        "nearest SDK_2026.01 ancestor and commit recorded",
+        "three commits after the tagged ancestor",
+        "runtime/toolchain skew remains not proven"
+      ]
+    },
+    {
+      "command": "sensitive-material and absolute-user-path scan",
+      "status": "PASS",
+      "changed_paths": 59,
+      "private_key_markers": 0,
+      "absolute_user_paths": 0
+    },
+    {
+      "command": "static libarmnn Alnpu support-boundary audit and retained real-graph controls",
+      "status": "PASS_STATIC_EXPECTED_BOARD_BLOCK",
+      "checks": [
+        "official yolo_demo_pic + vendor YOLOv8n reaches parser but fails Alnpu Optimize on QAsymmU8 Splitter",
+        "AlnpuLayerSupport vtable whitelist versus LayerSupportBase default rejection slots",
+        "QAsymmU8/QSymmS8 real YOLOv5n rejection predicates retained",
+        "05-5 GEG400 NPU_SOFT/SOFT_YOLO context and D20.1 substitution rejection",
+        "board transport failure recorded without fabricating a fresh run"
+      ],
+      "evidence": "results/evidence/028/trackc3_support_boundary_audit.json",
+      "board_or_media_change": false,
+      "benchmark": "NOT_RUN"
+    },
+    {
+      "command": "C3c capability whitelist, face ALHardNPU path and unique runtime identity audit",
+      "status": "PASS_STATIC_SCOPED_BACKEND_BOUNDARY",
+      "checks": [
+        "ten AlnpuLayerSupport Is*Supported overrides recovered",
+        "generic Conv2d/Activation/Splitter/Add/Mul slots resolve to LayerSupportBase",
+        "face strict Alnpu run reports three ALHardNPU assignments",
+        "all audited libarmnn identities have one SHA256",
+        "board wrapper failure classified as environment-only"
+      ],
+      "evidence": "results/evidence/028/trackc3_capability_face_path_audit.json",
+      "board_or_media_change": false,
+      "benchmark": "NOT_RUN"
+    }
+  ],
+  "runtime_correctness": "NOT_PASS; C1 conversion is PASS, C2 host quantized accuracy is NOT_ACCEPTED_PAUSED, and the scoped C3c backend boundary rejects the generic YOLO layer slots; external vendor dependency remains",
+  "track_a_status": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+  "track_b_status": "BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE",
+  "track_c_status": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+  "primary_track": "official AL_onnx_pass Track C",
+  "primary_status": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+  "track_c_quantization": "NOT_ACCEPTED",
+  "track_c_board_run": "BLOCKED_AT_ALNPU_OPTIMIZE",
+  "track_c2_status": "NOT_ACCEPTED_PAUSED",
+  "track_c2_export_matrix": "FOUR_OPSET13_14_ENTRIES_PASS",
+  "track_c2_board_run": "NOT_EXECUTED_BY_CONTRACT",
+  "native_positive_path": "NOT_EXECUTED",
+  "benchmark": "NOT_RUN",
+  "prior_evidence_immutability": "Task 017-027 validators passed; no prior file was edited by Task028",
+  "track_c1_status": "PASS",
+  "track_c3_status": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+  "track_c3_parser": "PASS",
+  "track_c3_armnn_network": "PASS",
+  "track_c3_alnpu_layer_support": "BLOCKED",
+  "track_c3_load_network": "NOT_REACHED",
+  "track_c3_npu_execution": "NOT_REACHED",
+  "track_c3_runtime_compatibility_status": "BLOCKED_RUNTIME_TOOLCHAIN_SKEW_UNPROVEN",
+  "track_c4_status": "NOT_RUN",
+  "track_c_board_run_evidence": "results/evidence/028/trackc3_board_smoke.json",
+  "track_c_int8_board_run_evidence": "results/evidence/028/trackc3_board_int8_smoke.json",
+  "track_c_operator_probe_evidence": "results/evidence/028/trackc3_quant_operator_probe_matrix.json",
+  "track_c_version_audit_evidence": "results/evidence/028/trackc3_runtime_version_audit.json",
+  "track_c_control_comparison_evidence": "results/evidence/028/trackc3_model_control_comparison.json",
+  "track_c_host_reference_evidence": "results/evidence/028/trackc3_host_uint8.json",
+  "track_c_preprocess_evidence": "results/evidence/028/trackc3_preprocess_audit.json",
+  "track_c_vendor_positive_evidence": "results/evidence/028/trackc3_vendor_positive_audit.json",
+  "track_c_runtime_compatibility_evidence": "results/evidence/028/trackc3_runtime_compatibility_matrix.json",
+  "track_c_hpf_d20_evidence": "results/evidence/028/trackc3_hpf_d20_comparison.json",
+  "track_c_support_boundary_evidence": "results/evidence/028/trackc3_support_boundary_audit.json",
+  "track_c_capability_face_path_evidence": "results/evidence/028/trackc3_capability_face_path_audit.json"
+}

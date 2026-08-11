@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "status": "PASS_AARCH64_BUILD",
+  "source_root": "<VM_TASK028_SOURCE_ROOT>",
+  "build_root": "<VM_TASK028_BUILD_ROOT>",
+  "source_git": "not_a_git_checkout",
+  "toolchain": {
+    "compiler": "Linaro GCC 7.5-2019.12",
+    "compiler_version": "7.5.0",
+    "compiler_path": "<VM_TOOLCHAIN_ROOT>/linaro-aarch64-linux-gnu-7.5.0/bin/aarch64-linux-gnu-g++",
+    "cmake": "<VM_CMAKE_ROOT>/cmake",
+    "cmake_version": "3.16.9",
+    "vm": "Ubuntu x86_64; Linux 4.15.0-91-generic"
+  },
+  "armnn": {
+    "root": "<VM_TASK025_ARMNN_LIB_ROOT>",
+    "libarmnn_sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+    "libarmnn_onnx_parser_sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+    "libprotobuf_sha256": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265"
+  },
+  "cmake_options": {
+    "EDGEAI_ENABLE_ARMNN": "ON",
+    "EDGEAI_ENABLE_ORT": "OFF",
+    "EDGEAI_ENABLE_NCNN": "OFF",
+    "EDGEAI_ENABLE_VIDEO": "OFF",
+    "backend_request": ["Alnpu"],
+    "cpu_fallback_allowed": false,
+    "rpath": "disabled; board LD_LIBRARY_PATH is explicit"
+  },
+  "runner": {
+    "path": "<VM_TASK028_BUILD_ROOT>/edgeai_armnn_image",
+    "sha256": "d50a243787f52e7ce8b11d2ff5ca54db53e401e1d7afc64ba3ac193d765e99b8",
+    "file": "ELF 64-bit LSB executable, ARM aarch64",
+    "interpreter": "/lib/ld-linux-aarch64.so.1",
+    "needed": [
+      "libopencv_imgcodecs.so.407", "libopencv_imgproc.so.407", "libopencv_core.so.407",
+      "libarmnn.so.32", "libarmnnOnnxParser.so.24", "libprotobuf.so.23",
+      "libdl.so.2", "libpthread.so.0", "libstdc++.so.6", "libm.so.6",
+      "libgcc_s.so.1", "libc.so.6"
+    ],
+    "x86_64_objects": 0
+  },
+  "build_attempts": [
+    {"attempt": 1, "result": "FAIL", "exit_code": 1, "reason": "incomplete source transfer omitted existing C++ tests and probe sources"},
+    {"attempt": 2, "result": "FAIL", "exit_code": 2, "reason": "GCC 7 rejected default construction of ArmNN unique_ptr function-pointer deleters"},
+    {"attempt": 3, "result": "PASS", "exit_code": 0, "repair": "complete source transfer and explicit ArmNN Destroy deleters"},
+    {"attempt": 4, "result": "PASS", "exit_code": 0, "repair": "disabled VM-specific RPATH and added model capability variants"},
+    {"attempt": 5, "result": "PASS", "exit_code": 0, "repair": "added generic expected-model SHA and parse-only ArmNN/Alnpu diagnostic mode", "runner_sha256": "d50a243787f52e7ce8b11d2ff5ca54db53e401e1d7afc64ba3ac193d765e99b8"}
+  ],
+  "diagnostic_capabilities": {
+    "parse_only": true,
+    "expected_model_sha256_override": true,
+    "backend_request": ["Alnpu"],
+    "cpu_fallback_allowed": false,
+    "board_probe_elf_sha256": "d50a243787f52e7ce8b11d2ff5ca54db53e401e1d7afc64ba3ac193d765e99b8"
+  },
+  "vendor_binaries_committed": false
+}

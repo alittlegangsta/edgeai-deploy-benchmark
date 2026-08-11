@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "RUNTIME_IDENTITY_MATCHED_YOLOV8N_GATE_FAILED",
+  "purpose": "Temporary /tmp-only runtime/model compatibility investigation; no benchmark, fallback, or system change.",
+  "source_identity": {
+    "repository": "dr1m90_npu",
+    "branch": "release",
+    "commit": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+    "tag_at_head": false,
+    "git_history": {
+      "nearest_ancestor_tag": "SDK_2026.01",
+      "nearest_ancestor_tag_commit": "a06f09a23582900e2b8843d564ea28db679649a5",
+      "commits_after_nearest_ancestor_tag": 3,
+      "observed_post_tag_commits": [
+        "a22dc96",
+        "1fb1578",
+        "199ef4d"
+      ],
+      "head_tag_mapping": "HEAD is not tagged; SDK_2026.01 is an ancestor, not an exact release identity",
+      "checkout_status": "DIRTY_PREEXISTING_EXTERNAL_CHECKOUT; provenance uses committed HEAD only"
+    },
+    "AL_onnx_pass_sha256": "f61bc7ab424726d08881f1e9ef8a3fbcfbee8fdcb612eeb6d944c450aed4540a",
+    "requirements_sha256": "c40f36e292ec2d3d921d8cada6016100fbacc399d260cb77e8d5d77b2a6a5c49",
+    "npu_demo_build_script_sha256": "d14a0df07f8e92780304ae448d3ac2ecb7a4eaa02515c4af4bde64f6ef62ef53",
+    "run_yolo_pic_script_sha256": "266c390bbca4b34efdbad9e628fa7ea00f5607cfb208ef06a42469ff7fb26c71",
+    "runtime_archive": {
+      "path_class": "external_vendor_source",
+      "relative_name": "npu_demo/libs/armnn_lib.tar.xz",
+      "sha256": "867e347bb758f9b1b083c35e08a74f2b3cc39c2975ac0f8e18c25f7f35749526"
+    },
+    "release_yolov8n_sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96"
+  },
+  "board_runtime": {
+    "armnn_stdout_version": "ArmNN v32.1.0",
+    "version_file_value": "ed5ae24",
+    "version_file_sha256": "7a5321411cc9cf1ebcbb47705064d7abb236544e2e2f0400e5f8e03bcb326a10",
+    "kernel": "Linux buildroot 6.1.111-rt42 #3 SMP PREEMPT Wed Aug 5 18:19:39 CST 2026 aarch64",
+    "runtime_path": "/opt/face_detection/runtime-root/armnn_lib/lib:/opt/face_detection/runtime-root/ffmpeg_opencv4.7.0_aarch64/lib:/lib:/usr/lib",
+    "libraries": {
+      "libarmnn.so.32.1": {
+        "board_sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+        "candidate_sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+        "exact_match": true
+      },
+      "libarmnnOnnxParser.so.24.6": {
+        "board_sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+        "candidate_sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+        "exact_match": true
+      },
+      "libprotobuf.so.23.0.0": {
+        "board_sha256": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265",
+        "candidate_sha256": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265",
+        "exact_match": true
+      },
+      "libarmnnBasePipeServer.so.32.1": {
+        "board_sha256": "ace198dd8cde495eb863a6899b0bdccc45348876361e7107fc49252850bbee00",
+        "candidate_sha256": "ace198dd8cde495eb863a6899b0bdccc45348876361e7107fc49252850bbee00",
+        "exact_match": true
+      },
+      "libtimelineDecoder.so.32.1": {
+        "board_sha256": "84139638f15a6c49429ff3457472e6d279a9a7b93569cbfa2c0bc3214fadcab9",
+        "candidate_sha256": "84139638f15a6c49429ff3457472e6d279a9a7b93569cbfa2c0bc3214fadcab9",
+        "exact_match": true
+      },
+      "libtimelineDecoderJson.so.32.1": {
+        "board_sha256": "9e6f7d4bf03750d53684f6bf49413eea4b07a77ae753ecb50ea22f02335eb891",
+        "candidate_sha256": "9e6f7d4bf03750d53684f6bf49413eea4b07a77ae753ecb50ea22f02335eb891",
+        "exact_match": true
+      }
+    },
+    "all_compared_libraries_exact_match": true,
+    "runtime_variable_isolated": false,
+    "static_abi_metadata": {
+      "libarmnn.so.32.1": {
+        "build_id": "9f9aaf6f26dd1cf57ac84c778b9f621c04c7d895",
+        "soname": "libarmnn.so.32",
+        "glibc_max_observed": "2.17",
+        "glibcxx_max_observed": "3.4.22"
+      },
+      "libarmnnOnnxParser.so.24.6": {
+        "build_id": "acde534acfe02ff3e9b00d722a169102039e8861",
+        "soname": "libarmnnOnnxParser.so.24",
+        "needed": ["libarmnn.so.32", "libprotobuf.so.23"],
+        "glibc_max_observed": "2.17"
+      },
+      "libprotobuf.so.23.0.0": {
+        "build_id": "40c16631e291ac6c0b2d1497877c4b67e7e1b4b4",
+        "soname": "libprotobuf.so.23",
+        "glibc_max_observed": "2.17",
+        "glibcxx_max_observed": "3.4.21"
+      }
+    },
+    "runtime_identity_interpretation": "The candidate archive is bit-for-bit identical to the board runtime for all six compared shared objects and has the same ed5ae24 version marker. It is therefore a matched identity copy, not an independent NEW runtime build."
+  },
+  "backend_static_identity": {
+    "archive_dynamic_inventory": [
+      "libarmnn.so.32.1",
+      "libarmnnOnnxParser.so.24.6",
+      "libprotobuf.so.23.0.0",
+      "libarmnnBasePipeServer.so.32.1",
+      "libtimelineDecoder.so.32.1",
+      "libtimelineDecoderJson.so.32.1"
+    ],
+    "separate_alnpu_shared_object_observed": false,
+    "alhardnpu_symbols_observed_in": "libarmnn.so.32.1",
+    "representative_symbols": [
+      "armnn::ILayerSupport::IsALHardNPUSupported",
+      "armnn::IWorkloadFactory::CreateALHardNPU"
+    ],
+    "onnx_parser_needed": [
+      "libarmnn.so.32",
+      "libprotobuf.so.23"
+    ],
+    "interpretation": "The release package exposes the Alnpu/ALHardNPU backend through libarmnn rather than a separately named libAlnpu shared object. This is static library identity evidence only; it does not establish graph support beyond the observed Optimize results."
+  },
+  "board_hardware_context": {
+    "source_evidence": [
+      "results/evidence/026/first_boot_validation.json",
+      "results/evidence/026/candidate_manifest_verification.json",
+      "results/evidence/028/softnpu_ip_audit.json"
+    ],
+    "candidate_sd_boot_assets": {
+      "BOOT.bin_sha256": "e25f98e00a68ea76f9e96736ba88fb7c169e2f8b769d60af55e3e69639880016",
+      "system.bit_sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+      "system.dtb_sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979"
+    },
+    "softnpu_static_configuration": {
+      "NPU_SOFT": 1,
+      "SOFT_NN": 1,
+      "SOFT_YOLO": 1,
+      "source": "results/evidence/028/softnpu_ip_audit.json"
+    },
+    "interpretation": "The successful Task 026 boot used the tutorial platform system.bit and matching system.dtb; the static SoftNPU metadata enables NPU_SOFT/SOFT_YOLO. This is positive hardware-context evidence, not proof that every graph dialect is supported by the loaded Alnpu backend."
+  },
+  "vm_sdk_provenance": {
+    "path_class": "published_extracted_sdk_tree",
+    "path_redacted": "VM_SDK_APP_NPU",
+    "git_metadata": "ABSENT",
+    "exact_sdk_commit": "NOT_RECOVERABLE_FROM_TREE",
+    "build_script_contains_armnn_link_chain": true,
+    "runtime_version_marker": "ed5ae24",
+    "app_npu_build_script_sha256": "252854d2b571c91cfa57ae578fb762b92721e5b267aae659ff6bcda211efde45",
+    "run_yolo_pic_script_sha256": "97b8311a67dbf8ecc20f70684ed4e5cb9acf97ad1071a23b84dad9ce172a39de",
+    "yolov8n_model_sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96",
+    "release_and_vm_runtime_core_hashes_match": true,
+    "build_script_comparison": {
+      "vm_script_sha256": "252854d2b571c91cfa57ae578fb762b92721e5b267aae659ff6bcda211efde45",
+      "release_script_sha256": "d14a0df07f8e92780304ae448d3ac2ecb7a4eaa02515c4af4bde64f6ef62ef53",
+      "differences_observed": [
+        "VM SDK uses a ../../toolchains path; release checkout uses ../../../toolchains",
+        "VM SDK script includes libprotoc.so, libprotoc.so.23 and libprotoc.so.23.0.0 in its copy list",
+        "release checkout script extracts armnn_lib.tar.xz and ffmpeg_opencv4.7.0_aarch64.tar.xz before building; VM SDK tree is already expanded"
+      ],
+      "runtime_core_difference_proven": false,
+      "interpretation": "These are packaging/build-script differences. They do not change the six runtime library hashes compared against the board, and no independent backend build identity was found."
+    },
+    "interpretation": "The VM SDK tree supplies the ArmNN demo build/runtime layout, but without Git metadata it cannot prove an exact SDK commit; this is provenance uncertainty, not evidence of a different loaded runtime."
+  },
+  "temporary_board_probe": {
+    "root": "/tmp/task028-runtime",
+    "persistent_system_paths_modified": false,
+    "sd_or_emmc_modified": false,
+    "modules_loaded_by_probe": false,
+    "benchmark": "NOT_RUN",
+    "cpu_fallback_allowed": false,
+    "loader_proof": {
+      "ldd_status": "PASS_NO_NOT_FOUND",
+      "ld_debug_yolov8n_log_sha256": "9f1a57cc674ecf79b8d5a9532419bb9155899fe1ab2a4da8477cc0db40b786d4",
+      "ld_debug_face_log_sha256": "0591521477b576b577816e032fa087c2470a1a2603e8492f714abfee4685a8f3",
+      "observed_candidate_paths": [
+        "/tmp/task028-runtime/libarmnn.so.32",
+        "/tmp/task028-runtime/libarmnnOnnxParser.so.24",
+        "/tmp/task028-runtime/libprotobuf.so.23"
+      ],
+      "ldd_log_sha256": "1cb87625f0ee5806d9e46d7fa8f5b2cd5608c3559447f2cac99238003a2742ac"
+    },
+    "dmesg": {
+      "severe_error_observed": false,
+      "new_probe_errors": false,
+      "observed_npu_register_lines": true
+    },
+    "official_demo_elf": {
+      "source": "VM task025 app-attempt3 build/bin/yolo_demo_pic",
+      "sha256": "9b7b69f73d9f73fb9267b874d992fb32c5fb8827f99f636c57fe6403c8e0da72",
+      "abi": "ELF64 AArch64, interpreter /lib/ld-linux-aarch64.so.1",
+      "build_id": "703efdf2862aaf6a27c2d340048e7450b0ad4be3",
+      "rpath_note": "ELF contains a VM build RPATH; LD_LIBRARY_PATH and LD_DEBUG proved the temporary candidate ArmNN libraries were loaded."
+    },
+    "yolov8n_alnpu": {
+      "model_sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96",
+      "command_backend": "-b Alnpu",
+      "parser": "CREATED_AND_MODEL_PARSED",
+      "optimize": "FAIL",
+      "load_network": "NOT_REACHED",
+      "exception": "Failed to assign a backend to each layer",
+      "unsupported_layer": "QAsymmU8 Splitter",
+      "process_exit_code": 0,
+      "application_exit_semantics": "The vendor main catches the exception and returns 0; the exception text, not exit code, is the compatibility result.",
+      "stdout_log_sha256": "c693484d3e5e1ed0c63f1b451b1b89196197cb4c741b8a267d8f5aab41d98c94",
+      "output": "NOT_CREATED"
+    },
+    "face_alnpu": {
+      "model_sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668",
+      "command_backend": "-b Alnpu",
+      "parser_optimize_load": "COMPLETED_WITHOUT_EXCEPTION",
+      "process_exit_code": 0,
+      "stdout_observation": "YOLO DETECTION END; detect item num: 0 on the repository reference image",
+      "detection_result": "No face is expected from this input; this row is a parser/load/runtime positive control, not a golden detection claim.",
+      "stdout_log_sha256": "2364cae2c7ae4d421096371930a7d168771be201073b2cce59418cabc9d01aca",
+      "loader_log_sha256": "0591521477b576b577816e032fa087c2470a1a2603e8492f714abfee4685a8f3",
+      "output_sha256": "955573d2e9706fc1fc33d0845d9e1acc59d3defcb1ecbfb05395e24643fdb6ed"
+    }
+  },
+  "matrix": [
+    {
+      "runtime": "OLD_BOARD_RUNTIME",
+      "runtime_identity": "ed5ae24; six-library identity recorded in trackc3_runtime_version_audit",
+      "model": "yolo_face_uint8_15.onnx",
+      "model_sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668",
+      "result": "PASS_EXISTING_TASK026",
+      "backend": "Alnpu/ALHardNPU",
+      "source_evidence": "results/evidence/026/official_demo_validation.json",
+      "rerun": "NOT_REQUIRED_SAME_RUNTIME_IDENTITY"
+    },
+    {
+      "runtime": "OLD_BOARD_RUNTIME",
+      "runtime_identity": "ed5ae24; board runtime",
+      "model": "vendor_yolov8n.quant.onnx",
+      "model_sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96",
+      "result": "FAIL_ALNPU_OPTIMIZE",
+      "unsupported": "QAsymmU8 Splitter",
+      "source_evidence": "results/evidence/028/trackc3_model_control_comparison.json"
+    },
+    {
+      "runtime": "NEW_MATCHED_RUNTIME_COPY",
+      "runtime_identity": "bit-for-bit identical to OLD_BOARD_RUNTIME; not an independent version",
+      "model": "yolo_face_uint8_15.onnx",
+      "model_sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668",
+      "result": "PASS_PARSER_OPTIMIZE_LOAD_TEMPORARY",
+      "backend": "Alnpu-only requested; no exception; NPU register mapping observed",
+      "process_exit_code": 0,
+      "fallback": "DISABLED"
+    },
+    {
+      "runtime": "NEW_MATCHED_RUNTIME_COPY",
+      "runtime_identity": "bit-for-bit identical to OLD_BOARD_RUNTIME; not an independent version",
+      "model": "vendor_yolov8n.quant.onnx",
+      "model_sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96",
+      "result": "FAIL_ALNPU_OPTIMIZE",
+      "unsupported": "QAsymmU8 Splitter",
+      "parser": "CREATED_AND_MODEL_PARSED",
+      "load_network": "NOT_REACHED",
+      "process_exit_code": 0,
+      "fallback": "DISABLED",
+      "evidence": "temporary_board_probe.yolov8n_alnpu"
+    }
+  ],
+  "conclusion": {
+    "critical_new_runtime_yolov8_gate": "FAIL",
+    "runtime_toolchain_version_skew": "NOT_PROVEN",
+    "available_runtime_package_difference": "NONE; candidate and board hashes match exactly",
+    "hardware_dialect_audit": "D20.1_AD101V20_GEG484_DIFFERS_FROM_05_5_GEG400",
+    "hardware_dialect_evidence": "results/evidence/028/trackc3_hpf_d20_comparison.json",
+    "interpretation": "The matched release runtime loads and reproduces the face positive control, but the vendor YOLOv8n control still fails Alnpu Optimize on QAsymmU8 Splitter. The available evidence therefore does not support a user-space runtime version mismatch as the primary explanation; graph/operator coverage or an unverified hardware/backend build difference remains."
+  },
+  "safety": {
+    "board_temp_only": true,
+    "board_system_files_changed": false,
+    "sd_or_emmc_written": false,
+    "kernel_dtb_bitstream_changed": false,
+    "benchmark_run": false,
+    "cpu_fallback_accepted": false
+  }
+}

@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+- Completed the Task 028 C3c static Alnpu capability audit. The exact matched
+  ArmNN binary exposes a finite ten-method `AlnpuLayerSupport` whitelist while
+  generic Conv2d/Activation/Splitter/Add/Mul slots resolve to
+  `LayerSupportBase`; the face positive is documented as an evidenced
+  `ALHardNPU` fused/custom path. Track A/C3 therefore converge, for this
+  backend identity, to `CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE`.
+  No new board workload, benchmark, fallback, or system change was performed.
+- Closed Task 028 as `BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`. Track A retains its
+  raw-ONNX ArmNN failure, C1 is `PASS`, C2 is paused after the independent
+  quantized host gate, C3 stops before LoadNetwork at the compiled Alnpu
+  LayerSupport boundary, and C4 remains `NOT_RUN`. Reopening requires a
+  supported generic-YOLO backend, APUG1205 compiler/native runtime, or official
+  DR1M90 GEG400 deployment chain; no NPU benchmark was claimed.
+
 - Added the minimal repository documentation for the two-stage baseline.
 - Added a C++17/CMake OpenCV smoke-test target that writes and verifies a
   640 x 360 image.
@@ -72,6 +86,33 @@
   bitstream, board deployment, or project model was executed. The audit is
   complete, but deployment remains blocked and the vendor one-shot and project
   YOLOv5n conversion were not performed.
+
+- Started Task 028's ArmNN/Alnpu bring-up with an AArch64 runner that disables
+  CPU fallback. The real frozen YOLOv5n FP32 parser attempt reports the
+  unsupported `/model.11/Floor` operator; bounded exact-ORT graph repairs and
+  a reproducible Conv-only QDQ conversion are retained, but parser/correctness
+  gates remain blocked. The official Alnpu-positive model was graph-diffed
+  against YOLOv5n; six static640 opset10/11/12 TorchScript exports passed local
+  ONNX/ORT checks but all hit Floor on the board, while dependency-sliced
+  probes isolated INT64-shape/Resize/FP32 limits. The refined conclusion is
+  `VENDOR_TOOLCHAIN_REQUIRED`; no NPU benchmark number is recorded.
+
+- Continued Task 028 with the APUG1205 native compiler/runtime track. The
+  documented `convert_tool`/`.tmfile`/`al_ai_flow`/`rt.bin`/`weight.bin` flow,
+  native headers/library and YOLOv5s positive-control assets were searched in
+  the approved local, repository-history, VM and vendor-knowledge scopes but
+  were not found. Track A remains `BLOCKED_UNSUPPORTED_ALNPU_GRAPH`; the active
+  Track B conclusion is `BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE`. The
+  05-5 platform bitstream statically confirms `NPU_SOFT=1` and `SOFT_YOLO=1`,
+  but no native conversion, board execution or benchmark was performed.
+
+- Added Task 028 Track C2 host-only opset13/14 deployment candidates using the
+  same YOLOv5n v7.0 weights and static640 export. All four exports and the
+  unchanged official uint8/int8 conversions pass ONNX/ORT structural checks;
+  the opset12 int8 axis failure is resolved for these opsets. An independent
+  eight-image held-out teacher-relative quantization gate still fails both
+  types (class-multiset agreement is 87.5% for each; no ground-truth mAP is
+  claimed), so Alnpu correctness and benchmark remain unexecuted.
 
 - Continued Task 024's read-only MLK-F3P-CZ02 board mapping gate. A current
   board read confirmed BOOT.bin, boot.scr, system.dtb and uImage.lz4 hashes,
@@ -160,3 +201,57 @@
   `PENDING`, `candidate_sd_image` is `NOT_PARTITIONED_IMAGE`, and no physical
   medium, board, module, FPGA or NPU runtime was touched. Task 026 is planned
   for device identification, dry-run validation, and first-boot approval gates.
+
+- Continued Task 028 with the official `dr1m90_npu` `AL_onnx_pass` Track C.
+  A separate ext4 environment populated from the unchanged vendor requirements
+  now closes the host dependencies and the unmodified frozen YOLOv5n entry
+  emits the Detect-cropped FP32 and uint8 QDQ graphs. The uint8 host golden gate
+  fails (minimum IoU `0.8421554845490358`, maximum confidence delta
+  `0.09312496031303408`), so the current primary status is
+  `BLOCKED_TRACK_C_QUANTIZED_CORRECTNESS`; no Alnpu run or benchmark was
+  performed. A deterministic 500-image calibration smoke also fails the gate
+  (minimum IoU `0.8891731303877853`). Track A remains
+  `BLOCKED_UNSUPPORTED_ALNPU_GRAPH`, and Track B
+  remains `BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE`.
+- Split Task 028 Track C into explicit C1/C2/C3/C4 states. C1 official
+  conversion is `PASS`; C2 quantized host accuracy is `NOT_ACCEPTED`; C3's
+  real, Alnpu-only opset14 uint8 board smoke is
+  `BLOCKED_UNSUPPORTED_ALNPU_QUANTIZED_LAYERS` because QAsymmU8 Conv2d,
+  Activation and ElementwiseBinary were rejected before `LoadNetwork`; C4
+  benchmark remains `NOT_RUN`. The smoke used only board `/tmp`, made no system
+  or media change, and accepted no CPU fallback. The vendor YOLOv5s positive
+  control remains unavailable; `run_yolo_pic.sh` points to a separate
+  `yolov8n.quant.onnx` demo.
+
+- Extended Task 028 C3 with an Alnpu-only opset14 INT8 smoke and a bounded
+  UINT8/INT8 operator probe matrix. The INT8 full graph reaches parser/network
+  creation but Optimize rejects QSymmS8 Conv2d, Activation and
+  ElementwiseBinary before LoadNetwork; all synthetic QDQ probes are retained
+  as parser-dialect-inconclusive after parser-stage SIGSEGVs. The release
+  YOLOv8n control also reaches parser/network creation but rejects QAsymmU8
+  Splitter at Optimize. These controls show graph/operator coverage
+  differences; runtime/toolchain skew is not proven. No CPU fallback or
+  benchmark result was recorded.
+- Audited Task 028 C3 runtime identity with the `dr1m90_npu` release ArmNN
+  archive. Six compared shared-library hashes and the `ed5ae24` marker match
+  the board runtime exactly; temporary `LD_LIBRARY_PATH`/`LD_DEBUG=libs`
+  evidence proves candidate loading. The matched-runtime face control completes
+  with Alnpu-only, while matched-runtime vendor YOLOv8n still fails Alnpu
+  Optimize on QAsymmU8 Splitter. The runtime/toolchain skew sub-track remains
+  `BLOCKED_RUNTIME_TOOLCHAIN_SKEW_UNPROVEN`; no benchmark or fallback result was
+  added.
+- Compared the 05-5 GEG400 SoftNPU HPF/bitstream with the official D20.1
+  2025.7 AD101V20/GEG484 example after the matched-runtime YOLOv8n gate. The
+  package, bitstream, SoftNPU address/IRQ, VDMA topology, and `SOFT_RESIZE`
+  setting differ, so the AD101V20 asset is not a valid board substitute. The
+  comparison supports a possible hardware/graph-dialect difference but does
+  not prove user-space runtime skew; no bitstream or system file was changed.
+
+- Added a static Task 028 C3 support-boundary audit. The matched
+  `libarmnn.so.32.1` dispatches only a finite Alnpu layer-support whitelist;
+  Conv2d, Activation, Splitter, Addition and Multiplication slots resolve to
+  generic `LayerSupportBase` rejection methods. This matches the retained real
+  vendor YOLOv8n `QAsymmU8 Splitter` failure and YOLOv5n UINT8/INT8 quantized
+  layer failures. The face model remains the separate no-Split positive
+  control; no benchmark or fallback result was added. A fresh board replay was
+  not possible because the SSH/vsock wrapper failed before connection.

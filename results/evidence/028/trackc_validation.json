@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C",
+  "status": "PASS_HOST_PIPELINE_QUANT_GATE_BLOCKED",
+  "primary_status": "BLOCKED_TRACK_C_QUANTIZED_CORRECTNESS",
+  "c3c_support_boundary_status": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+  "c3c_support_boundary_evidence": "results/evidence/028/trackc3_capability_face_path_audit.json",
+  "checks": {
+    "vendor_requirements_environment": "PASS",
+    "official_AL_onnx_pass_conversion": "PASS",
+    "onnx_checker_and_detect_crop_contract": "PASS",
+    "softnpu_operator_audit": "PASS_RECORDED",
+    "uint8_qdq_generation": "PASS_SMOKE",
+    "uint8_host_golden_correctness": "FAIL",
+    "int8_probe": "INVALID_OPSET12_DEQUANTIZE_LINEAR_AXIS",
+    "formal_calibration_dataset": "ESTABLISHED_FOR_HOST_SMOKE_ONLY",
+    "Alnpu_board_run": "NOT_EXECUTED",
+    "benchmark": "NOT_RUN",
+    "cpu_fallback": "NOT_ACCEPTED",
+    "track_a_preserved": "BLOCKED_UNSUPPORTED_ALNPU_GRAPH",
+    "track_b_preserved": "BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE",
+    "track_c2_export_matrix": "PASS",
+    "track_c2_official_graphs": "PASS_CHECKER_ORT_UINT8_INT8",
+    "track_c2_int8_axis_resolution": "PASS_OPSET13_14",
+    "track_c2_heldout_accuracy": "FAIL_TASK_LEVEL_GATE",
+    "track_c2_qdq_diagnostic": "PASS_DIAGNOSTIC_ONLY"
+  },
+  "next_minimum_action": "Resolve the Track C2 held-out quantization gate with a vendor-supported calibration or quantization configuration; do not access the board until host semantic correctness is closed.",
+  "evidence": [
+    "results/evidence/028/trackc_environment.json",
+    "results/evidence/028/trackc_official_smoke.json",
+    "results/evidence/028/al_onnx_pass_audit.json",
+    "results/evidence/028/trackc2_export_matrix.json",
+    "results/evidence/028/trackc2_official_smoke.json",
+    "results/evidence/028/trackc2_heldout_accuracy.json",
+    "results/evidence/028/trackc2_qdq_ranges.json",
+    "results/evidence/028/trackc2_validation.json"
+  ]
+}

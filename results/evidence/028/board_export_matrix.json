@@ -1,0 +1,68 @@
+{
+  "backend_request": [
+    "Alnpu"
+  ],
+  "benchmark": "NOT_RUN",
+  "candidates": [
+    {
+      "board_result": "UNSUPPORTED_OPERATOR",
+      "exit_code": 1,
+      "model_path_name": "yolov5n_opset10_static640_simplify_off.onnx",
+      "model_sha256": "d9db6df126c4510e380aa39eedb683ae550fd43f7ba9fb9ec48ed0ec89f9a97c",
+      "name": "yolov5n_opset10_static640_simplify_off",
+      "stderr": "ArmNN backend request: Alnpu only; CpuAcc/CpuRef fallback disabled\narmnn_stage=parser_created\nedgeai_armnn_image: Unsupported operation Floor for node '/11/Floor'\n",
+      "stderr_sha256": "bf21aeab1f44df40f8cb4d5319e6b661516d0daaa40ccbcf16d88cd646e82ff7"
+    },
+    {
+      "board_result": "UNSUPPORTED_OPERATOR",
+      "exit_code": 1,
+      "model_path_name": "yolov5n_opset10_static640_simplify_on.onnx",
+      "model_sha256": "3b016a0b480efd305d95730af1b3f4f5e143652017f0c21c9fc8833a50fe784e",
+      "name": "yolov5n_opset10_static640_simplify_on",
+      "stderr": "ArmNN backend request: Alnpu only; CpuAcc/CpuRef fallback disabled\narmnn_stage=parser_created\nedgeai_armnn_image: Unsupported operation Floor for node '/Floor'\n",
+      "stderr_sha256": "4ad947a7a90fa48c3262df0c35991e2173b4b7044621eef9e8805c48500cacce"
+    },
+    {
+      "board_result": "UNSUPPORTED_OPERATOR",
+      "exit_code": 1,
+      "model_path_name": "yolov5n_opset11_static640_simplify_off.onnx",
+      "model_sha256": "276872e2f43e23aff2396e23d815b5df32f3f2bd6b791104a5f6308f06d40890",
+      "name": "yolov5n_opset11_static640_simplify_off",
+      "stderr": "ArmNN backend request: Alnpu only; CpuAcc/CpuRef fallback disabled\narmnn_stage=parser_created\nedgeai_armnn_image: Unsupported operation Floor for node '/Floor'\n",
+      "stderr_sha256": "4ad947a7a90fa48c3262df0c35991e2173b4b7044621eef9e8805c48500cacce"
+    },
+    {
+      "board_result": "UNSUPPORTED_OPERATOR",
+      "exit_code": 1,
+      "model_path_name": "yolov5n_opset11_static640_simplify_on.onnx",
+      "model_sha256": "dd740f7b5e7ee0d077bdb8708ca5ed8bc5f7778b5b7a65dd249756b4d7a95af6",
+      "name": "yolov5n_opset11_static640_simplify_on",
+      "stderr": "ArmNN backend request: Alnpu only; CpuAcc/CpuRef fallback disabled\narmnn_stage=parser_created\nedgeai_armnn_image: Unsupported operation Floor for node '/Floor'\n",
+      "stderr_sha256": "4ad947a7a90fa48c3262df0c35991e2173b4b7044621eef9e8805c48500cacce"
+    },
+    {
+      "board_result": "UNSUPPORTED_OPERATOR",
+      "exit_code": 1,
+      "model_path_name": "yolov5n_opset12_static640_simplify_off.onnx",
+      "model_sha256": "add80b2e8a2e52a5d810e7e24d1780572a5da2f83bc53be97968d72dfc413fa6",
+      "name": "yolov5n_opset12_static640_simplify_off",
+      "stderr": "ArmNN backend request: Alnpu only; CpuAcc/CpuRef fallback disabled\narmnn_stage=parser_created\nedgeai_armnn_image: Unsupported operation Floor for node '/Floor'\n",
+      "stderr_sha256": "4ad947a7a90fa48c3262df0c35991e2173b4b7044621eef9e8805c48500cacce"
+    },
+    {
+      "board_result": "UNSUPPORTED_OPERATOR",
+      "exit_code": 1,
+      "model_path_name": "yolov5n_opset12_static640_simplify_on.onnx",
+      "model_sha256": "f0db193bac1ce18ce9bb17c6afedc1850f209d0d74961bee6a297741369079fa",
+      "name": "yolov5n_opset12_static640_simplify_on",
+      "stderr": "ArmNN backend request: Alnpu only; CpuAcc/CpuRef fallback disabled\narmnn_stage=parser_created\nedgeai_armnn_image: Unsupported operation Floor for node '/Floor'\n",
+      "stderr_sha256": "4ad947a7a90fa48c3262df0c35991e2173b4b7044621eef9e8805c48500cacce"
+    }
+  ],
+  "cpu_fallback_allowed": false,
+  "local_gate": "export_matrix.json records ONNX checker PASS and ORT raw output exact equality versus frozen input; no candidate reached board Optimize/LoadNetwork because the parser rejected Floor first.",
+  "purpose": "board Alnpu-only gate for every successful TorchScript export matrix candidate",
+  "schema_version": 1,
+  "task": "028",
+  "runner_sha256": "d50a243787f52e7ce8b11d2ff5ca54db53e401e1d7afc64ba3ac193d765e99b8"
+}

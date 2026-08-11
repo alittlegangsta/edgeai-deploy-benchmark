@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "source_model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+  "onnx_version": "1.16.2",
+  "onnxruntime_version": "1.18.1",
+  "source_graph_fact": "Four Floor nodes consume exact integer FLOAT constants (40.0 or 80.0) in dynamic Resize shape paths.",
+  "variants": [
+    {"name": "floor-identity", "sha256": "755fb5adc596eee7a7255bc29c48b86f1895df1e8fa1577d785cb431d233bcf2", "ort_raw_equivalence": "exact", "board_exit_code": 139, "board_error": "SIGSEGV immediately after parser_created"},
+    {"name": "floor-constant", "sha256": "e6066c047c2fc6bd37bd3ffa5322fa85a62873c5c9751e57ac8a569faf6201b7", "ort_raw_equivalence": "exact", "board_exit_code": 139, "board_error": "SIGSEGV immediately after parser_created"},
+    {"name": "floor-removed", "sha256": "e0720ffe896ed1919dba35699e703025b0bfad906bdcf97e4f2ab81e66df92e0", "ort_raw_equivalence": "exact", "board_exit_code": 139, "board_error": "SIGSEGV immediately after parser_created"},
+    {"name": "floor-add-zero", "sha256": "9f330839f3130f0af0fb7c5ab4c3f761ff6fd7f625c46298ef17a99caab40811", "ort_raw_equivalence": "exact", "board_exit_code": 139, "board_error": "SIGSEGV immediately after parser_created"},
+    {"name": "floor-fixed-resize", "sha256": "a8cd7290ee2d592ffd994d79dfceee3bf9dfd0eebe6a58b77624e2b6019a9de8", "ort_raw_equivalence": "exact", "board_exit_code": 1, "board_error": "Invalid action on a tensor shape that has unknown number of dimensions"},
+    {"name": "floor-fixed-resize-inferred", "sha256": "f29c4b85f4d2ebc16095ac9849319bc1e0ff3863001b1d38f4f28db508e86ead", "ort_raw_equivalence": "exact", "board_exit_code": 1, "board_error": "Invalid action on a tensor shape that has unknown number of dimensions"},
+    {"name": "floor-fixed-resize-scales", "sha256": "acfad8dbd631d61f47458a6a5639ed6804c3f1c53f6a177e2af08c7078b034da", "ort_raw_equivalence": "exact", "board_exit_code": 139, "board_error": "SIGSEGV immediately after parser_created"}
+  ],
+  "repair_scope": "No model was substituted or committed. Every derived graph is hash-pinned and compared with the frozen graph in local ORT before board probing.",
+  "board_kernel_effect": "All probe dmesg before/after hashes were identical; modules and NPU device nodes remained healthy."
+}

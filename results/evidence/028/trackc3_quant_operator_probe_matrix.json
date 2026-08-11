@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "PARSER_DIALECT_INCONCLUSIVE",
+  "purpose": "Bounded temporary-board probe matrix for Conv2d, Activation, Add, Mul, Concat and Resize in UINT8/INT8 QDQ dialects.",
+  "board_protocol": {
+    "runner_sha256": "c6c55b1df88d89a4507a2526f2198a7cbddb2ccc7bf8e881cf38d40e3f1a2d02",
+    "backend_request": ["Alnpu"],
+    "cpu_fallback_allowed": false,
+    "parse_only": true,
+    "input_shape": [1, 3, 640, 640],
+    "temporary_root": "/tmp/task028-c3-probes-v2 (rootfs tmpfs)",
+    "dmesg_severe_error": false
+  },
+  "matrix": [
+    {"operator": "Conv2d", "quantization": "UINT8", "model_sha256": "6b3d2e33d827ae9746174b5bb2f54134c7b63fe2c8b68265f353808776df8aa0", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Conv2d", "quantization": "INT8", "model_sha256": "dc4a4978478112c6b2a40f55898914db1b109be2b439335daab6de482bd57447", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Activation", "quantization": "UINT8", "model_sha256": "f090e0485cde0fa4cea430cec4c4cf78801cf158adc8bbcdb4aea440a281e4d0", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Activation", "quantization": "INT8", "model_sha256": "bbab238a130b29d1081711fde925376baf1547f4e54677838874c3330103b81d", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Add", "quantization": "UINT8", "model_sha256": "474fef3bd4e7188d4e970a102b8e2a498d2f8f526c826729ee34e0ae5e9af37a", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Add", "quantization": "INT8", "model_sha256": "84e4d7f6e0a35fcd783f1c6aa081a4572b8f14680acc54e87b76be4e175563eb", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Mul", "quantization": "UINT8", "model_sha256": "ca20ec85f96fd370231ed8b0a0b7f28604278af01ab146298b0acea7f2006a32", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Mul", "quantization": "INT8", "model_sha256": "0b511279a70e10fb89b9f59039cec29191256acc6f082d209a865f9b73386c42", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Concat", "quantization": "UINT8", "model_sha256": "d9fbe742a08ab94ca21e717c37ec9c582515862b9295c333e848ffada57a321b", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Concat", "quantization": "INT8", "model_sha256": "6c3a6830abc90067ed4135a0686ede620600ef6fc4dc07aa3cf938ab08f6834e", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Resize", "quantization": "UINT8", "model_sha256": "abad34c3064d6e4b229198f109542573a2678395abae22c41f01ad3d834ce452", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"},
+    {"operator": "Resize", "quantization": "INT8", "model_sha256": "d8d314b32a1e0b3ba9d1c2ace1da5ab89906c61afe8fd085bb8064ef426a8204", "exit_code": 139, "stage": "parser_created", "result": "PARSER_SIGSEGV"}
+  ],
+  "model_structure": "Each probe is ONNX-checker-valid, opset14, static, and uses QDQ wrappers around a single operator. The probes are not equivalent to the AL_onnx_pass full-model QAsymmU8/QSymmS8 layer dialect because the ArmNN parser crashes before Optimize on these synthetic graphs.",
+  "interpretation": "All 12 synthetic probes crashed immediately after parser_created with no dmesg error. They do not establish per-operator support or rejection. The authoritative full-model results remain: UINT8 Optimize rejects QAsymmU8 Conv2d/Activation/ElementwiseBinary, and INT8 Optimize rejects QSymmS8 Conv2d/Activation/ElementwiseBinary. A minimal identity QDQ control still reaches Alnpu LoadNetwork in parser_bisection.json."
+}

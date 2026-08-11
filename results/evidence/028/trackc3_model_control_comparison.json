@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "STATIC_CONTROL_COMPARISON_COMPLETE",
+  "models": {
+    "vendor_face_positive": {
+      "source": "Task 026 official vendor demo",
+      "model_sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668",
+      "opset": 14,
+      "input": {"dtype": "FLOAT", "shape": [1, 3, 416, 416]},
+      "outputs": [{"dtype": "FLOAT", "shape": [1, 18, 26, 26]}, {"dtype": "FLOAT", "shape": [1, 18, 13, 13]}],
+      "node_count": 124,
+      "operator_counts": {"Concat": 1, "Conv": 13, "DequantizeLinear": 59, "MaxPool": 6, "QuantizeLinear": 33, "Relu": 11, "Resize": 1},
+      "initializer_dtypes": {"FLOAT": 61, "INT32": 14, "INT64": 1, "UINT8": 37},
+      "backend_observation": "Task 026 real run assigned Alnpu/ALHardNPU; CPU fallback was disallowed"
+    },
+    "vendor_yolov8n_control": {
+      "source": "dr1m90_npu release npu_demo/demo_inputs/yolo_pic",
+      "model_sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96",
+      "opset": 17,
+      "input": {"dtype": "FLOAT", "shape": [1, 3, 384, 640]},
+      "outputs": [{"dtype": "FLOAT", "shape": [1, 64, 48, 80]}, {"dtype": "FLOAT", "shape": [1, 80, 48, 80]}, {"dtype": "FLOAT", "shape": [1, 64, 24, 40]}, {"dtype": "FLOAT", "shape": [1, 80, 24, 40]}, {"dtype": "FLOAT", "shape": [1, 64, 12, 20]}, {"dtype": "FLOAT", "shape": [1, 80, 12, 20]}],
+      "node_count": 771,
+      "operator_counts": {"Add": 6, "Concat": 13, "Conv": 63, "DequantizeLinear": 344, "MaxPool": 3, "Mul": 57, "QuantizeLinear": 218, "Resize": 2, "Sigmoid": 57, "Split": 8},
+      "initializer_dtypes": {"FLOAT": 324, "INT32": 126, "INT64": 4, "UINT8": 323},
+      "board_parse_optimize_load": {"exit_code": 1, "parser_created": true, "network_parsed": true, "optimize": "FAIL", "load_network": "NOT_REACHED", "unsupported": "QAsymmU8 Splitter", "cpu_fallback": "DISABLED"}
+    },
+    "project_yolov5n_uint8": {
+      "source": "official AL_onnx_pass; same-weight opset14 static640 candidate",
+      "model_sha256": "3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3",
+      "opset": 14,
+      "input": {"dtype": "FLOAT", "shape": [1, 3, 640, 640]},
+      "outputs": [{"dtype": "FLOAT", "shape": [1, 255, 80, 80]}, {"dtype": "FLOAT", "shape": [1, 255, 40, 40]}, {"dtype": "FLOAT", "shape": [1, 255, 20, 20]}],
+      "node_count": 719,
+      "operator_counts": {"Add": 7, "Concat": 13, "Conv": 60, "DequantizeLinear": 320, "MaxPool": 3, "Mul": 57, "QuantizeLinear": 200, "Resize": 2, "Sigmoid": 57},
+      "quantization": {"weight_dtype": "UINT8", "weight_axis": "per-tensor in this candidate", "zero_point_dtypes": ["UINT8", "INT32"]},
+      "board_parse_optimize_load": {"exit_code": 1, "parser_created": true, "network_parsed": true, "optimize": "FAIL", "load_network": "NOT_REACHED", "unsupported": ["QAsymmU8 Conv2d", "QAsymmU8 Activation", "QAsymmU8 ElementwiseBinary"], "cpu_fallback": "DISABLED"}
+    },
+    "project_yolov5n_int8": {
+      "source": "official AL_onnx_pass; same-weight opset14 static640 candidate",
+      "model_sha256": "8ff448f1fd250a198b0a4a44a1eca9d09c50a68a4da459788960282ba98c3ad9",
+      "opset": 14,
+      "input": {"dtype": "FLOAT", "shape": [1, 3, 640, 640]},
+      "outputs": [{"dtype": "FLOAT", "shape": [1, 255, 80, 80]}, {"dtype": "FLOAT", "shape": [1, 255, 40, 40]}, {"dtype": "FLOAT", "shape": [1, 255, 20, 20]}],
+      "node_count": 719,
+      "operator_counts": {"Add": 7, "Concat": 13, "Conv": 60, "DequantizeLinear": 320, "MaxPool": 3, "Mul": 57, "QuantizeLinear": 200, "Resize": 2, "Sigmoid": 57},
+      "quantization": {"weight_dtype": "INT8", "weight_axis": 0, "weight_scale_shapes": [1, 16, 32, 64, 128, 255, 256], "zero_point_dtypes": ["INT8", "INT32"]},
+      "board_parse_optimize_load": {"exit_code": 1, "parser_created": true, "network_parsed": true, "optimize": "FAIL", "load_network": "NOT_REACHED", "unsupported": ["QSymmS8 Conv2d", "QSymmS8 Activation", "QSymmS8 ElementwiseBinary"], "cpu_fallback": "DISABLED"}
+    }
+  },
+  "comparison": {
+    "shared": "All four graphs use static shapes and FLOAT graph IO with QDQ internal quantization, but the positive face model has no Split and fewer unsupported graph patterns.",
+    "important_difference": "YOLOv8n adds eight Split operators and fails at QAsymmU8 Splitter; YOLOv5n candidates fail at quantized Conv2d/Activation/ElementwiseBinary. The successful face control is not the YOLOv5n contract and cannot prove YOLOv5n support.",
+    "scale_zero_point": "YOLOv5n UINT8 uses scalar activation/weight scales with UINT8/INT32 zero points; YOLOv5n INT8 adds axis=0 per-channel weight dequantization and INT8 zero points. Existing model9 MaxPool/Concat scales are recorded in trackc2_qdq_ranges.json; no manual QDQ edit was applied.",
+    "runtime_skew_conclusion": "The control results do not isolate a library-version mismatch. Current evidence supports graph/operator coverage differences; a version skew remains an unproven possibility."
+  }
+}

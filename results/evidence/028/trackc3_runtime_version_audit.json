@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "VERSION_IDENTITIES_RECORDED_SKEW_NOT_PROVEN",
+  "source": {
+    "repository": "dr1m90_npu",
+    "path_redacted": "DR1_NPU_SCRIPTS",
+    "branch": "release",
+    "commit": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+    "tag_at_head": false,
+    "git_history": {
+      "nearest_ancestor_tag": "SDK_2026.01",
+      "nearest_ancestor_tag_commit": "a06f09a23582900e2b8843d564ea28db679649a5",
+      "commits_after_nearest_ancestor_tag": 3,
+      "head_tag_mapping": "HEAD is not tagged; SDK_2026.01 is an ancestor, not an exact release identity",
+      "checkout_status": "DIRTY_PREEXISTING_EXTERNAL_CHECKOUT; provenance uses committed HEAD only"
+    },
+    "AL_onnx_pass_sha256": "f61bc7ab424726d08881f1e9ef8a3fbcfbee8fdcb612eeb6d944c450aed4540a",
+    "requirements_sha256": "c40f36e292ea2d3d921d8cada6016100fbacc399d260cb77e8d5d77b2a6a5c49",
+    "requirements_policy": "official minimum/unpinned requirements used unchanged",
+    "host_environment": {"onnx": "vendor-venv", "onnxruntime": "1.28.0", "pip_freeze_sha256": "7b077b4fcef14e44f97b9d4c64d3ef7d6768e18d8ce2252dcbe90b09e4da057b"}
+  },
+  "board_runtime": {
+    "armnn_stdout_version": "ArmNN v32.1.0",
+    "version_file_value": "ed5ae24",
+    "version_file_sha256": "7a5321411cc9cf1ebcbb47705064d7abb236544e2e2f0400e5f8e03bcb326a10",
+    "libarmnn_so": {"soname_filename": "libarmnn.so.32.1", "sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce"},
+    "libarmnn_onnx_parser_so": {"soname_filename": "libarmnnOnnxParser.so.24.6", "sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99"},
+    "libprotobuf_so": {"soname_filename": "libprotobuf.so.23.0.0", "sha256": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265"},
+    "kernel": "Linux 6.1.111-rt42",
+    "runtime_library_path": "/opt/face_detection/runtime-root/armnn_lib/lib:/opt/face_detection/runtime-root/ffmpeg_opencv4.7.0_aarch64/lib:/lib:/usr/lib"
+  },
+  "comparison": {
+    "AL_onnx_pass_to_board_build_match": "NOT_PROVEN",
+    "runtime_toolchain_version_skew": "NOT_PROVEN",
+    "control_observation": "The same board runtime previously assigned the official yolo_face_uint8_15.onnx graph to Alnpu/ALHardNPU, but the release YOLOv8n quantized graph fails Alnpu Optimize on QAsymmU8 Splitter. This is consistent with a graph/operator dialect difference; it is not sufficient to claim a version skew.",
+    "no_runtime_files_modified": true,
+    "no_fallback_accepted": true
+  }
+}
