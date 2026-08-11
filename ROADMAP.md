@@ -366,9 +366,12 @@ Alnpu backend, APUG1205 compiler/native runtime, or official DR1M90 GEG400 YOLO
 deployment chain; no benchmark or CPU fallback result is claimed.
 
 Task 029 is completed as the documentation-only vendor enablement handoff. Its package is
-`READY_FOR_VENDOR_HANDOFF` and records the exact Task 028 identity, causal
-chain, compiled Alnpu capability boundary and questions for the missing vendor
-backend/compiler/deployment information.
+`WAITING_FOR_VENDOR_INPUT` and records the exact Task 028 identity, causal
+chain, compiled Alnpu capability boundary, Task 032 fusion findings and
+questions for the missing vendor backend/compiler/deployment information. The
+face ONNX has no ALHardNPU custom node; ArmNN/Alnpu forms three fused
+assignments during Optimize, but the complete fusion predicate is not
+recoverable, so YOLOv5n is not declared inherently incompatible.
 
 ## Stage 5: CPU benchmark and profiling consolidation (Task 030)
 

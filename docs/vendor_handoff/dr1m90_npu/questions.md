@@ -26,3 +26,9 @@ target board/package, and compatibility notes where applicable.
 8. Please explain why the face `ALHardNPU` control can load while real
    quantized YOLOv5n and YOLOv8n graphs fail at `Alnpu Optimize`, and identify
    the exact supported graph dialect or conversion contract.
+9. Please provide the complete `ALHardNPU` fusion/model constraints, including
+   the complete fusion predicate and eligibility predicate corresponding to
+   `ConvertConv2dIntoALHardNPUImpl`,
+   `checkConv`, `checkAct` and `checkPool`. The public audit cannot recover
+   these conditions and therefore does not classify YOLOv5n as inherently
+   incompatible.

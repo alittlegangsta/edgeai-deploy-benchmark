@@ -602,10 +602,14 @@ the audit record only, not SD writes, module loading or NPU execution. It is
 not an NPU execution or performance result.
 
 Task 029 is completed as the documentation-only vendor enablement handoff and is
-`READY_FOR_VENDOR_HANDOFF`. The package at
+`WAITING_FOR_VENDOR_INPUT`. The package at
 `docs/vendor_handoff/dr1m90_npu/` freezes Task 028 identities, causal evidence
-and the scoped Alnpu capability boundary; vendor binaries, models, SDKs,
-datasets and credentials remain external.
+the scoped Alnpu capability boundary, and the Task 032 fusion addendum; vendor
+binaries, models, SDKs, datasets and credentials remain external. The face ONNX
+has no ALHardNPU custom node; the audited runtime forms three
+`Alnpu|ALHardNPU` assignments during Optimize, but the complete fusion
+predicate is not recoverable. This does not claim that YOLOv5n is inherently
+incompatible.
 
 Task 030 consolidates the approved PC C++ ORT and DR1M90 ARM ncnn YOLOv5n CPU
 measurements under one correctness-first reporting contract. It independently

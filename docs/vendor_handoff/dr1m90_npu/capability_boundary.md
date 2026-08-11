@@ -7,6 +7,19 @@ Task 028 (`5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce`,
 build ID `9f9aaf6f26dd1cf57ac84c778b9f621c04c7d895`). It is not a claim about
 all DR1M90 hardware, all SoftNPU bitstreams, or future vendor library builds.
 
+## Task 032 fusion findings
+
+The face input `yolo_face_uint8_15.onnx` has no `ALHardNPU` custom node. The
+three `Alnpu|ALHardNPU` assignments are formed inside ArmNN/Alnpu during
+`Optimize`. Static inspection confirms the presence of
+`ConvertConv2dIntoALHardNPUImpl`, `checkConv`, `checkAct` and `checkPool` in
+this library. The available logs, stripped binary and public artifacts do not
+recover the complete fusion predicate or exact ONNX-node ranges for the three
+regions. This is an evidence limitation, not proof that YOLOv5n is inherently
+incompatible.
+
+The Task 032 conclusion is `FUSION_PREDICATE_NOT_RECOVERABLE`.
+
 ## Compiled method matrix
 
 | Arm NN support method | Observed implementation | Handoff interpretation |

@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Updated the Task 029 vendor handoff to `WAITING_FOR_VENDOR_INPUT` with the
+  Task 032 ALHardNPU fusion addendum. The face ONNX has no ALHardNPU custom
+  node; the audited `libarmnn.so.32.1` forms three `Alnpu|ALHardNPU`
+  assignments during Optimize and contains `ConvertConv2dIntoALHardNPUImpl`,
+  `checkConv`, `checkAct` and `checkPool`. The complete fusion predicate is not
+  recoverable from public evidence, so the handoff does not claim YOLOv5n is
+  inherently incompatible.
+
 - Added Task 032's bounded ALHardNPU fusion eligibility audit. The matched
   AArch64 ArmNN binary contains the fusion implementation symbols and a finite
   ten-method Alnpu support whitelist, while generic YOLO layer slots resolve

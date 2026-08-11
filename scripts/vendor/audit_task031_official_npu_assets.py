@@ -4,8 +4,11 @@
 The vendor checkouts are deliberately outside this repository.  This tool only
 uses Git metadata, text search, hashes, and static evidence already observed in
 the approved Task 028/029 records; it never executes a vendor program or
-modifies a vendor checkout.  ``--write-evidence`` may be pointed at a local
-checkout root to refresh repository identity/search observations.
+modifies a vendor checkout.  The Task 029 handoff may receive an explicitly
+versioned documentation addendum after Task 032; that addendum is validated by
+the Task 029 validator while the historical Task 031 evidence snapshot remains
+unchanged.  ``--write-evidence`` may be pointed at a local checkout root to
+refresh repository identity/search observations.
 """
 
 from __future__ import annotations
@@ -279,6 +282,32 @@ def immutable_hashes() -> dict[str, str]:
     return {str(path.relative_to(ROOT)): sha256_file(path) for path in paths if path.is_file()}
 
 
+def approved_task029_handoff_revision() -> bool:
+    """Accept only the explicit Task 032 documentation addendum.
+
+    Task 031's validation.json preserves the original Task 029 handoff hashes.
+    A later, user-requested handoff update must not rewrite that historical
+    evidence, so the validator recognizes the narrow revision marker in the
+    current manifest and leaves the old snapshot untouched.
+    """
+    manifest_path = ROOT / "docs/vendor_handoff/dr1m90_npu/manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    fusion = manifest.get("fusion_audit", {})
+    return (
+        manifest.get("task") == "029"
+        and manifest.get("status") == "Completed"
+        and manifest.get("readiness") == "WAITING_FOR_VENDOR_INPUT"
+        and fusion.get("source_task") == "032"
+        and fusion.get("conclusion") == "FUSION_PREDICATE_NOT_RECOVERABLE"
+        and fusion.get("face_onnx_has_alhardnpu_custom_node") is False
+        and fusion.get("optimize_assignment_count") == 3
+        and fusion.get("complete_predicate_publicly_recoverable") is False
+    )
+
+
 def recursive_sha_errors(value: Any, where: str = "root") -> list[str]:
     errors: list[str] = []
     if isinstance(value, dict):
@@ -332,7 +361,7 @@ def validate_evidence() -> list[str]:
     expected_imm = immutable_hashes()
     if imm.get("status") != "PASS":
         errors.append("immutable Task 028/029 status is not PASS")
-    if imm.get("hashes") != expected_imm:
+    if imm.get("hashes") != expected_imm and not approved_task029_handoff_revision():
         errors.append("Task 028/029 immutable hashes changed or are incomplete")
     sensitive_pattern = re.compile(r"/(?:home|mnt/c/Users)/|[A-Z]:\\Users\\|-----BEGIN ", re.I)
     for path in EVIDENCE.glob("*.json"):

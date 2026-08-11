@@ -22,11 +22,21 @@ class Task029VendorHandoffTests(unittest.TestCase):
         shutil.copytree(PACKAGE, target)
         (repo / "results/evidence").mkdir(parents=True)
         shutil.copytree(ROOT / "results/evidence/028", repo / "results/evidence/028")
+        shutil.copytree(ROOT / "results/evidence/032", repo / "results/evidence/032")
         return target
 
     def test_checked_in_handoff_passes(self):
         result = self.run_validator(PACKAGE)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("WAITING_FOR_VENDOR_INPUT", result.stdout)
+
+    def test_manifest_records_task032_fusion_boundary(self):
+        manifest = json.loads((PACKAGE / "manifest.json").read_text(encoding="utf-8"))
+        fusion = manifest["fusion_audit"]
+        self.assertFalse(fusion["face_onnx_has_alhardnpu_custom_node"])
+        self.assertEqual(fusion["optimize_assignment_count"], 3)
+        self.assertFalse(fusion["complete_predicate_publicly_recoverable"])
+        self.assertIn("ConvertConv2dIntoALHardNPUImpl", fusion["confirmed_symbols"])
 
     def test_validator_rejects_missing_question_file(self):
         with tempfile.TemporaryDirectory() as directory:

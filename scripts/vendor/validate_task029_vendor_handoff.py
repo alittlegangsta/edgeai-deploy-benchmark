@@ -18,7 +18,7 @@ REQUIRED_METHODS = (
     "IsPreluSupported", "IsResizeSupported", "IsConvolution2dSupported", "IsActivationSupported",
     "IsSplitterSupported", "IsAdditionSupported", "IsMultiplicationSupported", "IsElementwiseUnarySupported",
 )
-REQUIRED_QUESTIONS = ("DR1M90 GEG400", "AL_onnx_pass", "generic quantized YOLO", "ALHardNPU", "convert_tool", "al_ai_flow", "HPF", "SoftNPU", "SDK", "bitstream")
+REQUIRED_QUESTIONS = ("DR1M90 GEG400", "AL_onnx_pass", "generic quantized YOLO", "ALHardNPU", "fusion predicate", "model constraints", "convert_tool", "al_ai_flow", "HPF", "SoftNPU", "SDK", "bitstream")
 FORBIDDEN_SUFFIXES = {".onnx", ".bin", ".elf", ".so", ".ko", ".a", ".tar", ".gz", ".xz", ".zip", ".7z", ".img", ".dtb", ".hpf", ".tmfile"}
 
 
@@ -47,8 +47,8 @@ def validate(package: Path) -> list[str]:
         errors.append("manifest schema/task identity is invalid")
     if manifest.get("status") not in {"In Progress", "Completed"}:
         errors.append("manifest status is not a repository task state")
-    if manifest.get("readiness") != "READY_FOR_VENDOR_HANDOFF":
-        errors.append("handoff readiness is not READY_FOR_VENDOR_HANDOFF")
+    if manifest.get("readiness") != "WAITING_FOR_VENDOR_INPUT":
+        errors.append("handoff readiness is not WAITING_FOR_VENDOR_INPUT")
     source = manifest.get("source_of_truth", {})
     if source.get("task") != "028" or source.get("new_experiments") is not False:
         errors.append("handoff must be based only on Task 028 without new experiments")
@@ -56,6 +56,18 @@ def validate(package: Path) -> list[str]:
         errors.append("Task 028 primary verdict is missing")
     if source.get("primary_blocker") != "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE":
         errors.append("scoped Task 028 blocker is missing")
+    fusion = manifest.get("fusion_audit", {})
+    if fusion.get("source_task") != "032" or fusion.get("conclusion") != "FUSION_PREDICATE_NOT_RECOVERABLE":
+        errors.append("Task 032 fusion conclusion is missing")
+    if fusion.get("face_onnx_has_alhardnpu_custom_node") is not False:
+        errors.append("face ONNX custom-node fact is missing or incorrect")
+    if fusion.get("optimize_assignment_count") != 3:
+        errors.append("face Optimize assignment count is not three")
+    if fusion.get("complete_predicate_publicly_recoverable") is not False:
+        errors.append("fusion predicate recoverability boundary is missing")
+    for symbol in ("ConvertConv2dIntoALHardNPUImpl", "checkConv", "checkAct", "checkPool"):
+        if symbol not in fusion.get("confirmed_symbols", []):
+            errors.append(f"fusion symbol missing: {symbol}")
     identity = manifest.get("reproduction_identity", {})
     required_identity = {
         "board": ("system_bit_sha256", "system_dtb_sha256"),
@@ -101,11 +113,24 @@ def validate(package: Path) -> list[str]:
             errors.append(f"evidence file is missing: {rel}")
         elif hashlib.sha256(path.read_bytes()).hexdigest() != digest:
             errors.append(f"evidence SHA256 mismatch: {rel}")
+    for entry in fusion.get("task032_evidence", []):
+        rel, digest = entry.get("path"), entry.get("sha256")
+        if not isinstance(rel, str) or not rel.startswith("results/evidence/032/"):
+            errors.append(f"Task 032 evidence reference is outside Task 032: {rel!r}")
+            continue
+        if not isinstance(digest, str) or not SHA256_RE.fullmatch(digest):
+            errors.append(f"invalid Task 032 evidence SHA256: {rel}")
+            continue
+        path = root / rel
+        if not path.is_file():
+            errors.append(f"Task 032 evidence file is missing: {rel}")
+        elif hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            errors.append(f"Task 032 evidence SHA256 mismatch: {rel}")
     capability = (package / "capability_boundary.md").read_text(encoding="utf-8") if (package / "capability_boundary.md").is_file() else ""
     for method in REQUIRED_METHODS:
         if method not in capability:
             errors.append(f"capability matrix missing method: {method}")
-    for phrase in ("LayerSupportBase", "ALHardNPU", "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE"):
+    for phrase in ("LayerSupportBase", "ALHardNPU", "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE", "ConvertConv2dIntoALHardNPUImpl", "checkConv", "checkAct", "checkPool", "FUSION_PREDICATE_NOT_RECOVERABLE"):
         if phrase not in capability:
             errors.append(f"capability scope/conclusion missing: {phrase}")
     if "not a claim about" not in capability.lower() or "dr1m90 hardware" not in capability.lower():
@@ -142,7 +167,7 @@ def main() -> int:
     if errors:
         print(json.dumps({"status": "FAIL", "errors": errors}, indent=2, sort_keys=True))
         return 1
-    print(json.dumps({"status": "PASS", "task": "029", "readiness": "READY_FOR_VENDOR_HANDOFF", "evidence": "Task 028 references verified", "vendor_material": "absent"}, sort_keys=True))
+    print(json.dumps({"status": "PASS", "task": "029", "readiness": "WAITING_FOR_VENDOR_INPUT", "evidence": "Task 028 and Task 032 references verified", "vendor_material": "absent"}, sort_keys=True))
     return 0
 
 

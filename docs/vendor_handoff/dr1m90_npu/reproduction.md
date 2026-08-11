@@ -66,8 +66,12 @@ assignment: three Alnpu|ALHardNPU workloads
 fallback: false
 ```
 
-It has no Split node and uses a vendor fused/custom ALHardNPU path. It does not
-prove generic Conv2d support.
+The ONNX file itself contains no `ALHardNPU` custom node. ArmNN/Alnpu forms
+three `Alnpu|ALHardNPU` workloads during `Optimize`; this is a vendor
+fused/custom backend path and does not prove generic Conv2d support. The
+audited binary exposes `ConvertConv2dIntoALHardNPUImpl`, `checkConv`,
+`checkAct` and `checkPool`, but the complete fusion predicate remains
+unrecoverable from public evidence.
 
 ## Evidence references
 
