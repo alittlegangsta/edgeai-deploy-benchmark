@@ -9,7 +9,7 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–023 are completed. Task 021 ARM UVC camera inference passed its
+Tasks 001–030 are completed. Task 021 ARM UVC camera inference passed its
 automated stage and received user representative-frame approval. Task 020 ARM video-file inference passed
 automated real-board validation and user playback review.
 Checkpoint C is
@@ -606,3 +606,15 @@ Task 029 is completed as the documentation-only vendor enablement handoff and is
 `docs/vendor_handoff/dr1m90_npu/` freezes Task 028 identities, causal evidence
 and the scoped Alnpu capability boundary; vendor binaries, models, SDKs,
 datasets and credentials remain external.
+
+Task 030 consolidates the approved PC C++ ORT and DR1M90 ARM ncnn YOLOv5n CPU
+measurements under one correctness-first reporting contract. It independently
+recomputes nearest-rank P50/P95, stage means, FPS, process CPU utilization,
+Peak RSS, and frequency/temperature availability from retained raw evidence.
+The PC row uses WSL2 C++ ORT; the ARM row uses the recommended dual-thread
+OpenMP ncnn profile. They share the frozen model/input and preprocessing and
+postprocessing contracts, but are different platforms and runtimes, so no
+cross-platform speedup is claimed. The vendor face NPU is a functional control
+only, and DR1 YOLOv5n NPU remains `NOT_BENCHMARKED`. See
+[the consolidated benchmark report](docs/benchmark/ARM_CPU_BENCHMARK_PROFILING_CONSOLIDATION.md)
+and `results/evidence/030/`.

@@ -1,0 +1,36 @@
+task: "030"
+title: "ARM CPU benchmark and profiling consolidation"
+status: "Completed"
+methodology_id: "task030-arm-cpu-profiling-consolidation-v1"
+source_evidence:
+  pc_cpp_ort:
+    path: "results/benchmarks/pc_three_backend_cpp_ort.json"
+    task: "012"
+  arm_ncnn_recommended_dual_thread:
+    path: "results/evidence/018/openmp/threads2_raw_samples.json"
+    task: "018"
+workload:
+  model: "YOLOv5n v7.0"
+  onnx_sha256: "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121"
+  source_weights_sha256: "4f180cf23ba0717ada0badd6c685026d73d48f184d00fc159c2641284b2ac0a3"
+  image_sha256: "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+  input_shape: [1, 3, 640, 640]
+  output_shape: [1, 25200, 85]
+  confidence_threshold: 0.25
+  nms_iou_threshold: 0.45
+protocol:
+  warmup: 10
+  stages: [preprocess, inference, postprocess, pipeline]
+  percentiles: [p50, p95]
+  percentile_method: "nearest-rank"
+  fps_formula: "1000 / aggregate mean pipeline_ms"
+  preserve_all_samples: true
+comparison:
+  cross_platform_speedup: "not claimed"
+  npu_yolov5n: "NOT_BENCHMARKED"
+allowed_new_files:
+  - "tasks/030_arm_cpu_benchmark_profiling_consolidation.md"
+  - "docs/benchmark/ARM_CPU_BENCHMARK_PROFILING_CONSOLIDATION.md"
+  - "scripts/validate_task030_benchmark_consolidation.py"
+  - "tests/python/test_task030_benchmark_consolidation.py"
+  - "results/evidence/030/*.json"

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Added Task 030's correctness-first PC C++ ORT and DR1M90 ARM ncnn benchmark
+  consolidation. Retained raw campaigns are independently recomputed for stage
+  mean/P50/P95, FPS, process CPU utilization, Peak RSS, and null
+  frequency/temperature availability. The report uses the same frozen YOLOv5n
+  v7.0 workload contract, makes no cross-platform speedup claim, and keeps
+  vendor face NPU functional-only with YOLOv5n NPU `NOT_BENCHMARKED`.
+
 - Completed the Task 028 C3c static Alnpu capability audit. The exact matched
   ArmNN binary exposes a finite ten-method `AlnpuLayerSupport` whitelist while
   generic Conv2d/Activation/Splitter/Add/Mul slots resolve to

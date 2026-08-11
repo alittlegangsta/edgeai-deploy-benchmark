@@ -369,3 +369,17 @@ Task 029 is completed as the documentation-only vendor enablement handoff. Its p
 `READY_FOR_VENDOR_HANDOFF` and records the exact Task 028 identity, causal
 chain, compiled Alnpu capability boundary and questions for the missing vendor
 backend/compiler/deployment information.
+
+## Stage 5: CPU benchmark and profiling consolidation (Task 030)
+
+Task 030 is the correctness-first consolidation of the approved PC C++ ORT and
+DR1M90 ARM ncnn YOLOv5n CPU measurements. It freezes the shared model, input,
+threshold, preprocessing/postprocessing and timing definitions, then derives
+nearest-rank P50/P95, stage summaries, aggregate FPS, process CPU utilization,
+Peak RSS, and explicit null/unavailable frequency and temperature values from
+the retained Task 012 and Task 018 raw campaigns. The rows are reported
+separately because PC WSL2 ORT and ARM ncnn are different environments; no
+cross-platform speedup is published. NPU face control remains functional-only
+and YOLOv5n NPU remains `NOT_BENCHMARKED`. See
+`docs/benchmark/ARM_CPU_BENCHMARK_PROFILING_CONSOLIDATION.md` and
+`results/evidence/030/`.

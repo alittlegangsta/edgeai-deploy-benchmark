@@ -1,0 +1,50 @@
+{
+  "cross_platform_speedup": null,
+  "cross_platform_speedup_status": "NOT_CLAIMED_DIFFERENT_PLATFORM_AND_RUNTIME",
+  "historical_arm_reference": {
+    "note": "OpenMP-off historical baseline; immutable reference only, not mixed into the Task 018 recommended profile row.",
+    "path": "results/evidence/017/benchmark_summary.json",
+    "task": "017"
+  },
+  "identity": {
+    "confidence_threshold": 0.25,
+    "inference_config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+    "input_contract": {
+      "dtype": "FP32",
+      "shape": [
+        1,
+        3,
+        640,
+        640
+      ]
+    },
+    "input_image_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "model_name": "YOLOv5n v7.0",
+    "nms_iou_threshold": 0.45,
+    "onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "output_contract": {
+      "dtype": "FP32",
+      "shape": [
+        1,
+        25200,
+        85
+      ]
+    },
+    "postprocess": "shared YOLO decode, confidence filter, coordinate restore, class-aware NMS",
+    "preprocess": "shared BGR-to-RGB letterbox, normalize, HWC-to-CHW",
+    "source_weights_sha256": "4f180cf23ba0717ada0badd6c685026d73d48f184d00fc159c2641284b2ac0a3"
+  },
+  "interpretation": "The rows share workload and preprocessing/postprocessing contracts, but PC ORT and ARM ncnn are different hardware/runtime environments. This report does not present a cross-platform speedup.",
+  "rows": [
+    {
+      "backend": "pc_cpp_ort",
+      "evidence": "results/evidence/030/pc_ort_benchmark.json"
+    },
+    {
+      "backend": "arm_ncnn_recommended_dual_thread",
+      "evidence": "results/evidence/030/arm_ncnn_benchmark.json"
+    }
+  ],
+  "schema_version": 1,
+  "task": "030"
+}
