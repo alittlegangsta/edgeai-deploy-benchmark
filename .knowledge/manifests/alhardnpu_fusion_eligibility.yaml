@@ -1,0 +1,45 @@
+schema_version: 1
+task: "032"
+title: "ALHardNPU fusion eligibility audit"
+status: Completed
+conclusion: FUSION_PREDICATE_NOT_RECOVERABLE
+scope: "Audited AArch64 libarmnn.so.32.1 family and immutable Task 028/031 evidence"
+primary_task028_status: BLOCKED_EXTERNAL_VENDOR_DEPENDENCY
+board_accessed: false
+model_modified: false
+benchmark_run: false
+vendor_binary_executed: false
+evidence:
+  - results/evidence/032/fusion_symbol_audit.json
+  - results/evidence/032/face_fusion_regions.json
+  - results/evidence/032/yolov5n_pattern_comparison.json
+  - results/evidence/032/al_onnx_pass_pattern_audit.json
+  - results/evidence/032/fusion_eligibility_verdict.json
+  - results/evidence/032/validation.json
+immutable_inputs:
+  - results/evidence/028/trackc3_capability_face_path_audit.json
+  - results/evidence/028/trackc3_support_boundary_audit.json
+  - results/evidence/028/trackc3_model_control_comparison.json
+  - results/evidence/028/al_onnx_pass_audit.json
+  - results/evidence/031/face_onnx_provenance.json
+  - results/evidence/031/armnn_backend_inventory.json
+runtime:
+  libarmnn_sha256: 5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce
+  archive_sha256: 867e347bb758f9b1b083c35e08a74f2b3cc39c2975ac0f8e18c25f7f35749526
+  build_id: 9f9aaf6f26dd1cf57ac84c778b9f621c04c7d895
+  soname: libarmnn.so.32
+model:
+  face_sha256: 5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c
+  yolov5n_fp32_sha256: 78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121
+  yolov5n_uint8_sha256: 3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3
+  yolov5n_int8_sha256: 8ff4481ffd250a198b0a4a44a1eca9d09c50a68a4da459788960282ba98c3ad9
+al_onnx_pass:
+  repository_commit: 199ef4d71f453bb9a000102ff39def09c4cf73f9
+  script_sha256: f61bc7ab424726d08881f1e9ef8a3fbcfbee8fdcb612eeb6d944c450aed4540a
+  native_compiler_invoked: false
+  alhardnpu_custom_onnx_node_created: false
+next_reopen_requirements:
+  - vendor backend source/build exposing the complete fusion predicate
+  - generic quantized-YOLO-capable Alnpu backend
+  - APUG1205-compatible compiler/native runtime
+  - official DR1M90 GEG400 YOLO deployment chain

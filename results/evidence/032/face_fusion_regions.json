@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "task": "032",
+  "status": "COMPLETE_WITH_MAPPING_LIMIT",
+  "source_classification": "real_device_assignment_fact_reused_from_task_026; graph inventory fact from task_031; mapping limitation explicit",
+  "model": {
+    "name": "yolo_face_uint8_15.onnx",
+    "sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c",
+    "task028_recorded_model_hash": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668",
+    "task028_recorded_hash_status": "MALFORMED_IN_IMMUTABLE_TASK028_RECORD",
+    "opset": 14
+  },
+  "execution_sequence": [
+    "armnnOnnxParser::IOnnxParser::Create",
+    "CreateNetworkFromBinaryFile",
+    "armnn::Optimize",
+    "IRuntime::LoadNetwork"
+  ],
+  "observed_fused_assignment_count": 3,
+  "regions": [
+    {
+      "assignment": "135|Alnpu |ALHardNPU",
+      "assignment_id": "135",
+      "backend": "Alnpu",
+      "fused_layer": "ALHardNPU",
+      "exact_original_onnx_nodes": "NOT_RECOVERABLE_FROM_RETAINED_LOG",
+      "region_graph_pattern": "NOT_RECOVERABLE; only graph-level Conv/Relu/MaxPool/Concat candidate inventory is retained",
+      "region_shape_dtype_quantization": "NOT_RECOVERABLE_PER_REGION"
+    },
+    {
+      "assignment": "134|Alnpu |ALHardNPU",
+      "assignment_id": "134",
+      "backend": "Alnpu",
+      "fused_layer": "ALHardNPU",
+      "exact_original_onnx_nodes": "NOT_RECOVERABLE_FROM_RETAINED_LOG",
+      "region_graph_pattern": "NOT_RECOVERABLE; only graph-level Conv/Relu/MaxPool/Concat candidate inventory is retained",
+      "region_shape_dtype_quantization": "NOT_RECOVERABLE_PER_REGION"
+    },
+    {
+      "assignment": "126|Alnpu |ALHardNPU",
+      "assignment_id": "126",
+      "backend": "Alnpu",
+      "fused_layer": "ALHardNPU",
+      "exact_original_onnx_nodes": "NOT_RECOVERABLE_FROM_RETAINED_LOG",
+      "region_graph_pattern": "NOT_RECOVERABLE; only graph-level Conv/Relu/MaxPool/Concat candidate inventory is retained",
+      "region_shape_dtype_quantization": "NOT_RECOVERABLE_PER_REGION"
+    }
+  ],
+  "common_graph_inventory": {
+    "input": {
+      "shape": [
+        1,
+        3,
+        416,
+        416
+      ],
+      "dtype": "FLOAT"
+    },
+    "outputs": [
+      {
+        "shape": [
+          1,
+          18,
+          26,
+          26
+        ],
+        "dtype": "FLOAT"
+      },
+      {
+        "shape": [
+          1,
+          18,
+          13,
+          13
+        ],
+        "dtype": "FLOAT"
+      }
+    ],
+    "nodes": 124,
+    "operator_counts": {
+      "Conv": 13,
+      "Relu": 11,
+      "MaxPool": 6,
+      "Concat": 1,
+      "Resize": 1,
+      "QuantizeLinear": 33,
+      "DequantizeLinear": 59,
+      "Split": 0
+    },
+    "initializer_dtypes": {
+      "FLOAT": 61,
+      "INT32": 14,
+      "INT64": 1,
+      "UINT8": 37
+    },
+    "backend_layout": "NOT_RECOVERABLE_PER_REGION",
+    "internal_activation_quantization": "QDQ present; exact per-region scales/zero-points not retained"
+  },
+  "fusion_interpretation": {
+    "positive_fact": "The strict board run reported three Alnpu|ALHardNPU assignments, Optimize and LoadNetwork PASS, exit code 0, and CPU fallback disabled.",
+    "why_this_is_not_generic_conv_proof": "The same audited AlnpuLayerSupport does not override generic IsConvolution2dSupported; the assignment is evidence of a vendor fusion/custom workload path.",
+    "exact_region_mapping": "NOT_RECOVERABLE",
+    "missing_trace": "The retained logs contain assignment IDs and layer type but no parser layer names, graph node IDs or per-region tensor descriptors."
+  },
+  "safety": {
+    "new_board_run": false,
+    "board_evidence_reused": true,
+    "model_modified": false
+  }
+}

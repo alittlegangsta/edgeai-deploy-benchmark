@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- Added Task 032's bounded ALHardNPU fusion eligibility audit. The matched
+  AArch64 ArmNN binary contains the fusion implementation symbols and a finite
+  ten-method Alnpu support whitelist, while generic YOLO layer slots resolve
+  to `LayerSupportBase`. The face's three `Alnpu|ALHardNPU` assignments are
+  retained, but exact fusion predicates and source-node regions are not
+  recoverable from the stripped binary without backend source or an AArch64
+  disassembler. The conservative result is
+  `FUSION_PREDICATE_NOT_RECOVERABLE`; no model, board, runtime or benchmark
+  change was made.
+
 - Completed Task 031's read-only official NPU asset recovery and GEG400
   compatibility audit. The three public repository histories contain no
   recoverable `npuv1_release`, APUG1205 native compiler/runtime,

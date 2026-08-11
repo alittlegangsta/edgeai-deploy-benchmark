@@ -1,0 +1,350 @@
+{
+  "schema_version": 1,
+  "task": "032",
+  "status": "COMPLETE_STATIC_AUDIT",
+  "source_classification": "source_code_fact_for_task_028_031_records; binary_fact_for_this_read; inference_explicitly_labeled",
+  "external_identity": {
+    "archive": {
+      "path": "<vendor-root>/NPU_info/dr1m90_npu/npu_demo/libs/armnn_lib.tar.xz",
+      "sha256": "867e347bb758f9b1b083c35e08a74f2b3cc39c2975ac0f8e18c25f7f35749526",
+      "executed": false
+    },
+    "library": {
+      "path": "<external-temp>/armnn_lib/lib/libarmnn.so.32.1",
+      "sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+      "file_output": "/tmp/task032-armnn/armnn_lib/lib/libarmnn.so.32.1: ELF 64-bit LSB shared object, ARM aarch64, version 1 (GNU/Linux), dynamically linked, BuildID[sha1]=9f9aaf6f26dd1cf57ac84c778b9f621c04c7d895, stripped",
+      "build_id": "9f9aaf6f26dd1cf57ac84c778b9f621c04c7d895",
+      "soname": "libarmnn.so.32",
+      "architecture": "AArch64",
+      "stripped": true
+    }
+  },
+  "commands": {
+    "file": "file <external-temp>/armnn_lib/lib/libarmnn.so.32.1",
+    "readelf_header": "readelf -h <external-temp>/armnn_lib/lib/libarmnn.so.32.1",
+    "readelf_dynamic": "readelf -d <external-temp>/armnn_lib/lib/libarmnn.so.32.1",
+    "symbols": "nm -D -C --defined-only <external-temp>/armnn_lib/lib/libarmnn.so.32.1",
+    "strings": "strings -tx <external-temp>/armnn_lib/lib/libarmnn.so.32.1",
+    "host_objdump": "objdump -f <external-temp>/armnn_lib/lib/libarmnn.so.32.1"
+  },
+  "direct_fusion_symbols": {
+    "required_fragments": [
+      "RunOptimization",
+      "findLastLayer",
+      "Run(armnn::Graph&",
+      "RunFC(armnn::Graph&",
+      "checkConv",
+      "checkAct",
+      "checkPool",
+      "TransposeWeightLayer",
+      "TransposeFcWeightLayer"
+    ],
+    "observed": [
+      {
+        "address": "0x00000000006e6270",
+        "type": "W",
+        "name": "armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::findLastLayer(armnn::Layer&, armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::ConvertInfo&)"
+      },
+      {
+        "address": "0x00000000006f81e8",
+        "type": "W",
+        "name": "armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::RunOptimization(armnn::Graph&)"
+      },
+      {
+        "address": "0x00000000006ed178",
+        "type": "W",
+        "name": "void armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::TransposeWeightLayer<(armnn::DataType)2, unsigned char>(armnn::ConstantLayer*)"
+      },
+      {
+        "address": "0x00000000006ed708",
+        "type": "W",
+        "name": "void armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::TransposeWeightLayer<(armnn::DataType)6, signed char>(armnn::ConstantLayer*)"
+      },
+      {
+        "address": "0x00000000006ecec8",
+        "type": "W",
+        "name": "void armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::TransposeFcWeightLayer<(armnn::DataType)1, float>(armnn::ConstantLayer*)"
+      },
+      {
+        "address": "0x00000000006ed440",
+        "type": "W",
+        "name": "void armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::TransposeFcWeightLayer<(armnn::DataType)2, unsigned char>(armnn::ConstantLayer*)"
+      },
+      {
+        "address": "0x00000000006ed9d0",
+        "type": "W",
+        "name": "void armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::TransposeFcWeightLayer<(armnn::DataType)6, signed char>(armnn::ConstantLayer*)"
+      },
+      {
+        "address": "0x00000000006e60c8",
+        "type": "W",
+        "name": "armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::checkAct(armnn::ActivationLayer*)"
+      },
+      {
+        "address": "0x00000000006e5ce0",
+        "type": "W",
+        "name": "armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::checkConv(armnn::Convolution2dLayer*)"
+      },
+      {
+        "address": "0x00000000006e6130",
+        "type": "W",
+        "name": "armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::checkPool(armnn::Pooling2dLayer*)"
+      },
+      {
+        "address": "0x00000000006f6cc8",
+        "type": "W",
+        "name": "armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::Run(armnn::Graph&, armnn::Convolution2dLayer&) const"
+      },
+      {
+        "address": "0x00000000006f5288",
+        "type": "W",
+        "name": "armnn::optimizations::ConvertConv2dIntoALHardNPUImpl::RunFC(armnn::Graph&, armnn::FullyConnectedLayer&) const"
+      }
+    ],
+    "required_presence": {
+      "RunOptimization": true,
+      "findLastLayer": true,
+      "Run(armnn::Graph&": true,
+      "RunFC(armnn::Graph&": true,
+      "checkConv": true,
+      "checkAct": true,
+      "checkPool": true,
+      "TransposeWeightLayer": true,
+      "TransposeFcWeightLayer": true
+    },
+    "compiled_workload_symbols": [
+      "ALHardNPURun",
+      "ALHardNPUFCRun",
+      "ALHardNPULayer",
+      "AlnpuALHardNPUWorkload",
+      "CreateALHardNPU"
+    ],
+    "template_type_families_observed": {
+      "float": true,
+      "uint8": true,
+      "int8": true
+    },
+    "call_chain": {
+      "symbol_family": [
+        "RunOptimization",
+        "Run",
+        "RunFC",
+        "checkConv",
+        "checkAct",
+        "checkPool",
+        "ALHardNPULayer",
+        "CreateALHardNPU"
+      ],
+      "instruction_level_edges": "NOT_RECOVERABLE",
+      "interpretation": "The names identify the bounded fusion implementation family; no call edge is asserted without AArch64 disassembly or source."
+    }
+  },
+  "alnpu_layer_support": {
+    "overrides": {
+      "IsALHardNPUSupported": [
+        "armnn::AlnpuLayerSupport::IsALHardNPUSupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::ALHardNPUDescriptor const&, armnn::TensorInfo const&, armnn::Optional<armnn::TensorInfo> const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsConcatSupported": [
+        "armnn::AlnpuLayerSupport::IsConcatSupported(std::vector<armnn::TensorInfo const*, std::allocator<armnn::TensorInfo const*> >, armnn::TensorInfo const&, armnn::OriginsDescriptor const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsConstantSupported": [
+        "armnn::AlnpuLayerSupport::IsConstantSupported(armnn::TensorInfo const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsInputSupported": [
+        "armnn::AlnpuLayerSupport::IsInputSupported(armnn::TensorInfo const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsLayerSupported": [
+        "armnn::AlnpuLayerSupport::IsLayerSupported(armnn::LayerType const&, std::vector<armnn::TensorInfo, std::allocator<armnn::TensorInfo> > const&, armnn::BaseDescriptor const&, armnn::Optional<armnn::LstmInputParamsInfo> const&, armnn::Optional<armnn::LstmOnnxInputParamsInfo> const&, armnn::Optional<armnn::QuantizedLstmInputParamsInfo> const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsMemCopySupported": [
+        "armnn::AlnpuLayerSupport::IsMemCopySupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsOutputSupported": [
+        "armnn::AlnpuLayerSupport::IsOutputSupported(armnn::TensorInfo const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsPooling2dSupported": [
+        "armnn::AlnpuLayerSupport::IsPooling2dSupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::Pooling2dDescriptor const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsPreluSupported": [
+        "armnn::AlnpuLayerSupport::IsPreluSupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsResizeSupported": [
+        "armnn::AlnpuLayerSupport::IsResizeSupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::ResizeDescriptor const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ]
+    },
+    "generic_layer_support_base_symbols": {
+      "IsConvolution2dSupported": [
+        "armnn::LayerSupportBase::IsConvolution2dSupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::Convolution2dDescriptor const&, armnn::TensorInfo const&, armnn::Optional<armnn::TensorInfo> const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsActivationSupported": [
+        "armnn::LayerSupportBase::IsActivationSupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::ActivationDescriptor const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsSplitterSupported": [
+        "armnn::LayerSupportBase::IsSplitterSupported(armnn::TensorInfo const&, std::vector<std::reference_wrapper<armnn::TensorInfo>, std::allocator<std::reference_wrapper<armnn::TensorInfo> > > const&, armnn::ViewsDescriptor const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsAdditionSupported": [
+        "armnn::LayerSupportBase::IsAdditionSupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsMultiplicationSupported": [
+        "armnn::LayerSupportBase::IsMultiplicationSupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ],
+      "IsElementwiseUnarySupported": [
+        "armnn::LayerSupportBase::IsElementwiseUnarySupported(armnn::TensorInfo const&, armnn::TensorInfo const&, armnn::ElementwiseUnaryDescriptor const&, armnn::Optional<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>) const"
+      ]
+    },
+    "vtable_dispatch_reused_from_task028": [
+      {
+        "slot_address": "0x0cff728",
+        "method": "LayerSupportBase::IsActivationSupported",
+        "implementation": "0x00340f00",
+        "size": "0x38"
+      },
+      {
+        "slot_address": "0x0cff730",
+        "method": "LayerSupportBase::IsAdditionSupported",
+        "implementation": "0x00340ec8",
+        "size": "0x38"
+      },
+      {
+        "slot_address": "0x0cff788",
+        "method": "LayerSupportBase::IsConvolution2dSupported",
+        "implementation": "0x00340c50",
+        "size": "0x38"
+      },
+      {
+        "slot_address": "0x0cff878",
+        "method": "LayerSupportBase::IsMultiplicationSupported",
+        "implementation": "0x00340688",
+        "size": "0x38"
+      },
+      {
+        "slot_address": "0x0cff7d8",
+        "method": "LayerSupportBase::IsElementwiseUnarySupported",
+        "implementation": "0x00340a50",
+        "size": "0x38"
+      },
+      {
+        "slot_address": "0x0cff920",
+        "method": "LayerSupportBase::IsSplitterSupported",
+        "implementation": "0x003401e0",
+        "size": "0x38"
+      },
+      {
+        "slot_address": "0x0cff768",
+        "method": "AlnpuLayerSupport::IsConcatSupported",
+        "implementation": "0x003b5f90",
+        "size": "0xe20"
+      },
+      {
+        "slot_address": "0x0cff790",
+        "method": "AlnpuLayerSupport::IsALHardNPUSupported",
+        "implementation": "0x003b9200",
+        "size": "0x1300"
+      },
+      {
+        "slot_address": "0x0cff8f0",
+        "method": "AlnpuLayerSupport::IsResizeSupported",
+        "implementation": "0x003b8168",
+        "size": "0x1094"
+      }
+    ],
+    "override_set_exactly_matches_task031": true,
+    "generic_methods_are_not_alnpu_overrides": true,
+    "interpretation": "The audited binary has a finite AlnpuLayerSupport dispatch whitelist. The listed generic methods resolve to LayerSupportBase symbols; this is a proven dispatch fact, not a complete semantic predicate for every fused path."
+  },
+  "predicate_evidence": {
+    "string_level_indications": [
+      "b4b3d0 weights is not a supported type",
+      "b4b3f0 input and weights types mismatched",
+      "b4b418 biases is not a supported type",
+      "b4b438 the channel of conv input is not lesser or equal to 4095",
+      "b4b558 the pad is not equal to (kernel_size-1)/2",
+      "b4b740 only support add now",
+      "b4b7a0 Do Not Supported",
+      "b60ec8 Reference Convolution2d: weights is not a supported type.",
+      "b60f08 Reference Convolution2d: input and weights types mismatched.",
+      "b60f98 Reference Convolution2d: biases is not a supported type.",
+      "b61080 Reference ALHardNPU: weights is not a supported type.",
+      "b610b8 Reference ALHardNPU: input and weights types mismatched.",
+      "b61140 Reference ALHardNPU: biases is not a supported type.",
+      "b61230 Reference Convolution3d: weights is not a supported type.",
+      "b61270 Reference Convolution3d: input and weights types mismatched.",
+      "b61300 Reference Convolution3d: biases is not a supported type.",
+      "b61418 Reference DepthwiseConvolution2d: weights is not a supported type.",
+      "b61460 Reference DepthwiseConvolution2d: input and weights types mismatched.",
+      "b61500 Reference DepthwiseConvolution2d: biases is not a supported type.",
+      "b616d0 Reference TransposeConvolution2d: weights is not a supported type.",
+      "b61718 Reference TransposeConvolution2d: input and weights types mismatched.",
+      "b617b8 Reference TransposeConvolution2d: biases is not a supported type.",
+      "b61b50 Reference Fully Connected: weights is not a supported type.",
+      "b61b90 Reference Fully Connected: input and weights types mismatched."
+    ],
+    "indications": [
+      {
+        "condition": "weights/input/bias data-type checks and input-weight type matching",
+        "evidence": "embedded strings",
+        "status": "STRING_LEVEL_ONLY"
+      },
+      {
+        "condition": "input channel <= 4095",
+        "evidence": "embedded string",
+        "status": "STRING_LEVEL_ONLY"
+      },
+      {
+        "condition": "output height/width in 1..1023",
+        "evidence": "embedded string",
+        "status": "STRING_LEVEL_ONLY"
+      },
+      {
+        "condition": "padding equals (kernel_size-1)/2",
+        "evidence": "embedded string",
+        "status": "STRING_LEVEL_ONLY"
+      },
+      {
+        "condition": "kernel/stride modes including 2x2 and 1x4",
+        "evidence": "nearby binary strings from retained Task 028 audit",
+        "status": "STRING_LEVEL_ONLY"
+      },
+      {
+        "condition": "elementwise Add-only and broadcast/type checks",
+        "evidence": "embedded strings",
+        "status": "MIXED_GENERIC_OR_BACKEND_STRING; NOT_ATTRIBUTED"
+      },
+      {
+        "condition": "float, uint8 and int8 ALHardNPU template families",
+        "evidence": "exported symbols",
+        "status": "COMPILED_TEMPLATE_ONLY"
+      }
+    ],
+    "not_recovered": [
+      "exact predecessor and successor layer requirements",
+      "exact Conv kernel/stride/padding/dilation/groups predicate and branch selection",
+      "exact input/output channel limits beyond the string-level indications",
+      "layout and tensor alignment requirements",
+      "per-channel versus per-tensor scale/zero-point acceptance matrix",
+      "activation fusion semantics and graph rewrite ordering",
+      "hardware tile/alignment constraints"
+    ]
+  },
+  "source_and_disassembly_limits": {
+    "backend_source_available": false,
+    "source_path_strings_only": true,
+    "library_stripped": true,
+    "aarch64_disassembler_available": false,
+    "aarch64_disassembler_candidates": {
+      "aarch64-linux-gnu-objdump": null,
+      "llvm-objdump": null
+    },
+    "host_objdump_output": "/tmp/task032-armnn/armnn_lib/lib/libarmnn.so.32.1:     file format elf64-little\narchitecture: UNKNOWN!, flags 0x00000150:\nHAS_SYMS, DYNAMIC, D_PAGED\nstart address 0x00000000002fcdb0",
+    "host_objdump_error": "",
+    "exact_predicate_recovery": "NOT_RECOVERABLE",
+    "reason": "No ArmNN backend source was present in the audited scopes and the WSL host objdump cannot disassemble AArch64 instructions; symbol names, vtable dispatch and strings cannot establish the complete predicate."
+  },
+  "safety": {
+    "board_accessed": false,
+    "vendor_program_executed": false,
+    "model_modified": false,
+    "benchmark_run": false,
+    "runtime_modified": false
+  }
+}

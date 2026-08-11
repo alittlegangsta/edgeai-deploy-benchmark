@@ -629,3 +629,12 @@ audited AArch64 build and the primary result is
 `BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`; Task 029's vendor handoff remains the
 next action. See `docs/vendor/ANLOGIC_OFFICIAL_NPU_ASSET_RECOVERY_GEG400.md`
 and `results/evidence/031/`.
+
+Task 032 is a bounded static audit of the audited AArch64 ArmNN fusion path.
+It confirms the compiled `ConvertConv2dIntoALHardNPUImpl` symbols and the
+finite Alnpu support dispatch, retains the face positive assignments, and
+documents why the exact fusion predicate and per-node face mapping are not
+recoverable from the stripped binary. The result is
+`FUSION_PREDICATE_NOT_RECOVERABLE`; no model, board or benchmark was changed.
+See `docs/vendor/ANLOGIC_ALHARDNPU_FUSION_ELIGIBILITY.md` and
+`results/evidence/032/`.

@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "task": "032",
+  "status": "COMPLETE_PATTERN_COMPARISON",
+  "source_classification": "immutable_task_028_graph_and_real_optimize_evidence",
+  "face_reference": {
+    "model_sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c",
+    "task028_recorded_model_hash": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668",
+    "task028_recorded_hash_status": "MALFORMED_IN_IMMUTABLE_TASK028_RECORD",
+    "operator_counts": {
+      "Concat": 1,
+      "Conv": 13,
+      "DequantizeLinear": 59,
+      "MaxPool": 6,
+      "QuantizeLinear": 33,
+      "Relu": 11,
+      "Resize": 1
+    },
+    "input": {
+      "dtype": "FLOAT",
+      "shape": [
+        1,
+        3,
+        416,
+        416
+      ]
+    },
+    "outputs": [
+      {
+        "dtype": "FLOAT",
+        "shape": [
+          1,
+          18,
+          26,
+          26
+        ]
+      },
+      {
+        "dtype": "FLOAT",
+        "shape": [
+          1,
+          18,
+          13,
+          13
+        ]
+      }
+    ],
+    "split": 0,
+    "custom_alhardnpu_onnx_node": false
+  },
+  "frozen_fp32": {
+    "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "path_name": "yolov5n.onnx",
+    "opset": [
+      {
+        "domain": "",
+        "version": 12
+      }
+    ],
+    "node_count": 292,
+    "operator_counts": {
+      "Add": 10,
+      "Cast": 2,
+      "Concat": 21,
+      "Constant": 38,
+      "Conv": 60,
+      "Floor": 4,
+      "MaxPool": 3,
+      "Mul": 69,
+      "Pow": 3,
+      "Reshape": 6,
+      "Resize": 2,
+      "Shape": 2,
+      "Sigmoid": 60,
+      "Slice": 2,
+      "Split": 3,
+      "Transpose": 3,
+      "Unsqueeze": 4
+    },
+    "input": {
+      "dtype": "FLOAT",
+      "dynamic_dimensions": 0,
+      "name": "images",
+      "shape": [
+        1,
+        3,
+        640,
+        640
+      ]
+    },
+    "output": {
+      "dtype": "FLOAT",
+      "dynamic_dimensions": 0,
+      "name": "output0",
+      "shape": [
+        1,
+        25200,
+        85
+      ]
+    },
+    "qdq": false,
+    "first_observed_board_gate": "FP32 parser rejected Floor at /model.11/Floor in Task 028 matrix; this is a parser gate, not a recovered fusion predicate"
+  },
+  "al_onnx_pass_detect_crop_fp32": {
+    "node_count": 199,
+    "operator_counts": {
+      "Add": 7,
+      "Concat": 13,
+      "Conv": 60,
+      "MaxPool": 3,
+      "Mul": 57,
+      "Resize": 2,
+      "Sigmoid": 57
+    },
+    "inputs": [
+      [
+        1,
+        3,
+        640,
+        640
+      ],
+      "FLOAT"
+    ],
+    "outputs": [
+      [
+        [
+          1,
+          255,
+          80,
+          80
+        ],
+        "FLOAT"
+      ],
+      [
+        [
+          1,
+          255,
+          40,
+          40
+        ],
+        "FLOAT"
+      ],
+      [
+        [
+          1,
+          255,
+          20,
+          20
+        ],
+        "FLOAT"
+      ]
+    ],
+    "shape_ops": {
+      "Floor": 0,
+      "Shape": 0,
+      "Gather": 0,
+      "Resize": 2,
+      "Q": 0,
+      "DQ": 0
+    },
+    "semantic_change": "Detect output is intentionally cropped from [1,25200,85] to three raw FLOAT heads"
+  },
+  "al_onnx_pass_quantized": {
+    "node_count": 719,
+    "operator_counts": {
+      "Add": 7,
+      "Concat": 13,
+      "Conv": 60,
+      "DequantizeLinear": 320,
+      "MaxPool": 3,
+      "Mul": 57,
+      "QuantizeLinear": 200,
+      "Resize": 2,
+      "Sigmoid": 57
+    },
+    "inputs": [
+      [
+        1,
+        3,
+        640,
+        640
+      ],
+      "FLOAT"
+    ],
+    "outputs": [
+      [
+        [
+          1,
+          255,
+          80,
+          80
+        ],
+        "FLOAT"
+      ],
+      [
+        [
+          1,
+          255,
+          40,
+          40
+        ],
+        "FLOAT"
+      ],
+      [
+        [
+          1,
+          255,
+          20,
+          20
+        ],
+        "FLOAT"
+      ]
+    ],
+    "shape_ops": {
+      "Floor": 0,
+      "Shape": 0,
+      "Gather": 0,
+      "Resize": 2,
+      "Q": 200,
+      "DQ": 320
+    },
+    "quantization": {
+      "format": "ONNX QDQ",
+      "uint8": "Q/DQ wrappers around generic graph operators",
+      "int8": "QSymmS8 candidate with per-channel weight axis=0 in Task 028",
+      "native_alhardnpu_node_created": false
+    },
+    "first_observed_board_gates": {
+      "uint8": "QAsymmU8 Conv2d, Activation and ElementwiseBinary at Alnpu Optimize",
+      "int8": "QSymmS8 Conv2d, Activation and ElementwiseBinary at Alnpu Optimize"
+    }
+  },
+  "pattern_comparison": [
+    {
+      "pattern": "Conv",
+      "face": "13 Conv nodes inventory; exact fusion membership unavailable",
+      "yolov5n": "60 Conv nodes",
+      "backend_observation": "generic quantized Conv2d rejected for YOLOv5n; exact fusion eligibility unknown"
+    },
+    {
+      "pattern": "SiLU",
+      "face": "Relu nodes, no SiLU Sigmoid+Mul inventory",
+      "yolov5n": "Sigmoid+Mul repeated (60/57 in original/cropped graph)",
+      "backend_observation": "generic quantized Activation/ElementwiseBinary rejected"
+    },
+    {
+      "pattern": "residual Add",
+      "face": "not present in retained operator inventory",
+      "yolov5n": "Add 10 original, 7 cropped/quantized",
+      "backend_observation": "generic Add/Elementwise support is not an Alnpu override"
+    },
+    {
+      "pattern": "C3 split/concat",
+      "face": "Concat 1, Split 0",
+      "yolov5n": "Concat 21 and Split 3 in original; cropped graph retains 13 Concat",
+      "backend_observation": "Splitter is generic LayerSupportBase; no exact fusion predicate recovered"
+    },
+    {
+      "pattern": "SPPF MaxPool/Concat",
+      "face": "MaxPool 6, Concat 1",
+      "yolov5n": "MaxPool 3, Concat 21 original",
+      "backend_observation": "Pooling/Concat have Alnpu overrides, but individual descriptor acceptance is unknown"
+    },
+    {
+      "pattern": "Resize/Upsample",
+      "face": "Resize 1",
+      "yolov5n": "Resize 2",
+      "backend_observation": "Resize has an Alnpu override; exact mode/shape predicate unknown"
+    },
+    {
+      "pattern": "Detect head",
+      "face": "two FLOAT heads [1,18,26,26] and [1,18,13,13]",
+      "yolov5n": "original [1,25200,85], AL_onnx_pass three FLOAT heads [1,255,80,80], [1,255,40,40], [1,255,20,20]",
+      "backend_observation": "output contract differs; Detect crop is a documented tool operation, not a proof of fusion"
+    },
+    {
+      "pattern": "QDQ",
+      "face": "59 DQ/33 Q; UINT8 initializers present",
+      "yolov5n": "320 DQ/200 Q; UINT8 or INT8 candidates",
+      "backend_observation": "face passes through fused ALHardNPU path; YOLO candidates fail generic quantized layers at Optimize"
+    }
+  ],
+  "first_observed_gate_vs_fusion": {
+    "first_real_yolov5n_uint8": "QAsymmU8 Conv2d, Activation and ElementwiseBinary at Alnpu Optimize",
+    "first_real_yolov5n_int8": "QSymmS8 Conv2d, Activation and ElementwiseBinary at Alnpu Optimize",
+    "necessary_fusion_condition_identified": false,
+    "reason": "The dispatch boundary explains which generic support slots reject, but no instruction-level/source trace connects a particular YOLO node to ConvertConv2dIntoALHardNPUImpl::checkConv/checkAct/checkPool."
+  },
+  "model_sha256s": {
+    "frozen_fp32": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "uint8": "3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3",
+    "int8": "8ff448f1fd250a198b0a4a44a1eca9d09c50a68a4da459788960282ba98c3ad9"
+  },
+  "safety": {
+    "new_board_run": false,
+    "benchmark": false,
+    "model_modified": false,
+    "synthetic_probe_used_for_conclusion": false
+  }
+}

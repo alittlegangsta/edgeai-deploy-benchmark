@@ -37,6 +37,7 @@ The authoritative execution rules are in
 | 029 | Vendor NPU enablement handoff | 028 | Completed | `READY_FOR_VENDOR_HANDOFF`: freeze the Task 028 reproduction identity, causal chain and audited Alnpu capability boundary in `docs/vendor_handoff/dr1m90_npu/`. No new board run, model change, quantization work or benchmark was performed; vendor binaries and models remain external. |
 | 030 | Stage 5 benchmark consolidation | 009 + 012 + 017 + 018 + 029 | Completed | Consolidate the approved PC ORT and DR1 ARM ncnn YOLOv5n measurements with a unified correctness-first reporting contract, independently recomputed P95/resource metrics, and an explicit non-benchmark NPU status matrix. |
 | 031 | Stage 5 NPU asset recovery | 028 + 029 | Completed | Audit official sdk, dr1m90_npu and dr1_demo_prjs history, models, ArmNN builds, and GEG400 NPU_Yolo HPF/TD assets. No new public asset reopens YOLOv5n integration; scoped primary verdict is BLOCKED_EXTERNAL_VENDOR_DEPENDENCY. |
+| 032 | Stage 5 NPU fusion audit | 031 | Completed | Explain the retained face ALHardNPU positive versus YOLOv5n failure using a bounded static fusion-symbol and graph-pattern audit; exact fusion predicate is not recoverable from the stripped binary and unavailable backend source, so Task 028 remains blocked. No model, board, runtime, benchmark or vendor-release changes. |
 
 Batch A stops after Task 005, Batch B stops after Task 009, and Batch C stops
 after Task 012. A checkpoint requires explicit human review before the next batch.

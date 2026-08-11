@@ -395,3 +395,17 @@ Alnpu backend, or an official GEG400 YOLO HPF/TD. It explains the face positive
 as ArmNN ALHardNPU fusion rather than an ONNX custom op and keeps the scoped
 result `BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`; no new asset is sufficient to
 reopen YOLOv5n integration. Task 029 remains the vendor-support handoff.
+
+## Task 032: ALHardNPU fusion eligibility audit
+
+Task 032 is a bounded static audit of the audited AArch64 ArmNN fusion path.
+The binary contains the `ConvertConv2dIntoALHardNPUImpl` fusion symbols and a
+ten-method Alnpu support whitelist, while generic Conv2d/Activation/Splitter/
+elementwise methods resolve to `LayerSupportBase`. The face control's three
+`Alnpu|ALHardNPU` assignments are retained, but exact source-node fusion
+regions and the complete predicate cannot be recovered from the stripped
+AArch64 binary without backend source or an AArch64 disassembler. The result
+is `FUSION_PREDICATE_NOT_RECOVERABLE`; Task 028 remains blocked and no model,
+board, runtime or benchmark change was made. See
+`docs/vendor/ANLOGIC_ALHARDNPU_FUSION_ELIGIBILITY.md` and
+`results/evidence/032/`.
