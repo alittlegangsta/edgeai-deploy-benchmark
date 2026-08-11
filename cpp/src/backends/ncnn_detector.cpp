@@ -419,6 +419,29 @@ struct NcnnDetector::Impl {
         if (threads != 1 && threads != 2) {
             throw std::runtime_error("ncnn thread count must be 1 or 2");
         }
+        NcnnRuntimeOptions options;
+        options.threads = threads;
+        initialize(manifest_path, options, param_override, bin_override);
+    }
+
+    explicit Impl(
+        const edgeai::filesystem::path& manifest_path,
+        const NcnnRuntimeOptions& options,
+        const edgeai::filesystem::path& param_override,
+        const edgeai::filesystem::path& bin_override
+    ) {
+        if (options.threads < 1 || options.threads > 4) {
+            throw std::runtime_error("Task 033 ncnn thread count must be in [1, 4]");
+        }
+        initialize(manifest_path, options, param_override, bin_override);
+    }
+
+    void initialize(
+        const edgeai::filesystem::path& manifest_path,
+        const NcnnRuntimeOptions& options,
+        const edgeai::filesystem::path& param_override,
+        const edgeai::filesystem::path& bin_override
+    ) {
         if (param_override.empty() != bin_override.empty()) {
             throw std::runtime_error("ncnn param/bin overrides must be supplied together");
         }
@@ -436,7 +459,16 @@ struct NcnnDetector::Impl {
         if (info.version != manifest.runtime_version || info.version != "1.0.20240410") {
             throw std::runtime_error("ncnn runtime version differs from Task 010 manifest");
         }
-        info.threads = threads;
+        info.threads = options.threads;
+        info.packing_layout = options.use_packing_layout;
+        info.fp16_packed = options.use_fp16_packed;
+        info.fp16_storage = options.use_fp16_storage;
+        info.fp16_arithmetic = options.use_fp16_arithmetic;
+        info.fp16 = options.use_fp16_packed || options.use_fp16_storage ||
+                    options.use_fp16_arithmetic;
+        info.bf16 = options.use_bf16_storage;
+        info.int8 = options.use_int8_inference || options.use_int8_packed ||
+                    options.use_int8_storage || options.use_int8_arithmetic;
         const auto capabilities = ncnn_build_capabilities();
         info.openmp_compiled = capabilities.openmp_compiled;
         info.threads_compiled = capabilities.threads_compiled;
@@ -447,16 +479,17 @@ struct NcnnDetector::Impl {
         info.private_libgomp_sha256 = capabilities.private_libgomp_sha256;
         info.inputs = {manifest.input};
         info.outputs = {manifest.output};
-        network.opt.num_threads = threads;
+        network.opt.num_threads = options.threads;
         network.opt.use_vulkan_compute = false;
-        network.opt.use_fp16_packed = false;
-        network.opt.use_fp16_storage = false;
-        network.opt.use_fp16_arithmetic = false;
-        network.opt.use_bf16_storage = false;
-        network.opt.use_int8_inference = false;
-        network.opt.use_int8_packed = false;
-        network.opt.use_int8_storage = false;
-        network.opt.use_int8_arithmetic = false;
+        network.opt.use_packing_layout = options.use_packing_layout;
+        network.opt.use_fp16_packed = options.use_fp16_packed;
+        network.opt.use_fp16_storage = options.use_fp16_storage;
+        network.opt.use_fp16_arithmetic = options.use_fp16_arithmetic;
+        network.opt.use_bf16_storage = options.use_bf16_storage;
+        network.opt.use_int8_inference = options.use_int8_inference;
+        network.opt.use_int8_packed = options.use_int8_packed;
+        network.opt.use_int8_storage = options.use_int8_storage;
+        network.opt.use_int8_arithmetic = options.use_int8_arithmetic;
         const int param_status = network.load_param(param.string().c_str());
         const int bin_status = param_status == 0 ? network.load_model(bin.string().c_str()) : -1;
         if (param_status != 0 || bin_status != 0) {
@@ -540,6 +573,14 @@ NcnnDetector::NcnnDetector(
     const edgeai::filesystem::path& bin_path
 )
     : impl_(std::make_unique<Impl>(manifest_path, threads, param_path, bin_path)) {}
+
+NcnnDetector::NcnnDetector(
+    const edgeai::filesystem::path& manifest_path,
+    const NcnnRuntimeOptions& options,
+    const edgeai::filesystem::path& param_path,
+    const edgeai::filesystem::path& bin_path
+)
+    : impl_(std::make_unique<Impl>(manifest_path, options, param_path, bin_path)) {}
 
 NcnnDetector::~NcnnDetector() = default;
 NcnnDetector::NcnnDetector(NcnnDetector&&) noexcept = default;

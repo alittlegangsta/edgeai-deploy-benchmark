@@ -1,0 +1,25 @@
+schema_version: 1
+task: "033"
+title: ARM CPU performance optimization
+status: Completed
+branch: dev
+scope:
+  backend: ncnn CPU
+  model: YOLOv5n v7.0
+  input_contract: "FP32 [1,3,640,640]"
+  output_contract: "FP32 [1,25200,85]"
+  thresholds: "confidence=0.25, nms_iou=0.45"
+  npu_status: WAITING_FOR_VENDOR_INPUT
+  historical_evidence_immutable: true
+profiler:
+  source: cpp/apps/arm_cpu_profiler.cpp
+  target: edgeai_arm_cpu_profiler
+  stages: [preprocess, inference, decode, nms, postprocess, pipeline, end_to_end]
+experiments:
+  variables: [threads, affinity, packing_layout, fp16_storage, fp16_arithmetic]
+  correctness_gate: "existing five-detection golden; IoU >= 0.99; confidence delta <= 0.01"
+evidence:
+  directory: results/evidence/033
+  host_smoke: results/evidence/033/host_profiler_smoke.json
+  arm_matrix: results/evidence/033/experiment_matrix.json
+  optimization_summary: results/evidence/033/optimization_summary.json

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "task": "033",
+  "status": "PASS",
+  "checks": {
+    "arm_profiler_rows": "PASS",
+    "independent_stage_recompute": "PASS",
+    "correctness_gate_all_retained_rows": "PASS",
+    "experiment_matrix_hashes": "PASS",
+    "host_release_build": "PASS",
+    "release_ctest": "PASS_8_OF_8",
+    "full_ctest": "PASS_15_OF_15",
+    "python_unittest": "PASS_152",
+    "json_parse": "PASS",
+    "yaml_parse": "PASS",
+    "bash_python_syntax": "PASS",
+    "frozen_task_017_018_030_and_npu_scope": "PASS",
+    "sensitive_material_scan": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "commands": [
+    "python3 scripts/validate_task033_arm_cpu_optimization.py results/evidence/033/threads*.json",
+    "PYTHONPATH=python .venv/bin/python -m unittest tests.python.test_task033_arm_cpu_optimization -v",
+    "cmake --build build/ci-default-options-release -j2",
+    "ctest --test-dir build/ci-default-options-release --output-on-failure",
+    "PYTHONPATH=python .venv/bin/python -m unittest discover -s tests/python -p 'test_*.py'",
+    "cmake --build build/task033-host-release -j2",
+    "ctest --test-dir build/task033-host-release --output-on-failure",
+    "git diff --check"
+  ],
+  "notes": [
+    "Threads 3 and 4 were skipped because the board reports two logical CPUs.",
+    "CPU frequency, thermal and governor sysfs values were unavailable and were not inferred.",
+    "No persistent board, SD/eMMC, kernel, boot, governor, service or NPU state was changed."
+  ]
+}

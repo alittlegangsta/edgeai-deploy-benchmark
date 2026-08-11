@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "task": "033",
+  "status": "PASS_TARGET",
+  "board": {
+    "architecture": "aarch64",
+    "kernel": "6.1.111-rt42",
+    "logical_cpu_count": 2,
+    "cpu_part": "0xd04",
+    "features_observed": ["asimd", "fp", "aes", "crc32"],
+    "cpufreq_readout": "UNAVAILABLE",
+    "thermal_readout": "UNAVAILABLE",
+    "governor_readout": "UNAVAILABLE",
+    "taskset_tool": "UNAVAILABLE"
+  },
+  "frozen_identity": {
+    "ncnn_version": "1.0.20240410",
+    "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "input_shape": [1, 3, 640, 640],
+    "output_shape": [1, 25200, 85],
+    "dtype": "float32",
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45,
+    "correctness_gate": {
+      "detection_count": 5,
+      "minimum_iou": 0.99,
+      "maximum_confidence_delta": 0.01
+    }
+  },
+  "experiments": [
+    {
+      "id": "threads1_default_packing_on",
+      "result": "results/evidence/033/threads1_default_packing_on.json",
+      "result_sha256": "fb2695e4f7ac2b596d459b80fa26e6b1f4be8b9e5b304f788d4668e38ecf5c9f",
+      "command": "LD_LIBRARY_PATH=/tmp/task033-profiler-v1/lib OMP_NUM_THREADS=1 ./edgeai_arm_cpu_profiler --manifest model/ncnn_manifest.json --config config/yolov5n_v7_inference.json --input input/pc_reference.jpg --reference reference/cpp_ncnn_reference.json --output results/threads1_default_packing_on.json --threads 1 --warmup 3 --repeat 10 --affinity default --packing on",
+      "threads": 1,
+      "affinity": "default",
+      "packing": "on",
+      "warmup": 3,
+      "repeat": 10,
+      "classification": "BASELINE_ACCEPTED"
+    },
+    {
+      "id": "threads2_default_packing_on",
+      "result": "results/evidence/033/threads2_default_packing_on.json",
+      "result_sha256": "506e736b340fe0453380d9be6761857339ddaf1e5f576267b527ae23b22c34a0",
+      "command": "LD_LIBRARY_PATH=/tmp/task033-profiler-v1/lib OMP_NUM_THREADS=2 ./edgeai_arm_cpu_profiler --manifest model/ncnn_manifest.json --config config/yolov5n_v7_inference.json --input input/pc_reference.jpg --reference reference/cpp_ncnn_reference.json --output results/threads2_default_packing_on.json --threads 2 --warmup 3 --repeat 10 --affinity default --packing on",
+      "threads": 2,
+      "affinity": "default",
+      "packing": "on",
+      "warmup": 3,
+      "repeat": 10,
+      "classification": "BEST_ACCEPTED"
+    },
+    {
+      "id": "threads1_cpu0_packing_on",
+      "result": "results/evidence/033/threads1_cpu0_packing_on.json",
+      "result_sha256": "e569c2813c8df4f436953e0f10084616cb607b82c962f042402297cd94cc0d1c",
+      "command": "LD_LIBRARY_PATH=/tmp/task033-profiler-v1/lib OMP_NUM_THREADS=1 ./edgeai_arm_cpu_profiler --manifest model/ncnn_manifest.json --config config/yolov5n_v7_inference.json --input input/pc_reference.jpg --reference reference/cpp_ncnn_reference.json --output results/threads1_cpu0_packing_on.json --threads 1 --warmup 3 --repeat 10 --affinity cpu0 --packing on",
+      "threads": 1,
+      "affinity": "cpu0",
+      "packing": "on",
+      "warmup": 3,
+      "repeat": 10,
+      "classification": "CORRECT_BUT_SLOWER"
+    },
+    {
+      "id": "threads2_both_packing_on",
+      "result": "results/evidence/033/threads2_both_packing_on.json",
+      "result_sha256": "58d9f3a14c4654eb0a180aebdcbb4e9a6f0c533992ae35878be26b7dc1abfbb1",
+      "command": "LD_LIBRARY_PATH=/tmp/task033-profiler-v1/lib OMP_NUM_THREADS=2 ./edgeai_arm_cpu_profiler --manifest model/ncnn_manifest.json --config config/yolov5n_v7_inference.json --input input/pc_reference.jpg --reference reference/cpp_ncnn_reference.json --output results/threads2_both_packing_on.json --threads 2 --warmup 3 --repeat 10 --affinity both --packing on",
+      "threads": 2,
+      "affinity": "both",
+      "packing": "on",
+      "warmup": 3,
+      "repeat": 10,
+      "classification": "CORRECT_BUT_SLOWER"
+    },
+    {
+      "id": "threads1_default_packing_off",
+      "result": "results/evidence/033/threads1_default_packing_off.json",
+      "result_sha256": "d78db36949e1a0fa05cfb4340ab24743a7e3125d1ffab7838c73fdf88c047eb3",
+      "command": "LD_LIBRARY_PATH=/tmp/task033-profiler-v1/lib ./edgeai_arm_cpu_profiler --manifest model/ncnn_manifest.json --config config/yolov5n_v7_inference.json --input input/pc_reference.jpg --reference reference/cpp_ncnn_reference.json --output results/threads1_default_packing_off.json --threads 1 --warmup 2 --repeat 5 --affinity default --packing off",
+      "threads": 1,
+      "affinity": "default",
+      "packing": "off",
+      "warmup": 2,
+      "repeat": 5,
+      "classification": "CORRECT_BUT_SLOWER"
+    },
+    {
+      "id": "threads2_default_packing_off",
+      "result": "results/evidence/033/threads2_default_packing_off.json",
+      "result_sha256": "5e8ea93b7016f626aecc3693f2e814d7efdafa4965d509136dce76a8f314ecff",
+      "command": "LD_LIBRARY_PATH=/tmp/task033-profiler-v1/lib ./edgeai_arm_cpu_profiler --manifest model/ncnn_manifest.json --config config/yolov5n_v7_inference.json --input input/pc_reference.jpg --reference reference/cpp_ncnn_reference.json --output results/threads2_default_packing_off.json --threads 2 --warmup 2 --repeat 5 --affinity default --packing off",
+      "threads": 2,
+      "affinity": "default",
+      "packing": "off",
+      "warmup": 2,
+      "repeat": 5,
+      "classification": "CORRECT_BUT_SLOWER"
+    },
+    {
+      "id": "threads2_fp16_packed_on",
+      "result": "results/evidence/033/threads2_fp16_packed_on.json",
+      "result_sha256": "6b2e54f82dce1e53adc4aa2517d0cfad1e345fb9ff5606f7e18dc263e515f031",
+      "command": "LD_LIBRARY_PATH=/tmp/task033-profiler-v1/lib ./edgeai_arm_cpu_profiler --manifest model/ncnn_manifest.json --config config/yolov5n_v7_inference.json --input input/pc_reference.jpg --reference reference/cpp_ncnn_reference.json --output results/threads2_fp16_packed_on.json --threads 2 --warmup 2 --repeat 5 --affinity default --packing on --fp16-packed on",
+      "threads": 2,
+      "affinity": "default",
+      "packing": "on",
+      "fp16_packed": true,
+      "warmup": 2,
+      "repeat": 5,
+      "classification": "CORRECT_BUT_SLOWER"
+    },
+    {
+      "id": "threads2_fp16_storage_on",
+      "result": "results/evidence/033/threads2_fp16_storage_on.json",
+      "result_sha256": "1fce1a39320f509da1826f414c0293416306a9b1d4d39d8e86020f662800453b",
+      "command": "LD_LIBRARY_PATH=/tmp/task033-profiler-v1/lib ./edgeai_arm_cpu_profiler --manifest model/ncnn_manifest.json --config config/yolov5n_v7_inference.json --input input/pc_reference.jpg --reference reference/cpp_ncnn_reference.json --output results/threads2_fp16_storage_on.json --threads 2 --warmup 2 --repeat 5 --affinity default --packing on --fp16-storage on",
+      "threads": 2,
+      "affinity": "default",
+      "packing": "on",
+      "fp16_storage": true,
+      "warmup": 2,
+      "repeat": 5,
+      "classification": "CORRECT_BUT_SLOWER"
+    },
+    {
+      "id": "threads2_fp16_arithmetic_on",
+      "result": "results/evidence/033/threads2_fp16_arithmetic_on.json",
+      "result_sha256": "8194d243aa5cbd6fbb64f704af63c54d03470aab938fc3433616bde493855530",
+      "command": "LD_LIBRARY_PATH=/tmp/task033-profiler-v1/lib ./edgeai_arm_cpu_profiler --manifest model/ncnn_manifest.json --config config/yolov5n_v7_inference.json --input input/pc_reference.jpg --reference reference/cpp_ncnn_reference.json --output results/threads2_fp16_arithmetic_on.json --threads 2 --warmup 2 --repeat 5 --affinity default --packing on --fp16-arithmetic on",
+      "threads": 2,
+      "affinity": "default",
+      "packing": "on",
+      "fp16_arithmetic": true,
+      "warmup": 2,
+      "repeat": 5,
+      "classification": "CORRECT_BUT_SLOWER"
+    }
+  ],
+  "skipped": [
+    {
+      "id": "threads3",
+      "status": "SKIPPED_TOPOLOGY",
+      "reason": "board reports 2 logical CPUs; no 3-thread run was attempted"
+    },
+    {
+      "id": "threads4",
+      "status": "SKIPPED_TOPOLOGY",
+      "reason": "board reports 2 logical CPUs; no 4-thread run was attempted"
+    }
+  ],
+  "selection": {
+    "best_accepted": "threads2_default_packing_on",
+    "accepted_criteria": "PASS_TARGET correctness and lowest measured pipeline mean among retained configurations",
+    "rejected_changes": [
+      "cpu0 affinity was slower than default scheduling",
+      "explicit both-core affinity was slightly slower than default scheduling",
+      "packing off was slower for both thread counts",
+      "FP16 packed/storage/arithmetic passed correctness but were slower than FP32 packing-on"
+    ],
+    "npu_status": "FROZEN_WAITING_FOR_VENDOR_INPUT",
+    "benchmark_scope": "CPU-only; no NPU YOLOv5n benchmark"
+  }
+}

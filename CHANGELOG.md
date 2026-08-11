@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+- Started Task 033 ARM CPU profiling with a standalone ncnn profiler. The
+  historical Task 017/018 measurements remain immutable; the new tool adds
+  decode/NMS timing, runtime capability reporting, affinity and single-variable
+  packing/FP16/threads experiments, all gated by the existing YOLOv5n golden.
+
+- Completed Task 033 ARM CPU profiling on the two-core DR1 board. The accepted
+  ncnn 20240410 OpenMP configuration uses two threads, default scheduling,
+  packing on and FP32; it measured 1.789854x same-session pipeline speedup and
+  78.985396% FPS gain over one thread with all retained rows passing the frozen
+  golden. CPU affinity, packing-off and FP16 rows were retained as slower A/B
+  evidence; no NPU or camera benchmark was added.
+
 - Updated the Task 029 vendor handoff to `WAITING_FOR_VENDOR_INPUT` with the
   Task 032 ALHardNPU fusion addendum. The face ONNX has no ALHardNPU custom
   node; the audited `libarmnn.so.32.1` forms three `Alnpu|ALHardNPU`

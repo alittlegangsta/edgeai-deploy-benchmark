@@ -38,6 +38,7 @@ The authoritative execution rules are in
 | 030 | Stage 5 benchmark consolidation | 009 + 012 + 017 + 018 + 029 | Completed | Consolidate the approved PC ORT and DR1 ARM ncnn YOLOv5n measurements with a unified correctness-first reporting contract, independently recomputed P95/resource metrics, and an explicit non-benchmark NPU status matrix. |
 | 031 | Stage 5 NPU asset recovery | 028 + 029 | Completed | Audit official sdk, dr1m90_npu and dr1_demo_prjs history, models, ArmNN builds, and GEG400 NPU_Yolo HPF/TD assets. No new public asset reopens YOLOv5n integration; scoped primary verdict is BLOCKED_EXTERNAL_VENDOR_DEPENDENCY. |
 | 032 | Stage 5 NPU fusion audit | 031 | Completed | Explain the retained face ALHardNPU positive versus YOLOv5n failure using a bounded static fusion-symbol and graph-pattern audit; exact fusion predicate is not recoverable from the stripped binary and unavailable backend source, so Task 028 remains blocked. No model, board, runtime, benchmark or vendor-release changes. |
+| 033 | Stage 5 ARM CPU optimization | 030 | Completed | Profile and optimize the validated ARM ncnn YOLOv5n CPU pipeline with correctness-first, single-variable experiments; accepted two-thread OpenMP/packing-on default scheduling, retained slower affinity/packing/FP16 rows, and preserved historical evidence and the frozen NPU vendor handoff. |
 
 Batch A stops after Task 005, Batch B stops after Task 009, and Batch C stops
 after Task 012. A checkpoint requires explicit human review before the next batch.

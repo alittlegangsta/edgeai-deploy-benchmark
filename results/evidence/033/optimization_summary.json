@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "task": "033",
+  "status": "PASS_TARGET",
+  "best_configuration": {
+    "id": "threads2_default_packing_on",
+    "threads": 2,
+    "affinity": "default",
+    "packing_layout": true,
+    "fp16_packed": false,
+    "fp16_storage": false,
+    "fp16_arithmetic": false,
+    "correctness": "PASS_TARGET",
+    "pipeline_mean_ms": 1963.8176175,
+    "pipeline_p50_ms": 1962.758989,
+    "pipeline_p95_ms": 1976.06648,
+    "fps": 0.5092122563158541,
+    "peak_rss_kib": 168064,
+    "cpu_percent_one_core_basis_mean": 187.02447345462414,
+    "source": "results/evidence/033/threads2_default_packing_on.json"
+  },
+  "same_session_baseline": {
+    "id": "threads1_default_packing_on",
+    "pipeline_mean_ms": 3514.9467439,
+    "pipeline_p50_ms": 3513.318755,
+    "pipeline_p95_ms": 3527.416265,
+    "fps": 0.28449933181361736,
+    "peak_rss_kib": 167860,
+    "cpu_percent_one_core_basis_mean": 99.56266246244877,
+    "source": "results/evidence/033/threads1_default_packing_on.json"
+  },
+  "comparison": {
+    "pipeline_speedup": 1.7898539622913836,
+    "fps_gain_percent": 78.98539622913836,
+    "rss_change_percent": 0.12152803311921755,
+    "inference_mean_speedup": 1.8272052774207268,
+    "inference_mean_baseline_ms": 3423.2222589,
+    "inference_mean_best_ms": 1873.4743716
+  },
+  "bottleneck_attribution": {
+    "baseline_pipeline_share_percent": {
+      "preprocess": 1.0774275418460628,
+      "inference": 97.39044453065517,
+      "postprocess": 1.5321279274987538
+    },
+    "best_pipeline_share_percent": {
+      "preprocess": 1.856896739037427,
+      "inference": 95.39961119123627,
+      "postprocess": 2.743492069726276
+    },
+    "decode_mean_ms_best": 53.8218066,
+    "nms_mean_ms_best": 0.015581999999999999,
+    "interpretation": "inference dominates; decode is the largest postprocess component; NMS is negligible",
+    "next_stage_priority": "inference",
+    "preprocess_postprocess_next_stage_priority": false,
+    "nms_next_stage_priority": false
+  },
+  "historical_reference": {
+    "task018_pipeline_mean_ms": 1969.40219014,
+    "task018_source": "results/evidence/018/raw_samples.json",
+    "same_session_best_delta_percent": -0.28356689496739085,
+    "note": "historical Task018 evidence remains immutable and is not replaced by Task033"
+  },
+  "limitations": [
+    "board cpufreq and thermal sysfs readouts were unavailable during the run",
+    "threads 3 and 4 were skipped because the board reports two logical CPUs",
+    "results are CPU profiling evidence, not an NPU or camera benchmark"
+  ],
+  "frozen_conclusions": {
+    "inference_is_absolute_primary_bottleneck": true,
+    "inference_pipeline_share_best_percent": 95.39961119123627,
+    "preprocess_or_postprocess_are_not_next_primary_optimization_targets": true,
+    "nms_is_negligible": true,
+    "fp16_packed_storage_arithmetic_have_no_measured_gain": true,
+    "cpu_affinity_has_no_measured_gain": true,
+    "thread_3_4_not_attempted_due_to_two_logical_cpus": true
+  }
+}

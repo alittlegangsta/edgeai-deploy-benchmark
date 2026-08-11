@@ -412,3 +412,19 @@ is `FUSION_PREDICATE_NOT_RECOVERABLE`; Task 028 remains blocked and no model,
 board, runtime or benchmark change was made. See
 `docs/vendor/ANLOGIC_ALHARDNPU_FUSION_ELIGIBILITY.md` and
 `results/evidence/032/`.
+
+## Task 033: ARM CPU performance optimization
+
+Task 033 is `Completed`. The standalone profiler measured the validated ARM
+ncnn YOLOv5n CPU path on the two-core board, including preprocess, inference,
+decode, NMS, postprocess, end-to-end timing, CPU utilization, RSS, thread
+count, capability and correctness. The accepted configuration is OpenMP ncnn
+20240410, two threads, default scheduling, packing on and FP32
+storage/arithmetic. Its same-session pipeline mean is 1963.817618 ms versus
+3514.946744 ms for one thread (1.789854x, 78.985396% FPS gain); every retained
+row passes the unchanged golden. CPU affinity, packing-off and FP16 options
+remain retained as slower A/B rows, and three/four-thread runs were skipped
+because topology reports two logical CPUs. This does not reopen NPU work or
+publish an NPU/camera benchmark. See
+`docs/benchmark/ARM_CPU_PERFORMANCE_OPTIMIZATION.md` and
+`results/evidence/033/`.

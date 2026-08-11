@@ -642,3 +642,15 @@ recoverable from the stripped binary. The result is
 `FUSION_PREDICATE_NOT_RECOVERABLE`; no model, board or benchmark was changed.
 See `docs/vendor/ANLOGIC_ALHARDNPU_FUSION_ELIGIBILITY.md` and
 `results/evidence/032/`.
+
+Task 033 completed correctness-first ARM CPU profiling on the validated ncnn
+YOLOv5n path without reopening the frozen NPU vendor handoff. The accepted
+two-core board configuration is ncnn 20240410 OpenMP with two threads, default
+scheduling, packing on, and FP32 storage/arithmetic. It measured 1963.817618 ms
+pipeline mean versus 3514.946744 ms for one thread (1.789854x pipeline speedup
+and 78.985396% FPS gain); inference mean was 1873.474372 ms. All retained rows
+passed the unchanged five-detection golden. Affinity, packing-off and FP16 A/B
+rows were retained as slower evidence, while threads 3/4 were skipped because
+the board exposes two logical CPUs. This is CPU profiling evidence, not an NPU
+or camera benchmark; see `docs/benchmark/ARM_CPU_PERFORMANCE_OPTIMIZATION.md`
+and `results/evidence/033/`.

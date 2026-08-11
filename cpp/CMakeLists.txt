@@ -477,6 +477,34 @@ target_link_libraries(edgeai_ncnn_detector_tests PRIVATE edgeai_ncnn_backend)
 edgeai_enable_warnings(edgeai_ncnn_detector_tests)
 add_test(NAME edgeai_ncnn_detector_tests COMMAND edgeai_ncnn_detector_tests)
 
+add_executable(edgeai_arm_cpu_profiler
+    apps/arm_cpu_profiler.cpp
+)
+target_compile_features(edgeai_arm_cpu_profiler PRIVATE cxx_std_17)
+set_target_properties(edgeai_arm_cpu_profiler PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_arm_cpu_profiler PRIVATE edgeai_ncnn_backend)
+edgeai_enable_warnings(edgeai_arm_cpu_profiler)
+
+add_executable(edgeai_arm_cpu_profiler_tests
+    tests/test_arm_cpu_profiler.cpp
+)
+target_compile_features(edgeai_arm_cpu_profiler_tests PRIVATE cxx_std_17)
+set_target_properties(edgeai_arm_cpu_profiler_tests PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_compile_definitions(edgeai_arm_cpu_profiler_tests PRIVATE
+    EDGEAI_REPOSITORY_ROOT="${CMAKE_CURRENT_SOURCE_DIR}/.."
+)
+target_link_libraries(edgeai_arm_cpu_profiler_tests PRIVATE edgeai_ncnn_backend)
+edgeai_enable_warnings(edgeai_arm_cpu_profiler_tests)
+add_test(NAME edgeai_arm_cpu_profiler_tests COMMAND edgeai_arm_cpu_profiler_tests)
+
 if(EDGEAI_ENABLE_VIDEO)
 add_executable(edgeai_ncnn_video
     apps/ncnn_video.cpp
