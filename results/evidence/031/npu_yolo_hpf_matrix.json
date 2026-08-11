@@ -1,0 +1,62 @@
+{
+  "conclusion": "All reachable official D20 YOLO HPF/TD assets are AD101/AD103 and GEG484-family. The retained 05-5 GEG400 package is external to these three repositories; no new GEG400 NPU_Yolo design was recovered.",
+  "current_task028_geg400_reference": {
+    "hpf_sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+    "platform_bitstream_sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+    "soft_npu_flags": {
+      "ALL_OPERATOR": 1,
+      "NPU_SOFT": 1,
+      "POST_PROCESS": 0,
+      "PRE_PROCESS": 1,
+      "SOFT_NN": 1,
+      "SOFT_RESIZE": 1,
+      "SOFT_YOLO": 1
+    },
+    "source": "retained Task 028 evidence; not a newly executed board audit"
+  },
+  "d20_hpf": [
+    {
+      "device": "DR1M90GEG484",
+      "name": "D20.1_NPU_Simple_Demo_AD101V20.hpf",
+      "sha256": "43c508c96a91aff5753bd3225ff546a04197074bb362eab107d8439153c5d5d8",
+      "soft_yolo": true,
+      "yolov5": false,
+      "yolov8": true
+    },
+    {
+      "device": "DR1M90MEG484",
+      "name": "D20.2_NPU_MIPI_USB_HDMI_AD103V20.hpf",
+      "sha256": "199840edcae7dee8a61e3132d4e268fecfc3c7e5a82bb01ca0040de552809f74",
+      "soft_yolo": true,
+      "yolov5": false,
+      "yolov8": true
+    },
+    {
+      "device": "DR1M90GEG484",
+      "name": "D20.3_NPU_USB_HDMI_AD101V20.hpf",
+      "sha256": "3a6b6777d32247a7309150705ebec3fdc8336941c6b912677fa67c4b5f4a1215",
+      "soft_yolo": true,
+      "yolov5": false,
+      "yolov8": true
+    }
+  ],
+  "geg400_official_yolo_hpf_or_td_found": false,
+  "generic_c20_note": "C20 metadata contains mixed GEG400/GEG484 strings but no SOFT_YOLO/Video_NPU/NPU_SOFT design; it is not an official GEG400 YOLO HPF/TD.",
+  "official_repo_scope": "sdk, dr1_demo_prjs and dr1m90_npu reachable history",
+  "schema_version": 1,
+  "sdk_hpf": [
+    {
+      "board_family": "AD101V20",
+      "device": "DR1M90GEG484",
+      "name": "AD101V20.hpf",
+      "yolo_geg400": false
+    },
+    {
+      "board_family": "AD103V20",
+      "device": "DR1M90MEG484",
+      "name": "AD103V20.hpf",
+      "yolo_geg400": false
+    }
+  ],
+  "task": "031"
+}

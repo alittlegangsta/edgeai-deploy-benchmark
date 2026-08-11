@@ -1,0 +1,32 @@
+{
+  "model_path_objects": {
+    "dr1_demo_prjs": [],
+    "dr1m90_npu": [
+      "face_detection/inputs/yolo_face_uint8_15.onnx",
+      "npu_demo/demo_inputs/yolo_pic/yolov8n.quant.onnx"
+    ],
+    "sdk": [
+      "app/face_detection/inputs/yolo_face_uint8_15.onnx"
+    ]
+  },
+  "reachable_object_path_matches": {},
+  "release_findings": {
+    "deleted_history": "SDK deletion history contains old TensorFlow Lite parser/protobuf-lite/libprotoc files only; no requested compiler/model/GEG400 NPU design deletion",
+    "lfs": "git-lfs executable unavailable; pointer files were inspected and local LFS objects were hash/format audited; no requested YOLOv5s payload was present",
+    "native_compiler_runtime": "no convert_tool, al_ai_flow, nn_compiler, npu_runtime, tmfile, rt.bin, weight.bin or npu_c_api.h recovered",
+    "npuv1_release": "documentation-only reference in SDK/dr1m90_npu README to <historical-workspace>/npuv1_release/release_2024_06_25/al_onnx_pass; no directory, tag, branch, compiler, archive or LFS payload recovered",
+    "release_2024_06_25": "same documentation-only reference; not an obtainable release in the three repositories",
+    "yolov5s_sim_quant_uint8.onnx": "README command/reference only; no reachable path, LFS object, download script payload or archive found"
+  },
+  "schema_version": 1,
+  "search_scope": [
+    "current worktree",
+    "all reachable commits/objects",
+    "tags and branches",
+    "deleted-file name history",
+    "LFS pointer rules and local objects",
+    "README/download/archive references"
+  ],
+  "source_classification": "document_fact for references; source_code_fact for reachable-path absence; absence is not proof that a private vendor release never existed",
+  "task": "031"
+}

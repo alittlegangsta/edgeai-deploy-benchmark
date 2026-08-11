@@ -1,0 +1,46 @@
+schema_version: 1
+task: "031"
+title: "Official NPU asset recovery and GEG400 compatibility"
+status: Completed
+primary_verdict: BLOCKED_EXTERNAL_VENDOR_DEPENDENCY
+reopening_asset_status: NO_REOPENING_ASSET_FOUND
+new_assets_sufficient_to_reopen_yolov5n: false
+source_repositories:
+  - "<vendor-root>/sdk"
+  - "<vendor-root>/dr1m90_npu"
+  - "<vendor-root>/dr1_demo_prjs"
+scope:
+  current_and_reachable_history: true
+  deleted_file_names: true
+  lfs_pointer_and_local_object_audit: true
+  archive_references: true
+  board_accessed: false
+  vendor_program_executed: false
+  model_modified: false
+  bitstream_written: false
+tracks:
+  raw_onnx_armnn: BLOCKED_UNSUPPORTED_ALNPU_GRAPH
+  apug1205_native: BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE
+  al_onnx_pass_c1: PASS
+  quantized_host_accuracy_c2: NOT_ACCEPTED_PAUSED
+  alnn_layer_support_c3: BLOCKED
+  benchmark_c4: NOT_RUN
+answers:
+  alhardnpu_generation_tool: NOT_FOUND
+  npuv1_release: DOCUMENTATION_REFERENCE_ONLY
+  official_yolov5s_quantized_positive: NOT_FOUND
+  materially_different_alnpu_backend: NOT_FOUND
+  geg400_yolo_hpf_td: NOT_FOUND
+  face_alhardnpu: ARMNN_FUSED_CUSTOM_PATH
+  public_chain: PARTIALLY_SELF_CONSISTENT
+  reopen_yolov5n: NOT_READY
+evidence:
+  - results/evidence/031/official_repo_inventory.json
+  - results/evidence/031/git_history_archaeology.json
+  - results/evidence/031/face_onnx_provenance.json
+  - results/evidence/031/armnn_backend_inventory.json
+  - results/evidence/031/npu_yolo_hpf_matrix.json
+  - results/evidence/031/software_chain_audit.json
+  - results/evidence/031/compatibility_verdict.json
+  - results/evidence/031/validation.json
+validator: scripts/vendor/audit_task031_official_npu_assets.py

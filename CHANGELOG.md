@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- Completed Task 031's read-only official NPU asset recovery and GEG400
+  compatibility audit. The three public repository histories contain no
+  recoverable `npuv1_release`, APUG1205 native compiler/runtime,
+  `yolov5s_sim_quant_uint8.onnx`, materially broader Alnpu backend, or official
+  GEG400 `NPU_Yolo` HPF/TD. Face `ALHardNPU` is an ArmNN fusion path, not an
+  ONNX custom node. The scoped primary verdict remains
+  `BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`; no board, model, bitstream or vendor
+  binary was changed or executed.
+
 - Added Task 030's correctness-first PC C++ ORT and DR1M90 ARM ncnn benchmark
   consolidation. Retained raw campaigns are independently recomputed for stage
   mean/P50/P95, FPS, process CPU utilization, Peak RSS, and null

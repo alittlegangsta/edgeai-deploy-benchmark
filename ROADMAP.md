@@ -383,3 +383,15 @@ cross-platform speedup is published. NPU face control remains functional-only
 and YOLOv5n NPU remains `NOT_BENCHMARKED`. See
 `docs/benchmark/ARM_CPU_BENCHMARK_PROFILING_CONSOLIDATION.md` and
 `results/evidence/030/`.
+
+## Task 031: Official NPU asset recovery and GEG400 compatibility
+
+Task 031 is `Completed` as a read-only archaeology of the public Anlogic
+`sdk`, `dr1m90_npu` and `dr1_demo_prjs` repositories. Current and reachable
+history, deleted names, LFS pointers/local objects and source chains were
+checked without changing vendor trees. The audit did not recover the
+`npuv1_release`/APUG1205 compiler, `yolov5s_sim_quant_uint8.onnx`, a broader
+Alnpu backend, or an official GEG400 YOLO HPF/TD. It explains the face positive
+as ArmNN ALHardNPU fusion rather than an ONNX custom op and keeps the scoped
+result `BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`; no new asset is sufficient to
+reopen YOLOv5n integration. Task 029 remains the vendor-support handoff.

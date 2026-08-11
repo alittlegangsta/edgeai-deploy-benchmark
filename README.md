@@ -618,3 +618,14 @@ cross-platform speedup is claimed. The vendor face NPU is a functional control
 only, and DR1 YOLOv5n NPU remains `NOT_BENCHMARKED`. See
 [the consolidated benchmark report](docs/benchmark/ARM_CPU_BENCHMARK_PROFILING_CONSOLIDATION.md)
 and `results/evidence/030/`.
+
+Task 031 is the completed read-only recovery audit of the public `sdk`,
+`dr1m90_npu` and `dr1_demo_prjs` histories. It found no recoverable
+`npuv1_release`, APUG1205 native compiler/runtime, official YOLOv5s positive
+model, materially broader Alnpu backend, or GEG400 `NPU_Yolo` HPF/TD. The face
+ONNX contains no ALHardNPU custom node; ArmNN fuses its eligible path into
+ALHardNPU workloads. The generic quantized YOLO boundary remains scoped to the
+audited AArch64 build and the primary result is
+`BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`; Task 029's vendor handoff remains the
+next action. See `docs/vendor/ANLOGIC_OFFICIAL_NPU_ASSET_RECOVERY_GEG400.md`
+and `results/evidence/031/`.

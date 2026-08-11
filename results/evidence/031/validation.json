@@ -1,0 +1,93 @@
+{
+  "checks": {
+    "evidence_schema": "PASS",
+    "sha256_format": "PASS",
+    "source_scope": "PASS",
+    "task028_029_immutable": "PASS"
+  },
+  "commands": [
+    "python3 scripts/vendor/audit_task031_official_npu_assets.py --write-evidence",
+    "python3 scripts/vendor/audit_task031_official_npu_assets.py --validate"
+  ],
+  "immutable_task028_029": {
+    "hashes": {
+      "docs/vendor_handoff/dr1m90_npu/README.md": "c71c42a7526ae7a9044cc081a38966dd9938ea53e61b520d25891b1bf5d9f0a8",
+      "docs/vendor_handoff/dr1m90_npu/capability_boundary.md": "5cdf1ead1350fd5cd3b983cbe3838890e3adad99684a7ab97a0f831552a32140",
+      "docs/vendor_handoff/dr1m90_npu/environment.md": "5c4a9c07a96cfd4657fc980ff2b15fcd77b348ae9a3f0a78c3e1596061603b0f",
+      "docs/vendor_handoff/dr1m90_npu/manifest.json": "0b38ee78ecb299cf17a419c39202daa21eaaa1cb1408b01adcf444af841b3665",
+      "docs/vendor_handoff/dr1m90_npu/questions.md": "f493f616e899757872817bf07ab60e7cc1fdfe3513e880356defe5cb82a8b713",
+      "docs/vendor_handoff/dr1m90_npu/reproduction.md": "7daae4e6984a4f3b118d728e10955f327aa162fe9dd37a7b268849e2e72df614",
+      "docs/vendor_handoff/dr1m90_npu/vendor_support_request.md": "b47cd370561bb0567c9de4ca0a8abcc746c779ab5ccc8e004c4b051c139cfe59",
+      "results/evidence/028/al_onnx_pass_audit.json": "ecfdc963143e45a35649da7b8152abd3b76b8f3b0f8449b875cf4aaa78ae28d9",
+      "results/evidence/028/armnn_build.json": "cff38ecf99cb71b35a212ae07df542dc365ae36d31dbfe1a8bf67ef8eefc7d60",
+      "results/evidence/028/armnn_contract.json": "28e340ed4499ba82962dfb06f14fb20d379ba325c7254bd52c3accfb38fbf6a5",
+      "results/evidence/028/benchmark_status.json": "74c59438704c7fe80048385262fb99688f5da8a72df68fcac6e605e93a9c5bb2",
+      "results/evidence/028/board_export_matrix.json": "089470d74f8e1d60de4b016924564267d0526a142bc7dff60129843b3532ad18",
+      "results/evidence/028/board_runtime_probe.json": "a8c27a6f5e913d606b3e7481b6083067e4299af854cd5ddadb08be02935ef1ea",
+      "results/evidence/028/export_matrix.json": "b8840b744221cf9c00fd329642c2bcc594f4990d7ff849a57bb08fdc197ca700",
+      "results/evidence/028/fp32_parser_failure.json": "e4a60f2aa5d6fc64b69228107e53825012cb435b935fb8c03c8ff94506f26503",
+      "results/evidence/028/graph_dialect_diff.json": "5fed13bc52fcd1c7a1730233e537d4bbb018f219085eb53c75f2fe4104fe2c0c",
+      "results/evidence/028/model_repair_audit.json": "82155bc4d1e9704db428ff2bda4ac7d3ab01c9e6f672afe2ce734fd9cbdac12f",
+      "results/evidence/028/native_toolchain_audit.json": "859b9e836a6a4fba556df24d2ca5bdc078613301d8843081725bb1b06e6e39ad",
+      "results/evidence/028/native_yolov5s_positive_path.json": "bfc9e5d12e9908475804b551d9d4a561217716797038443a4e727f9d93593331",
+      "results/evidence/028/official_resize_style_attempt.json": "6e591e45f4ac947d69ad5d7e9a7b4460dbbc76171d4d043749424df380e9eb00",
+      "results/evidence/028/parser_bisection.json": "849492e2927327fe5a1fdd916f714df5849479e7bb59a61053c079ed8679ff53",
+      "results/evidence/028/parser_probe_models.json": "4a45edc0725f36b87752e834e8fd8a5a2c7231d1c2884ed1ac51ec6500a70470",
+      "results/evidence/028/quantization_audit.json": "cd9259461046953588a56a89565d4331c23a46ac0e326ce3922a77d3f970f5be",
+      "results/evidence/028/softnpu_ip_audit.json": "5083df24026b332df690d5861dc4c89e22ace230eea2c217732398275c6c24c6",
+      "results/evidence/028/trackc2_export_matrix.json": "598647c87323a50fb5dfcb0404cf8b1e996dbdbc2d70b63aeef702d1dc8bff68",
+      "results/evidence/028/trackc2_heldout_accuracy.json": "545b2660c908ccfa13d0fa3c7ee0ae9f6bb0be576c9feef9a4ec339694a8d8fd",
+      "results/evidence/028/trackc2_official_smoke.json": "ce706badbbfcfd936e92cef040e2fe92001162e7d7d235f925947b26ad4dd6ef",
+      "results/evidence/028/trackc2_qdq_ranges.json": "561780ecfd5e9dda4500b81cf38a55d88492dd419d530af3a640899aa4883311",
+      "results/evidence/028/trackc2_validation.json": "0a133721030bb8d1ab443345459bca1dc657301c58824f891fb370f9f460dddf",
+      "results/evidence/028/trackc3_board_int8_smoke.json": "1a3ac318053a09444d6af85b05f44d3ba661d1086290b1114a808aa4925ac82a",
+      "results/evidence/028/trackc3_board_smoke.json": "fb5fba05e4ce6ace3e535be13890c213615ec4bb31d1a4f922ac8d6c2080e550",
+      "results/evidence/028/trackc3_capability_face_path_audit.json": "3ec27834b8ec4f45fa594c8f617c339fb14c00715b2736a0374fe4d88c041c30",
+      "results/evidence/028/trackc3_host_uint8.json": "56f536c31a35f755c018735a789801626b057e6f3ad837c6991ef4e3917b19f0",
+      "results/evidence/028/trackc3_hpf_d20_comparison.json": "5ac192de4551196af0434fea5f84f5e5be10ca7a4e407b57b18b9a630eb9092d",
+      "results/evidence/028/trackc3_model_control_comparison.json": "149a789d68774d7f2057188cf2e26c98b93cdbb07e8df15e4c066d5b9127d808",
+      "results/evidence/028/trackc3_preprocess_audit.json": "ab02563e5bb79f1bbbd0436f72d0ae517cc813ec83f1efbd6047500819743d38",
+      "results/evidence/028/trackc3_quant_operator_probe_matrix.json": "181f13ae88b86d1c40548025e2ea003dd66a62f76753afcdb3c407dbf6369996",
+      "results/evidence/028/trackc3_runner_build.json": "c97b5f5f6b17439e2a3d1799ec188ce794498d6f4eb0fa62f6c1aa89e0c85847",
+      "results/evidence/028/trackc3_runtime_compatibility_matrix.json": "dd70e490a8f91a6d9716b40c834f5db8800ffe91bc3cd2291adeae556c00f953",
+      "results/evidence/028/trackc3_runtime_version_audit.json": "bbd02a0c7b2bbd0b6b81e95c205399c6abda77fe684ddc5d9d32203bdb4ae72d",
+      "results/evidence/028/trackc3_support_boundary_audit.json": "997b154ab34fa852cb83cfe0b403cfcf8eef7d1354fbdeb37b652b45b433a8bc",
+      "results/evidence/028/trackc3_vendor_positive_audit.json": "aabbcc8d74e8bbdbecc6208784185e3484f374ce4f5f29a05311f314435ea6da",
+      "results/evidence/028/trackc_environment.json": "f3a9bc5c0271798afefb498e9495e397c4645a7565583ff82e4ce74b27447dae",
+      "results/evidence/028/trackc_host_smoke.json": "b71d1623be36886ce773e410d2079c26cea13863dbeda69e0c9cb209be72aebb",
+      "results/evidence/028/trackc_official_smoke.json": "10c3b1b077572ce2bc9d79f5e03ef664738b1bb8e60d7c1f242952461826216e",
+      "results/evidence/028/trackc_validation.json": "f6b2c5e8ceb704ff781ba169538769a23fa7551d684fd1bdca2fa93ef4835061",
+      "results/evidence/028/validation.json": "58bd3fc1178644e4b4ddd4be5784f751a90220abdaddc1cc8bd001631e21b1b4"
+    },
+    "status": "PASS"
+  },
+  "offline_validation": {
+    "focused_unittest": {
+      "status": "PASS",
+      "tests": 6
+    },
+    "full_python_unittest": {
+      "status": "PASS",
+      "tests": 144
+    },
+    "git_diff_check": "PASS",
+    "json_yaml_parse": "PASS",
+    "markdown_links": "PASS",
+    "python_syntax": "PASS",
+    "release_build": {
+      "ctest": "14/14",
+      "status": "PASS"
+    },
+    "sensitive_material_scan": "PASS"
+  },
+  "safety": {
+    "bitstream_written": false,
+    "board_accessed": false,
+    "model_modified": false,
+    "task028_029_modified": false,
+    "vendor_program_executed": false
+  },
+  "schema_version": 1,
+  "status": "PASS",
+  "task": "031"
+}
