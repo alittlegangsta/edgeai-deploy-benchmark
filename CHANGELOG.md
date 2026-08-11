@@ -255,3 +255,9 @@
   layer failures. The face model remains the separate no-Split positive
   control; no benchmark or fallback result was added. A fresh board replay was
   not possible because the SSH/vsock wrapper failed before connection.
+
+- Added Task 029's documentation-only vendor enablement handoff. The package
+  at `docs/vendor_handoff/dr1m90_npu/` freezes Task 028 identities and evidence
+  references, explains the scoped Alnpu capability boundary, and lists the
+  exact questions required from Anlogic/Milianke. No new experiment or vendor
+  material was added.

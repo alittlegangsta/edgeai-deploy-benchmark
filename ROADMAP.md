@@ -364,3 +364,8 @@ Task 028 is now `Completed` with primary verdict
 audited AArch64 ArmNN binary. Reopening requires a generic quantized-layer
 Alnpu backend, APUG1205 compiler/native runtime, or official DR1M90 GEG400 YOLO
 deployment chain; no benchmark or CPU fallback result is claimed.
+
+Task 029 is completed as the documentation-only vendor enablement handoff. Its package is
+`READY_FOR_VENDOR_HANDOFF` and records the exact Task 028 identity, causal
+chain, compiled Alnpu capability boundary and questions for the missing vendor
+backend/compiler/deployment information.

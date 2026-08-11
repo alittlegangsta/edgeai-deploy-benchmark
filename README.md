@@ -600,3 +600,9 @@ Task 024 is `Completed` as an audit with primary verdict
 the payload/source mapping is unresolved. `candidate_approved: true` approves
 the audit record only, not SD writes, module loading or NPU execution. It is
 not an NPU execution or performance result.
+
+Task 029 is completed as the documentation-only vendor enablement handoff and is
+`READY_FOR_VENDOR_HANDOFF`. The package at
+`docs/vendor_handoff/dr1m90_npu/` freezes Task 028 identities, causal evidence
+and the scoped Alnpu capability boundary; vendor binaries, models, SDKs,
+datasets and credentials remain external.

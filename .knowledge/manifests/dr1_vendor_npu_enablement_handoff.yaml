@@ -1,0 +1,28 @@
+schema_version: 1
+task: "029"
+title: "DR1 vendor NPU enablement handoff"
+status: "Completed"
+readiness: "READY_FOR_VENDOR_HANDOFF"
+source_task: "028"
+primary_verdict: "BLOCKED_EXTERNAL_VENDOR_DEPENDENCY"
+primary_blocker: "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE"
+scope: "Audited AArch64 libarmnn.so.32.1 only"
+new_experiments: false
+package_root: "docs/vendor_handoff/dr1m90_npu"
+validator: "scripts/vendor/validate_task029_vendor_handoff.py"
+tracks:
+  track_a: "BLOCKED_UNSUPPORTED_ALNPU_GRAPH"
+  track_b: "BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE"
+  track_c1: "PASS"
+  track_c2: "NOT_ACCEPTED_PAUSED"
+  track_c3: "BLOCKED_AT_ALNPU_LAYER_SUPPORT"
+  track_c4: "NOT_RUN"
+external_reopen_conditions:
+  - "generic quantized YOLO Alnpu backend"
+  - "APUG1205-compatible compiler and native runtime"
+  - "official DR1M90 GEG400 YOLO deployment/conversion chain"
+safety:
+  board_accessed: false
+  benchmark_run: false
+  cpu_fallback_accepted: false
+  vendor_material_committed: false
