@@ -654,3 +654,14 @@ rows were retained as slower evidence, while threads 3/4 were skipped because
 the board exposes two logical CPUs. This is CPU profiling evidence, not an NPU
 or camera benchmark; see `docs/benchmark/ARM_CPU_PERFORMANCE_OPTIMIZATION.md`
 and `results/evidence/033/`.
+
+Task 034 completed profiling the inference kernel distribution of that same ARM ncnn
+pipeline. The isolated `NCNN_BENCHMARK` build reports 206 layers; Convolution
+accounts for 80.304% of summed layer time, while Task 033 inference remains
+95.399611% of pipeline time. The exact 20240410 Release/OpenMP build was
+audited and a correctness-passing `-mtune=cortex-a35` A/B candidate was
+rejected because it was 0.607296% slower in pipeline. The frozen conversion is
+already optimized at its recorded pnnx `optlevel=2`; no INT8 or NPU claim is
+introduced. See
+`docs/benchmark/ARM_NCNN_INFERENCE_KERNEL_OPTIMIZATION.md` and
+`results/evidence/034/`.

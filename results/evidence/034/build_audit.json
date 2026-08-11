@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "task": "034",
+  "status": "PASS",
+  "source": {
+    "repository_role": "fixed ncnn source snapshot",
+    "commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "tag": "20240410",
+    "archive_sha256": "328fe282b98457d85ab56184fa896467f6bf640d4e48e91fcefc8d31889f92b7",
+    "archive_method": "git archive of the exact commit; build did not use the dirty checkout directly",
+    "checkout_note": "The source checkout had an unrelated submodule worktree state; the reproducible build input was the clean commit archive."
+  },
+  "toolchain": {
+    "cmake": "cmake version 3.16.9",
+    "compiler": "aarch64-linux-gnu-g++ (Linaro GCC 7.5-2019.12) 7.5.0",
+    "target": "AArch64 GNU/Linux",
+    "runtime_openmp": "private libgomp.so.1",
+    "libgomp_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+    "libgomp_elf": "ELF64 AArch64",
+    "libgomp_glibc_requirement_observed": "GLIBC_2.17"
+  },
+  "common_ncnn_options": {
+    "NCNN_VERSION": "20240410",
+    "CMAKE_BUILD_TYPE": "Release",
+    "NCNN_OPENMP": true,
+    "NCNN_THREADS": true,
+    "NCNN_SIMPLEOMP": false,
+    "NCNN_RUNTIME_CPU": true,
+    "NCNN_ARM82": false,
+    "NCNN_VFPV4": true,
+    "NCNN_GNU_INLINE_ASM": true,
+    "NCNN_BF16": true,
+    "NCNN_INT8": false,
+    "NCNN_FORCE_INLINE": true,
+    "NCNN_ENABLE_LTO": false,
+    "Vulkan": false
+  },
+  "variants": {
+    "profiling": {
+      "flags": "-O3 -DNDEBUG",
+      "NCNN_BENCHMARK": true,
+      "libncnn_a_sha256": "deee9e557376a7f257e8e19515456041b1746fe2f65d90a0afd3db9f3d1743bc",
+      "profiler_elf_sha256": "4b1f6f594e8f93fb00bd48ce483b9238c1134e80662adb819f92367dc15cfa2d",
+      "purpose": "diagnostic layer timing only; not a formal performance candidate"
+    },
+    "A": {
+      "flags": "-O3 -DNDEBUG",
+      "NCNN_BENCHMARK": false,
+      "libncnn_a_sha256": "02cb05e93a4187b2e79a9f091c45b543cdcb8bf8d46b910e569e2f501f3ab286",
+      "profiler_elf_sha256": "bc0d46936442aa68e4413d9b5315853287b8a3905fc6b4b1dbee33a7f32e3c38",
+      "role": "same-source/options Release control candidate; not asserted byte-identical to the Task 033 library",
+      "correctness": "PASS_TARGET"
+    },
+    "B": {
+      "flags": "-O3 -DNDEBUG -mtune=cortex-a35",
+      "NCNN_BENCHMARK": false,
+      "libncnn_a_sha256": "8a0629d82f270f6b0c398520ce8bc1a2b6afb8cbea1b90aa39e7106dab0d3038",
+      "profiler_elf_sha256": "663d8ff64b421b878c2b281ce7e8584d3df061d9af56c551b099221bf5d1ee58",
+      "role": "single-variable tuning candidate",
+      "correctness": "PASS_TARGET"
+    }
+  },
+  "historical_reference": {
+    "task033_libncnn_a_sha256": "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3",
+    "note": "Task 033 evidence is immutable. A is a reproducible same-source control for this audit, not a claim that the historical static archive is byte-identical."
+  },
+  "static_elf_checks": {
+    "profiling_a_b_profiler_architecture": "ELF64 AArch64",
+    "dynamic_runtime": ["libgomp.so.1", "libopencv_core.so.407", "libopencv_imgproc.so.407", "libopencv_imgcodecs.so.407"],
+    "production_semantics": "NCNN_BENCHMARK is OFF for A and B; profiling instrumentation is isolated to the profiling build."
+  },
+  "runtime_capability_observation": {
+    "board_architecture": "aarch64",
+    "compiled_neon": true,
+    "ncnn_arm82": false,
+    "runtime_cpu_dispatch": true,
+    "runtime_packing": true,
+    "openmp_backend": "openmp",
+    "configured_threads": 2
+  },
+  "repair_attempts": [
+    {
+      "attempt": 1,
+      "change": "Initial candidate-B attempt used -mcpu=cortex-a35.",
+      "outcome": "Compiler/source architecture-flag conflict; candidate was not accepted."
+    },
+    {
+      "attempt": 2,
+      "change": "Rebuilt candidate B from the same clean archive with -mtune=cortex-a35 only.",
+      "outcome": "Build and project link succeeded; board correctness passed, but timing was slower than A."
+    }
+  ],
+  "audit_command": "scripts/vendor/audit_task034_ncnn_build.sh --build-output <external Task 034 build-output>",
+  "audit_result": "PASS"
+}

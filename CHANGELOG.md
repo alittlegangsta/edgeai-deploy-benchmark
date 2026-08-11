@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Completed Task 034 ARM ncnn inference-kernel/build optimization. A switchable
+  `NCNN_BENCHMARK` layer profile attributes 80.304% of summed layer time to
+  Convolution; the exact Release/OpenMP/packing build and graph conversion are
+  audited. A correctness-passing `-mtune=cortex-a35` candidate is retained as
+  rejected because it is 0.607296% slower in pipeline. PMU/perf is unavailable,
+  and no INT8, NPU, kernel or board-system change is made.
+
 - Started Task 033 ARM CPU profiling with a standalone ncnn profiler. The
   historical Task 017/018 measurements remain immutable; the new tool adds
   decode/NMS timing, runtime capability reporting, affinity and single-variable

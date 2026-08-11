@@ -428,3 +428,18 @@ because topology reports two logical CPUs. This does not reopen NPU work or
 publish an NPU/camera benchmark. See
 `docs/benchmark/ARM_CPU_PERFORMANCE_OPTIMIZATION.md` and
 `results/evidence/033/`.
+
+## Task 034: ARM ncnn inference-kernel and build optimization
+
+Task 034 is `Completed`. The
+switchable ncnn layer profile shows 60 Convolution layers accounting for
+80.304% of summed layer time; the Task 033 inference stage remains the primary
+pipeline cost at 95.399611%. The exact ncnn 20240410 source, Linaro AArch64
+Release build and OpenMP/packing controls were audited. A same-source control
+and a single-variable `-mtune=cortex-a35` candidate both pass correctness, but
+the tuned candidate is 0.607296% slower in pipeline and is rejected. PMU/perf
+is unavailable on the board, so cache-miss attribution is not claimed. The
+frozen conversion graph is recorded `ALREADY_OPTIMIZED`; no INT8 result or NPU
+change is introduced. See
+`docs/benchmark/ARM_NCNN_INFERENCE_KERNEL_OPTIMIZATION.md` and
+`results/evidence/034/`.

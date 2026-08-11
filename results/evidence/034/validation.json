@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "task": "034",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "task034_layer_parser_self_test",
+      "command": "python3 scripts/validate_task034_ncnn_optimization.py --self-test",
+      "status": "PASS"
+    },
+    {
+      "name": "task034_profile_and_ab_parser",
+      "command": "python3 scripts/validate_task034_ncnn_optimization.py --layer-log ... --layer-run-json ... --candidate-a ... --candidate-b ...",
+      "status": "PASS",
+      "result": "206 layers, 6 layer sequences; A/B correctness and resource summaries validated"
+    },
+    {
+      "name": "task034_build_audit",
+      "command": "scripts/vendor/audit_task034_ncnn_build.sh --build-output <external Task 034 build-output>",
+      "status": "PASS"
+    },
+    {
+      "name": "release_build",
+      "command": "cmake --build build/ci-default-options-release -j2",
+      "status": "PASS",
+      "result": "ninja: no work to do"
+    },
+    {
+      "name": "ctest",
+      "command": "ctest --test-dir build/ci-default-options-release --output-on-failure",
+      "status": "PASS",
+      "result": "15/15 tests passed"
+    },
+    {
+      "name": "python_unittest",
+      "command": "PYTHONPATH=python .venv/bin/python -m unittest discover -s tests/python -p 'test*.py'",
+      "status": "PASS",
+      "result": "152 tests passed"
+    },
+    {
+      "name": "json_yaml_parse",
+      "command": "PYTHONPATH=python .venv/bin/python JSON/YAML parse check",
+      "status": "PASS",
+      "result": "all six Task 034 JSON files and 40 repository manifests parsed"
+    },
+    {
+      "name": "shell_python_syntax",
+      "command": "bash -n scripts/vendor/run_task034_ncnn_layer_profile.sh scripts/vendor/audit_task034_ncnn_build.sh; python -m py_compile scripts/validate_task034_ncnn_optimization.py",
+      "status": "PASS"
+    },
+    {
+      "name": "markdown_links",
+      "command": "local Markdown target existence check",
+      "status": "PASS"
+    },
+    {
+      "name": "completed_task_immutability",
+      "command": "git diff --name-only scope check for Tasks 017/018/030/033 and NPU evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "frozen_task033_reference_validator",
+      "command": "python3 scripts/validate_task033_arm_cpu_optimization.py results/evidence/033/threads2_default_packing_on.json",
+      "status": "PASS"
+    },
+    {
+      "name": "sensitive_material_scan",
+      "command": "changed-file scan for private keys, credentials and tokens",
+      "status": "PASS"
+    },
+    {
+      "name": "repository_hygiene",
+      "command": "git status and Task 034 artifact-type check",
+      "status": "PASS",
+      "result": "only allowed text/JSON/script/doc paths changed; no model, library, ELF or build tree added"
+    },
+    {
+      "name": "git_diff_check",
+      "command": "git diff --check",
+      "status": "PASS"
+    }
+  ],
+  "environment_note": "System python3 lacks the repository's existing cv2/onnx imports; no dependency was installed. The repository .venv with PYTHONPATH=python was already present and completed the full unittest run."
+}

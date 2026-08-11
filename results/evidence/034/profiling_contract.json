@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task": "034",
+  "status": "PASS",
+  "purpose": "Switchable ncnn layer/operator profiling without changing the production benchmark path.",
+  "frozen_workload": {
+    "model": "YOLOv5n v7.0",
+    "ncnn_version": "1.0.20240410",
+    "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "input_shape": [1, 3, 640, 640],
+    "output_shape": [1, 25200, 85],
+    "precision": "FP32",
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45,
+    "correctness_gate": "PASS_TARGET"
+  },
+  "production_path": {
+    "ncnn_benchmark": false,
+    "layer_logging": "disabled",
+    "semantics_changed": false,
+    "baseline_runtime": "threads=2, default scheduling, packing=on, FP16 off"
+  },
+  "profiling_path": {
+    "facility": "ncnn NCNN_BENCHMARK",
+    "ncnn_benchmark": true,
+    "build_type": "Release",
+    "warmup": 2,
+    "repeat": 3,
+    "threads": 2,
+    "affinity": "default",
+    "packing": true,
+    "fp16_packed": false,
+    "fp16_storage": false,
+    "fp16_arithmetic": false,
+    "layer_log_parser": "scripts/validate_task034_ncnn_optimization.py",
+    "raw_log_retained_outside_git": true
+  },
+  "result": {
+    "status": "PASS_TARGET",
+    "run_json": "external Task 034 board return / layer_profile_run.json",
+    "run_json_sha256": "62149b2e50858f3aa74eb32a909f34ba5204c606120ac9c7c3638fd7520a43b1",
+    "raw_layer_log_sha256": "c76045bab5d6c5dd905d569d8215a08371c6d1c3856fc693f6d3d6304ec44044",
+    "layer_count": 206,
+    "run_count_in_layer_log": 6,
+    "formal_sample_count": 3,
+    "note": "The layer log includes one initial result plus two warmups and three measured repeats; the structured profiler summary retains the three measured samples."
+  }
+}
