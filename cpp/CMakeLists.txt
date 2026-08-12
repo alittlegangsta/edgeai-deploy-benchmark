@@ -649,3 +649,61 @@ edgeai_enable_warnings(edgeai_benchmark_ncnn)
 add_test(NAME edgeai_benchmark_ncnn_invalid_args COMMAND edgeai_benchmark_ncnn)
 set_tests_properties(edgeai_benchmark_ncnn_invalid_args PROPERTIES WILL_FAIL TRUE)
 endif()
+
+# Task 038: one explicit image CLI over the existing backend adapters.  The
+# factory is compiled with feature flags so a disabled backend fails with a
+# clear runtime error instead of silently selecting another implementation.
+add_library(edgeai_unified_backend STATIC
+    src/inference_backend.cpp
+)
+target_compile_features(edgeai_unified_backend PUBLIC cxx_std_17)
+set_target_properties(edgeai_unified_backend PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_include_directories(edgeai_unified_backend PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_link_libraries(edgeai_unified_backend PUBLIC edgeai_common)
+set(EDGEAI_UNIFIED_HAVE_ORT 0)
+set(EDGEAI_UNIFIED_HAVE_NCNN 0)
+set(EDGEAI_UNIFIED_HAVE_TENSORRT 0)
+if(EDGEAI_ENABLE_ORT)
+    target_link_libraries(edgeai_unified_backend PUBLIC edgeai_ort_backend)
+    set(EDGEAI_UNIFIED_HAVE_ORT 1)
+endif()
+if(EDGEAI_ENABLE_NCNN)
+    target_link_libraries(edgeai_unified_backend PUBLIC edgeai_ncnn_backend)
+    set(EDGEAI_UNIFIED_HAVE_NCNN 1)
+endif()
+if(EDGEAI_ENABLE_TENSORRT)
+    target_link_libraries(edgeai_unified_backend PUBLIC edgeai_tensorrt_backend)
+    set(EDGEAI_UNIFIED_HAVE_TENSORRT 1)
+endif()
+target_compile_definitions(edgeai_unified_backend PRIVATE
+    EDGEAI_UNIFIED_HAVE_ORT=${EDGEAI_UNIFIED_HAVE_ORT}
+    EDGEAI_UNIFIED_HAVE_NCNN=${EDGEAI_UNIFIED_HAVE_NCNN}
+    EDGEAI_UNIFIED_HAVE_TENSORRT=${EDGEAI_UNIFIED_HAVE_TENSORRT}
+)
+edgeai_enable_warnings(edgeai_unified_backend)
+
+add_executable(edgeai_demo
+    apps/edgeai_demo.cpp
+)
+target_compile_features(edgeai_demo PRIVATE cxx_std_17)
+set_target_properties(edgeai_demo PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_demo PRIVATE edgeai_unified_backend)
+if(EDGEAI_ENABLE_ORT)
+    set_property(TARGET edgeai_demo APPEND PROPERTY BUILD_RPATH "${ONNXRUNTIME_ROOT}/lib")
+endif()
+if(EDGEAI_ENABLE_TENSORRT)
+    set_property(TARGET edgeai_demo APPEND PROPERTY BUILD_RPATH "/usr/lib/x86_64-linux-gnu;/usr/local/cuda-12.9/lib64")
+endif()
+edgeai_enable_warnings(edgeai_demo)
+add_test(NAME edgeai_demo_invalid_args COMMAND edgeai_demo)
+set_tests_properties(edgeai_demo_invalid_args PROPERTIES WILL_FAIL TRUE)

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "task": "038",
+  "status": "PASS",
+  "application": "edgeai_demo",
+  "contract": {
+    "cli": "--backend ort|tensorrt|ncnn --model PATH --source PATH --precision fp32|fp16|int8 --benchmark --warmup N --repeat N",
+    "backend_selection": "explicit; unavailable backends return a nonzero error; no fallback",
+    "shared_stages": ["preprocess", "backend_inference", "postprocess", "pipeline"],
+    "outputs": ["JSON", "annotated image"],
+    "model_input": [1, 3, 640, 640],
+    "model_output": [1, 25200, 85]
+  },
+  "builds": {
+    "release_ort_ncnn": {"build_dir": "/tmp/task038-cmake", "edgeai_demo_sha256": "5a94d91abc2b46fc1c08d07503e0b1e6940afb13f97ff47132e936adf8f700c5", "exit_code": 0, "rpath_dependencies_not_found": false},
+    "release_ort_ncnn_tensorrt": {"build_dir": "/tmp/task038-trt-cmake", "edgeai_demo_sha256": "174c30357f6e97bb45cbfbe4183e5255d30a2281ac3490220287c0de8fcc0fee", "exit_code": 0, "rpath_dependencies_not_found": false}
+  },
+  "runs": {
+    "ort_fp32": "PASS_TARGET",
+    "ncnn_fp32": "PASS_TARGET",
+    "tensorrt_fp32": "PASS_TARGET",
+    "tensorrt_fp16": "RUNNABLE; Task037 COCO gate accepted; strict single-image Golden retained as secondary diagnostic"
+  },
+  "ncnn_int8": {
+    "status": "EXTERNAL_MATCHING_MANIFEST_REQUIRED",
+    "reason": "Task035 EQ assets are external to this repository; the unified CLI does not relabel FP32 assets as INT8",
+    "guard_probe": {
+      "exit_code": 1,
+      "stderr_contains": "ncnn --precision int8 requires a matching manifest declaring contract.precision=INT8"
+    }
+  },
+  "disabled_backend_probe": {
+    "command": "/tmp/task038-cmake/edgeai_demo --backend tensorrt --model /tmp/no.engine --source data/samples/images/pc_reference.jpg --precision fp32",
+    "exit_code": 1,
+    "stderr_contains": "backend 'tensorrt' is unavailable: build with EDGEAI_ENABLE_TENSORRT=ON"
+  },
+  "tests": {
+    "release_ctest_ort_ncnn": "PASS 11/11",
+    "release_ctest_ort_ncnn_tensorrt": "PASS 11/11",
+    "focused_python": "PASS 3/3",
+    "full_python": "PASS 160/160 using .venv",
+    "system_python_environment_attempt": "FAIL; six import errors because system Python lacks cv2/onnx; retained in python_tests_system_python.json",
+    "prior_task_validators": "PASS Task030, Task033, Task034 self-test, Task035 self-test, Task037",
+    "syntax_links_hygiene": "PASS",
+    "git_diff_check": "PASS"
+  }
+}

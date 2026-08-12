@@ -9,7 +9,8 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–036 are completed. Task 021 ARM UVC camera inference passed its
+Tasks 001–037 are completed; Task 038 is the active unified C++ application
+integration. Task 021 ARM UVC camera inference passed its
 automated stage and received user representative-frame approval. Task 020 ARM video-file inference passed
 automated real-board validation and user playback review.
 Checkpoint C is
@@ -258,6 +259,50 @@ audited AArch64 ArmNN binary only. Track A remains raw-ONNX
 C4 is `NOT_RUN`. Reopening requires a supported generic-YOLO Alnpu backend,
 APUG1205 compiler/native runtime, or an official DR1M90 GEG400 YOLO deployment
 chain. No CPU fallback or NPU benchmark is claimed.
+
+## Unified C++ image application (Task 038)
+
+`cpp/apps/edgeai_demo.cpp` exposes one explicit image contract over the existing
+backend adapters. `edgeai_common` owns the YOLOv5n letterbox preprocessing,
+raw-output decode/NMS and visualization; only the raw inference call is
+backend-specific:
+
+```text
+InferenceBackend
+├── OrtBackend       (CPUExecutionProvider, FP32)
+├── TensorRtBackend  (CUDA engine, FP32 or the frozen FP16 diagnostic)
+└── NcnnBackend      (CPU, FP32 or an explicitly supplied matching INT8 manifest)
+```
+
+Example (for ncnn the model argument is its validated manifest):
+
+```bash
+./build/pc-acceptance-release/edgeai_demo \
+  --backend ort \
+  --model models/yolov5n-v7.0/yolov5n.onnx \
+  --manifest models/yolov5n-v7.0/manifest.json \
+  --source data/samples/images/pc_reference.jpg \
+  --precision fp32 --benchmark --warmup 10 --repeat 100 \
+  --output-image build/reproduction/edgeai_ort.png \
+  --output-json build/reproduction/edgeai_ort.json
+```
+
+Use `--backend ncnn --model models/yolov5n-v7.0/ncnn_manifest.json
+--threads 2 --packing 1` for the accepted CPU profile, or pass the approved
+TensorRT engine as `--model` with `--backend tensorrt`. The CLI reports backend,
+runtime/model identity, tensor shapes and dtypes, preprocess/inference/
+postprocess/pipeline mean/P50/P95, FPS, Peak RSS, detections and an annotated
+image. A disabled backend returns an explicit error; it never falls back to a
+different implementation. ncnn `int8` is accepted only when its matching
+external quantized manifest and param/bin are supplied, so the FP32 assets are
+never mislabeled as EQ INT8. DR1 face NPU remains a separate experimental
+control because it does not implement this YOLOv5n raw-output contract.
+
+Task 038's three FP32 paths pass the existing single-image Golden. TensorRT
+FP16 is runnable and retains Task 037's strict single-image diagnostic alongside
+its accepted COCO gate; that diagnostic is not silently promoted to a strict
+Golden pass. Reproducible run metadata and sample annotated images are under
+`results/evidence/038/`.
 
 ## PC architecture and model lineage
 
