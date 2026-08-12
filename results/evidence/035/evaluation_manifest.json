@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task": "035",
+  "role": "held_out_coco_val2017_accuracy",
+  "source": "official COCO val2017 images, disjoint from calibration subset",
+  "count": 500,
+  "manifest_path_external": "/tmp/task035-coco/evaluation_manifest.tsv",
+  "manifest_sha256": "b98b81be7822bce89b10535e6806833b30ac56d706723ce1d88b80c0f2cc3f2d",
+  "ids_sha256": "d2a9767fa4893848ddef397b82b05817dbfac91917b91933a2f9c9be917a21fc",
+  "per_image_sha256_manifest_external": "/tmp/task035-coco/evaluation_sha256.tsv",
+  "per_image_sha256_manifest_sha256": "8d1aacaf8545610e58aea4dfb06a3bd44689461a212c4bc100aeefb1371ddb27",
+  "annotation": {
+    "path_external": "/tmp/task035-coco/annotations/instances_val2017.json",
+    "sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+    "images_total": 5000,
+    "annotations_total": 36781,
+    "categories_total": 80
+  },
+  "selection": {
+    "seed": 35035,
+    "rule": "sorted val2017 IDs shuffled with random.Random(35035), second block of 500",
+    "calibration_manifest_sha256": "de490f890d82b40e0f66f17ed4289d2efd276e933b6e9f0935e4572c365c28f7",
+    "overlap_count": 0
+  },
+  "metric_scope": "Corrected COCO bbox subset evaluation uses AP confidence=0.001 and NMS IoU=0.6, with COCOeval imgIds exactly equal to this 500-image held-out manifest; deployment threshold remains confidence=0.25/NMS IoU=0.45 and is not changed",
+  "corrected_evaluator_evidence": "results/evidence/035/coco_evaluator_audit.json",
+  "previous_bounded_manifest": {
+    "count": 1,
+    "manifest_sha256": "b7bceac0dce235d3471731bd822f1733c311b0c2949c4830eb3243594541d40f",
+    "role": "RETAINED_FP32_REFERENCE_REGRESSION"
+  },
+  "full_independent_evaluation": {
+    "evidence": "results/evidence/035/coco_full_evaluation.json",
+    "count": 4500,
+    "manifest_sha256": "a219a5da368557510ec2c5229d9752028a0428eea719b08ab7cf222a20afee22",
+    "ids_sha256": "3b3b23ec869f04009b704ab05a1c8552a81cdd6bd27e2b7b48519f0a990a21de",
+    "overlap_with_calibration": 0,
+    "metric_scope": "same corrected COCO protocol, conf=0.001, NMS IoU=0.6, maxDets=100"
+  }
+}

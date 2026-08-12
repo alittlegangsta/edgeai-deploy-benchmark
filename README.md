@@ -9,7 +9,7 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–030 are completed. Task 021 ARM UVC camera inference passed its
+Tasks 001–035 are completed. Task 021 ARM UVC camera inference passed its
 automated stage and received user representative-frame approval. Task 020 ARM video-file inference passed
 automated real-board validation and user playback review.
 Checkpoint C is
@@ -643,7 +643,8 @@ recoverable from the stripped binary. The result is
 See `docs/vendor/ANLOGIC_ALHARDNPU_FUSION_ELIGIBILITY.md` and
 `results/evidence/032/`.
 
-Task 033 completed correctness-first ARM CPU profiling on the validated ncnn
+Tasks 033–035 form the ARM optimization sequence: runtime tuning, kernel
+profiling, then INT8 quantization. Task 033 completed correctness-first ARM CPU profiling on the validated ncnn
 YOLOv5n path without reopening the frozen NPU vendor handoff. The accepted
 two-core board configuration is ncnn 20240410 OpenMP with two threads, default
 scheduling, packing on, and FP32 storage/arithmetic. It measured 1963.817618 ms
@@ -665,3 +666,20 @@ already optimized at its recorded pnnx `optlevel=2`; no INT8 or NPU claim is
 introduced. See
 `docs/benchmark/ARM_NCNN_INFERENCE_KERNEL_OPTIMIZATION.md` and
 `results/evidence/034/`.
+
+Task 035 (Completed) evaluates the fixed ncnn 20240410 INT8 path separately from the frozen
+FP32 baseline. The repaired COCO evaluator uses 500 calibration images and all
+4,500 remaining val2017 images, exact subset IDs, COCO80 category mapping and
+`xyxy`→`xywh`, with AP confidence `0.001`/NMS `0.6` while deployment remains
+`0.25`/`0.45`. Final FP32/EQ mAP50 is `0.457605/0.443309` and mAP50-95 is
+`0.279777/0.265115`; absolute EQ degradation is `0.014296/0.014662`, within
+the `0.02` gate, and neither has zero-detection images. The same AArch64
+`NCNN_INT8=ON` ELF, threads=2/default scheduling/packing-on, measured EQ
+`1.604359x` inference and `1.557952x` pipeline speedup (`55.795208%` FPS gain)
+with a `1.938084x` diagnostic convolution aggregate speedup. The experiment
+decision is `INT8_ACCEPTED`; the strict single-image FP32-reference failure is
+retained as secondary evidence rather than relabeled. EQ is the accepted ARM
+INT8 configuration, and no NPU work is reopened.
+See
+[the INT8 feasibility report](docs/benchmark/ARM_NCNN_INT8_QUANTIZATION_FEASIBILITY.md)
+and `results/evidence/035/`.

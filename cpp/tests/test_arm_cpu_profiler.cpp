@@ -19,6 +19,13 @@ void run_test() {
     edgeai::backends::NcnnDetector detector(manifest, options);
     require(detector.runtime_info().threads == 1, "profiler thread option was not preserved");
     require(!detector.runtime_info().packing_layout, "packing option was not preserved");
+    edgeai::backends::NcnnRuntimeOptions int8_options;
+    int8_options.threads = 1;
+    int8_options.use_int8_inference = true;
+    int8_options.use_int8_packed = true;
+    int8_options.use_int8_storage = true;
+    edgeai::backends::NcnnDetector int8_detector(manifest, int8_options);
+    require(int8_detector.runtime_info().int8, "profiler INT8 option was not preserved");
     bool rejected = false;
     try {
         edgeai::backends::NcnnRuntimeOptions invalid;

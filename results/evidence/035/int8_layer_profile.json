@@ -1,0 +1,88 @@
+{
+  "schema_version": 2,
+  "task": "035",
+  "status": "PASS_DIAGNOSTIC",
+  "purpose": "NCNN_BENCHMARK=ON diagnostic layer comparison; not a separate production build",
+  "fp32_reference": {
+    "source_evidence": "results/evidence/034/layer_profile.json",
+    "run_count": 6,
+    "layer_count": 206,
+    "total_layer_time_mean_ms": 1826.8233333333335,
+    "convolution_layer_count": 60,
+    "convolution_total_ms": 1467.0133333333333,
+    "convolution_share_percent": 80.30406151297242
+  },
+  "int8_eq": {
+    "status": "PASS_DIAGNOSTIC_RUN_WITH_SECONDARY_REFERENCE_GATE_FAILURE",
+    "run_count": 6,
+    "layer_count": 206,
+    "measured_runs": 3,
+    "total_layer_time_mean_ms": 1113.6916666666666,
+    "build": {
+      "source_commit": "56775de50990ab7f16627efdcf5529b49541206f",
+      "source_archive_sha256": "328fe282b98457d85ab56184fa896467f6bf640d4e48e91fcefc8d31889f92b7",
+      "project_archive_sha256": "480ac4ad523355041fcfc7bdf41e5f6dcaced86f1cf96fe050ccccac64710c16",
+      "compiler": "aarch64-linux-gnu-g++ (Linaro GCC 7.5-2019.12) 7.5.0",
+      "cmake": "cmake version 3.16.9",
+      "NCNN_BENCHMARK": true,
+      "NCNN_INT8": true,
+      "NCNN_OPENMP": true,
+      "NCNN_THREADS": true,
+      "NCNN_SIMPLEOMP": false,
+      "NCNN_RUNTIME_CPU": true,
+      "NCNN_ARM82": false,
+      "NCNN_VFPV4": true,
+      "libncnn_sha256": "05f8140910c99dc09e3eb4b836adeb8b98719a82051dcfc0309b9f4c53fe2d99",
+      "profiler_sha256": "ac23c1485c6b9470ca6e4ca639e501e1e3701520bb188a35ccc02019ef17b52f"
+    },
+    "raw_log": {
+      "stderr_sha256": "8996b58b2429da15a93052b12d17a7cad1a6f22d4ee41d7a03d8dc81e792f2d6",
+      "stdout_sha256": "f5d443890f82799203e3c22c58ad393d8eb1ffd9db549f334615d956ab623c9a",
+      "run_json_sha256": "4566399f0e135d5a2c21f9eb87679f62cab674adab92cf9045032c82d0335de4",
+      "external_location": "external_generated/task035-arm-benchmark-profile/returned"
+    },
+    "operator_aggregates": [
+      {"type": "Convolution", "layer_count": 60, "mean_total_ms": 756.94, "share_percent": 67.96674722955935},
+      {"type": "Swish", "layer_count": 57, "mean_total_ms": 191.29333333333332, "share_percent": 17.176507561189137},
+      {"type": "Sigmoid", "layer_count": 3, "mean_total_ms": 47.02333333333333, "share_percent": 4.22229372282873},
+      {"type": "Permute", "layer_count": 3, "mean_total_ms": 37.98666666666667, "share_percent": 3.4108782352985196},
+      {"type": "Concat", "layer_count": 17, "mean_total_ms": 30.5, "share_percent": 2.7386395097386322},
+      {"type": "Reshape", "layer_count": 6, "mean_total_ms": 24.983333333333334, "share_percent": 2.24328995907006},
+      {"type": "Slice", "layer_count": 3, "mean_total_ms": 8.013333333333334, "share_percent": 0.7195288941433522},
+      {"type": "Pooling", "layer_count": 3, "mean_total_ms": 7.781666666666667, "share_percent": 0.6987272060639167},
+      {"type": "BinaryOp", "layer_count": 16, "mean_total_ms": 6.046666666666667, "share_percent": 0.5429390241164895},
+      {"type": "Interp", "layer_count": 2, "mean_total_ms": 1.88, "share_percent": 0.16880794355110257},
+      {"type": "MemoryData", "layer_count": 6, "mean_total_ms": 0.4383333333333333, "share_percent": 0.0393585896754787},
+      {"type": "Eltwise", "layer_count": 3, "mean_total_ms": 0.35833333333333334, "share_percent": 0.03217527292862327},
+      {"type": "Split", "layer_count": 24, "mean_total_ms": 0.355, "share_percent": 0.031875968064170965},
+      {"type": "UnaryOp", "layer_count": 3, "mean_total_ms": 0.09166666666666666, "share_percent": 0.008230883772438512}
+    ],
+    "top_10_hottest_layers": [
+      {"type": "Convolution", "name": "conv_3", "mean_ms": 96.95333333333333, "share_percent": 8.705581287459875},
+      {"type": "Convolution", "name": "conv_4", "mean_ms": 50.35166666666667, "share_percent": 4.521149629984362},
+      {"type": "Convolution", "name": "conv_10", "mean_ms": 43.47833333333333, "share_percent": 3.903982999483699},
+      {"type": "Convolution", "name": "conv_60", "mean_ms": 42.41, "share_percent": 3.808055790426734},
+      {"type": "Convolution", "name": "conv_18", "mean_ms": 40.24333333333333, "share_percent": 3.6135076285327328},
+      {"type": "Convolution", "name": "conv_28", "mean_ms": 38.775, "share_percent": 3.4816638357414904},
+      {"type": "Sigmoid", "name": "sigmoid_0", "mean_ms": 35.76, "share_percent": 3.2109425858443768},
+      {"type": "Permute", "name": "permute_134", "mean_ms": 31.72666666666667, "share_percent": 2.8487836998570826},
+      {"type": "Swish", "name": "silu_66", "mean_ms": 26.21166666666667, "share_percent": 2.3535838016207364},
+      {"type": "Convolution", "name": "conv_48", "mean_ms": 21.305, "share_percent": 1.913007041146936}
+    ]
+  },
+  "comparison": {
+    "convolution_layer_count_equal": true,
+    "fp32_convolution_total_ms": 1467.0133333333333,
+    "int8_convolution_total_ms": 756.94,
+    "convolution_speedup": 1.938084040126474,
+    "fp32_convolution_share_percent": 80.30406151297242,
+    "int8_convolution_share_percent": 67.96674722955935,
+    "top_layer_examples": {
+      "conv_3": {"fp32_ms": 256.8616666666667, "int8_ms": 96.95333333333333, "delta_percent": -62.25465068746472},
+      "conv_4": {"fp32_ms": 105.97166666666668, "int8_ms": 50.35166666666667, "delta_percent": -52.48572731705017},
+      "conv_10": {"fp32_ms": 89.66833333333334, "int8_ms": 43.47833333333333, "delta_percent": -51.512053679299655},
+      "conv_60": {"fp32_ms": 74.88333333333333, "int8_ms": 42.41, "delta_percent": -43.36523480970398}
+    },
+    "interpretation": "EQ reduces measured convolution layer time materially in the diagnostic build; layer logs are diagnostic and the strict single-image frozen-reference comparison remains a secondary failure."
+  }
+}

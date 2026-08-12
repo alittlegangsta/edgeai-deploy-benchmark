@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "task": "035",
+  "official_flow": {
+    "optimize": "ncnnoptimize inparam inbin outparam outbin 0",
+    "calibration": "ncnn2table opt.param opt.bin imagelist table mean=[0,0,0] norm=[0.00392156862745098,0.00392156862745098,0.00392156862745098] shape=[640,640,3] pixel=RGB thread=2 method=kl|aciq|eq",
+    "quantize": "ncnn2int8 opt.param opt.bin int8.param int8.bin table",
+    "source": "ncnn 20240410 tools; no AL_onnx_pass model was used"
+  },
+  "methods": {
+    "kl": "tool completed and produced a table/model; valid 22-image calibration candidate produced 0 detections on the held-out PC reference",
+    "aciq": "tool completed and produced a table/model; valid 22-image calibration candidate produced 3 detections on the held-out PC reference",
+    "eq": "attempted with the same pinned tool and 22-image manifest; bounded run was interrupted at exit 130 while searching scales and no table is accepted"
+  },
+  "source_behavior": {
+    "option_defaults": {
+      "use_int8_inference": true,
+      "use_int8_packed": true,
+      "use_int8_storage": true,
+      "use_int8_arithmetic": false
+    },
+    "project_runtime_note": "NcnnDetector receives explicit runtime options; the new profiler --int8 flag enables inference, packed and storage INT8 without changing the default FP32 path",
+    "quantized_layers": "ncnn2int8 marks quantized convolution parameters with 8=2 and quantizes Convolution, ConvolutionDepthWise and InnerProduct weights"
+  }
+}

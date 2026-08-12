@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "task": "035",
+  "status": "EQ_INT8_ARM_BENCHMARK_CANDIDATE",
+  "purpose": "Largest independent COCO val2017 evaluation after excluding the frozen 500-image calibration set",
+  "selection": {
+    "total_val2017_images": 5000,
+    "calibration_count": 500,
+    "evaluation_count": 4500,
+    "overlap_count": 0,
+    "selection_rule": "all val2017 annotation image IDs not in calibration_ids.txt",
+    "manifest_sha256": "a219a5da368557510ec2c5229d9752028a0428eea719b08ab7cf222a20afee22",
+    "ids_sha256": "3b3b23ec869f04009b704ab05a1c8552a81cdd6bd27e2b7b48519f0a990a21de",
+    "per_image_sha256_manifest_sha256": "9a8d207750a5b1b03a490e02a382667de8457fe4d7b2b66f8845d8b66451f0fd",
+    "annotation_sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+    "source_archive": "/mnt/c/Users/Administrator/Desktop/fpga_info/val2017.zip"
+  },
+  "evaluator": {
+    "implementation": "COCO bbox subset evaluator (COCOeval-compatible image/category/bbox contract; pycocotools unavailable)",
+    "evaluator_script_external": "/tmp/task035-coco/evaluate_full_corrected.py",
+    "evaluator_sha256": "a635e58b10ca0692956e0ed05283194ce9cc7a9d6a1de837d329ae0ce3a6dbcc",
+    "confidence_threshold": 0.001,
+    "nms_iou_threshold": 0.6,
+    "max_detections_per_image": 100,
+    "deployment_confidence_threshold_unchanged": 0.25,
+    "deployment_nms_iou_threshold_unchanged": 0.45,
+    "category_mapping": "YOLO COCO80 class IDs mapped to annotation category_id",
+    "bbox_mapping": "source-image xyxy converted to original-pixel xywh",
+    "evaluated_imgIds_equal_manifest": true,
+    "prediction_ids_equal_manifest": true,
+    "duplicate_or_missing_subset_ids": false,
+    "pycocotools_available": false
+  },
+  "models": {
+    "fp32": {
+      "prediction_json_sha256": "3c927bc236b8dff7e3fa664945f838587bb89c7c8210b53be728acf3ca151d66",
+      "coco_result_sha256": "5f20133e59dd1b565596e5b895dc0cf8e89780aa0a7e02a41993ee4637ee6d1f",
+      "images": 4500,
+      "prediction_count": 776899,
+      "zero_detection_images": 0,
+      "mAP50": 0.4576054997961436,
+      "mAP50_95": 0.2797771184417101,
+      "precision_at_iou50": 0.037650168442110374,
+      "recall_at_iou50": 0.765169400582554
+    },
+    "eq": {
+      "prediction_json_sha256": "6153efb990961c740728807e6e200715d4f746b5918104e3731e672d3f2e5fed",
+      "coco_result_sha256": "72a1e405b3665360c2ce0e01b5d27ddcafab7d99916ce1f12e089bf9dac9c5cf",
+      "images": 4500,
+      "prediction_count": 800831,
+      "zero_detection_images": 0,
+      "mAP50": 0.44330934307986297,
+      "mAP50_95": 0.2651150199415103,
+      "precision_at_iou50": 0.03666746990784277,
+      "recall_at_iou50": 0.7651387398436302
+    }
+  },
+  "comparison": {
+    "delta_eq_minus_fp32_mAP50": -0.01429615671628063,
+    "delta_eq_minus_fp32_mAP50_95": -0.0146620985001998,
+    "gate_mAP50_absolute_delta_max": 0.02,
+    "gate_mAP50_95_absolute_delta_max": 0.02,
+    "gate_mAP50_pass": true,
+    "gate_mAP50_95_pass": true,
+    "gate_no_catastrophic_zero_detection": true,
+    "accuracy_gate": "PASS",
+    "decision": "EQ_INT8_ARM_BENCHMARK_CANDIDATE",
+    "scope_note": "This is an accuracy gate only; no ARM INT8 build, timing or deployment acceptance is claimed yet."
+  },
+  "external_artifacts": {
+    "manifest": "/tmp/task035-coco/evaluation_full_manifest.tsv",
+    "ids": "/tmp/task035-coco/evaluation_full_ids.txt",
+    "per_image_sha256_manifest": "/tmp/task035-coco/evaluation_full_sha256.tsv",
+    "metrics": "/tmp/task035-coco/coco_metrics_full_corrected.json",
+    "metrics_sha256": "b2354e9035d82e0197384eaed50aeb0289aed76e76d2f7d18f6e56bb2cddda13",
+    "fp32_predictions": "/tmp/task035-coco/fp32_ap_full.json",
+    "eq_predictions": "/tmp/task035-coco/eq_ap_full.json"
+  }
+}

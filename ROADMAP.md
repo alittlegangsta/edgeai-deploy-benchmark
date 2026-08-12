@@ -443,3 +443,22 @@ frozen conversion graph is recorded `ALREADY_OPTIMIZED`; no INT8 result or NPU
 change is introduced. See
 `docs/benchmark/ARM_NCNN_INFERENCE_KERNEL_OPTIMIZATION.md` and
 `results/evidence/034/`.
+
+## Task 035: ARM ncnn INT8 quantization feasibility
+
+Task 035 is `Completed`. The user-supplied val2017 archive enabled 500
+calibration images and all remaining 4,500
+independent evaluation images (train2017 was not supplied). The corrected
+evaluator constrains the exact subset IDs, COCO80 category mapping and
+source-pixel `xyxy`→COCO `xywh`, with AP confidence `0.001`/NMS `0.6` while
+deployment remains `0.25`/`0.45`. On the final independent set FP32/EQ mAP50
+is `0.457605/0.443309` and mAP50-95 is `0.279777/0.265115`; absolute EQ
+degradation is `0.014296/0.014662`, within the explicit `0.02` gate, with no
+zero-detection images. The same AArch64 `NCNN_INT8=ON` ELF then measured
+`1.604359x` inference and `1.557952x` pipeline speedup (`55.795208%` FPS
+gain) versus FP32 under the Task 033 protocol. The experiment decision is
+`INT8_ACCEPTED` with EQ as the accepted ARM INT8 configuration; historical
+bounded failures and the VM wrapper event remain separately recorded. No NPU
+work is reopened. See
+`docs/benchmark/ARM_NCNN_INT8_QUANTIZATION_FEASIBILITY.md` and
+`results/evidence/035/`.

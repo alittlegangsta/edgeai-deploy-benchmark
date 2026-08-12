@@ -45,6 +45,7 @@ struct Arguments {
     bool fp16_packed{false};
     bool fp16_storage{false};
     bool fp16_arithmetic{false};
+    bool int8{false};
 };
 
 struct Usage {
@@ -79,6 +80,8 @@ struct Sample {
     std::optional<std::int64_t> frequency_khz;
     std::optional<std::int64_t> temperature_millicelsius;
     edgeai::common::DetectionComparison correctness;
+    std::string correctness_status{"PASS_TARGET"};
+    std::string correctness_error;
 };
 
 struct RunResult {
@@ -145,13 +148,14 @@ Arguments parse_args(int argc, char* argv[]) {
             "usage: edgeai_arm_cpu_profiler --manifest PATH --config PATH --input PATH "
             "--reference PATH --output PATH [--threads N] [--warmup N] [--repeat N] "
             "[--affinity default|cpu0|cpu1|both] [--packing on|off] "
-            "[--fp16-packed on|off] [--fp16-storage on|off] [--fp16-arithmetic on|off]"
+            "[--fp16-packed on|off] [--fp16-storage on|off] [--fp16-arithmetic on|off] "
+            "[--int8 on|off]"
         );
     }
     const std::vector<std::string> allowed{
         "--manifest", "--config", "--input", "--reference", "--output", "--threads",
         "--warmup", "--repeat", "--affinity", "--packing", "--fp16-packed",
-        "--fp16-storage", "--fp16-arithmetic",
+        "--fp16-storage", "--fp16-arithmetic", "--int8",
     };
     std::map<std::string, std::string> values;
     for (int index = 1; index < argc; index += 2) {
@@ -171,7 +175,7 @@ Arguments parse_args(int argc, char* argv[]) {
     Arguments result{
         values.at("--manifest"), values.at("--config"), values.at("--input"),
         values.at("--reference"), values.at("--output"), 1, 3, 10, "default", true,
-        false, false, false,
+        false, false, false, false,
     };
     if (values.count("--threads") != 0U) result.threads = parse_int(values.at("--threads"), "--threads", 1);
     if (values.count("--warmup") != 0U) result.warmup = parse_int(values.at("--warmup"), "--warmup", 0);
@@ -185,6 +189,7 @@ Arguments parse_args(int argc, char* argv[]) {
     if (values.count("--fp16-packed") != 0U) result.fp16_packed = parse_bool(values.at("--fp16-packed"), "--fp16-packed");
     if (values.count("--fp16-storage") != 0U) result.fp16_storage = parse_bool(values.at("--fp16-storage"), "--fp16-storage");
     if (values.count("--fp16-arithmetic") != 0U) result.fp16_arithmetic = parse_bool(values.at("--fp16-arithmetic"), "--fp16-arithmetic");
+    if (values.count("--int8") != 0U) result.int8 = parse_bool(values.at("--int8"), "--int8");
     return result;
 }
 
@@ -371,9 +376,20 @@ RunResult run_once(
     const auto end = Clock::now();
     getrusage(RUSAGE_SELF, &after);
     edgeai::common::validate_frame_detections(post.detections, image.cols, image.rows, 0U);
-    const auto comparison = edgeai::common::compare_benchmark_detections(
-        golden, post.detections, 0.99, 0.01
-    );
+    edgeai::common::DetectionComparison comparison;
+    std::string correctness_status = "PASS_TARGET";
+    std::string correctness_error;
+    try {
+        comparison = edgeai::common::compare_benchmark_detections(
+            golden, post.detections, 0.99, 0.01
+        );
+    } catch (const std::exception& error) {
+        correctness_status = "FAIL_CORRECTNESS_GATE";
+        correctness_error = error.what();
+        comparison.detection_count = post.detections.size();
+        comparison.minimum_class_matched_iou = 0.0;
+        comparison.maximum_absolute_confidence_difference = 0.0;
+    }
     Sample sample;
     sample.preprocess_ns = elapsed_ns(pre_start, pre_end);
     sample.inference_ns = elapsed_ns(infer_start, infer_end);
@@ -390,6 +406,8 @@ RunResult run_once(
     sample.frequency_khz = frequency_khz();
     sample.temperature_millicelsius = temperature_millicelsius();
     sample.correctness = comparison;
+    sample.correctness_status = correctness_status;
+    sample.correctness_error = correctness_error;
     return {std::move(sample), post.detections, raw.values, raw.shape};
 }
 
@@ -448,11 +466,20 @@ void write_sample(std::ostringstream& output, const Sample& sample, std::size_t 
     write_optional(output, sample.frequency_khz);
     output << ",\"temperature_millicelsius\":";
     write_optional(output, sample.temperature_millicelsius);
-    output << ",\"correctness\":{\"status\":\"PASS_TARGET\",\"detection_count\":"
+    output << ",\"correctness\":{\"status\":" << json_string(sample.correctness_status)
+           << ",\"detection_count\":"
            << sample.correctness.detection_count
-           << ",\"minimum_class_matched_iou\":" << sample.correctness.minimum_class_matched_iou
-           << ",\"maximum_absolute_confidence_difference\":"
-           << sample.correctness.maximum_absolute_confidence_difference << "}}";
+           << ",\"minimum_class_matched_iou\":";
+    if (sample.correctness_status == "PASS_TARGET") output << sample.correctness.minimum_class_matched_iou;
+    else output << "null";
+    output << ",\"maximum_absolute_confidence_difference\":";
+    if (sample.correctness_status == "PASS_TARGET") {
+        output << sample.correctness.maximum_absolute_confidence_difference;
+    } else {
+        output << "null";
+    }
+    output
+           << ",\"error\":" << json_string(sample.correctness_error) << "}}";
 }
 
 void write_summary(std::ostringstream& output, const std::vector<Sample>& samples) {
@@ -516,7 +543,14 @@ void write_output(
     std::ostringstream output;
     output << std::setprecision(17);
     const auto& runtime = detector.runtime_info();
-    output << "{\"schema_version\":1,\"task\":\"033\",\"status\":\"PASS_TARGET\""
+    const bool all_pass = std::all_of(
+        samples.begin(), samples.end(), [](const Sample& sample) {
+            return sample.correctness_status == "PASS_TARGET";
+        }
+    );
+    output << "{\"schema_version\":1,\"task\":"
+           << json_string(arguments.int8 ? "035" : "033")
+           << ",\"status\":" << json_string(all_pass ? "PASS_TARGET" : "FAIL_CORRECTNESS_GATE")
            << ",\"identity\":{\"manifest_sha256\":"
            << json_string(edgeai::backends::ncnn_sha256_file(arguments.manifest))
            << ",\"param_sha256\":" << json_string(detector.param_sha256())
@@ -535,6 +569,7 @@ void write_output(
            << ",\"fp16_packed\":" << (arguments.fp16_packed ? "true" : "false")
            << ",\"fp16_storage\":" << (arguments.fp16_storage ? "true" : "false")
            << ",\"fp16_arithmetic\":" << (arguments.fp16_arithmetic ? "true" : "false")
+           << ",\"int8_inference\":" << (arguments.int8 ? "true" : "false")
            << ",\"warmup\":" << arguments.warmup << ",\"repeat\":" << arguments.repeat << "}"
            << ",\"runtime\":{\"threads\":" << runtime.threads
            << ",\"openmp_compiled\":" << (runtime.openmp_compiled ? "true" : "false")
@@ -559,11 +594,24 @@ void write_output(
            << ",\"input_dtype\":\"float32\",\"output_dtype\":\"float32\",\"confidence_threshold\":"
            << config.confidence_threshold << ",\"nms_iou_threshold\":" << config.iou_threshold << "}"
            << ",\"model_load_ms\":" << model_load_ms
-           << ",\"correctness\":{\"status\":\"PASS_TARGET\",\"detection_count\":"
+           << ",\"correctness\":{\"status\":"
+           << json_string(first_result.sample.correctness_status)
+           << ",\"detection_count\":"
            << first_result.sample.correctness.detection_count
-           << ",\"minimum_class_matched_iou\":" << first_result.sample.correctness.minimum_class_matched_iou
-           << ",\"maximum_absolute_confidence_difference\":"
-           << first_result.sample.correctness.maximum_absolute_confidence_difference
+           << ",\"minimum_class_matched_iou\":";
+    if (first_result.sample.correctness_status == "PASS_TARGET") {
+        output << first_result.sample.correctness.minimum_class_matched_iou;
+    } else {
+        output << "null";
+    }
+    output << ",\"maximum_absolute_confidence_difference\":";
+    if (first_result.sample.correctness_status == "PASS_TARGET") {
+        output << first_result.sample.correctness.maximum_absolute_confidence_difference;
+    } else {
+        output << "null";
+    }
+    output
+           << ",\"error\":" << json_string(first_result.sample.correctness_error)
            << ",\"raw_output_stats\":" << raw_stats(first_result.raw) << "}"
            << ",\"samples\":[";
     for (std::size_t index = 0; index < samples.size(); ++index) write_sample(output, samples[index], index);
@@ -591,6 +639,9 @@ int main(int argc, char* argv[]) {
         options.use_fp16_packed = arguments.fp16_packed;
         options.use_fp16_storage = arguments.fp16_storage;
         options.use_fp16_arithmetic = arguments.fp16_arithmetic;
+        options.use_int8_inference = arguments.int8;
+        options.use_int8_packed = arguments.int8;
+        options.use_int8_storage = arguments.int8;
         const auto load_start = Clock::now();
         edgeai::backends::NcnnDetector detector(arguments.manifest, options);
         const double model_load_ms = std::chrono::duration<double, std::milli>(Clock::now() - load_start).count();
@@ -611,14 +662,23 @@ int main(int argc, char* argv[]) {
         }
         write_output(arguments, config, detector, samples, last_result, model_load_ms, initial_mask);
         const auto& summary = samples.front();
-        std::cout << "Task 033 profiler PASS_TARGET\n"
+        const bool all_pass = std::all_of(
+            samples.begin(), samples.end(), [](const Sample& sample) {
+                return sample.correctness_status == "PASS_TARGET";
+            }
+        );
+        std::cout << "Task " << (arguments.int8 ? "035" : "033") << " profiler "
+                  << (all_pass ? "PASS_TARGET" : "FAIL_CORRECTNESS_GATE") << '\n'
                   << "threads=" << arguments.threads << " affinity=" << arguments.affinity
                   << " mask=" << cpu_mask() << " packing_layout=" << (arguments.packing ? "on" : "off") << '\n'
+                  << "int8_inference=" << (arguments.int8 ? "on" : "off") << '\n'
                   << "ncnn=" << detector.runtime_info().version
                   << " backend=" << detector.runtime_info().effective_parallel_backend << '\n'
                   << "correctness_detection_count=" << summary.correctness.detection_count
                   << " minimum_iou=" << summary.correctness.minimum_class_matched_iou
-                  << " max_confidence_delta=" << summary.correctness.maximum_absolute_confidence_difference << '\n'
+                  << " max_confidence_delta=" << summary.correctness.maximum_absolute_confidence_difference
+                  << " status=" << summary.correctness_status
+                  << (summary.correctness_error.empty() ? "" : " error=" + summary.correctness_error) << '\n'
                   << "output=" << arguments.output.string() << '\n';
         return 0;
     } catch (const std::exception& error) {

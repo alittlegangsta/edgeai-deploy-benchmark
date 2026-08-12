@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "task": "035",
+  "status": "INT8_ACCEPTED",
+  "purpose": "ARM CPU EQ INT8 comparison after the independent COCO accuracy gate",
+  "accuracy_gate": {
+    "evidence": "results/evidence/035/coco_full_evaluation.json",
+    "evaluation_images": 4500,
+    "calibration_images": 500,
+    "conf": 0.001,
+    "nms_iou": 0.6,
+    "max_detections": 100,
+    "delta_map50": -0.01429615671628063,
+    "delta_map50_95": -0.0146620985001998,
+    "delta_limits": {"map50": 0.02, "map50_95": 0.02},
+    "zero_detection_images": {"fp32": 0, "eq": 0},
+    "status": "PASS",
+    "decision": "EQ_INT8_ARM_BENCHMARK_CANDIDATE"
+  },
+  "board": {
+    "architecture": "aarch64",
+    "kernel": "Linux 6.1.111-rt42 #3 SMP PREEMPT Wed Aug 5 18:19:39 CST 2026",
+    "cpu_part": "0xd04",
+    "logical_cpu_count": 2,
+    "cma_total": "128 MiB",
+    "environment_sha256": "f8bc5efaa18bbc76f1f8ee779a8617c8405dc79d98087cc575cb410e227fdd30",
+    "frequency_khz": null,
+    "temperature_millicelsius": null
+  },
+  "build": {
+    "source_commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "source_archive_sha256": "328fe282b98457d85ab56184fa896467f6bf640d4e48e91fcefc8d31889f92b7",
+    "project_archive_sha256": "480ac4ad523355041fcfc7bdf41e5f6dcaced86f1cf96fe050ccccac64710c16",
+    "compiler": "aarch64-linux-gnu-g++ (Linaro GCC 7.5-2019.12) 7.5.0",
+    "cmake": "cmake version 3.16.9",
+    "options": {
+      "NCNN_OPENMP": true,
+      "NCNN_THREADS": true,
+      "NCNN_SIMPLEOMP": false,
+      "NCNN_RUNTIME_CPU": true,
+      "NCNN_BENCHMARK": false,
+      "NCNN_INT8": true,
+      "NCNN_BF16": true,
+      "NCNN_FORCE_INLINE": true,
+      "NCNN_ENABLE_LTO": false,
+      "NCNN_ARM82": false,
+      "NCNN_VFPV4": true,
+      "release": true
+    },
+    "libncnn_sha256": "248c96f0afd9fb5acb36ca40fa6db0bf62ae860e31fd6febdbf0bfd5fffb47a2",
+    "profiler_elf_sha256": "598886d9b1a2b3b2d56455e2efbaef79b70f740c62f2c2a6a9c82ddfe9a71e64",
+    "private_libgomp_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+    "dynamic_loader": "/lib/ld-linux-aarch64.so.1",
+    "ldd": "PASS_PRIVATE_LIBS_RESOLVED"
+  },
+  "workload": {
+    "model": "YOLOv5n v7.0",
+    "input_shape": [1, 3, 640, 640],
+    "output_shape": [1, 25200, 85],
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "fp32_param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "fp32_bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "eq_param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+    "eq_bin_sha256": "9ae93520aa8fa9c235176e57c3146ac6a66115cddd0186c20f2637f7516c09f7",
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45
+  },
+  "protocol": {
+    "independent_processes_per_variant": 5,
+    "samples_per_process": 10,
+    "repeat_per_process": 10,
+    "sample_count_per_variant": 50,
+    "warmup": 3,
+    "threads": 2,
+    "scheduling": "default",
+    "packing": true,
+    "pair_order": ["fp32->eq", "eq->fp32", "fp32->eq", "eq->fp32", "fp32->eq"],
+    "same_elf": true,
+    "same_input": true,
+    "same_preprocess_postprocess": true
+  },
+  "variants": {
+    "fp32": {
+      "status": "PASS_TARGET",
+      "raw_process_json": [
+        {"file": "pair1-fp32.json", "sha256": "d4b6e3935475855af756505460907f4cce9bc6debd5c63a13470e0184174ba68"},
+        {"file": "pair2-fp32.json", "sha256": "6a19905abe1b45817cc5806c9bb2bc4d3b13c0fa330acaab87110858bf522bcf"},
+        {"file": "pair3-fp32.json", "sha256": "75a87ebb49d6272096403666cf9a6a75860af9205e264b5837343f9cdc1b1093"},
+        {"file": "pair4-fp32.json", "sha256": "a9d80158756c534b28c70153fd61c67d6f5248306096baa087f23c80f33df949"},
+        {"file": "pair5-fp32.json", "sha256": "a27c72022254ef5025b8179306d5e8eb86e86d9fd00c399f54a3c99142f5c20a"}
+      ],
+      "metrics": {
+        "inference_ms": {"mean": 1882.2464185, "p50": 1877.732749, "p95": 1888.663099, "fps": 0.5312800652302052},
+        "pipeline_ms": {"mean": 1973.1456982, "p50": 1968.618889, "p95": 1984.8119, "fps": 0.5068049464934338},
+        "preprocess_ms": {"mean": 36.97146272, "p50": 36.263791, "p95": 43.26786},
+        "postprocess_ms": {"mean": 53.92781698, "p50": 53.8611, "p95": 53.937601},
+        "cpu_percent_one_core_basis": {"mean": 186.55582625867945, "p50": 186.9424162823931, "p95": 187.57394215742093},
+        "peak_rss_kib": {"mean": 166579.2, "p50": 168256, "p95": 168376, "max": 168376}
+      }
+    },
+    "eq": {
+      "status": "FAIL_CORRECTNESS_GATE_SECONDARY_REFERENCE_ONLY",
+      "raw_process_json": [
+        {"file": "pair1-eq.json", "sha256": "49049dc52dfc8b0535b7e1d7dd13413a6bb7a0a01624ab0f033e6690a3a98257"},
+        {"file": "pair2-eq.json", "sha256": "fac9748b22b1e92cb3b07fff0eade25eccdb3408f0dbab59cdebff85272ec3e5"},
+        {"file": "pair3-eq.json", "sha256": "876b18aafbce9b84cf6bf896532dc35bf4d836ac42c2b1100b70fec64b482581"},
+        {"file": "pair4-eq.json", "sha256": "9390a7e66d38d1378222ee73c5138b8e30ee4ab9364048107ad6aa041377d69a"},
+        {"file": "pair5-eq.json", "sha256": "7bd870621bcad0e8c664e5ce4bcb8e93744e10ed7efe908678eff9105996d838"}
+      ],
+      "metrics": {
+        "inference_ms": {"mean": 1173.20763684, "p50": 1172.655522, "p95": 1187.335782, "fps": 0.8523640390659835},
+        "pipeline_ms": {"mean": 1266.4996013, "p50": 1264.250773, "p95": 1285.629763, "fps": 0.7895778245595568},
+        "preprocess_ms": {"mean": 38.36760878, "p50": 38.20488, "p95": 42.79749},
+        "postprocess_ms": {"mean": 54.92435568, "p50": 55.596901, "p95": 55.7238},
+        "cpu_percent_one_core_basis": {"mean": 181.47370245878886, "p50": 181.4348088848541, "p95": 182.7607694069728},
+        "peak_rss_kib": {"mean": 149047.2, "p50": 150736, "p95": 150836, "max": 150836}
+      },
+      "secondary_frozen_reference": {
+        "status": "FAIL_CORRECTNESS_GATE",
+        "detection_count": 5,
+        "minimum_iou_reported": 0,
+        "note": "The formal single-image comparison is retained as a secondary diagnostic; it does not override the independent annotated COCO gate defined by this task continuation."
+      }
+    }
+  },
+  "comparison": {
+    "inference_speedup_fp32_over_eq": 1.6043591597901414,
+    "pipeline_speedup_fp32_over_eq": 1.5579520879238038,
+    "fps_gain_percent": 55.79520879238038,
+    "peak_rss_change_percent": -10.41716159072552,
+    "cpu_percent_change_percent": -2.7241839088121944,
+    "meaningful_inference_benefit": true,
+    "decision": "INT8_ACCEPTED"
+  },
+  "layer_profile": {
+    "evidence": "results/evidence/035/int8_layer_profile.json",
+    "convolution_speedup": 1.938084040126474,
+    "layer_profile_status": "PASS_DIAGNOSTIC"
+  },
+  "scope": {
+    "formal_npu_benchmark": false,
+    "deployment_threshold_changed": false,
+    "sd_or_emmc_modified": false,
+    "npu_modified": false,
+    "raw_return_external": "external_generated/task035-arm-benchmark-return"
+  }
+}

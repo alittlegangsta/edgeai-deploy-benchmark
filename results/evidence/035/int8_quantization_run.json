@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "task": "035",
+  "status": "PASS_TOOL_OUTPUTS",
+  "toolchain": {
+    "ncnn": "20240410",
+    "revision": "56775de50990ab7f16627efdcf5529b49541206f",
+    "ncnn2table_usage": "ncnn2table param bin image_list table mean=[0,0,0] norm=[0.0039215686,0.0039215686,0.0039215686] shape=[0,0] pixel=RGB method=<aciq|kl|eq>",
+    "ncnn2int8_usage": "ncnn2int8 [inparam] [inbin] [outparam] [outbin] [calibration table]"
+  },
+  "expanded_validation": {
+    "calibration_count": 500,
+    "calibration_manifest_sha256": "de490f890d82b40e0f66f17ed4289d2efd276e933b6e9f0935e4572c365c28f7",
+    "evaluation_count": 500,
+    "evaluation_manifest_sha256": "b98b81be7822bce89b10535e6806833b30ac56d706723ce1d88b80c0f2cc3f2d",
+    "evaluation_annotation_sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+    "calibration_source": "COCO val2017 fallback; disjoint held-out evaluation block",
+    "candidates": [
+      {
+        "method": "ACIQ",
+        "command": "ncnn2table /tmp/task035-int8/repro/yolov5n-opt.param /tmp/task035-int8/repro/yolov5n-opt.bin /tmp/task035-coco/calibration_images.txt /tmp/task035-coco/repro/yolov5n-aciq.table mean=[0,0,0] norm=[0.0039215686,0.0039215686,0.0039215686] shape=[0,0] pixel=RGB method=aciq",
+        "table_sha256": "de0eea9caeae6b1a44c146ee26558b650ed5ffac749c2da4aab197d6d8b26225",
+        "param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+        "bin_sha256": "c47963978d047bc2f7622e4312cfdb1fa93d5d2b8f36cce0f5b931842327d0b4",
+        "table_stderr_sha256": "16396368f75587d1a3b3984485daad8e1bb3e8e35d274c223b69188aa5f1001a",
+        "quantize_command": "ncnn2int8 /tmp/task035-int8/repro/yolov5n-opt.param /tmp/task035-int8/repro/yolov5n-opt.bin /tmp/task035-coco/repro/yolov5n-aciq-int8.param /tmp/task035-coco/repro/yolov5n-aciq-int8.bin /tmp/task035-coco/repro/yolov5n-aciq.table",
+        "evaluation_json_sha256": "44b9ccbd14ddd1027fa6b6195234babe18a7f74090fbc8f9eae9dc226499d603",
+        "status": "GENERATED_AND_EVALUATED"
+      },
+      {
+        "method": "KL",
+        "command": "ncnn2table /tmp/task035-int8/repro/yolov5n-opt.param /tmp/task035-int8/repro/yolov5n-opt.bin /tmp/task035-coco/calibration_images.txt /tmp/task035-coco/repro/yolov5n-kl.table mean=[0,0,0] norm=[0.0039215686,0.0039215686,0.0039215686] shape=[0,0] pixel=RGB method=kl",
+        "table_sha256": "d6404f36b86b5e87a6142ccb5756e059c5179c6831165ccd755d7b62b51f56d9",
+        "param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+        "bin_sha256": "9efa2e29c85842b2ef93891f8e817fee2b910a6fe4e589590dcdfc257512b8ad",
+        "table_stderr_sha256": "4841781ac3e02f8c22165283029f2310ecfdfea351d69966d50eca2af6e89ec1",
+        "quantize_command": "ncnn2int8 /tmp/task035-int8/repro/yolov5n-opt.param /tmp/task035-int8/repro/yolov5n-opt.bin /tmp/task035-coco/repro/yolov5n-kl-int8.param /tmp/task035-coco/repro/yolov5n-kl-int8.bin /tmp/task035-coco/repro/yolov5n-kl.table",
+        "evaluation_json_sha256": "571114abd20c623f2d5c663d7c7c45c62ed58396a5f0976998532b7d46ce1ec9",
+        "status": "GENERATED_AND_EVALUATED"
+      },
+      {
+        "method": "EQ",
+        "command": "ncnn2table /tmp/task035-int8/repro/yolov5n-opt.param /tmp/task035-int8/repro/yolov5n-opt.bin /tmp/task035-coco/calibration_images.txt /tmp/task035-coco/repro/yolov5n-eq.table mean=[0,0,0] norm=[0.0039215686,0.0039215686,0.0039215686] shape=[0,0] pixel=RGB method=eq thread=20",
+        "exit_code": 0,
+        "table_sha256": "2d138307017cf68769ec01b5c06502f4d903fe3720399235be215102d1462471",
+        "table_stderr_sha256": "0a8ef0697e1449331fa31fc455c18facbbf407a23fbf3e7c5b4d787079794f9d",
+        "quantize_command": "ncnn2int8 /tmp/task035-int8/repro/yolov5n-opt.param /tmp/task035-int8/repro/yolov5n-opt.bin /tmp/task035-coco/repro/yolov5n-eq-int8.param /tmp/task035-coco/repro/yolov5n-eq-int8.bin /tmp/task035-coco/repro/yolov5n-eq.table",
+        "param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+        "bin_sha256": "9ae93520aa8fa9c235176e57c3146ac6a66115cddd0186c20f2637f7516c09f7",
+        "evaluation_json_sha256": "2753c5c9117c9f65353784833f27b81a5ec2ee33e9faf21d6c4673775deac844",
+        "status": "GENERATED_AND_EVALUATED"
+      }
+    ],
+    "fp32_reference_json_sha256": "0a36bc45a9c5dfefa32facb6aa1e4a2ac3ab3288b4e9ceb95c5f10e9d3c3ce22",
+    "metrics_json_sha256": "e421e39bf80c5d0fd32dabeb35205bd784e2bfd8f37740838893448a5f5ca4ff",
+    "runner_sha256": "fafdf0277e73579398a6359adcd879f8c167ca9e488a32dcda54bb15ee4c2b14",
+    "evaluator_sha256": "54896b2624d1bd7a0c6cbc88a77804706e823521192114ed088080658e9ef447"
+  },
+  "bounded_validation": {
+    "calibration_count": 22,
+    "calibration_manifest_sha256": "1d1ebb2c51a8cfff1745dce6ab4a2c6f44eb08bcbd0cf2d13bf68720e5bf7113",
+    "evaluation_count": 1,
+    "evaluation_manifest_sha256": "b7bceac0dce235d3471731bd822f1733c311b0c2949c4830eb3243594541d40f",
+    "commands_log_external": "/tmp/task035-int8/bounded22/commands.log",
+    "commands_log_sha256": "08faee9799131fe939b95c96e27de86a2c338f50a053ad46dd04bf010c37333a",
+    "note": "The prior bounded ACIQ/KL/EQ observations remain retained and are not replaced by the expanded run."
+  },
+  "commands_log": {
+    "external_path": "/tmp/task035-int8/repro/commands.log",
+    "sha256": "11ab83e67b97f59af5aa896460c491b68f3911ff9212cb13212e54059ec5d1b9"
+  },
+  "calibration_candidates": [
+    {
+      "method": "kl",
+      "calibration_count": 22,
+      "table_sha256": "21974821d0c08260ea9768d17a9411eca6ec35fcd86f46e1964eddfed4ac9767",
+      "param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+      "bin_sha256": "5f9b05f54de6060ddfc802f424a2fa1ec90387aec15b29f1a6d2031024ecbd86",
+      "status": "RETAINED_BOUNDED_GENERATED"
+    },
+    {
+      "method": "aciq",
+      "calibration_count": 22,
+      "table_sha256": "1f9955113d3d808f64d531daca59dce4bc9d6d3550806a154c8f2e4949cb13bb",
+      "param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+      "bin_sha256": "9a98d6a08c3623f1047dbe419426bf13155beca837cdd31d805ba0c69cc202ee",
+      "status": "RETAINED_BOUNDED_GENERATED"
+    }
+  ],
+  "optimize": {
+    "input_param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "input_bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "output_param_sha256": "911e206d2651a08feb819c50c7da556ed200db670ae3e8d1cbf53db26b3d4f13",
+    "output_bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "note": "The canonical optimize identities remain in the prior evidence; expanded candidates are derived from the pinned optimized source model."
+  },
+  "model_size": {
+    "fp32_param_bytes": 16885,
+    "fp32_bin_bytes": 7873060,
+    "optimized_param_bytes": 14904,
+    "int8_param_bytes": 15144,
+    "int8_bin_bytes": 2309704
+  },
+  "graph_editing": false,
+  "al_onnx_pass_used": false
+}
