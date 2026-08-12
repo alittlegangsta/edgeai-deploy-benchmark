@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+- Completed Task 036 as a project-owned DR1 vendor-face NPU closed loop. The
+  new AArch64 C++ image runner forces ArmNN `Alnpu`, rejects CPU fallback,
+  performs the audited 416x416 quantized face preprocessing and decode/NMS,
+  emits JSON plus annotated PNG, and was observed assigning layers to
+  `Alnpu | ALHardNPU`. A bounded functional control (two warmups, ten repeats)
+  measured 50.3471437 ms inference mean and 65.9801407 ms end-to-end mean;
+  this is not a YOLOv5n comparison or a published NPU performance benchmark.
+  Model/runtime/ELF hashes, board state, logs and offline validation are under
+  `results/evidence/036/`. Custom YOLOv5n NPU work remains
+  `WAITING_FOR_VENDOR_INPUT`.
+
 - Continued Task 035 through the final independent COCO gate and ARM run. The
   500-image calibration block was excluded from all 4,500 evaluation images;
   exact subset IDs, COCO80 mapping and original-pixel bbox conversion were

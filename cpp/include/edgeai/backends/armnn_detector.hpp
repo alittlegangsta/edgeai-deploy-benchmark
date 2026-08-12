@@ -15,6 +15,8 @@ struct ArmnnTensorDescriptor {
     std::vector<std::int64_t> shape;
     std::string dtype;
     std::size_t bytes{0};
+    float quantization_scale{1.0F};
+    std::int64_t quantization_offset{0};
 };
 
 struct ArmnnRawTensor {

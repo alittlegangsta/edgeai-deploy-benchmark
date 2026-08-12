@@ -174,7 +174,14 @@ ArmnnTensorDescriptor descriptor(
     const std::string& name,
     const armnn::TensorInfo& info
 ) {
-    return {name, shape_of(info.GetShape()), dtype_name(info.GetDataType()), info.GetNumBytes()};
+    return {
+        name,
+        shape_of(info.GetShape()),
+        dtype_name(info.GetDataType()),
+        info.GetNumBytes(),
+        info.GetQuantizationScale(),
+        info.GetQuantizationOffset(),
+    };
 }
 
 std::string join_messages(const std::vector<std::string>& messages) {
@@ -416,27 +423,54 @@ const std::string& ArmnnDetector::model_sha256() const {
 }
 
 ArmnnRawInferenceResult ArmnnDetector::infer(const edgeai::common::InputTensor& tensor) {
-    if (tensor.shape != std::array<std::int64_t, 4>{{1, 3, 640, 640}}) {
-        throw std::runtime_error("ArmNN input tensor shape differs from [1,3,640,640]");
+    const std::vector<std::int64_t> input_shape{
+        tensor.shape[0], tensor.shape[1], tensor.shape[2], tensor.shape[3]
+    };
+    if (input_shape != impl_->runtime_info.input.shape) {
+        throw std::runtime_error("ArmNN input tensor shape differs from parser contract");
     }
     if (tensor.values.size() != static_cast<std::size_t>(impl_->input_info.GetNumElements())) {
         throw std::runtime_error("ArmNN input tensor element count differs from parser contract");
     }
-    if (impl_->input_info.GetDataType() != armnn::DataType::Float32 ||
-        std::any_of(impl_->output_infos.begin(), impl_->output_infos.end(), [](const armnn::TensorInfo& info) {
-            return info.GetDataType() != armnn::DataType::Float32;
-        })) {
-        throw std::runtime_error(
-            "FP32 contract rejected by ArmNN: input=" +
-            std::string(dtype_name(impl_->input_info.GetDataType())) +
-            " output=" + dtype_name(impl_->output_info.GetDataType())
-        );
+    const auto supported_type = [](armnn::DataType type) {
+        return type == armnn::DataType::Float32 || type == armnn::DataType::QAsymmU8 ||
+               type == armnn::DataType::QAsymmS8 || type == armnn::DataType::QSymmS8;
+    };
+    if (!supported_type(impl_->input_info.GetDataType()) ||
+        std::any_of(impl_->output_infos.begin(), impl_->output_infos.end(),
+                    [&supported_type](const armnn::TensorInfo& info) {
+                        return !supported_type(info.GetDataType());
+                    })) {
+        throw std::runtime_error("unsupported ArmNN tensor dtype for project runner: input=" +
+                                 std::string(dtype_name(impl_->input_info.GetDataType())) +
+                                 " output=" + dtype_name(impl_->output_info.GetDataType()));
     }
-    std::memcpy(
-        impl_->input_buffer->data(),
-        tensor.values.data(),
-        tensor.values.size() * sizeof(float)
-    );
+    const auto input_type = impl_->input_info.GetDataType();
+    const float input_scale = impl_->input_info.GetQuantizationScale();
+    const auto input_offset = impl_->input_info.GetQuantizationOffset();
+    if (input_type == armnn::DataType::Float32) {
+        std::memcpy(impl_->input_buffer->data(), tensor.values.data(),
+                    tensor.values.size() * sizeof(float));
+    } else {
+        if (!(std::isfinite(input_scale) && input_scale > 0.0F)) {
+            throw std::runtime_error("quantized ArmNN input has invalid scale");
+        }
+        if (input_type == armnn::DataType::QAsymmU8) {
+            auto* destination = static_cast<std::uint8_t*>(impl_->input_buffer->data());
+            for (std::size_t index = 0; index < tensor.values.size(); ++index) {
+                const auto quantized = static_cast<long long>(std::llround(
+                    static_cast<double>(tensor.values[index]) / input_scale + input_offset));
+                destination[index] = static_cast<std::uint8_t>(std::clamp(quantized, 0LL, 255LL));
+            }
+        } else {
+            auto* destination = static_cast<std::int8_t*>(impl_->input_buffer->data());
+            for (std::size_t index = 0; index < tensor.values.size(); ++index) {
+                const auto quantized = static_cast<long long>(std::llround(
+                    static_cast<double>(tensor.values[index]) / input_scale + input_offset));
+                destination[index] = static_cast<std::int8_t>(std::clamp(quantized, -128LL, 127LL));
+            }
+        }
+    }
     if (cma_mem_sync_for_device(
             impl_->input_buffer->raw().phys_addr,
             impl_->input_info.GetNumBytes()) != 0) {
@@ -475,12 +509,31 @@ ArmnnRawInferenceResult ArmnnDetector::infer(const edgeai::common::InputTensor& 
         ArmnnRawTensor tensor;
         tensor.name = impl_->output_names_[index];
         tensor.shape = impl_->runtime_info.outputs[index].shape;
-        tensor.values.resize(impl_->output_infos[index].GetNumElements());
-        std::memcpy(
-            tensor.values.data(),
-            impl_->output_buffers[index]->data(),
-            tensor.values.size() * sizeof(float)
-        );
+        const auto& info = impl_->output_infos[index];
+        tensor.values.resize(info.GetNumElements());
+        if (info.GetDataType() == armnn::DataType::Float32) {
+            std::memcpy(tensor.values.data(), impl_->output_buffers[index]->data(),
+                        tensor.values.size() * sizeof(float));
+        } else {
+            const float scale = info.GetQuantizationScale();
+            const auto offset = info.GetQuantizationOffset();
+            if (!(std::isfinite(scale) && scale > 0.0F)) {
+                throw std::runtime_error("quantized ArmNN output has invalid scale");
+            }
+            if (info.GetDataType() == armnn::DataType::QAsymmU8) {
+                const auto* source = static_cast<const std::uint8_t*>(
+                    impl_->output_buffers[index]->data());
+                for (std::size_t element = 0; element < tensor.values.size(); ++element) {
+                    tensor.values[element] = (static_cast<float>(source[element]) - offset) * scale;
+                }
+            } else {
+                const auto* source = static_cast<const std::int8_t*>(
+                    impl_->output_buffers[index]->data());
+                for (std::size_t element = 0; element < tensor.values.size(); ++element) {
+                    tensor.values[element] = (static_cast<float>(source[element]) - offset) * scale;
+                }
+            }
+        }
         result.tensors.push_back(std::move(tensor));
     }
     if (result.tensors.size() == 1U) {

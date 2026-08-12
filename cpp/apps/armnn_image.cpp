@@ -265,7 +265,9 @@ void write_shape(cv::FileStorage& output, const std::vector<std::int64_t>& shape
 void write_descriptor(cv::FileStorage& output, const edgeai::backends::ArmnnTensorDescriptor& value) {
     output << "{" << "name" << value.name << "dtype" << value.dtype << "shape";
     write_shape(output, value.shape);
-    output << "bytes" << static_cast<double>(value.bytes) << "}";
+    output << "bytes" << static_cast<double>(value.bytes)
+           << "quantization_scale" << value.quantization_scale
+           << "quantization_offset" << static_cast<double>(value.quantization_offset) << "}";
 }
 
 void write_box(cv::FileStorage& output, const edgeai::common::Box& box) {

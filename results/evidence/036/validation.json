@@ -1,0 +1,16 @@
+{
+  "assignment_count": 13,
+  "benchmark_repeats": 10,
+  "checks": {
+    "alhardnpu_assignment_log": true,
+    "alnpu_only_runtime": true,
+    "artifact_hashes": true,
+    "board_devices_and_cma": true,
+    "model_and_tensor_contract": true,
+    "runtime_config": true,
+    "scope_boundary": true
+  },
+  "note": "Functional vendor face control only; no YOLOv5n NPU performance claim.",
+  "status": "PASS",
+  "task": "036"
+}

@@ -1,0 +1,246 @@
+{
+    "schema_version": 1,
+    "application": "edgeai_armnn_face_image",
+    "status": "PASS_ALNPU_ONLY",
+    "model_sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c",
+    "model_expected_sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c",
+    "runtime": {
+        "armnn_version": "32.1.0",
+        "requested_backend": "Alnpu",
+        "fallback_allowed": 0,
+        "requested_backend_registered": 1,
+        "load_status": "Success",
+        "load_error": "",
+        "selected_backend": "Alnpu",
+        "alhardnpu_assignment": "must be confirmed in captured ArmNN process log",
+        "supported_backends": [
+            "CpuAcc",
+            "Alnpu",
+            "CpuRef",
+            "ALRef"
+        ],
+        "optimizer_messages": [
+        ],
+        "cpu_fallback": 0
+    },
+    "model": {
+        "path": "/opt/face_detection/runtime-root/inputs/yolo_face_uint8_15.onnx",
+        "source": "Anlogic dr1m90_npu face_detection yolo_face_uint8_15.onnx",
+        "input_shape": [
+            1,
+            3,
+            416,
+            416
+        ],
+        "output_contract": "two [1,18,H,W] heads at stride 16 and 32"
+    },
+    "input": {
+        "path": "/tmp/task036/first_raw.png",
+        "sha256": "ca7ef6edbf64379d523f7bb902977a21a942543085473700a0d1c2bd855c5c26",
+        "shape_bgr": [
+            480,
+            640,
+            3
+        ]
+    },
+    "preprocess": {
+        "method": "vendor face resize (no letterbox)",
+        "resize": [
+            416,
+            416
+        ],
+        "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255"
+        ],
+        "x_scale": 6.5000000000000002e-01,
+        "y_scale": 8.6666666666666670e-01
+    },
+    "tensor_contract": {
+        "input": {
+            "name": "images",
+            "dtype": "uint8",
+            "shape": [
+                1,
+                3,
+                416,
+                416
+            ],
+            "bytes": 519168.0,
+            "quantization_scale": 3.9215688593685627e-03,
+            "quantization_offset": 0.0
+        },
+        "outputs": [
+            {
+                "name": "output1",
+                "dtype": "uint8",
+                "shape": [
+                    1,
+                    18,
+                    13,
+                    13
+                ],
+                "bytes": 3042.0,
+                "quantization_scale": 1.8495631217956543e-01,
+                "quantization_offset": 163.0
+            },
+            {
+                "name": "output0",
+                "dtype": "uint8",
+                "shape": [
+                    1,
+                    18,
+                    26,
+                    26
+                ],
+                "bytes": 12168.0,
+                "quantization_scale": 2.1186828613281250e-01,
+                "quantization_offset": 153.0
+            }
+        ]
+    },
+    "raw_outputs": [
+        {
+            "name": "output1",
+            "shape": [
+                1,
+                18,
+                13,
+                13
+            ],
+            "dtype": "float32_dequantized",
+            "element_count": 3042.0,
+            "finite": 1,
+            "min": -1.9975280761718750e+01,
+            "max": 1.1652247428894043e+01,
+            "mean": -2.2380807225755922e-01
+        },
+        {
+            "name": "output0",
+            "shape": [
+                1,
+                18,
+                26,
+                26
+            ],
+            "dtype": "float32_dequantized",
+            "element_count": 12168.0,
+            "finite": 1,
+            "min": -2.6059799194335938e+01,
+            "max": 1.2288360595703125e+01,
+            "mean": 2.0164748699080387e-01
+        }
+    ],
+    "detections": [
+        {
+            "rank": 1,
+            "class_id": 0,
+            "class_name": "face",
+            "objectness": 4.4723019003868103e-01,
+            "class_score": 9.9997973442077637e-01,
+            "confidence": 4.4722113013267517e-01,
+            "box_xyxy_input": [
+                2.4846702575683594e+02,
+                1.6328332519531250e+02,
+                2.6015573120117188e+02,
+                1.8533941650390625e+02
+            ],
+            "box_xyxy_source": [
+                3.8225695800781250e+02,
+                1.8840383911132812e+02,
+                4.0023959350585938e+02,
+                2.1385317993164062e+02
+            ]
+        },
+        {
+            "rank": 2,
+            "class_id": 0,
+            "class_name": "face",
+            "objectness": 4.0856212377548218e-01,
+            "class_score": 9.9998176097869873e-01,
+            "confidence": 4.0855467319488525e-01,
+            "box_xyxy_input": [
+                2.5648239135742188e+02,
+                1.7403083801269531e+02,
+                2.7031771850585938e+02,
+                1.9265531921386719e+02
+            ],
+            "box_xyxy_source": [
+                3.9458828735351562e+02,
+                2.0080480957031250e+02,
+                4.1587341308593750e+02,
+                2.2229460144042969e+02
+            ]
+        }
+    ],
+    "counts": {
+        "raw_candidates": 2535,
+        "threshold_candidates": 3,
+        "nms_candidates": 2,
+        "detections": 2
+    },
+    "timings": {
+        "model_load_ms": 7.3805271700000003e+02,
+        "warmup": 1,
+        "repeats": 3,
+        "samples": [
+            {
+                "preprocess_ms": 1.4703150000000001e+01,
+                "inference_ms": 5.0429341000000001e+01,
+                "postprocess_ms": 1.2482100000000000e+00,
+                "end_to_end_ms": 6.6381871000000004e+01,
+                "cpu_ms": 5.1145999999999958e+01
+            },
+            {
+                "preprocess_ms": 1.4521770000000000e+01,
+                "inference_ms": 5.0427149999999997e+01,
+                "postprocess_ms": 1.2955800000000000e+00,
+                "end_to_end_ms": 6.6245310000000003e+01,
+                "cpu_ms": 5.0980000000000018e+01
+            },
+            {
+                "preprocess_ms": 1.4719590999999999e+01,
+                "inference_ms": 5.0432310000000001e+01,
+                "postprocess_ms": 1.2330900000000000e+00,
+                "end_to_end_ms": 6.6385951000000006e+01,
+                "cpu_ms": 5.1163999999999987e+01
+            }
+        ],
+        "summary_ms": {
+            "preprocess": {
+                "mean": 1.4648170333333333e+01,
+                "p50": 1.4703150000000001e+01,
+                "p95": 1.4719590999999999e+01,
+                "min": 1.4521770000000000e+01,
+                "max": 1.4719590999999999e+01
+            },
+            "inference": {
+                "mean": 5.0429600333333333e+01,
+                "p50": 5.0429341000000001e+01,
+                "p95": 5.0432310000000001e+01,
+                "min": 5.0427149999999997e+01,
+                "max": 5.0432310000000001e+01
+            },
+            "postprocess": {
+                "mean": 1.2589600000000001e+00,
+                "p50": 1.2482100000000000e+00,
+                "p95": 1.2955800000000000e+00,
+                "min": 1.2330900000000000e+00,
+                "max": 1.2955800000000000e+00
+            },
+            "end_to_end": {
+                "mean": 6.6337710666666666e+01,
+                "p50": 6.6381871000000004e+01,
+                "p95": 6.6385951000000006e+01,
+                "min": 6.6245310000000003e+01,
+                "max": 6.6385951000000006e+01
+            }
+        },
+        "fps": 1.5074382126703076e+01,
+        "peak_rss_kib": 38280.0,
+        "observed_process_threads": 2,
+        "benchmark_scope": "functional face control only; not compared to YOLOv5n"
+    }
+}

@@ -174,6 +174,19 @@ set_target_properties(edgeai_armnn_image PROPERTIES
 )
 target_link_libraries(edgeai_armnn_image PRIVATE edgeai_armnn_backend)
 edgeai_enable_warnings(edgeai_armnn_image)
+
+add_executable(edgeai_armnn_face_image
+    apps/armnn_face_image.cpp
+)
+target_compile_features(edgeai_armnn_face_image PRIVATE cxx_std_17)
+set_target_properties(edgeai_armnn_face_image PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    SKIP_BUILD_RPATH TRUE
+)
+target_link_libraries(edgeai_armnn_face_image PRIVATE edgeai_armnn_backend)
+edgeai_enable_warnings(edgeai_armnn_face_image)
 endif()
 
 set(EDGEAI_COMMON_SOURCES

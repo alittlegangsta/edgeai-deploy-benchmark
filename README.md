@@ -9,7 +9,7 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–035 are completed. Task 021 ARM UVC camera inference passed its
+Tasks 001–036 are completed. Task 021 ARM UVC camera inference passed its
 automated stage and received user representative-frame approval. Task 020 ARM video-file inference passed
 automated real-board validation and user playback review.
 Checkpoint C is
@@ -683,3 +683,15 @@ INT8 configuration, and no NPU work is reopened.
 See
 [the INT8 feasibility report](docs/benchmark/ARM_NCNN_INT8_QUANTIZATION_FEASIBILITY.md)
 and `results/evidence/035/`.
+
+Task 036 closes a project-owned DR1 vendor-face NPU image loop. The AArch64
+`edgeai_armnn_face_image` runner uses the audited
+`yolo_face_uint8_15.onnx` control, forces `Alnpu`, rejects CPU fallback, emits
+JSON and an annotated PNG, and was observed assigning layers to
+`Alnpu | ALHardNPU`. Its bounded two-warmup/ten-repeat diagnostic reports
+50.3471437 ms inference mean and 65.9801407 ms end-to-end mean (functional
+control only; not a YOLOv5n benchmark). The model/runtime/ELF identities,
+board device state, logs, images and offline validator are in
+[the DR1 NPU closed-loop guide](docs/vendor/ANLOGIC_DR1_NPU_DEMO_INTEGRATION.md)
+and `results/evidence/036/`. Custom YOLOv5n NPU compatibility remains
+`WAITING_FOR_VENDOR_INPUT`.

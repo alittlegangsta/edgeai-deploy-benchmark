@@ -462,3 +462,18 @@ bounded failures and the VM wrapper event remain separately recorded. No NPU
 work is reopened. See
 `docs/benchmark/ARM_NCNN_INT8_QUANTIZATION_FEASIBILITY.md` and
 `results/evidence/035/`.
+
+## Task 036: DR1 NPU demo integration closed loop
+
+Task 036 is the completed functional integration of the already validated
+vendor face control. A project-owned AArch64 C++ image runner performs the
+vendor resize/RGB/NCHW preprocessing, ArmNN ONNX parse and
+`Optimize([Alnpu])`, CMA-backed inference, YOLO-face decode/NMS, JSON output
+and annotated PNG output. A real board run completed with `Alnpu | ALHardNPU`
+assignments, `fallback_allowed=false`, successful Load/Enqueue stages and no
+CPU fallback. The bounded 10-repeat control measured 50.3471437 ms inference
+mean and 65.9801407 ms end-to-end mean, but is explicitly not a YOLOv5n or
+general NPU performance benchmark. See
+`docs/vendor/ANLOGIC_DR1_NPU_DEMO_INTEGRATION.md` and
+`results/evidence/036/`. Task 028/029/032 custom YOLOv5n status remains
+`WAITING_FOR_VENDOR_INPUT`.
