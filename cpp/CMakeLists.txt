@@ -16,7 +16,35 @@ option(EDGEAI_ENABLE_ORT "Build targets that require the ONNX Runtime C/C++ SDK"
 option(EDGEAI_ENABLE_NCNN "Build targets that require the pinned ncnn SDK" ON)
 option(EDGEAI_ENABLE_VIDEO "Build targets and tests that require OpenCV videoio" ON)
 option(EDGEAI_ENABLE_ARMNN "Build targets that require the Arm NN/Alnpu SDK" OFF)
+option(EDGEAI_ENABLE_TENSORRT "Build targets that require the TensorRT C++ SDK" OFF)
 set(EDGEAI_OPENCV_ROOT "" CACHE PATH "Optional explicit target OpenCV install root")
+
+if(EDGEAI_ENABLE_TENSORRT)
+    find_path(TENSORRT_INCLUDE_DIR NvInferRuntime.h
+        PATHS /usr/include/x86_64-linux-gnu /usr/include
+        NO_DEFAULT_PATH
+    )
+    find_library(TENSORRT_LIBRARY nvinfer
+        PATHS /usr/lib/x86_64-linux-gnu /usr/lib
+        NO_DEFAULT_PATH
+    )
+    find_library(TENSORRT_CUDA_LIBRARY cudart
+        PATHS /usr/local/cuda-12.9/lib64 /usr/local/cuda/lib64
+        NO_DEFAULT_PATH
+    )
+    find_path(TENSORRT_CUDA_INCLUDE_DIR cuda_runtime_api.h
+        PATHS /usr/local/cuda-12.9/include /usr/local/cuda/include
+        NO_DEFAULT_PATH
+    )
+    if(NOT TENSORRT_INCLUDE_DIR OR NOT TENSORRT_LIBRARY OR NOT TENSORRT_CUDA_LIBRARY OR
+       NOT TENSORRT_CUDA_INCLUDE_DIR)
+        message(FATAL_ERROR "TensorRT C++ SDK or CUDA runtime was not found")
+    endif()
+    message(STATUS "TensorRT include: ${TENSORRT_INCLUDE_DIR}")
+    message(STATUS "TensorRT library: ${TENSORRT_LIBRARY}")
+    message(STATUS "CUDA runtime library: ${TENSORRT_CUDA_LIBRARY}")
+    message(STATUS "CUDA include: ${TENSORRT_CUDA_INCLUDE_DIR}")
+endif()
 
 if(EDGEAI_ENABLE_ARMNN)
     set(ARMNN_ROOT "" CACHE PATH "Absolute root of the approved Arm NN/Alnpu SDK")
@@ -224,6 +252,62 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_L
     target_link_libraries(edgeai_common PUBLIC stdc++fs)
 endif()
 edgeai_enable_warnings(edgeai_common)
+
+if(EDGEAI_ENABLE_TENSORRT)
+add_library(edgeai_tensorrt_backend STATIC
+    src/backends/tensorrt_detector.cpp
+)
+target_compile_features(edgeai_tensorrt_backend PUBLIC cxx_std_17)
+set_target_properties(edgeai_tensorrt_backend PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_include_directories(edgeai_tensorrt_backend PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_include_directories(edgeai_tensorrt_backend SYSTEM PRIVATE
+    ${TENSORRT_INCLUDE_DIR}
+    ${TENSORRT_CUDA_INCLUDE_DIR}
+)
+target_link_libraries(edgeai_tensorrt_backend PUBLIC
+    edgeai_common
+    ${TENSORRT_LIBRARY}
+    ${TENSORRT_CUDA_LIBRARY}
+    dl
+    pthread
+)
+edgeai_enable_warnings(edgeai_tensorrt_backend)
+
+add_executable(edgeai_tensorrt_image
+    apps/tensorrt_image.cpp
+)
+target_compile_features(edgeai_tensorrt_image PRIVATE cxx_std_17)
+set_target_properties(edgeai_tensorrt_image PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    BUILD_RPATH "/usr/lib/x86_64-linux-gnu;/usr/local/cuda-12.9/lib64"
+)
+target_link_libraries(edgeai_tensorrt_image PRIVATE edgeai_tensorrt_backend)
+target_include_directories(edgeai_tensorrt_image SYSTEM PRIVATE
+    ${TENSORRT_CUDA_INCLUDE_DIR}
+)
+edgeai_enable_warnings(edgeai_tensorrt_image)
+
+add_executable(edgeai_tensorrt_coco
+    apps/tensorrt_coco.cpp
+)
+target_compile_features(edgeai_tensorrt_coco PRIVATE cxx_std_17)
+set_target_properties(edgeai_tensorrt_coco PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    BUILD_RPATH "/usr/lib/x86_64-linux-gnu;/usr/local/cuda-12.9/lib64"
+)
+target_link_libraries(edgeai_tensorrt_coco PRIVATE edgeai_tensorrt_backend)
+edgeai_enable_warnings(edgeai_tensorrt_coco)
+endif()
 
 add_executable(edgeai_opencv_smoke
     apps/opencv_smoke.cpp

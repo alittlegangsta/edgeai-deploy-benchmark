@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "task": "037",
+  "status": "TENSORRT_FP16_READY",
+  "purpose": "FP16 accuracy gate before formal benchmark",
+  "model_contract": {
+    "model": "YOLOv5n v7.0",
+    "onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "input": [1, 3, 640, 640],
+    "output": [1, 25200, 85],
+    "graph_nms": false
+  },
+  "dataset": {
+    "source": "user-provided COCO val2017 archive",
+    "annotation_sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+    "calibration_images": 500,
+    "evaluation_images": 4500,
+    "overlap": 0,
+    "evaluation_ids_sha256": "3b3b23ec869f04009b704ab05a1c8552a81cdd6bd27e2b7b48519f0a990a21de",
+    "evaluation_ids_equal_predictions": true
+  },
+  "protocol": {
+    "confidence_threshold": 0.001,
+    "nms_iou_threshold": 0.6,
+    "max_detections_per_image": 100,
+    "deployment_threshold_unchanged": {"confidence": 0.25, "nms_iou": 0.45},
+    "category_mapping": "YOLO COCO80 class order to non-contiguous COCO category_id",
+    "bbox_mapping": "original-image pixel xyxy to COCO xywh",
+    "evaluator": "scripts/task037_evaluate_coco.py",
+    "evaluator_sha256": "024c21dca56f9ebd35fab0b5ad45a39d7b10c3abf387c4221187e569e11e05e7"
+  },
+  "models": {
+    "reference_fp32_ncnn_task035": {
+      "source": "Task 035 frozen corrected COCO evaluation",
+      "images": 4500,
+      "mAP50": 0.4576054997961436,
+      "mAP50_95": 0.2797771184417101,
+      "scope": "secondary cross-backend reference; not used for the TensorRT FP16 delta gate"
+    },
+    "tensorrt_fp32": {
+      "engine_sha256": "a3ad9715f3560e46cae2cacfa06ca11d1468c42947eea9487a15c82d84b968d6",
+      "prediction_sha256": "19812cd92a07465d5880eb2fa7fa2bc1f6090a11815db4fb32b6b52d1e6d4e6d",
+      "prediction_count": 375638,
+      "images": 4500,
+      "zero_detection_images": 0,
+      "mAP50": 0.44830267054426975,
+      "mAP50_95": 0.27472046488699353
+    },
+    "tensorrt_fp16": {
+      "engine_sha256": "7f99cc9f628613a71ec993898a9825c0c45f4c5129862f8350fea0161e653c8a",
+      "prediction_sha256": "c2d81cd6fd6f734eab7151a2434f295ecb310b195686f90f26242efe77548be1",
+      "prediction_count": 375735,
+      "images": 4500,
+      "zero_detection_images": 0,
+      "mAP50": 0.4481054404868596,
+      "mAP50_95": 0.2747865502965814
+    }
+  },
+  "comparison": {
+    "reference": "tensorrt_fp32",
+    "fp16_delta_mAP50": -0.000197230057410146,
+    "fp16_delta_mAP50_95": 0.000066085409587863,
+    "gate_max_absolute_delta_mAP50": 0.01,
+    "gate_max_absolute_delta_mAP50_95": 0.01,
+    "gate_no_catastrophic_zero_detection": true,
+    "gate": "PASS",
+    "decision": "TENSORRT_FP16_READY"
+  },
+  "secondary_golden_diagnostic": {
+    "detection_count": 5,
+    "minimum_iou": 0.9935288429260254,
+    "maximum_confidence_delta": 0.005570024251937866,
+    "status": "RETAINED_SECONDARY; NOT_USED_AS_COCO_GATE"
+  }
+}

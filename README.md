@@ -695,3 +695,17 @@ board device state, logs, images and offline validator are in
 [the DR1 NPU closed-loop guide](docs/vendor/ANLOGIC_DR1_NPU_DEMO_INTEGRATION.md)
 and `results/evidence/036/`. Custom YOLOv5n NPU compatibility remains
 `WAITING_FOR_VENDOR_INPUT`.
+
+Task 037 establishes the PC TensorRT GPU baseline in the approved Ubuntu WSL2
+environment. The RTX 4060 Ti (compute capability 8.9), CUDA 12.9.86 toolkit
+and TensorRT 10.13.3 C++ stack pass the environment gate; no Linux NVIDIA
+display driver was installed. The project-owned runner accepts a real FP32
+engine built with `--noTF32` (1.674261 ms CUDA inference mean and 107.715355
+FPS end-to-end on the fixed image protocol). The real FP16 engine passes the
+frozen 4,500-image COCO accuracy gate (mAP50 0.448105440, mAP50-95
+0.274786550 versus TensorRT FP32 0.448302671/0.274720465, zero detection
+images 0) and is therefore `TENSORRT_FP16_READY`; its known single-image
+Golden drift remains a secondary diagnostic. FP16 GPU inference is 1.221751x
+faster, while the complete pipeline is 1.3307% slower because CPU
+pre/postprocess dominates. Engines and raw output remain outside Git. See
+`docs/benchmark/TENSORRT_DEPLOYMENT_BASELINE.md` and `results/evidence/037/`.
