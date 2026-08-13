@@ -45,6 +45,14 @@ TASK041_ALLOWED = TASK040_ALLOWED | {
     "scripts/validate_task042_demo_release.py",
     "tasks/042_final_demo_capture_release_validation.md",
     "tests/python/test_task042_demo_release.py",
+    "docs/career/RESUME_PROJECT.md",
+    "docs/career/PROJECT_PITCH.md",
+    "docs/career/INTERVIEW_QA.md",
+    "docs/career/PROJECT_STORIES.md",
+    "docs/career/FINAL_PROJECT_FACTS.md",
+    "scripts/validate_task043_career_package.py",
+    "tasks/043_resume_interview_package.md",
+    "tests/python/test_task043_career_package.py",
 }
 
 

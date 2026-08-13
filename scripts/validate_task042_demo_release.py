@@ -69,6 +69,14 @@ TASK042_ALLOWED = TASK041_ALLOWED | {
     "tasks/042_final_demo_capture_release_validation.md",
     "tests/python/test_task042_demo_release.py",
     "scripts/validate_task041_presentation.py",
+    "docs/career/RESUME_PROJECT.md",
+    "docs/career/PROJECT_PITCH.md",
+    "docs/career/INTERVIEW_QA.md",
+    "docs/career/PROJECT_STORIES.md",
+    "docs/career/FINAL_PROJECT_FACTS.md",
+    "scripts/validate_task043_career_package.py",
+    "tasks/043_resume_interview_package.md",
+    "tests/python/test_task043_career_package.py",
 }
 
 SEGMENT_IDS = {
@@ -311,8 +319,11 @@ def validate() -> dict[str, Any]:
         changed.append(path)
         if path not in TASK042_ALLOWED:
             raise AssertionError(f"changed path outside Task040/041/042 allowed set: {path}")
-    if "docs/FINAL_DEMO_GUIDE.md" not in changed or "release/demo/manifest.json" not in changed:
-        raise AssertionError("Task042 guide and manifest are not visible in the worktree")
+    # The package may already be committed when a later documentation task is
+    # validated; existence and hash checks above are the durable requirements,
+    # not whether these paths are dirty in the current worktree.
+    if not GUIDE.is_file() or not MANIFEST.is_file():
+        raise AssertionError("Task042 guide and manifest are missing")
     return {
         "status": "PASS",
         "task": "042",

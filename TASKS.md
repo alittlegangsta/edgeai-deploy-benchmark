@@ -48,6 +48,7 @@ The authoritative execution rules are in
 | 040 | Stage 6 final results freeze | 039 | Completed | Freeze provenance-linked formal YOLOv5n benchmark and accuracy results across PC ORT, RTX TensorRT, and DR ncnn; retain NPU face as functional control, camera/unified-app timings as integration evidence, and custom DR YOLOv5n NPU as vendor-blocked. |
 | 041 | Stage 6 project presentation | 040 | Completed | Rework the README around the frozen Task040 results and add reproducible architecture, deployment-flow and demo-recording guidance without changing technical evidence. |
 | 042 | Stage 6 final demo release | 041 | Completed | Prepare the four-segment final demo guide, release manifest, recording commands and offline release validation from frozen Task040/041 evidence. |
+| 043 | Stage 6 career package | 042 | Completed | Convert the frozen deployment, benchmark and NPU evidence into a concise resume, interview pitch, technical Q&A and STAR story package without adding experiments or claims. |
 
 Batch A stops after Task 005, Batch B stops after Task 009, and Batch C stops
 after Task 012. A checkpoint requires explicit human review before the next batch.
