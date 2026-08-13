@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "HPF_SOFTNPU_VERSION_COMPARISON_COMPLETE",
+  "purpose": "Static comparison of the current 05-5 DR1M90GEG400 SoftNPU package with the official D20.1 AD101V20 example after the matched-runtime YOLOv8n Optimize gate failed.",
+  "safety": {
+    "read_only_source_audit": true,
+    "board_accessed_for_this_comparison": false,
+    "bitstream_written": false,
+    "dtb_or_kernel_changed": false,
+    "modules_loaded": false,
+    "benchmark": "NOT_RUN"
+  },
+  "current_05_5_package": {
+    "board_identity": {
+      "device": "DR1M90GEG400",
+      "architecture": "dr1_90",
+      "speed": "-2",
+      "td_version": "6.2.175876",
+      "hpf_tool_version": "2025.09"
+    },
+    "tutorial_selected_hpf": {
+      "logical_path": "05-5_NPU演示/demo/soc_sdk/soc_base/soc_prj.hpf",
+      "sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+      "hpf_info": {
+        "version": "202501",
+        "device": "DR1M90GEG400",
+        "time": "202511281010",
+        "compile_time": "Sep 3 2025 14:29:18"
+      },
+      "embedded_bitstream": {
+        "sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+        "logical_path": "HPFs/soc_prj.bit",
+        "version": "6.2.175876",
+        "architecture": "dr1_90",
+        "package": "DR1M90GEG400",
+        "date": "2025/11/28 9:37"
+      },
+      "selection_evidence": "The PDF/tutorial copies soc_sdk/soc_base/platform/soc_prj.bit; that file and this HPF embedded payload have the same SHA256. The separate generated best-result/phy_1 bitstream is not substituted."
+    },
+    "alternate_project_hpf": {
+      "logical_path": "05-5_NPU演示/demo/soc_prj/soc_prj.hpf",
+      "sha256": "48e1f8a19b3b45a17aab39bbea784d1655d48ea24f35e3cea1afc3b582347635",
+      "hpf_info_device": "DR1M90GEG400",
+      "embedded_bitstream_sha256": "a71de5830e603c5bda43a5eee944f984c9ec50eff86ca8a5cc8ab44a2aa2e2f4",
+      "role": "Older/generated project export retained as provenance evidence; not the tutorial-selected platform payload."
+    },
+    "soft_npu_configuration": {
+      "source": "05-5_NPU演示/demo/soc_prj/al_ip/NPU_SOFT_0/.params_NPU_SOFT_0.txt",
+      "sha256": "23f10bd7c7a0c9d8c017246b793eb9e75ac5dfd128f2c2691237c39c10ee7dfc",
+      "NPU_SOFT": 1,
+      "SOFT_NN": 1,
+      "SOFT_YOLO": 1,
+      "SOFT_RESIZE": 1,
+      "ALL_OPERATOR": 1,
+      "PRE_PROCESS": 1,
+      "POST_PROCESS": 0
+    },
+    "generated_platform_resources": {
+      "soft_npu_reg": "0x1f0000000 + 0x10000",
+      "soft_npu_interrupt": 97,
+      "vdma_reg": "0x80200000 + 0x1000",
+      "vdma_interrupt": 84,
+      "dtsi_sha256": "eaa008d108664a7319ad1e6867c06d1ee83b437f7abc42bdf0b5c8506b3dc0af",
+      "source": "HPF extraction soc_plat_pl.dtsi"
+    },
+    "platform_header": {
+      "logical_path": "05-5_NPU演示/demo/soc_sdk/soc_base/platform/inc/soc_plat.h",
+      "sha256": "beec68f2f7d010bceae6765cfb93453522e92042fc5009463e40d3af5d771410",
+      "HPF_VERSION": 202507,
+      "IDE_VERSION": "Release: 6.2.1 Build: 175876",
+      "HPFTool_Version": "2025/09/03 14:29:18"
+    }
+  },
+  "d20_1_official_example": {
+    "target_identity": {
+      "device": "DR1M90GEG484",
+      "family": "DR1",
+      "speed": "-2",
+      "td_version": "6.2.175876",
+      "project_name": "D20.1_NPU_Simple_Demo_AD101V20_2025.7"
+    },
+    "hpf": {
+      "logical_path": "TD_D20.1_AD101V20_2025.7/D20.1_NPU_Simple_Demo_AD101V20_2025.7.hpf",
+      "sha256": "0d2c7f2592eb167a369c3a327a66b6b3e2cbad4450b5218c100870b68a18ef96",
+      "hpf_info": {
+        "version": "202501",
+        "device": "DR1M90GEG484",
+        "time": "202510301415",
+        "compile_time": "Sep 3 2025 14:29:18"
+      },
+      "embedded_bitstream": {
+        "sha256": "2f168661ff90729df23637698791b6e5f38845196cc55df8f77b61ac01508bb1",
+        "logical_path": "HPFs/D20.1_NPU_Simple_Demo_AD101V20_2025.7.bit",
+        "version": "6.2.175876",
+        "architecture": "dr1_90",
+        "package": "DR1M90GEG484",
+        "date": "2025/10/30 14:10"
+      }
+    },
+    "soft_npu_configuration": {
+      "source": "TD_D20.1_AD101V20_2025.7/design_0/ip/design_0_Video_NPU_1/Design.xml",
+      "sha256": "57970d0affa3d4f49955b47460eccb9b4de3a4ac35d85b8d021209efecfd802b",
+      "NPU_SOFT": 1,
+      "SOFT_NN": 1,
+      "SOFT_YOLO": 1,
+      "SOFT_RESIZE": 0,
+      "ALL_OPERATOR": 1,
+      "PRE_PROCESS": 1,
+      "POST_PROCESS": 0
+    },
+    "generated_platform_resources": {
+      "soft_npu_reg": "0x80000000 + 0x20000000",
+      "soft_npu_interrupt": 114,
+      "vdma_instances": 0,
+      "dtsi_sha256": "5562afa2afd559b86f2f4d037936e58997bec583705ec4b7d0259ebe3b62a16",
+      "source": "HPF extraction soc_plat_pl.dtsi"
+    }
+  },
+  "observed_board_context": {
+    "source_evidence": [
+      "results/evidence/026/first_boot_validation.json",
+      "results/evidence/026/npu_module_preflight.json",
+      "results/evidence/026/official_demo_validation.json"
+    ],
+    "tutorial_system_bit_sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+    "tutorial_system_dtb_sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+    "soft_npu_reg": "0x1f0000000 + 0x10000",
+    "soft_npu_interrupt": 97,
+    "hard_npu_reg": "0x63f00000 + 0x100000",
+    "hard_npu_interrupt": 42,
+    "cma_kib": 131072,
+    "runtime": "ArmNN v32.1.0 / ed5ae24",
+    "interpretation": "The Task 026 candidate boot and module evidence agrees with the GEG400 05-5 platform resources; it does not identify the D20.1 GEG484 example as active hardware."
+  },
+  "comparison": {
+    "same_td_release_line": true,
+    "same_hpf_info_version": true,
+    "device_package_match": false,
+    "bitstream_identity_match": false,
+    "soft_resize_setting_match": false,
+    "soft_npu_address_match": false,
+    "soft_npu_interrupt_match": false,
+    "vdma_topology_match": false,
+    "d20_1_direct_substitution": "REJECTED_BOARD_PACKAGE_MISMATCH",
+    "hardware_dialect_difference_observed": true,
+    "runtime_version_skew": "NOT_PROVEN",
+    "runtime_skew_evidence_limit": "The matched release ArmNN objects are byte-identical to the board runtime; the remaining unknown is backend/bitstream build correspondence, not a demonstrated user-space library mismatch.",
+    "conclusion": "The D20.1 AD101V20/GEG484 HPF and bitstream cannot be used as a control for the current GEG400 05-5 board. The current failed YOLOv8n QAsymmU8 Splitter Optimize gate therefore remains a graph/operator compatibility result; it does not justify changing the board bitstream or assigning a runtime version skew."
+  }
+}

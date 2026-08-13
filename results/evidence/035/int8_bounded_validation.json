@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "task": "035",
+  "status": "EQ_INT8_ARM_BENCHMARK_CANDIDATE",
+  "previous_status": "INT8_ACCURACY_REJECTED",
+  "final_task_verdict": "EQ_INT8_ARM_BENCHMARK_CANDIDATE",
+  "status_scope": "The prior fixed-threshold evaluator result and bounded correctness observations are retained, but the prior rejection is not a final task verdict because the evaluator used the wrong GT image scope and deployment threshold.",
+  "calibration": {
+    "count": 22,
+    "unique_sha256_count": 22,
+    "target_count": 500,
+    "manifest_sha256": "1d1ebb2c51a8cfff1745dce6ab4a2c6f44eb08bcbd0cf2d13bf68720e5bf7113",
+    "source_summary": "20 Task 021 replay frames plus local YOLOv5 v7.0 bus.jpg and zidane.jpg; no fabricated duplicates or network data"
+  },
+  "evaluation": {
+    "requested_count": 43,
+    "available_distinct_count": 1,
+    "actual_count": 1,
+    "manifest_sha256": "b7bceac0dce235d3471731bd822f1733c311b0c2949c4830eb3243594541d40f",
+    "metric": "FP32-reference regression",
+    "map": "NOT_COMPUTED_NO_GROUND_TRUTH",
+    "note": "The historical 43 is a Python test count, not a 43-image Golden set."
+  },
+  "expanded_coco_validation": {
+    "status": "SUPERSEDED_INVALID_SCOPE_AND_THRESHOLD",
+    "calibration_count": 500,
+    "evaluation_count": 500,
+    "calibration_manifest_sha256": "de490f890d82b40e0f66f17ed4289d2efd276e933b6e9f0935e4572c365c28f7",
+    "evaluation_manifest_sha256": "b98b81be7822bce89b10535e6806833b30ac56d706723ce1d88b80c0f2cc3f2d",
+    "annotation_sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+    "selection_source": "COCO val2017 fallback; calibration and evaluation are disjoint",
+    "evaluator": "superseded fixed confidence=0.25/NMS IoU=0.45 evaluator; GT denominator was not restricted to held-out image IDs",
+    "metrics_file_external": "/tmp/task035-coco/coco_metrics.json",
+    "metrics_file_sha256": "e421e39bf80c5d0fd32dabeb35205bd784e2bfd8f37740838893448a5f5ca4ff",
+    "models": {
+      "fp32": {"detections": 2557, "map50": 0.04078045501371188, "map50_95": 0.02772673268634781, "precision": 0.6851779429018381, "recall": 0.04821797165267648},
+      "aciq": {"detections": 2384, "map50": 0.03864486787859332, "map50_95": 0.025113504170290422, "precision": 0.6912751677852349, "recall": 0.04535571762763176, "count_agreement_images": 272, "class_agreement_images": 314, "candidate_zero_detection_images": 38, "matched_box_iou_mean": 0.8686923789091188, "confidence_delta_max": 0.425949991},
+      "kl": {"detections": 1145, "map50": 0.009564392488606025, "map50_95": 0.007112894050806626, "precision": 0.8375545851528384, "recall": 0.02639328471171047, "count_agreement_images": 75, "class_agreement_images": 78, "candidate_zero_detection_images": 178, "matched_box_iou_mean": 0.8653209505908165, "confidence_delta_max": 0.651926994},
+      "eq": {"detections": 2350, "map50": 0.03856900234146894, "map50_95": 0.02583295288920582, "precision": 0.688936170212766, "recall": 0.04535571762763176, "count_agreement_images": 319, "class_agreement_images": 329, "candidate_zero_detection_images": 42, "matched_box_iou_mean": 0.9167913081772582, "matched_box_iou_p05": 0.7971821710495622, "matched_box_iou_min": 0.0, "confidence_delta_mean": 0.05089593511456056, "confidence_delta_p95": 0.16351179749999986, "confidence_delta_max": 0.659039974}
+    },
+    "eq": {"status": "COMPLETED_AND_REJECTED", "table_sha256": "2d138307017cf68769ec01b5c06502f4d903fe3720399235be215102d1462471", "param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4", "bin_sha256": "9ae93520aa8fa9c235176e57c3146ac6a66115cddd0186c20f2637f7516c09f7", "runner_json_sha256": "2753c5c9117c9f65353784833f27b81a5ec2ee33e9faf21d6c4673775deac844", "gate": "FAIL_ON_HELDOUT_AND_FROZEN_REFERENCE"},
+    "final_task_verdict": "INT8_ACCURACY_REJECTED_BOUNDED_OBSERVATION_ONLY",
+    "expanded_golden_regression": {"reference_detection_count": 5, "aciq_detection_count": 4, "kl_detection_count": 1, "eq_detection_count": 5, "aciq_min_iou": 0.8845812500265686, "kl_min_iou": 0.9302763526231909, "eq_min_iou": 0.8992660203111462}
+  },
+  "corrected_coco_validation": {
+    "evidence": "results/evidence/035/coco_evaluator_audit.json",
+    "status": "EQ_INT8_ARM_BENCHMARK_CANDIDATE",
+    "calibration_count": 500,
+    "evaluation_count": 500,
+    "evaluation_manifest_sha256": "b98b81be7822bce89b10535e6806833b30ac56d706723ce1d88b80c0f2cc3f2d",
+    "annotation_sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+    "evaluated_imgIds_equal_heldout": true,
+    "ground_truth_image_ids_in_subset": 494,
+    "ap_confidence_threshold": 0.001,
+    "ap_nms_iou_threshold": 0.6,
+    "deployment_confidence_threshold_unchanged": 0.25,
+    "deployment_nms_iou_threshold_unchanged": 0.45,
+    "models": {
+      "fp32": {"mAP50": 0.4973494284597922, "mAP50-95": 0.30971763324139717, "prediction_count": 88333},
+      "aciq": {"mAP50": 0.4759858766452364, "mAP50-95": 0.2858129292490713, "delta_mAP50": -0.021363551814555792, "delta_mAP50-95": -0.02390470399232586, "relative_delta_mAP50": -0.04295481324008987, "relative_delta_mAP50-95": -0.07718225062663542, "prediction_count": 90409},
+      "kl": {"mAP50": 0.4070404716208542, "mAP50-95": 0.24424187767824224, "delta_mAP50": -0.09030895683893797, "delta_mAP50-95": -0.06547575556315494, "relative_delta_mAP50": -0.1815804978777389, "relative_delta_mAP50-95": -0.21140467489018444, "prediction_count": 84934},
+      "eq": {"mAP50": 0.4840712671411614, "mAP50-95": 0.29392531834074126, "delta_mAP50": -0.013278161318630799, "delta_mAP50-95": -0.015792314900655913, "relative_delta_mAP50": -0.02669785176943107, "relative_delta_mAP50-95": -0.05098939551932846, "prediction_count": 91026}
+    },
+    "fp32_sanity_gate": "PASS_ENGINEERING_COCO_SCALE",
+    "task_level_verdict": "EQ_INT8_ARM_BENCHMARK_CANDIDATE",
+    "reason": "The user-defined full independent evaluation gate is explicit: absolute mAP50 and mAP50-95 degradation no greater than 0.02 and no catastrophic zero-detection failure. EQ passes; ARM benchmark remains pending."
+  },
+  "candidates": [
+    {
+      "method": "ACIQ",
+      "table_sha256": "1f9955113d3d808f64d531daca59dce4bc9d6d3550806a154c8f2e4949cb13bb",
+      "param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+      "bin_sha256": "9a98d6a08c3623f1047dbe419426bf13155beca837cdd31d805ba0c69cc202ee",
+      "runner_json_sha256": "7104769088a9a5e6e75be7396bb1ca52b55108057c7278378ebad087897eacd9",
+      "detection_count": 3,
+      "reference_detection_count": 5,
+      "class_agreement": false,
+      "matched_iou": [
+        0.9459513272624841,
+        0.94682602892869,
+        0.9154784851416163
+      ],
+      "minimum_matched_iou": 0.9154784851416163,
+      "maximum_confidence_delta": 0.0782729983329773,
+      "catastrophic_zero_detection": false,
+      "gate": "FAIL"
+    },
+    {
+      "method": "KL",
+      "table_sha256": "21974821d0c08260ea9768d17a9411eca6ec35fcd86f46e1964eddfed4ac9767",
+      "param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+      "bin_sha256": "5f9b05f54de6060ddfc802f424a2fa1ec90387aec15b29f1a6d2031024ecbd86",
+      "runner_json_sha256": "6c699133f73fcacbf9e30473e5b04d14c0329aefd10e7f2a880647cdc48709ae",
+      "detection_count": 0,
+      "reference_detection_count": 5,
+      "class_agreement": false,
+      "matched_iou": [],
+      "minimum_matched_iou": null,
+      "maximum_confidence_delta": null,
+      "catastrophic_zero_detection": true,
+      "gate": "FAIL"
+    },
+    {
+      "method": "EQ",
+      "table_sha256": null,
+      "param_sha256": null,
+      "bin_sha256": null,
+      "runner_json_sha256": null,
+      "detection_count": null,
+      "reference_detection_count": 5,
+      "class_agreement": null,
+      "matched_iou": [],
+      "minimum_matched_iou": null,
+      "maximum_confidence_delta": null,
+      "catastrophic_zero_detection": null,
+      "gate": "NOT_EVALUATED",
+      "status": "NOT_ACCEPTED",
+      "exit_code": 130,
+      "stderr_sha256": "9bfa7d2b067a5d1bc0974c6d893261ae57fe7386e32df173a7f714391fcf8fb9"
+    }
+  ],
+  "arm_benchmark": {
+    "status": "SKIPPED_CORRECTNESS_GATE",
+    "accepted_candidate": null
+  },
+  "infra": {
+    "vm_wrapper_error": "UtilBindVsockAnyPort:307: socket failed 1",
+    "role": "independent infrastructure issue; not used as the INT8 model verdict"
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "schema_version": 2,
+  "task": "037",
+  "status": "COMPLETED",
+  "recorded_at": "2026-08-12T15:25:18+08:00",
+  "recorded_at_note": "WSL environment-gate record time. CUDA Toolkit and TensorRT were installed with the user-approved version-pinned procedure; no Linux NVIDIA display driver was installed.",
+  "host": {
+    "architecture": "x86_64",
+    "python": "3.12.3",
+    "windows_observed_product_name": "Windows 10 Pro",
+    "windows_user_reported_generation": "Windows 11",
+    "windows_build": "26200.8246"
+  },
+  "windows_gpu": {
+    "nvidia_smi_path": "nvidia-smi (Windows PowerShell)",
+    "nvidia_smi_exit": 0,
+    "gpu_model": "NVIDIA GeForce RTX 4060 Ti",
+    "driver_version": "591.86",
+    "nvidia_smi_cuda_version": "13.1",
+    "memory_total_mib": 8188,
+    "architecture": "Ada Lovelace (reported by the identity audit)",
+    "temperature_c_at_audit": 35,
+    "utilization_percent_at_audit": 10,
+    "gpu_uuid": "GPU-d625b2cc-aa13-c4f0-2bee-7fdf9c0f57ee",
+    "compute_capability_observed": null,
+    "compute_capability_expected_for_model": "8.9; not emitted by the captured query"
+  },
+  "wsl_host": {
+    "wsl_version": "2.7.11.0",
+    "wsl_kernel": "6.18.33.2-microsoft-standard-WSL2",
+    "wsl_default_version": 2,
+    "default_distribution": "Ubuntu",
+    "distribution_state": "Running",
+    "distribution_version": "Ubuntu 24.04.4 LTS",
+    "actual_distro_gpu_probe": {
+      "dxg_path": "/dev/dxg",
+      "dxg_ls": "crw-rw-rw- 1 root root 10, 258 Aug 12 14:08 /dev/dxg",
+      "nvidia_smi_path": "/usr/lib/wsl/lib/nvidia-smi",
+      "nvidia_smi_exit": 0,
+      "nvidia_smi_result": "GPU 0: NVIDIA GeForce RTX 4060 Ti (UUID: GPU-d625b2cc-aa13-c4f0-2bee-7fdf9c0f57ee)"
+    },
+    "bridge_libraries": [
+      {"path": "/usr/lib/wsl/lib/libcuda.so", "sha256": "00d5773a96ab7e18d087880b8ce02741863da15c487b434999f7932f3cbe1383"},
+      {"path": "/usr/lib/wsl/lib/libcuda.so.1", "sha256": "00d5773a96ab7e18d087880b8ce02741863da15c487b434999f7932f3cbe1383"},
+      {"path": "/usr/lib/wsl/lib/libnvidia-ml.so.1", "sha256": "3e46dc990c44d2d5c6bafea68b57b662d8366425c56155e140f4d52549f77921"},
+      {"path": "/usr/lib/wsl/lib/libdxcore.so", "sha256": "83d1671a839bcf71709349e77cd68341515df2e63080765618876996a0f4190c"}
+    ],
+    "ldconfig_entries": ["libcuda.so.1", "libnvidia-ml.so.1", "libdxcore.so"],
+    "device_node_conclusion": "PASS_WSL_GPU_PASSTHROUGH"
+  },
+  "interop": {
+    "direct_wsl_windows_executable_probe": "FAILED: UtilBindVsockAnyPort:307: socket failed 1",
+    "elevated_powershell_probe": "PASS; powershell.exe and wsl.exe -d Ubuntu completed the read-only probes",
+    "conclusion": "UTILBINDSOCK_INTEROP_ISSUE_SEPARATE_FROM_GPU_DRIVER"
+  },
+  "toolchain": {
+    "cuda_toolkit_status": "INSTALLED_TOOLKIT_ONLY",
+    "cuda_toolkit_package": "cuda-toolkit-12-9 12.9.1-1",
+    "cuda_nvcc_package": "cuda-nvcc-12-9 12.9.86-1",
+    "nvcc": {
+      "path": "/usr/local/cuda-12.9/bin/nvcc",
+      "version_output": "Cuda compilation tools, release 12.9, V12.9.86"
+    },
+    "trt_package_versions": {
+      "libnvinfer10": "10.13.3.9-1+cuda12.9",
+      "libnvinfer-dev": "10.13.3.9-1+cuda12.9",
+      "libnvinfer-headers-dev": "10.13.3.9-1+cuda12.9",
+      "libnvonnxparsers10": "10.13.3.9-1+cuda12.9",
+      "libnvonnxparsers-dev": "10.13.3.9-1+cuda12.9"
+    },
+    "trtexec": {
+      "path": "/usr/src/tensorrt/bin/trtexec",
+      "identity": "TensorRT v101303",
+      "help_exit": 0,
+      "version_flag_note": "--version is not a standalone version query for this binary; it attempted a model run and returned a model-missing failure. --help identified TensorRT v101303."
+    },
+    "tensorrt_headers": [
+      "/usr/include/x86_64-linux-gnu/NvInfer.h",
+      "/usr/include/x86_64-linux-gnu/NvOnnxParser.h"
+    ],
+    "tensorrt_libraries": [
+      "/usr/lib/x86_64-linux-gnu/libnvinfer.so.10.13.3",
+      "/usr/lib/x86_64-linux-gnu/libnvonnxparser.so.10.13.3"
+    ],
+    "package_sha256": {
+      "cuda-toolkit-12-9_12.9.1-1_amd64.deb": "851704dc80c3a0154a5a6f3e576fb898ad3714c0586176908982a0f97acfb359",
+      "cuda-nvcc-12-9_12.9.86-1_amd64.deb": "66c11ad4fba8c12c44a1fec346c5125011e2ed519b98a787966dda0df9043b45",
+      "libnvinfer-bin_10.13.3.9-1+cuda12.9_amd64.deb": "ec7e85f57d39acbbee4c1270e594b51ad4722af9e1102d90ed79f5e56d3438fd",
+      "libnvinfer-dev_10.13.3.9-1+cuda12.9_amd64.deb": "24ff02b760fd1ad07a4a3efe3b1456d26577e6bc3afee0a2c62169a83f94225c",
+      "libnvinfer10_10.13.3.9-1+cuda12.9_amd64.deb": "e4361bf6bfe4a27623d0880c439d53b73baea9a3692d48dbeab91366b80dd2af",
+      "libnvinfer-headers-dev_10.13.3.9-1+cuda12.9_amd64.deb": "ebffa2a89481c341b42c556372a96c5a4a18827040d390d157cebe1a0f8abf98",
+      "libnvinfer-headers-plugin-dev_10.13.3.9-1+cuda12.9_amd64.deb": "e5677038a024ccbff4331cad46585622587a7dd19c4022d30083c6d8c496d01d",
+      "libnvonnxparsers-dev_10.13.3.9-1+cuda12.9_amd64.deb": "2aee13f100df181b34233c23607f3a1ffff33387a16e388d34b843f9c1bdb404",
+      "libnvonnxparsers10_10.13.3.9-1+cuda12.9_amd64.deb": "eb917a18fc176b5a95c5dbe19af82d3838f76dbefc6f0460695a851f3b1cd825"
+    },
+    "installation_source": "NVIDIA official CUDA WSL Ubuntu repository and NVIDIA official Ubuntu 24.04 TensorRT repository; exact package versions pinned above",
+    "linux_nvidia_display_driver_packages": "NOT_INSTALLED",
+    "python_tensorrt": "NOT_REQUIRED_FOR_CXX_RUNNER; Python TensorRT module not installed",
+    "python_torch": null,
+    "python_onnxruntime": null,
+    "python_pycuda": null,
+    "python_cupy": null
+  },
+  "compatibility_plan": {
+    "status": "APPROVED_AND_INSTALLED",
+    "recommended_pair": {
+      "cuda_toolkit": "12.9 Update 1",
+      "tensorrt": "10.13.3 C++ Linux x86_64 package built for CUDA 12.9"
+    },
+    "reason": "TensorRT 10.13.3 officially lists CUDA 12.9 Update 1 and Ubuntu 24.04-era x86-64 support; CUDA 12.9 Windows driver minimum is below the observed 591.86 driver.",
+    "not_selected_latest_pair": "TensorRT 11.2.1 C++ Debian/tar packages prefer CUDA 13.3 Update 1; the CUDA 13.3 Linux release table calls for a newer r610-class development driver, so it is not the conservative first choice for the observed WSL host.",
+    "installation_boundary": "User-approved toolkit-only installation completed; no Linux NVIDIA display driver was installed.",
+    "official_references": [
+      "https://docs.nvidia.com/deeplearning/tensorrt/10.x.x/getting-started/release-notes-10/10.13.3.html",
+      "https://docs.nvidia.com/deeplearning/tensorrt/latest/installing-tensorrt/prerequisites.html",
+      "https://docs.nvidia.com/deeplearning/tensorrt/latest/getting-started/support-matrix.html",
+      "https://docs.nvidia.com/cuda/archive/12.9.0/cuda-toolkit-release-notes/index.html"
+    ]
+  },
+  "model_contract": {
+    "manifest": "models/yolov5n-v7.0/manifest.json",
+    "family": "YOLOv5",
+    "release": "v7.0",
+    "input_shape": [1, 3, 640, 640],
+    "input_dtype": "FP32",
+    "output_shape": [1, 25200, 85],
+    "contains_graph_nms": false,
+    "opset": 12
+  },
+  "cuda_probe": {
+    "source": "scripts/task037_cuda_probe.cu",
+    "binary": "/tmp/task037_cuda_probe",
+    "exit_code": 0,
+    "device_count": 1,
+    "device_name": "NVIDIA GeForce RTX 4060 Ti",
+    "compute_capability": "8.9",
+    "global_memory_bytes": 8585216000,
+    "operations": ["cudaGetDeviceCount", "cudaGetDeviceProperties", "cudaMalloc", "cudaMemset", "cudaDeviceSynchronize", "cudaFree"]
+  },
+  "environment_gate": "PASS",
+  "verdict": "TENSORRT_FP32_AND_FP16_READY",
+  "engine_build": "FP32_AND_FP16_BUILT; FP32_NO_TF32_ACCEPTED; FP16_COCO_GATE_PASS",
+  "project_runner": "PASS_FP32; PASS_FP16_COCO_GATE_WITH_SECONDARY_GOLDEN_DIAGNOSTIC",
+  "benchmark": "PASS_FP32; PASS_FP16_FORMAL",
+  "downloads_or_installs": "USER_APPROVED_CUDA_TOOLKIT_AND_TENSORRT_INSTALL_COMPLETED",
+  "classification": {
+    "windows_gpu_driver": "PASS",
+    "wsl_gpu_passthrough": "PASS_ACTUAL_UBUNTU_DISTRO",
+    "cuda_toolkit": "PASS_TOOLKIT_ONLY",
+    "tensorrt_cpp": "PASS_HEADERS_LIBS_BUILDER",
+    "utilbindvsock": "INTEROP_ISSUE_ONLY"
+  },
+  "final_scope": {
+    "fp32_status": "TENSORRT_FP32_READY",
+    "fp16_status": "TENSORRT_FP16_READY",
+    "overall_task_status": "COMPLETED",
+    "fp16_accuracy_gate": {
+      "evaluation_images": 4500,
+      "mAP50_delta_absolute": 0.000197230057410146,
+      "mAP50_95_delta_absolute": 0.000066085409587863,
+      "no_catastrophic_zero_detection": true,
+      "status": "PASS"
+    },
+    "pipeline_attribution_fp32": {
+      "gpu_inference_percent": 18.034359562390716,
+      "preprocess_percent": 17.05504513264218,
+      "postprocess_percent": 43.2969335106947,
+      "cuda_transfer_percent": 13.855152067306822
+    },
+    "cpu_fallback": "NOT_APPLICABLE_TO_TENSORRT_RUNNER",
+    "model_contract_changed": false,
+    "serialized_engines_committed": false,
+    "display_driver_installed": false
+  }
+}

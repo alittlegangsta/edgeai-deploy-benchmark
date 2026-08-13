@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "task": "037",
+  "protocol": {
+    "warmup": 10,
+    "repeat": 100,
+    "input_reading": "loaded once before timed loops",
+    "preprocess": "timed separately inside pipeline loop",
+    "inference_only": "host wall and CUDA event H2D/inference/D2H",
+    "postprocess": "timed separately inside pipeline loop",
+    "end_to_end": "preprocess through postprocess, excluding image read and rendering",
+    "thresholds_unchanged": true
+  },
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 4060 Ti",
+    "compute_capability": "8.9",
+    "driver": "591.86",
+    "memory_total_bytes": 8585216000
+  },
+  "accepted": {
+    "id": "fp32_no_tf32",
+    "precision": "FP32",
+    "engine_sha256": "a3ad9715f3560e46cae2cacfa06ca11d1468c42947eea9487a15c82d84b968d6",
+    "runner_json": "/tmp/task037-run/fp32_benchmark2.json",
+    "correctness": "PASS_TARGET",
+    "metrics": {
+      "inference_wall_ms": {"mean": 3.71244466, "p50": 3.482152, "p95": 5.222537},
+      "gpu_h2d_ms": {"mean": 0.4578543993830681, "p50": 0.44975998997688293, "p95": 0.5253120064735413},
+      "gpu_inference_ms": {"mean": 1.6742607927322388, "p50": 1.4604159593582153, "p95": 2.739680051803589},
+      "gpu_d2h_ms": {"mean": 0.828420158624649, "p50": 0.8022080063819885, "p95": 0.9611520171165466},
+      "preprocess_ms": {"mean": 1.58334391, "p50": 1.560376, "p95": 1.821055},
+      "postprocess_ms": {"mean": 4.01956931, "p50": 3.960571, "p95": 4.588547},
+      "pipeline_ms": {"mean": 9.28372747, "p50": 9.104986, "p95": 10.790646},
+      "fps": 107.71535498337931,
+      "peak_rss_kib": 537596,
+      "gpu_memory_free_bytes_at_end": 7353663488
+    }
+  },
+  "formal_fp16": {
+    "id": "fp16",
+    "precision": "FP16",
+    "engine_sha256": "7f99cc9f628613a71ec993898a9825c0c45f4c5129862f8350fea0161e653c8a",
+    "runner_json": "/tmp/task037-run/fp16_formal.json",
+    "correctness": "COCO_GATE_PASS_WITH_SECONDARY_GOLDEN_DIAGNOSTIC",
+    "metrics": {
+      "inference_wall_ms": {"mean": 3.71610421, "p50": 3.455037, "p95": 5.1078},
+      "gpu_h2d_ms": {"mean": 0.48472256064414976, "p50": 0.4645119905471802, "p95": 0.6407359838485718},
+      "gpu_inference_ms": {"mean": 1.37037856, "p50": 1.241536, "p95": 2.23456},
+      "gpu_d2h_ms": {"mean": 0.9343347209692001, "p50": 0.8867520093917847, "p95": 1.3120959997177124},
+      "preprocess_ms": {"mean": 1.66588106, "p50": 1.629598, "p95": 1.855246},
+      "postprocess_ms": {"mean": 4.06613426, "p50": 3.939225, "p95": 4.728582},
+      "pipeline_ms": {"mean": 9.40893524, "p50": 9.013034, "p95": 11.427198},
+      "fps": 106.28195162282786,
+      "peak_rss_kib": 548172
+    },
+    "speed_result_is_accepted_after_coco_gate": true,
+    "coco_gate": {
+      "mAP50": 0.4481054404868596,
+      "mAP50_95": 0.2747865502965814,
+      "delta_vs_tensorrt_fp32_mAP50": -0.000197230057410146,
+      "delta_vs_tensorrt_fp32_mAP50_95": 0.000066085409587863,
+      "zero_detection_images": 0,
+      "pass": true
+    },
+    "comparison_to_fp32": {
+      "gpu_inference_speedup": 1.2217505739541041,
+      "pipeline_speedup": 0.986692673846058,
+      "pipeline_delta_percent": -1.3307326153942034
+    }
+  },
+  "trtexec_reference": {
+    "command": "trtexec --loadEngine=/tmp/task037/yolov5n_fp32_no_tf32.engine --iterations=100 --warmUp=200 --duration=1 --noDataTransfers --percentile=50,95",
+    "log": "/tmp/task037-run/trtexec_fp32.log",
+    "log_sha256": "1170031ffeea62d4f2fd78bb6d488186f2cf3fa42b016c9752cdd9bf731af7cc",
+    "exit_code": 0,
+    "reported_gpu_compute_ms": {"mean": 1.43621, "p50": 1.4162, "p95": 1.62506},
+    "reported_throughput_qps": 693.247,
+    "note": "No data transfers; reference only, not the project end-to-end measurement"
+  }
+}

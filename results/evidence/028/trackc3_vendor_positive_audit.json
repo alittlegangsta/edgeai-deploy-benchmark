@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "VENDOR_YOLOV5S_POSITIVE_CONTROL_UNAVAILABLE",
+  "source_checkout": {
+    "path": "<vendor-root>/NPU_info/dr1m90_npu",
+    "commit": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+    "branch": "release"
+  },
+  "positive_control_requested": {
+    "model": "yolov5s_320_sigmoid.onnx",
+    "config": "net_config_yolov5s.json",
+    "expected_sequence": [
+      "FP32 YOLOv5s",
+      "AL_onnx_pass --yolo_type yolov5",
+      "sim/split",
+      "quantize",
+      "yolo_model_inference"
+    ]
+  },
+  "current_demo": {
+    "run_script": {
+      "path": "<vendor-root>/NPU_info/dr1m90_npu/npu_demo/demo_scripts/run_yolo_pic.sh",
+      "sha256": "266c390bbca4b34efdbad9e628fa7ea00f5607cfb208ef06a42469ff7fb26c71",
+      "text": "invokes yolo_demo_pic -m yolov8n.quant.onnx -i input.jpg -u example.json"
+    },
+    "config": {
+      "path": "<vendor-root>/NPU_info/dr1m90_npu/npu_demo/demo_inputs/yolo_pic/example.json",
+      "sha256": "e27bb5685a7b62d7dbb317a233c57051dc25235703269aa2cfae8e09294141cd",
+      "input_scale": [
+        0.003921,
+        0.003921,
+        0.003921
+      ],
+      "mean": [
+        0,
+        0,
+        0
+      ],
+      "confidence": 0.2,
+      "nms": 0.5
+    },
+    "model": {
+      "path": "<vendor-root>/NPU_info/dr1m90_npu/npu_demo/demo_inputs/yolo_pic/yolov8n.quant.onnx",
+      "sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96",
+      "size_bytes": 3449876,
+      "opsets": [
+        {
+          "domain": "",
+          "version": 17
+        }
+      ],
+      "inputs": [
+        {
+          "name": "images",
+          "dtype": "FLOAT",
+          "shape": [
+            1,
+            3,
+            384,
+            640
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output0",
+          "dtype": "FLOAT",
+          "shape": [
+            1,
+            64,
+            48,
+            80
+          ]
+        },
+        {
+          "name": "output1",
+          "dtype": "FLOAT",
+          "shape": [
+            1,
+            80,
+            48,
+            80
+          ]
+        },
+        {
+          "name": "output2",
+          "dtype": "FLOAT",
+          "shape": [
+            1,
+            64,
+            24,
+            40
+          ]
+        },
+        {
+          "name": "output3",
+          "dtype": "FLOAT",
+          "shape": [
+            1,
+            80,
+            24,
+            40
+          ]
+        },
+        {
+          "name": "output4",
+          "dtype": "FLOAT",
+          "shape": [
+            1,
+            64,
+            12,
+            20
+          ]
+        },
+        {
+          "name": "output5",
+          "dtype": "FLOAT",
+          "shape": [
+            1,
+            80,
+            12,
+            20
+          ]
+        }
+      ],
+      "operator_counts": {
+        "Add": 6,
+        "Concat": 13,
+        "Conv": 63,
+        "DequantizeLinear": 344,
+        "MaxPool": 3,
+        "Mul": 57,
+        "QuantizeLinear": 218,
+        "Resize": 2,
+        "Sigmoid": 57,
+        "Split": 8
+      }
+    },
+    "input": {
+      "path": "<vendor-root>/NPU_info/dr1m90_npu/npu_demo/demo_inputs/yolo_pic/input.jpg",
+      "sha256": "51c3c74f4e7e2aa8b88fabad9b384eaca3c3b9a612a5d7e515a502e04be9b749",
+      "size_bytes": 181753
+    }
+  },
+  "search_scope": {
+    "roots": [
+      "<vendor-root>/NPU_info/dr1m90_npu",
+      "/home/dministrator/vendor/anlogic-dr1-knowledge"
+    ],
+    "exact_assets": [
+      "yolov5s_320_sigmoid.onnx",
+      "net_config_yolov5s.json",
+      "*.tmfile",
+      "rt.bin",
+      "weight.bin",
+      "npu_c_api.h",
+      "libnpu_runtime*"
+    ],
+    "result": "NO_MATCHES"
+  },
+  "interpretation": "The checked release checkout provides a YOLOv8 quantized ArmNN/Alnpu demo, not the requested YOLOv5s 320 positive control. No exact YOLOv5s source model, net_config_yolov5s.json, native compiler/runtime assets or generated tmfile/rt.bin/weight.bin were found in the bounded local search. This does not alter the frozen YOLOv5n contract."
+}

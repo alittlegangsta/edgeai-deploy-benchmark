@@ -1,0 +1,538 @@
+{
+  "assets": [
+    {
+      "kind": "markdown",
+      "path": "README.md",
+      "role": "final project presentation",
+      "sha256": "f83ae0805533cc9da80ed473822c359a07199467927e786444fe8792a4233a9d"
+    },
+    {
+      "kind": "markdown",
+      "path": "docs/PROJECT_PRESENTATION.md",
+      "role": "architecture and shot-list source",
+      "sha256": "d5b4ad6ec262ca7b07955ab072ab5d1f2a954f197ca4d0746667f8ab65b3e0bc"
+    },
+    {
+      "kind": "markdown",
+      "path": "docs/FINAL_BENCHMARK_RESULTS.md",
+      "role": "formal benchmark provenance",
+      "sha256": "5bda20f5445ccb2a9fca3e6167e56687e69a49af8e5cf8133241ce9b90850351"
+    },
+    {
+      "kind": "markdown",
+      "path": "results/final/README_READY_TABLES.md",
+      "role": "README-ready formal tables",
+      "sha256": "1646de78cbfed294fd187d1887fa2c3d9fbfd727e90473a388e4370b42cb7db2"
+    },
+    {
+      "kind": "json",
+      "path": "results/final/authoritative_results.json",
+      "role": "formal source authority",
+      "sha256": "d18208ac620edf97719ba25d49b0c9dc19a1d3a4d483ef0b222b580c0c95f416"
+    },
+    {
+      "kind": "json",
+      "path": "results/evidence/039/pc_tensorrt_fp16_video.json",
+      "role": "PC video integration evidence",
+      "sha256": "e010e91295b5e654dfd80d426fe7876a16bfbaee1ce5c3584505f9cefb8b5b40"
+    },
+    {
+      "kind": "json",
+      "path": "results/evidence/039/dr_camera_ncnn_int8.json",
+      "role": "DR1 camera integration evidence",
+      "sha256": "39823af6eb3450fb9aebd9f0d49b5da9ff2c966d60450ce7ed6a93a9aa2ddbe7"
+    },
+    {
+      "kind": "json",
+      "path": "results/evidence/039/validation.json",
+      "role": "video/camera validation",
+      "sha256": "07e69a2a13e4fdeb986509c2f9e267184a3e767dd4876339f3b5ec4d1dfde742"
+    },
+    {
+      "kind": "json",
+      "path": "results/evidence/036/vendor_face_flow_audit.json",
+      "role": "vendor face flow audit",
+      "sha256": "efcbcf050050a28ef9118b6d38c45f7bd63a253698be81ef095a9491ca7d10c0"
+    },
+    {
+      "kind": "json",
+      "path": "results/evidence/036/face_runner_benchmark.json",
+      "role": "vendor face functional run",
+      "sha256": "6b6963ed8c242ece25bef94da5461a86fc1e093f5224722133a18d8fd9e22f4a"
+    },
+    {
+      "kind": "json",
+      "path": "results/evidence/036/artifact_manifest.json",
+      "role": "vendor face identity manifest",
+      "sha256": "3f020d9bade065ac827718186bbf219eb5b813197950649327a0905a96101c64"
+    },
+    {
+      "kind": "text",
+      "path": "results/evidence/036/board_stdout.log",
+      "role": "Alnpu assignment log",
+      "sha256": "d0cffeacd0a790250327272cc7724fb5668334aee65990904a393b0dba9f58e2"
+    },
+    {
+      "kind": "text",
+      "path": "results/evidence/036/board_stderr.log",
+      "role": "no-fallback status log",
+      "sha256": "4a41f3c507760e1b25a2414169e1a27205036b26f3b790ab9920dd3abd640ed5"
+    },
+    {
+      "kind": "image",
+      "path": "results/images/021/first_annotated.png",
+      "role": "DR1 camera representative frame",
+      "sha256": "8c4fa983a44ab4dcb1889a56987d49339b8dff1ab5c595e2593be85f0e966da7"
+    },
+    {
+      "kind": "image",
+      "path": "results/images/021/middle_annotated.png",
+      "role": "DR1 camera representative frame",
+      "sha256": "497f706a4ff04e56ec4aa2e98c319e2341bca9c96af62db10b5c46f7072d7731"
+    },
+    {
+      "kind": "image",
+      "path": "results/images/021/last_annotated.png",
+      "role": "DR1 camera representative frame",
+      "sha256": "33754df9f462a4b3244f95551be067a9cb56874b0958fbeb670ce9b4e08b7e78"
+    },
+    {
+      "kind": "image",
+      "path": "results/images/036/face_annotated.png",
+      "role": "vendor face NPU visual",
+      "sha256": "efa1a0463bfa67f1e4c86280b0a4f1f32f694fa52f2203809b5b51813558899a"
+    },
+    {
+      "kind": "video",
+      "path": "results/videos/anlogic_arm_ncnn_reference.avi",
+      "role": "reviewed ARM video",
+      "sha256": "2669ec2fd0bd4eaaa1bf06f5ef3636e2100023f32bc0a77622f01fab5673a8bc"
+    }
+  ],
+  "authoritative_summary": {
+    "accuracy_performance_tradeoffs": [
+      {
+        "accuracy": {
+          "candidate": {
+            "mAP50": 0.44330934307986297,
+            "mAP50_95": 0.2651150199415103
+          },
+          "delta_candidate_minus_reference": {
+            "mAP50": -0.01429615671628063,
+            "mAP50_95": -0.0146620985001998
+          },
+          "gate": {
+            "max_absolute_delta": 0.02,
+            "status": "PASS",
+            "zero_detection_images": 0
+          },
+          "protocol": "4500 independent COCO val2017 images; 500-image calibration disjoint",
+          "reference": {
+            "mAP50": 0.4576054997961436,
+            "mAP50_95": 0.2797771184417101
+          }
+        },
+        "decision": "INT8_ACCEPTED",
+        "id": "dr1_fp32_vs_eq_int8",
+        "performance": {
+          "candidate": {
+            "backend_inference_mean_ms": 1173.20763684,
+            "fps": 0.7895778245595568,
+            "pipeline_mean_ms": 1266.4996013
+          },
+          "reference": {
+            "backend_inference_mean_ms": 1882.2464185,
+            "fps": 0.5068049464934338,
+            "pipeline_mean_ms": 1973.1456982
+          },
+          "rss_reduction_percent": -10.41716159072552,
+          "same_platform_fps_gain_percent": 55.79520879238038,
+          "same_platform_speedup": {
+            "backend_inference": 1.6043591597901414,
+            "pipeline": 1.5579520879238038
+          },
+          "timing_boundary": "ncnn backend call wall time; same boundary for both precision variants"
+        },
+        "source_evidence": [
+          {
+            "path": "results/evidence/035/coco_full_evaluation.json",
+            "role": "COCO accuracy",
+            "sha256": "45cb2a944a79d59ab0718ae1c89d121b0fc403b9b63459f85cf14a14db20c436"
+          },
+          {
+            "path": "results/evidence/035/arm_int8_benchmark.json",
+            "role": "paired ARM performance",
+            "sha256": "b3ddfb60f32a9da0651a60cc5d9597a257c9dd8bce89d602f38819292348054b"
+          }
+        ]
+      },
+      {
+        "accuracy": {
+          "candidate": {
+            "mAP50": 0.4481054404868596,
+            "mAP50_95": 0.2747865502965814
+          },
+          "delta_candidate_minus_reference": {
+            "mAP50": -0.000197230057410146,
+            "mAP50_95": 6.6085409587863e-05
+          },
+          "gate": {
+            "max_absolute_delta": 0.01,
+            "status": "PASS",
+            "zero_detection_images": 0
+          },
+          "protocol": "4500 independent COCO val2017 images; same evaluator and IDs",
+          "reference": {
+            "mAP50": 0.44830267054426975,
+            "mAP50_95": 0.27472046488699353
+          }
+        },
+        "decision": "TENSORRT_FP16_READY",
+        "id": "rtx4060ti_fp32_vs_fp16",
+        "performance": {
+          "backend_call_delta_percent": 0.09857520677494236,
+          "candidate": {
+            "backend_inference_mean_ms": 3.71610421,
+            "fps": 106.28195162282786,
+            "pipeline_mean_ms": 9.40893524
+          },
+          "gpu_execution": {
+            "candidate_mean_ms": 1.37037856,
+            "reference_mean_ms": 1.6742607927322388,
+            "speedup_fp32_over_fp16": 1.2217505739541041
+          },
+          "reference": {
+            "backend_inference_mean_ms": 3.71244466,
+            "fps": 107.71535498337931,
+            "pipeline_mean_ms": 9.28372747
+          },
+          "same_gpu_precision_comparison": {
+            "gpu_inference_speedup_fp32_over_fp16": 1.2217505739541041,
+            "pipeline_delta_percent": -1.3307326153942034
+          },
+          "timing_boundary": "backend inference is host wall detector.infer(); GPU execution is CUDA event enqueueV3 only; pipeline includes preprocess and postprocess"
+        },
+        "source_evidence": [
+          {
+            "path": "results/evidence/037/coco_accuracy.json",
+            "role": "COCO accuracy",
+            "sha256": "193188a7aa684be67bd893d03990c308310b929303b3c0a23d0fa88b3c3a02b5"
+          },
+          {
+            "path": "results/evidence/037/benchmark.json",
+            "role": "TensorRT performance",
+            "sha256": "b1cf310b66828cd44ee2fa518e6ff5b97c4c79fcce251cf18f427457ca75af02"
+          }
+        ]
+      }
+    ],
+    "deployment_capability_matrix": [
+      {
+        "backend": "ORT",
+        "model": "YOLOv5n v7.0",
+        "platform": "PC CPU",
+        "scope": "formal benchmark; no fallback",
+        "source_evidence": [
+          "results/evidence/030/pc_ort_benchmark.json"
+        ],
+        "status": "YOLOV5N_CPU_FORMAL_READY"
+      },
+      {
+        "backend": "TensorRT",
+        "model": "YOLOv5n v7.0",
+        "platform": "RTX 4060 Ti",
+        "scope": "formal benchmark; FP16 accepted by COCO gate",
+        "source_evidence": [
+          "results/evidence/037/benchmark.json",
+          "results/evidence/037/coco_accuracy.json"
+        ],
+        "status": "TENSORRT_FP32_FP16_FORMAL_READY"
+      },
+      {
+        "backend": "ncnn",
+        "model": "YOLOv5n v7.0",
+        "platform": "DR1 CPU",
+        "scope": "formal benchmark; EQ accepted by COCO gate",
+        "source_evidence": [
+          "results/evidence/035/arm_int8_benchmark.json",
+          "results/evidence/035/coco_full_evaluation.json"
+        ],
+        "status": "NCNN_FP32_EQ_INT8_FORMAL_READY"
+      },
+      {
+        "backend": "Alnpu | ALHardNPU",
+        "model": "vendor face control",
+        "platform": "DR1 NPU",
+        "scope": "different face model; no YOLOv5n performance substitution",
+        "source_evidence": [
+          "results/evidence/036/face_runner_benchmark.json",
+          "results/evidence/036/board_stdout.log",
+          "results/evidence/036/board_stderr.log"
+        ],
+        "status": "FUNCTIONAL_CONTROL_ONLY"
+      },
+      {
+        "backend": "Alnpu",
+        "model": "YOLOv5n v7.0",
+        "platform": "DR1 NPU",
+        "scope": "NOT_BENCHMARKED; Task028 external dependency blocker",
+        "source_evidence": [
+          "results/evidence/028/benchmark_status.json"
+        ],
+        "status": "WAITING_FOR_VENDOR_INPUT"
+      }
+    ],
+    "formal_rows": [
+      {
+        "backend": "ONNX Runtime 1.18.1 / CPUExecutionProvider",
+        "backend_inference_mean_ms": 45.849136916666666,
+        "fps": 19.303906657155686,
+        "id": "pc_ort_fp32",
+        "peak_rss_kib": 150869.33333333334,
+        "pipeline_mean_ms": 51.80298567333333,
+        "platform": "PC WSL2 x86_64",
+        "precision": "FP32",
+        "source_evidence": [
+          {
+            "path": "results/evidence/030/pc_ort_benchmark.json",
+            "role": "PC ORT formal benchmark",
+            "sha256": "cdea130112c953182d2e210218a7f295ef24d174fb9dc9aec4f97179467f9355"
+          },
+          {
+            "path": "results/evidence/030/benchmark_contract.json",
+            "role": "shared model and benchmark contract",
+            "sha256": "2aac1d6eefcabcec276028c42cca8d2519bcea041186afe91dfadc301bf012e5"
+          }
+        ]
+      },
+      {
+        "backend": "TensorRT 10.13.3 / CUDA 12.9",
+        "backend_inference_mean_ms": 3.71244466,
+        "fps": 107.71535498337931,
+        "id": "rtx4060ti_tensorrt_fp32",
+        "peak_rss_kib": 537596.0,
+        "pipeline_mean_ms": 9.28372747,
+        "platform": "PC WSL2 x86_64",
+        "precision": "FP32",
+        "source_evidence": [
+          {
+            "path": "results/evidence/037/benchmark.json",
+            "role": "TensorRT formal benchmark",
+            "sha256": "b1cf310b66828cd44ee2fa518e6ff5b97c4c79fcce251cf18f427457ca75af02"
+          },
+          {
+            "path": "results/evidence/037/coco_accuracy.json",
+            "role": "TensorRT COCO accuracy gate",
+            "sha256": "193188a7aa684be67bd893d03990c308310b929303b3c0a23d0fa88b3c3a02b5"
+          },
+          {
+            "path": "results/evidence/037/engine_manifest.json",
+            "role": "engine and builder identity",
+            "sha256": "ed0faf546c1db8eb55250d777be431bb726abe4f4966279d467779a90c2ec14f"
+          }
+        ]
+      },
+      {
+        "backend": "TensorRT 10.13.3 / CUDA 12.9",
+        "backend_inference_mean_ms": 3.71610421,
+        "fps": 106.28195162282786,
+        "id": "rtx4060ti_tensorrt_fp16",
+        "peak_rss_kib": 548172.0,
+        "pipeline_mean_ms": 9.40893524,
+        "platform": "PC WSL2 x86_64",
+        "precision": "FP16",
+        "source_evidence": [
+          {
+            "path": "results/evidence/037/benchmark.json",
+            "role": "TensorRT formal benchmark",
+            "sha256": "b1cf310b66828cd44ee2fa518e6ff5b97c4c79fcce251cf18f427457ca75af02"
+          },
+          {
+            "path": "results/evidence/037/coco_accuracy.json",
+            "role": "TensorRT COCO accuracy gate",
+            "sha256": "193188a7aa684be67bd893d03990c308310b929303b3c0a23d0fa88b3c3a02b5"
+          },
+          {
+            "path": "results/evidence/037/engine_manifest.json",
+            "role": "engine and builder identity",
+            "sha256": "ed0faf546c1db8eb55250d777be431bb726abe4f4966279d467779a90c2ec14f"
+          }
+        ]
+      },
+      {
+        "backend": "ncnn 20240410",
+        "backend_inference_mean_ms": 1882.2464185,
+        "fps": 0.5068049464934338,
+        "id": "dr1_ncnn_fp32",
+        "peak_rss_kib": 166579.2,
+        "pipeline_mean_ms": 1973.1456982,
+        "platform": "DR1 MLK-F3P-CZ02-DR1M90",
+        "precision": "FP32",
+        "source_evidence": [
+          {
+            "path": "results/evidence/035/arm_int8_benchmark.json",
+            "role": "paired ARM formal benchmark",
+            "sha256": "b3ddfb60f32a9da0651a60cc5d9597a257c9dd8bce89d602f38819292348054b"
+          },
+          {
+            "path": "results/evidence/035/coco_full_evaluation.json",
+            "role": "independent COCO accuracy gate",
+            "sha256": "45cb2a944a79d59ab0718ae1c89d121b0fc403b9b63459f85cf14a14db20c436"
+          },
+          {
+            "path": "results/evidence/033/threads2_default_packing_on.json",
+            "role": "accepted runtime profile identity",
+            "sha256": "506e736b340fe0453380d9be6761857339ddaf1e5f576267b527ae23b22c34a0"
+          }
+        ]
+      },
+      {
+        "backend": "ncnn 20240410",
+        "backend_inference_mean_ms": 1173.20763684,
+        "fps": 0.7895778245595568,
+        "id": "dr1_ncnn_eq",
+        "peak_rss_kib": 149047.2,
+        "pipeline_mean_ms": 1266.4996013,
+        "platform": "DR1 MLK-F3P-CZ02-DR1M90",
+        "precision": "EQ INT8",
+        "source_evidence": [
+          {
+            "path": "results/evidence/035/arm_int8_benchmark.json",
+            "role": "paired ARM formal benchmark",
+            "sha256": "b3ddfb60f32a9da0651a60cc5d9597a257c9dd8bce89d602f38819292348054b"
+          },
+          {
+            "path": "results/evidence/035/coco_full_evaluation.json",
+            "role": "independent COCO accuracy gate",
+            "sha256": "45cb2a944a79d59ab0718ae1c89d121b0fc403b9b63459f85cf14a14db20c436"
+          },
+          {
+            "path": "results/evidence/033/threads2_default_packing_on.json",
+            "role": "accepted runtime profile identity",
+            "sha256": "506e736b340fe0453380d9be6761857339ddaf1e5f576267b527ae23b22c34a0"
+          }
+        ]
+      }
+    ],
+    "source_policy": "Only these formal rows and tradeoffs are used for release claims; Task038/039 integration evidence is not substituted."
+  },
+  "recorded_at_wsl": "2026-08-13T12:26:05.741978+08:00",
+  "recorded_time_semantics": "WSL package-generation time; not capture time, board runtime time or benchmark time",
+  "recording_policy": {
+    "benchmark_rerun": false,
+    "board_access": false,
+    "formal_source": "results/final/authoritative_results.json",
+    "npu_execution": false,
+    "screen_recording": "MANUAL_NOT_PERFORMED",
+    "task038_039_timings": "integration_evidence_only"
+  },
+  "release_checks": {
+    "custom_yolov5n_npu_status": "WAITING_FOR_VENDOR_INPUT",
+    "face_npu_not_yolov5n_speed_result": true,
+    "formal_values_come_from_task040": true,
+    "four_segments_only": true,
+    "new_binary_assets_added": false,
+    "prepared_commands_not_executed": true,
+    "task039_camera_not_formal_benchmark": true
+  },
+  "schema_version": 1,
+  "segments": [
+    {
+      "asset_requirements": [
+        "repository checkout"
+      ],
+      "command": "sed -n '1,150p' README.md && sed -n '1,150p' docs/PROJECT_PRESENTATION.md",
+      "command_status": "PREPARED_NOT_RUN",
+      "duration_seconds": {
+        "end": 20,
+        "start": 0
+      },
+      "evidence": [
+        "README.md",
+        "docs/PROJECT_PRESENTATION.md"
+      ],
+      "id": "readme_architecture",
+      "narration": "Shared OpenCV preprocessing, explicit C++ backend adapters, shared decode/NMS and evidence.",
+      "overlay": "YOLOv5n v7.0 | [1,3,640,640] -> [1,25200,85] | C++17",
+      "scope": "presentation_only"
+    },
+    {
+      "asset_requirements": [
+        "Release edgeai_demo",
+        "locally built Task037 FP16 engine",
+        "frozen sample video"
+      ],
+      "command": "PC_BUILD=<release-build-root>; TRT_ENGINE=<task037-yolov5n-fp16-engine>; VIDEO=data/samples/videos/anlogic_arm_reference.avi; \"$PC_BUILD/edgeai_demo\" --backend tensorrt --precision fp16 --model \"$TRT_ENGINE\" --source \"$VIDEO\" --output-video \"$PC_BUILD/demo/trt_fp16.avi\" --output-json \"$PC_BUILD/demo/trt_fp16.json\" --output-codec MJPG --warmup 2",
+      "command_status": "PREPARED_NOT_RUN",
+      "duration_seconds": {
+        "end": 48,
+        "start": 20
+      },
+      "evidence": [
+        "results/evidence/039/pc_tensorrt_fp16_video.json",
+        "results/final/authoritative_results.json"
+      ],
+      "id": "pc_tensorrt_fp16_video",
+      "narration": "RTX 4060 Ti TensorRT FP16 video integration; formal values remain Task040.",
+      "overlay": "backend=tensorrt precision=fp16 inference_ms pipeline_fps detections",
+      "scope": "integration_evidence_only"
+    },
+    {
+      "asset_requirements": [
+        "DR1 edgeai_demo and approved EQ INT8 manifest",
+        "USB camera /dev/video0"
+      ],
+      "command": "DR1_ROOT=/root/edgeai/<approved-runtime-root>; LD_LIBRARY_PATH=\"$DR1_ROOT/lib\" \"$DR1_ROOT/edgeai_demo\" --backend ncnn --precision int8 --model \"$DR1_ROOT/model/eq_int8_manifest.json\" --camera 0 --max-frames 3 --output-video \"$DR1_ROOT/demo/dr_camera_int8.avi\" --output-json \"$DR1_ROOT/demo/dr_camera_int8.json\" --output-codec MJPG --threads 2 --packing 1",
+      "command_status": "PREPARED_NOT_RUN",
+      "duration_seconds": {
+        "end": 78,
+        "start": 48
+      },
+      "evidence": [
+        "results/evidence/039/dr_camera_ncnn_int8.json",
+        "results/evidence/039/validation.json"
+      ],
+      "id": "dr1_camera_ncnn_int8",
+      "narration": "Real DR1 UVC camera with accepted ncnn EQ INT8; bounded integration, not realtime benchmark.",
+      "overlay": "backend=ncnn precision=int8 inference_ms pipeline_fps detections",
+      "scope": "camera_integration_evidence_only"
+    },
+    {
+      "asset_requirements": [
+        "AArch64 face runner",
+        "yolo_face_uint8_15.onnx",
+        "Arm NN 32.1 runtime",
+        "DR1 runtime-root"
+      ],
+      "backend_gate": {
+        "accept_status": "PASS_ALNPU_ONLY",
+        "fallback_allowed": false,
+        "required_assignment": "Alnpu | ALHardNPU"
+      },
+      "command": "FACE_ROOT=/root/edgeai/<face-runtime-root>; LD_LIBRARY_PATH=\"$FACE_ROOT/armnn_lib/lib:$FACE_ROOT/ffmpeg_opencv4.7.0_aarch64/lib:$FACE_ROOT/lib\" \"$FACE_ROOT/edgeai_armnn_face_image\" --model \"$FACE_ROOT/inputs/yolo_face_uint8_15.onnx\" --image \"$FACE_ROOT/inputs/first_raw.png\" --output-json \"$FACE_ROOT/demo/face.json\" --output-image \"$FACE_ROOT/demo/face.png\" --warmup 2 --repeats 10",
+      "command_status": "PREPARED_NOT_RUN",
+      "duration_seconds": {
+        "end": 108,
+        "start": 78
+      },
+      "evidence": [
+        "results/evidence/036/vendor_face_flow_audit.json",
+        "results/evidence/036/face_runner_benchmark.json",
+        "results/evidence/036/board_stdout.log",
+        "results/evidence/036/board_stderr.log"
+      ],
+      "id": "dr1_face_alnpu_control",
+      "narration": "Vendor face functional NPU control; not a YOLOv5n performance result.",
+      "overlay": "Alnpu | ALHardNPU | fallback_allowed=false | PASS_ALNPU_ONLY",
+      "scope": "functional_control_only"
+    }
+  ],
+  "source_authority": {
+    "formal_only": true,
+    "path": "results/final/authoritative_results.json",
+    "sha256": "d18208ac620edf97719ba25d49b0c9dc19a1d3a4d483ef0b222b580c0c95f416",
+    "status": "FINAL_BENCHMARK_RESULTS_FROZEN"
+  },
+  "status": "FINAL_DEMO_PACKAGE_READY",
+  "task": "042"
+}

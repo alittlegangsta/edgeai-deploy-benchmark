@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "task": "037",
+  "reference": {
+    "backend": "ONNX Runtime FP32",
+    "golden": "results/acceptance/python_ort_reference.json",
+    "image": "data/samples/images/pc_reference.jpg",
+    "image_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "golden_detection_count": 5,
+    "gate": {"minimum_iou": 0.99, "maximum_confidence_delta": 0.001}
+  },
+  "results": {
+    "fp32_no_tf32": {
+      "runner_json": "/tmp/task037-run/fp32_benchmark2.json",
+      "runner_exit_code": 0,
+      "status": "PASS_TARGET",
+      "detection_count": 5,
+      "minimum_class_matched_iou": 0.9999971389770508,
+      "maximum_confidence_delta": 0.0000020265579223632812,
+      "raw_comparison": {
+        "script": "scripts/task037_compare_raw.py",
+        "shape": [1, 25200, 85],
+        "max_abs_delta": 0.00115966797,
+        "mean_abs_delta": 0.000000702108821,
+        "rmse": 0.00000825201732,
+        "ort_min": 0.0,
+        "ort_max": 637.115173,
+        "tensorrt_min": 0.00000000283909429,
+        "tensorrt_max": 637.115173
+      }
+    },
+    "fp16": {
+      "runner_json": "/tmp/task037-run/fp16_benchmark2.json",
+      "runner_exit_code": 2,
+      "status": "SECONDARY_DIAGNOSTIC_FAIL; COCO_GATE_PASS",
+      "detection_count": 5,
+      "minimum_class_matched_iou": 0.9935288429260254,
+      "maximum_confidence_delta": 0.005570024251937866,
+      "failure": "none; strict single-image Golden retained as secondary diagnostic",
+      "formal_runner_json": "/tmp/task037-run/fp16_formal.json",
+      "formal_runner_exit_code": 0,
+      "coco_accuracy_gate": {
+        "evaluator": "scripts/task037_evaluate_coco.py",
+        "evaluation_images": 4500,
+        "evaluation_ids_sha256": "3b3b23ec869f04009b704ab05a1c8552a81cdd6bd27e2b7b48519f0a990a21de",
+        "annotations_sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+        "confidence_threshold": 0.001,
+        "nms_iou_threshold": 0.6,
+        "max_detections_per_image": 100,
+        "mAP50": 0.4481054404868596,
+        "mAP50_95": 0.2747865502965814,
+        "delta_vs_tensorrt_fp32_mAP50": -0.000197230057410146,
+        "delta_vs_tensorrt_fp32_mAP50_95": 0.000066085409587863,
+        "zero_detection_images": 0,
+        "gate": "PASS"
+      }
+    },
+    "fp32_default_tf32": {
+      "runner_json": "/tmp/task037/fp32.json",
+      "runner_exit_code": 2,
+      "status": "FAIL",
+      "detection_count": 5,
+      "minimum_class_matched_iou": 0.9989778399467468,
+      "maximum_confidence_delta": 0.0021830201148986816,
+      "failure": "default TF32 path exceeded the strict confidence gate"
+    }
+  },
+  "no_cpu_fallback": "TensorRT C++ runner uses the TensorRT CUDA engine directly; no alternate backend is selected",
+  "model_contract_unchanged": true
+}

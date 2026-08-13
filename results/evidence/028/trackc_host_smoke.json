@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C",
+  "recorded_at": "2026-08-07T17:39:25+08:00",
+  "path_redaction": "DR1_NPU_SCRIPTS denotes the external official source directory; personal Windows path components are intentionally omitted.",
+  "frozen_contract": {
+    "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "opset": 12,
+    "input_shape": [1, 3, 640, 640],
+    "input_dtype": "FLOAT",
+    "raw_output_shape": [1, 25200, 85],
+    "raw_output_dtype": "FLOAT",
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45
+  },
+  "fp32_reference": {
+    "status": "PASS_TARGET",
+    "command": "PYTHONPATH=python .venv/bin/python python/apps/ort_image.py --model models/yolov5n-v7.0/yolov5n.onnx --input data/samples/images/pc_reference.jpg --config configs/yolov5n_v7_inference.json --output-json /tmp/task028-trackc/fp32.json --output-image /tmp/task028-trackc/fp32.png",
+    "exit_code": 0,
+    "raw_candidate_count": 25200,
+    "threshold_candidate_count": 60,
+    "detection_count": 5,
+    "golden_min_iou": 1.0,
+    "golden_max_confidence_delta": 0.0,
+    "output_json_sha256": "ebf11ba7d946b052b2c6fecd973cb3709e1ecbac235636dbdb02a2fbfaf91e1f",
+    "output_image_sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2",
+    "execution_provider": "CPUExecutionProvider",
+    "npu_claim": false
+  },
+  "onnx_checker": {
+    "frozen_model": "PASS",
+    "detect_cropped_equivalent": "PASS",
+    "frozen_model_nodes": 292,
+    "detect_cropped_equivalent_nodes": 231
+  },
+  "detect_crop_raw_output_smoke": {
+    "execution_provider": "CPUExecutionProvider",
+    "all_finite": true,
+    "outputs": [
+      {"shape": [1, 255, 80, 80], "dtype": "float32", "min": -19.679786682128906, "max": 4.467897415161133, "mean": -5.646040916442871},
+      {"shape": [1, 255, 40, 40], "dtype": "float32", "min": -17.71175765991211, "max": 5.2958807945251465, "mean": -5.62925910949707},
+      {"shape": [1, 255, 20, 20], "dtype": "float32", "min": -14.385946273803711, "max": 5.2924346923828125, "mean": -6.046959400177002}
+    ]
+  },
+  "yolo_model_inference_semantic_prepass": {
+    "status": "PARTIAL_SEMANTIC_PASS_GEOMETRY_GATE_OPEN",
+    "model": "/tmp/task028-trackc/yolov5n_heads_prepass.onnx",
+    "model_sha256": "f5062d3b4214a08230a32e8f9fc6e58d06faecb15d303751c77394442281099c",
+    "command": "PYTHONPATH=$DR1_NPU_SCRIPTS .venv/bin/python $DR1_NPU_SCRIPTS/yolo_model_inference.py --input_model /tmp/task028-trackc/yolov5n_heads_prepass.onnx --input_image data/samples/images/pc_reference.jpg --conf_thres 0.25 --iou_thres 0.45 --simplified --model_type yolov5 --anchors 10 13 16 30 33 23 30 61 62 45 59 119 116 90 156 198 373 326",
+    "exit_code": 0,
+    "execution_provider": "CPUExecutionProvider",
+    "provider_warning": "CUDAExecutionProvider unavailable; host script selected CPUExecutionProvider",
+    "parsed_detection_count": 5,
+    "golden_detection_count": 5,
+    "class_ids_match": true,
+    "max_confidence_delta": 0.00000040000000001150227,
+    "min_box_iou": 0.9550582994980138,
+    "box_representation": "official host script emits integer source-space boxes; comparison is against floating-point baseline boxes",
+    "geometry_gate": "NOT_CLOSED_AT_0.99",
+    "stdout_sha256": "d37525b73eb8fde415976af5b8cbc11bd8e00295f7b5a7cbeca73cd00267bb91",
+    "stderr_sha256": "1c5b8d9cb0f661b594bb40c899e3348aa7064e72bc80d2e588048a032ce8b113",
+    "npu_claim": false,
+    "not_official_al_onnx_pass_output": true
+  },
+  "quantized_output": {
+    "status": "NOT_EXECUTED",
+    "reason": "AL_onnx_pass was blocked before simplification because onnxsim is unavailable; no quantized output is attributed to Track C."
+  },
+  "armnn_alnpu_board_run": {
+    "status": "NOT_EXECUTED",
+    "reason": "Host official pipeline and full correctness closure are not available; no CPU fallback or board candidate was accepted."
+  },
+  "benchmark": "NOT_RUN",
+  "interpretation": "The frozen FP32 contract is independently correct on host. The source-equivalent Detect crop proves the documented three-head semantic shape, but this is not a completed official AL_onnx_pass conversion and its integer box output does not satisfy the 0.99 geometry gate."
+}

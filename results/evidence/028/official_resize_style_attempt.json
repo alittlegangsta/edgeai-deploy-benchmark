@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "purpose": "bounded attempt to match the vendor positive-control Resize input dialect",
+  "source": "floor-fixed-resize candidate a8cd7290ee2d592ffd994d79dfceee3bf9dfd0eebe6a58b77624e2b6019a9de8",
+  "transformation": "replace each four-input fixed Resize with the positive-control three-input [data, empty_roi, sizes] form; no weights or output semantics changed",
+  "candidates": [
+    {
+      "opset": 12,
+      "sha256": "a99c206b38d819796ad079d0f22cfbe047063e95d050ea1f2b66f3c4d4bad4e1",
+      "onnx_checker": "FAIL",
+      "error": "ValidationError: Node (/model.11/Resize)'s input 1 is marked single but has an empty string in the graph"
+    },
+    {
+      "opset": 14,
+      "sha256": "275cdd3ded8faff368dabdf14ab23b7287b5286414a11171a5d3fcf2c4205dbf",
+      "onnx_checker": "FAIL",
+      "error": "ValidationError: Unrecognized attribute split for operator Split at /model.24/Split"
+    }
+  ],
+  "conclusion": "The positive-control Resize spelling cannot be transplanted into the frozen opset-12 graph without a complete opset-aware graph conversion. No invalid candidate was sent to the board and no model was substituted."
+}

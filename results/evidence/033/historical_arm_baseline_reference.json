@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "task": "033",
+  "status": "REFERENCE_ONLY",
+  "source_task": "018",
+  "source_path": "results/evidence/018/openmp/threads2_raw_samples.json",
+  "source_sha256": "b1246ce255a1962bf96b76a717faafe78481393aa95c43072349009d85600f40",
+  "sample_count": 100,
+  "runtime_profile": "recommended-dual-thread",
+  "note": "Historical Task 018 source has shared postprocess timing but no separate decode/NMS clocks; this reference is not a new Task 033 board measurement.",
+  "stage_means_ms": {
+    "preprocess": 43.43648921,
+    "inference": 1871.13470669,
+    "postprocess": 54.83099424,
+    "pipeline": 1969.40219014
+  },
+  "stage_p50_ms": {
+    "preprocess": 44.32413,
+    "inference": 1873.266138,
+    "postprocess": 55.46784,
+    "pipeline": 1973.12387
+  },
+  "stage_p95_ms": {
+    "preprocess": 44.467111,
+    "inference": 1877.160108,
+    "postprocess": 55.580611,
+    "pipeline": 1977.06293
+  },
+  "pipeline_share": {
+    "preprocess": 0.022055672237732304,
+    "inference": 0.950102887088282,
+    "postprocess": 0.02784144067398554
+  },
+  "attribution": "Inference dominates the retained dual-thread pipeline; decode versus NMS remains unresolved until the new profiler runs on ARM."
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "task": "032",
+  "status": "PASS",
+  "checks": [
+    "required JSON parse",
+    "fusion symbol presence and override sets",
+    "face assignment count and explicit mapping limit",
+    "conservative verdict enum",
+    "AL_onnx_pass custom-node absence",
+    "Task 028/031 evidence roots present",
+    "portable text and sensitive-material scan"
+  ],
+  "errors": [],
+  "commands": {
+    "write": "python3 scripts/vendor/audit_task032_alhardnpu_fusion.py --write --archive <external-armnn-archive>",
+    "validate": "python3 scripts/vendor/audit_task032_alhardnpu_fusion.py --validate"
+  }
+}

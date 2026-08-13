@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "task": "033",
+  "status": "IN_PROGRESS",
+  "workload": {
+    "model": "YOLOv5n v7.0 ncnn 20240410 representation",
+    "input_shape": [1, 3, 640, 640],
+    "output_shape": [1, 25200, 85],
+    "precision": "FP32",
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45,
+    "model_param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "model_bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "historical_reference": "results/evidence/018/openmp/threads2_raw_samples.json"
+  },
+  "timing_stages": [
+    "preprocess",
+    "inference",
+    "decode",
+    "nms",
+    "postprocess",
+    "pipeline",
+    "end_to_end"
+  ],
+  "experiment_variables": [
+    "threads",
+    "affinity",
+    "packing_layout",
+    "fp16_storage",
+    "fp16_arithmetic"
+  ],
+  "planned_thread_candidates": [1, 2, 3, 4],
+  "correctness_gate": {
+    "detection_count": 5,
+    "minimum_class_matched_iou": 0.99,
+    "maximum_absolute_confidence_difference": 0.01,
+    "finite_values": true,
+    "valid_boxes": true
+  },
+  "npu_status": "WAITING_FOR_VENDOR_INPUT",
+  "historical_evidence_mutable": false
+}

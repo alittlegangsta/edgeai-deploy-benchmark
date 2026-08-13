@@ -15,7 +15,60 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(EDGEAI_ENABLE_ORT "Build targets that require the ONNX Runtime C/C++ SDK" ON)
 option(EDGEAI_ENABLE_NCNN "Build targets that require the pinned ncnn SDK" ON)
 option(EDGEAI_ENABLE_VIDEO "Build targets and tests that require OpenCV videoio" ON)
+option(EDGEAI_ENABLE_ARMNN "Build targets that require the Arm NN/Alnpu SDK" OFF)
+option(EDGEAI_ENABLE_TENSORRT "Build targets that require the TensorRT C++ SDK" OFF)
 set(EDGEAI_OPENCV_ROOT "" CACHE PATH "Optional explicit target OpenCV install root")
+
+if(EDGEAI_ENABLE_TENSORRT)
+    find_path(TENSORRT_INCLUDE_DIR NvInferRuntime.h
+        PATHS /usr/include/x86_64-linux-gnu /usr/include
+        NO_DEFAULT_PATH
+    )
+    find_library(TENSORRT_LIBRARY nvinfer
+        PATHS /usr/lib/x86_64-linux-gnu /usr/lib
+        NO_DEFAULT_PATH
+    )
+    find_library(TENSORRT_CUDA_LIBRARY cudart
+        PATHS /usr/local/cuda-12.9/lib64 /usr/local/cuda/lib64
+        NO_DEFAULT_PATH
+    )
+    find_path(TENSORRT_CUDA_INCLUDE_DIR cuda_runtime_api.h
+        PATHS /usr/local/cuda-12.9/include /usr/local/cuda/include
+        NO_DEFAULT_PATH
+    )
+    if(NOT TENSORRT_INCLUDE_DIR OR NOT TENSORRT_LIBRARY OR NOT TENSORRT_CUDA_LIBRARY OR
+       NOT TENSORRT_CUDA_INCLUDE_DIR)
+        message(FATAL_ERROR "TensorRT C++ SDK or CUDA runtime was not found")
+    endif()
+    message(STATUS "TensorRT include: ${TENSORRT_INCLUDE_DIR}")
+    message(STATUS "TensorRT library: ${TENSORRT_LIBRARY}")
+    message(STATUS "CUDA runtime library: ${TENSORRT_CUDA_LIBRARY}")
+    message(STATUS "CUDA include: ${TENSORRT_CUDA_INCLUDE_DIR}")
+endif()
+
+if(EDGEAI_ENABLE_ARMNN)
+    set(ARMNN_ROOT "" CACHE PATH "Absolute root of the approved Arm NN/Alnpu SDK")
+    if(NOT IS_ABSOLUTE "${ARMNN_ROOT}")
+        message(FATAL_ERROR "ARMNN_ROOT must be an explicit absolute SDK path")
+    endif()
+    get_filename_component(ARMNN_ROOT "${ARMNN_ROOT}" REALPATH)
+    foreach(armnn_required
+            "${ARMNN_ROOT}/include/armnn/ArmNN.hpp"
+            "${ARMNN_ROOT}/include/armnnOnnxParser/IOnnxParser.hpp"
+            "${ARMNN_ROOT}/include/armnnALUtils/cma_mem_init.hpp"
+            "${ARMNN_ROOT}/lib/libarmnn.so"
+            "${ARMNN_ROOT}/lib/libarmnnOnnxParser.so"
+            "${ARMNN_ROOT}/lib/libprotobuf.so")
+        if(NOT EXISTS "${armnn_required}")
+            message(FATAL_ERROR "Required Arm NN SDK artifact is missing: ${armnn_required}")
+        endif()
+    endforeach()
+    set(EDGEAI_ARMNN_BUILD_ID "" CACHE STRING
+        "Provenance identifier for the approved Arm NN/Alnpu SDK")
+    set(EDGEAI_ARMNN_LIBRARY_SHA256 "" CACHE STRING
+        "SHA256 of the approved libarmnn.so used for a DR1 build")
+    message(STATUS "Arm NN root: ${ARMNN_ROOT}")
+endif()
 
 set(EDGEAI_OPENCV_COMPONENTS core imgproc imgcodecs)
 if(EDGEAI_ENABLE_VIDEO)
@@ -105,6 +158,65 @@ function(edgeai_enable_warnings target_name)
     endif()
 endfunction()
 
+if(EDGEAI_ENABLE_ARMNN)
+add_library(edgeai_armnn_backend STATIC
+    src/backends/armnn_detector.cpp
+)
+target_compile_features(edgeai_armnn_backend PUBLIC cxx_std_17)
+set_target_properties(edgeai_armnn_backend PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_include_directories(edgeai_armnn_backend PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_include_directories(edgeai_armnn_backend SYSTEM PRIVATE
+    ${ARMNN_ROOT}/include
+)
+target_compile_definitions(edgeai_armnn_backend PUBLIC
+    EDGEAI_ARMNN_BUILD_ID="${EDGEAI_ARMNN_BUILD_ID}"
+    EDGEAI_ARMNN_LIBRARY_SHA256="${EDGEAI_ARMNN_LIBRARY_SHA256}"
+)
+target_link_libraries(edgeai_armnn_backend PUBLIC
+    edgeai_common
+    ${ARMNN_ROOT}/lib/libarmnn.so
+    ${ARMNN_ROOT}/lib/libarmnnOnnxParser.so
+    ${ARMNN_ROOT}/lib/libprotobuf.so
+    dl
+    pthread
+)
+edgeai_enable_warnings(edgeai_armnn_backend)
+
+add_executable(edgeai_armnn_image
+    apps/armnn_image.cpp
+)
+target_compile_features(edgeai_armnn_image PRIVATE cxx_std_17)
+set_target_properties(edgeai_armnn_image PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    # Keep the artifact relocatable.  The deployment wrapper supplies an
+    # explicit LD_LIBRARY_PATH containing the approved Arm NN/OpenCV trees.
+    SKIP_BUILD_RPATH TRUE
+)
+target_link_libraries(edgeai_armnn_image PRIVATE edgeai_armnn_backend)
+edgeai_enable_warnings(edgeai_armnn_image)
+
+add_executable(edgeai_armnn_face_image
+    apps/armnn_face_image.cpp
+)
+target_compile_features(edgeai_armnn_face_image PRIVATE cxx_std_17)
+set_target_properties(edgeai_armnn_face_image PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    SKIP_BUILD_RPATH TRUE
+)
+target_link_libraries(edgeai_armnn_face_image PRIVATE edgeai_armnn_backend)
+edgeai_enable_warnings(edgeai_armnn_face_image)
+endif()
+
 set(EDGEAI_COMMON_SOURCES
     src/common/benchmark.cpp
     src/common/config.cpp
@@ -140,6 +252,62 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_L
     target_link_libraries(edgeai_common PUBLIC stdc++fs)
 endif()
 edgeai_enable_warnings(edgeai_common)
+
+if(EDGEAI_ENABLE_TENSORRT)
+add_library(edgeai_tensorrt_backend STATIC
+    src/backends/tensorrt_detector.cpp
+)
+target_compile_features(edgeai_tensorrt_backend PUBLIC cxx_std_17)
+set_target_properties(edgeai_tensorrt_backend PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_include_directories(edgeai_tensorrt_backend PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_include_directories(edgeai_tensorrt_backend SYSTEM PRIVATE
+    ${TENSORRT_INCLUDE_DIR}
+    ${TENSORRT_CUDA_INCLUDE_DIR}
+)
+target_link_libraries(edgeai_tensorrt_backend PUBLIC
+    edgeai_common
+    ${TENSORRT_LIBRARY}
+    ${TENSORRT_CUDA_LIBRARY}
+    dl
+    pthread
+)
+edgeai_enable_warnings(edgeai_tensorrt_backend)
+
+add_executable(edgeai_tensorrt_image
+    apps/tensorrt_image.cpp
+)
+target_compile_features(edgeai_tensorrt_image PRIVATE cxx_std_17)
+set_target_properties(edgeai_tensorrt_image PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    BUILD_RPATH "/usr/lib/x86_64-linux-gnu;/usr/local/cuda-12.9/lib64"
+)
+target_link_libraries(edgeai_tensorrt_image PRIVATE edgeai_tensorrt_backend)
+target_include_directories(edgeai_tensorrt_image SYSTEM PRIVATE
+    ${TENSORRT_CUDA_INCLUDE_DIR}
+)
+edgeai_enable_warnings(edgeai_tensorrt_image)
+
+add_executable(edgeai_tensorrt_coco
+    apps/tensorrt_coco.cpp
+)
+target_compile_features(edgeai_tensorrt_coco PRIVATE cxx_std_17)
+set_target_properties(edgeai_tensorrt_coco PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+    BUILD_RPATH "/usr/lib/x86_64-linux-gnu;/usr/local/cuda-12.9/lib64"
+)
+target_link_libraries(edgeai_tensorrt_coco PRIVATE edgeai_tensorrt_backend)
+edgeai_enable_warnings(edgeai_tensorrt_coco)
+endif()
 
 add_executable(edgeai_opencv_smoke
     apps/opencv_smoke.cpp
@@ -406,6 +574,34 @@ target_link_libraries(edgeai_ncnn_detector_tests PRIVATE edgeai_ncnn_backend)
 edgeai_enable_warnings(edgeai_ncnn_detector_tests)
 add_test(NAME edgeai_ncnn_detector_tests COMMAND edgeai_ncnn_detector_tests)
 
+add_executable(edgeai_arm_cpu_profiler
+    apps/arm_cpu_profiler.cpp
+)
+target_compile_features(edgeai_arm_cpu_profiler PRIVATE cxx_std_17)
+set_target_properties(edgeai_arm_cpu_profiler PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_arm_cpu_profiler PRIVATE edgeai_ncnn_backend)
+edgeai_enable_warnings(edgeai_arm_cpu_profiler)
+
+add_executable(edgeai_arm_cpu_profiler_tests
+    tests/test_arm_cpu_profiler.cpp
+)
+target_compile_features(edgeai_arm_cpu_profiler_tests PRIVATE cxx_std_17)
+set_target_properties(edgeai_arm_cpu_profiler_tests PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_compile_definitions(edgeai_arm_cpu_profiler_tests PRIVATE
+    EDGEAI_REPOSITORY_ROOT="${CMAKE_CURRENT_SOURCE_DIR}/.."
+)
+target_link_libraries(edgeai_arm_cpu_profiler_tests PRIVATE edgeai_ncnn_backend)
+edgeai_enable_warnings(edgeai_arm_cpu_profiler_tests)
+add_test(NAME edgeai_arm_cpu_profiler_tests COMMAND edgeai_arm_cpu_profiler_tests)
+
 if(EDGEAI_ENABLE_VIDEO)
 add_executable(edgeai_ncnn_video
     apps/ncnn_video.cpp
@@ -453,3 +649,61 @@ edgeai_enable_warnings(edgeai_benchmark_ncnn)
 add_test(NAME edgeai_benchmark_ncnn_invalid_args COMMAND edgeai_benchmark_ncnn)
 set_tests_properties(edgeai_benchmark_ncnn_invalid_args PROPERTIES WILL_FAIL TRUE)
 endif()
+
+# Task 038: one explicit image CLI over the existing backend adapters.  The
+# factory is compiled with feature flags so a disabled backend fails with a
+# clear runtime error instead of silently selecting another implementation.
+add_library(edgeai_unified_backend STATIC
+    src/inference_backend.cpp
+)
+target_compile_features(edgeai_unified_backend PUBLIC cxx_std_17)
+set_target_properties(edgeai_unified_backend PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_include_directories(edgeai_unified_backend PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_link_libraries(edgeai_unified_backend PUBLIC edgeai_common)
+set(EDGEAI_UNIFIED_HAVE_ORT 0)
+set(EDGEAI_UNIFIED_HAVE_NCNN 0)
+set(EDGEAI_UNIFIED_HAVE_TENSORRT 0)
+if(EDGEAI_ENABLE_ORT)
+    target_link_libraries(edgeai_unified_backend PUBLIC edgeai_ort_backend)
+    set(EDGEAI_UNIFIED_HAVE_ORT 1)
+endif()
+if(EDGEAI_ENABLE_NCNN)
+    target_link_libraries(edgeai_unified_backend PUBLIC edgeai_ncnn_backend)
+    set(EDGEAI_UNIFIED_HAVE_NCNN 1)
+endif()
+if(EDGEAI_ENABLE_TENSORRT)
+    target_link_libraries(edgeai_unified_backend PUBLIC edgeai_tensorrt_backend)
+    set(EDGEAI_UNIFIED_HAVE_TENSORRT 1)
+endif()
+target_compile_definitions(edgeai_unified_backend PRIVATE
+    EDGEAI_UNIFIED_HAVE_ORT=${EDGEAI_UNIFIED_HAVE_ORT}
+    EDGEAI_UNIFIED_HAVE_NCNN=${EDGEAI_UNIFIED_HAVE_NCNN}
+    EDGEAI_UNIFIED_HAVE_TENSORRT=${EDGEAI_UNIFIED_HAVE_TENSORRT}
+)
+edgeai_enable_warnings(edgeai_unified_backend)
+
+add_executable(edgeai_demo
+    apps/edgeai_demo.cpp
+)
+target_compile_features(edgeai_demo PRIVATE cxx_std_17)
+set_target_properties(edgeai_demo PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+target_link_libraries(edgeai_demo PRIVATE edgeai_unified_backend)
+if(EDGEAI_ENABLE_ORT)
+    set_property(TARGET edgeai_demo APPEND PROPERTY BUILD_RPATH "${ONNXRUNTIME_ROOT}/lib")
+endif()
+if(EDGEAI_ENABLE_TENSORRT)
+    set_property(TARGET edgeai_demo APPEND PROPERTY BUILD_RPATH "/usr/lib/x86_64-linux-gnu;/usr/local/cuda-12.9/lib64")
+endif()
+edgeai_enable_warnings(edgeai_demo)
+add_test(NAME edgeai_demo_invalid_args COMMAND edgeai_demo)
+set_tests_properties(edgeai_demo_invalid_args PROPERTIES WILL_FAIL TRUE)

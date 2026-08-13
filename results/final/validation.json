@@ -1,0 +1,29 @@
+{
+  "checks": {
+    "COCO_accuracy_gates": "PASS",
+    "NPU_boundary": "PASS",
+    "formal_vs_integration_scope": "PASS",
+    "model_contract": "PASS",
+    "prior_task_evidence_unchanged": "PASS",
+    "source_evidence_sha256": "PASS"
+  },
+  "errors": [],
+  "offline_validation": {
+    "allowed_file_hygiene": "PASS 9 files",
+    "focused_python": "PASS 4/4",
+    "full_python": "PASS 168/168 using PYTHONPATH=python .venv",
+    "git_diff_check": "PASS",
+    "markdown_links": "PASS",
+    "prior_task_validators": "PASS Task030, Task033, Task034 self-test, Task035, Task036, Task037, Task038, Task039",
+    "python_syntax": "PASS",
+    "recording_note": "Statuses are the actual offline commands recorded in Task 040 execution record; no benchmark was rerun.",
+    "sensitive_material_scan": "PASS",
+    "task040_validator": "PASS",
+    "tracked_json_yaml_parse": "PASS 299 JSON, 44 YAML"
+  },
+  "schema_version": 1,
+  "source_file_count": 17,
+  "status": "PASS",
+  "task": "040",
+  "validator": "scripts/validate_task040_final_results.py"
+}

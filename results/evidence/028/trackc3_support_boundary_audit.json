@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "ALNPU_SUPPORT_BOUNDARY_STATICALLY_IDENTIFIED",
+  "timestamp": "2026-08-10T17:19:13+08:00",
+  "purpose": "Static ArmNN/Alnpu support-boundary audit plus reuse of retained real-graph board results; no new workload or benchmark is claimed.",
+  "safety": {
+    "board_system_modified": false,
+    "board_probe_this_turn": "NOT_RUN_TRANSPORT_UNAVAILABLE",
+    "transport_error": "UtilBindVsockAnyPort:307: socket failed 1",
+    "previous_authoritative_board_evidence_reused": true,
+    "synthetic_model_created_this_turn": false,
+    "modules_loaded": false,
+    "sd_or_emmc_modified": false,
+    "bitstream_or_dtb_modified": false,
+    "benchmark": "NOT_RUN",
+    "cpu_fallback_accepted": false
+  },
+  "official_vendor_path": {
+    "source_checkout": {
+      "repository": "dr1m90_npu",
+      "branch": "release",
+      "commit": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+      "tag_at_head": false,
+      "nearest_ancestor_tag": "SDK_2026.01",
+      "nearest_ancestor_tag_commit": "a06f09a23582900e2b8843d564ea28db679649a5",
+      "checkout_status": "DIRTY_PREEXISTING_EXTERNAL_CHECKOUT; committed HEAD used for provenance"
+    },
+    "run_script": {
+      "logical_path": "npu_demo/demo_scripts/run_yolo_pic.sh",
+      "sha256": "266c390bbca4b34efdbad9e628fa7ea00f5607cfb208ef06a42469ff7fb26c71",
+      "invokes": "yolo_demo_pic -m ../demo_inputs/yolo_pic/yolov8n.quant.onnx -i ../demo_inputs/yolo_pic/input.jpg -u ../demo_inputs/yolo_pic/example.json -o yolo_pic_output.jpg",
+      "library_selection": "LD_LIBRARY_PATH=<demo>/../libs:$LD_LIBRARY_PATH",
+      "backend_note": "The executable's default backend string includes Alnpu,CpuAcc,CpuRef; retained strict probes requested -b Alnpu and disabled CPU fallback."
+    },
+    "build_chain": {
+      "build_script_sha256": "d14a0df07f8e92780304ae448d3ac2ecb7a4eaa02515c4af4bde64f6ef62ef53",
+      "links": ["libarmnn", "libarmnnOnnxParser", "libprotobuf", "fmt", "OpenCV"],
+      "executor_sequence": ["OnnxParser", "armnn::Optimize", "LoadNetwork"],
+      "native_runtime_assets": "NOT_USED; no npu_runtime/rt.bin/weight.bin dependency"
+    },
+    "vendor_app_model_result": {
+      "model": "yolov8n.quant.onnx",
+      "model_sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96",
+      "application": "yolo_demo_pic",
+      "application_sha256": "9b7b69f73d9f73fb9267b874d992fb32c5fb8827f99f636c57fe6403c8e0da72",
+      "backend": "Alnpu only",
+      "parser": "CREATED_AND_MODEL_PARSED",
+      "optimize": "FAIL",
+      "load_network": "NOT_REACHED",
+      "first_reported_unsupported": "QAsymmU8 Splitter",
+      "fallback": "DISABLED",
+      "process_exit_semantics": "Vendor application catches the Optimize exception and may return 0; exception text is authoritative.",
+      "source_evidence": "results/evidence/028/trackc3_runtime_compatibility_matrix.json"
+    }
+  },
+  "armnn_binary_identity": {
+    "archive_sha256": "867e347bb758f9b1b083c35e08a74f2b3cc39c2975ac0f8e18c25f7f35749526",
+    "libarmnn": {
+      "path": "npu_demo/libs/armnn_lib/lib/libarmnn.so.32.1",
+      "sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+      "soname": "libarmnn.so.32",
+      "build_id": "9f9aaf6f26dd1cf57ac84c778b9f621c04c7d895",
+      "static_architecture": "AArch64 ELF shared object",
+      "runtime_marker": "ed5ae24"
+    },
+    "packaging": {
+      "separate_libAlnpu_observed": false,
+      "backend_symbols_in": "libarmnn.so.32.1",
+      "representative_symbols": [
+        "armnn::AlnpuBackend::OptimizeSubgraphView",
+        "armnn::AlnpuLayerSupport::IsLayerSupported",
+        "armnn::AlnpuLayerSupport::IsALHardNPUSupported",
+        "armnn::IWorkloadFactory::CreateALHardNPU"
+      ],
+      "parser_needed": ["libarmnn.so.32", "libprotobuf.so.23"],
+      "board_runtime_identity": "The six compared ArmNN/parser/protobuf/timeline objects are byte-identical to the board runtime; no independent NEW runtime was found."
+    }
+  },
+  "support_dispatch_static_audit": {
+    "method": "readelf -rW/objdump -T/nm/strings on AArch64 libarmnn.so.32.1; no ArmNN backend source was available in the audited SDK/repository scopes",
+    "layer_support_dispatch": {
+      "overridden_Alnpu_methods": [
+        "IsALHardNPUSupported",
+        "IsConcatSupported",
+        "IsConstantSupported",
+        "IsInputSupported",
+        "IsLayerSupported",
+        "IsMemCopySupported",
+        "IsOutputSupported",
+        "IsPooling2dSupported",
+        "IsPreluSupported",
+        "IsResizeSupported"
+      ],
+      "inherited_LayerSupportBase_methods": [
+        "IsConvolution2dSupported",
+        "IsActivationSupported",
+        "IsSplitterSupported",
+        "IsAdditionSupported",
+        "IsMultiplicationSupported",
+        "IsElementwiseUnarySupported"
+      ],
+      "predicate_interpretation": "The vtable slots for the listed methods resolve to LayerSupportBase implementations, whose static code shape and embedded unsupported-reason strings are the generic reject path. Alnpu-specific support is therefore an explicit whitelist of overridden methods, not a blanket quantized-layer capability."
+    },
+    "vtable_slots": [
+      {"slot_address": "0x0cff728", "method": "LayerSupportBase::IsActivationSupported", "implementation": "0x00340f00", "size": "0x38"},
+      {"slot_address": "0x0cff730", "method": "LayerSupportBase::IsAdditionSupported", "implementation": "0x00340ec8", "size": "0x38"},
+      {"slot_address": "0x0cff788", "method": "LayerSupportBase::IsConvolution2dSupported", "implementation": "0x00340c50", "size": "0x38"},
+      {"slot_address": "0x0cff878", "method": "LayerSupportBase::IsMultiplicationSupported", "implementation": "0x00340688", "size": "0x38"},
+      {"slot_address": "0x0cff7d8", "method": "LayerSupportBase::IsElementwiseUnarySupported", "implementation": "0x00340a50", "size": "0x38"},
+      {"slot_address": "0x0cff920", "method": "LayerSupportBase::IsSplitterSupported", "implementation": "0x003401e0", "size": "0x38"},
+      {"slot_address": "0x0cff768", "method": "AlnpuLayerSupport::IsConcatSupported", "implementation": "0x003b5f90", "size": "0xe20"},
+      {"slot_address": "0x0cff790", "method": "AlnpuLayerSupport::IsALHardNPUSupported", "implementation": "0x003b9200", "size": "0x1300"},
+      {"slot_address": "0x0cff8f0", "method": "AlnpuLayerSupport::IsResizeSupported", "implementation": "0x003b8168", "size": "0x1094"}
+    ],
+    "embedded_validation_predicates": [
+      "weights is not a supported type",
+      "input and weights types mismatched",
+      "biases is not a supported type",
+      "the channel of conv input is not lesser or equal to 4095",
+      "the height/width of output must be within 1..1023",
+      "the pad is not equal to (kernel_size-1)/2",
+      "kernel/stride constraints for 2x2 and 1x4 modes",
+      "the channel of FC input is not lesser or equal to 2038",
+      "alpha is not a supported type",
+      "shapes are not suitable for implicit broadcast",
+      "Input tensor dimension not supported",
+      "only support add now",
+      "input/output types not matching",
+      "Do Not Supported"
+    ],
+    "source_path_strings": [
+      "<vendor-build-source>/AL_armnn/scripts/source/armnn/src/backends/backendsCommon/LayerSupportBase.cpp"
+    ],
+    "all_nm_observed_alnpu_is_methods": [
+      "IsALHardNPUSupported",
+      "IsConcatSupported",
+      "IsConstantSupported",
+      "IsInputSupported",
+      "IsLayerSupported",
+      "IsMemCopySupported",
+      "IsOutputSupported",
+      "IsPooling2dSupported",
+      "IsPreluSupported",
+      "IsResizeSupported"
+    ],
+    "scope_limit": "Binary strings and dispatch tables reveal the compiled predicates and reasons but do not recover the unavailable backend source or prove support for a dtype/shape not exercised by a real graph."
+  },
+  "real_graph_evidence": {
+    "positive_face": {
+      "model_sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668",
+      "observed": "Task 026 Alnpu/ALHardNPU positive; no Split operator",
+      "source": "results/evidence/026/official_demo_validation.json"
+    },
+    "vendor_yolov8n": {
+      "model_sha256": "5fa7e8ee047a118c500736cf6b1f24bf1d4ec5120661b10ba661e662f9371d96",
+      "first_real_graph_failure": "QAsymmU8 Splitter at Alnpu Optimize",
+      "split_count": 8,
+      "source": "results/evidence/028/trackc3_runtime_compatibility_matrix.json"
+    },
+    "project_yolov5n_uint8": {
+      "model_sha256": "3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3",
+      "first_real_graph_failure": "QAsymmU8 Conv2d, Activation and ElementwiseBinary at Alnpu Optimize",
+      "source": "results/evidence/028/trackc3_board_smoke.json"
+    },
+    "project_yolov5n_int8": {
+      "model_sha256": "8ff448f1fd250a198b0a4a44a1eca9d09c50a68a4da459788960282ba98c3ad9",
+      "first_real_graph_failure": "QSymmS8 Conv2d, Activation and ElementwiseBinary at Alnpu Optimize",
+      "source": "results/evidence/028/trackc3_board_int8_smoke.json"
+    },
+    "bisection_scope": "Existing parser_bisection.json contains dependency-sliced and full graph-derived probes. Its synthetic QDQ matrix remains explicitly inconclusive and is not used as support proof.",
+    "bisection_source": "results/evidence/028/parser_bisection.json"
+  },
+  "hardware_context": {
+    "board_package": "DR1M90GEG400 05-5 tutorial platform",
+    "system_bit_sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+    "hpf_sha256": "ec0ef8aa53f3de8a13cbb953808c68b8b947f6c84da0107248af8542f78da7a7",
+    "softnpu_flags": {"NPU_SOFT": 1, "SOFT_NN": 1, "SOFT_YOLO": 1, "SOFT_RESIZE": 1, "ALL_OPERATOR": 1},
+    "softnpu_resource": {"reg": "0x1f0000000 + 0x10000", "irq": 97},
+    "vdma_resource": {"reg": "0x80200000 + 0x1000", "irq": 84},
+    "d20_1_substitution": "REJECTED_BOARD_PACKAGE_MISMATCH",
+    "d20_evidence": "results/evidence/028/trackc3_hpf_d20_comparison.json",
+    "interpretation": "05-5 is a GEG400 SoftNPU configuration with SOFT_YOLO enabled, but this static hardware fact does not imply support for every ArmNN graph/dtype dialect."
+  },
+  "conclusion": {
+    "vendor_app_vendor_yolov8n": "FAIL_ALNPU_OPTIMIZE",
+    "support_boundary": "Alnpu support is an explicit compiled method whitelist; unoverridden Conv2d/Activation/Splitter/elementwise slots use the generic LayerSupportBase rejection path. Observed dtype-specific failures are QAsymmU8 and QSymmS8 on real graphs.",
+    "face_vs_yolo": "The face control loads successfully through three reported Alnpu|ALHardNPU workloads and has no Split; this is a vendor-specific fused/custom path, not generic Conv2d support. YOLOv8n adds eight Split nodes, while YOLOv5n quantized graphs fail earlier on Conv2d/Activation/ElementwiseBinary.",
+    "runtime_skew": "NOT_PROVEN; the available release ArmNN objects are byte-identical to the board runtime.",
+    "current_primary": "BLOCKED_EXTERNAL_VENDOR_DEPENDENCY",
+    "primary_blocker": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+    "track_c3": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+    "track_a": "BLOCKED_UNSUPPORTED_ALNPU_GRAPH",
+    "native_compiler_reassessment": "REQUIRED_FOR_GENERAL_YOLO_DEPLOYMENT",
+    "benchmark": "NOT_RUN",
+    "next_minimum_action": "Obtain a vendor-supported graph/operator configuration or backend build that exercises the required real quantized layers; do not infer support from synthetic probes or change the board bitstream."
+  }
+}

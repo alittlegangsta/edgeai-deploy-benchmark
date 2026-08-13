@@ -13,6 +13,8 @@ struct PostprocessResult {
     std::size_t threshold_candidate_count{0};
     std::size_t nms_candidate_count{0};
     std::size_t invalid_box_count{0};
+    std::int64_t decode_ns{0};
+    std::int64_t nms_ns{0};
     std::vector<Detection> detections;
 };
 

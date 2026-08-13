@@ -269,3 +269,211 @@ back and verify partitions, files and SHA256 values, boot from SD through the
 serial console, validate the system and NPU drivers first, and only then
 consider the official NPU Demo. The task must include a backup, serial recovery
 and rollback plan and must never assume that a detected block device is safe.
+
+## Task 027: Anlogic DR1 persistent board runtime
+
+Task 027 is `Completed`. The initial single-file candidate update and boot
+validation are recorded separately: `eth0` is `192.168.50.2/24`, OpenSSH
+reconnects with the expected host identity, and source-derived
+`cma_mem -> hard_npu -> soft_npu` startup binds all three NPU devices. Key-fix2
+was written as the sole FAT-root update and completed cold boot plus one reboot,
+but both boots retained `fmask=0022,dmask=0022`, so the persistent-key
+fingerprint health gate failed. Key-fix3 (`0da5…`) is rebuilt offline with a
+verified unmount-before-secure-remount fix and has now been written as the
+sole FAT-root update with
+readback and safe unmount; board cold-boot and reboot validation both pass,
+including secure FAT masks, host-key persistence and NPU health. The camera
+Demo remains manual and is never started by init.
+
+## Task 028: YOLOv5n ArmNN/Alnpu bring-up and benchmark
+
+Task 028 is `Completed` on `feature/armnn-alnpu-bringup`. Its final primary
+verdict is `BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`; the scoped C3c blocker is
+`CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE`. Track A adds an
+explicit Arm NN runner for the frozen YOLOv5n v7.0 FP32 ONNX contract and
+forces the `Alnpu`/`ALHardNPU` backend without accepting CpuAcc/CpuRef fallback;
+its C3c-scoped status is `CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE` after the real
+`/model.11/Floor`, shape and Resize parser limits and bounded repairs. Track B
+retains the independent APUG1205 native result
+`BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE`: the compiler/runtime release
+and YOLOv5s positive-control assets are absent. Track C is now the active
+official `AL_onnx_pass` path. Its dependencies are closed in an isolated
+vendor-requirements environment and the unchanged entry emits the official
+Detect-cropped FP32 and uint8 QDQ graphs, but the uint8 host golden gate fails
+(minimum IoU `0.8421554845490358`, confidence delta `0.09312496031303408`).
+Track C is split into C1 conversion `PASS`, C2 quantized host accuracy
+`NOT_ACCEPTED`, C3 board compatibility
+`CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE`, and C4 benchmark `NOT_RUN`.
+The best opset14 uint8 candidate was run once from board `/tmp` with Alnpu-only;
+ArmNN rejected QAsymmU8 Conv2d, Activation and ElementwiseBinary before
+`LoadNetwork`. The corresponding opset14 INT8 candidate likewise rejected
+QSymmS8 Conv2d, Activation and ElementwiseBinary. The release YOLOv8n control
+reached parser/network creation but rejected QAsymmU8 Splitter at Optimize.
+No converted Alnpu correctness or benchmark is claimed. The
+05-5 platform bitstream's static metadata has `NPU_SOFT=1`/`SOFT_YOLO=1`, which
+does not prove compiler or runtime availability. Prior task evidence and the
+persistent Task 027 runtime remain unchanged.
+
+The C3 runtime/toolchain follow-up used the `dr1m90_npu` release ArmNN archive
+in a board `/tmp` directory only. Its six compared shared-library hashes and
+`ed5ae24` marker exactly match the currently loaded board runtime; `ldd` and
+`LD_DEBUG=libs` prove the temporary copy was selected. The matched-runtime
+face control completed with `-b Alnpu`, but matched-runtime vendor YOLOv8n
+still fails Alnpu `Optimize` on `QAsymmU8 Splitter`. Thus the available
+runtime package does not isolate a version skew, and C3 remains blocked on
+model/operator compatibility while the explicit runtime-skew sub-track is
+`BLOCKED_RUNTIME_TOOLCHAIN_SKEW_UNPROVEN`. No benchmark, fallback, or system
+change was performed. Evidence: `results/evidence/028/trackc3_runtime_compatibility_matrix.json`.
+
+The follow-up static D20.1 comparison confirms that the official 2025.7
+AD101V20/DR1M90GEG484 HPF/bitstream is not a valid substitute for the current
+05-5 DR1M90GEG400 package: SoftNPU address/IRQ, VDMA topology, and
+`SOFT_RESIZE` differ even though both are on TD 6.2.175876. The current
+GEG400 package remains the only board context used by Task 026; no bitstream
+change or runtime-skew claim is made. Evidence:
+`results/evidence/028/trackc3_hpf_d20_comparison.json`.
+
+Track C2 preserves the opset12 FP32 baseline and adds same-weight static-640
+opset13/14 exports. The four graphs pass ONNX/ORT raw checks and the official
+conversion emits valid uint8/int8 graphs, including resolution of the opset12
+int8 axis dialect failure. Both quantized candidates fail the separate
+eight-image held-out teacher-relative gate; class-multiset agreement is 87.5%
+for both types. No local ground truth is available, so true dataset mAP is not
+claimed. Host preprocessing is exactly equal to the project baseline on the
+frozen 1280x960 input, while vendor calibration uses `scaleup=False`. The
+requested YOLOv5s positive-control assets were not found; the release picture
+demo uses a separate `yolov8n.quant.onnx` graph. The existing `43` in the test
+summary is a test count, not a 43-image golden set. C4 remains `NOT_RUN`.
+
+The C3c support-boundary audit records all ten compiled
+`AlnpuLayerSupport` overrides, while generic Conv2d/Activation/Splitter/Add/Mul
+slots resolve to `LayerSupportBase` rejection methods. The face positive control
+is explained by its measured three `Alnpu|ALHardNPU` fused/custom workload
+assignments; it is not generic Conv2d coverage. This explains the retained
+real-graph boundary (vendor YOLOv8n `QAsymmU8 Splitter`; YOLOv5n UINT8/INT8
+quantized Conv2d/Activation/ElementwiseBinary) without treating synthetic QDQ
+probes as proof. The scoped convergence is
+`CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE` for the exact
+audited binary. The 05-5 GEG400 `NPU_SOFT/SOFT_YOLO` context remains unchanged;
+the SSH/vsock failure is environment-only. Evidence:
+`results/evidence/028/trackc3_capability_face_path_audit.json`.
+
+Task 028 is now `Completed` with primary verdict
+`BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`. The blocker
+`CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE` is scoped to the
+audited AArch64 ArmNN binary. Reopening requires a generic quantized-layer
+Alnpu backend, APUG1205 compiler/native runtime, or official DR1M90 GEG400 YOLO
+deployment chain; no benchmark or CPU fallback result is claimed.
+
+Task 029 is completed as the documentation-only vendor enablement handoff. Its package is
+`WAITING_FOR_VENDOR_INPUT` and records the exact Task 028 identity, causal
+chain, compiled Alnpu capability boundary, Task 032 fusion findings and
+questions for the missing vendor backend/compiler/deployment information. The
+face ONNX has no ALHardNPU custom node; ArmNN/Alnpu forms three fused
+assignments during Optimize, but the complete fusion predicate is not
+recoverable, so YOLOv5n is not declared inherently incompatible.
+
+## Stage 5: CPU benchmark and profiling consolidation (Task 030)
+
+Task 030 is the correctness-first consolidation of the approved PC C++ ORT and
+DR1M90 ARM ncnn YOLOv5n CPU measurements. It freezes the shared model, input,
+threshold, preprocessing/postprocessing and timing definitions, then derives
+nearest-rank P50/P95, stage summaries, aggregate FPS, process CPU utilization,
+Peak RSS, and explicit null/unavailable frequency and temperature values from
+the retained Task 012 and Task 018 raw campaigns. The rows are reported
+separately because PC WSL2 ORT and ARM ncnn are different environments; no
+cross-platform speedup is published. NPU face control remains functional-only
+and YOLOv5n NPU remains `NOT_BENCHMARKED`. See
+`docs/benchmark/ARM_CPU_BENCHMARK_PROFILING_CONSOLIDATION.md` and
+`results/evidence/030/`.
+
+## Task 031: Official NPU asset recovery and GEG400 compatibility
+
+Task 031 is `Completed` as a read-only archaeology of the public Anlogic
+`sdk`, `dr1m90_npu` and `dr1_demo_prjs` repositories. Current and reachable
+history, deleted names, LFS pointers/local objects and source chains were
+checked without changing vendor trees. The audit did not recover the
+`npuv1_release`/APUG1205 compiler, `yolov5s_sim_quant_uint8.onnx`, a broader
+Alnpu backend, or an official GEG400 YOLO HPF/TD. It explains the face positive
+as ArmNN ALHardNPU fusion rather than an ONNX custom op and keeps the scoped
+result `BLOCKED_EXTERNAL_VENDOR_DEPENDENCY`; no new asset is sufficient to
+reopen YOLOv5n integration. Task 029 remains the vendor-support handoff.
+
+## Task 032: ALHardNPU fusion eligibility audit
+
+Task 032 is a bounded static audit of the audited AArch64 ArmNN fusion path.
+The binary contains the `ConvertConv2dIntoALHardNPUImpl` fusion symbols and a
+ten-method Alnpu support whitelist, while generic Conv2d/Activation/Splitter/
+elementwise methods resolve to `LayerSupportBase`. The face control's three
+`Alnpu|ALHardNPU` assignments are retained, but exact source-node fusion
+regions and the complete predicate cannot be recovered from the stripped
+AArch64 binary without backend source or an AArch64 disassembler. The result
+is `FUSION_PREDICATE_NOT_RECOVERABLE`; Task 028 remains blocked and no model,
+board, runtime or benchmark change was made. See
+`docs/vendor/ANLOGIC_ALHARDNPU_FUSION_ELIGIBILITY.md` and
+`results/evidence/032/`.
+
+## Task 033: ARM CPU performance optimization
+
+Task 033 is `Completed`. The standalone profiler measured the validated ARM
+ncnn YOLOv5n CPU path on the two-core board, including preprocess, inference,
+decode, NMS, postprocess, end-to-end timing, CPU utilization, RSS, thread
+count, capability and correctness. The accepted configuration is OpenMP ncnn
+20240410, two threads, default scheduling, packing on and FP32
+storage/arithmetic. Its same-session pipeline mean is 1963.817618 ms versus
+3514.946744 ms for one thread (1.789854x, 78.985396% FPS gain); every retained
+row passes the unchanged golden. CPU affinity, packing-off and FP16 options
+remain retained as slower A/B rows, and three/four-thread runs were skipped
+because topology reports two logical CPUs. This does not reopen NPU work or
+publish an NPU/camera benchmark. See
+`docs/benchmark/ARM_CPU_PERFORMANCE_OPTIMIZATION.md` and
+`results/evidence/033/`.
+
+## Task 034: ARM ncnn inference-kernel and build optimization
+
+Task 034 is `Completed`. The
+switchable ncnn layer profile shows 60 Convolution layers accounting for
+80.304% of summed layer time; the Task 033 inference stage remains the primary
+pipeline cost at 95.399611%. The exact ncnn 20240410 source, Linaro AArch64
+Release build and OpenMP/packing controls were audited. A same-source control
+and a single-variable `-mtune=cortex-a35` candidate both pass correctness, but
+the tuned candidate is 0.607296% slower in pipeline and is rejected. PMU/perf
+is unavailable on the board, so cache-miss attribution is not claimed. The
+frozen conversion graph is recorded `ALREADY_OPTIMIZED`; no INT8 result or NPU
+change is introduced. See
+`docs/benchmark/ARM_NCNN_INFERENCE_KERNEL_OPTIMIZATION.md` and
+`results/evidence/034/`.
+
+## Task 035: ARM ncnn INT8 quantization feasibility
+
+Task 035 is `Completed`. The user-supplied val2017 archive enabled 500
+calibration images and all remaining 4,500
+independent evaluation images (train2017 was not supplied). The corrected
+evaluator constrains the exact subset IDs, COCO80 category mapping and
+source-pixel `xyxy`→COCO `xywh`, with AP confidence `0.001`/NMS `0.6` while
+deployment remains `0.25`/`0.45`. On the final independent set FP32/EQ mAP50
+is `0.457605/0.443309` and mAP50-95 is `0.279777/0.265115`; absolute EQ
+degradation is `0.014296/0.014662`, within the explicit `0.02` gate, with no
+zero-detection images. The same AArch64 `NCNN_INT8=ON` ELF then measured
+`1.604359x` inference and `1.557952x` pipeline speedup (`55.795208%` FPS
+gain) versus FP32 under the Task 033 protocol. The experiment decision is
+`INT8_ACCEPTED` with EQ as the accepted ARM INT8 configuration; historical
+bounded failures and the VM wrapper event remain separately recorded. No NPU
+work is reopened. See
+`docs/benchmark/ARM_NCNN_INT8_QUANTIZATION_FEASIBILITY.md` and
+`results/evidence/035/`.
+
+## Task 036: DR1 NPU demo integration closed loop
+
+Task 036 is the completed functional integration of the already validated
+vendor face control. A project-owned AArch64 C++ image runner performs the
+vendor resize/RGB/NCHW preprocessing, ArmNN ONNX parse and
+`Optimize([Alnpu])`, CMA-backed inference, YOLO-face decode/NMS, JSON output
+and annotated PNG output. A real board run completed with `Alnpu | ALHardNPU`
+assignments, `fallback_allowed=false`, successful Load/Enqueue stages and no
+CPU fallback. The bounded 10-repeat control measured 50.3471437 ms inference
+mean and 65.9801407 ms end-to-end mean, but is explicitly not a YOLOv5n or
+general NPU performance benchmark. See
+`docs/vendor/ANLOGIC_DR1_NPU_DEMO_INTEGRATION.md` and
+`results/evidence/036/`. Task 028/029/032 custom YOLOv5n status remains
+`WAITING_FOR_VENDOR_INPUT`.

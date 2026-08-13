@@ -1,0 +1,30 @@
+{
+  "entries": [
+    {
+      "backend": "PC C++ ORT YOLOv5n",
+      "evidence": "results/evidence/030/pc_ort_benchmark.json",
+      "scope": "WSL2 CPUExecutionProvider; benchmarked separately from ARM",
+      "status": "BENCHMARKED_CORRECT"
+    },
+    {
+      "backend": "ARM ncnn YOLOv5n",
+      "evidence": "results/evidence/030/arm_ncnn_benchmark.json",
+      "scope": "DR1M90 CPU-only recommended-dual-thread profile; benchmarked separately from PC",
+      "status": "BENCHMARKED_CORRECT"
+    },
+    {
+      "backend": "DR1 vendor face NPU control",
+      "evidence": "results/evidence/026/official_demo_validation.json",
+      "scope": "different face model; no YOLOv5n performance substitution",
+      "status": "FUNCTIONAL_CONTROL_ONLY"
+    },
+    {
+      "backend": "DR1 YOLOv5n NPU",
+      "evidence": "results/evidence/028/benchmark_status.json",
+      "scope": "Task 028 vendor dependency blocker; no NPU performance claim",
+      "status": "NOT_BENCHMARKED"
+    }
+  ],
+  "schema_version": 1,
+  "task": "030"
+}

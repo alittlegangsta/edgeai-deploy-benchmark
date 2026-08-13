@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "BOARD_ALNPU_COMPATIBILITY_BLOCKED",
+  "purpose": "one Alnpu-only compatibility smoke in RAM; no benchmark and no system/media write",
+  "candidate": {
+    "model_path": "/tmp/task028-c3-smoke/model.onnx",
+    "model_sha256": "3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3",
+    "opset": 14,
+    "input_path": "/tmp/task028-c3-smoke/input.jpg",
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+    "runner_sha256": "c6c55b1df88d89a4507a2526f2198a7cbddb2ccc7bf8e881cf38d40e3f1a2d02"
+  },
+  "board": {
+    "uname": "Linux buildroot 6.1.111-rt42 #3 SMP PREEMPT Wed Aug 5 18:19:39 CST 2026 aarch64 GNU/Linux",
+    "runtime_profile": "recommended-dual-thread",
+    "backend_request": "Alnpu only",
+    "cpu_fallback_allowed": false,
+    "modules": [
+      "cma_mem",
+      "hard_npu",
+      "soft_npu"
+    ],
+    "devices": [
+      "/dev/cma_mem",
+      "/dev/hard_npu",
+      "/dev/soft_npu"
+    ],
+    "temporary_root": "/tmp/task028-c3-smoke (rootfs tmpfs)"
+  },
+  "command": {
+    "exit_code": 1,
+    "host_timeout_seconds": 180,
+    "command": "env LD_LIBRARY_PATH=/opt/face_detection/runtime-root/armnn_lib/lib:/opt/face_detection/runtime-root/ffmpeg_opencv4.7.0_aarch64/lib:/lib:/usr/lib edgeai_armnn_image --model model.onnx --model-variant matrix --expected-model-sha256 3186e4276961b4519eec86385cc8ecc780c371e782d684851942599e712f93a3 --mode correctness --warmup 0 --repeats 1 --raw-head-dir raw_heads",
+    "stdout": "Info: ArmNN v32.1.0\nInfo: Initialization time: 1.04 ms.\nWarning: WARNING: Layer of type Convolution2d is not supported on requested backend Alnpu for input data type QAsymmU8 and output data type QAsymmU8 (reason: Do Not Supported, Convolution2d can`t fit to 'alnpu'\n***if you want to improve the performance of your network, please contact AL stuff for help***), falling back to the next backend.\nWarning: ERROR: Layer of type Convolution2d is not supported on any preferred backend [Alnpu ]\nWarning: WARNING: Layer of type Activation is not supported on requested backend Alnpu for input data type QAsymmU8 and output data type QAsymmU8 (reason: Do Not Supported, Activation can`t fit to 'alnpu'\n***if you want to improve the performance of your network, please contact AL stuff for help***), falling back to the next backend.\nWarning: ERROR: Layer of type Activation is not supported on any preferred backend [Alnpu ]\nWarning: WARNING: Layer of type ElementwiseBinary is not supported on requested backend Alnpu for input data type QAsymmU8 and output data type QAsymmU8 (reason: only support add now, elementwise can`t fit to 'alnpu'\n\n***if you want to improve the performance of your network, please contact AL stuff for help***), falling back to the next backend.\nWarning: ERROR: Layer of type ElementwiseBinary is not supported on any preferred backend [Alnpu ]\nInfo: Shutdown time: 0.04 ms.\n",
+    "stderr": "ArmNN backend request: Alnpu only; CpuAcc/CpuRef fallback disabled\narmnn_stage=parser_created\narmnn_stage=network_parsed\narmnn_stage=optimize_begin backend=Alnpu\nedgeai_armnn_image: Alnpu optimization failed: Failed to assign a backend to each layer; messages=WARNING: Layer of type Convolution2d is not supported on requested backend Alnpu for input data type QAsymmU8 and output data type QAsymmU8 (reason: Do Not Supported, Convolution2d can`t fit to 'alnpu'\n***if you want to improve the performance of your network, please contact AL stuff for help***), falling back to the next backend. | ERROR: Layer of type Convolution2d is not supported on any preferred backend [Alnpu ] | WARNING: Layer of type Activation is not supported on requested backend Alnpu for input data type QAsymmU8 and output data type QAsymmU8 (reason: Do Not Supported, Activation can`t fit to 'alnpu'\n***if you want to improve the performance of your network, please contact AL stuff for help***), falling back to the next backend. | ERROR: Layer of type Activation is not supported on any preferred backend [Alnpu ] | WARNING: Layer of type ElementwiseBinary is not supported on requested backend Alnpu for input data type QAsymmU8 and output data type QAsymmU8 (reason: only support add now, elementwise can`t fit to 'alnpu'\n\n***if you want to improve the performance of your network, please contact AL stuff for help***), falling back to the next backend. | ERROR: Layer of type ElementwiseBinary is not supported on any preferred backend [Alnpu ]\n"
+  },
+  "parser_backend_result": {
+    "parser_created": true,
+    "network_parsed": true,
+    "optimization": "FAIL",
+    "load_network": "NOT_REACHED",
+    "reason": "Alnpu-only Optimize rejected QAsymmU8 Conv2d, Activation, and ElementwiseBinary layers; no CPU fallback was permitted",
+    "unsupported_layers": [
+      "Convolution2d",
+      "Activation",
+      "ElementwiseBinary"
+    ]
+  },
+  "outputs": {
+    "result_json": "NOT_CREATED",
+    "board_raw_heads": "NOT_CREATED",
+    "board_detections": "NOT_CREATED",
+    "comparison": "NOT_AVAILABLE_BEFORE_ALNPU_LOAD"
+  },
+  "dmesg_delta": {
+    "lines": [
+      "[  929.339599] hard_npu 63f00000.hard_npu: map_to_register: phys_addr: 63f00000",
+      "[  929.339706] soft_npu 1f0000000.soft_npu: map_to_register: phys_addr: 1f0000000"
+    ],
+    "severe_error_observed": false,
+    "new_npu_lines": [
+      "[  929.339599] hard_npu 63f00000.hard_npu: map_to_register: phys_addr: 63f00000",
+      "[  929.339706] soft_npu 1f0000000.soft_npu: map_to_register: phys_addr: 1f0000000"
+    ]
+  },
+  "interpretation": "The current ArmNN/Alnpu runtime accepts the ONNX container and parses it, but the official UINT8 QDQ graph cannot be assigned to Alnpu-only because its quantized Conv2d/Activation/ElementwiseBinary operators are unsupported. This is a deployment-compatibility rejection, not a CPU fallback or benchmark result."
+}

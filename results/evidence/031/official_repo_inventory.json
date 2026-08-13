@@ -1,0 +1,90 @@
+{
+  "repositories": [
+    {
+      "branch": "anlogic-linuxsdk",
+      "describe": "SDK_2026.01-linux6.1-rel-3-g5a693be-dirty",
+      "dirty": true,
+      "head": "5a693bed7d78e2e156e425ef57ebc8b7efad25cd",
+      "lfs": {
+        "available": false,
+        "error": "git-lfs executable unavailable"
+      },
+      "license": {
+        "classification": "GPLv2 text observed"
+      },
+      "name": "sdk",
+      "path": "<vendor-root>/sdk",
+      "remote": "https://gitee.com/anlogic/sdk.git",
+      "status_entry_count": 2632,
+      "submodules": [
+        "-280f9c6d7ac46ffc642730ba408626dcfeb218aa buildroot",
+        "-5034ba1aca1cb7f0c3b4564d9900b68dc5de0ca2 fsbl",
+        "-47edebb7c473b5ec674c7b355ad5bddfcc9b8e0c linux",
+        "-9719f89209db9d5ef7d94037fb39bdb49f5d02f4 opensbi",
+        "-9675d6b96de95477b0a16b2944fbc3a6b13c7765 toolchains",
+        "-0067800d0bcfcdb7d90cf3bda86586ca5848f215 u-boot",
+        "-95a2e322eab209cde2dbd5ea2d34ce903e8e4f xenomai"
+      ],
+      "tags": [
+        "SDK_2024.3_ES1.0-linux5.10 0b5c475",
+        "SDK_2024.3_ES1.0-linux6.1 99fe963",
+        "SDK_2024.5_ES1.1-linux5.10 904553d",
+        "SDK_2024.5_ES1.1-linux6.1 003c224",
+        "SDK_2024.7-linux5.10 7008feb",
+        "SDK_2024.7-linux6.1 c35a00f",
+        "SDK_2024.10-linux5.10 030372f",
+        "SDK_2024.10-linux6.1 5f81586",
+        "SDK_2025.01-linux5.10 4cdb280",
+        "SDK_2025.01-linux6.1 128756c",
+        "SDK_2025.07-linux5.10 24f08f7",
+        "SDK_2025.07-linux6.1 dac0fd0",
+        "SDK_2026.01-linux5.10 e8b473b",
+        "SDK_2026.01-linux6.1 d9178b5"
+      ]
+    },
+    {
+      "branch": "release",
+      "describe": "SDK_2026.01-3-g199ef4d-dirty",
+      "dirty": true,
+      "head": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+      "lfs": {
+        "available": false,
+        "error": "git-lfs executable unavailable"
+      },
+      "license": {
+        "classification": "root LICENSE absent; README/readmes only"
+      },
+      "name": "dr1m90_npu",
+      "path": "<vendor-root>/dr1m90_npu",
+      "remote": "https://gitee.com/anlogic/dr1m90_npu.git",
+      "status_entry_count": 2021,
+      "submodules": [],
+      "tags": [
+        "SDK_2026.01 a06f09a"
+      ]
+    },
+    {
+      "branch": "2026.1",
+      "describe": "ee12dfd-dirty",
+      "dirty": true,
+      "head": "ee12dfde1d7ccef2cca0e6fccda66d4fb84671fa",
+      "lfs": {
+        "available": false,
+        "error": "git-lfs executable unavailable"
+      },
+      "license": {
+        "classification": "GPLv2 text observed"
+      },
+      "name": "dr1_demo_prjs",
+      "path": "<vendor-root>/dr1_demo_prjs",
+      "remote": "https://gitee.com/anlogic/dr1_demo_prjs.git",
+      "status_entry_count": 12359,
+      "submodules": [],
+      "tags": []
+    }
+  ],
+  "schema_version": 1,
+  "search_scope": "not refreshed; evidence preserves the approved local audit",
+  "source_classification": "document_fact/source_code_fact",
+  "task": "031"
+}

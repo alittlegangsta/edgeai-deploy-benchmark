@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "task": "033",
+  "host_release_build": {
+    "command": "cmake -S cpp -B build/task033-host-release -DCMAKE_BUILD_TYPE=Release -DEDGEAI_ENABLE_ORT=OFF -DEDGEAI_ENABLE_NCNN=ON -DEDGEAI_ENABLE_VIDEO=OFF -DNCNN_ROOT=/home/dministrator/opt/ncnn/ncnn-linux-x64-20240410-local -DEDGEAI_NCNN_LIBRARY_SHA256=5c905cd8f6824bc890a076a47fb540aecf9e676d27420ff3e5d6aed6737a0b8a -DEDGEAI_PRIVATE_LIBGOMP_SHA256='' && cmake --build build/task033-host-release --target edgeai_arm_cpu_profiler edgeai_arm_cpu_profiler_tests edgeai_ncnn_detector_tests -j2",
+    "exit_code": 0,
+    "targets": ["edgeai_arm_cpu_profiler", "edgeai_arm_cpu_profiler_tests", "edgeai_ncnn_detector_tests"],
+    "ctest_command": "ctest --test-dir build/task033-host-release --output-on-failure -R edgeai_(arm_cpu_profiler_tests|ncnn_detector_tests)",
+    "ctest_exit_code": 0,
+    "host_profiler_smoke": "results/evidence/033/host_profiler_smoke.json",
+    "host_profiler_smoke_sha256": "dbcf2f3f647b1d419dbe459670c108713ec0682670d8fd3a1d250ca63b352ae1"
+  },
+  "arm_cross_build": {
+    "command": ["scripts/vendor/run_task033_arm_cpu_profiler.sh --check", "scripts/vendor/run_task033_arm_cpu_profiler.sh --execute"],
+    "exit_code": 0,
+    "status": "PASS",
+    "environment": {
+      "cmake": "3.16.9",
+      "compiler": "Linaro GCC 7.5.0",
+      "architecture": "aarch64",
+      "ncnn_version": "1.0.20240410",
+      "ncnn_library_sha256": "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3",
+      "private_libgomp_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91"
+    },
+    "profiler_sha256": "90c71995e3c724c49e157084b81170acc2b31c8559ed0e6a1021f0b373941c14",
+    "build_output_manifest_sha256": "79ba91d07a6ab73a167f7046a8d08c9b65e84e77ea0715f97c6087521ab23a62"
+  },
+  "board_measurement": {
+    "status": "PASS",
+    "probe_command": "/home/dministrator/bin/anlogic-board-ssh 'printf BOARD_OK; hostname; uname -a; uname -m; nproc; cat /proc/cpuinfo'",
+    "probe_exit_code": 0,
+    "board": {
+      "hostname": "buildroot",
+      "architecture": "aarch64",
+      "kernel": "6.1.111-rt42",
+      "logical_cpu_count": 2,
+      "cpu_part": "0xd04",
+      "features": ["fp", "asimd", "evtstrm", "aes", "pmull", "sha1", "sha2", "crc32", "cpuid"]
+    },
+    "temporary_package": "/tmp/task033-profiler-v1",
+    "package_manifest_sha256": "d26f6ff31c62040a3257006d8eaf5733b9714824c817330ab353cf196d839ca0",
+    "profiler_sha256": "90c71995e3c724c49e157084b81170acc2b31c8559ed0e6a1021f0b373941c14",
+    "private_libgomp_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+    "package_hash_check": "PASS_BY_INDIVIDUAL_SHA256_RECOMPUTATION",
+    "runs": "results/evidence/033/experiment_matrix.json",
+    "cpufreq_readout": "UNAVAILABLE",
+    "thermal_readout": "UNAVAILABLE",
+    "governor_readout": "UNAVAILABLE",
+    "taskset_tool": "UNAVAILABLE",
+    "persistent_board_changes": false,
+    "sd_emmc_changes": false,
+    "npu_execution": false
+  }
+}

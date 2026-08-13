@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task": "036",
+  "status": "PASS_READ_ONLY",
+  "recorded_at_wsl": "2026-08-12T11:51:22+08:00",
+  "source": "real board read-only SSH command",
+  "command_scope": "uname, /proc/meminfo, lsmod, device nodes, platform-driver bindings and filtered dmesg",
+  "kernel": {
+    "release": "6.1.111-rt42",
+    "architecture": "aarch64",
+    "board": "MLK-F3P-CZ02-DR1M90"
+  },
+  "cma": {
+    "total_kib": 131072,
+    "free_kib": 124436
+  },
+  "modules": {
+    "loaded": [
+      "cma_mem",
+      "hard_npu",
+      "soft_npu"
+    ],
+    "source_order": "cma_mem -> hard_npu -> soft_npu"
+  },
+  "devices": {
+    "present": [
+      "/dev/cma_mem",
+      "/dev/hard_npu",
+      "/dev/soft_npu"
+    ],
+    "observed_modes": {
+      "/dev/cma_mem": "crw-------",
+      "/dev/hard_npu": "crw-------",
+      "/dev/soft_npu": "crw-------"
+    }
+  },
+  "platform_bindings": {
+    "hard_npu": "/sys/bus/platform/drivers/hard_npu/63f00000.hard_npu",
+    "soft_npu": "/sys/bus/platform/drivers/soft_npu/1f0000000.soft_npu"
+  },
+  "dmesg_observations": [
+    "cma_mem registered",
+    "hard_npu probe address 0x63f00000 IRQ 42",
+    "soft_npu probe address 0x1f0000000 IRQ 43"
+  ],
+  "limitations": [
+    "No module loading or system mutation was performed by this read-only capture.",
+    "This file records board state, not a claim that the face control is a YOLOv5n deployment."
+  ]
+}

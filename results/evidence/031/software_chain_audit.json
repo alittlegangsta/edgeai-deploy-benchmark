@@ -1,0 +1,55 @@
+{
+  "al_onnx_pass": {
+    "logical_path": "<vendor-root>/sdk/app/npu/scripts/AL_onnx_pass.py",
+    "native_compiler_step": false,
+    "native_runtime_step": false,
+    "sequence": [
+      "onnx.load",
+      "onnxsim.simplify",
+      "shape inference",
+      "Detect extract_model for yolov5",
+      "split_convFC",
+      "convert_version(...,19)",
+      "check_onnx_model",
+      "onnxruntime.quantize_static QDQ"
+    ],
+    "sha256": "f61bc7ab424726d08881f1e9ef8a3fbcfbee8fdcb612eeb6d944c450aed4540a"
+  },
+  "demo_chain": {
+    "backends_default": [
+      "Alnpu",
+      "CpuAcc",
+      "CpuRef"
+    ],
+    "build_script": "<vendor-root>/dr1m90_npu/npu_demo/build.sh",
+    "load": "LoadNetwork",
+    "native_runtime_dependency": false,
+    "optimize": "armnn::Optimize",
+    "parser": "ArmNN OnnxParser CreateNetworkFromBinaryFile",
+    "run_script": "<vendor-root>/dr1m90_npu/npu_demo/demo_scripts/run_yolo_pic.sh",
+    "runner": "<vendor-root>/dr1m90_npu/npu_demo/demo_src/yolo_demo_pic",
+    "strict_probe_backend": "Alnpu"
+  },
+  "face_to_alhardnpu": {
+    "measured_assignment": "three Alnpu|ALHardNPU fused/custom workload assignments in retained Task 028 evidence",
+    "mechanism": "ArmNN optimization/fusion (ConvertConv2dIntoALHardNPUImpl and ALHardNPU workload symbols) after parser, not an ONNX custom op",
+    "onnx_contains_alhardnpu_node": false
+  },
+  "native_assets": {
+    "al_ai_flow": false,
+    "convert_tool": false,
+    "nn_compiler": false,
+    "npu_c_api.h": false,
+    "npu_runtime": false,
+    "rt.bin": false,
+    "tmfile": false,
+    "weight.bin": false
+  },
+  "omitted_steps": {
+    "AL_onnx_pass_to_ArmNN": "no additional native compiler/converter step found in source",
+    "required_unknown": "vendor may have a private or unrecovered fusion/compiler stage; public repositories do not document one"
+  },
+  "schema_version": 1,
+  "source_classification": "source_code_fact for scripts/build chain; engineering_inference only where explicitly labelled unknown",
+  "task": "031"
+}

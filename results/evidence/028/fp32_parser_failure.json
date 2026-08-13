@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "attempt": "frozen_fp32",
+  "status": "BLOCKED_UNSUPPORTED_OPERATOR",
+  "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+  "backend_request": ["Alnpu"],
+  "cpu_fallback_allowed": false,
+  "command_mode": "correctness; warmup=0; repeats=1",
+  "exit_code": 1,
+  "stderr": "ArmNN backend request: Alnpu only; CpuAcc/CpuRef fallback disabled\nedgeai_armnn_image: Unsupported operation Floor for node '/model.11/Floor'",
+  "parser_stage_reached": "parser_created",
+  "network_parsed": false,
+  "output_json_created": false,
+  "dmesg_delta": "empty; no kernel/NPU error added",
+  "interpretation": "The frozen FP32 graph reaches ArmNN OnnxParser but Alnpu rejects Floor before optimization or load. No CPU fallback was used."
+}

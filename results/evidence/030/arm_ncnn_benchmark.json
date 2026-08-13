@@ -1,0 +1,124 @@
+{
+  "backend": "arm_ncnn_recommended_dual_thread",
+  "correctness": {
+    "all_statuses_pass": true,
+    "checks": 10,
+    "detection_counts": [
+      5
+    ],
+    "maximum_absolute_confidence_difference": 5.0067901611328125e-06,
+    "minimum_class_matched_iou": 0.9999855075776749,
+    "statuses": [
+      "PASS_TARGET"
+    ]
+  },
+  "environment_note": "MLK-F3P-CZ02-DR1M90 AArch64; Task 019 recommended-dual-thread OpenMP profile.",
+  "formal_iterations_per_process": [
+    20
+  ],
+  "fps": {
+    "formula": "1000 / mean pipeline_ms",
+    "value": 0.5077682989318258
+  },
+  "independent_process_count": 5,
+  "model_load": {
+    "count": 5,
+    "max_ms": 592.377666,
+    "mean_ms": 584.9432337999999,
+    "min_ms": 575.255676
+  },
+  "model_representation": "ncnn 20240410 param/bin conversion of the frozen YOLOv5n v7.0 weights",
+  "resources": {
+    "cpu_utilization_one_core_basis_percent": {
+      "count": 5,
+      "max": 185.91492429222788,
+      "mean": 185.37399511776437,
+      "min": 184.96806061444056,
+      "unit": "percent"
+    },
+    "peak_rss_kib": {
+      "count": 5,
+      "max": 142668,
+      "mean": 142601.6,
+      "min": 142560,
+      "scope": "process startup through formal measurement completion",
+      "unit": "KiB"
+    }
+  },
+  "round_ids": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sample_count": 100,
+  "sampled_frequency_temperature": {
+    "cpu_frequency_khz": {
+      "field_present_in_samples": true,
+      "max": null,
+      "mean": null,
+      "min": null,
+      "null_sample_count": 100,
+      "numeric_sample_count": 0,
+      "status": "NOT_RECORDED_IN_SOURCE_CAMPAIGN",
+      "unit": "kHz"
+    },
+    "temperature_millicelsius": {
+      "field_present_in_samples": true,
+      "max": null,
+      "mean": null,
+      "min": null,
+      "null_sample_count": 100,
+      "numeric_sample_count": 0,
+      "status": "NOT_RECORDED_IN_SOURCE_CAMPAIGN",
+      "unit": "millicelsius"
+    }
+  },
+  "source_evidence": {
+    "path": "results/evidence/018/openmp/threads2_raw_samples.json",
+    "sha256": "b1246ce255a1962bf96b76a717faafe78481393aa95c43072349009d85600f40"
+  },
+  "stages": {
+    "inference": {
+      "count": 100,
+      "max_ms": 1877.905069,
+      "mean_ms": 1871.13470669,
+      "min_ms": 1863.085099,
+      "p50_ms": 1873.266138,
+      "p95_ms": 1877.160108,
+      "sample_standard_deviation_ms": 4.648583006510372
+    },
+    "pipeline": {
+      "count": 100,
+      "max_ms": 1977.787789,
+      "mean_ms": 1969.4021901400001,
+      "min_ms": 1958.800699,
+      "p50_ms": 1973.12387,
+      "p95_ms": 1977.06293,
+      "sample_standard_deviation_ms": 6.577660346451398
+    },
+    "postprocess": {
+      "count": 100,
+      "max_ms": 55.662571,
+      "mean_ms": 54.83099424,
+      "min_ms": 53.75589,
+      "p50_ms": 55.46784,
+      "p95_ms": 55.580611,
+      "sample_standard_deviation_ms": 0.8362610290049913
+    },
+    "preprocess": {
+      "count": 100,
+      "max_ms": 44.58039,
+      "mean_ms": 43.43648921,
+      "min_ms": 41.82246,
+      "p50_ms": 44.32413,
+      "p95_ms": 44.467111,
+      "sample_standard_deviation_ms": 1.1711298576646927
+    }
+  },
+  "status": "BENCHMARKED_CORRECT",
+  "warmup_per_process": [
+    10
+  ]
+}

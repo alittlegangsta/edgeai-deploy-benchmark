@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "task": "039",
+  "status": "PASS",
+  "source": {
+    "path": "data/samples/videos/anlogic_arm_reference.avi",
+    "sha256": "3953653b6364a844e829be68df76fce8ce673add5c4bfaf9176c5fb205e5da49",
+    "codec": "FFV1",
+    "width": 1280,
+    "height": 960,
+    "fps": 5.0,
+    "frame_count": 30,
+    "lossless_reference": true
+  },
+  "protocol": {
+    "backend_contract": "Task038 InferenceBackend; shared preprocess/decode/NMS/visualization",
+    "source_modes": ["image", "video", "camera"],
+    "queue": "synchronous serialized capture/inference; capacity=0; dropped_frames=0",
+    "output_codec": "MJPG",
+    "pipeline_fps_definition": "processed frames divided by wall time from first capture through final write",
+    "benchmark_scope": "integration evidence only; cross-platform performance reserved for Task040"
+  },
+    "runs": {
+    "pc_ort_fp32": {
+      "evidence_file": "pc_ort_fp32_video.json",
+      "backend": "ort",
+      "binary_sha256": "5a94d91abc2b46fc1c08d07503e0b1e6940afb13f97ff47132e936adf8f700c5",
+      "output_artifact": {
+        "path": "/tmp/task039-ort-video.avi",
+        "sha256": "0022075da2f9a35d4f799352714dc7ccce769d186d488c44896d62d8a42436c7",
+        "size_bytes": 4066364,
+        "retained_outside_git": true
+      }
+    },
+    "pc_ncnn_fp32": {
+      "evidence_file": "pc_ncnn_fp32_video.json",
+      "backend": "ncnn",
+      "binary_sha256": "5a94d91abc2b46fc1c08d07503e0b1e6940afb13f97ff47132e936adf8f700c5",
+      "output_artifact": {
+        "path": "/tmp/task039-ncnn-video.avi",
+        "sha256": "371392dadfd320f809003a34b7384fc4fad7eb7307a2bd3f8e6e0e29ae2d32b3",
+        "size_bytes": 4069888,
+        "retained_outside_git": true
+      }
+    },
+    "pc_tensorrt_fp16": {
+      "evidence_file": "pc_tensorrt_fp16_video.json",
+      "backend": "tensorrt",
+      "binary_sha256": "174c30357f6e97bb45cbfbe4183e5255d30a2281ac3490220287c0de8fcc0fee",
+      "engine_sha256": "7f99cc9f628613a71ec993898a9825c0c45f4c5129862f8350fea0161e653c8a",
+      "output_artifact": {
+        "path": "/tmp/task039-trt-video.avi",
+        "sha256": "71ea30ecb2a45d1813ce063d2e99aad0fd3be669bb2ced114aebd072c5e605f3",
+        "size_bytes": 4082592,
+        "retained_outside_git": true
+      }
+    },
+    "dr_camera_ncnn_int8": {
+      "evidence_file": "dr_camera_ncnn_int8.json",
+      "backend": "ncnn",
+      "precision": "int8",
+      "binary_sha256": "2548fce2678c0a88628b8fa9f311242fb47cc334731df586261dd1ec016a36a6",
+      "model_manifest_sha256": "89d0f2c2c6cb285dac9d40d08f3db0e0108d10a5740302e4d4567273b1c911b1",
+      "param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+      "bin_sha256": "9ae93520aa8fa9c235176e57c3146ac6a66115cddd0186c20f2637f7516c09f7",
+      "output_artifact": {
+        "path": "/tmp/task039-dr-camera-final.avi",
+        "sha256": "3440ac126814fe0273813f9fc0ae91f4d304e4f9a0d86b6f2d2a9a7ff889b117",
+        "size_bytes": 68560,
+        "retained_outside_git": true
+      }
+    }
+  },
+  "tensorrt_fp16_diagnostic": {
+    "source": "results/evidence/037/correctness.json",
+    "single_image_scope": "secondary diagnostic; Task037 COCO gate remains the acceptance gate",
+    "minimum_iou": 0.9935288429260254,
+    "maximum_confidence_delta": 0.005570024251937866
+  },
+  "camera_probe": {
+    "status": "PASS",
+    "device": "/dev/video0",
+    "stable_id": "/dev/v4l/by-id/usb-Sonix_Technology_Co.__Ltd._USB_2.0_Camera_SN0001-video-index0",
+    "driver": "uvcvideo",
+    "identity": "Sonix USB 2.0 Camera SN0001",
+    "requested": "OpenCV/V4L2 default negotiation; edgeai_demo exposes no camera size/FPS override",
+    "negotiated": {"width": 640, "height": 480, "fourcc": "YUYV", "fps": 25.0, "backend": "V4L2"},
+    "capabilities_evidence": "dr_camera_capabilities.json",
+    "application": "edgeai_demo",
+    "backend": "ncnn",
+    "precision": "int8",
+    "runtime_profile": "recommended-dual-thread",
+    "configured_threads": 2,
+    "effective_parallel_backend": "openmp",
+    "frames": {"captured": 3, "processed": 3, "dropped": 0, "failed": 0, "written": 3},
+    "queue": {"mode": "synchronous", "capacity": 0, "drop_policy": "none"},
+    "output_video_sha256": "3440ac126814fe0273813f9fc0ae91f4d304e4f9a0d86b6f2d2a9a7ff889b117",
+    "output_json_sha256": "39823af6eb3450fb9aebd9f0d49b5da9ff2c966d60450ce7ed6a93a9aa2ddbe7",
+    "wrapper_note": "Windows/vsock wrapper remained unavailable; native WSL SSH path reached the board without modifying the wrapper.",
+    "does_not_claim_camera_realtime": true,
+    "source_rate_is_not_processing_rate": true,
+    "note": "dropped=0 is scoped to the bounded serialized run and does not imply that every faster live-source frame would be processed"
+  },
+  "tests": {
+    "release_ctest_ort_ncnn": "PASS 16/16",
+    "release_ctest_ort_ncnn_tensorrt": "PASS 16/16",
+    "focused_python": "PASS 4/4",
+    "full_python": "PASS 164/164 using .venv",
+    "prior_task_validators": "PASS Task030, Task033, Task034 self-test, Task035 self-test, Task037"
+  }
+}

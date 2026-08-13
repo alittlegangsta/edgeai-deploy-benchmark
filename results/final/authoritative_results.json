@@ -1,0 +1,1071 @@
+{
+  "authoritative_results": {
+    "accuracy_performance_tradeoff": [
+      {
+        "accuracy": {
+          "candidate": {
+            "mAP50": 0.44330934307986297,
+            "mAP50_95": 0.2651150199415103
+          },
+          "delta_candidate_minus_reference": {
+            "mAP50": -0.01429615671628063,
+            "mAP50_95": -0.0146620985001998
+          },
+          "gate": {
+            "max_absolute_delta": 0.02,
+            "status": "PASS",
+            "zero_detection_images": 0
+          },
+          "protocol": "4500 independent COCO val2017 images; 500-image calibration disjoint",
+          "reference": {
+            "mAP50": 0.4576054997961436,
+            "mAP50_95": 0.2797771184417101
+          }
+        },
+        "decision": "INT8_ACCEPTED",
+        "id": "dr1_fp32_vs_eq_int8",
+        "performance": {
+          "candidate": {
+            "backend_inference_mean_ms": 1173.20763684,
+            "fps": 0.7895778245595568,
+            "pipeline_mean_ms": 1266.4996013
+          },
+          "reference": {
+            "backend_inference_mean_ms": 1882.2464185,
+            "fps": 0.5068049464934338,
+            "pipeline_mean_ms": 1973.1456982
+          },
+          "rss_reduction_percent": -10.41716159072552,
+          "same_platform_fps_gain_percent": 55.79520879238038,
+          "same_platform_speedup": {
+            "backend_inference": 1.6043591597901414,
+            "pipeline": 1.5579520879238038
+          },
+          "timing_boundary": "ncnn backend call wall time; same boundary for both precision variants"
+        },
+        "platform": "DR1 MLK-F3P-CZ02-DR1M90",
+        "source_evidence": [
+          {
+            "path": "results/evidence/035/coco_full_evaluation.json",
+            "role": "COCO accuracy",
+            "sha256": "45cb2a944a79d59ab0718ae1c89d121b0fc403b9b63459f85cf14a14db20c436"
+          },
+          {
+            "path": "results/evidence/035/arm_int8_benchmark.json",
+            "role": "paired ARM performance",
+            "sha256": "b3ddfb60f32a9da0651a60cc5d9597a257c9dd8bce89d602f38819292348054b"
+          }
+        ]
+      },
+      {
+        "accuracy": {
+          "candidate": {
+            "mAP50": 0.4481054404868596,
+            "mAP50_95": 0.2747865502965814
+          },
+          "delta_candidate_minus_reference": {
+            "mAP50": -0.000197230057410146,
+            "mAP50_95": 6.6085409587863e-05
+          },
+          "gate": {
+            "max_absolute_delta": 0.01,
+            "status": "PASS",
+            "zero_detection_images": 0
+          },
+          "protocol": "4500 independent COCO val2017 images; same evaluator and IDs",
+          "reference": {
+            "mAP50": 0.44830267054426975,
+            "mAP50_95": 0.27472046488699353
+          }
+        },
+        "decision": "TENSORRT_FP16_READY",
+        "id": "rtx4060ti_fp32_vs_fp16",
+        "performance": {
+          "backend_call_delta_percent": 0.09857520677494236,
+          "candidate": {
+            "backend_inference_mean_ms": 3.71610421,
+            "fps": 106.28195162282786,
+            "pipeline_mean_ms": 9.40893524
+          },
+          "gpu_execution": {
+            "candidate_mean_ms": 1.37037856,
+            "reference_mean_ms": 1.6742607927322388,
+            "speedup_fp32_over_fp16": 1.2217505739541041
+          },
+          "reference": {
+            "backend_inference_mean_ms": 3.71244466,
+            "fps": 107.71535498337931,
+            "pipeline_mean_ms": 9.28372747
+          },
+          "same_gpu_precision_comparison": {
+            "gpu_inference_speedup_fp32_over_fp16": 1.2217505739541041,
+            "pipeline_delta_percent": -1.3307326153942034
+          },
+          "timing_boundary": "backend inference is host wall detector.infer(); GPU execution is CUDA event enqueueV3 only; pipeline includes preprocess and postprocess"
+        },
+        "platform": "PC WSL2 NVIDIA RTX 4060 Ti",
+        "source_evidence": [
+          {
+            "path": "results/evidence/037/coco_accuracy.json",
+            "role": "COCO accuracy",
+            "sha256": "193188a7aa684be67bd893d03990c308310b929303b3c0a23d0fa88b3c3a02b5"
+          },
+          {
+            "path": "results/evidence/037/benchmark.json",
+            "role": "TensorRT performance",
+            "sha256": "b1cf310b66828cd44ee2fa518e6ff5b97c4c79fcce251cf18f427457ca75af02"
+          }
+        ]
+      }
+    ],
+    "cross_platform_yolov5n_performance": [
+      {
+        "backend": "ONNX Runtime 1.18.1 / CPUExecutionProvider",
+        "classification": "formal_benchmark",
+        "correctness": {
+          "detection_count": [
+            5
+          ],
+          "maximum_confidence_delta": 0.0,
+          "minimum_class_matched_iou": 1.0,
+          "primary_status": "PASS"
+        },
+        "hardware": "CPU",
+        "id": "pc_ort_fp32",
+        "metrics": {
+          "backend_inference_ms": {
+            "mean": 45.849136916666666,
+            "p50": 45.639122,
+            "p95": 48.349684
+          },
+          "cpu_utilization_one_core_basis_percent": {
+            "count": 6,
+            "max": 100.00009098318544,
+            "mean": 99.99840534408399,
+            "min": 99.99622021243385,
+            "unit": "percent"
+          },
+          "fps": 19.303906657155686,
+          "frequency_temperature": "not recorded in the source campaign",
+          "gpu_memory": null,
+          "peak_rss_kib": {
+            "count": 6,
+            "max": 151444.0,
+            "mean": 150869.33333333334,
+            "min": 150328.0,
+            "scope": "process startup through formal measurement completion",
+            "unit": "KiB"
+          },
+          "pipeline_ms": {
+            "mean": 51.80298567333333,
+            "p50": 51.595426,
+            "p95": 54.415443
+          },
+          "postprocess_ms": {
+            "mean": 4.1202788749999995,
+            "p50": 4.036812,
+            "p95": 4.577968
+          },
+          "preprocess_ms": {
+            "mean": 1.8335698816666666,
+            "p50": 1.790252,
+            "p95": 2.082433
+          }
+        },
+        "model": "YOLOv5n v7.0 ONNX",
+        "platform": "PC WSL2 x86_64",
+        "precision": "FP32",
+        "protocol": {
+          "backend_inference_boundary": "wall time of the ORT backend call",
+          "independent_processes": 6,
+          "repeat": 100,
+          "samples": 600,
+          "stage_definition": "preprocess + ORT inference + postprocess; image source timing excluded",
+          "warmup": 10
+        },
+        "source_evidence": [
+          {
+            "path": "results/evidence/030/pc_ort_benchmark.json",
+            "role": "PC ORT formal benchmark",
+            "sha256": "cdea130112c953182d2e210218a7f295ef24d174fb9dc9aec4f97179467f9355"
+          },
+          {
+            "path": "results/evidence/030/benchmark_contract.json",
+            "role": "shared model and benchmark contract",
+            "sha256": "2aac1d6eefcabcec276028c42cca8d2519bcea041186afe91dfadc301bf012e5"
+          }
+        ]
+      },
+      {
+        "backend": "TensorRT 10.13.3 / CUDA 12.9",
+        "classification": "formal_benchmark",
+        "correctness": {
+          "coco_gate": "reference for FP16 gate",
+          "primary_status": "PASS_TARGET",
+          "secondary_single_image_reference": null
+        },
+        "engine_identity": {
+          "builder": {
+            "artifact_policy": "engines remain outside Git in /tmp/task037",
+            "builder_optimization_level": 3,
+            "compute_capability": "8.9",
+            "cuda": "12.9.86",
+            "gpu": "NVIDIA GeForce RTX 4060 Ti",
+            "tensorrt": "10.13.3",
+            "tool": "/usr/src/tensorrt/bin/trtexec",
+            "workspace": "2048M"
+          },
+          "engine_sha256": "a3ad9715f3560e46cae2cacfa06ca11d1468c42947eea9487a15c82d84b968d6"
+        },
+        "hardware": "NVIDIA GeForce RTX 4060 Ti (compute capability 8.9)",
+        "id": "rtx4060ti_tensorrt_fp32",
+        "metrics": {
+          "backend_inference_ms": {
+            "mean": 3.71244466,
+            "p50": 3.482152,
+            "p95": 5.222537
+          },
+          "cpu_utilization_one_core_basis_percent": null,
+          "fps": 107.71535498337931,
+          "frequency_temperature": "not recorded in the source campaign",
+          "gpu_d2h_ms": {
+            "mean": 0.828420158624649,
+            "p50": 0.8022080063819885,
+            "p95": 0.9611520171165466
+          },
+          "gpu_execution_ms": {
+            "mean": 1.6742607927322388,
+            "p50": 1.4604159593582153,
+            "p95": 2.739680051803589
+          },
+          "gpu_h2d_ms": {
+            "mean": 0.4578543993830681,
+            "p50": 0.44975998997688293,
+            "p95": 0.5253120064735413
+          },
+          "gpu_memory": {
+            "free_bytes_at_end": 7353663488,
+            "total_bytes": 8585216000
+          },
+          "peak_rss_kib": {
+            "mean": 537596.0,
+            "p50": null,
+            "p95": null
+          },
+          "pipeline_ms": {
+            "mean": 9.28372747,
+            "p50": 9.104986,
+            "p95": 10.790646
+          },
+          "postprocess_ms": {
+            "mean": 4.01956931,
+            "p50": 3.960571,
+            "p95": 4.588547
+          },
+          "preprocess_ms": {
+            "mean": 1.58334391,
+            "p50": 1.560376,
+            "p95": 1.821055
+          }
+        },
+        "model": "YOLOv5n v7.0 TensorRT engine",
+        "platform": "PC WSL2 x86_64",
+        "precision": "FP32",
+        "protocol": {
+          "backend_inference_boundary": "host wall time from immediately before TensorRT detector.infer() to return; includes H2D, enqueueV3, D2H and event synchronization",
+          "gpu_execution_boundary": "CUDA event elapsed time from inference_start to inference_end around enqueueV3; excludes H2D and D2H",
+          "h2d_inference_d2h": "CUDA event diagnostics retained separately",
+          "repeat": 100,
+          "stage_definition": "preprocess through postprocess, excluding image read and rendering",
+          "warmup": 10
+        },
+        "source_evidence": [
+          {
+            "path": "results/evidence/037/benchmark.json",
+            "role": "TensorRT formal benchmark",
+            "sha256": "b1cf310b66828cd44ee2fa518e6ff5b97c4c79fcce251cf18f427457ca75af02"
+          },
+          {
+            "path": "results/evidence/037/coco_accuracy.json",
+            "role": "TensorRT COCO accuracy gate",
+            "sha256": "193188a7aa684be67bd893d03990c308310b929303b3c0a23d0fa88b3c3a02b5"
+          },
+          {
+            "path": "results/evidence/037/engine_manifest.json",
+            "role": "engine and builder identity",
+            "sha256": "ed0faf546c1db8eb55250d777be431bb726abe4f4966279d467779a90c2ec14f"
+          }
+        ]
+      },
+      {
+        "backend": "TensorRT 10.13.3 / CUDA 12.9",
+        "classification": "formal_benchmark",
+        "correctness": {
+          "coco_gate": "PASS",
+          "primary_status": "COCO_GATE_PASS",
+          "secondary_single_image_reference": "COCO_GATE_PASS_WITH_SECONDARY_GOLDEN_DIAGNOSTIC"
+        },
+        "engine_identity": {
+          "builder": {
+            "artifact_policy": "engines remain outside Git in /tmp/task037",
+            "builder_optimization_level": 3,
+            "compute_capability": "8.9",
+            "cuda": "12.9.86",
+            "gpu": "NVIDIA GeForce RTX 4060 Ti",
+            "tensorrt": "10.13.3",
+            "tool": "/usr/src/tensorrt/bin/trtexec",
+            "workspace": "2048M"
+          },
+          "engine_sha256": "7f99cc9f628613a71ec993898a9825c0c45f4c5129862f8350fea0161e653c8a"
+        },
+        "hardware": "NVIDIA GeForce RTX 4060 Ti (compute capability 8.9)",
+        "id": "rtx4060ti_tensorrt_fp16",
+        "metrics": {
+          "backend_inference_ms": {
+            "mean": 3.71610421,
+            "p50": 3.455037,
+            "p95": 5.1078
+          },
+          "cpu_utilization_one_core_basis_percent": null,
+          "fps": 106.28195162282786,
+          "frequency_temperature": "not recorded in the source campaign",
+          "gpu_d2h_ms": {
+            "mean": 0.9343347209692001,
+            "p50": 0.8867520093917847,
+            "p95": 1.3120959997177124
+          },
+          "gpu_execution_ms": {
+            "mean": 1.37037856,
+            "p50": 1.241536,
+            "p95": 2.23456
+          },
+          "gpu_h2d_ms": {
+            "mean": 0.48472256064414976,
+            "p50": 0.4645119905471802,
+            "p95": 0.6407359838485718
+          },
+          "gpu_memory": {
+            "free_bytes_at_end": null,
+            "total_bytes": 8585216000
+          },
+          "peak_rss_kib": {
+            "mean": 548172.0,
+            "p50": null,
+            "p95": null
+          },
+          "pipeline_ms": {
+            "mean": 9.40893524,
+            "p50": 9.013034,
+            "p95": 11.427198
+          },
+          "postprocess_ms": {
+            "mean": 4.06613426,
+            "p50": 3.939225,
+            "p95": 4.728582
+          },
+          "preprocess_ms": {
+            "mean": 1.66588106,
+            "p50": 1.629598,
+            "p95": 1.855246
+          }
+        },
+        "model": "YOLOv5n v7.0 TensorRT engine",
+        "platform": "PC WSL2 x86_64",
+        "precision": "FP16",
+        "protocol": {
+          "backend_inference_boundary": "host wall time from immediately before TensorRT detector.infer() to return; includes H2D, enqueueV3, D2H and event synchronization",
+          "gpu_execution_boundary": "CUDA event elapsed time from inference_start to inference_end around enqueueV3; excludes H2D and D2H",
+          "h2d_inference_d2h": "CUDA event diagnostics retained separately",
+          "repeat": 100,
+          "stage_definition": "preprocess through postprocess, excluding image read and rendering",
+          "warmup": 10
+        },
+        "source_evidence": [
+          {
+            "path": "results/evidence/037/benchmark.json",
+            "role": "TensorRT formal benchmark",
+            "sha256": "b1cf310b66828cd44ee2fa518e6ff5b97c4c79fcce251cf18f427457ca75af02"
+          },
+          {
+            "path": "results/evidence/037/coco_accuracy.json",
+            "role": "TensorRT COCO accuracy gate",
+            "sha256": "193188a7aa684be67bd893d03990c308310b929303b3c0a23d0fa88b3c3a02b5"
+          },
+          {
+            "path": "results/evidence/037/engine_manifest.json",
+            "role": "engine and builder identity",
+            "sha256": "ed0faf546c1db8eb55250d777be431bb726abe4f4966279d467779a90c2ec14f"
+          }
+        ]
+      },
+      {
+        "backend": "ncnn 20240410",
+        "classification": "formal_benchmark",
+        "correctness": {
+          "coco_gate": "not the EQ acceptance gate",
+          "primary_status": "PASS_TARGET",
+          "secondary_single_image_reference": null
+        },
+        "hardware": "AArch64 dual-core Cortex-A35-class CPU",
+        "id": "dr1_ncnn_fp32",
+        "metrics": {
+          "backend_inference_ms": {
+            "mean": 1882.2464185,
+            "p50": 1877.732749,
+            "p95": 1888.663099
+          },
+          "cpu_utilization_one_core_basis_percent": {
+            "mean": 186.55582625867945,
+            "p50": 186.9424162823931,
+            "p95": 187.57394215742093
+          },
+          "fps": 0.5068049464934338,
+          "frequency_temperature": "not recorded in the source campaign",
+          "gpu_memory": null,
+          "peak_rss_kib": {
+            "mean": 166579.2,
+            "p50": 168256.0,
+            "p95": 168376.0
+          },
+          "pipeline_ms": {
+            "mean": 1973.1456982,
+            "p50": 1968.618889,
+            "p95": 1984.8119
+          },
+          "postprocess_ms": {
+            "mean": 53.92781698,
+            "p50": 53.8611,
+            "p95": 53.937601
+          },
+          "preprocess_ms": {
+            "mean": 36.97146272,
+            "p50": 36.263791,
+            "p95": 43.26786
+          }
+        },
+        "model": "YOLOv5n v7.0 ncnn param/bin",
+        "platform": "DR1 MLK-F3P-CZ02-DR1M90",
+        "precision": "FP32",
+        "protocol": {
+          "backend_inference_boundary": "wall time of the ncnn backend call",
+          "independent_processes": 5,
+          "packing": true,
+          "repeat": 10,
+          "samples": 50,
+          "scheduling": "default",
+          "stage_definition": "preprocess + backend inference + postprocess; same input and image path",
+          "threads": 2,
+          "warmup": 3
+        },
+        "runtime_identity": {
+          "ncnn_library_sha256": "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3",
+          "ncnn_version": "1.0.20240410",
+          "openmp": "openmp",
+          "packing": true,
+          "private_libgomp_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+          "threads": 2
+        },
+        "source_evidence": [
+          {
+            "path": "results/evidence/035/arm_int8_benchmark.json",
+            "role": "paired ARM formal benchmark",
+            "sha256": "b3ddfb60f32a9da0651a60cc5d9597a257c9dd8bce89d602f38819292348054b"
+          },
+          {
+            "path": "results/evidence/035/coco_full_evaluation.json",
+            "role": "independent COCO accuracy gate",
+            "sha256": "45cb2a944a79d59ab0718ae1c89d121b0fc403b9b63459f85cf14a14db20c436"
+          },
+          {
+            "path": "results/evidence/033/threads2_default_packing_on.json",
+            "role": "accepted runtime profile identity",
+            "sha256": "506e736b340fe0453380d9be6761857339ddaf1e5f576267b527ae23b22c34a0"
+          }
+        ]
+      },
+      {
+        "backend": "ncnn 20240410",
+        "classification": "formal_benchmark",
+        "correctness": {
+          "coco_gate": "PASS",
+          "primary_status": "COCO_GATE_PASS; secondary single-image diagnostic retained",
+          "secondary_single_image_reference": {
+            "detection_count": 5,
+            "minimum_iou_reported": 0,
+            "note": "The formal single-image comparison is retained as a secondary diagnostic; it does not override the independent annotated COCO gate defined by this task continuation.",
+            "status": "FAIL_CORRECTNESS_GATE"
+          }
+        },
+        "hardware": "AArch64 dual-core Cortex-A35-class CPU",
+        "id": "dr1_ncnn_eq",
+        "metrics": {
+          "backend_inference_ms": {
+            "mean": 1173.20763684,
+            "p50": 1172.655522,
+            "p95": 1187.335782
+          },
+          "cpu_utilization_one_core_basis_percent": {
+            "mean": 181.47370245878886,
+            "p50": 181.4348088848541,
+            "p95": 182.7607694069728
+          },
+          "fps": 0.7895778245595568,
+          "frequency_temperature": "not recorded in the source campaign",
+          "gpu_memory": null,
+          "peak_rss_kib": {
+            "mean": 149047.2,
+            "p50": 150736.0,
+            "p95": 150836.0
+          },
+          "pipeline_ms": {
+            "mean": 1266.4996013,
+            "p50": 1264.250773,
+            "p95": 1285.629763
+          },
+          "postprocess_ms": {
+            "mean": 54.92435568,
+            "p50": 55.596901,
+            "p95": 55.7238
+          },
+          "preprocess_ms": {
+            "mean": 38.36760878,
+            "p50": 38.20488,
+            "p95": 42.79749
+          }
+        },
+        "model": "YOLOv5n v7.0 ncnn param/bin",
+        "platform": "DR1 MLK-F3P-CZ02-DR1M90",
+        "precision": "EQ INT8",
+        "protocol": {
+          "backend_inference_boundary": "wall time of the ncnn backend call",
+          "independent_processes": 5,
+          "packing": true,
+          "repeat": 10,
+          "samples": 50,
+          "scheduling": "default",
+          "stage_definition": "preprocess + backend inference + postprocess; same input and image path",
+          "threads": 2,
+          "warmup": 3
+        },
+        "runtime_identity": {
+          "ncnn_library_sha256": "bd76f70f160ac34e44592d040ea68d8f2d40aea33ea7f3ce3009f13545db20f3",
+          "ncnn_version": "1.0.20240410",
+          "openmp": "openmp",
+          "packing": true,
+          "private_libgomp_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+          "threads": 2
+        },
+        "source_evidence": [
+          {
+            "path": "results/evidence/035/arm_int8_benchmark.json",
+            "role": "paired ARM formal benchmark",
+            "sha256": "b3ddfb60f32a9da0651a60cc5d9597a257c9dd8bce89d602f38819292348054b"
+          },
+          {
+            "path": "results/evidence/035/coco_full_evaluation.json",
+            "role": "independent COCO accuracy gate",
+            "sha256": "45cb2a944a79d59ab0718ae1c89d121b0fc403b9b63459f85cf14a14db20c436"
+          },
+          {
+            "path": "results/evidence/033/threads2_default_packing_on.json",
+            "role": "accepted runtime profile identity",
+            "sha256": "506e736b340fe0453380d9be6761857339ddaf1e5f576267b527ae23b22c34a0"
+          }
+        ]
+      }
+    ],
+    "deployment_capability_matrix": [
+      {
+        "backend": "ORT",
+        "model": "YOLOv5n v7.0",
+        "platform": "PC CPU",
+        "scope": "formal benchmark; no fallback",
+        "source_evidence": [
+          "results/evidence/030/pc_ort_benchmark.json"
+        ],
+        "status": "YOLOV5N_CPU_FORMAL_READY"
+      },
+      {
+        "backend": "TensorRT",
+        "model": "YOLOv5n v7.0",
+        "platform": "RTX 4060 Ti",
+        "scope": "formal benchmark; FP16 accepted by COCO gate",
+        "source_evidence": [
+          "results/evidence/037/benchmark.json",
+          "results/evidence/037/coco_accuracy.json"
+        ],
+        "status": "TENSORRT_FP32_FP16_FORMAL_READY"
+      },
+      {
+        "backend": "ncnn",
+        "model": "YOLOv5n v7.0",
+        "platform": "DR1 CPU",
+        "scope": "formal benchmark; EQ accepted by COCO gate",
+        "source_evidence": [
+          "results/evidence/035/arm_int8_benchmark.json",
+          "results/evidence/035/coco_full_evaluation.json"
+        ],
+        "status": "NCNN_FP32_EQ_INT8_FORMAL_READY"
+      },
+      {
+        "backend": "Alnpu | ALHardNPU",
+        "model": "vendor face control",
+        "platform": "DR1 NPU",
+        "scope": "different face model; no YOLOv5n performance substitution",
+        "source_evidence": [
+          "results/evidence/036/face_runner_benchmark.json",
+          "results/evidence/036/board_stdout.log",
+          "results/evidence/036/board_stderr.log"
+        ],
+        "status": "FUNCTIONAL_CONTROL_ONLY"
+      },
+      {
+        "backend": "Alnpu",
+        "model": "YOLOv5n v7.0",
+        "platform": "DR1 NPU",
+        "scope": "NOT_BENCHMARKED; Task028 external dependency blocker",
+        "source_evidence": [
+          "results/evidence/028/benchmark_status.json"
+        ],
+        "status": "WAITING_FOR_VENDOR_INPUT"
+      }
+    ]
+  },
+  "integration_evidence": [
+    {
+      "backend": "ort",
+      "classification": "integration_evidence",
+      "fps": 18.15457456900368,
+      "id": "task038_ort_fp32",
+      "not_formal_benchmark": true,
+      "precision": "fp32",
+      "source_evidence": [
+        {
+          "path": "results/evidence/038/backend_runs.json",
+          "role": "unified image integration",
+          "sha256": "adc9f04a5e42f7819531ab6f42f692cb04537d94f2327e08cd0692b7df70f70b"
+        }
+      ],
+      "timings_ms": {
+        "fps": 18.15457456900368,
+        "inference": {
+          "mean": 49.3322254,
+          "p50": 48.494136,
+          "p95": 53.05282
+        },
+        "pipeline": {
+          "mean": 55.0825356,
+          "p50": 53.995918,
+          "p95": 59.262734
+        },
+        "postprocess": {
+          "mean": 4.020042,
+          "p50": 3.882319,
+          "p95": 4.35406
+        },
+        "preprocess": {
+          "mean": 1.730157,
+          "p50": 1.619407,
+          "p95": 2.025223
+        }
+      }
+    },
+    {
+      "backend": "ncnn",
+      "classification": "integration_evidence",
+      "fps": 20.822619835145403,
+      "id": "task038_ncnn_fp32",
+      "not_formal_benchmark": true,
+      "precision": "fp32",
+      "source_evidence": [
+        {
+          "path": "results/evidence/038/backend_runs.json",
+          "role": "unified image integration",
+          "sha256": "adc9f04a5e42f7819531ab6f42f692cb04537d94f2327e08cd0692b7df70f70b"
+        }
+      ],
+      "timings_ms": {
+        "fps": 20.822619835145403,
+        "inference": {
+          "mean": 42.3938848,
+          "p50": 42.517418,
+          "p95": 44.542058
+        },
+        "pipeline": {
+          "mean": 48.0246966,
+          "p50": 48.412571,
+          "p95": 50.097624
+        },
+        "postprocess": {
+          "mean": 4.0217168,
+          "p50": 4.010389,
+          "p95": 4.315033
+        },
+        "preprocess": {
+          "mean": 1.6090158,
+          "p50": 1.590509,
+          "p95": 1.675187
+        }
+      }
+    },
+    {
+      "backend": "tensorrt",
+      "classification": "integration_evidence",
+      "fps": 101.11244109922247,
+      "id": "task038_tensorrt_fp32",
+      "not_formal_benchmark": true,
+      "precision": "fp32",
+      "source_evidence": [
+        {
+          "path": "results/evidence/038/backend_runs.json",
+          "role": "unified image integration",
+          "sha256": "adc9f04a5e42f7819531ab6f42f692cb04537d94f2327e08cd0692b7df70f70b"
+        }
+      ],
+      "timings_ms": {
+        "fps": 101.11244109922247,
+        "inference": {
+          "mean": 4.2555388,
+          "p50": 4.250414,
+          "p95": 4.469002
+        },
+        "pipeline": {
+          "mean": 9.8899798,
+          "p50": 9.937474,
+          "p95": 10.329017
+        },
+        "postprocess": {
+          "mean": 3.9970016,
+          "p50": 3.966113,
+          "p95": 4.188833
+        },
+        "preprocess": {
+          "mean": 1.637373,
+          "p50": 1.657263,
+          "p95": 1.703324
+        }
+      }
+    },
+    {
+      "backend": "tensorrt",
+      "classification": "integration_evidence",
+      "fps": 76.95471241339074,
+      "id": "task038_tensorrt_fp16",
+      "not_formal_benchmark": true,
+      "precision": "fp16",
+      "source_evidence": [
+        {
+          "path": "results/evidence/038/backend_runs.json",
+          "role": "unified image integration",
+          "sha256": "adc9f04a5e42f7819531ab6f42f692cb04537d94f2327e08cd0692b7df70f70b"
+        }
+      ],
+      "timings_ms": {
+        "fps": 76.95471241339074,
+        "inference": {
+          "mean": 7.3970642,
+          "p50": 6.921778,
+          "p95": 9.375776
+        },
+        "pipeline": {
+          "mean": 12.9946558,
+          "p50": 12.400664,
+          "p95": 15.271359
+        },
+        "postprocess": {
+          "mean": 4.0047426,
+          "p50": 3.86082,
+          "p95": 4.282613
+        },
+        "preprocess": {
+          "mean": 1.5927838,
+          "p50": 1.598483,
+          "p95": 1.649664
+        }
+      }
+    },
+    {
+      "backend": "ort",
+      "classification": "integration_evidence",
+      "effective_processing_fps": 14.202751267782316,
+      "frames": {
+        "captured_frames": 30,
+        "dropped_frames": 0,
+        "failed_frames": 0,
+        "processed_frames": 30,
+        "written_frames": 30
+      },
+      "id": "task039_pc_ort_fp32",
+      "not_formal_benchmark": true,
+      "pipeline_ms": {
+        "mean_ms": 67.9756793,
+        "p50_ms": 64.791914,
+        "p95_ms": 75.925677
+      },
+      "precision": "fp32",
+      "source_evidence": [
+        {
+          "path": "results/evidence/039/pc_ort_fp32_video.json",
+          "role": "video/camera integration",
+          "sha256": "8625e8fa4cd0acb93f9d28451ecb97ca45d912518b598ec0b0d34581ec845013"
+        }
+      ]
+    },
+    {
+      "backend": "ncnn",
+      "classification": "integration_evidence",
+      "effective_processing_fps": 14.72067099157985,
+      "frames": {
+        "captured_frames": 30,
+        "dropped_frames": 0,
+        "failed_frames": 0,
+        "processed_frames": 30,
+        "written_frames": 30
+      },
+      "id": "task039_pc_ncnn_fp32",
+      "not_formal_benchmark": true,
+      "pipeline_ms": {
+        "mean_ms": 65.5235933,
+        "p50_ms": 59.880139,
+        "p95_ms": 81.957176
+      },
+      "precision": "fp32",
+      "source_evidence": [
+        {
+          "path": "results/evidence/039/pc_ncnn_fp32_video.json",
+          "role": "video/camera integration",
+          "sha256": "0589892f341eb7a281170d41f8635932e3bea74a78370d6fdaa131b9a660514b"
+        }
+      ]
+    },
+    {
+      "backend": "tensorrt",
+      "classification": "integration_evidence",
+      "effective_processing_fps": 17.770533792117416,
+      "frames": {
+        "captured_frames": 30,
+        "dropped_frames": 0,
+        "failed_frames": 0,
+        "processed_frames": 30,
+        "written_frames": 30
+      },
+      "id": "task039_pc_tensorrt_fp16",
+      "not_formal_benchmark": true,
+      "pipeline_ms": {
+        "mean_ms": 53.87240160000001,
+        "p50_ms": 47.478824,
+        "p95_ms": 71.58747
+      },
+      "precision": "fp16",
+      "source_evidence": [
+        {
+          "path": "results/evidence/039/pc_tensorrt_fp16_video.json",
+          "role": "video/camera integration",
+          "sha256": "e010e91295b5e654dfd80d426fe7876a16bfbaee1ce5c3584505f9cefb8b5b40"
+        }
+      ]
+    },
+    {
+      "backend": "ncnn",
+      "camera": {
+        "device": "/dev/video0",
+        "identity": {
+          "bus": "usb",
+          "card": "USB 2.0 Camera: USB Camera",
+          "driver": "uvcvideo",
+          "id_path": "platform-f8180000.usb-usb-0:1.3:1.0",
+          "model": "USB_2.0_Camera",
+          "model_id": "636b",
+          "serial": "SN0001",
+          "vendor": "Sonix_Technology_Co.__Ltd."
+        },
+        "negotiated": {
+          "backend": "V4L2",
+          "fourcc": "YUYV",
+          "fps": 25.0,
+          "height": 480,
+          "reported_frame_count": -1,
+          "width": 640
+        },
+        "queue": {
+          "capacity": 0,
+          "drop_policy": "none; capture and inference are serialized",
+          "mode": "synchronous"
+        }
+      },
+      "classification": "CAMERA_INTEGRATION_EVIDENCE",
+      "effective_processing_fps": 0.5648655607293647,
+      "frames": {
+        "captured_frames": 3,
+        "dropped_frames": 0,
+        "failed_frames": 0,
+        "processed_frames": 3,
+        "written_frames": 3
+      },
+      "id": "task039_dr_camera_ncnn_int8",
+      "not_formal_benchmark": true,
+      "pipeline_ms": {
+        "mean_ms": 1725.0766969999997,
+        "p50_ms": 1533.709605,
+        "p95_ms": 2113.275891
+      },
+      "precision": "int8",
+      "source_evidence": [
+        {
+          "path": "results/evidence/039/dr_camera_ncnn_int8.json",
+          "role": "video/camera integration",
+          "sha256": "39823af6eb3450fb9aebd9f0d49b5da9ff2c966d60450ce7ed6a93a9aa2ddbe7"
+        }
+      ]
+    }
+  ],
+  "model_contract": {
+    "confidence_threshold": 0.25,
+    "graph_nms": false,
+    "input": {
+      "dtype": "FP32",
+      "shape": [
+        1,
+        3,
+        640,
+        640
+      ]
+    },
+    "model": "YOLOv5n v7.0",
+    "nms_iou_threshold": 0.45,
+    "onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "output": {
+      "dtype": "FP32",
+      "shape": [
+        1,
+        25200,
+        85
+      ]
+    },
+    "postprocess": "shared YOLO decode, confidence filter, coordinate restore, class-aware NMS",
+    "preprocess": "shared BGR-to-RGB letterbox, normalize, HWC-to-CHW"
+  },
+  "notes": [
+    "Formal rows retain their own hardware, runtime, warmup/repeat and stage boundaries; the table is not a cross-hardware speedup claim.",
+    "Task039 camera captured three frames at 25 FPS and processed three synchronously with queue capacity zero; this is camera integration evidence, not realtime performance.",
+    "Task037 FP16 single-image Golden diagnostics remain secondary; its 4,500-image COCO gate is the acceptance gate.",
+    "Task035 EQ single-image reference diagnostic remains secondary; its independent 4,500-image COCO gate is the acceptance gate.",
+    "No Task001\u2013039 evidence was rewritten by this freeze."
+  ],
+  "provenance_policy": {
+    "cross_platform_speedup_claimed": false,
+    "formal_benchmark": "Task030 PC ORT, Task035 paired DR ncnn, Task037 TensorRT",
+    "functional_control": "Task036 vendor face Alnpu|ALHardNPU only; not YOLOv5n or cross-model speed",
+    "integration_evidence": "Task038 unified image and Task039 video/camera timings; not formal benchmark",
+    "optimization_reference": "Task033 accepted DR ncnn runtime tuning; Task035 paired values are authoritative for the final DR trade-off",
+    "vendor_blocked": "Task028 custom DR YOLOv5n NPU; no benchmark"
+  },
+  "recorded_at_semantics": "manifest generation time in WSL; not a benchmark clock",
+  "recorded_at_wsl": "2026-08-13T11:24:42+08:00",
+  "schema_version": 1,
+  "source_evidence": [
+    {
+      "path": "results/evidence/030/pc_ort_benchmark.json",
+      "role": "formal PC ORT",
+      "sha256": "cdea130112c953182d2e210218a7f295ef24d174fb9dc9aec4f97179467f9355"
+    },
+    {
+      "path": "results/evidence/030/benchmark_contract.json",
+      "role": "shared model contract",
+      "sha256": "2aac1d6eefcabcec276028c42cca8d2519bcea041186afe91dfadc301bf012e5"
+    },
+    {
+      "path": "results/evidence/033/threads2_default_packing_on.json",
+      "role": "accepted ncnn profile",
+      "sha256": "506e736b340fe0453380d9be6761857339ddaf1e5f576267b527ae23b22c34a0"
+    },
+    {
+      "path": "results/evidence/035/arm_int8_benchmark.json",
+      "role": "formal DR ncnn benchmark",
+      "sha256": "b3ddfb60f32a9da0651a60cc5d9597a257c9dd8bce89d602f38819292348054b"
+    },
+    {
+      "path": "results/evidence/035/coco_full_evaluation.json",
+      "role": "DR COCO accuracy",
+      "sha256": "45cb2a944a79d59ab0718ae1c89d121b0fc403b9b63459f85cf14a14db20c436"
+    },
+    {
+      "path": "results/evidence/036/face_runner_benchmark.json",
+      "role": "NPU functional control",
+      "sha256": "6b6963ed8c242ece25bef94da5461a86fc1e093f5224722133a18d8fd9e22f4a"
+    },
+    {
+      "path": "results/evidence/036/artifact_manifest.json",
+      "role": "NPU runtime identity",
+      "sha256": "3f020d9bade065ac827718186bbf219eb5b813197950649327a0905a96101c64"
+    },
+    {
+      "path": "results/evidence/036/board_stdout.log",
+      "role": "ALHardNPU assignment log",
+      "sha256": "d0cffeacd0a790250327272cc7724fb5668334aee65990904a393b0dba9f58e2"
+    },
+    {
+      "path": "results/evidence/036/board_stderr.log",
+      "role": "NPU no-fallback log",
+      "sha256": "4a41f3c507760e1b25a2414169e1a27205036b26f3b790ab9920dd3abd640ed5"
+    },
+    {
+      "path": "results/evidence/037/benchmark.json",
+      "role": "formal TensorRT benchmark",
+      "sha256": "b1cf310b66828cd44ee2fa518e6ff5b97c4c79fcce251cf18f427457ca75af02"
+    },
+    {
+      "path": "results/evidence/037/coco_accuracy.json",
+      "role": "TensorRT COCO accuracy",
+      "sha256": "193188a7aa684be67bd893d03990c308310b929303b3c0a23d0fa88b3c3a02b5"
+    },
+    {
+      "path": "results/evidence/037/engine_manifest.json",
+      "role": "TensorRT engine identity",
+      "sha256": "ed0faf546c1db8eb55250d777be431bb726abe4f4966279d467779a90c2ec14f"
+    },
+    {
+      "path": "results/evidence/038/backend_runs.json",
+      "role": "unified image integration",
+      "sha256": "adc9f04a5e42f7819531ab6f42f692cb04537d94f2327e08cd0692b7df70f70b"
+    },
+    {
+      "path": "results/evidence/039/validation.json",
+      "role": "video/camera integration policy",
+      "sha256": "07e69a2a13e4fdeb986509c2f9e267184a3e767dd4876339f3b5ec4d1dfde742"
+    },
+    {
+      "path": "results/evidence/039/dr_camera_ncnn_int8.json",
+      "role": "DR camera integration",
+      "sha256": "39823af6eb3450fb9aebd9f0d49b5da9ff2c966d60450ce7ed6a93a9aa2ddbe7"
+    },
+    {
+      "path": "results/evidence/039/dr_camera_capabilities.json",
+      "role": "camera identity",
+      "sha256": "243fa1d5b90c9a30ff8f8cff305664bab258e31737c447628af9e8bdbefb3f29"
+    },
+    {
+      "path": "results/evidence/028/benchmark_status.json",
+      "role": "custom NPU blocked status",
+      "sha256": "74c59438704c7fe80048385262fb99688f5da8a72df68fcac6e605e93a9c5bb2"
+    }
+  ],
+  "status": "FINAL_BENCHMARK_RESULTS_FROZEN",
+  "task": "040",
+  "timing_boundary_policy": {
+    "conflict_resolution": "Task037 formal fields remain authoritative; Task038 values remain integration-only and cannot overwrite them",
+    "cross_backend_main_field": "backend_inference_ms",
+    "task038_integration_values_ms": {
+      "fp16_backend_call": 7.3970642,
+      "fp32_backend_call": 4.2555388
+    },
+    "tensorrt_backend_call": "Task037 inference_wall_ms: host wall detector.infer() including H2D, enqueueV3, D2H and synchronization",
+    "tensorrt_formal_values_ms": {
+      "fp16_backend_call": 3.71610421,
+      "fp16_gpu_execution": 1.37037856,
+      "fp32_backend_call": 3.71244466,
+      "fp32_gpu_execution": 1.6742607927322388
+    },
+    "tensorrt_gpu_execution": "Task037 gpu_inference_ms: CUDA event from inference_start to inference_end around enqueueV3 only, excluding H2D and D2H"
+  }
+}

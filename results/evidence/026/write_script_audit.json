@@ -1,0 +1,81 @@
+{
+  "schema_version": "task026-write-script-audit-v1",
+  "task": "026",
+  "captured_at": "2026-08-06T13:38:05+08:00",
+  "status": "PASS_STATIC_REVIEW",
+  "source_root": "/home/uisrc/task025-repro/uisrc-lab-anlogic-pdf-20260805",
+  "scripts": [
+    {
+      "name": "scripts/rootfs/buildroot/make_parted.sh",
+      "sha256": "36a2f94ee3566c8a78171dbdc0b56c2f913161e456c4bf1e65d39bad95cefd9b",
+      "source_read_in_this_phase": true,
+      "classification": "UNSAFE_DESTRUCTIVE",
+      "executed_in_this_phase": false,
+      "hardcoded_sdb": false,
+      "device_identity_checks": "enumerates nonzero removable block devices with DRIVER=sd and prompts for a device; no model/serial/capacity binding",
+      "destructive_actions": ["optional apt-get install parted", "umount all selected partitions", "parted rm all partitions", "parted mklabel msdos", "parted mkpart", "parted set boot", "partprobe", "mkfs.vfat", "mkfs.ext4"],
+      "evaluated_layout": "with MLK_BOOTSCR_NAME=parameter-tf-fat.txt (not containing ext4), one FAT32 partition from 0% to 100%, boot flag"
+    },
+    {
+      "name": "scripts/rootfs/buildroot/deploy_image.sh",
+      "sha256": "23d95f0d2d7e82c554e3b6ac5a7af3ed96d9462b4138c719250f13b46102fbb3",
+      "source_read_in_this_phase": true,
+      "classification": "UNSAFE_DESTRUCTIVE",
+      "executed_in_this_phase": false,
+      "hardcoded_sdb": false,
+      "device_identity_checks": "enumerates removable DRIVER=sd devices and prompts for a device; no model/serial/capacity binding",
+      "destructive_actions": ["umount selected partitions", "mount vfat/ext4", "rsync boot files", "tar extract rootfs", "rsync custom/recovery trees", "sync", "umount"],
+      "evaluated_behavior": "partition 1 must be vfat and receives MLK_IMAGES_DIR/boot; partition 2 must be ext4 and receives rootfs.tar.gz, but this is not used by the parameter-tf-fat one-partition layout"
+    },
+    {
+      "name": "boards/DR1M/configs/parameter-tf-fat.txt",
+      "sha256": "5cf3e7d8ca04e44cdf3c5c103de27d5db293135d0c29ee37bfa4edbcfd8432ba",
+      "source_read_in_this_phase": true,
+      "classification": "STATIC_BOOT_CONFIG",
+      "executed_in_this_phase": false,
+      "device_identity_checks": "not applicable",
+      "boot_contract": "mmc part; load uImage.lz4, uInitrd.lz4 and system.dtb; bootm; console ttyS0 and alspinor mtdparts"
+    },
+    {
+      "name": "scripts/rootfs/buildroot/create_image.sh",
+      "sha256": "e273750fdeacdc22a348449150dc9107161ecd7f30923479edcf46a72b4a74cd",
+      "source_read_in_this_phase": true,
+      "classification": "SAFE_ISOLATED_BUILD",
+      "executed_in_this_phase": false,
+      "device_identity_checks": "not applicable",
+      "behavior": "dispatches to create_dr1m_image.sh for ARCH=arm64; no block-device operations in this script"
+    },
+    {
+      "name": "scripts/rootfs/buildroot/create_dr1m_image.sh",
+      "sha256": "ffd4d6db096d8b99f47b657c4c3ee030802a419feba2481c8036f809963428ab",
+      "source_read_in_this_phase": true,
+      "classification": "SAFE_ISOLATED_BUILD",
+      "executed_in_this_phase": false,
+      "device_identity_checks": "not applicable",
+      "behavior": "uses fsbl.elf, system.bit, u-boot.bin, bootgen/albg and mkimage to create BOOT.bin/boot.scr and copy boot/rootfs artifacts into MLK_IMAGES_DIR"
+    },
+    {
+      "name": "boards/DR1M/buildroot/images/boot/boot.scr",
+      "sha256": "99d1c6d7e5bead893c495f9b5c8c796e1186108d4decd47915c06680f6f4b012",
+      "size_bytes": 466,
+      "source_read_in_this_phase": true,
+      "classification": "STATIC_BOOT_ARTIFACT",
+      "executed_in_this_phase": false,
+      "device_identity_checks": "not applicable",
+      "behavior": "U-Boot script loads uImage.lz4, uInitrd.lz4 and system.dtb from mmc boot partition"
+    }
+  ],
+  "board_config_observation": {
+    "cfg_path": "boards/DR1M/configs/.cfg",
+    "mlk_bootscr_name": "parameter-tf-fat.txt",
+    "branch_selected_by_make_parted": "single FAT32 partition 0%-100%"
+  },
+  "known_destructive_actions": ["umount", "parted", "partprobe", "mkfs.vfat", "mkfs.ext4", "mount", "rsync", "tar extraction", "sync"],
+  "vendor_commands_not_run": ["make_parted.sh", "deploy_image.sh"],
+  "controlled_write_operations_outside_vendor_scripts": ["umount", "parted", "partprobe", "mkfs.vfat", "mount", "cp", "sync"],
+  "safety": {
+    "destructive_vendor_script_executed": false,
+    "block_device_written_by_vendor_script": false,
+    "controlled_write_authorized_by_user": true
+  }
+}

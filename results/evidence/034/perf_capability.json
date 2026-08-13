@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task": "034",
+  "status": "PASS_READONLY_AUDIT",
+  "board_observation": {
+    "architecture": "aarch64",
+    "kernel": "6.1.111-rt42",
+    "logical_cpu_count": 2,
+    "cpu_part": "0xd04",
+    "features": ["fp", "asimd", "evtstrm", "aes", "pmull", "sha1", "sha2", "crc32", "cpuid"],
+    "source": "read-only board probe retained with Task 034 run logs"
+  },
+  "pmu": {
+    "perf_command": "perf stat -e cycles,instructions,cache-references,cache-misses -- <profiler>",
+    "available": false,
+    "observed_exit_code": 127,
+    "observed_error": "perf: command not found",
+    "kernel_changed": false
+  },
+  "frequency_temperature": {
+    "cpu_frequency_khz": "unavailable: no readable scaling_cur_freq source observed",
+    "temperature_millicelsius": "unavailable: no readable thermal temperature source observed"
+  },
+  "interpretation": {
+    "compute_vs_memory": "Layer timing identifies convolution/kernel throughput as the dominant measured cost; cache/PMU attribution is not possible because perf is unavailable.",
+    "not_claimed": ["cache miss rate", "cycle count", "instructions per cycle", "frequency-normalized throughput"]
+  }
+}

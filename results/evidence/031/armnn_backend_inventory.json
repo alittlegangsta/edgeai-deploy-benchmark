@@ -1,0 +1,66 @@
+{
+  "archives": [
+    {
+      "executed": false,
+      "logical_path": "<vendor-root>/dr1m90_npu/npu_demo/libs/armnn_lib.tar.xz",
+      "sha256": "867e347bb758f9b1b083c35e08a74f2b3cc39c2975ac0f8e18c25f7f35749526",
+      "static_extraction": true
+    }
+  ],
+  "capability_audit": {
+    "alhardnpu_fusion_symbols_present": [
+      "ConvertConv2dIntoALHardNPUImpl::RunOptimization",
+      "ConvertConv2dIntoALHardNPUImpl::checkConv",
+      "ConvertConv2dIntoALHardNPUImpl::checkAct",
+      "ConvertConv2dIntoALHardNPUImpl::checkPool",
+      "ALHardNPURun",
+      "ALHardNPUFCRun",
+      "ALHardNPULayer",
+      "AlnpuALHardNPUWorkload",
+      "IWorkloadFactory::CreateALHardNPU"
+    ],
+    "all_builds_same_override_set": true,
+    "alnpu_overrides": [
+      "IsALHardNPUSupported",
+      "IsConcatSupported",
+      "IsConstantSupported",
+      "IsInputSupported",
+      "IsLayerSupported",
+      "IsMemCopySupported",
+      "IsOutputSupported",
+      "IsPooling2dSupported",
+      "IsPreluSupported",
+      "IsResizeSupported"
+    ],
+    "generic_methods_default_reject": [
+      "IsConvolution2dSupported",
+      "IsActivationSupported",
+      "IsSplitterSupported",
+      "IsAdditionSupported",
+      "IsMultiplicationSupported",
+      "IsElementwiseUnarySupported"
+    ],
+    "generic_support_build_found": false,
+    "method": "nm -D -C/readelf/objdump static symbol and RTTI/vtable audit; backend source unavailable",
+    "rejection_path_strings_same": true
+  },
+  "conclusion": "No unique audited libarmnn.so build exposes generic Conv2d/Activation/Splitter/Add/Mul AlnpuLayerSupport overrides. The compiled ALHardNPU symbols are an ArmNN fusion path, not a recovered standalone generation tool.",
+  "deduplication": "SHA256",
+  "schema_version": 1,
+  "task": "031",
+  "unique_builds": [
+    {
+      "build_id": "908ef2baba9c12555c89548f19501510b8863b7a",
+      "label": "SDK_2024.10/2025.01 family",
+      "libarmnn_sha256": "9cd854c95c9992920aee26195bee3953357b315bce8baddb2d6c4e7327efc547",
+      "parser_sha256": "a7ae528a848face4f56f4f766bbd8026da0457d63763c75157fb571dc3fc7195"
+    },
+    {
+      "build_id": "9f9aaf6f26dd1cf57ac84c778b9f621c04c7d895",
+      "label": "SDK_2025.07/2026.01 and dr1m90_npu release family",
+      "libarmnn_sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+      "parser_sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+      "soname": "libarmnn.so.32"
+    }
+  ]
+}

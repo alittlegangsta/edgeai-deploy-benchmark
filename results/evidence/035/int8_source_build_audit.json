@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "task": "035",
+  "source": {
+    "path": "/home/dministrator/src/ncnn-20240410",
+    "tag": "20240410",
+    "commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "commit_subject": "update readme download matrix, release 20240410 (#5418)",
+    "working_tree_note": "python/pybind11 submodule is dirty; reproducible archives use git archive at the pinned commit",
+    "source_archive_sha256": "328fe282b98457d85ab56184fa896467f6bf640d4e48e91fcefc8d31889f92b7"
+  },
+  "host_build": {
+    "path": "/home/dministrator/src/ncnn-20240410/build-linux-x64-release",
+    "build_type": "Release",
+    "compiler": "/usr/bin/g++",
+    "NCNN_INT8": "ON",
+    "NCNN_OPENMP": "ON",
+    "NCNN_THREADS": "ON",
+    "NCNN_SIMPLEOMP": "OFF",
+    "NCNN_RUNTIME_CPU": "ON",
+    "NCNN_GNU_INLINE_ASM": "ON",
+    "quantization_tools": {
+      "ncnnoptimize": {
+        "path": "/home/dministrator/src/ncnn-20240410/build-linux-x64-release/tools/ncnnoptimize",
+        "sha256": "4f1aa276303215ce8ef02e3f2a4393effd030f044266cbf519603269f700bfad"
+      },
+      "ncnn2table": {
+        "path": "/home/dministrator/src/ncnn-20240410/build-linux-x64-release/tools/quantize/ncnn2table",
+        "sha256": "b82e6568ce566c1d3e5d925914b95b22393314bf8148226c260c28bea98418d6"
+      },
+      "ncnn2int8": {
+        "path": "/home/dministrator/src/ncnn-20240410/build-linux-x64-release/tools/quantize/ncnn2int8",
+        "sha256": "49a251aa76f9b234e095d60c4b0c595d58d1adfaeeaa54897963100275a22ae7"
+      }
+    }
+  },
+  "arm_source_capability": {
+    "int8_kernels": [
+      "convolution_3x3_int8.h",
+      "convolution_3x3_winograd_int8.h",
+      "convolution_im2col_gemm_int8.h",
+      "convolution_packed_int8.h",
+      "convolutiondepthwise_3x3_int8.h",
+      "convolutiondepthwise_3x3_pack8_int8.h",
+      "quantize_arm.cpp",
+      "dequantize_arm.cpp",
+      "requantize_arm.cpp"
+    ],
+    "board_isa_evidence": "Task 034 board capability probe: AArch64 Cortex-A35-class CPU part 0xd04 with ASIMD/NEON; no dotprod or I8MM reported",
+    "candidate_build": {
+      "status": "PASS_AARCH64_INT8_BUILD",
+      "script": "scripts/vendor/run_task035_ncnn_int8.sh --execute",
+      "source_archive_sha256": "328fe282b98457d85ab56184fa896467f6bf640d4e48e91fcefc8d31889f92b7",
+      "project_archive_sha256": "480ac4ad523355041fcfc7bdf41e5f6dcaced86f1cf96fe050ccccac64710c16",
+      "compiler": "aarch64-linux-gnu-g++ (Linaro GCC 7.5-2019.12) 7.5.0",
+      "cmake": "cmake version 3.16.9",
+      "options": {
+        "NCNN_OPENMP": true,
+        "NCNN_THREADS": true,
+        "NCNN_SIMPLEOMP": false,
+        "NCNN_RUNTIME_CPU": true,
+        "NCNN_BENCHMARK": false,
+        "NCNN_INT8": true,
+        "NCNN_BF16": true,
+        "NCNN_FORCE_INLINE": true,
+        "NCNN_ENABLE_LTO": false,
+        "NCNN_ARM82": false,
+        "NCNN_VFPV4": true,
+        "release": true
+      },
+      "libncnn_sha256": "248c96f0afd9fb5acb36ca40fa6db0bf62ae860e31fd6febdbf0bfd5fffb47a2",
+      "profiler_sha256": "598886d9b1a2b3b2d56455e2efbaef79b70f740c62f2c2a6a9c82ddfe9a71e64",
+      "architecture": "ELF64 AArch64",
+      "dynamic_loader": "/lib/ld-linux-aarch64.so.1",
+      "private_libgomp_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+      "ldd_status": "PASS_PRIVATE_LIBS_RESOLVED",
+      "infra_note": "The initial VM wrapper socket failure was retried with the approved isolated VM build path; it is retained as an independent infrastructure event."
+    }
+  },
+  "model_contract": {
+    "param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "input_shape": [1, 3, 640, 640],
+    "output_shape": [1, 25200, 85],
+    "dtype": "FP32 interface with decoded YOLO candidate output",
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45
+  }
+}

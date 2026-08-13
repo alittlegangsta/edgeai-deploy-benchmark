@@ -1,279 +1,153 @@
 # EdgeAI Deploy Benchmark
 
-EdgeAI Deploy Benchmark is a reproducible PC deployment and measurement baseline
-plus an Anlogic DR1 ARM CPU single-image deployment baseline for a fixed
-YOLOv5n v7.0 detector. The PC implementation contains Python ONNX Runtime, C++
-ONNX Runtime, and C++ ncnn image/video paths with shared correctness and
-benchmark contracts. The ARM implementation reuses the approved C++ ncnn
-single-image pipeline and correctness contract.
+一个面向端侧 AI 部署的 YOLOv5n v7.0 工程：同一套 C++ 推理接口贯通
+ONNX Runtime、TensorRT/CUDA 和 ARM Linux ncnn，并在真实 Anlogic DR1M90
+开发板上完成 CPU、INT8、UVC 摄像头和 vendor NPU control 验证。
 
-## Current status
+项目重点不是“只跑通模型”，而是把模型契约、预处理、后处理、正确性、
+性能边界、交叉编译、动态库和板端证据全部冻结成可复核的部署链路。
 
-Tasks 001–023 are completed. Task 021 ARM UVC camera inference passed its
-automated stage and received user representative-frame approval. Task 020 ARM video-file inference passed
-automated real-board validation and user playback review.
-Checkpoint C is
-human-approved, PC Stage 1 is complete, and the Anlogic DR1 Stage 2 CPU
-single-image and unoptimized benchmark baselines are complete.
-Stage 2 covers the validated AArch64 toolchain, a CPU-only static ncnn build,
-real-board ncnn runtime smoke, frozen YOLOv5n single-image inference, PC/ARM
-correctness, user-approved visual output, and the formal CPU/FP32 one-thread
-benchmark. It does not include video, camera, Vulkan, quantization, optimization,
-or NPU deployment. Task 020 is a functional video validation, not a formal
-video performance benchmark.
+## Project Highlights
 
-Task 017 froze the separate formal DR1 ARM CPU benchmark protocol and offline
-collector/validator. It defines five independent processes, 10 warmups and 20
-measured iterations per process, exact stage boundaries, nearest-rank
-statistics, Peak RSS, frequency/temperature observation, and before/after
-correctness. The complete 100-sample real-board session passed automated
-validation and user review and is published as the default unoptimized baseline.
-See [the ARM benchmark protocol](docs/vendor/ANLOGIC_ARM_CPU_BENCHMARK.md).
+- 固定 YOLOv5n v7.0：batch=1，输入 `[1,3,640,640]`，输出
+  `[1,25200,85]`，FP32、无图内 NMS。
+- C++17、OpenCV、ONNX Runtime、TensorRT、ncnn 共用 letterbox、decode/NMS
+  和可视化逻辑；backend 不可用时显式报错，不静默 fallback。
+- PC：CPU ORT 与 RTX 4060 Ti TensorRT FP32/FP16；ARM：AArch64 ncnn
+  FP32 与 EQ INT8。
+- DR1 实机：Linux 6.1.111-rt42、V4L2 UVC camera、ncnn INT8、视频文件和
+  vendor `Alnpu | ALHardNPU` face control。
+- 正式结果只来自 [Task040 authoritative manifest](results/final/authoritative_results.json)。
 
-Task 018 completed a contemporaneous paired one-thread/two-thread experiment
-with one OpenMP-enabled ncnn build. The user-approved `BENEFICIAL` result
-records `1.845334x` pipeline speedup and `84.53%` FPS gain while preserving
-correctness. The earlier OpenMP-off session remains parameter-sensitivity
-evidence and is invalid for multithread performance comparison. See
-[the threading experiment protocol](docs/vendor/ANLOGIC_ARM_CPU_THREADING_EXPERIMENT.md).
+## Architecture
 
-Task 019 turns the approved result into explicit deployment policy without
-changing PC defaults: `baseline-single-thread` preserves Task 017, while
-`recommended-dual-thread` binds the Task 018 OpenMP build, two threads, and its
-private libgomp. DR1 deployments should select the recommended profile
-explicitly. See
-[the ARM runtime profile guide](docs/vendor/ANLOGIC_ARM_RUNTIME_PROFILES.md).
-
-Task 020 reuses that recommended dual-thread profile for a 30-frame lossless
-fixed-image video on the real board. All frames pass the PC ncnn golden gate,
-and the returned MJPEG/AVI decodes 30/30 frames in WSL. See
-[the ARM video-file guide](docs/vendor/ANLOGIC_ARM_VIDEO_FILE_INFERENCE.md).
-The user approved full playback, frame continuity, and annotations; Task 020 is
-`Completed`. This remains functional validation, not a formal video benchmark.
-
-Task 021 uses the real DR1M90 UVC camera at the audited `/dev/video0` V4L2
-`YUYV 640x480@5` configuration and a capacity-one latest-frame slot. Ten live
-frames were retained and independently replayed through the approved single-
-image path with `PASS_TARGET` equivalence. See
-[the ARM UVC camera guide](docs/vendor/ANLOGIC_ARM_UVC_CAMERA_INFERENCE.md) and
-the six user-approved representative files under `results/images/021/`. This
-is functional bounded-latency validation, not a realtime benchmark; YUYV 5 FPS
-is the camera capture setting, not an inference FPS result.
-
-Task 022's prior local/VM/board audit and seven-page official AlWiki review are
-user-approved. The task is complete as an audit, while NPU deployment remains
-blocked; the primary result remains
-`BLOCKED_DRIVER_OR_DEVICE`: the
-board's hard-NPU device-tree node and CMA reservation are visible, but no
-matching NPU/CMA modules are loaded, no `/dev/hard_npu`, `/dev/soft_npu`, or
-`/dev/cma_mem` nodes exist, and the searched VM/SDK scope lacks a versioned
-standalone `npu_runtime`, host converter executables, and official `rt.bin` /
-`weight.bin` artifacts. The AArch64 Arm NN/Alnpu libraries in the SDK are
-candidate assets, not proof of a deployable board runtime. No vendor one-shot
-was run and the frozen project YOLOv5n model has not been converted for NPU.
-This is a current asset/device readiness block, not a claim that DR1M90
-permanently lacks NPU support; a version-matched vendor package must be
-received and reviewed before any deployment change.
-See [the NPU feasibility audit](docs/vendor/ANLOGIC_NPU_RUNTIME_FEASIBILITY.md)
-and its structured evidence under `results/evidence/022/`.
-
-The selected public AlWiki API pages (seven pages, `7/7` HTTP 200) add an
-official D20.1 DR1M90 Buildroot/HPF/module-selection flow and D20.0 NPU API
-documentation. They do not expose a verified current-board driver/runtime,
-bitstream, one-shot, `rt.bin`/`weight.bin`, or host converter package. The
-examples mention AD101V20 or DR1M90GEG484-2 in places, so exact
-MLK-F3P-CZ02-DR1M90/Linux 6.1.111-rt42 applicability is still unknown. No
-attachment was downloaded; the supplemental Wiki review is complete, and
-project YOLOv5n conversion is still not ready.
-
-Task 023 is the completed, user-approved read-only Anlogic NPU package-intake
-audit. The user-provided
-`NPU_info` collection and approved AlWiki/Gitee sources now have a provenance
-and dependency map. The native `npu_runtime` path remains asset-blocked, while
-the Arm NN/ONNX demo path has been configured and linked in an isolated VM
-workspace; neither path is deployment-ready because the mixed
-DR1M90GEG400/AD101V20/AD103V20/GEG484 materials do not map to the active
-MLK-F3P-CZ02-DR1M90 FPGA/Device Tree. The primary status is
-`BLOCKED_BOARD_HARDWARE_MAPPING`; secondary build, symbol-CRC, runtime,
-release-identity and asset blockers remain. No driver, bitstream, vendor ELF,
-or project model was executed or added to this repository. See
-`docs/vendor/ANLOGIC_NPU_PACKAGE_AND_BUILD_CHAIN.md` and
-`results/evidence/023/` for the static intake.
-The audit is complete; deployment remains blocked, the vendor one-shot was not
-executed, controlled board deployment was not approved, and project YOLOv5n
-conversion is not ready.
-
-Task 024 is the completed read-only MLK-F3P-CZ02 board-mapping audit. A current
-Buildroot 2022.02.6/Linux 6.1.111-rt42 read confirmed the boot partition,
-BOOT.bin, boot.scr, system.dtb and uImage.lz4 hashes, and parsed the active
-hard-NPU/CMA Device Tree semantics. The BOOT.bin FPGA payload/source remains
-opaque, and the supplied DR1M90GEG400 NPU project is a candidate rather than
-the active FPGA/Device Tree. Kernel symbol provenance and rollback readiness
-remain open; current eMMC NPU readiness is Not ready and controlled deployment
-is not approved. No module, bitstream, DTB, kernel, media, or vendor program was touched. See
-`docs/vendor/ANLOGIC_NPU_BOARD_MAPPING_AND_CONTROLLED_DEPLOYMENT.md` and
-`results/evidence/024/`.
-
-Task 025 is the completed SD-image preflight. The Milianke project is a strong
-`DR1M90GEG400` board-level lead and its candidate HPF/bitstream/DT/boot hashes
-are retained outside Git. The exact `SDK_2025.07-linux6.1` superproject clone
-is reproducible, but local relative submodules cannot be materialized; the
-fuller vendor release tarball has no `.git` provenance and the official SDK has
-no MLK-F3P-CZ02 BoardConfig. Arm NN application targets link as AArch64
-binaries in isolation, and their recursive non-system `DT_NEEDED` closure is
-static-pass; the packaging step's `libprotoc.so*` names are not runtime
-dependencies for the inspected closure, while absolute OpenCV RPATH
-relocation remains unverified. The PDF-guided injection flow was then exercised
-in a fresh isolated VM copy: the same workspace generated `BOOT.bin`,
-`system.dtb`, kernel and the three NPU modules, and compiled the Arm NN demo.
-The Buildroot 2022.02.6 dependency cache is now frozen and hash-checked, and a
-formal rootfs was built offline in the isolated VM workspace. Static inspection
-found only AArch64 ELF files and no missing DT_NEEDED names. A complete
-external candidate file set (but no partitioned SD image) is recorded as
-`READY_FOR_SD_WRITE_APPROVAL`; `candidate_approved: true` admits the static
-13-file set to a controlled deployment workflow only. It does not authorize
-formatting, partitioning or writing real media; `deployment_approval` remains
-`PENDING`. No SD/eMMC write, module load, FPGA write, vendor NPU execution or
-project-model conversion was performed. See
-[the Task 025 preflight](docs/vendor/ANLOGIC_NPU_SD_IMAGE_PREFLIGHT.md) and
-`results/evidence/025/`.
-
-The bounded `03_demo` follow-up audit selected `05-5_NPU演示` as the direct
-Milianke NPU lead. It confirms an Arm NN/ONNX package and candidate
-DR1M90GEG400 HPF/bitstream/boot assets, but also records mixed AD101/GEG484
-metadata, a missing base DTS, differing platform and best-result bitstream
-hashes, and no MLK BoardConfig or native `npu_runtime` assets. The candidate
-source identity remains mixed, but the documented injection workflow and
-formal Buildroot rootfs are separately evidenced. Source provenance, board
-boot and runtime execution remain unverified; the screening, deep-audit, PDF
-workflow and formal rootfs evidence is in `results/evidence/025/`.
-
-The subsequent bounded archive audit listed the 05-5 package and hash-recorded
-the two large FPSoc RAR SDK archives; no local RAR reader was available, so no
-RAR extraction was attempted. Direct 3-2/3-4 inspection confirms only generic
-GEG400/FSBL/Linux context, while the 05-5 HPF/platform bit and best-result bit
-are different and its BOOT payload has no packaged BIF/bootgen source. This
-keeps candidate BoardConfig recovery at `ASSET_IDENTITY_CONFLICT`; the
-formal candidate file set is now ready for a separate SD-write approval, but
-no partitioned image or board boot is claimed.
-
-The exact expected ARM Milianke package `uisrc-lab-anlogicM-V4.0.1.tar.gz`
-was then identified by MD5 and statically inspected. It is a generic DR1M
-SDK_2025.1 source/toolchain snapshot with image scripts and NPU driver source,
-not an MLK-F3P-CZ02 BoardConfig or complete Arm NN/NPU runtime package. The
-expected `anlogic-linuxsdk` download was not found locally; this increment is
-classified `RECOVERABLE_STRUCTURE_VERSION_MISMATCH`; that package-only
-increment did not itself provide the rootfs inputs needed by the later
-PDF-guided candidate build.
-
-## PC architecture and model lineage
-
-```text
-YOLOv5n v7.0 weights
-├── frozen ONNX ──> Python ORT / C++ ORT
-└── frozen TorchScript ──> pnnx 20240410 ──> ncnn param/bin ──> C++ ncnn
+```mermaid
+flowchart LR
+    S[Image / Video / V4L2 Camera] --> P[Shared OpenCV preprocessing\nletterbox + NCHW]
+    P --> F{InferenceBackend}
+    F --> O[OrtBackend\nONNX Runtime CPU FP32]
+    F --> T[TensorRtBackend\nCUDA FP32 / FP16]
+    F --> N[NcnnBackend\nARM CPU FP32 / EQ INT8]
+    O --> R[Raw YOLO tensor]
+    T --> R
+    N --> R
+    R --> D[Shared decode + NMS]
+    D --> V[JSON + overlay + image/video output]
 ```
 
-The two ONNX Runtime implementations use the same frozen ONNX model. The ncnn implementation uses a separately frozen TorchScript-to-pnnx model generated from the same YOLOv5n v7.0 weights and validated for semantic equivalence.
+The backend boundary is intentionally small: adapters return raw model output,
+while preprocessing, postprocessing and visualization remain backend-independent.
 
-YOLOv5n was selected as a small, established detector suitable for learning and
-comparing deployment pipelines. The source weights SHA256 is
-`4f180cf23ba0717ada0badd6c685026d73d48f184d00fc159c2641284b2ac0a3`;
-the frozen ONNX SHA256 is
-`78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121`.
-The input contract is batch 1, FP32, NCHW `[1,3,640,640]`.
+## Deployment Pipeline
 
-## Environment and dependencies
-
-- WSL2 Linux x86_64; CPU affinity scheduler managed; pinning disabled.
-- Python 3.12.3, ONNX Runtime 1.18.1 CPUExecutionProvider, OpenCV 4.10.0.
-- GCC 13.3.0, CMake 3.28.3, Ninja 1.11.1, system OpenCV 4.6.0.
-- C++ ONNX Runtime SDK 1.18.1 and ncnn 1.0.20240410.
-- ORT intra/inter-op threads 1, ncnn threads 1, OpenCV threads 1.
-- `OMP_NUM_THREADS`, `OPENBLAS_NUM_THREADS`, `MKL_NUM_THREADS`, and
-  `NUMEXPR_NUM_THREADS` are all 1.
-- ARM cross-build: Ubuntu 18.04.4 VM, user-local CMake 3.16.9, Linaro
-  GCC/G++ 7.5.0, target `aarch64-linux-gnu`, and glibc 2.25 sysroot.
-- ARM target: MLK-F3P-CZ02-DR1M90, AArch64 dual core, Buildroot 2022.02.6,
-  kernel 6.1.111-rt42, glibc 2.25, and OpenCV 4.7.0.
-- Task 018 ARM threading instrument: ncnn `20240410` with
-  `NCNN_OPENMP=ON`, `NCNN_THREADS=ON`, `NCNN_SIMPLEOMP=OFF`, plus a private
-  `libgomp.so.1` loaded only from the isolated deployment directory.
-
-The Python/C++ OpenCV version difference limits single-cause attribution of
-preprocess performance even though tensor and detection correctness pass.
-
-## Anlogic DR1 ARM CPU baseline
-
-The real board ran the frozen ncnn `20240410` CPU/FP32 pipeline with one thread,
-the same approved `.param`/`.bin`, fixed image, configuration, preprocessing,
-postprocessing, and PC C++ ncnn golden. It exited zero with five matching
-detections. The minimum class-matched IoU is `0.999985507578`, the maximum
-confidence delta is `0.00000500679016113`, the annotated PNG is byte-identical
-to the PC ncnn golden, and the user visual review is `PASS`.
-
-The user-approved Task 017 benchmark uses five independent processes, 10
-warmups and 20 measured iterations per process. The aggregate pipeline mean is
-`3513.992354 ms` (about `3.514` seconds per image), and sequential batch-1 FPS
-is `0.284576601` (about `0.285`). Mean inference time is `3418.092005 ms`, so
-inference dominates the pipeline. Maximum process Peak RSS is `142476 KiB`.
-These values describe the default CPU-only FP32, batch-1, `640x640`, one-thread
-configuration, not multi-thread, NEON-specific, quantized, Vulkan, or NPU
-performance.
-
-The user-approved Task 018 paired experiment uses a separate OpenMP-enabled
-build for both conditions and changes only `configured_threads`. Mean pipeline
-latency is `3634.205540 ms` at one thread and `1969.402190 ms` at two threads,
-corresponding to `1.845334x` speedup and an FPS increase from `0.275163303` to
-`0.507768299`. Correctness is unchanged (`IoU=1.0`, confidence delta `0.0`
-between thread conditions), and both stability gates pass. This is beneficial
-but not ideal `2x` scaling; serial pipeline work and scheduling overhead remain.
-Task 017 is a different-build historical reference and was not modified.
-
-For deployment, use `recommended-dual-thread`; use
-`baseline-single-thread` only when reproducing Task 017. The recommendation is
-specific to the verified DR1M90 CPU/FP32 single-image path and does not
-silently alter the generic PC CLI.
-
-Use [the Stage 2 closeout guide](docs/vendor/ANLOGIC_ARM_STAGE2_CLOSEOUT.md) for
-the frozen identities, environment roles, phased build/deploy/run/collect/
-compare commands, tracked evidence, and artifact policy. Task 015 reconciles
-existing evidence only; no inference or benchmark was rerun during closeout.
-
-## Repository structure
-
-- `python/`: Python ORT applications and common processing.
-- `cpp/`: C++ common modules and ORT/ncnn applications.
-- `configs/`: frozen inference and benchmark contracts.
-- `models/`: manifests; generated model binaries remain Git-ignored.
-- `tasks/`: auditable task state and execution records.
-- `results/`: committed small evidence and generated local outputs.
-- `docs/`: model, benchmark, PC acceptance, and ARM deployment documentation.
-
-## Model preparation
-
-Model weights, ONNX, TorchScript, ncnn param/bin, SDKs, and large videos are
-intentionally Git-ignored. Put the official v7.0 weights at
-`models/yolov5n-v7.0/yolov5n.pt`, verify the Task 002 SHA256, and export ONNX
-from a read-only YOLOv5 v7.0 checkout:
-
-```bash
-export YOLOV5_SOURCE=/path/to/yolov5-v7.0
-.venv/bin/python "$YOLOV5_SOURCE/export.py" \
-  --weights models/yolov5n-v7.0/yolov5n.pt \
-  --imgsz 640 640 --batch-size 1 --device cpu \
-  --include onnx --opset 12
+```mermaid
+flowchart TD
+    W[YOLOv5n v7.0 weights] --> X[Frozen ONNX contract]
+    X --> PC[PC ORT / TensorRT engines]
+    W --> TS[TorchScript]
+    TS --> PX[pnnx 20240410]
+    PX --> NC[ncnn param/bin]
+    NC --> ARM[ARM Linux cross-build]
+    PC --> RUN[edgeai_demo image/video/camera]
+    ARM --> RUN
+    RUN --> C[Correctness gates]
+    C --> B[Formal benchmark or integration evidence]
 ```
 
-Do not add `--simplify`, `--dynamic`, `--half`, or graph NMS. For ncnn, follow
-Task 010's fixed CPU/FP32 chain using the same weights: TorchScript export, pnnx
-from ncnn tag `20240410` revision
-`56775de50990ab7f16627efdcf5529b49541206f`, `inputshape=[1,3,640,640]f32`,
-`device=cpu`, `fp16=0`, and `optlevel=2`. The manifests and Task 010 validators
-must reproduce the recorded SHA256 values before inference. Do not substitute a
-different model, pnnx revision, input size, precision, or threshold.
+Build and runtime identities are kept separate from generated binaries. Large
+models, engines, SDKs, rootfs images and board packages remain external.
 
-## Build
+## Backend Matrix
+
+| Backend | Platform | Model / precision | Status | Scope |
+|---|---|---|---|---|
+| ONNX Runtime | PC CPU | YOLOv5n FP32 | `YOLOV5N_CPU_FORMAL_READY` | Formal benchmark |
+| TensorRT / CUDA | RTX 4060 Ti | YOLOv5n FP32 + FP16 | `TENSORRT_FP32_FP16_FORMAL_READY` | Formal benchmark; FP16 COCO gate passed |
+| ncnn | DR1 Cortex-A35-class CPU | YOLOv5n FP32 + EQ INT8 | `NCNN_FP32_EQ_INT8_FORMAL_READY` | Formal benchmark; EQ accepted |
+| Alnpu \| ALHardNPU | DR1 NPU | Vendor face model | `FUNCTIONAL_CONTROL_ONLY` | NPU functional control, no YOLO speed claim |
+| Alnpu | DR1 NPU | Custom YOLOv5n | `WAITING_FOR_VENDOR_INPUT` | Not benchmarked; no CPU fallback |
+
+## Final Benchmark
+
+These are independent formal rows. They are not a cross-hardware speedup claim.
+Pipeline includes the recorded preprocess, backend and postprocess stages.
+
+| Platform / backend | Precision | Backend-call mean (ms) | Pipeline mean (ms) | FPS | Peak RSS |
+|---|---:|---:|---:|---:|---:|
+| PC CPU ORT | FP32 | 45.849137 | 51.802986 | 19.303907 | 150869 KiB |
+| RTX 4060 Ti TensorRT | FP32 | 3.712445 | 9.283727 | 107.715355 | 537596 KiB |
+| RTX 4060 Ti TensorRT | FP16 | 3.716104 | 9.408935 | 106.281952 | 548172 KiB |
+| DR1 ncnn | FP32 | 1882.246418 | 1973.145698 | 0.506805 | 166579 KiB |
+| DR1 ncnn | EQ INT8 | 1173.207637 | 1266.499601 | 0.789578 | 149047 KiB |
+
+TensorRT also records a separate CUDA execution event: FP32 **1.674261 ms**
+versus FP16 **1.370379 ms** (`1.221751x`). This event covers `enqueueV3` only;
+the backend-call wall boundary includes H2D, execution, D2H and synchronization.
+FP16 therefore improves GPU execution but not end-to-end pipeline time. Task038
+unified-app timings and Task039 video/camera timings are integration evidence,
+not rows in this table.
+
+## Accuracy / Performance Trade-off
+
+| Platform comparison | Accuracy reference → candidate | Absolute delta | Accepted performance result |
+|---|---|---|---|
+| DR1 ncnn FP32 → EQ INT8 | mAP50 `0.457605 → 0.443309`; mAP50-95 `0.279777 → 0.265115` | `-0.014296 / -0.014662` | Accuracy gate PASS; inference `1.604359x`, pipeline `1.557952x`, FPS `+55.795208%`, RSS reduction `10.417162%` |
+| TensorRT FP32 → FP16 | mAP50 `0.448303 → 0.448105`; mAP50-95 `0.274720 → 0.274787` | `-0.000197 / +0.000066` | COCO gate PASS; GPU execution `1.221751x`; pipeline does not improve |
+
+COCO evaluation used independent held-out data and the frozen evaluator. The
+deployment output contract remains confidence `0.25`, NMS IoU `0.45`; evaluation
+thresholds are not changed to rescue a backend.
+
+## ARM Optimization
+
+The DR1 CPU story is deliberately measurable:
+
+1. Runtime tuning selected ncnn OpenMP with `threads=2`, default scheduling and
+   packing on.
+2. Layer profiling found convolution responsible for **80.304%** of layer time;
+   inference accounts for **95.40%** of the FP32 pipeline.
+3. ncnn official EQ INT8 was calibrated on 500 COCO images and evaluated on 4500
+   disjoint images. It passed the `0.02` mAP50/mAP50-95 gate and delivered the
+   accepted speed and memory improvements above.
+
+## TensorRT Optimization
+
+CUDA 12.9 and TensorRT 10.13.3 were installed toolkit-only in WSL2; no Linux
+NVIDIA display driver was replaced. Engines were built on the RTX 4060 Ti and
+checked against the same preprocessing, decode/NMS and COCO correctness gate.
+FP16 preserves accuracy, accelerates the GPU execution region, and exposes the
+next bottleneck: host preprocessing, transfers, synchronization and postprocess.
+
+## DR1 Camera Demo
+
+`edgeai_demo` accepts image, video and camera sources through the same backend
+factory. The real DR1 UVC run used `/dev/video0`, Sonix USB 2.0 Camera,
+`uvcvideo`, V4L2 YUYV `640x480@25 FPS`, ncnn EQ INT8, and a bounded synchronous
+run: `captured=3`, `processed=3`, `written=3`, `exit=0`. Mean inference was
+`1343.185 ms`, pipeline `1725.077 ms`, effective processing FPS `0.564866`.
+
+This is **camera integration evidence**, not a realtime camera benchmark:
+`queue capacity=0`, and `dropped=0` only describes that bounded serialized run.
+The output video was re-decoded successfully. See
+[Task039 evidence](results/evidence/039/dr_camera_ncnn_int8.json) and the
+[presentation/demo plan](docs/PROJECT_PRESENTATION.md).
+
+## DR1 NPU Enablement
+
+The vendor face control is a real DR1 deployment closed loop:
+
+- vendor face input → Arm NN → `Alnpu | ALHardNPU` → output/visualization;
+- CPU fallback was disabled and no `CpuAcc`/`CpuRef` result was accepted;
+- it is a different model, not a YOLOv5n performance result.
+
+The custom YOLOv5n NPU path remains `WAITING_FOR_VENDOR_INPUT`. The audited
+runtime's generic Alnpu graph boundary and the missing vendor deployment chain
+are documented in the [vendor handoff](docs/vendor_handoff/dr1m90_npu/README.md).
+
+## Quick Start
+
+The generated model assets are intentionally Git-ignored. Supply the frozen
+model and matching local runtime roots, then build a Release C++ application:
 
 ```bash
 export ONNXRUNTIME_ROOT=/path/to/onnxruntime-linux-x64-1.18.1
@@ -284,226 +158,91 @@ cmake -S cpp -B build/pc-acceptance-release -G Ninja \
   -DNCNN_ROOT="$NCNN_ROOT"
 cmake --build build/pc-acceptance-release --parallel
 ctest --test-dir build/pc-acceptance-release --output-on-failure
-PYTHONPATH=python .venv/bin/python -m unittest discover -s tests/python -p 'test_*.py' -v
 ```
 
-## Single-image and video commands
+Single image with ORT:
 
 ```bash
-mkdir -p build/reproduction
-PYTHONPATH=python .venv/bin/python python/apps/ort_image.py \
+./build/pc-acceptance-release/edgeai_demo \
+  --backend ort --precision fp32 \
   --model models/yolov5n-v7.0/yolov5n.onnx \
   --manifest models/yolov5n-v7.0/manifest.json \
-  --config configs/yolov5n_v7_inference.json \
-  --image data/samples/images/pc_reference.jpg \
-  --output-image build/reproduction/python_ort_reference.png \
-  --output-json build/reproduction/python_ort_reference.json
-
-./build/pc-acceptance-release/edgeai_ort_image \
-  --model models/yolov5n-v7.0/yolov5n.onnx \
-  --manifest models/yolov5n-v7.0/manifest.json \
-  --config configs/yolov5n_v7_inference.json \
-  --image data/samples/images/pc_reference.jpg \
-  --output-image build/reproduction/cpp_ort_reference.png \
-  --output-json build/reproduction/cpp_ort_reference.json
-
-./build/pc-acceptance-release/edgeai_ort_video \
-  --model models/yolov5n-v7.0/yolov5n.onnx \
-  --manifest models/yolov5n-v7.0/manifest.json \
-  --config configs/yolov5n_v7_inference.json \
-  --input data/samples/videos/pc_reference.mp4 \
-  --output build/reproduction/cpp_ort_reference.mp4 \
-  --output-json build/reproduction/cpp_ort_video.json
-
-./build/pc-acceptance-release/edgeai_ncnn_image \
-  --manifest models/yolov5n-v7.0/ncnn_manifest.json \
-  --config configs/yolov5n_v7_inference.json \
-  --image data/samples/images/pc_reference.jpg \
-  --output-image build/reproduction/cpp_ncnn_reference.png \
-  --output-json build/reproduction/cpp_ncnn_reference.json
-
-./build/pc-acceptance-release/edgeai_ncnn_video \
-  --manifest models/yolov5n-v7.0/ncnn_manifest.json \
-  --config configs/yolov5n_v7_inference.json \
-  --input data/samples/videos/pc_reference.mp4 \
-  --output build/reproduction/cpp_ncnn_reference.mp4 \
-  --output-json build/reproduction/cpp_ncnn_video.json
+  --source data/samples/images/pc_reference.jpg \
+  --output-image build/reproduction/ort.png \
+  --output-json build/reproduction/ort.json
 ```
 
-These reproduction outputs stay under the Git-ignored build tree and do not
-overwrite approved evidence. The known low-confidence second `mouse` on the
-earbud case is retained as a model false positive; it is not hidden with
-threshold or coordinate rules.
-
-## Task 012 benchmark method
-
-Six rounds execute all permutations of Python ORT, C++ ORT, and C++ ncnn. Every
-backend appears twice in each position. Every invocation is an independent
-process with 10 warmups and 100 formal iterations, yielding 600 samples per
-backend. Every formal iteration performs preprocess, inference, and postprocess.
-
-Pipeline total is the exact unrounded sum of those stages. It excludes image
-read, model/runtime load, drawing, labels, writes, video decode, and encoding.
-Pipeline FPS is `1000 / aggregate mean pipeline_total_ms`, not a mean of per-run
-FPS and not video application throughput. P50/P90 use nearest-rank.
-
-To reproduce the campaign without overwriting the approved Task 012 files, use
-new paths under the Git-ignored build tree:
+TensorRT uses a locally built engine:
 
 ```bash
-mkdir -p build/reproduction/benchmark
-export OMP_NUM_THREADS=1
-export OPENBLAS_NUM_THREADS=1
-export MKL_NUM_THREADS=1
-export NUMEXPR_NUM_THREADS=1
-PYTHONPATH=python .venv/bin/python scripts/generate_pc_acceptance.py run-campaign \
-  --config configs/benchmark_pc_three_backend.json \
-  --base-config configs/benchmark_pc.json \
-  --python .venv/bin/python \
-  --python-benchmark python/apps/benchmark_ort.py \
-  --cpp-ort build/pc-acceptance-release/edgeai_benchmark_ort \
-  --cpp-ncnn build/pc-acceptance-release/edgeai_benchmark_ncnn \
-  --ncnn-manifest models/yolov5n-v7.0/ncnn_manifest.json \
-  --reference-detections results/evidence/007/cpp_ort_detections.json \
-  --python-output build/reproduction/benchmark/python_ort.json \
-  --cpp-ort-output build/reproduction/benchmark/cpp_ort.json \
-  --cpp-ncnn-output build/reproduction/benchmark/cpp_ncnn.json \
-  --summary build/reproduction/benchmark/summary.json \
-  --csv build/reproduction/benchmark/summary.csv \
-  --validation build/reproduction/benchmark/validation.json \
-  --log build/reproduction/benchmark/campaign.log
+./build/pc-acceptance-release/edgeai_demo \
+  --backend tensorrt --precision fp16 \
+  --model /path/to/yolov5n_fp16.engine \
+  --source data/samples/images/pc_reference.jpg \
+  --output-image build/reproduction/trt.png \
+  --output-json build/reproduction/trt.json
 ```
 
-This command intentionally launches a new campaign; its outputs are not the
-approved data below and must not replace files under `results/benchmarks/`.
+Video and camera use the same interface:
 
-### Final PC performance — campaign approved
+```bash
+./build/pc-acceptance-release/edgeai_demo \
+  --backend tensorrt --precision fp16 --model /path/to/engine \
+  --source data/samples/videos/pc_reference.mp4 \
+  --output-video build/reproduction/result.avi --output-json build/reproduction/video.json
 
-| Backend | Pipeline mean (ms) | P50 | P90 | Min | Max | Pipeline FPS | Six-round spread | Position spread |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Python ORT | 54.881306 | 54.640382 | 56.898155 | 51.590660 | 65.453303 | 18.221141 | 3.098913% | 1.156671% |
-| C++ ORT | 51.802986 | 51.595426 | 53.627128 | 48.863992 | 65.671301 | 19.303907 | 3.221212% | 1.383173% |
-| C++ ncnn | 77.865349 | 77.618684 | 80.776143 | 73.478461 | 85.075339 | 12.842683 | 1.727134% | 0.438557% |
+./build/pc-acceptance-release/edgeai_demo \
+  --backend ncnn --precision int8 --model /path/to/eq-int8-manifest \
+  --camera 0 --max-frames 10 \
+  --output-video build/reproduction/camera.avi --output-json build/reproduction/camera.json
+```
 
-### Stage means
+For DR1, use the approved external EQ INT8 ncnn manifest/param/bin and the
+`recommended-dual-thread` profile (`threads=2`, OpenMP, packing on). The CLI
+never relabels FP32 assets as INT8 and never falls back to another backend.
 
-| Backend | Preprocess mean (ms) | Inference mean (ms) | Postprocess mean (ms) | Pipeline mean (ms) |
-| --- | ---: | ---: | ---: | ---: |
-| Python ORT | 3.356562 | 45.898201 | 5.626543 | 54.881306 |
-| C++ ORT | 1.833570 | 45.849137 | 4.120279 | 51.802986 |
-| C++ ncnn | 1.815537 | 71.941530 | 4.108283 | 77.865349 |
+## Repository Structure
 
-Under this fixed WSL2 configuration, C++ ORT has the lowest complete-
-pipeline mean at `51.802986 ms`, which is `5.61%`
-lower than Python ORT. Python ORT and C++ ORT inference means are
-`45.898201 ms` and
-`45.849137 ms`, a difference of about
-`0.11%`; the observed C++ pipeline advantage is
-therefore concentrated in this implementation's preprocess and postprocess
-overheads, not evidence that C++ or the ORT inference kernel is universally
-faster.
+```text
+cpp/                 C++17 common pipeline and backend adapters
+python/              ORT reference utilities and evaluator helpers
+configs/             Frozen model/inference contracts
+models/              Small manifests; generated model binaries stay ignored
+docs/                Benchmark, deployment and presentation documentation
+results/final/       Task040 authoritative results and validation
+results/evidence/    Task-specific structured evidence
+tasks/               Task state and execution records
+tests/python/        Offline validators and focused tests
+```
 
-C++ ncnn records `77.865349 ms`, `50.31%` above
-C++ ORT for the complete pipeline. Its inference mean is
-`71.941530 ms`, `56.91%`
-above C++ ORT in this campaign. This is specific to the fixed x86 CPU, WSL2,
-runtime versions, model-conversion path, build, and input; it predicts neither
-another PC nor ARM behavior.
+## Reproducibility / Evidence
 
-### Running-position effect
+- [Authoritative results manifest](results/final/authoritative_results.json)
+- [README-ready frozen tables](results/final/README_READY_TABLES.md)
+- [Final provenance report](docs/FINAL_BENCHMARK_RESULTS.md)
+- [Model contract](docs/model_contract.md)
+- [PC benchmark methodology](docs/benchmark_methodology.md)
+- [ARM profiling and INT8 reports](docs/benchmark/ARM_CPU_PERFORMANCE_OPTIMIZATION.md)
+- [TensorRT report](docs/benchmark/TENSORRT_DEPLOYMENT_BASELINE.md)
+- [DR1 camera evidence](results/evidence/039/validation.json)
+- [Vendor NPU handoff](docs/vendor_handoff/dr1m90_npu/README.md)
 
-| Backend | Position 1 mean (ms) | Position 2 mean (ms) | Position 3 mean (ms) | Position spread |
-| --- | ---: | ---: | ---: | ---: |
-| Python ORT | 54.472042 | 55.102104 | 55.069772 | 1.156671% |
-| C++ ORT | 52.163539 | 51.451871 | 51.793547 | 1.383173% |
-| C++ ncnn | 77.956484 | 77.649513 | 77.990051 | 0.438557% |
+The Task040 validator re-hashes every source evidence file used by the final
+manifest. Reproduction commands, model SHA256 values and deployment identities
+are documented without committing proprietary SDKs, engines, models, private
+keys or large logs.
 
-Every position group contains 200 samples. All round spreads are below 3.3% and
-all position spreads are below 1.4%; the execution position did not change the
-backend ranking in this campaign. Position spread is diagnostic and no sample
-was removed because of it.
+## Known Limitations
 
-### Model load, CPU, and Peak RSS
+- Formal numbers are per-platform rows; no cross-hardware speedup is claimed.
+- Task038/039 timings are integration evidence, not formal video or camera
+  throughput benchmarks.
+- DR1 ncnn is CPU-only; the accepted EQ INT8 result is not an NPU result.
+- The DR1 custom YOLOv5n NPU path awaits a vendor-compatible generic graph
+  backend, native compiler/runtime, or official GEG400 YOLO deployment chain.
+- The vendor face NPU control does not establish YOLOv5n NPU support.
+- Generated ONNX, ncnn param/bin, TensorRT engines, SDKs and board images must
+  be supplied from the recorded external sources.
 
-| Backend | Model load range (ms) | Process CPU range (%) | Peak RSS range (bytes) | Peak RSS range (MiB) |
-| --- | ---: | ---: | ---: | ---: |
-| Python ORT | 27.340525–34.602837 | 99.942096–99.972122 | 178225152–181420032 | 170.0–173.0 |
-| C++ ORT | 53.144442–54.676551 | 99.996220–100.000091 | 153935872–155078656 | 146.8–147.9 |
-| C++ ncnn | 30.798871–32.886271 | 99.988997–99.998528 | 187768832–188178432 | 179.1–179.5 |
-
-All 1,800 samples and outliers are preserved. The table applies only to this
-fixed WSL2 environment, code, model lineage, input, thread configuration, and
-campaign. It is not a universal language/runtime ranking and cannot be projected
-to bare-metal Linux, another PC, or ARM.
-
-## Correctness
-
-Python/C++ ORT use the frozen golden tolerances. ncnn matches ORT at the
-pre-registered target of class-matched IoU at least 0.99 and confidence delta at
-most 0.01. Each formal process performs untimed checks before warmup and after
-measurement. The approved final values are minimum IoU `0.999999982537` and
-maximum confidence delta `1.64833068306e-08` for Python/C++ ORT, and minimum IoU
-`0.999997080011` and maximum delta `2.02655792236e-06` for C++ ORT/ncnn. The
-three annotated images are human-approved and byte-identical with SHA256
-`57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2`.
-
-## CPU and memory definitions
-
-`process_cpu_percent_one_core_basis` is 100 times process CPU-time delta divided
-by wall-time delta. About 100% represents sustained use of one logical CPU;
-values above 100% can reflect auxiliary Runtime or system activity. A configured
-thread count of 1 does not mean the process owns exactly one OS thread.
-
-Peak RSS is the complete process peak, not model-only memory. Python includes the
-interpreter/modules; C++ includes executable and linked-library costs; every
-backend includes its Runtime, model, and input state.
-
-## Evidence, limitations, and reproduction
-
-- Benchmark summary: `results/benchmarks/pc_three_backend_summary.json` and CSV.
-- Validation: `results/evidence/012/three_backend_benchmark_validation.json`.
-- Approved annotated outputs: `results/acceptance/python_ort_reference.png`,
-  `results/acceptance/cpp_ort_reference.png`, and
-  `results/acceptance/cpp_ncnn_reference.png`.
-- PC acceptance: `docs/pc_stage_acceptance.md` and
-  `results/evidence/012/pc_acceptance.json`.
-- Task 009/011 campaigns remain immutable historical evidence and are not used as
-  substitute rows in the Task 012 main table.
-- WSL2 scheduling, frequency/thermal state, background activity, unpinned CPU,
-  distinct OpenCV versions, and distinct ONNX/ncnn serialized graphs limit causal
-  attribution.
-- Generated models, SDKs, logs, videos, and other large reproducible artifacts
-  remain Git-ignored. Reproduction requires the exact recorded hashes and local
-  tool versions.
-
-Task 025's read-only VM history audit found a generic SDK_2025.07 tree and
-generic `anlogic-dr1m90` base DTS files, but no MLK BoardConfig, exact
-submodule provenance, historical 2025.07 uisrc package or original 05-5
-workspace. The VM 05-5 tree is an exact copy of the local demo package, not an
-independent build workspace. The later PDF-guided isolated build generated
-boot/kernel/module artifacts, and the subsequent offline Buildroot build
-generated the formal rootfs. The current candidate is a complete external file
-set without a partitioned SD image and is `READY_FOR_SD_WRITE_APPROVAL`;
-`candidate_approved: true` admits the static 13-file set to a controlled
-deployment workflow only. It does not authorize formatting, partitioning or
-writing real media; `deployment_approval` remains `PENDING`, and no board boot
-or runtime result is claimed.
-
-## Stage boundary and future work
-
-PC Stage 1 and the DR1 ARM CPU single-image Stage 2 baseline are complete.
-Task 017 has completed the preregistered single-thread CPU/FP32 benchmark and
-published the validator- and user-approved unoptimized default baseline.
-Task 018 completed the corrected OpenMP-enabled paired thread experiment without
-changing that baseline. Its original OpenMP-off session remains intact and
-invalid for multithread performance comparison. Camera validation is now an
-independent completed functional Task 021 with user-approved representative
-frames; no camera timing is a formal realtime benchmark. Affinity/NEON-specific optimization, Vulkan,
-quantization, and NPU remain separate future work; NPU readiness remains
-`HOLD`.
-
-Task 024 is `Completed` as an audit with primary verdict
-`BLOCKED_ACTIVE_BITSTREAM_IDENTITY`; active file hashes are read-confirmed but
-the payload/source mapping is unresolved. `candidate_approved: true` approves
-the audit record only, not SD writes, module loading or NPU execution. It is
-not an NPU execution or performance result.
+For the concise architecture, recording script, shot list and approved visual
+assets, see [PROJECT_PRESENTATION.md](docs/PROJECT_PRESENTATION.md).

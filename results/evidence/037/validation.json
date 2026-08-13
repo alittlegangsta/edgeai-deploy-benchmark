@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "benchmark_protocol": true,
+    "cuda_probe": true,
+    "engine_hashes": true,
+    "fp16_coco_accuracy_gate": true,
+    "fp32_correctness": true,
+    "model_contract": true,
+    "runner_build": true,
+    "toolkit_only_install": true,
+    "trtexec_reference": true
+  },
+  "environment_gate": "PASS",
+  "fp16": "TENSORRT_FP16_READY",
+  "fp32": "PASS_TARGET",
+  "overall": "TENSORRT_FP32_AND_FP16_READY",
+  "schema_version": 1,
+  "status": "PASS",
+  "task": "037",
+  "verification": {
+    "focused_python": {"command": "python3 -m unittest tests/python/test_task037_tensorrt.py", "exit_code": 0, "tests": 3},
+    "full_python": {"command": "PYTHONPATH=python ./.venv/bin/python -m unittest discover -s tests/python -p 'test_*.py'", "exit_code": 0, "tests": 157},
+    "cmake_release_tensorRT": {"command": "cmake --build /tmp/task037-cmake -j2", "exit_code": 0},
+    "ctest": {"command": "ctest --test-dir /tmp/task037-cmake --output-on-failure", "exit_code": 0, "tests": 3},
+    "json_parse": {"exit_code": 0},
+    "python_syntax": {"command": "python3 -m py_compile scripts/task037_evaluate_coco.py scripts/validate_task037_tensorrt.py tests/python/test_task037_tensorrt.py scripts/task037_compare_raw.py", "exit_code": 0},
+    "coco_evaluator": {"command": "scripts/task037_evaluate_coco.py on 4,500-image manifest for FP32 and FP16", "exit_code": 0, "gate": "PASS"},
+    "git_diff_check": "PASS"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "comparison_policy": "separate PC and ARM reports; no cross-platform speedup claim",
+  "correctness_gate": {
+    "detection_count": 5,
+    "finite_values": true,
+    "maximum_confidence_delta": 0.01,
+    "minimum_class_matched_iou": 0.99,
+    "status": "PASS_REQUIRED",
+    "valid_boxes": true
+  },
+  "methodology_id": "task030-arm-cpu-profiling-consolidation-v1",
+  "protocol": {
+    "cpu_formula": "100 * process user+system CPU seconds / wall seconds",
+    "fps_formula": "1000 / mean pipeline_ms",
+    "frequency_temperature": "preserve numeric values or JSON null/unavailable",
+    "memory": "process-level Peak RSS high-water mark",
+    "outlier_policy": "retain all source samples; no latency filtering",
+    "percentile_method": "nearest-rank",
+    "percentiles": [
+      0.5,
+      0.95
+    ],
+    "pipeline_formula": "preprocess_ns + inference_ns + postprocess_ns",
+    "repeated_runs": "retained source process rounds and timed samples",
+    "stages": [
+      "preprocess",
+      "inference",
+      "postprocess",
+      "pipeline"
+    ],
+    "warmup": 10
+  },
+  "schema_version": 1,
+  "source_campaigns": {
+    "arm": {
+      "historical_task": "018",
+      "path": "results/evidence/018/openmp/threads2_raw_samples.json",
+      "sha256": "b1246ce255a1962bf96b76a717faafe78481393aa95c43072349009d85600f40"
+    },
+    "pc": {
+      "historical_task": "012",
+      "path": "results/benchmarks/pc_three_backend_cpp_ort.json",
+      "sha256": "a047eee174b7ae355613c6f3f95bfac3c2d681467cd16333de1b8d3261bad085"
+    }
+  },
+  "status": "COMPLETED",
+  "task": "030",
+  "title": "ARM CPU benchmark and profiling consolidation",
+  "workload_identity": {
+    "confidence_threshold": 0.25,
+    "inference_config_sha256": "82ef24f773a6ffb8e06e26b94747bd1b581408b19adae293b3ecfd8b228ee96d",
+    "input_contract": {
+      "dtype": "FP32",
+      "shape": [
+        1,
+        3,
+        640,
+        640
+      ]
+    },
+    "input_image_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "model_name": "YOLOv5n v7.0",
+    "nms_iou_threshold": 0.45,
+    "onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "output_contract": {
+      "dtype": "FP32",
+      "shape": [
+        1,
+        25200,
+        85
+      ]
+    },
+    "postprocess": "shared YOLO decode, confidence filter, coordinate restore, class-aware NMS",
+    "preprocess": "shared BGR-to-RGB letterbox, normalize, HWC-to-CHW",
+    "source_weights_sha256": "4f180cf23ba0717ada0badd6c685026d73d48f184d00fc159c2641284b2ac0a3"
+  }
+}

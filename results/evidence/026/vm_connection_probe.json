@@ -1,0 +1,58 @@
+{
+  "schema_version": "task026-vm-connection-probe-v1",
+  "task": "026",
+  "captured_at": "2026-08-06T13:07:29+08:00",
+  "endpoint": "192.168.244.128:22",
+  "wrapper": "/home/dministrator/bin/anlogic-vm-ssh",
+  "read_only": true,
+  "attempts": [
+    {
+      "command": "/home/dministrator/bin/anlogic-vm-ssh 'printf VM_OK\\n; hostname; id -un'",
+      "result": "FAIL",
+      "error": "UtilBindVsockAnyPort:307: socket failed 1"
+    },
+    {
+      "command": "direct Windows OpenSSH via /mnt/c/Windows/System32/OpenSSH/ssh.exe -V",
+      "result": "FAIL",
+      "error": "UtilBindVsockAnyPort:307: socket failed 1"
+    },
+    {
+      "command": "Linux ssh -o BatchMode=yes -o ConnectTimeout=5 -i /mnt/c/Users/Administrator/.ssh/anlogic_vm uisrc@192.168.244.128 'printf VM_OK\\n; hostname; id -un; lsblk -J -O'",
+      "result": "FAIL",
+      "error": "ssh: connect to host 192.168.244.128 port 22: Connection timed out"
+    },
+    {
+      "command": "ping -c 1 -W 2 192.168.244.128",
+      "result": "FAIL",
+      "error": "100% packet loss"
+    }
+  ],
+  "recovery": {
+    "command": "/home/dministrator/bin/anlogic-vm-ssh 'printf VM_OK\\n; hostname; id -un; uname -m'",
+    "result": "PASS",
+    "stdout_summary": "VM_OK; ubuntu; uisrc; x86_64"
+  },
+  "user_observation": {
+    "source": "user_message",
+    "candidate_path": "/dev/sdb",
+    "size_human": "29.2G",
+    "removable": 1,
+    "read_only": 0,
+    "partition": "/dev/sdb1",
+    "mountpoint": "/media/uisrc/EDGEAI_DATA",
+    "independently_rechecked_in_this_phase": true,
+    "exact_size_bytes": 31299993600,
+    "vendor": "Mass",
+    "model": "Storage Device",
+    "serial": "121220160204",
+    "transport": "usb"
+  },
+  "status": "PASS_VM_REACHED",
+  "safety": {
+    "board_accessed": false,
+    "media_unmounted": false,
+    "destructive_command_run": false,
+    "block_device_written": false
+  },
+  "next_required_action": "Await explicit SD write approval; no destructive operation is authorized by this evidence."
+}

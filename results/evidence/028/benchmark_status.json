@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "status": "NOT_RUN",
+  "reason": "The frozen FP32 graph and bounded model-repair probes failed before ArmNN network load/correctness; the contract prohibits recording an NPU benchmark before correctness closes.",
+  "warmup": null,
+  "measured_samples": null,
+  "preprocess": null,
+  "inference": null,
+  "postprocess": null,
+  "end_to_end": null,
+  "fps": null,
+  "p50": null,
+  "p95": null,
+  "cpu_usage": null,
+  "peak_rss": null,
+  "cma_npu_state": "board state was healthy but no target workload completed"
+}

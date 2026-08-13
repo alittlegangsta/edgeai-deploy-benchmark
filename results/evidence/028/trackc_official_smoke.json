@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C",
+  "recorded_at": "2026-08-10T09:58:24+08:00",
+  "status": "BLOCKED_TRACK_C_QUANTIZED_CORRECTNESS",
+  "environment_ref": "results/evidence/028/trackc_environment.json",
+  "frozen_inputs": {
+    "model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "calibration_smoke_count": 1,
+    "calibration_smoke_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+    "calibration_expanded_count": 27,
+    "calibration_expanded_manifest_sha256": "06ced1a8612258f2151c87316599f3bdd682d9b4a27514c5bcb85de7f73fb208",
+    "calibration_500": {
+      "generated_count": 500,
+      "source_count": 27,
+      "source_manifest_sha256": "ed9fe073256592f257b0494df6a747640209c4f02545dc335879a5a22802dd64",
+      "generated_manifest_sha256": "6f71361703b2f1979cb07bf3564ad75e23301cedf88df1ef6371168b69727922",
+      "generation_metadata_sha256": "fd765dfaf065e9e8a4771e3f177a8bf19569f2dba2fdffbdf3026dccf486e374",
+      "algorithm": "deterministic source index and ten fixed OpenCV transforms; generated PNGs remain outside Git",
+      "generation_command": "isolated Python/OpenCV script in /tmp/task028-trackc; source index=i%27, transform=i%10, PNG compression=3"
+    }
+  },
+  "official_entry": {
+    "command": "<isolated-venv>/bin/python DR1_NPU_SCRIPTS/AL_onnx_pass.py --input_model <frozen-copy>/yolov5n.onnx --calibrate_dataset <calibration-dir> --quant_type uint8 --yolo_type yolov5",
+    "exit_code": 0,
+    "stdout_sha256": "448bb3baf2a493c41cc5cd07330f8b7ec8d985608a3ff4fc8e6467677619c58a",
+    "stderr_sha256": "e909eca3cab19b18b66a2c4bbe85aa99b268143eea15dc2cf0351c26fb2cfc86",
+    "artifacts": {
+      "sim": {
+        "sha256": "421e1c670fbb219cb444b0244c9e0162a5c14ebc1e9b63c6a4c936d38a93422f",
+        "size_bytes": 7519471
+      },
+      "split": "NOT_CREATED; split_convFC returned false",
+      "quant_uint8": {
+        "sha256": "b8d4736f056a56576e905558c415012d0c90855aee429fe870c754e0335cc7af",
+        "size_bytes": 2143157
+      }
+    },
+    "warnings": [
+      "ALNPU warning: model.0/conv kernel size cannot be accelerated",
+      "ALNPU warning: model.0/conv strides cannot be accelerated",
+      "ALNPU warning: model.0/conv pads cannot be accelerated",
+      "SoftNPU operators reported: Add, MaxPool, Concat, Resize",
+      "ONNX Runtime quantization recommends preprocessing"
+    ]
+  },
+  "graph_contract": {
+    "source": {
+      "opset": 12,
+      "nodes": 292,
+      "input": [[1, 3, 640, 640], "FLOAT"],
+      "output": [[1, 25200, 85], "FLOAT"],
+      "operators": {"Floor": 4, "Shape": 2, "Gather": 0, "Resize": 2, "Q": 0, "DQ": 0}
+    },
+    "sim_detect_crop": {
+      "opset": 12,
+      "nodes": 199,
+      "inputs": [[1, 3, 640, 640], "FLOAT"],
+      "outputs": [[[1, 255, 80, 80], "FLOAT"], [[1, 255, 40, 40], "FLOAT"], [[1, 255, 20, 20], "FLOAT"]],
+      "operator_counts": {"Add": 7, "Concat": 13, "Conv": 60, "MaxPool": 3, "Mul": 57, "Resize": 2, "Sigmoid": 57},
+      "operators": {"Floor": 0, "Shape": 0, "Gather": 0, "Resize": 2, "Q": 0, "DQ": 0}
+    },
+    "quant_uint8": {
+      "opset": 12,
+      "nodes": 719,
+      "inputs": [[1, 3, 640, 640], "FLOAT"],
+      "outputs": [[[1, 255, 80, 80], "FLOAT"], [[1, 255, 40, 40], "FLOAT"], [[1, 255, 20, 20], "FLOAT"]],
+      "operator_counts": {"Add": 7, "Concat": 13, "Conv": 60, "DequantizeLinear": 320, "MaxPool": 3, "Mul": 57, "QuantizeLinear": 200, "Resize": 2, "Sigmoid": 57},
+      "operators": {"Floor": 0, "Shape": 0, "Gather": 0, "Resize": 2, "Q": 200, "DQ": 320}
+    },
+    "detect_crop_note": "The official YOLO path changes the output contract from [1,25200,85] to three raw heads; this is intentional and documented by the vendor tool."
+  },
+  "host_correctness": {
+    "sim_fp32": {
+      "command": "DR1_NPU_SCRIPTS/yolo_model_inference.py on yolov5n_sim.onnx, CPUExecutionProvider, yolov5, conf=0.25, IoU=0.45",
+      "exit_code": 0,
+      "stdout_sha256": "d37525b73eb8fde415976af5b8cbc11bd8e00295f7b5a7cbeca73cd00267bb91",
+      "stderr_sha256": "a592f628bb26f4c2e8e163fc9821b86ff1b6bd43d21d4a760654f64c42e15a66",
+      "detection_count": 5,
+      "class_ids": [66, 62, 41, 64, 64],
+      "max_confidence_delta": 0.0000048919204711506126,
+      "min_box_iou": 0.95506547868033,
+      "strict_box_gate": "FAIL_AT_0.99; vendor host script emits integer source-space boxes",
+      "npu_claim": false
+    },
+    "quant_uint8_one_image": {
+      "command": "DR1_NPU_SCRIPTS/yolo_model_inference.py on yolov5n_sim_quant_uint8.onnx with one-image calibration",
+      "exit_code": 0,
+      "stdout_sha256": "6a6a21188e300eb8f2c5efd21b3ba81083c6ee5ab04f7a15f6d5aa0df84dfc7c",
+      "stderr_sha256": "a592f628bb26f4c2e8e163fc9821b86ff1b6bd43d21d4a760654f64c42e15a66",
+      "detection_count": 5,
+      "class_ids": [66, 62, 41, 64, 64],
+      "max_confidence_delta": 0.09312496031303408,
+      "min_box_iou": 0.8421554845490358,
+      "strict_correctness": "FAIL",
+      "npu_claim": false
+    },
+    "quant_uint8_expanded_smoke": {
+      "calibration_count": 27,
+      "model_sha256": "7021c474a03396d03fcfbdd898a1c6086d54ca02342fac2b8eb5bfa1f34d2c85",
+      "detection_count": 5,
+      "class_ids": [66, 41, 62, 64, 64],
+      "max_confidence_delta": 0.12637988031303404,
+      "min_box_iou": 0.8201916410627047,
+      "strict_correctness": "FAIL",
+      "npu_claim": false
+    },
+    "quant_uint8_calibration_500": {
+      "calibration_count": 500,
+      "model_sha256": "902453f2c92a715300b851da525b1529dc3dd5f58516abbd59350c837691328c",
+      "inference_stdout_sha256": "58418d8508f2e5500e9c7973d91e6823fbdad3ebc071d887851d002ee8c77359",
+      "inference_stderr_sha256": "a592f628bb26f4c2e8e163fc9821b86ff1b6bd43d21d4a760654f64c42e15a66",
+      "detection_count": 5,
+      "class_ids": [66, 41, 62, 64, 64],
+      "max_confidence_delta": 0.11366653714614872,
+      "min_box_iou": 0.8891731303877853,
+      "strict_correctness": "FAIL",
+      "npu_claim": false
+    }
+  },
+  "int8_probe": {
+    "conversion_exit_code": 0,
+    "model_sha256": "2e5e2a8dfa8360bc113000b756071686f77b05fc92708111cbda5fec6e800b73",
+    "onnx_checker": "FAIL: DequantizeLinear axis attribute is invalid for opset 12",
+    "host_ort_exit_code": 1,
+    "host_error": "ONNX Runtime INVALID_GRAPH on bias DequantizeLinear axis",
+    "status": "INVALID_GRAPH",
+    "npu_claim": false
+  },
+  "qdq_diagnostic": {
+    "status": "DIAGNOSTIC_ONLY",
+    "command": "isolated vendor run_qdq_debug-compatible probe on one frozen calibration image; no source or candidate model was modified",
+    "float_model": "yolov5n_sim.onnx",
+    "qdq_model": "yolov5n_sim_quant_uint8.onnx",
+    "calibration_count": 1,
+    "debug_stdout_sha256": "66657960494142fda6cbaea289bd56914b58206ac79159f2b2950a59606c0c95",
+    "largest_qdq_relative_errors": [
+      {"tensor": "/model.9/Concat_output_0", "qdq_error": 373.39930508830935, "xmodel_error": 22.966077218323065},
+      {"tensor": "/model.9/m_2/MaxPool_output_0", "qdq_error": 369.1313315134262, "xmodel_error": 25.0882180456319},
+      {"tensor": "/model.9/m_1/MaxPool_output_0", "qdq_error": 368.3335129512494, "xmodel_error": 24.200216841007382},
+      {"tensor": "/model.9/m/MaxPool_output_0", "qdq_error": 367.0070886278302, "xmodel_error": 22.45970625240664},
+      {"tensor": "/model.15/Resize_output_0", "qdq_error": 366.45203749870836, "xmodel_error": 17.36919667645663},
+      {"tensor": "/model.11/Resize_output_0", "qdq_error": 361.1896363762353, "xmodel_error": 14.128049037153874}
+    ],
+    "vendor_documentation_ref": "DR1_NPU_SCRIPTS/README.md, YOLO quantization FAQ",
+    "vendor_documentation_fact": "The vendor README warns that YOLO quantization can lose correctness when Concat inputs have materially different scales and says the quantization strategy may need adjustment.",
+    "interpretation": "The probe localizes the first large QDQ error around the model.9 MaxPool/Concat path and later Resize tensors, consistent with the vendor warning. It is diagnostic evidence only; no manual graph edit or non-official quantization strategy is promoted to the Task 028 candidate."
+  },
+  "runtime_and_safety": {
+    "cpu_fallback_accepted": false,
+    "board_accessed": false,
+    "alnpu_run": "NOT_EXECUTED",
+    "benchmark": "NOT_RUN",
+    "formal_calibration_500_images": "ESTABLISHED_FOR_HOST_SMOKE_ONLY; 500 deterministic PNGs derived from 27 local source images; this is not a published accuracy set",
+    "vendor_binary_executed": false,
+    "model_source_changed": false
+  },
+  "interpretation": "The official host environment and unmodified AL_onnx_pass conversion now run. The detected three-head graph is structurally valid and FP32 host inference runs, but official QDQ uint8 output does not satisfy the frozen golden correctness gate; host semantic closure is therefore not complete and no board or benchmark run is allowed."
+}

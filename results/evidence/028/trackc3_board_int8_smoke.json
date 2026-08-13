@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C3",
+  "status": "BOARD_ALNPU_INT8_OPTIMIZATION_BLOCKED",
+  "purpose": "Temporary RAM-only Alnpu compatibility smoke for the best opset14 INT8 AL_onnx_pass candidate; Parser -> Optimize -> LoadNetwork only, no inference or benchmark.",
+  "candidate": {
+    "model_sha256": "8ff448f1fd250a198b0a4a44a1eca9d09c50a68a4da459788960282ba98c3ad9",
+    "model_path_name": "yolov5n_opset14_static640_simplify_on_sim_quant_int8.onnx",
+    "opset": 14,
+    "input": {"dtype": "FLOAT", "shape": [1, 3, 640, 640]},
+    "outputs": [
+      {"dtype": "FLOAT", "shape": [1, 255, 80, 80]},
+      {"dtype": "FLOAT", "shape": [1, 255, 40, 40]},
+      {"dtype": "FLOAT", "shape": [1, 255, 20, 20]}
+    ],
+    "node_count": 719,
+    "operator_counts": {
+      "Add": 7,
+      "Concat": 13,
+      "Conv": 60,
+      "DequantizeLinear": 320,
+      "MaxPool": 3,
+      "Mul": 57,
+      "QuantizeLinear": 200,
+      "Resize": 2,
+      "Sigmoid": 57
+    },
+    "initializer_dtypes": {"FLOAT": 315, "INT32": 120, "INT64": 2, "INT8": 315},
+    "quantization": {
+      "activation_zero_point_dtype": "INT8",
+      "weight_zero_point_dtype": "INT8",
+      "weight_dequant_axis": 0,
+      "per_channel_weight_scale_shapes": [1, 16, 32, 64, 128, 255, 256]
+    }
+  },
+  "board": {
+    "kernel": "Linux buildroot 6.1.111-rt42 #3 SMP PREEMPT Wed Aug 5 18:19:39 CST 2026 aarch64",
+    "armnn_version_stdout": "ArmNN v32.1.0",
+    "libarmnn_sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+    "libarmnn_onnx_parser_sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+    "modules": ["cma_mem", "hard_npu", "soft_npu"],
+    "devices": ["/dev/cma_mem", "/dev/hard_npu", "/dev/soft_npu"],
+    "temporary_root": "/tmp/task028-c3-int8-smoke (rootfs tmpfs)",
+    "backend_request": ["Alnpu"],
+    "cpu_fallback_allowed": false
+  },
+  "command": {
+    "mode": "correctness",
+    "warmup": 0,
+    "repeats": 1,
+    "parse_only": false,
+    "runtime_library_path": "/opt/face_detection/runtime-root/armnn_lib/lib:/opt/face_detection/runtime-root/ffmpeg_opencv4.7.0_aarch64/lib:/lib:/usr/lib",
+    "exit_code": 1,
+    "stdout_log": "/tmp/task028-c3-int8-stdout.txt",
+    "stderr_log": "/tmp/task028-c3-int8-stderr.txt"
+  },
+  "stages": {
+    "parser_created": true,
+    "network_parsed": true,
+    "optimize_begin": true,
+    "optimize": "FAIL",
+    "load_network": "NOT_REACHED",
+    "unsupported_layers": [
+      {"layer": "Convolution2d", "dtype": "QSymmS8", "reason": "Do Not Supported"},
+      {"layer": "Activation", "dtype": "QSymmS8", "reason": "Do Not Supported"},
+      {"layer": "ElementwiseBinary", "dtype": "QSymmS8", "reason": "only support add now"}
+    ],
+    "fallback": "DISABLED"
+  },
+  "dmesg": {
+    "severe_error_observed": false,
+    "new_lines": [
+      "hard_npu 63f00000.hard_npu: map_to_register: phys_addr: 63f00000",
+      "soft_npu 1f0000000.soft_npu: map_to_register: phys_addr: 1f0000000"
+    ],
+    "before_log": "/tmp/task028-c3-int8-dmesg-before.txt",
+    "after_log": "/tmp/task028-c3-int8-dmesg-after.txt"
+  },
+  "outputs": {
+    "result_json": "NOT_CREATED",
+    "raw_heads": "NOT_CREATED",
+    "detections": "NOT_CREATED"
+  },
+  "interpretation": "The INT8 graph reaches ArmNN parsing but the current Alnpu backend rejects QSymmS8 Conv2d, Activation and ElementwiseBinary during Optimize. LoadNetwork and inference were not reached. This is a compatibility result, not a benchmark or host-accuracy result."
+}

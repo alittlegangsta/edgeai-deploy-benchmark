@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "C",
+  "status": "HISTORICAL_INITIAL_HOST_DEPENDENCY_BLOCK",
+  "recorded_at": "2026-08-07T17:39:25+08:00",
+  "scope": "Initial static audit and project-venv attempt of the official dr1m90_npu AL_onnx_pass pipeline",
+  "followup": {
+    "environment_evidence": "results/evidence/028/trackc_environment.json",
+    "official_smoke_evidence": "results/evidence/028/trackc_official_smoke.json",
+    "current_status": "BLOCKED_TRACK_C_QUANTIZED_CORRECTNESS",
+    "note": "The initial missing-import result is retained as history; a separate vendor-requirements environment subsequently ran the unchanged conversion."
+  },
+  "source_identity": {
+    "root": "NPU_info/dr1m90_npu",
+    "remote": "https://gitee.com/anlogic/dr1m90_npu.git",
+    "branch": "release",
+    "head": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+    "tag_points_at_head": [],
+    "worktree": "dirty; 2021 porcelain entries observed in the source checkout",
+    "native_path_separation": "This repository contains the ArmNN/ONNX demo path; no native npu_runtime assets were found in the audited checkout."
+  },
+  "source_files": {
+    "AL_onnx_pass.py": {
+      "path": "npu_demo/scripts/AL_onnx_pass.py",
+      "sha256": "f61bc7ab424726d08881f1e9ef8a3fbcfbee8fdcb612eeb6d944c450aed4540a",
+      "role": "official simplification, YOLO postprocess extraction, split, checker and static quantization orchestrator"
+    },
+    "check_onnx_model.py": {
+      "path": "npu_demo/scripts/check_onnx_model.py",
+      "sha256": "c00fe365aff2b95b07636bbfe351739e6c264c3e422131d79b90b3e18972a7b7",
+      "role": "onnx_tool model profile and ALNPU/SoftNPU operator warnings"
+    },
+    "extract_model.py": {
+      "path": "npu_demo/scripts/extract_model.py",
+      "sha256": "07e28154c9ec0e1877b313ca5f0dcb372d268418225db1cc86ac593be15996fb",
+      "role": "YOLOv5 Detect output cropping through Reshape head detection"
+    },
+    "onnx_infer_shape.py": {
+      "path": "npu_demo/scripts/onnx_infer_shape.py",
+      "sha256": "f0bda73ec872f6ca5112a10654eef6474c1bfde55ef7503b6589914d8a9a4b65",
+      "role": "fixed input shape and optional Resize-to-scales transformation"
+    },
+    "split_convFC.py": {
+      "path": "npu_demo/scripts/split_convFC.py",
+      "sha256": "ac1292137560b61f608e9da3cdf2e3d6dc48a7f27030e374c17cec0e2d3e929",
+      "role": "large Conv/Gemm splitting"
+    },
+    "run_quant.py": {
+      "path": "npu_demo/scripts/run_quant.py",
+      "sha256": "6032d059a9717568f4666f03f28c39ca02a20c047f8328b1f274f7cf0535ff2e",
+      "role": "ONNX Runtime static QDQ quantization and post-quant shape inference"
+    },
+    "yolo_model_inference.py": {
+      "path": "npu_demo/scripts/yolo_model_inference.py",
+      "sha256": "befd244026eba7237a5eb6ee515a18210e693bef4d9f754fef6add9e567c1191",
+      "role": "host ORT YOLO head semantic smoke and AL postprocess"
+    },
+    "requirements.txt": {
+      "path": "npu_demo/scripts/requirements.txt",
+      "sha256": "c40f36e292ea2d3d921d8cada6016100fbacc399d260cb77e8d5d77b2a6a5c49",
+      "role": "official unpinned host requirements"
+    },
+    "yolo_demo_pic_main.cpp": {
+      "path": "npu_demo/demo_src/npu_flow/yolo_demo_pic/main.cpp",
+      "sha256": "d722803df59e0342635f7ca9e0b86e2448680ff6a9bb4b7937e6d393046a51ed",
+      "role": "ArmNN demo CLI; default backend string includes CPU fallbacks"
+    },
+    "executor.cpp": {
+      "path": "npu_demo/demo_src/npu_flow/utils/executor.cpp",
+      "sha256": "5eca13e799b156708c2a1053569682cf0743531222dbd119718f29010e9a3267",
+      "role": "ArmNN OnnxParser, Optimize, LoadNetwork and CMA allocator path"
+    }
+  },
+  "pipeline": {
+    "stages": [
+      "onnx.load",
+      "onnxsim.simplify",
+      "fixed-shape inference",
+      "extract_model.extract_yolo_model for yolov5",
+      "split_convFC.split_and_add",
+      "onnx version conversion to opset 19",
+      "check_onnx_model.check_onnx_model",
+      "run_quant.run_quant using ONNX Runtime static QDQ"
+    ],
+    "yolo_output_contract_after_extract": {
+      "source": "extract_model.py logic; host prepass reproduced with onnx.utils.extract_model",
+      "outputs": [
+        {"name": "/model.24/m.0/Conv_output_0", "shape": [1, 255, 80, 80], "dtype": "FLOAT"},
+        {"name": "/model.24/m.1/Conv_output_0", "shape": [1, 255, 40, 40], "dtype": "FLOAT"},
+        {"name": "/model.24/m.2/Conv_output_0", "shape": [1, 255, 20, 20], "dtype": "FLOAT"}
+      ],
+      "note": "This is the documented Detect-cropped contract; it is not the original [1,25200,85] output."
+    },
+    "quantization": {
+      "mechanism": "onnxruntime.quantize_static with QDQ format, QUInt8 or QInt8 and per-channel option",
+      "calibration_limit": 800,
+      "readme_recommendation": 500,
+      "not_executed": true
+    },
+    "runtime_path": "The resulting ONNX is consumed by the separate ArmNN OnnxParser/Alnpu demo; AL_onnx_pass does not provide npu_runtime, rt.bin or weight.bin."
+  },
+  "host_dependency_audit": {
+    "python": ".venv/bin/python 3.12",
+    "installed": {
+      "onnx": "1.16.2",
+      "onnxruntime": "1.18.1",
+      "torch": "2.2.2+cpu",
+      "opencv": "4.10.0",
+      "numpy": "1.26.4"
+    },
+    "missing_required_for_official_entry": ["onnxsim", "onnx_tool"],
+    "requirements_policy": "The official requirements are minimum/unpinned; the initial project-venv attempt installed nothing. A later isolated vendor-requirements environment is recorded separately.",
+    "vm_status": "VM wrapper currently fails with UtilBindVsockAnyPort socket failed 1; no substitute environment was used."
+  },
+  "official_entry_attempt": {
+    "command": ".venv/bin/python $DR1_NPU_SCRIPTS/AL_onnx_pass.py --input_model models/yolov5n-v7.0/yolov5n.onnx --calibrate_dataset results/evidence/028 --quant_type uint8 --yolo_type yolov5",
+    "exit_code": 1,
+    "status": "BLOCKED_MISSING_HOST_DEPENDENCY",
+    "blocked_stage": "module import before onnx.load/simplify",
+    "stderr_first_error": "ModuleNotFoundError: No module named 'onnxsim'",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "fbed60e3059682ddc09fc89b60581c78fd69325878b40f018c226cf9234d5a88",
+    "artifacts_created": [],
+    "quantization_reached": false,
+    "official_checker_reached": false
+  },
+  "path_redaction": "The external Windows source root is intentionally represented by DR1_NPU_SCRIPTS; no personal Windows username is stored in the repository.",
+  "static_graph_prepass": {
+    "status": "PASS_NON_OFFICIAL_PREPASS",
+    "reason": "Official entry could not import; only ONNX shape inference and the source-equivalent YOLO output extraction were used.",
+    "original": {
+      "path": "models/yolov5n-v7.0/yolov5n.onnx",
+      "sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "opset": 12,
+      "nodes": 292,
+      "operator_counts": {"Add": 10, "Cast": 2, "Concat": 21, "Constant": 38, "Conv": 60, "Floor": 4, "MaxPool": 3, "Mul": 69, "Pow": 3, "Reshape": 6, "Resize": 2, "Shape": 2, "Sigmoid": 60, "Slice": 2, "Split": 3, "Transpose": 3, "Unsqueeze": 4},
+      "input": {"shape": [1, 3, 640, 640], "dtype": "FLOAT"},
+      "output": {"shape": [1, 25200, 85], "dtype": "FLOAT"},
+      "gather_count": 0,
+      "qdq_count": 0
+    },
+    "detect_cropped_equivalent": {
+      "path": "/tmp/task028-trackc/yolov5n_heads_prepass.onnx",
+      "sha256": "f5062d3b4214a08230a32e8f9fc6e58d06faecb15d303751c77394442281099c",
+      "size_bytes": 7523841,
+      "opset": 12,
+      "nodes": 231,
+      "operator_counts": {"Add": 7, "Cast": 2, "Concat": 17, "Constant": 14, "Conv": 60, "Floor": 4, "MaxPool": 3, "Mul": 57, "Resize": 2, "Shape": 2, "Sigmoid": 57, "Slice": 2, "Unsqueeze": 4},
+      "outputs": [[1, 255, 80, 80], [1, 255, 40, 40], [1, 255, 20, 20]],
+      "gather_count": 0,
+      "qdq_count": 0,
+      "not_official_artifact": true
+    },
+    "shape_operator_change": {"Floor": "unchanged_4", "Shape": "unchanged_2", "Gather": "absent_0", "Resize": "unchanged_2", "QDQ": "absent_0"},
+    "checker_like_prepass": {
+      "status": "PROVISIONAL_SOURCE_SEMANTICS_ONLY",
+      "potential_required_softnpu_ops": ["Add", "Concat", "MaxPool"],
+      "resize_status": "not classified because dynamic output shape is produced by Shape/Concat subgraphs; exact check_onnx_model requires onnx_tool",
+      "warning_count": 58,
+      "warning_operator_counts": {"Cast": 2, "Constant": 38, "Floor": 4, "Pow": 3, "Shape": 2, "Slice": 2, "Transpose": 3, "Unsqueeze": 4},
+      "not_official_checker_output": true
+    }
+  },
+  "safety": {
+    "official_vendor_binary_executed": false,
+    "board_accessed_for_track_c": false,
+    "driver_loaded": false,
+    "bitstream_or_boot_modified": false,
+    "model_changed": false,
+    "cpu_fallback_accepted": false,
+    "quantized_model_generated_by_track_c": false,
+    "benchmark_run": false,
+    "vendor_files_copied_to_git": false
+  }
+}

@@ -1,0 +1,4692 @@
+{
+  "interpretation": "Only export_status=PASS entries are candidates for the board parser; failed entries remain evidence and are not silently substituted.",
+  "matrix": [
+    {
+      "export_source": "models/yolov5n-v7.0/yolov5n.torchscript",
+      "export_status": "PASS",
+      "name": "yolov5n_opset10_static640_simplify_off",
+      "onnx_checker": "PASS",
+      "opset": 10,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset10_static640_simplify_off.onnx",
+      "sha256": "d9db6df126c4510e380aa39eedb683ae550fd43f7ba9fb9ec48ed0ec89f9a97c",
+      "simplify_implementation": "torch.onnx.do_constant_folding",
+      "simplify_requested": "off",
+      "size_bytes": 7917485,
+      "static_shape": true,
+      "summary": {
+        "domain": "",
+        "dynamic_io_dimension_count": 0,
+        "initializer_bytes": 7469620,
+        "initializer_count": 120,
+        "initializer_dtypes": {
+          "FLOAT": 120
+        },
+        "inputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "images",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "ir_version": 5,
+        "metadata": {},
+        "model_version": 0,
+        "node_count": 333,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 7,
+          "Concat": 27,
+          "Constant": 42,
+          "Conv": 60,
+          "Div": 2,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 28
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 10
+          }
+        ],
+        "outputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "output0",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "path_name": "yolov5n_opset10_static640_simplify_off.onnx",
+        "producer": {
+          "name": "pytorch",
+          "version": "2.2.2"
+        },
+        "selected_nodes": [
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 0,
+            "inputs": [],
+            "name": "/24/Constant",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 1,
+            "inputs": [],
+            "name": "/11/Constant",
+            "op_type": "Constant",
+            "outputs": [
+              "/11/Constant_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 2,
+            "inputs": [],
+            "name": "/0/conv/Constant",
+            "op_type": "Constant",
+            "outputs": [
+              "/0/conv/Constant_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 120,
+            "inputs": [],
+            "name": "/11/Constant_1",
+            "op_type": "Constant",
+            "outputs": [
+              "/11/Constant_1_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 121,
+            "inputs": [
+              "/11/Constant_1_output_0"
+            ],
+            "name": "/11/Floor",
+            "op_type": "Floor",
+            "outputs": [
+              "/11/Floor_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 122,
+            "inputs": [],
+            "name": "/11/Constant_2",
+            "op_type": "Constant",
+            "outputs": [
+              "/11/Constant_2_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 123,
+            "inputs": [
+              "/11/Constant_2_output_0"
+            ],
+            "name": "/11/Floor_1",
+            "op_type": "Floor",
+            "outputs": [
+              "/11/Floor_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 127,
+            "inputs": [
+              "/11/Concat_output_0"
+            ],
+            "name": "/11/Cast",
+            "op_type": "Cast",
+            "outputs": [
+              "/11/Cast_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 128,
+            "inputs": [
+              "/10/act/Mul_output_0"
+            ],
+            "name": "/11/Shape",
+            "op_type": "Shape",
+            "outputs": [
+              "/11/Shape_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 129,
+            "inputs": [],
+            "name": "/11/Constant_3",
+            "op_type": "Constant",
+            "outputs": [
+              "/11/Constant_3_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 130,
+            "inputs": [],
+            "name": "/11/Constant_4",
+            "op_type": "Constant",
+            "outputs": [
+              "/11/Constant_4_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 131,
+            "inputs": [],
+            "name": "/11/Constant_5",
+            "op_type": "Constant",
+            "outputs": [
+              "/11/Constant_5_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 133,
+            "inputs": [
+              "/11/Slice_output_0"
+            ],
+            "name": "/11/Cast_1",
+            "op_type": "Cast",
+            "outputs": [
+              "/11/Cast_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 135,
+            "inputs": [],
+            "name": "/11/Constant_6",
+            "op_type": "Constant",
+            "outputs": [
+              "/11/Constant_6_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "mode": "nearest"
+            },
+            "index": 137,
+            "inputs": [
+              "/10/act/Mul_output_0",
+              "/11/Concat_1_output_0"
+            ],
+            "name": "/11/Resize",
+            "op_type": "Resize",
+            "outputs": [
+              "/11/Resize_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 158,
+            "inputs": [],
+            "name": "/15/Constant",
+            "op_type": "Constant",
+            "outputs": [
+              "/15/Constant_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 159,
+            "inputs": [
+              "/15/Constant_output_0"
+            ],
+            "name": "/15/Floor",
+            "op_type": "Floor",
+            "outputs": [
+              "/15/Floor_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 160,
+            "inputs": [],
+            "name": "/15/Constant_1",
+            "op_type": "Constant",
+            "outputs": [
+              "/15/Constant_1_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 161,
+            "inputs": [
+              "/15/Constant_1_output_0"
+            ],
+            "name": "/15/Floor_1",
+            "op_type": "Floor",
+            "outputs": [
+              "/15/Floor_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 165,
+            "inputs": [
+              "/15/Concat_output_0"
+            ],
+            "name": "/15/Cast",
+            "op_type": "Cast",
+            "outputs": [
+              "/15/Cast_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 166,
+            "inputs": [
+              "/14/act/Mul_output_0"
+            ],
+            "name": "/15/Shape",
+            "op_type": "Shape",
+            "outputs": [
+              "/15/Shape_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 167,
+            "inputs": [],
+            "name": "/15/Constant_2",
+            "op_type": "Constant",
+            "outputs": [
+              "/15/Constant_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 168,
+            "inputs": [],
+            "name": "/15/Constant_3",
+            "op_type": "Constant",
+            "outputs": [
+              "/15/Constant_3_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 169,
+            "inputs": [],
+            "name": "/15/Constant_4",
+            "op_type": "Constant",
+            "outputs": [
+              "/15/Constant_4_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 171,
+            "inputs": [
+              "/15/Slice_output_0"
+            ],
+            "name": "/15/Cast_1",
+            "op_type": "Cast",
+            "outputs": [
+              "/15/Cast_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 173,
+            "inputs": [],
+            "name": "/15/Constant_5",
+            "op_type": "Constant",
+            "outputs": [
+              "/15/Constant_5_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "mode": "nearest"
+            },
+            "index": 175,
+            "inputs": [
+              "/14/act/Mul_output_0",
+              "/15/Concat_1_output_0"
+            ],
+            "name": "/15/Resize",
+            "op_type": "Resize",
+            "outputs": [
+              "/15/Resize_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 234,
+            "inputs": [],
+            "name": "/24/Constant_1",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 235,
+            "inputs": [],
+            "name": "/24/Constant_2",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 236,
+            "inputs": [],
+            "name": "/24/Constant_3",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_3_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 247,
+            "inputs": [],
+            "name": "/24/Constant_4",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_4_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 249,
+            "inputs": [],
+            "name": "/24/Constant_5",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_5_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 251,
+            "inputs": [],
+            "name": "/24/Constant_6",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_6_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 253,
+            "inputs": [],
+            "name": "/24/Constant_7",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_7_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 255,
+            "inputs": [
+              "/0/conv/Constant_output_0"
+            ],
+            "name": "/24/Cast",
+            "op_type": "Cast",
+            "outputs": [
+              "/24/Cast_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 257,
+            "inputs": [],
+            "name": "/24/Constant_8",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_8_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 260,
+            "inputs": [],
+            "name": "/24/Constant_9",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_9_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 267,
+            "inputs": [],
+            "name": "/24/Constant_10",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_10_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 268,
+            "inputs": [],
+            "name": "/24/Constant_11",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_11_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 269,
+            "inputs": [],
+            "name": "/24/Constant_12",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_12_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 280,
+            "inputs": [],
+            "name": "/24/Constant_13",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_13_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 282,
+            "inputs": [],
+            "name": "/24/Constant_14",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_14_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 284,
+            "inputs": [],
+            "name": "/24/Constant_15",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_15_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 286,
+            "inputs": [],
+            "name": "/24/Constant_16",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_16_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 288,
+            "inputs": [
+              "/0/conv/Constant_output_0"
+            ],
+            "name": "/24/Cast_1",
+            "op_type": "Cast",
+            "outputs": [
+              "/24/Cast_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 290,
+            "inputs": [],
+            "name": "/24/Constant_17",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_17_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 293,
+            "inputs": [],
+            "name": "/24/Constant_18",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_18_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 300,
+            "inputs": [],
+            "name": "/24/Constant_19",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_19_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 301,
+            "inputs": [],
+            "name": "/24/Constant_20",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_20_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 302,
+            "inputs": [],
+            "name": "/24/Constant_21",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_21_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 313,
+            "inputs": [],
+            "name": "/24/Constant_22",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_22_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 315,
+            "inputs": [],
+            "name": "/24/Constant_23",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_23_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 317,
+            "inputs": [],
+            "name": "/24/Constant_24",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_24_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 319,
+            "inputs": [],
+            "name": "/24/Constant_25",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_25_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 321,
+            "inputs": [
+              "/0/conv/Constant_output_0"
+            ],
+            "name": "/24/Cast_2",
+            "op_type": "Cast",
+            "outputs": [
+              "/24/Cast_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 323,
+            "inputs": [],
+            "name": "/24/Constant_26",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_26_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 326,
+            "inputs": [],
+            "name": "/24/Constant_27",
+            "op_type": "Constant",
+            "outputs": [
+              "/24/Constant_27_output_0"
+            ]
+          }
+        ],
+        "sha256": "d9db6df126c4510e380aa39eedb683ae550fd43f7ba9fb9ec48ed0ec89f9a97c",
+        "size_bytes": 7917485,
+        "value_info_count": 0
+      }
+    },
+    {
+      "export_source": "models/yolov5n-v7.0/yolov5n.torchscript",
+      "export_status": "PASS",
+      "name": "yolov5n_opset10_static640_simplify_on",
+      "onnx_checker": "PASS",
+      "opset": 10,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset10_static640_simplify_on.onnx",
+      "sha256": "3b016a0b480efd305d95730af1b3f4f5e143652017f0c21c9fc8833a50fe784e",
+      "simplify_implementation": "torch.onnx.do_constant_folding",
+      "simplify_requested": "on",
+      "size_bytes": 7907564,
+      "static_shape": true,
+      "summary": {
+        "domain": "",
+        "dynamic_io_dimension_count": 0,
+        "initializer_bytes": 7469620,
+        "initializer_count": 120,
+        "initializer_dtypes": {
+          "FLOAT": 120
+        },
+        "inputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "images",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "ir_version": 5,
+        "metadata": {},
+        "model_version": 0,
+        "node_count": 294,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 4,
+          "Concat": 21,
+          "Constant": 36,
+          "Conv": 60,
+          "Div": 2,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 4
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 10
+          }
+        ],
+        "outputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "output0",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "path_name": "yolov5n_opset10_static640_simplify_on.onnx",
+        "producer": {
+          "name": "pytorch",
+          "version": "2.2.2"
+        },
+        "selected_nodes": [
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 117,
+            "inputs": [],
+            "name": "/Constant",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 118,
+            "inputs": [
+              "/Constant_output_0"
+            ],
+            "name": "/Floor",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 119,
+            "inputs": [],
+            "name": "/Constant_1",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_1_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 120,
+            "inputs": [
+              "/Constant_1_output_0"
+            ],
+            "name": "/Floor_1",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 124,
+            "inputs": [
+              "/Concat_5_output_0"
+            ],
+            "name": "/Cast",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 125,
+            "inputs": [
+              "/Mul_33_output_0"
+            ],
+            "name": "/Shape",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 126,
+            "inputs": [],
+            "name": "/Constant_2",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 127,
+            "inputs": [],
+            "name": "/Constant_3",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_3_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 128,
+            "inputs": [],
+            "name": "/Constant_4",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_4_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 130,
+            "inputs": [
+              "/Slice_output_0"
+            ],
+            "name": "/Cast_1",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 132,
+            "inputs": [],
+            "name": "/Constant_5",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_5_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "mode": "nearest"
+            },
+            "index": 134,
+            "inputs": [
+              "/Mul_33_output_0",
+              "/Concat_6_output_0"
+            ],
+            "name": "/Resize",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 155,
+            "inputs": [],
+            "name": "/Constant_6",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_6_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 156,
+            "inputs": [
+              "/Constant_6_output_0"
+            ],
+            "name": "/Floor_2",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 157,
+            "inputs": [],
+            "name": "/Constant_7",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_7_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 158,
+            "inputs": [
+              "/Constant_7_output_0"
+            ],
+            "name": "/Floor_3",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_3_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 162,
+            "inputs": [
+              "/Concat_9_output_0"
+            ],
+            "name": "/Cast_2",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_2_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 163,
+            "inputs": [
+              "/Mul_39_output_0"
+            ],
+            "name": "/Shape_1",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 164,
+            "inputs": [],
+            "name": "/Constant_8",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_8_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 165,
+            "inputs": [],
+            "name": "/Constant_9",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_9_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 166,
+            "inputs": [],
+            "name": "/Constant_10",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_10_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 168,
+            "inputs": [
+              "/Slice_1_output_0"
+            ],
+            "name": "/Cast_3",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_3_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 170,
+            "inputs": [],
+            "name": "/Constant_11",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_11_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "mode": "nearest"
+            },
+            "index": 172,
+            "inputs": [
+              "/Mul_39_output_0",
+              "/Concat_10_output_0"
+            ],
+            "name": "/Resize_1",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 231,
+            "inputs": [],
+            "name": "/Constant_12",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_12_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 236,
+            "inputs": [],
+            "name": "/Constant_13",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_13_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 238,
+            "inputs": [],
+            "name": "/Constant_14",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_14_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 240,
+            "inputs": [],
+            "name": "/Constant_15",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_15_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 242,
+            "inputs": [],
+            "name": "/Constant_16",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_16_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 244,
+            "inputs": [],
+            "name": "/Constant_17",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_17_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 246,
+            "inputs": [],
+            "name": "/Constant_18",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_18_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 249,
+            "inputs": [],
+            "name": "/Constant_19",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_19_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 252,
+            "inputs": [],
+            "name": "/Constant_20",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_20_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 257,
+            "inputs": [],
+            "name": "/Constant_21",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_21_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 259,
+            "inputs": [],
+            "name": "/Constant_22",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_22_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 261,
+            "inputs": [],
+            "name": "/Constant_23",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_23_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 263,
+            "inputs": [],
+            "name": "/Constant_24",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_24_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 265,
+            "inputs": [],
+            "name": "/Constant_25",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_25_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 267,
+            "inputs": [],
+            "name": "/Constant_26",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_26_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 270,
+            "inputs": [],
+            "name": "/Constant_27",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_27_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 273,
+            "inputs": [],
+            "name": "/Constant_28",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_28_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 278,
+            "inputs": [],
+            "name": "/Constant_29",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_29_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 280,
+            "inputs": [],
+            "name": "/Constant_30",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_30_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 282,
+            "inputs": [],
+            "name": "/Constant_31",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_31_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 284,
+            "inputs": [],
+            "name": "/Constant_32",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_32_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 286,
+            "inputs": [],
+            "name": "/Constant_33",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_33_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 288,
+            "inputs": [],
+            "name": "/Constant_34",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_34_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 291,
+            "inputs": [],
+            "name": "/Constant_35",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_35_output_0"
+            ]
+          }
+        ],
+        "sha256": "3b016a0b480efd305d95730af1b3f4f5e143652017f0c21c9fc8833a50fe784e",
+        "size_bytes": 7907564,
+        "value_info_count": 0
+      }
+    },
+    {
+      "export_source": "models/yolov5n-v7.0/yolov5n.torchscript",
+      "export_status": "PASS",
+      "name": "yolov5n_opset11_static640_simplify_off",
+      "onnx_checker": "PASS",
+      "opset": 11,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset11_static640_simplify_off.onnx",
+      "sha256": "276872e2f43e23aff2396e23d815b5df32f3f2bd6b791104a5f6308f06d40890",
+      "simplify_implementation": "torch.onnx.do_constant_folding",
+      "simplify_requested": "off",
+      "size_bytes": 7911190,
+      "static_shape": true,
+      "summary": {
+        "domain": "",
+        "dynamic_io_dimension_count": 0,
+        "initializer_bytes": 7469620,
+        "initializer_count": 120,
+        "initializer_dtypes": {
+          "FLOAT": 120
+        },
+        "inputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "images",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "ir_version": 6,
+        "metadata": {},
+        "model_version": 0,
+        "node_count": 331,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 5,
+          "Concat": 27,
+          "Constant": 44,
+          "Conv": 60,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 28
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 11
+          }
+        ],
+        "outputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "output0",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "path_name": "yolov5n_opset11_static640_simplify_off.onnx",
+        "producer": {
+          "name": "pytorch",
+          "version": "2.2.2"
+        },
+        "selected_nodes": [
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 0,
+            "inputs": [],
+            "name": "/Constant",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 1,
+            "inputs": [],
+            "name": "/Constant_1",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 2,
+            "inputs": [],
+            "name": "/Constant_2",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 120,
+            "inputs": [],
+            "name": "/Constant_3",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_3_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 121,
+            "inputs": [
+              "/Constant_3_output_0"
+            ],
+            "name": "/Floor",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 122,
+            "inputs": [],
+            "name": "/Constant_4",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_4_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 123,
+            "inputs": [
+              "/Constant_4_output_0"
+            ],
+            "name": "/Floor_1",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_1_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 127,
+            "inputs": [
+              "/Mul_33_output_0"
+            ],
+            "name": "/Shape",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 128,
+            "inputs": [],
+            "name": "/Constant_5",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_5_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 129,
+            "inputs": [],
+            "name": "/Constant_6",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_6_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 130,
+            "inputs": [],
+            "name": "/Constant_7",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_7_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 7
+            },
+            "index": 132,
+            "inputs": [
+              "/Concat_5_output_0"
+            ],
+            "name": "/Cast",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 134,
+            "inputs": [],
+            "name": "/Constant_8",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_8_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 135,
+            "inputs": [],
+            "name": "/Constant_9",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_9_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "coordinate_transformation_mode": "asymmetric",
+              "cubic_coeff_a": -0.75,
+              "mode": "nearest",
+              "nearest_mode": "floor"
+            },
+            "index": 136,
+            "inputs": [
+              "/Mul_33_output_0",
+              "/Constant_8_output_0",
+              "/Constant_9_output_0",
+              "/Concat_6_output_0"
+            ],
+            "name": "/Resize",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 157,
+            "inputs": [],
+            "name": "/Constant_10",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_10_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 158,
+            "inputs": [
+              "/Constant_10_output_0"
+            ],
+            "name": "/Floor_2",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 159,
+            "inputs": [],
+            "name": "/Constant_11",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_11_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 160,
+            "inputs": [
+              "/Constant_11_output_0"
+            ],
+            "name": "/Floor_3",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_3_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 164,
+            "inputs": [
+              "/Mul_39_output_0"
+            ],
+            "name": "/Shape_1",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 165,
+            "inputs": [],
+            "name": "/Constant_12",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_12_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 166,
+            "inputs": [],
+            "name": "/Constant_13",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_13_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 167,
+            "inputs": [],
+            "name": "/Constant_14",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_14_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 7
+            },
+            "index": 169,
+            "inputs": [
+              "/Concat_9_output_0"
+            ],
+            "name": "/Cast_1",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 171,
+            "inputs": [],
+            "name": "/Constant_15",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_15_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 172,
+            "inputs": [],
+            "name": "/Constant_16",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_16_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "coordinate_transformation_mode": "asymmetric",
+              "cubic_coeff_a": -0.75,
+              "mode": "nearest",
+              "nearest_mode": "floor"
+            },
+            "index": 173,
+            "inputs": [
+              "/Mul_39_output_0",
+              "/Constant_15_output_0",
+              "/Constant_16_output_0",
+              "/Concat_10_output_0"
+            ],
+            "name": "/Resize_1",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 232,
+            "inputs": [],
+            "name": "/Constant_17",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_17_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 233,
+            "inputs": [],
+            "name": "/Constant_18",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_18_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 234,
+            "inputs": [],
+            "name": "/Constant_19",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_19_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 245,
+            "inputs": [],
+            "name": "/Constant_20",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_20_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 247,
+            "inputs": [],
+            "name": "/Constant_21",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_21_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 249,
+            "inputs": [],
+            "name": "/Constant_22",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_22_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 251,
+            "inputs": [],
+            "name": "/Constant_23",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_23_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 253,
+            "inputs": [
+              "/Constant_2_output_0"
+            ],
+            "name": "/Cast_2",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 255,
+            "inputs": [],
+            "name": "/Constant_24",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_24_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 258,
+            "inputs": [],
+            "name": "/Constant_25",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_25_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 265,
+            "inputs": [],
+            "name": "/Constant_26",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_26_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 266,
+            "inputs": [],
+            "name": "/Constant_27",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_27_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 267,
+            "inputs": [],
+            "name": "/Constant_28",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_28_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 278,
+            "inputs": [],
+            "name": "/Constant_29",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_29_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 280,
+            "inputs": [],
+            "name": "/Constant_30",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_30_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 282,
+            "inputs": [],
+            "name": "/Constant_31",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_31_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 284,
+            "inputs": [],
+            "name": "/Constant_32",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_32_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 286,
+            "inputs": [
+              "/Constant_2_output_0"
+            ],
+            "name": "/Cast_3",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_3_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 288,
+            "inputs": [],
+            "name": "/Constant_33",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_33_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 291,
+            "inputs": [],
+            "name": "/Constant_34",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_34_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 298,
+            "inputs": [],
+            "name": "/Constant_35",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_35_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 299,
+            "inputs": [],
+            "name": "/Constant_36",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_36_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 300,
+            "inputs": [],
+            "name": "/Constant_37",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_37_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 311,
+            "inputs": [],
+            "name": "/Constant_38",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_38_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 313,
+            "inputs": [],
+            "name": "/Constant_39",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_39_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 315,
+            "inputs": [],
+            "name": "/Constant_40",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_40_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 317,
+            "inputs": [],
+            "name": "/Constant_41",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_41_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 1
+            },
+            "index": 319,
+            "inputs": [
+              "/Constant_2_output_0"
+            ],
+            "name": "/Cast_4",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_4_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 321,
+            "inputs": [],
+            "name": "/Constant_42",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_42_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 324,
+            "inputs": [],
+            "name": "/Constant_43",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_43_output_0"
+            ]
+          }
+        ],
+        "sha256": "276872e2f43e23aff2396e23d815b5df32f3f2bd6b791104a5f6308f06d40890",
+        "size_bytes": 7911190,
+        "value_info_count": 0
+      }
+    },
+    {
+      "export_source": "models/yolov5n-v7.0/yolov5n.torchscript",
+      "export_status": "PASS",
+      "name": "yolov5n_opset11_static640_simplify_on",
+      "onnx_checker": "PASS",
+      "opset": 11,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset11_static640_simplify_on.onnx",
+      "sha256": "dd740f7b5e7ee0d077bdb8708ca5ed8bc5f7778b5b7a65dd249756b4d7a95af6",
+      "simplify_implementation": "torch.onnx.do_constant_folding",
+      "simplify_requested": "on",
+      "size_bytes": 7907714,
+      "static_shape": true,
+      "summary": {
+        "domain": "",
+        "dynamic_io_dimension_count": 0,
+        "initializer_bytes": 7469620,
+        "initializer_count": 120,
+        "initializer_dtypes": {
+          "FLOAT": 120
+        },
+        "inputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "images",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "ir_version": 6,
+        "metadata": {},
+        "model_version": 0,
+        "node_count": 292,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 2,
+          "Concat": 21,
+          "Constant": 38,
+          "Conv": 60,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 4
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 11
+          }
+        ],
+        "outputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "output0",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "path_name": "yolov5n_opset11_static640_simplify_on.onnx",
+        "producer": {
+          "name": "pytorch",
+          "version": "2.2.2"
+        },
+        "selected_nodes": [
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 117,
+            "inputs": [],
+            "name": "/Constant",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 118,
+            "inputs": [
+              "/Constant_output_0"
+            ],
+            "name": "/Floor",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 119,
+            "inputs": [],
+            "name": "/Constant_1",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_1_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 120,
+            "inputs": [
+              "/Constant_1_output_0"
+            ],
+            "name": "/Floor_1",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_1_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 124,
+            "inputs": [
+              "/Mul_33_output_0"
+            ],
+            "name": "/Shape",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 125,
+            "inputs": [],
+            "name": "/Constant_2",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 126,
+            "inputs": [],
+            "name": "/Constant_3",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_3_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 127,
+            "inputs": [],
+            "name": "/Constant_4",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_4_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 7
+            },
+            "index": 129,
+            "inputs": [
+              "/Concat_5_output_0"
+            ],
+            "name": "/Cast",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 131,
+            "inputs": [],
+            "name": "/Constant_5",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_5_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 132,
+            "inputs": [],
+            "name": "/Constant_6",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_6_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "coordinate_transformation_mode": "asymmetric",
+              "cubic_coeff_a": -0.75,
+              "mode": "nearest",
+              "nearest_mode": "floor"
+            },
+            "index": 133,
+            "inputs": [
+              "/Mul_33_output_0",
+              "/Constant_5_output_0",
+              "/Constant_6_output_0",
+              "/Concat_6_output_0"
+            ],
+            "name": "/Resize",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 154,
+            "inputs": [],
+            "name": "/Constant_7",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_7_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 155,
+            "inputs": [
+              "/Constant_7_output_0"
+            ],
+            "name": "/Floor_2",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 156,
+            "inputs": [],
+            "name": "/Constant_8",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_8_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 157,
+            "inputs": [
+              "/Constant_8_output_0"
+            ],
+            "name": "/Floor_3",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_3_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 161,
+            "inputs": [
+              "/Mul_39_output_0"
+            ],
+            "name": "/Shape_1",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 162,
+            "inputs": [],
+            "name": "/Constant_9",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_9_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 163,
+            "inputs": [],
+            "name": "/Constant_10",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_10_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 164,
+            "inputs": [],
+            "name": "/Constant_11",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_11_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 7
+            },
+            "index": 166,
+            "inputs": [
+              "/Concat_9_output_0"
+            ],
+            "name": "/Cast_1",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 168,
+            "inputs": [],
+            "name": "/Constant_12",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_12_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 169,
+            "inputs": [],
+            "name": "/Constant_13",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_13_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "coordinate_transformation_mode": "asymmetric",
+              "cubic_coeff_a": -0.75,
+              "mode": "nearest",
+              "nearest_mode": "floor"
+            },
+            "index": 170,
+            "inputs": [
+              "/Mul_39_output_0",
+              "/Constant_12_output_0",
+              "/Constant_13_output_0",
+              "/Concat_10_output_0"
+            ],
+            "name": "/Resize_1",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 229,
+            "inputs": [],
+            "name": "/Constant_14",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_14_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 234,
+            "inputs": [],
+            "name": "/Constant_15",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_15_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 236,
+            "inputs": [],
+            "name": "/Constant_16",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_16_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 238,
+            "inputs": [],
+            "name": "/Constant_17",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_17_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 240,
+            "inputs": [],
+            "name": "/Constant_18",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_18_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 242,
+            "inputs": [],
+            "name": "/Constant_19",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_19_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 244,
+            "inputs": [],
+            "name": "/Constant_20",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_20_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 247,
+            "inputs": [],
+            "name": "/Constant_21",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_21_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 250,
+            "inputs": [],
+            "name": "/Constant_22",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_22_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 255,
+            "inputs": [],
+            "name": "/Constant_23",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_23_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 257,
+            "inputs": [],
+            "name": "/Constant_24",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_24_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 259,
+            "inputs": [],
+            "name": "/Constant_25",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_25_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 261,
+            "inputs": [],
+            "name": "/Constant_26",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_26_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 263,
+            "inputs": [],
+            "name": "/Constant_27",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_27_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 265,
+            "inputs": [],
+            "name": "/Constant_28",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_28_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 268,
+            "inputs": [],
+            "name": "/Constant_29",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_29_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 271,
+            "inputs": [],
+            "name": "/Constant_30",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_30_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 276,
+            "inputs": [],
+            "name": "/Constant_31",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_31_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 278,
+            "inputs": [],
+            "name": "/Constant_32",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_32_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 280,
+            "inputs": [],
+            "name": "/Constant_33",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_33_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 282,
+            "inputs": [],
+            "name": "/Constant_34",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_34_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 284,
+            "inputs": [],
+            "name": "/Constant_35",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_35_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 286,
+            "inputs": [],
+            "name": "/Constant_36",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_36_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 289,
+            "inputs": [],
+            "name": "/Constant_37",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_37_output_0"
+            ]
+          }
+        ],
+        "sha256": "dd740f7b5e7ee0d077bdb8708ca5ed8bc5f7778b5b7a65dd249756b4d7a95af6",
+        "size_bytes": 7907714,
+        "value_info_count": 0
+      }
+    },
+    {
+      "export_source": "models/yolov5n-v7.0/yolov5n.torchscript",
+      "export_status": "PASS",
+      "name": "yolov5n_opset12_static640_simplify_off",
+      "onnx_checker": "PASS",
+      "opset": 12,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset12_static640_simplify_off.onnx",
+      "sha256": "add80b2e8a2e52a5d810e7e24d1780572a5da2f83bc53be97968d72dfc413fa6",
+      "simplify_implementation": "torch.onnx.do_constant_folding",
+      "simplify_requested": "off",
+      "size_bytes": 7911138,
+      "static_shape": true,
+      "summary": {
+        "domain": "",
+        "dynamic_io_dimension_count": 0,
+        "initializer_bytes": 7469620,
+        "initializer_count": 120,
+        "initializer_dtypes": {
+          "FLOAT": 120
+        },
+        "inputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "images",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "ir_version": 7,
+        "metadata": {},
+        "model_version": 0,
+        "node_count": 330,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 2,
+          "Concat": 27,
+          "Constant": 46,
+          "Conv": 60,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 28
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 12
+          }
+        ],
+        "outputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "output0",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "path_name": "yolov5n_opset12_static640_simplify_off.onnx",
+        "producer": {
+          "name": "pytorch",
+          "version": "2.2.2"
+        },
+        "selected_nodes": [
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 0,
+            "inputs": [],
+            "name": "/Constant",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 1,
+            "inputs": [],
+            "name": "/Constant_1",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 119,
+            "inputs": [],
+            "name": "/Constant_2",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_2_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 120,
+            "inputs": [
+              "/Constant_2_output_0"
+            ],
+            "name": "/Floor",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 121,
+            "inputs": [],
+            "name": "/Constant_3",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_3_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 122,
+            "inputs": [
+              "/Constant_3_output_0"
+            ],
+            "name": "/Floor_1",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_1_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 126,
+            "inputs": [
+              "/Mul_33_output_0"
+            ],
+            "name": "/Shape",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 127,
+            "inputs": [],
+            "name": "/Constant_4",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_4_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 128,
+            "inputs": [],
+            "name": "/Constant_5",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_5_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 129,
+            "inputs": [],
+            "name": "/Constant_6",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_6_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 7
+            },
+            "index": 131,
+            "inputs": [
+              "/Concat_5_output_0"
+            ],
+            "name": "/Cast",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 133,
+            "inputs": [],
+            "name": "/Constant_7",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_7_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 134,
+            "inputs": [],
+            "name": "/Constant_8",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_8_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "coordinate_transformation_mode": "asymmetric",
+              "cubic_coeff_a": -0.75,
+              "mode": "nearest",
+              "nearest_mode": "floor"
+            },
+            "index": 135,
+            "inputs": [
+              "/Mul_33_output_0",
+              "/Constant_7_output_0",
+              "/Constant_8_output_0",
+              "/Concat_6_output_0"
+            ],
+            "name": "/Resize",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 156,
+            "inputs": [],
+            "name": "/Constant_9",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_9_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 157,
+            "inputs": [
+              "/Constant_9_output_0"
+            ],
+            "name": "/Floor_2",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 158,
+            "inputs": [],
+            "name": "/Constant_10",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_10_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 159,
+            "inputs": [
+              "/Constant_10_output_0"
+            ],
+            "name": "/Floor_3",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_3_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 163,
+            "inputs": [
+              "/Mul_39_output_0"
+            ],
+            "name": "/Shape_1",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 164,
+            "inputs": [],
+            "name": "/Constant_11",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_11_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 165,
+            "inputs": [],
+            "name": "/Constant_12",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_12_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 166,
+            "inputs": [],
+            "name": "/Constant_13",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_13_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 7
+            },
+            "index": 168,
+            "inputs": [
+              "/Concat_9_output_0"
+            ],
+            "name": "/Cast_1",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 170,
+            "inputs": [],
+            "name": "/Constant_14",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_14_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 171,
+            "inputs": [],
+            "name": "/Constant_15",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_15_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "coordinate_transformation_mode": "asymmetric",
+              "cubic_coeff_a": -0.75,
+              "mode": "nearest",
+              "nearest_mode": "floor"
+            },
+            "index": 172,
+            "inputs": [
+              "/Mul_39_output_0",
+              "/Constant_14_output_0",
+              "/Constant_15_output_0",
+              "/Concat_10_output_0"
+            ],
+            "name": "/Resize_1",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 231,
+            "inputs": [],
+            "name": "/Constant_16",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_16_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 232,
+            "inputs": [],
+            "name": "/Constant_17",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_17_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 233,
+            "inputs": [],
+            "name": "/Constant_18",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_18_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 244,
+            "inputs": [],
+            "name": "/Constant_19",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_19_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 246,
+            "inputs": [],
+            "name": "/Constant_20",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_20_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 248,
+            "inputs": [],
+            "name": "/Constant_21",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_21_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 250,
+            "inputs": [],
+            "name": "/Constant_22",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_22_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 252,
+            "inputs": [],
+            "name": "/Constant_23",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_23_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 254,
+            "inputs": [],
+            "name": "/Constant_24",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_24_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 257,
+            "inputs": [],
+            "name": "/Constant_25",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_25_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 264,
+            "inputs": [],
+            "name": "/Constant_26",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_26_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 265,
+            "inputs": [],
+            "name": "/Constant_27",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_27_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 266,
+            "inputs": [],
+            "name": "/Constant_28",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_28_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 277,
+            "inputs": [],
+            "name": "/Constant_29",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_29_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 279,
+            "inputs": [],
+            "name": "/Constant_30",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_30_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 281,
+            "inputs": [],
+            "name": "/Constant_31",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_31_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 283,
+            "inputs": [],
+            "name": "/Constant_32",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_32_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 285,
+            "inputs": [],
+            "name": "/Constant_33",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_33_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 287,
+            "inputs": [],
+            "name": "/Constant_34",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_34_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 290,
+            "inputs": [],
+            "name": "/Constant_35",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_35_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 297,
+            "inputs": [],
+            "name": "/Constant_36",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_36_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 298,
+            "inputs": [],
+            "name": "/Constant_37",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_37_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 299,
+            "inputs": [],
+            "name": "/Constant_38",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_38_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 310,
+            "inputs": [],
+            "name": "/Constant_39",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_39_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 312,
+            "inputs": [],
+            "name": "/Constant_40",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_40_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 314,
+            "inputs": [],
+            "name": "/Constant_41",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_41_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 316,
+            "inputs": [],
+            "name": "/Constant_42",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_42_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 318,
+            "inputs": [],
+            "name": "/Constant_43",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_43_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 320,
+            "inputs": [],
+            "name": "/Constant_44",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_44_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 323,
+            "inputs": [],
+            "name": "/Constant_45",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_45_output_0"
+            ]
+          }
+        ],
+        "sha256": "add80b2e8a2e52a5d810e7e24d1780572a5da2f83bc53be97968d72dfc413fa6",
+        "size_bytes": 7911138,
+        "value_info_count": 0
+      }
+    },
+    {
+      "export_source": "models/yolov5n-v7.0/yolov5n.torchscript",
+      "export_status": "PASS",
+      "name": "yolov5n_opset12_static640_simplify_on",
+      "onnx_checker": "PASS",
+      "opset": 12,
+      "ort_raw_output": {
+        "dtype": "float32",
+        "exact_equal": true,
+        "golden_input": {
+          "interpolation": "cv2.INTER_LINEAR",
+          "original_size": {
+            "height": 960,
+            "width": 1280
+          },
+          "pad_color_bgr": [
+            114,
+            114,
+            114
+          ],
+          "padding": {
+            "bottom": 80,
+            "left": 0,
+            "right": 0,
+            "top": 80
+          },
+          "resized_size": {
+            "height": 480,
+            "width": 640
+          },
+          "scale": 0.5,
+          "target_size": {
+            "height": 640,
+            "width": 640
+          },
+          "transforms": [
+            "BGR_TO_RGB",
+            "HWC_TO_CHW",
+            "uint8_TO_float32",
+            "divide_by_255",
+            "add_batch_dimension"
+          ]
+        },
+        "max_abs_delta_vs_frozen": 0.0,
+        "mean_abs_delta_vs_frozen": 0.0,
+        "shape": [
+          1,
+          25200,
+          85
+        ],
+        "status": "PASS"
+      },
+      "path_name": "yolov5n_opset12_static640_simplify_on.onnx",
+      "sha256": "f0db193bac1ce18ce9bb17c6afedc1850f209d0d74961bee6a297741369079fa",
+      "simplify_implementation": "torch.onnx.do_constant_folding",
+      "simplify_requested": "on",
+      "size_bytes": 7907714,
+      "static_shape": true,
+      "summary": {
+        "domain": "",
+        "dynamic_io_dimension_count": 0,
+        "initializer_bytes": 7469620,
+        "initializer_count": 120,
+        "initializer_dtypes": {
+          "FLOAT": 120
+        },
+        "inputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "images",
+            "shape": [
+              1,
+              3,
+              640,
+              640
+            ]
+          }
+        ],
+        "ir_version": 7,
+        "metadata": {},
+        "model_version": 0,
+        "node_count": 292,
+        "operator_counts": {
+          "Add": 10,
+          "Cast": 2,
+          "Concat": 21,
+          "Constant": 38,
+          "Conv": 60,
+          "Floor": 4,
+          "MaxPool": 3,
+          "Mul": 69,
+          "Pow": 3,
+          "Reshape": 6,
+          "Resize": 2,
+          "Shape": 2,
+          "Sigmoid": 60,
+          "Slice": 2,
+          "Split": 3,
+          "Transpose": 3,
+          "Unsqueeze": 4
+        },
+        "opsets": [
+          {
+            "domain": "",
+            "version": 12
+          }
+        ],
+        "outputs": [
+          {
+            "dtype": "FLOAT",
+            "dynamic_dimensions": 0,
+            "name": "output0",
+            "shape": [
+              1,
+              25200,
+              85
+            ]
+          }
+        ],
+        "path_name": "yolov5n_opset12_static640_simplify_on.onnx",
+        "producer": {
+          "name": "pytorch",
+          "version": "2.2.2"
+        },
+        "selected_nodes": [
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 117,
+            "inputs": [],
+            "name": "/Constant",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 118,
+            "inputs": [
+              "/Constant_output_0"
+            ],
+            "name": "/Floor",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 119,
+            "inputs": [],
+            "name": "/Constant_1",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_1_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 120,
+            "inputs": [
+              "/Constant_1_output_0"
+            ],
+            "name": "/Floor_1",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_1_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 124,
+            "inputs": [
+              "/Mul_33_output_0"
+            ],
+            "name": "/Shape",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 125,
+            "inputs": [],
+            "name": "/Constant_2",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 126,
+            "inputs": [],
+            "name": "/Constant_3",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_3_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 127,
+            "inputs": [],
+            "name": "/Constant_4",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_4_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 7
+            },
+            "index": 129,
+            "inputs": [
+              "/Concat_5_output_0"
+            ],
+            "name": "/Cast",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 131,
+            "inputs": [],
+            "name": "/Constant_5",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_5_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 132,
+            "inputs": [],
+            "name": "/Constant_6",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_6_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "coordinate_transformation_mode": "asymmetric",
+              "cubic_coeff_a": -0.75,
+              "mode": "nearest",
+              "nearest_mode": "floor"
+            },
+            "index": 133,
+            "inputs": [
+              "/Mul_33_output_0",
+              "/Constant_5_output_0",
+              "/Constant_6_output_0",
+              "/Concat_6_output_0"
+            ],
+            "name": "/Resize",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 154,
+            "inputs": [],
+            "name": "/Constant_7",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_7_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 155,
+            "inputs": [
+              "/Constant_7_output_0"
+            ],
+            "name": "/Floor_2",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_2_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 156,
+            "inputs": [],
+            "name": "/Constant_8",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_8_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 157,
+            "inputs": [
+              "/Constant_8_output_0"
+            ],
+            "name": "/Floor_3",
+            "op_type": "Floor",
+            "outputs": [
+              "/Floor_3_output_0"
+            ]
+          },
+          {
+            "attributes": {},
+            "index": 161,
+            "inputs": [
+              "/Mul_39_output_0"
+            ],
+            "name": "/Shape_1",
+            "op_type": "Shape",
+            "outputs": [
+              "/Shape_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 162,
+            "inputs": [],
+            "name": "/Constant_9",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_9_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 163,
+            "inputs": [],
+            "name": "/Constant_10",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_10_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 164,
+            "inputs": [],
+            "name": "/Constant_11",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_11_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "to": 7
+            },
+            "index": 166,
+            "inputs": [
+              "/Concat_9_output_0"
+            ],
+            "name": "/Cast_1",
+            "op_type": "Cast",
+            "outputs": [
+              "/Cast_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 168,
+            "inputs": [],
+            "name": "/Constant_12",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_12_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 169,
+            "inputs": [],
+            "name": "/Constant_13",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_13_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "coordinate_transformation_mode": "asymmetric",
+              "cubic_coeff_a": -0.75,
+              "mode": "nearest",
+              "nearest_mode": "floor"
+            },
+            "index": 170,
+            "inputs": [
+              "/Mul_39_output_0",
+              "/Constant_12_output_0",
+              "/Constant_13_output_0",
+              "/Concat_10_output_0"
+            ],
+            "name": "/Resize_1",
+            "op_type": "Resize",
+            "outputs": [
+              "/Resize_1_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 229,
+            "inputs": [],
+            "name": "/Constant_14",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_14_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 234,
+            "inputs": [],
+            "name": "/Constant_15",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_15_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 236,
+            "inputs": [],
+            "name": "/Constant_16",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_16_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 238,
+            "inputs": [],
+            "name": "/Constant_17",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_17_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 240,
+            "inputs": [],
+            "name": "/Constant_18",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_18_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 242,
+            "inputs": [],
+            "name": "/Constant_19",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_19_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 244,
+            "inputs": [],
+            "name": "/Constant_20",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_20_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 247,
+            "inputs": [],
+            "name": "/Constant_21",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_21_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 250,
+            "inputs": [],
+            "name": "/Constant_22",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_22_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 255,
+            "inputs": [],
+            "name": "/Constant_23",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_23_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 257,
+            "inputs": [],
+            "name": "/Constant_24",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_24_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 259,
+            "inputs": [],
+            "name": "/Constant_25",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_25_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 261,
+            "inputs": [],
+            "name": "/Constant_26",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_26_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 263,
+            "inputs": [],
+            "name": "/Constant_27",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_27_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 265,
+            "inputs": [],
+            "name": "/Constant_28",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_28_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 268,
+            "inputs": [],
+            "name": "/Constant_29",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_29_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 271,
+            "inputs": [],
+            "name": "/Constant_30",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_30_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 276,
+            "inputs": [],
+            "name": "/Constant_31",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_31_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 278,
+            "inputs": [],
+            "name": "/Constant_32",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_32_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 280,
+            "inputs": [],
+            "name": "/Constant_33",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_33_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 282,
+            "inputs": [],
+            "name": "/Constant_34",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_34_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 284,
+            "inputs": [],
+            "name": "/Constant_35",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_35_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 286,
+            "inputs": [],
+            "name": "/Constant_36",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_36_output_0"
+            ]
+          },
+          {
+            "attributes": {
+              "value": "type_4"
+            },
+            "index": 289,
+            "inputs": [],
+            "name": "/Constant_37",
+            "op_type": "Constant",
+            "outputs": [
+              "/Constant_37_output_0"
+            ]
+          }
+        ],
+        "sha256": "f0db193bac1ce18ce9bb17c6afedc1850f209d0d74961bee6a297741369079fa",
+        "size_bytes": 7907714,
+        "value_info_count": 0
+      }
+    }
+  ],
+  "onnx_version": "1.16.2",
+  "onnxruntime_version": "1.18.1",
+  "schema_version": 1,
+  "source_frozen_onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+  "source_torchscript_sha256": "1ea5813fac07158ca4ff5eb98b273353b1bf5baafdd46f1ced4ab33835247892"
+}

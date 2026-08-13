@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "arm_raw_equations": "PASS",
+    "identity_and_correctness": "PASS",
+    "npu_not_benchmarked": "PASS",
+    "p95_recomputed": "PASS",
+    "pc_raw_equations": "PASS",
+    "source_evidence_immutable": "PASS"
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "arm": "b1246ce255a1962bf96b76a717faafe78481393aa95c43072349009d85600f40",
+    "pc": "a047eee174b7ae355613c6f3f95bfac3c2d681467cd16333de1b8d3261bad085"
+  },
+  "status": "PASS",
+  "task": "030",
+  "validator": "scripts/validate_task030_benchmark_consolidation.py"
+}

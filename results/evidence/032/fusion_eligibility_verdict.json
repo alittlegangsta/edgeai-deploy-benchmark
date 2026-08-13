@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "task": "032",
+  "status": "COMPLETE",
+  "conclusion": "FUSION_PREDICATE_NOT_RECOVERABLE",
+  "scope": "Only the audited AArch64 libarmnn.so.32.1 family and immutable Task 028/031 evidence; not a statement about DR1M90 hardware or future vendor backends.",
+  "task028_status_unchanged": "BLOCKED_EXTERNAL_VENDOR_DEPENDENCY",
+  "primary_root_cause_statement": "The face graph demonstrably reaches three ALHardNPU fused/custom workloads, while real YOLOv5n candidates reach generic quantized Conv2d/Activation/ElementwiseBinary rejection at Alnpu Optimize. Static dispatch proves the generic slots are not Alnpu overrides, but the complete ALHardNPU fusion predicate cannot be reconstructed from the stripped binary and unavailable backend source.",
+  "proven_facts": [
+    "ConvertConv2dIntoALHardNPUImpl::RunOptimization, findLastLayer, Run, RunFC, checkConv, checkAct and checkPool are exported symbols.",
+    "ALHardNPU layer/workload creation and float/uint8/int8 template symbols are present.",
+    "The audited AlnpuLayerSupport override set contains ten methods and does not override generic Conv2d, Activation, Splitter, Addition, Multiplication or ElementwiseUnary support.",
+    "The face board run reported three Alnpu|ALHardNPU assignments with Optimize/LoadNetwork PASS and CPU fallback disabled.",
+    "YOLOv5n UINT8/INT8 real graphs fail at generic quantized layer support before LoadNetwork; vendor YOLOv8n independently fails at QAsymmU8 Splitter."
+  ],
+  "partial_predicate_indications": [
+    {
+      "condition": "weights/input/bias data-type checks and input-weight type matching",
+      "evidence": "embedded strings",
+      "status": "STRING_LEVEL_ONLY"
+    },
+    {
+      "condition": "input channel <= 4095",
+      "evidence": "embedded string",
+      "status": "STRING_LEVEL_ONLY"
+    },
+    {
+      "condition": "output height/width in 1..1023",
+      "evidence": "embedded string",
+      "status": "STRING_LEVEL_ONLY"
+    },
+    {
+      "condition": "padding equals (kernel_size-1)/2",
+      "evidence": "embedded string",
+      "status": "STRING_LEVEL_ONLY"
+    },
+    {
+      "condition": "kernel/stride modes including 2x2 and 1x4",
+      "evidence": "nearby binary strings from retained Task 028 audit",
+      "status": "STRING_LEVEL_ONLY"
+    },
+    {
+      "condition": "elementwise Add-only and broadcast/type checks",
+      "evidence": "embedded strings",
+      "status": "MIXED_GENERIC_OR_BACKEND_STRING; NOT_ATTRIBUTED"
+    },
+    {
+      "condition": "float, uint8 and int8 ALHardNPU template families",
+      "evidence": "exported symbols",
+      "status": "COMPILED_TEMPLATE_ONLY"
+    }
+  ],
+  "not_proven": [
+    "exact predecessor and successor layer requirements",
+    "exact Conv kernel/stride/padding/dilation/groups predicate and branch selection",
+    "exact input/output channel limits beyond the string-level indications",
+    "layout and tensor alignment requirements",
+    "per-channel versus per-tensor scale/zero-point acceptance matrix",
+    "activation fusion semantics and graph rewrite ordering",
+    "hardware tile/alignment constraints"
+  ],
+  "face_regions_exact_mapping": "NOT_RECOVERABLE",
+  "al_onnx_pass_effect": {
+    "proven": [
+      "AL_onnx_pass performs simplification, fixed-shape/Detect extraction, optional split, checker and ONNX Runtime static QDQ"
+    ],
+    "not_proven": [
+      "that QDQ alone destroys a previously eligible ALHardNPU fusion",
+      "that Detect crop makes a graph eligible",
+      "that any output shape or operator rewrite satisfies checkConv/checkAct/checkPool"
+    ],
+    "interpretation": "The official pass removes the original Detect shape subgraph and adds generic QDQ wrappers; it does not create an ALHardNPU node or invoke a native compiler. The board failures therefore remain graph/backend observations, not a recovered conversion recipe."
+  },
+  "model_compatibility_decision": "CANNOT_CLASSIFY_AS_A_OR_B_WITHOUT_EXACT_PREDICATE",
+  "reopening_requirement": "BLOCKED_EXTERNAL_VENDOR_DEPENDENCY remains; a vendor backend source/build with the predicate, a supported generic-YOLO Alnpu backend, or APUG1205/native compiler evidence is required before a model conversion experiment.",
+  "safety": {
+    "board_accessed": false,
+    "benchmark_run": false,
+    "model_modified": false,
+    "runtime_modified": false,
+    "vendor_binary_executed": false
+  }
+}

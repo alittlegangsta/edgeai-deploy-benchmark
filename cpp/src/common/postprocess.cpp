@@ -3,6 +3,7 @@
 #include "edgeai/common/preprocess.hpp"
 
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <numeric>
 #include <stdexcept>
@@ -95,6 +96,8 @@ PostprocessResult decode_yolov5_output(
     const LetterboxMetadata& metadata,
     const InferenceConfig& config
 ) {
+    using Clock = std::chrono::steady_clock;
+    const auto decode_start = Clock::now();
     validate_config(config);
     if (output_shape.size() != 3U || output_shape[0] != 1 || output_shape[1] < 0 ||
         output_shape[2] != static_cast<std::int64_t>(5U + class_names.size())) {
@@ -158,6 +161,7 @@ PostprocessResult decode_yolov5_output(
         );
     }
 
+    const auto decode_end = Clock::now();
     std::vector<std::size_t> order(candidates.size());
     std::iota(order.begin(), order.end(), 0U);
     std::sort(order.begin(), order.end(), [&](std::size_t left_index, std::size_t right_index) {
@@ -172,6 +176,7 @@ PostprocessResult decode_yolov5_output(
         return left.candidate_index < right.candidate_index;
     });
 
+    const auto nms_start = Clock::now();
     std::vector<std::size_t> kept;
     kept.reserve(std::min(candidates.size(), static_cast<std::size_t>(config.max_detections)));
     for (const std::size_t position : order) {
@@ -194,7 +199,14 @@ PostprocessResult decode_yolov5_output(
         }
     }
 
+    const auto nms_end = Clock::now();
     PostprocessResult result;
+    result.decode_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
+        decode_end - decode_start
+    ).count();
+    result.nms_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
+        nms_end - nms_start
+    ).count();
     result.raw_candidate_count = candidate_count;
     result.threshold_candidate_count = candidates.size();
     result.nms_candidate_count = kept.size();

@@ -1,0 +1,35 @@
+{
+  "answers": {
+    "alhardnpu_generation_or_fusion_tool": "No standalone public generator/fusion executable was found; ArmNN contains compiled ALHardNPU fusion symbols.",
+    "different_capability_alnpu_backend": "Not found among two SHA256-deduplicated ArmNN families; both expose the same ten overrides and generic reject path.",
+    "face_reason": "The face ONNX has no ALHardNPU custom node; ArmNN optimization fuses eligible layers into ALHardNPU workloads.",
+    "geg400_official_yolo_hpf_td": "Not found in the three repositories; D20 YOLO assets are AD101/AD103/GEG484-family.",
+    "npuv1_release": "Not recovered; README path reference only.",
+    "official_yolov5s_quantized_positive": "Not recovered; README reference only, no reachable/LFS/archive payload.",
+    "public_chain_consistency": "Partially self-consistent for face/ArmNN demo; incomplete for generic YOLOv5n because compiler/native runtime and generic backend coverage are absent.",
+    "reopen": "No newly recovered asset is sufficient; vendor handoff remains the next action."
+  },
+  "new_assets_sufficient_to_reopen_yolov5n": false,
+  "primary_verdict": "BLOCKED_EXTERNAL_VENDOR_DEPENDENCY",
+  "reopening_asset_status": "NO_REOPENING_ASSET_FOUND",
+  "safety": {
+    "bitstream_written": false,
+    "board_accessed": false,
+    "model_modified": false,
+    "task028_029_modified": false,
+    "vendor_program_executed": false
+  },
+  "schema_version": 1,
+  "scope": "The backend boundary is limited to the audited AArch64 libarmnn.so.32.1 builds and does not claim DR1M90 hardware or future vendor releases are incapable of YOLO.",
+  "status": "Completed",
+  "subverdicts": {
+    "benchmark": "NOT_RUN",
+    "cpu_fallback": "NOT_ACCEPTED",
+    "face_positive_control": "PASS_ALHARDNPU_FUSED_PATH",
+    "generic_alnpu_backend": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+    "native_compiler": "BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE",
+    "official_geg400_yolo_design": "NOT_FOUND",
+    "runtime_skew": "NOT_PROVEN"
+  },
+  "task": "031"
+}

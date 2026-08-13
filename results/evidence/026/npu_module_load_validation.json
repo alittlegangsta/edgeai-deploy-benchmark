@@ -1,0 +1,78 @@
+{
+  "schema_version": "task026-npu-module-load-validation-v1",
+  "task": "026",
+  "recorded_at_wsl": "2026-08-07T10:55:42+08:00",
+  "board_wrapper": "/home/dministrator/bin/anlogic-board-ssh",
+  "running_kernel": "6.1.111-rt42",
+  "candidate_module_hashes_match": true,
+  "sequence": [
+    {
+      "order": 1,
+      "module": "cma_mem.ko",
+      "sha256": "b86f640c3801fac67321f1ffd7718e9794dbd328255565232c6a3bcecb78343b",
+      "command": "insmod /lib/modules/6.1.111-rt42/extra/cma_mem.ko",
+      "return_code": 0,
+      "dmesg_delta": ["misc cma_mem: registered."],
+      "lsmod_delta": ["cma_mem 16384 0"],
+      "device_nodes": {"/dev/cma_mem": "present", "/dev/hard_npu": "absent", "/dev/soft_npu": "absent"},
+      "severe_error": false
+    },
+    {
+      "order": 2,
+      "module": "hard_npu.ko",
+      "sha256": "554c4a08d0fae556f979160c26d339ac3085d72e857e9dac5f815dd4217d6a3d",
+      "command": "insmod /lib/modules/6.1.111-rt42/extra/hard_npu.ko",
+      "return_code": 0,
+      "dmesg_delta": [
+        "hard_npu 63f00000.hard_npu: drv_hard_npu_probe",
+        "hard_npu 63f00000.hard_npu: find irq num: 42",
+        "hard_npu 63f00000.hard_npu: mem start addr: 63f00000",
+        "hard_npu 63f00000.hard_npu: mem size: 1048576"
+      ],
+      "platform_driver": "hard_npu",
+      "platform_device": "63f00000.hard_npu",
+      "device_nodes": {"/dev/cma_mem": "present", "/dev/hard_npu": "present", "/dev/soft_npu": "absent"},
+      "severe_error": false
+    },
+    {
+      "order": 3,
+      "module": "soft_npu.ko",
+      "sha256": "9b64d3baf6d09db89cb1163ffb30364ad82e2ce8b9b68801b612f642be47b380",
+      "command": "insmod /lib/modules/6.1.111-rt42/extra/soft_npu.ko",
+      "return_code": 0,
+      "dmesg_delta": [
+        "soft_npu 1f0000000.soft_npu: drv_soft_npu_probe",
+        "soft_npu 1f0000000.soft_npu: find irq num: 43",
+        "soft_npu 1f0000000.soft_npu: mem start addr: 1f0000000",
+        "soft_npu 1f0000000.soft_npu: mem size: 65536"
+      ],
+      "platform_driver": "soft_npu",
+      "platform_device": "1f0000000.soft_npu",
+      "device_nodes": {"/dev/cma_mem": "present", "/dev/hard_npu": "present", "/dev/soft_npu": "present"},
+      "severe_error": false
+    }
+  ],
+  "final_state": {
+    "lsmod": ["soft_npu", "hard_npu", "cma_mem"],
+    "platform_bindings": {
+      "63f00000.hard_npu": "hard_npu",
+      "1f0000000.soft_npu": "soft_npu"
+    },
+    "device_nodes": ["/dev/cma_mem", "/dev/hard_npu", "/dev/soft_npu"],
+    "cma_total_kib": 131072,
+    "npu_dmesg_errors": [],
+    "kernel_oops_or_hang": false
+  },
+  "order_provenance": {
+    "vendor_runtime_order_explicit": false,
+    "inferred_from": [
+      "drivers/npu/Makefile object order cma_mem_driver then hard_npu_driver then soft_npu_driver",
+      "cma_mem module_init misc registration",
+      "hard_npu and soft_npu OF platform-driver module_init registration",
+      "empty embedded module dependency fields and zero unresolved same-source symbols"
+    ],
+    "inference_was_user_authorized": true
+  },
+  "board_write_or_system_change": false,
+  "module_operation_performed": true
+}

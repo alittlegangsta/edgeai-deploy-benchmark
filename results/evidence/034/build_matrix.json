@@ -1,0 +1,242 @@
+{
+  "candidate_a": {
+    "correctness": {
+      "detection_count": 5,
+      "maximum_absolute_confidence_difference": 5.0067901611328125e-06,
+      "minimum_class_matched_iou": 0.9999855075776749,
+      "raw_output_stats": {
+        "count": 2142000,
+        "max": 637.115,
+        "mean": 8.75883,
+        "min": 2.83905e-09
+      },
+      "status": "PASS_TARGET"
+    },
+    "experiment": {
+      "affinity": "default",
+      "affinity_mask_after": "0,1",
+      "affinity_mask_before": "0,1",
+      "fp16_arithmetic": false,
+      "fp16_packed": false,
+      "fp16_storage": false,
+      "packing_layout": true,
+      "repeat": 5,
+      "threads": 2,
+      "warmup": 2
+    },
+    "label": "A",
+    "path": "/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/task034-ncnn-optimization/returned/a.json",
+    "resources": {
+      "cpu_frequency_khz": [
+        null
+      ],
+      "cpu_percent_one_core_basis_mean": 186.21233059202797,
+      "peak_rss_kib_max": 168136,
+      "peak_rss_kib_samples": [
+        159688,
+        159688,
+        168136,
+        168136,
+        168136
+      ],
+      "system_cpu_seconds_mean": 0.010057999999999978,
+      "temperature_millicelsius": [
+        null
+      ],
+      "threads_after": [
+        3
+      ],
+      "threads_before": [
+        3
+      ],
+      "user_cpu_seconds_mean": 3.6867663999999998
+    },
+    "runtime": {
+      "bf16": false,
+      "compiler_openmp": true,
+      "effective_parallel_backend": "openmp",
+      "fp16": false,
+      "int8": false,
+      "openmp_compiled": true,
+      "packing_layout": true,
+      "simpleomp_compiled": false,
+      "threads": 2,
+      "threads_compiled": true
+    },
+    "sha256": "239cd6068e1c69b3457e28afd90a5792d4a9bd175540ef3ebdf03e29410552b9",
+    "status": "PASS_TARGET",
+    "summary": {
+      "decode": {
+        "fps": 17.977991881678207,
+        "mean_ms": 55.623565,
+        "p50_ms": 55.586581,
+        "p95_ms": 55.847821
+      },
+      "end_to_end": {
+        "fps": 0.5037032601164949,
+        "mean_ms": 1985.295866,
+        "p50_ms": 1983.5894,
+        "p95_ms": 1999.4597
+      },
+      "inference": {
+        "fps": 0.5290866214568131,
+        "mean_ms": 1890.0496808,
+        "p50_ms": 1889.613079,
+        "p95_ms": 1899.363739
+      },
+      "nms": {
+        "fps": 65257.113025319755,
+        "mean_ms": 0.015324,
+        "p50_ms": 0.01464,
+        "p95_ms": 0.01683
+      },
+      "pipeline": {
+        "fps": 0.5038045455200858,
+        "mean_ms": 1984.8967400000001,
+        "p50_ms": 1983.24872,
+        "p95_ms": 1999.11686
+      },
+      "postprocess": {
+        "fps": 17.959734956697012,
+        "mean_ms": 55.680109,
+        "p50_ms": 55.641991,
+        "p95_ms": 55.904971
+      },
+      "preprocess": {
+        "fps": 25.531730065620476,
+        "mean_ms": 39.1669502,
+        "p50_ms": 37.93485,
+        "p95_ms": 44.11008
+      }
+    }
+  },
+  "candidate_b": {
+    "correctness": {
+      "detection_count": 5,
+      "maximum_absolute_confidence_difference": 5.0067901611328125e-06,
+      "minimum_class_matched_iou": 0.9999855075776749,
+      "raw_output_stats": {
+        "count": 2142000,
+        "max": 637.115,
+        "mean": 8.75883,
+        "min": 2.83905e-09
+      },
+      "status": "PASS_TARGET"
+    },
+    "experiment": {
+      "affinity": "default",
+      "affinity_mask_after": "0,1",
+      "affinity_mask_before": "0,1",
+      "fp16_arithmetic": false,
+      "fp16_packed": false,
+      "fp16_storage": false,
+      "packing_layout": true,
+      "repeat": 5,
+      "threads": 2,
+      "warmup": 2
+    },
+    "label": "B",
+    "path": "/mnt/c/Users/Administrator/Desktop/fpga_info/_generated/task034-ncnn-optimization/returned/b.json",
+    "resources": {
+      "cpu_frequency_khz": [
+        null
+      ],
+      "cpu_percent_one_core_basis_mean": 186.19033647063347,
+      "peak_rss_kib_max": 168324,
+      "peak_rss_kib_samples": [
+        159876,
+        159876,
+        168324,
+        168324,
+        168324
+      ],
+      "system_cpu_seconds_mean": 0.017708999999999985,
+      "temperature_millicelsius": [
+        null
+      ],
+      "threads_after": [
+        3
+      ],
+      "threads_before": [
+        3
+      ],
+      "user_cpu_seconds_mean": 3.7010192
+    },
+    "runtime": {
+      "bf16": false,
+      "compiler_openmp": true,
+      "effective_parallel_backend": "openmp",
+      "fp16": false,
+      "int8": false,
+      "openmp_compiled": true,
+      "packing_layout": true,
+      "simpleomp_compiled": false,
+      "threads": 2,
+      "threads_compiled": true
+    },
+    "sha256": "5abf38d5592cc8f463b09d0e3919277c2ecfc0a7856e8fb524f88614a1b2e0a8",
+    "status": "PASS_TARGET",
+    "summary": {
+      "decode": {
+        "fps": 17.941223439655836,
+        "mean_ms": 55.737559,
+        "p50_ms": 55.735351,
+        "p95_ms": 55.756081
+      },
+      "end_to_end": {
+        "fps": 0.500676311057595,
+        "mean_ms": 1997.29841,
+        "p50_ms": 1996.39331,
+        "p95_ms": 2011.32977
+      },
+      "inference": {
+        "fps": 0.5257984312695279,
+        "mean_ms": 1901.8695008,
+        "p50_ms": 1902.162889,
+        "p95_ms": 1912.546969
+      },
+      "nms": {
+        "fps": 66507.04974727321,
+        "mean_ms": 0.015035999999999999,
+        "p50_ms": 0.0153,
+        "p95_ms": 0.01575
+      },
+      "pipeline": {
+        "fps": 0.5007634293717436,
+        "mean_ms": 1996.950938,
+        "p50_ms": 1996.04033,
+        "p95_ms": 2010.9863
+      },
+      "postprocess": {
+        "fps": 17.922391563930294,
+        "mean_ms": 55.796124999999996,
+        "p50_ms": 55.794361,
+        "p95_ms": 55.811761
+      },
+      "preprocess": {
+        "fps": 25.45480598217061,
+        "mean_ms": 39.2853122,
+        "p50_ms": 38.06568,
+        "p95_ms": 44.21301
+      }
+    }
+  },
+  "comparison": {
+    "inference": {
+      "a_mean_ms": 1890.0496808,
+      "accepted": false,
+      "b_delta_percent": 0.625370863002761,
+      "b_mean_ms": 1901.8695008,
+      "b_over_a": 1.0062537086300276
+    },
+    "pipeline": {
+      "a_mean_ms": 1984.8967400000001,
+      "accepted": false,
+      "b_delta_percent": 0.6072959744999107,
+      "b_mean_ms": 1996.950938,
+      "b_over_a": 1.006072959744999
+    }
+  },
+  "schema_version": 1,
+  "task": "034"
+}

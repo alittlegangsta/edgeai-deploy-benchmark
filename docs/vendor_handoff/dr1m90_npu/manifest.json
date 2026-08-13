@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "task": "029",
+  "title": "DR1 vendor NPU enablement handoff",
+  "status": "Completed",
+  "readiness": "WAITING_FOR_VENDOR_INPUT",
+  "source_of_truth": {
+    "task": "028",
+    "primary_verdict": "BLOCKED_EXTERNAL_VENDOR_DEPENDENCY",
+    "primary_blocker": "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE",
+    "scope": "Only the audited AArch64 libarmnn.so.32.1 and observed graph dialects",
+    "new_experiments": false
+  },
+  "fusion_audit": {
+    "source_task": "032",
+    "conclusion": "FUSION_PREDICATE_NOT_RECOVERABLE",
+    "scope": "Only the audited AArch64 libarmnn.so.32.1; not a claim that YOLOv5n is inherently incompatible",
+    "face_onnx_has_alhardnpu_custom_node": false,
+    "optimize_assignment_count": 3,
+    "optimize_assignments": ["Alnpu|ALHardNPU", "Alnpu|ALHardNPU", "Alnpu|ALHardNPU"],
+    "confirmed_symbols": ["ConvertConv2dIntoALHardNPUImpl", "checkConv", "checkAct", "checkPool"],
+    "complete_predicate_publicly_recoverable": false,
+    "task032_evidence": [
+      {"path": "results/evidence/032/fusion_symbol_audit.json", "sha256": "4184161d1a8b54618673e862a465fc9882358e82760b5110f17d84439e03c239"},
+      {"path": "results/evidence/032/face_fusion_regions.json", "sha256": "8ce1c18554a2ad1fc430223c30f691d95fa830e578d9aa0fc915c296ca6b7689"},
+      {"path": "results/evidence/032/fusion_eligibility_verdict.json", "sha256": "1ced6d317a79682a2283433965283221d4888cbef6c57139626b8ba01a578e7a"}
+    ]
+  },
+  "reproduction_identity": {
+    "board": {
+      "board": "MLK-F3P-CZ02",
+      "soc_package": "DR1M90GEG400",
+      "kernel": "6.1.111-rt42",
+      "os": "Buildroot 2022.02.6",
+      "system_bit_sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+      "system_dtb_sha256": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979"
+    },
+    "source": {
+      "repository": "dr1m90_npu",
+      "branch": "release",
+      "commit": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+      "nearest_tag": "SDK_2026.01",
+      "nearest_tag_commit": "a06f09a23582900e2b8843d564ea28db679649a5",
+      "al_onnx_pass_sha256": "f61bc7ab424726d08881f1e9ef8a3fbcfbee8fdcb612eeb6d944c450aed4540a",
+      "requirements_sha256": "c40f36e292ea2d3d921d8cada6016100fbacc399d260cb77e8d5d77b2a6a5c49",
+      "pip_freeze_sha256": "7b077b4fcef14e44f97b9d4c64d3ef7d6768e18d8ce2252dcbe90b09e4da057b"
+    },
+    "runtime": {
+      "armnn_version": "v32.1.0",
+      "version_marker": "ed5ae24",
+      "armnn_archive_sha256": "867e347bb758f9b1b083c35e08a74f2b3cc39c2975ac0f8e18c25f7f35749526",
+      "libarmnn_sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+      "libarmnn_onnx_parser_sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+      "libprotobuf_sha256": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265",
+      "runtime_skew": "NOT_PROVEN"
+    },
+    "model": {
+      "yolov5n_v7_opset12_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+      "input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+      "input_shape": [1, 3, 640, 640],
+      "output_shape": [1, 25200, 85],
+      "dtype": "FP32",
+      "graph_nms": false
+    },
+    "runner": {
+      "diagnostic_aarch64_elf_sha256": "c6c55b1df88d89a4507a2526f2198a7cbddb2ccc7bf8e881cf38d40e3f1a2d02",
+      "previous_aarch64_elf_sha256": "d50a243787f52e7ce8b11d2ff5ca54db53e401e1d7afc64ba3ac193d765e99b8",
+      "backend_request": ["Alnpu"],
+      "cpu_fallback_allowed": false
+    }
+  },
+  "causal_chain": [
+    {"stage": "face_positive", "result": "PASS_ALNPU_ALHARDNPU", "evidence": "results/evidence/026/official_demo_validation.json"},
+    {"stage": "yolov5n_al_onnx_pass", "result": "PASS_HOST_CONVERSION", "evidence": "results/evidence/028/trackc_official_smoke.json"},
+    {"stage": "armnn_parser", "result": "PASS", "evidence": "results/evidence/028/trackc3_capability_face_path_audit.json"},
+    {"stage": "armnn_network", "result": "PASS", "evidence": "results/evidence/028/validation.json"},
+    {"stage": "alnpu_layer_support", "result": "BLOCKED_GENERIC_QUANTIZED_YOLO_LAYERS", "evidence": "results/evidence/028/trackc3_support_boundary_audit.json"},
+    {"stage": "vendor_yolov8n_control", "result": "FAIL_QASYMMU8_SPLITTER_AT_OPTIMIZE", "evidence": "results/evidence/028/trackc3_runtime_compatibility_matrix.json"},
+    {"stage": "load_network", "result": "NOT_REACHED", "evidence": "results/evidence/028/validation.json"},
+    {"stage": "npu_execution", "result": "NOT_REACHED", "evidence": "results/evidence/028/validation.json"}
+  ],
+  "tracks": {
+    "track_a_raw_onnx": "BLOCKED_UNSUPPORTED_ALNPU_GRAPH",
+    "track_b_apug1205_native": "BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE",
+    "track_c1_al_onnx_pass": "PASS",
+    "track_c2_quantized_host_accuracy": "NOT_ACCEPTED_PAUSED",
+    "track_c3": {"parser": "PASS", "network": "PASS", "layer_support": "BLOCKED", "load_network": "NOT_REACHED", "npu_execution": "NOT_REACHED"},
+    "track_c4_benchmark": "NOT_RUN"
+  },
+  "evidence": [
+    {"path": "results/evidence/028/trackc3_capability_face_path_audit.json", "sha256": "3ec27834b8ec4f45fa594c8f617c339fb14c00715b2736a0374fe4d88c041c30"},
+    {"path": "results/evidence/028/trackc3_support_boundary_audit.json", "sha256": "997b154ab34fa852cb83cfe0b403cfcf8eef7d1354fbdeb37b652b45b433a8bc"},
+    {"path": "results/evidence/028/trackc3_runtime_version_audit.json", "sha256": "bbd02a0c7b2bbd0b6b81e95c205399c6abda77fe684ddc5d9d32203bdb4ae72d"},
+    {"path": "results/evidence/028/trackc3_runtime_compatibility_matrix.json", "sha256": "dd70e490a8f91a6d9716b40c834f5db8800ffe91bc3cd2291adeae556c00f953"},
+    {"path": "results/evidence/028/trackc3_vendor_positive_audit.json", "sha256": "aabbcc8d74e8bbdbecc6208784185e3484f374ce4f5f29a05311f314435ea6da"},
+    {"path": "results/evidence/028/trackc3_hpf_d20_comparison.json", "sha256": "5ac192de4551196af0434fea5f84f5e5be10ca7a4e407b57b18b9a630eb9092d"},
+    {"path": "results/evidence/028/trackc_environment.json", "sha256": "f3a9bc5c0271798afefb498e9495e397c4645a7565583ff82e4ce74b27447dae"},
+    {"path": "results/evidence/028/trackc_official_smoke.json", "sha256": "10c3b1b077572ce2bc9d79f5e03ef664738b1bb8e60d7c1f242952461826216e"},
+    {"path": "results/evidence/028/armnn_build.json", "sha256": "cff38ecf99cb71b35a212ae07df542dc365ae36d31dbfe1a8bf67ef8eefc7d60"},
+    {"path": "results/evidence/028/trackc3_runner_build.json", "sha256": "c97b5f5f6b17439e2a3d1799ec188ce794498d6f4eb0fa62f6c1aa89e0c85847"},
+    {"path": "results/evidence/028/validation.json", "sha256": "58bd3fc1178644e4b4ddd4be5784f751a90220abdaddc1cc8bd001631e21b1b4"}
+  ],
+  "external_asset_policy": "Record source, version, location class and SHA256 only; vendor binaries, models, SDKs, datasets and credentials are not included.",
+  "safety": {"board_accessed_for_task029": false, "new_experiment": false, "cpu_fallback_accepted": false, "benchmark_run": false, "vendor_material_copied": false}
+}

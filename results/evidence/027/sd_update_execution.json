@@ -1,0 +1,196 @@
+{
+  "schema_version": "task027-sd-update-execution-v1",
+  "task": "027",
+  "status": "SD_UPDATE_COMPLETED_INITIAL_CANDIDATE_VALIDATED",
+  "latest_update_status": "KEYFIX3_SD_UPDATE_COMPLETED_BOARD_BOOT_VALIDATED",
+  "captured_at": "2026-08-07T12:00:00+08:00",
+  "approval": {
+    "source": "user_instruction",
+    "scope": "replace only the FAT-root uInitrd.lz4; no partition or other boot-file change"
+  },
+  "device": {
+    "path": "/dev/sdb",
+    "stable_id": "/dev/disk/by-id/usb-Mass_Storage_Device_121220160204-0:0",
+    "size_bytes": 31299993600,
+    "vendor": "Mass",
+    "model": "Storage Device",
+    "serial": "121220160204",
+    "transport": "usb",
+    "removable": 1,
+    "read_only": 0,
+    "partition": "/dev/sdb1",
+    "filesystem": "vfat",
+    "mountpoint": "/media/uisrc/BOOT"
+  },
+  "source": {
+    "path": "<vm-task027>/results/task027-buildroot-output/images/uInitrd.lz4",
+    "sha256": "a84cb5a26b8639782cb86ea211b77410528d15d4bfbd4a13d499e2791c74b2f6"
+  },
+  "destination": {
+    "path": "FAT-root/uInitrd.lz4",
+    "old_sha256": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268",
+    "new_sha256": "a84cb5a26b8639782cb86ea211b77410528d15d4bfbd4a13d499e2791c74b2f6",
+    "temporary_copy_and_atomic_replace": true,
+    "backup_path": "<vm-task027>/task027-sd-update-20260807/uInitrd.lz4.before"
+  },
+  "integrity": {
+    "source_hash_match": true,
+    "destination_hash_match": true,
+    "non_uinitrd_root_files_unchanged": true,
+    "sync_completed": true,
+    "safe_unmount_completed": true
+  },
+  "prohibited_operations": {
+    "partition": false,
+    "format": false,
+    "dd": false,
+    "make_parted": false,
+    "deploy_image": false,
+    "other_boot_files_changed": false,
+    "emmc_changed": false
+  },
+  "board_validation": {
+    "sd_removed_from_reader": true,
+    "inserted_in_board": true,
+    "cold_boot": "PASS_INITIAL_CANDIDATE",
+    "linux_login": "PASS",
+    "eth0": "192.168.50.2/24",
+    "sshd": "PASS",
+    "npu_modules": ["cma_mem", "hard_npu", "soft_npu"],
+    "device_nodes": ["/dev/cma_mem", "/dev/hard_npu", "/dev/soft_npu"],
+    "two_boot_validation": "PASS_USER_OBSERVED_SSH_RECONNECT_INITIAL_CANDIDATE",
+    "keyfix_candidate_booted": true,
+    "keyfix_candidate_cold_boot": "FAIL_HEALTHCHECK_FAT_MASK",
+    "keyfix_candidate_reboot_validation": "FAIL_HEALTHCHECK_FAT_MASK",
+    "keyfix_update": "RECORDED_SEPARATELY"
+  },
+  "keyfix_update": {
+    "status": "KEYFIX_SD_UPDATE_COMPLETED_BOARD_BOOT_FAILED_HEALTHCHECK",
+    "approval": "user_instruction",
+    "device": {
+      "path": "/dev/sdb",
+      "stable_id": "/dev/disk/by-id/usb-Mass_Storage_Device_121220160204-0:0",
+      "size_bytes": 31299993600,
+      "vendor": "Mass",
+      "model": "Storage Device",
+      "serial": "121220160204",
+      "transport": "usb",
+      "removable": 1,
+      "read_only": 0,
+      "partition": "/dev/sdb1",
+      "filesystem": "vfat",
+      "mountpoint": "/media/uisrc/BOOT"
+    },
+    "source": {
+      "path": "<vm-task027>/uisrc-lab-anlogic-task027-keyfix2-20260807/results/task027-buildroot-output/images/uInitrd.lz4",
+      "sha256": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+      "size_bytes": 112291409
+    },
+    "destination": {
+      "path": "FAT-root/uInitrd.lz4",
+      "old_sha256": "a84cb5a26b8639782cb86ea211b77410528d15d4bfbd4a13d499e2791c74b2f6",
+      "new_sha256": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+      "backup_path": "<vm-task027>/task027-keyfix-sd-update-20260807/uInitrd.lz4.before",
+      "temporary_copy_and_atomic_replace": true
+    },
+    "integrity": {
+      "device_identity_match": true,
+      "source_hash_match": true,
+      "old_hash_guard_match": true,
+      "destination_hash_match": true,
+      "non_uinitrd_root_files_unchanged": true,
+      "sync_completed": true,
+      "safe_unmount_completed": true
+    },
+    "prohibited_operations": {
+      "partition": false,
+      "format": false,
+      "dd": false,
+      "make_parted": false,
+      "deploy_image": false,
+      "other_boot_files_changed": false,
+      "emmc_changed": false
+    },
+    "board_validation": {
+      "sd_inserted_in_board": true,
+      "cold_boot": "FAIL_HEALTHCHECK_FAT_MASK",
+      "reboot_validation": "FAIL_HEALTHCHECK_FAT_MASK",
+      "healthcheck_exit_code": 1,
+      "uinitrd_sha256_readback": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+      "mount_options_observed": "fmask=0022,dmask=0022",
+      "host_key_sha_match": true,
+      "host_key_fingerprint_match": false,
+      "network_sshd_npu_status": "PASS"
+    }
+  },
+  "keyfix3_candidate": {
+    "status": "COMPLETED_BOARD_VALIDATED",
+    "source": {
+      "path": "<vm-task027>/uisrc-lab-anlogic-task027-keyfix3-20260807/results/task027-buildroot-output/images/uInitrd.lz4",
+      "sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7"
+    },
+    "board_validation": "PASS_COLD_BOOT_AND_REBOOT",
+    "reason": "keyfix2 cold boot and reboot retained fmask=0022 despite requested remount"
+  },
+  "keyfix3_update": {
+    "status": "KEYFIX3_SD_UPDATE_COMPLETED_BOARD_BOOT_VALIDATED",
+    "approval": "user_instruction",
+    "device": {
+      "path": "/dev/sdb",
+      "stable_id": "/dev/disk/by-id/usb-Mass_Storage_Device_121220160204-0:0",
+      "size_bytes": 31299993600,
+      "vendor": "Mass",
+      "model": "Storage Device",
+      "serial": "121220160204",
+      "transport": "usb",
+      "removable": 1,
+      "read_only": 0,
+      "partition": "/dev/sdb1",
+      "filesystem": "vfat",
+      "mountpoint": "/media/uisrc/BOOT"
+    },
+    "source": {
+      "path": "<vm-task027>/uisrc-lab-anlogic-task027-keyfix3-20260807/results/task027-buildroot-output/images/uInitrd.lz4",
+      "sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+      "size_bytes": 112290962
+    },
+    "destination": {
+      "path": "FAT-root/uInitrd.lz4",
+      "old_sha256": "358048b9aa73edeed6c3ee8e50b67bb4bde1cd062c1217d37ccbc06cd8442028",
+      "new_sha256": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+      "backup_path": "<vm-task027>/task027-keyfix3-sd-update-20260807/uInitrd.lz4.before",
+      "temporary_copy_and_atomic_replace": true
+    },
+    "integrity": {
+      "device_identity_match": true,
+      "source_hash_match": true,
+      "old_hash_guard_match": true,
+      "destination_hash_match": true,
+      "non_uinitrd_root_files_unchanged": true,
+      "sync_completed": true,
+      "safe_unmount_completed": true
+    },
+    "prohibited_operations": {
+      "partition": false,
+      "format": false,
+      "dd": false,
+      "make_parted": false,
+      "deploy_image": false,
+      "other_boot_files_changed": false,
+      "emmc_changed": false
+    },
+    "board_validation": {
+      "sd_inserted_in_board": true,
+      "cold_boot": "PASS",
+      "reboot_validation": "PASS",
+      "uinitrd_sha256_observed": "0da5cad9ed0ec4f2987f250ff5d7d60f037cd6e3d99bc409503e4a44a54366c7",
+      "mount_options_observed": "fmask=0177,dmask=0077",
+      "etc_private_key_mode": "600",
+      "etc_public_sidecar_mode": "644",
+      "host_key_sha_match": true,
+      "host_key_fingerprint_match": true,
+      "healthcheck": "PASS",
+      "network_sshd_npu_status": "PASS"
+    }
+  }
+}

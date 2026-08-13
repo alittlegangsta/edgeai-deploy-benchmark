@@ -1,0 +1,2957 @@
+{
+    "schema_version": 2,
+    "application": "edgeai_demo",
+    "mode": "video",
+    "backend": {
+        "name": "ncnn",
+        "runtime": "1.0.20240410/openmp",
+        "model_identity": "param_sha256=72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4,bin_sha256=658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+        "precision": "fp32",
+        "input_dtype": "float32",
+        "output_dtype": "float32",
+        "input_shape": [
+            1,
+            3,
+            640,
+            640
+        ],
+        "output_shape": [
+            1,
+            25200,
+            85
+        ],
+        "fallback": "none"
+    },
+    "model": {
+        "path": "models/yolov5n-v7.0/ncnn_manifest.json",
+        "manifest": "models/yolov5n-v7.0/ncnn_manifest.json"
+    },
+    "source": {
+        "kind": "video",
+        "path": "data/samples/videos/anlogic_arm_reference.avi",
+        "metadata": {
+            "width": 1280,
+            "height": 960,
+            "fps": 5.0,
+            "reported_frame_count": 30,
+            "fourcc": "FFV1",
+            "backend": "FFMPEG"
+        }
+    },
+    "configuration": {
+        "path": "configs/yolov5n_v7_inference.json",
+        "input_size": [
+            640,
+            640
+        ],
+        "confidence_threshold": 2.5000000000000000e-01,
+        "iou_threshold": 4.5000000000000001e-01,
+        "max_detections": 1000,
+        "threads": 2,
+        "packing": 1,
+        "warmup": 0,
+        "repeat": 1
+    },
+    "counts": {
+        "captured_frames": 30,
+        "processed_frames": 30,
+        "dropped_frames": 0,
+        "failed_frames": 0,
+        "written_frames": 30
+    },
+    "queue": {
+        "mode": "synchronous",
+        "capacity": 0,
+        "drop_policy": "none; capture and inference are serialized"
+    },
+    "input_video_metadata": {
+        "width": 1280,
+        "height": 960,
+        "fps": 5.0,
+        "reported_frame_count": 30,
+        "fourcc": "FFV1",
+        "backend": "FFMPEG"
+    },
+    "output_video": {
+        "path": "/tmp/task039-ncnn-video.avi",
+        "requested_codec": "MJPG",
+        "writer_backend": "FFMPEG",
+        "metadata": {
+            "width": 1280,
+            "height": 960,
+            "fps": 5.0,
+            "reported_frame_count": 30,
+            "fourcc": "MJPG",
+            "backend": "OpenCV VideoWriter"
+        }
+    },
+    "timings_ms": {
+        "capture_read": {
+            "mean_ms": 2.8055409666666669e+00,
+            "p50_ms": 8.6306400000000005e-01,
+            "p95_ms": 1.4506090000000000e+00
+        },
+        "preprocess": {
+            "mean_ms": 2.0636220000000005e+00,
+            "p50_ms": 1.6970680000000000e+00,
+            "p95_ms": 2.7424740000000001e+00
+        },
+        "inference": {
+            "mean_ms": 4.9188769500000014e+01,
+            "p50_ms": 4.4768531000000003e+01,
+            "p95_ms": 6.3297629999999998e+01
+        },
+        "postprocess": {
+            "mean_ms": 4.1022826999999999e+00,
+            "p50_ms": 4.0024530000000000e+00,
+            "p95_ms": 4.4255430000000002e+00
+        },
+        "visualization": {
+            "mean_ms": 4.2510720000000002e-01,
+            "p50_ms": 4.0126800000000001e-01,
+            "p95_ms": 5.6189900000000004e-01
+        },
+        "video_write": {
+            "mean_ms": 6.6945271666666679e+00,
+            "p50_ms": 6.5212770000000004e+00,
+            "p95_ms": 8.3159320000000001e+00
+        },
+        "pipeline_end_to_end": {
+            "mean_ms": 6.5523593300000002e+01,
+            "p50_ms": 5.9880139000000000e+01,
+            "p95_ms": 8.1957176000000004e+01
+        },
+        "effective_processing_fps": 1.4720670991579849e+01,
+        "source_fps": 5.0,
+        "measurement": "synchronous; image decode and video encode are reported separately"
+    },
+    "first_frame_golden": {
+        "status": "PASS",
+        "expected_count": 5,
+        "observed_count": 5,
+        "minimum_iou": 1.0,
+        "maximum_confidence_delta": 0.0
+    },
+    "frames": [
+        {
+            "frame_index": 0,
+            "timings_ms": {
+                "capture_read": 5.7401131999999997e+01,
+                "preprocess": 1.0264639000000001e+01,
+                "inference": 1.0100788500000000e+02,
+                "postprocess": 3.8554520000000001e+00,
+                "visualization": 4.4707400000000003e-01,
+                "video_write": 5.8414140000000003e+00,
+                "pipeline_total": 1.7882451000000000e+02
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 1,
+            "timings_ms": {
+                "capture_read": 9.3620899999999996e-01,
+                "preprocess": 1.6358770000000000e+00,
+                "inference": 5.1327061000000000e+01,
+                "postprocess": 3.8865500000000002e+00,
+                "visualization": 3.7141000000000002e-01,
+                "video_write": 5.6093109999999999e+00,
+                "pipeline_total": 6.4011189000000002e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 2,
+            "timings_ms": {
+                "capture_read": 8.8740900000000000e-01,
+                "preprocess": 2.0928740000000001e+00,
+                "inference": 4.4359383999999999e+01,
+                "postprocess": 4.2280090000000001e+00,
+                "visualization": 3.7660300000000002e-01,
+                "video_write": 6.5761659999999997e+00,
+                "pipeline_total": 5.8770428000000003e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 3,
+            "timings_ms": {
+                "capture_read": 9.0115500000000004e-01,
+                "preprocess": 2.2011390000000000e+00,
+                "inference": 4.4216963000000000e+01,
+                "postprocess": 3.8708809999999998e+00,
+                "visualization": 4.3437900000000002e-01,
+                "video_write": 6.2676540000000003e+00,
+                "pipeline_total": 5.8140838000000002e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 4,
+            "timings_ms": {
+                "capture_read": 1.4019410000000001e+00,
+                "preprocess": 1.8977440000000001e+00,
+                "inference": 4.4221519000000001e+01,
+                "postprocess": 3.8385189999999998e+00,
+                "visualization": 3.8633699999999999e-01,
+                "video_write": 7.0377549999999998e+00,
+                "pipeline_total": 5.9054378000000000e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 5,
+            "timings_ms": {
+                "capture_read": 8.4814999999999996e-01,
+                "preprocess": 2.1848399999999999e+00,
+                "inference": 4.6740493999999998e+01,
+                "postprocess": 3.9056839999999999e+00,
+                "visualization": 3.7114999999999998e-01,
+                "video_write": 6.0267629999999999e+00,
+                "pipeline_total": 6.0307349000000002e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 6,
+            "timings_ms": {
+                "capture_read": 9.1015900000000005e-01,
+                "preprocess": 1.6438310000000000e+00,
+                "inference": 4.3474735000000003e+01,
+                "postprocess": 4.0736530000000002e+00,
+                "visualization": 3.9549400000000001e-01,
+                "video_write": 6.1751120000000004e+00,
+                "pipeline_total": 5.6909207000000002e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 7,
+            "timings_ms": {
+                "capture_read": 8.5703700000000005e-01,
+                "preprocess": 1.7402880000000001e+00,
+                "inference": 4.4287643000000003e+01,
+                "postprocess": 4.2223129999999998e+00,
+                "visualization": 4.2233100000000001e-01,
+                "video_write": 6.5603429999999996e+00,
+                "pipeline_total": 5.8355182999999997e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 8,
+            "timings_ms": {
+                "capture_read": 1.1998139999999999e+00,
+                "preprocess": 1.9117420000000001e+00,
+                "inference": 4.1631056999999998e+01,
+                "postprocess": 3.8350670000000000e+00,
+                "visualization": 4.3906400000000001e-01,
+                "video_write": 6.4786289999999997e+00,
+                "pipeline_total": 5.5732729999999997e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 9,
+            "timings_ms": {
+                "capture_read": 8.6306400000000005e-01,
+                "preprocess": 1.6193350000000000e+00,
+                "inference": 4.6893124999999998e+01,
+                "postprocess": 4.2021459999999999e+00,
+                "visualization": 5.0582300000000002e-01,
+                "video_write": 6.7824999999999998e+00,
+                "pipeline_total": 6.1089651000000003e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 10,
+            "timings_ms": {
+                "capture_read": 8.8859999999999995e-01,
+                "preprocess": 1.6312390000000001e+00,
+                "inference": 4.8238055000000003e+01,
+                "postprocess": 3.9144260000000002e+00,
+                "visualization": 3.6913699999999999e-01,
+                "video_write": 6.7746990000000000e+00,
+                "pipeline_total": 6.2045149000000002e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 11,
+            "timings_ms": {
+                "capture_read": 8.7060899999999997e-01,
+                "preprocess": 1.7991250000000001e+00,
+                "inference": 4.3062970999999997e+01,
+                "postprocess": 4.2228620000000001e+00,
+                "visualization": 3.7078800000000001e-01,
+                "video_write": 6.7276629999999997e+00,
+                "pipeline_total": 5.7300426999999999e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 12,
+            "timings_ms": {
+                "capture_read": 1.0773800000000000e+00,
+                "preprocess": 1.6474960000000001e+00,
+                "inference": 4.3070743000000000e+01,
+                "postprocess": 4.4121350000000001e+00,
+                "visualization": 3.9757900000000002e-01,
+                "video_write": 6.3619500000000002e+00,
+                "pipeline_total": 5.7269064999999998e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 13,
+            "timings_ms": {
+                "capture_read": 1.0520769999999999e+00,
+                "preprocess": 1.6561650000000001e+00,
+                "inference": 4.4342706999999997e+01,
+                "postprocess": 3.9618579999999999e+00,
+                "visualization": 4.0570099999999998e-01,
+                "video_write": 6.2008330000000003e+00,
+                "pipeline_total": 5.7861035000000001e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 14,
+            "timings_ms": {
+                "capture_read": 7.7217899999999995e-01,
+                "preprocess": 1.5843640000000001e+00,
+                "inference": 4.6113135000000000e+01,
+                "postprocess": 4.4237099999999998e+00,
+                "visualization": 3.7110500000000002e-01,
+                "video_write": 6.6906840000000001e+00,
+                "pipeline_total": 6.0181359000000000e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 15,
+            "timings_ms": {
+                "capture_read": 7.7648600000000001e-01,
+                "preprocess": 1.7567050000000000e+00,
+                "inference": 6.1259462999999997e+01,
+                "postprocess": 3.9735630000000000e+00,
+                "visualization": 4.4325100000000001e-01,
+                "video_write": 6.6450170000000002e+00,
+                "pipeline_total": 7.5090906000000004e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 16,
+            "timings_ms": {
+                "capture_read": 8.5864700000000005e-01,
+                "preprocess": 2.7424740000000001e+00,
+                "inference": 5.2733728999999997e+01,
+                "postprocess": 4.2501579999999999e+00,
+                "visualization": 4.3474600000000002e-01,
+                "video_write": 6.5212770000000004e+00,
+                "pipeline_total": 6.7779325999999998e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 17,
+            "timings_ms": {
+                "capture_read": 9.1456199999999999e-01,
+                "preprocess": 1.6973259999999999e+00,
+                "inference": 4.1486657999999998e+01,
+                "postprocess": 4.0765390000000004e+00,
+                "visualization": 4.0126800000000001e-01,
+                "video_write": 6.9182569999999997e+00,
+                "pipeline_total": 5.5757629000000001e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 18,
+            "timings_ms": {
+                "capture_read": 7.6745300000000005e-01,
+                "preprocess": 1.5544160000000000e+00,
+                "inference": 4.4066153999999997e+01,
+                "postprocess": 4.4255430000000002e+00,
+                "visualization": 5.0515299999999996e-01,
+                "video_write": 8.3159320000000001e+00,
+                "pipeline_total": 5.9880139000000000e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 19,
+            "timings_ms": {
+                "capture_read": 8.3498600000000001e-01,
+                "preprocess": 1.6200550000000000e+00,
+                "inference": 4.3014321000000002e+01,
+                "postprocess": 3.9251870000000002e+00,
+                "visualization": 3.8964500000000002e-01,
+                "video_write": 6.2796820000000002e+00,
+                "pipeline_total": 5.6294794000000003e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 20,
+            "timings_ms": {
+                "capture_read": 8.1948600000000005e-01,
+                "preprocess": 1.6125860000000001e+00,
+                "inference": 4.4768531000000003e+01,
+                "postprocess": 4.1855640000000003e+00,
+                "visualization": 3.9189200000000002e-01,
+                "video_write": 6.2969350000000004e+00,
+                "pipeline_total": 5.8301746000000001e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 21,
+            "timings_ms": {
+                "capture_read": 1.4506090000000000e+00,
+                "preprocess": 1.6720600000000001e+00,
+                "inference": 4.8406981999999999e+01,
+                "postprocess": 4.4119809999999999e+00,
+                "visualization": 4.2484600000000000e-01,
+                "video_write": 6.4199460000000004e+00,
+                "pipeline_total": 6.3033774999999999e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 22,
+            "timings_ms": {
+                "capture_read": 7.9832300000000000e-01,
+                "preprocess": 1.8026180000000001e+00,
+                "inference": 4.4135452000000001e+01,
+                "postprocess": 4.2775489999999996e+00,
+                "visualization": 3.7947599999999998e-01,
+                "video_write": 6.1480579999999998e+00,
+                "pipeline_total": 5.7779465000000002e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 23,
+            "timings_ms": {
+                "capture_read": 7.5265800000000005e-01,
+                "preprocess": 1.6004259999999999e+00,
+                "inference": 5.0970469000000001e+01,
+                "postprocess": 3.9932449999999999e+00,
+                "visualization": 4.4324400000000003e-01,
+                "video_write": 7.0801629999999998e+00,
+                "pipeline_total": 6.5078177999999994e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 24,
+            "timings_ms": {
+                "capture_read": 1.0774060000000001e+00,
+                "preprocess": 1.7707029999999999e+00,
+                "inference": 5.2512082999999997e+01,
+                "postprocess": 4.0024530000000000e+00,
+                "visualization": 5.6189900000000004e-01,
+                "video_write": 6.9655870000000002e+00,
+                "pipeline_total": 6.7188310000000001e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 25,
+            "timings_ms": {
+                "capture_read": 8.5635499999999998e-01,
+                "preprocess": 1.9139550000000001e+00,
+                "inference": 6.3297629999999998e+01,
+                "postprocess": 4.7492239999999999e+00,
+                "visualization": 6.6805099999999995e-01,
+                "video_write": 1.0016185000000000e+01,
+                "pipeline_total": 8.1957176000000004e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 26,
+            "timings_ms": {
+                "capture_read": 9.6057400000000004e-01,
+                "preprocess": 1.8418710000000000e+00,
+                "inference": 5.5510257000000003e+01,
+                "postprocess": 3.8525440000000000e+00,
+                "visualization": 3.8177499999999998e-01,
+                "video_write": 6.1312460000000000e+00,
+                "pipeline_total": 6.8907754999999995e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 27,
+            "timings_ms": {
+                "capture_read": 8.4840700000000002e-01,
+                "preprocess": 1.5669850000000001e+00,
+                "inference": 5.0495488000000002e+01,
+                "postprocess": 3.8710420000000001e+00,
+                "visualization": 3.8404199999999999e-01,
+                "video_write": 7.1366519999999998e+00,
+                "pipeline_total": 6.4541472999999996e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 28,
+            "timings_ms": {
+                "capture_read": 8.0077600000000004e-01,
+                "preprocess": 1.5487139999999999e+00,
+                "inference": 4.5798580999999999e+01,
+                "postprocess": 3.9939480000000001e+00,
+                "visualization": 4.3404399999999999e-01,
+                "video_write": 7.6333529999999996e+00,
+                "pipeline_total": 6.0436985000000000e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        },
+        {
+            "frame_index": 29,
+            "timings_ms": {
+                "capture_read": 7.8258600000000000e-01,
+                "preprocess": 1.6970680000000000e+00,
+                "inference": 4.4219810000000003e+01,
+                "postprocess": 4.2266760000000003e+00,
+                "visualization": 4.4590900000000000e-01,
+                "video_write": 6.2160489999999999e+00,
+                "pipeline_total": 5.7827643999999999e+01
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+                {
+                    "rank": 1,
+                    "candidate_index": 24269,
+                    "class_id": 66,
+                    "class_name": "keyboard",
+                    "objectness": 8.9882099628448486e-01,
+                    "class_score": 9.9247598648071289e-01,
+                    "confidence": 8.9205801486968994e-01,
+                    "box_xyxy_source": [
+                        4.2091885375976562e+02,
+                        6.3648284912109375e+02,
+                        7.8687280273437500e+02,
+                        7.4738958740234375e+02
+                    ]
+                },
+                {
+                    "rank": 2,
+                    "candidate_index": 24170,
+                    "class_id": 62,
+                    "class_name": "tv",
+                    "objectness": 8.2981199026107788e-01,
+                    "class_score": 9.8378801345825195e-01,
+                    "confidence": 8.1635898351669312e-01,
+                    "box_xyxy_source": [
+                        4.0053491210937500e+02,
+                        2.5555166625976562e+02,
+                        8.9571826171875000e+02,
+                        5.4392761230468750e+02
+                    ]
+                },
+                {
+                    "rank": 3,
+                    "candidate_index": 24265,
+                    "class_id": 41,
+                    "class_name": "cup",
+                    "objectness": 7.5236600637435913e-01,
+                    "class_score": 9.4098097085952759e-01,
+                    "confidence": 7.0796298980712891e-01,
+                    "box_xyxy_source": [
+                        2.5285494995117188e+02,
+                        6.1353369140625000e+02,
+                        3.4821408081054688e+02,
+                        7.7130712890625000e+02
+                    ]
+                },
+                {
+                    "rank": 4,
+                    "candidate_index": 24293,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 4.2091900110244751e-01,
+                    "class_score": 9.3715202808380127e-01,
+                    "confidence": 3.9446499943733215e-01,
+                    "box_xyxy_source": [
+                        8.7052661132812500e+02,
+                        7.1600866699218750e+02,
+                        9.7028942871093750e+02,
+                        7.8796752929687500e+02
+                    ]
+                },
+                {
+                    "rank": 5,
+                    "candidate_index": 21847,
+                    "class_id": 64,
+                    "class_name": "mouse",
+                    "objectness": 3.1194299459457397e-01,
+                    "class_score": 8.8001900911331177e-01,
+                    "confidence": 2.7451598644256592e-01,
+                    "box_xyxy_source": [
+                        1.8571618652343750e+02,
+                        6.7606640625000000e+02,
+                        2.5375265502929688e+02,
+                        7.1283007812500000e+02
+                    ]
+                }
+            ]
+        }
+    ]
+}

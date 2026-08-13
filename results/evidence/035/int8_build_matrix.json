@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "task": "035",
+  "status": "ARM_BUILD_AND_BENCHMARK_COMPLETED",
+  "host": {
+    "candidate": "EQ ncnn INT8",
+    "status": "BUILT_AND_EVALUATED",
+    "architecture": "x86_64",
+    "int8_option": true,
+    "correctness_scope": "full independent COCO gate; frozen single-image regression retained as secondary",
+    "full_coco_gate": "PASS"
+  },
+  "arm_aarch64": {
+    "status": "BUILT_AND_EXECUTED",
+    "source_commit": "56775de50990ab7f16627efdcf5529b49541206f",
+    "compiler": "aarch64-linux-gnu-g++ (Linaro GCC 7.5-2019.12) 7.5.0",
+    "cmake": "cmake version 3.16.9",
+    "ncnn_options": {
+      "NCNN_OPENMP": true,
+      "NCNN_THREADS": true,
+      "NCNN_SIMPLEOMP": false,
+      "NCNN_RUNTIME_CPU": true,
+      "NCNN_BENCHMARK": false,
+      "NCNN_INT8": true,
+      "NCNN_BF16": true,
+      "NCNN_FORCE_INLINE": true,
+      "NCNN_ENABLE_LTO": false,
+      "NCNN_ARM82": false,
+      "NCNN_VFPV4": true,
+      "release": true
+    },
+    "ncnn_library_sha256": "248c96f0afd9fb5acb36ca40fa6db0bf62ae860e31fd6febdbf0bfd5fffb47a2",
+    "ncnn_library_sha256_note": "The formal NCNN_INT8 build identity is recorded in the external build manifest; the diagnostic NCNN_BENCHMARK=ON library is separately identified in int8_layer_profile.json.",
+    "profiler_elf_sha256": "598886d9b1a2b3b2d56455e2efbaef79b70f740c62f2c2a6a9c82ddfe9a71e64",
+    "private_libgomp_sha256": "87333e5498f3df629be8737e7b3c64e58668d91ce0edd8d78a7ce86065955b91",
+    "binary_architecture": "ELF64 AArch64",
+    "dynamic_loader": "/lib/ld-linux-aarch64.so.1",
+    "ldd_status": "PASS_PRIVATE_LIBS_RESOLVED",
+    "model": "EQ INT8 ncnn param/bin",
+    "model_param_sha256": "b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4",
+    "model_bin_sha256": "9ae93520aa8fa9c235176e57c3146ac6a66115cddd0186c20f2637f7516c09f7",
+    "build_script": "scripts/vendor/run_task035_ncnn_int8.sh --execute",
+    "build_output_external": "external_generated/task035-ncnn-int8/build-output"
+  },
+  "formal_benchmark": {
+    "status": "COMPLETED",
+    "evidence": "results/evidence/035/arm_int8_benchmark.json",
+    "sample_count_per_variant": 50,
+    "independent_processes_per_variant": 5,
+    "warmup": 3,
+    "repeat_per_process": 10,
+    "thread_configuration": 2,
+    "scheduling": "default",
+    "packing": true,
+    "same_elf_for_variants": true,
+    "same_input_and_postprocess": true
+  }
+}

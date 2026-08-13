@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "task": "038",
+  "recorded_at": "2026-08-12T16:28:00+08:00",
+  "recorded_at_note": "WSL evidence record time; benchmark clocks are steady_clock",
+  "model_contract": {
+    "family": "YOLOv5n v7.0",
+    "onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "input": {"shape": [1, 3, 640, 640], "dtype": "FP32", "layout": "NCHW"},
+    "output": {"shape": [1, 25200, 85], "dtype": "FP32"},
+    "graph_nms": false,
+    "source_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071"
+  },
+  "protocol": {
+    "preprocess": "shared edgeai_common letterbox/BGR-to-RGB/NCHW/255",
+    "postprocess": "shared YOLOv5 decode, confidence 0.25, class-aware NMS IoU 0.45",
+    "image_read_excluded_from_stage_samples": true,
+    "warmup": 2,
+    "repeat": 5,
+    "timing": "preprocess, backend inference, postprocess, and their sum; decoded image reused"
+  },
+  "runs": {
+    "ort_fp32": {
+      "command": "/tmp/task038-cmake/edgeai_demo --backend ort --model models/yolov5n-v7.0/yolov5n.onnx --manifest models/yolov5n-v7.0/manifest.json --source data/samples/images/pc_reference.jpg --golden results/acceptance/cpp_ort_reference.json --output-image /tmp/task038-ort.png --output-json /tmp/task038-ort.json --precision fp32 --benchmark --warmup 2 --repeat 5",
+      "exit_code": 0,
+      "binary_sha256": "5a94d91abc2b46fc1c08d07503e0b1e6940afb13f97ff47132e936adf8f700c5",
+      "backend": "ort",
+      "runtime": "ONNX Runtime 1.18.1 / CPUExecutionProvider",
+      "precision": "fp32",
+      "input_dtype": "FLOAT",
+      "output_dtype": "FLOAT",
+      "input_shape": [1, 3, 640, 640],
+      "output_shape": [1, 25200, 85],
+      "fallback": "none",
+      "correctness": {"status": "PASS_TARGET", "detections": 5, "minimum_iou": 1.0, "maximum_confidence_delta": 0.0},
+      "timings_ms": {
+        "preprocess": {"mean": 1.7301570, "p50": 1.619407, "p95": 2.025223},
+        "inference": {"mean": 49.3322254, "p50": 48.494136, "p95": 53.05282},
+        "postprocess": {"mean": 4.0200420, "p50": 3.882319, "p95": 4.35406},
+        "pipeline": {"mean": 55.0825356, "p50": 53.995918, "p95": 59.262734},
+        "fps": 18.15457456900368
+      },
+      "peak_rss_kib": 161184,
+      "output_image": {"path": "results/evidence/038/ort_annotated.png", "sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2"}
+    },
+    "ncnn_fp32": {
+      "command": "LD_LIBRARY_PATH=/home/dministrator/opt/ncnn/ncnn-linux-x64-20240410-local/lib /tmp/task038-cmake/edgeai_demo --backend ncnn --model models/yolov5n-v7.0/ncnn_manifest.json --source data/samples/images/pc_reference.jpg --golden results/acceptance/cpp_ncnn_reference.json --output-image /tmp/task038-ncnn.png --output-json /tmp/task038-ncnn.json --precision fp32 --threads 2 --packing 1 --benchmark --warmup 2 --repeat 5",
+      "exit_code": 0,
+      "binary_sha256": "5a94d91abc2b46fc1c08d07503e0b1e6940afb13f97ff47132e936adf8f700c5",
+      "backend": "ncnn",
+      "runtime": "ncnn 1.0.20240410 / OpenMP",
+      "precision": "fp32",
+      "input_dtype": "float32",
+      "output_dtype": "float32",
+      "input_shape": [1, 3, 640, 640],
+      "output_shape": [1, 25200, 85],
+      "threads": 2,
+      "packing": true,
+      "fallback": "none",
+      "correctness": {"status": "PASS_TARGET", "detections": 5, "minimum_iou": 1.0, "maximum_confidence_delta": 0.0},
+      "timings_ms": {
+        "preprocess": {"mean": 1.6090158, "p50": 1.590509, "p95": 1.675187},
+        "inference": {"mean": 42.3938848, "p50": 42.517418, "p95": 44.542058},
+        "postprocess": {"mean": 4.0217168, "p50": 4.010389, "p95": 4.315033},
+        "pipeline": {"mean": 48.0246966, "p50": 48.412571, "p95": 50.097624},
+        "fps": 20.822619835145403
+      },
+      "peak_rss_kib": 187224,
+      "output_image": {"path": "results/evidence/038/ncnn_annotated.png", "sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2"}
+    },
+    "tensorrt_fp32": {
+      "command": "LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/usr/local/cuda-12.9/lib64 /tmp/task038-trt-cmake/edgeai_demo --backend tensorrt --model /tmp/task037/yolov5n_fp32_no_tf32.engine --source data/samples/images/pc_reference.jpg --golden results/acceptance/cpp_ort_reference.json --output-image /tmp/task038-trt.png --output-json /tmp/task038-trt.json --precision fp32 --benchmark --warmup 2 --repeat 5",
+      "exit_code": 0,
+      "binary_sha256": "174c30357f6e97bb45cbfbe4183e5255d30a2281ac3490220287c0de8fcc0fee",
+      "backend": "tensorrt",
+      "runtime": "TensorRT 10.13.3 / CUDA / RTX 4060 Ti",
+      "engine_path": "/tmp/task037/yolov5n_fp32_no_tf32.engine",
+      "engine_sha256": "a3ad9715f3560e46cae2cacfa06ca11d1468c42947eea9487a15c82d84b968d6",
+      "precision": "fp32",
+      "input_dtype": "FLOAT",
+      "output_dtype": "FLOAT",
+      "input_shape": [1, 3, 640, 640],
+      "output_shape": [1, 25200, 85],
+      "fallback": "none",
+      "correctness": {"status": "PASS_TARGET", "detections": 5, "minimum_iou": 0.9999971389770508, "maximum_confidence_delta": 0.0000020265579223632812},
+      "timings_ms": {
+        "preprocess": {"mean": 1.6373730, "p50": 1.657263, "p95": 1.703324},
+        "inference": {"mean": 4.2555388, "p50": 4.250414, "p95": 4.469002},
+        "postprocess": {"mean": 3.9970016, "p50": 3.966113, "p95": 4.188833},
+        "pipeline": {"mean": 9.8899798, "p50": 9.937474, "p95": 10.329017},
+        "fps": 101.11244109922247
+      },
+      "peak_rss_kib": 535536,
+      "output_image": {"path": "results/evidence/038/tensorrt_fp32_annotated.png", "sha256": "57dd15410b66da0ef30c08ddb6d077c37698c6cfc9b4d876d8882270459645f2"}
+    },
+    "tensorrt_fp16": {
+      "command": "LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/usr/local/cuda-12.9/lib64 /tmp/task038-trt-cmake/edgeai_demo --backend tensorrt --model /tmp/task037/yolov5n_fp16.engine --source data/samples/images/pc_reference.jpg --output-image /tmp/task038-trt-fp16.png --output-json /tmp/task038-trt-fp16.json --precision fp16 --benchmark --warmup 2 --repeat 5",
+      "exit_code": 0,
+      "binary_sha256": "174c30357f6e97bb45cbfbe4183e5255d30a2281ac3490220287c0de8fcc0fee",
+      "backend": "tensorrt",
+      "runtime": "TensorRT 10.13.3 / CUDA / RTX 4060 Ti",
+      "engine_path": "/tmp/task037/yolov5n_fp16.engine",
+      "engine_sha256": "7f99cc9f628613a71ec993898a9825c0c45f4c5129862f8350fea0161e653c8a",
+      "precision": "fp16",
+      "fallback": "none",
+      "input_dtype": "FLOAT",
+      "output_dtype": "FLOAT",
+      "input_shape": [1, 3, 640, 640],
+      "output_shape": [1, 25200, 85],
+      "correctness": {"status": "TASK037_COCO_GATE_PASS_SECONDARY_SINGLE_GOLDEN_FAIL", "single_image_iou": 0.9935288429260254, "single_image_confidence_delta": 0.005570024251937866},
+      "timings_ms": {
+        "preprocess": {"mean": 1.5927838, "p50": 1.598483, "p95": 1.649664},
+        "inference": {"mean": 7.3970642, "p50": 6.921778, "p95": 9.375776},
+        "postprocess": {"mean": 4.0047426, "p50": 3.86082, "p95": 4.282613},
+        "pipeline": {"mean": 12.9946558, "p50": 12.400664, "p95": 15.271359},
+        "fps": 76.95471241339074
+      },
+      "peak_rss_kib": 546136,
+      "output_image": {"path": "results/evidence/038/tensorrt_fp16_annotated.png", "sha256": "08ee3d79c2317e3680a353e484fb8e68ef1f4d342571fd9a0dfbc7e7cd1725a4"}
+    }
+  }
+}

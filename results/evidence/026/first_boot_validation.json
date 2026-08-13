@@ -1,0 +1,118 @@
+{
+  "schema_version": "task026-first-boot-validation-v1",
+  "task": "026",
+  "recorded_at_wsl": "2026-08-07T10:29:43+08:00",
+  "physical_first_boot": {
+    "status": "COMPLETED",
+    "source": "user_confirmation",
+    "sd_inserted": true,
+    "boot_switch": "ON-OFF-OFF",
+    "serial_connected_and_recording": true,
+    "board_powered": true,
+    "no_second_power_cycle": true
+  },
+  "serial_boot_observed": {
+    "status": "PASS",
+    "source": "user_serial_capture",
+    "summary": "User observed FSBL/FPGA/U-Boot/Linux output and a login prompt for the candidate SD boot. The complete raw serial transcript remains external to Git; this evidence stores only the sanitized summary."
+  },
+  "linux_login": "PASS",
+  "candidate_sd_boot": {
+    "status": "PASS_PRELIMINARY",
+    "basis": [
+      "running kernel is Linux 6.1.111-rt42 #3 SMP PREEMPT Wed Aug 5 18:19:39 CST 2026 aarch64",
+      "mmcblk0 is the 29.2 GiB SD card and is mounted at /mnt/mmcblk0p1",
+      "mmcblk1 is the 7.30 GiB onboard eMMC and is mounted only for read-only identity checks",
+      "all eight boot-root files on /mnt/mmcblk0p1 match the approved Task 025 candidate hashes",
+      "chosen/linux,initrd-start and chosen/linux,initrd-end show the initrd loaded by the SD boot path",
+      "the running root is an in-memory rootfs, consistent with the candidate uInitrd.lz4"
+    ],
+    "boot_files": {
+      "BOOT.bin": "e25f98e00a68ea76f9e96736ba88fb7c169e2f8b769d60af55e3e69639880016",
+      "boot.scr": "99d1c6d7e5bead893c495f9b5c8c796e1186108d4decd47915c06680f6f4b012",
+      "soc_fsbl.elf": "be0a66928221a70c12187e229a9867f2c9f7e7b10b64909f3dc7b289b5a76f49",
+      "system.bit": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+      "system.dtb": "e1ddd7405245d7b9f644c64066bda64369edbac0d8e8676564261d9cfc22b979",
+      "u-boot.bin": "2f8e24a96e21395e042feed4777b14409e901d2764c9819a83366fc1bf2efe47",
+      "uImage.lz4": "b6ff1dd519ce342d4739a18fa4e03b3f108c0c4c30e432f94afac9704fb8b4b0",
+      "uInitrd.lz4": "c736bb9af24e644407ee0ee467c37f771f07b314b779879ac203d02b28159268"
+    }
+  },
+  "board_read_only_collection": {
+    "wrapper": "/home/dministrator/bin/anlogic-board-ssh",
+    "hostname": "buildroot",
+    "user": "root",
+    "uname": "Linux buildroot 6.1.111-rt42 #3 SMP PREEMPT Wed Aug 5 18:19:39 CST 2026 aarch64 GNU/Linux",
+    "os_release": "Buildroot 2022.02.6",
+    "cmdline": "console=ttyS0,115200n8 earlycon=uart,mmio32,0xf8401000 loglevel=8 mtdparts=alspinor:1M(boot),-(data)",
+    "root_mount": "rootfs on / type rootfs (rw,size=385860k,nr_inodes=96465)",
+    "mounted_partitions": [
+      "/dev/mmcblk0p1 on /mnt/mmcblk0p1 type vfat",
+      "/dev/mmcblk1p2 on /mnt/mmcblk1p2 type ext4",
+      "/dev/mmcblk1p1 on /mnt/mmcblk1p1 type vfat"
+    ],
+    "storage_identity": {
+      "mmcblk0": "SDHC MSSD0 29.2 GiB",
+      "mmcblk1": "MMC IS008G 7.30 GiB (onboard eMMC)"
+    },
+    "eth0": {
+      "addresses": ["169.254.125.44/16", "192.168.50.2/24"],
+      "link": "1Gbps/Full",
+      "driver_observed": "dwc-eth-dwmac with YT8531 Gigabit Ethernet PHY"
+    },
+    "cma": {
+      "CmaTotal_kib": 131072,
+      "CmaFree_kib": 124436,
+      "dmesg_reserved": "created CMA memory pool at 0x0000000017c00000, size 128 MiB"
+    }
+  },
+  "device_tree": {
+    "model": "Anlogic, DR1M90 FPSoc",
+    "hard_npu": {
+      "path": "/sys/firmware/devicetree/base/soc/hard_npu@63F00000",
+      "compatible": "anlogic,hard_npu",
+      "status_property": "not_present_in_live_tree",
+      "reg_bytes_hex": "0000000063f00000000000000010000000000000f88000000000000000000200000000000000f88010000000000000000000100",
+      "interrupts_bytes_hex": "000000000000007000000004"
+    },
+    "soft_npu": {
+      "path": "/sys/firmware/devicetree/base/soc/soft_npu@1f0000000",
+      "compatible": "anlogic,soft_npu",
+      "status": "okay",
+      "reg_bytes_hex": "00000001f00000000000000000010000",
+      "interrupts_bytes_hex": "000000000000006100000004"
+    },
+    "cma_reserved_memory": {
+      "path": "/sys/firmware/devicetree/base/reserved-memory/linux,cma",
+      "compatible": "shared-dma-pool",
+      "size_bytes_hex": "0000000008000000"
+    },
+    "vdma": {
+      "path": "/sys/firmware/devicetree/base/soc/vdma@80200000",
+      "compatible": "anlogic,axi-vdma",
+      "status": "okay",
+      "reg_bytes_hex": "00000000802000000000000000001000",
+      "interrupts_bytes_hex": "000000000000005400000004"
+    },
+    "fpga_manager": {
+      "compatible": "anlogic,dr1m90-pcap-fpga",
+      "dmesg": "FPGA manager framework and fpga-region were probed"
+    },
+    "chosen_initrd": {
+      "linux,initrd-start_bytes_hex": "0000000037d71000",
+      "linux,initrd-end_bytes_hex": "000000003e7fa546"
+    }
+  },
+  "kernel_and_npu_dmesg": {
+    "npu_driver_probe_lines": [],
+    "cma_and_fpga_lines_observed": true,
+    "other_warnings_or_errors": [
+      "anlogic-vdma-fb initially failed to request the VDMA channel before the VDMA driver probe",
+      "pca954x 0-0074 probe failed",
+      "FAT filesystems reported not properly unmounted during boot",
+      "no HardNPU, SoftNPU or cma_mem probe/registration line was observed"
+    ]
+  },
+  "network_note": "The candidate system has 192.168.50.2 on eth0; the user reported that the address had previously been placed on can0 and was corrected. No persistent network configuration was changed by this validation.",
+  "board_write_or_system_change": false
+}

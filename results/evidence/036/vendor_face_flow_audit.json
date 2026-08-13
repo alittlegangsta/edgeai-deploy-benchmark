@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "task": "036",
+  "evidence_brief": {
+    "task": "036",
+    "board": "MLK-F3P-CZ02-DR1M90",
+    "sdk_tag": "unknown; existing Task 031 repository identity is used",
+    "repository_tag_commit": "dr1m90_npu HEAD 199ef4d71f453bb9a000102ff39def09c4cf73f9",
+    "sources_consulted": [
+      "results/evidence/026/official_demo_validation.json",
+      "results/evidence/028/trackc3_capability_face_path_audit.json",
+      "<vendor-root>/NPU_info/dr1m90_npu/face_detection"
+    ],
+    "documented_facts": [
+      "The model has one 416x416 NCHW input and two [1,18,H,W] output heads.",
+      "The vendor configuration uses zero means, approximately 1/255 channel scales, confidence 0.35 and NMS IoU 0.45.",
+      "The vendor face decoder uses stride 16/32 anchors and sigmoid YOLO decoding followed by NMS.",
+      "The vendor camera script exports ArmNN and OpenCV runtime library paths."
+    ],
+    "source_code_facts": [
+      "executor.cpp creates an ONNX parser, calls ArmNN Optimize with backend preferences, then LoadNetwork and CMA-backed buffers.",
+      "preprocess.cpp converts camera BGR/BGRA data to quantized planar RGB and applies model quantization parameters.",
+      "postprocess.cpp supports QAsymmU8/QSymmS8 outputs and performs sigmoid, anchor decode and NMS.",
+      "The project runner uses the same graph contract and forces a single Alnpu backend preference."
+    ],
+    "assumptions": [],
+    "conflicts": [
+      "The vendor camera executable defaults to a preference list that includes CPU backends; this task's project runner intentionally passes only Alnpu and rejects fallback."
+    ],
+    "unresolved_blockers": [
+      "The custom YOLOv5n graph remains under Task 028/029/032 WAITING_FOR_VENDOR_INPUT and is not part of this closed loop."
+    ],
+    "proposed_action": "Use edgeai_armnn_face_image for a bounded image-control deployment and keep the vendor camera script as source evidence only."
+  },
+  "model_contract": {
+    "sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c",
+    "input": "uint8 NCHW [1,3,416,416], scale 0.003921568859368563, zero-point 0",
+    "outputs": ["uint8 [1,18,13,13] stride 32", "uint8 [1,18,26,26] stride 16"],
+    "classes": ["face"],
+    "thresholds": {"confidence": 0.35, "nms_iou": 0.45},
+    "anchors": {
+      "stride16": [4, 6, 8, 10, 13, 17],
+      "stride32": [26, 35, 60, 78, 162, 206]
+    }
+  },
+  "project_flow": [
+    "image file -> OpenCV BGR decode",
+    "resize 416x416 without letterbox",
+    "BGR -> RGB, HWC -> NCHW, divide by 255",
+    "ArmNN ONNX parser -> Optimize([Alnpu]) -> LoadNetwork",
+    "CMA input/output buffers -> EnqueueWorkload",
+    "dequantized output heads -> sigmoid/anchor decode -> confidence filter -> NMS",
+    "JSON detections and OpenCV annotated image"
+  ],
+  "backend_proof": {
+    "required": "Alnpu",
+    "captured_assignment": "Alnpu | ALHardNPU",
+    "fallback_allowed": false,
+    "load_status": "Success",
+    "enqueue_status": "Success",
+    "cpu_fallback": false
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "status": "REPAIR_NOT_CORRECTNESS_CLOSED",
+  "source_model_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+  "calibration_input_sha256": "625a64f72f19c7c674383f060c85c4c5a55068e0916ccb12e285e438d3036071",
+  "tool_versions": {"onnx": "1.16.2", "onnxruntime": "1.18.1"},
+  "method": "Conv-only static QDQ quantization with one frozen calibration image, followed by removal of four exact-integer constant FLOAT Floor nodes",
+  "intermediate_qdq_sha256": "308b93a89b1158b884930222621df9b0d581e88f36a90b6fa1e4aa24e8d50386",
+  "final_model_sha256": "3ce1e58b3d024ac890eef24e0704265aae12a7c58d005aeed288ff4c4aba4b76",
+  "model_contract_after_conversion": {"input_dtype": "float32", "input_shape": [1, 3, 640, 640], "output_dtype": "float32", "output_shape": [1, 25200, 85], "floor_nodes": 0, "qdq_nodes_present": true},
+  "local_ort_before_after": {"frozen_detection_count": 5, "quantized_detection_count": 4, "quantized_classes": [66, 62, 41, 64], "quantized_raw_max_abs_delta": 308.5351867675781, "correctness_gate": "FAIL; quantized graph is not a golden-equivalent replacement"},
+  "board_probe": {"exit_code": 139, "stderr": "ArmNN backend request: Alnpu only; CpuAcc/CpuRef fallback disabled\narmnn_stage=parser_created\nSegmentation fault", "load_status": "not_reached"},
+  "conclusion": "Quantization is reproducible but neither local golden correctness nor board parser acceptance is closed; no quantized benchmark was run."
+}

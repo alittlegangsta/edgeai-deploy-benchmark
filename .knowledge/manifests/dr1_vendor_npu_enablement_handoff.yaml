@@ -1,0 +1,46 @@
+schema_version: 1
+task: "029"
+title: "DR1 vendor NPU enablement handoff"
+status: "Completed"
+readiness: "WAITING_FOR_VENDOR_INPUT"
+source_task: "028"
+primary_verdict: "BLOCKED_EXTERNAL_VENDOR_DEPENDENCY"
+primary_blocker: "CURRENT_ARMNN_ALNPU_BACKEND_NOT_GENERAL_YOLO_GRAPH_CAPABLE"
+scope: "Audited AArch64 libarmnn.so.32.1 only"
+new_experiments: false
+package_root: "docs/vendor_handoff/dr1m90_npu"
+validator: "scripts/vendor/validate_task029_vendor_handoff.py"
+fusion_audit:
+  source_task: "032"
+  conclusion: "FUSION_PREDICATE_NOT_RECOVERABLE"
+  face_onnx_has_alhardnpu_custom_node: false
+  optimize_assignment_count: 3
+  confirmed_symbols:
+    - "ConvertConv2dIntoALHardNPUImpl"
+    - "checkConv"
+    - "checkAct"
+    - "checkPool"
+  complete_predicate_publicly_recoverable: false
+  task032_evidence:
+    - path: "results/evidence/032/fusion_symbol_audit.json"
+      sha256: "4184161d1a8b54618673e862a465fc9882358e82760b5110f17d84439e03c239"
+    - path: "results/evidence/032/face_fusion_regions.json"
+      sha256: "8ce1c18554a2ad1fc430223c30f691d95fa830e578d9aa0fc915c296ca6b7689"
+    - path: "results/evidence/032/fusion_eligibility_verdict.json"
+      sha256: "1ced6d317a79682a2283433965283221d4888cbef6c57139626b8ba01a578e7a"
+tracks:
+  track_a: "BLOCKED_UNSUPPORTED_ALNPU_GRAPH"
+  track_b: "BLOCKED_VENDOR_NATIVE_TOOLCHAIN_UNAVAILABLE"
+  track_c1: "PASS"
+  track_c2: "NOT_ACCEPTED_PAUSED"
+  track_c3: "BLOCKED_AT_ALNPU_LAYER_SUPPORT"
+  track_c4: "NOT_RUN"
+external_reopen_conditions:
+  - "generic quantized YOLO Alnpu backend"
+  - "APUG1205-compatible compiler and native runtime"
+  - "official DR1M90 GEG400 YOLO deployment/conversion chain"
+safety:
+  board_accessed: false
+  benchmark_run: false
+  cpu_fallback_accepted: false
+  vendor_material_committed: false

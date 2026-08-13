@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "track": "B",
+  "status": "PASS_STATIC_NPU_SOFT_CONFIGURATION",
+  "source": {
+    "logical_project": "NPU_info/05-5_NPU演示/demo",
+    "tutorial_platform_bitstream": {
+      "logical_path": "demo/soc_sdk/soc_base/platform/soc_prj.bit",
+      "sha256": "e40536cdc035cb707a50dd86c5f1858a5d11e33cfd39faa03c8b0ab483b57fb5",
+      "role": "PDF/tutorial platform system.bit; not the best-result bitstream"
+    },
+    "best_result_bitstream": {
+      "logical_path": "demo/soc_prj/soc_prj_Runs/best_result/soc_prj.bit",
+      "sha256": "0e7a6311ad7c0cc1b6d9eb228b8e5b74d63b52f598454dd6e4fc922bbced9912",
+      "role": "separate project output; not substituted for the tutorial platform bitstream"
+    },
+    "soft_ip_params": {
+      "logical_path": "demo/soc_prj/al_ip/NPU_SOFT_0/.params_NPU_SOFT_0.txt",
+      "sha256": "23f10bd7c7a0c9d8c017246b793eb9e75ac5dfd128f2c2691237c39c10ee7dfc",
+      "npu_soft": 1
+    },
+    "design_xml": {
+      "logical_path": "demo/soc_prj/al_ip/design_0/Design.xml",
+      "sha256": "7164122d05f5afeaf44fb3b52da9d73616f866d0f99e427f7512ed26739ad483",
+      "video_npu_configuration": {
+        "NPU_SOFT": 1,
+        "SOFT_NN": 1,
+        "SOFT_YOLO": 1,
+        "SOFT_RESIZE": 1,
+        "ALL_OPERATOR": 1,
+        "PRE_PROCESS": 1,
+        "POST_PROCESS": 0
+      }
+    }
+  },
+  "interpretation": {
+    "hardware_path": "The audited project statically contains a Video_NPU configuration with NPU_SOFT and SOFT_YOLO enabled.",
+    "native_compiler_proof": false,
+    "native_runtime_proof": false,
+    "conclusion": "The SoftNPU FPGA/IP side is positive static evidence, but it does not provide convert_tool, al_ai_flow, rt.bin/weight.bin or libnpu_runtime."
+  },
+  "safety": {
+    "bitstream_written": false,
+    "fpga_reconfigured": false,
+    "npu_program_executed": false
+  }
+}

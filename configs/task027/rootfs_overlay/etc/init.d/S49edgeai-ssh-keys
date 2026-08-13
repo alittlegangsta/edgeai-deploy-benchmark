@@ -1,0 +1,139 @@
+#!/bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+[ -r /etc/edgeai/runtime.conf ] && . /etc/edgeai/runtime.conf
+
+log() { echo "edgeai-ssh: $*"; }
+
+secure_mount_active() {
+    mount | grep -F " on $EDGEAI_SD_BOOT_MOUNT " 2>/dev/null |
+        grep -F "fmask=0177" 2>/dev/null |
+        grep -F "dmask=0077" >/dev/null 2>&1
+}
+
+mount_persistent_boot() {
+    mkdir -p "$EDGEAI_SD_BOOT_MOUNT"
+    if mountpoint -q "$EDGEAI_SD_BOOT_MOUNT" 2>/dev/null; then
+        if secure_mount_active; then
+            log "persistent boot already uses $EDGEAI_SD_BOOT_MOUNT_OPTIONS"
+            return 0
+        fi
+        log "existing boot mount has an insecure mask; remounting from scratch"
+        sync
+        if ! umount "$EDGEAI_SD_BOOT_MOUNT" 2>/dev/null; then
+            log "cannot unmount existing boot mount for secure remount" >&2
+            return 1
+        fi
+    fi
+    # The candidate image uses an initramfs root.  Persist only generated host
+    # keys on the SD boot partition; no key is stored in Git or in this image.
+    if ! mount -t vfat -o "$EDGEAI_SD_BOOT_MOUNT_OPTIONS" \
+        "$EDGEAI_SD_BOOT_DEVICE" "$EDGEAI_SD_BOOT_MOUNT" 2>/dev/null; then
+        log "cannot mount boot partition with $EDGEAI_SD_BOOT_MOUNT_OPTIONS" >&2
+        return 1
+    fi
+    if ! secure_mount_active; then
+        log "boot partition mount did not retain $EDGEAI_SD_BOOT_MOUNT_OPTIONS" >&2
+        umount "$EDGEAI_SD_BOOT_MOUNT" 2>/dev/null || true
+        return 1
+    fi
+    log "persistent boot mounted with $EDGEAI_SD_BOOT_MOUNT_OPTIONS"
+    return 0
+}
+
+copy_host_keys() {
+    src="$1"
+    restored=0
+    for key in "$src"/ssh_host_*_key; do
+        [ -f "$key" ] || continue
+        name=$(basename "$key")
+        cp "$key" "/etc/ssh/$name"
+        chmod 600 "/etc/ssh/$name"
+        if [ -f "$key.pub" ]; then
+            cp "$key.pub" "/etc/ssh/$name.pub"
+            chmod 644 "/etc/ssh/$name.pub"
+        fi
+        restored=1
+    done
+    [ "$restored" -eq 1 ]
+}
+
+ensure_host_key_public() {
+    for key in /etc/ssh/ssh_host_*_key; do
+        [ -f "$key" ] || continue
+        pub="$key.pub"
+        if [ ! -s "$pub" ]; then
+            tmp="$pub.tmp"
+            if ! /usr/bin/ssh-keygen -y -f "$key" > "$tmp" 2>/dev/null; then
+                rm -f "$tmp"
+                log "cannot derive public sidecar for $key" >&2
+                return 1
+            fi
+            chmod 644 "$tmp"
+            mv -f "$tmp" "$pub"
+            log "derived missing public sidecar $pub"
+        else
+            chmod 644 "$pub"
+        fi
+    done
+}
+
+persist_host_keys() {
+    dst="$EDGEAI_PERSIST_ROOT/ssh"
+    mkdir -p "$dst"
+    for key in /etc/ssh/ssh_host_*_key; do
+        [ -f "$key" ] || continue
+        name=$(basename "$key")
+        cp "$key" "$dst/$name"
+        chmod 600 "$dst/$name"
+        if [ -f "$key.pub" ]; then
+            cp "$key.pub" "$dst/$name.pub"
+            chmod 644 "$dst/$name.pub"
+        fi
+    done
+}
+
+case "$1" in
+start)
+    mkdir -p /root/.ssh /etc/ssh
+    chmod 700 /root/.ssh
+    if [ -s "$EDGEAI_AUTHORIZED_KEYS" ]; then
+        cp "$EDGEAI_AUTHORIZED_KEYS" /root/.ssh/authorized_keys
+        chmod 600 /root/.ssh/authorized_keys
+        log "authorized_keys installed"
+    else
+        log "authorized_keys source is missing; SSH key login is not configured" >&2
+    fi
+
+    if mount_persistent_boot; then
+        if [ -d "$EDGEAI_PERSIST_ROOT/ssh" ] && copy_host_keys "$EDGEAI_PERSIST_ROOT/ssh"; then
+            log "persistent host keys restored"
+        fi
+        /usr/bin/ssh-keygen -A
+        ensure_host_key_public || exit 1
+        persist_host_keys
+        log "host keys present, public sidecars verified, and persisted"
+    else
+        /usr/bin/ssh-keygen -A
+        ensure_host_key_public || exit 1
+        log "boot partition unavailable; host keys are ephemeral for this boot" >&2
+    fi
+    if [ -x /usr/sbin/sshd ]; then
+        /usr/sbin/sshd -t || {
+            log "sshd configuration test failed" >&2
+            exit 1
+        }
+    else
+        log "sshd binary is missing" >&2
+        exit 1
+    fi
+    ;;
+stop|restart|reload)
+    ;;
+*)
+    echo "Usage: $0 {start|stop|restart|reload}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

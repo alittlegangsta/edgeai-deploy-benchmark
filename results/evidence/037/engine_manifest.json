@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "task": "037",
+  "recorded_at": "2026-08-12T15:25:18+08:00",
+  "model": {
+    "path": "models/yolov5n-v7.0/yolov5n.onnx",
+    "sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "opset": 12,
+    "input": {"shape": [1, 3, 640, 640], "dtype": "FP32", "layout": "NCHW"},
+    "output": {"shape": [1, 25200, 85], "dtype": "FP32"},
+    "graph_nms": false
+  },
+  "builder": {
+    "tool": "/usr/src/tensorrt/bin/trtexec",
+    "tensorrt": "10.13.3",
+    "cuda": "12.9.86",
+    "gpu": "NVIDIA GeForce RTX 4060 Ti",
+    "compute_capability": "8.9",
+    "workspace": "2048M",
+    "builder_optimization_level": 3,
+    "artifact_policy": "engines remain outside Git in /tmp/task037"
+  },
+  "engines": [
+    {
+      "id": "fp32_default_tf32",
+      "precision": "FP32",
+      "path": "/tmp/task037/yolov5n_fp32.engine",
+      "size_bytes": 11218372,
+      "sha256": "268653e3df291b43cf3febb3b8a0de79abe421a004c2354d02b88211847b189b",
+      "build_command": "trtexec --onnx=models/yolov5n-v7.0/yolov5n.onnx --saveEngine=/tmp/task037/yolov5n_fp32.engine --memPoolSize=workspace:2048M --builderOptimizationLevel=3 --verbose",
+      "correctness_status": "FAIL",
+      "correctness": {"detection_count": 5, "minimum_iou": 0.9989778399467468, "maximum_confidence_delta": 0.0021830201148986816},
+      "accepted": false,
+      "rejection_reason": "default TF32 path exceeds the existing confidence tolerance"
+    },
+    {
+      "id": "fp32_no_tf32",
+      "precision": "FP32",
+      "path": "/tmp/task037/yolov5n_fp32_no_tf32.engine",
+      "size_bytes": 14373580,
+      "sha256": "a3ad9715f3560e46cae2cacfa06ca11d1468c42947eea9487a15c82d84b968d6",
+      "build_command": "trtexec --onnx=models/yolov5n-v7.0/yolov5n.onnx --saveEngine=/tmp/task037/yolov5n_fp32_no_tf32.engine --memPoolSize=workspace:2048M --builderOptimizationLevel=3 --noTF32 --skipInference",
+      "correctness_status": "PASS_TARGET",
+      "correctness": {"detection_count": 5, "minimum_iou": 0.9999971389770508, "maximum_confidence_delta": 0.0000020265579223632812},
+      "accepted": true
+    },
+    {
+      "id": "fp16",
+      "precision": "FP16",
+      "path": "/tmp/task037/yolov5n_fp16.engine",
+      "size_bytes": 7253188,
+      "sha256": "7f99cc9f628613a71ec993898a9825c0c45f4c5129862f8350fea0161e653c8a",
+      "build_command": "trtexec --onnx=models/yolov5n-v7.0/yolov5n.onnx --saveEngine=/tmp/task037/yolov5n_fp16.engine --memPoolSize=workspace:2048M --builderOptimizationLevel=3 --fp16",
+      "correctness_status": "COCO_GATE_PASS; SINGLE_IMAGE_GOLDEN_SECONDARY_DIAGNOSTIC",
+      "correctness": {"detection_count": 5, "minimum_iou": 0.9935288429260254, "maximum_confidence_delta": 0.005570024251937866},
+      "accepted": true,
+      "acceptance_scope": "4,500-image COCO accuracy gate; strict single-image Golden remains secondary diagnostic",
+      "coco_gate": {
+        "mAP50": 0.4481054404868596,
+        "mAP50_95": 0.2747865502965814,
+        "delta_vs_tensorrt_fp32_mAP50": -0.000197230057410146,
+        "delta_vs_tensorrt_fp32_mAP50_95": 0.000066085409587863,
+        "zero_detection_images": 0,
+        "pass": true
+      }
+    }
+  ],
+  "serialized_engine_git_policy": "NOT_COMMITTED"
+}

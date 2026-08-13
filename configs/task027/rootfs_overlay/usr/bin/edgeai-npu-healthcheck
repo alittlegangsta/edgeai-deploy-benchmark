@@ -1,0 +1,75 @@
+#!/bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+[ -r /etc/edgeai/runtime.conf ] && . /etc/edgeai/runtime.conf
+
+json=0
+[ "${1:-}" = "--json" ] && json=1
+fail=0
+
+module_state() { [ -d "/sys/module/$1" ] && echo loaded || echo missing; }
+node_state() { [ -e "$1" ] && echo present || echo missing; }
+binding_state() {
+    device="$1"
+    if [ -L "/sys/bus/platform/devices/$device/driver" ]; then echo bound; else echo unbound; fi
+}
+fingerprint_from_private() {
+    key="$1"
+    [ -s "$key" ] || return 1
+    /usr/bin/ssh-keygen -y -f "$key" 2>/dev/null |
+        /usr/bin/ssh-keygen -lf - 2>/dev/null | awk '{print $2}'
+}
+
+cma_total=$(awk '/^CmaTotal:/ {print $2}' /proc/meminfo 2>/dev/null || echo 0)
+[ "${cma_total:-0}" -ge 131072 ] || fail=1
+for module in cma_mem hard_npu soft_npu; do
+    [ "$(module_state "$module")" = loaded ] || fail=1
+done
+for node in /dev/cma_mem /dev/hard_npu /dev/soft_npu; do
+    [ "$(node_state "$node")" = present ] || fail=1
+done
+hard_binding=$(binding_state 63f00000.hard_npu)
+soft_binding=$(binding_state 1f0000000.soft_npu)
+[ "$hard_binding" = bound ] || fail=1
+[ "$soft_binding" = bound ] || fail=1
+eth0=$(ip -4 -o addr show eth0 2>/dev/null | awk '{print $4}' | tr '\n' ',')
+echo "$eth0" | grep -q '192.168.50.2/24' || fail=1
+sshd_state=missing
+if pidof sshd >/dev/null 2>&1; then sshd_state=running; else fail=1; fi
+persist_state=missing
+host_key_sha256=missing
+persistent_host_key_sha256=missing
+host_key_fingerprint=missing
+persistent_host_key_fingerprint=missing
+host_key_sha_match=false
+host_key_fingerprint_match=false
+if [ -f /etc/ssh/ssh_host_ed25519_key ] && [ -f "$EDGEAI_PERSIST_ROOT/ssh/ssh_host_ed25519_key" ]; then
+    host_key_sha256=$(sha256sum /etc/ssh/ssh_host_ed25519_key | awk '{print $1}')
+    persistent_host_key_sha256=$(sha256sum "$EDGEAI_PERSIST_ROOT/ssh/ssh_host_ed25519_key" | awk '{print $1}')
+    if host_key_fingerprint=$(fingerprint_from_private /etc/ssh/ssh_host_ed25519_key); then :; else host_key_fingerprint=missing; fi
+    if persistent_host_key_fingerprint=$(fingerprint_from_private "$EDGEAI_PERSIST_ROOT/ssh/ssh_host_ed25519_key"); then :; else persistent_host_key_fingerprint=missing; fi
+    [ "$host_key_sha256" = "$persistent_host_key_sha256" ] && host_key_sha_match=true || fail=1
+    [ -n "$host_key_fingerprint" ] && [ "$host_key_fingerprint" = "$persistent_host_key_fingerprint" ] && host_key_fingerprint_match=true || fail=1
+    if [ -n "${EDGEAI_EXPECTED_HOST_KEY_ED25519_FINGERPRINT:-}" ] && [ "$host_key_fingerprint" != "$EDGEAI_EXPECTED_HOST_KEY_ED25519_FINGERPRINT" ]; then
+        fail=1
+    fi
+    persist_state=present
+else
+    fail=1
+fi
+if [ -x /usr/sbin/sshd ] && /usr/sbin/sshd -t >/dev/null 2>&1; then
+    sshd_config=valid
+else
+    sshd_config=invalid
+    fail=1
+fi
+
+if [ "$json" -eq 1 ]; then
+    status=FAIL; [ "$fail" -eq 0 ] && status=PASS
+    printf '{"status":"%s","kernel":"%s","cma_total_kib":%s,"cma_mem":"%s","hard_npu":"%s","soft_npu":"%s","hard_npu_node":"%s","soft_npu_node":"%s","hard_npu_binding":"%s","soft_npu_binding":"%s","eth0":"%s","sshd":"%s","sshd_config":"%s","persistent_host_keys":"%s","host_key_sha256":"%s","persistent_host_key_sha256":"%s","host_key_fingerprint":"%s","persistent_host_key_fingerprint":"%s","host_key_sha_match":%s,"host_key_fingerprint_match":%s,"camera_autostart":false}\n' \
+      "$status" "$(uname -r)" "${cma_total:-0}" "$(module_state cma_mem)" "$(module_state hard_npu)" "$(module_state soft_npu)" "$(node_state /dev/hard_npu)" "$(node_state /dev/soft_npu)" "$hard_binding" "$soft_binding" "$eth0" "$sshd_state" "$sshd_config" "$persist_state" "$host_key_sha256" "$persistent_host_key_sha256" "$host_key_fingerprint" "$persistent_host_key_fingerprint" "$host_key_sha_match" "$host_key_fingerprint_match"
+else
+    printf 'kernel=%s\ncma_total_kib=%s\ncma_mem=%s\nhard_npu=%s\nsoft_npu=%s\nhard_npu_node=%s\nsoft_npu_node=%s\nhard_npu_binding=%s\nsoft_npu_binding=%s\neth0=%s\nsshd=%s\nsshd_config=%s\npersistent_host_keys=%s\nhost_key_sha256=%s\npersistent_host_key_sha256=%s\nhost_key_fingerprint=%s\npersistent_host_key_fingerprint=%s\nhost_key_sha_match=%s\nhost_key_fingerprint_match=%s\ncamera_autostart=false\n' \
+      "$(uname -r)" "${cma_total:-0}" "$(module_state cma_mem)" "$(module_state hard_npu)" "$(module_state soft_npu)" "$(node_state /dev/hard_npu)" "$(node_state /dev/soft_npu)" "$hard_binding" "$soft_binding" "$eth0" "$sshd_state" "$sshd_config" "$persist_state" "$host_key_sha256" "$persistent_host_key_sha256" "$host_key_fingerprint" "$persistent_host_key_fingerprint" "$host_key_sha_match" "$host_key_fingerprint_match"
+fi
+exit "$fail"

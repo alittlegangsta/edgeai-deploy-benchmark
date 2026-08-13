@@ -1,0 +1,125 @@
+{
+  "backend": "pc_cpp_ort",
+  "correctness": {
+    "all_statuses_pass": true,
+    "checks": 12,
+    "detection_counts": [
+      5
+    ],
+    "maximum_absolute_confidence_difference": 0.0,
+    "minimum_class_matched_iou": 1.0,
+    "statuses": [
+      "PASS"
+    ]
+  },
+  "environment_note": "WSL2 x86_64 C++ ONNX Runtime CPUExecutionProvider; not bare-metal ARM.",
+  "formal_iterations_per_process": [
+    100
+  ],
+  "fps": {
+    "formula": "1000 / mean pipeline_ms",
+    "value": 19.303906657155686
+  },
+  "independent_process_count": 6,
+  "model_load": {
+    "count": 6,
+    "max_ms": 54.676551,
+    "mean_ms": 53.540214,
+    "min_ms": 53.144442
+  },
+  "model_representation": "frozen YOLOv5n v7.0 ONNX FP32",
+  "resources": {
+    "cpu_utilization_one_core_basis_percent": {
+      "count": 6,
+      "max": 100.00009098318544,
+      "mean": 99.99840534408399,
+      "min": 99.99622021243385,
+      "unit": "percent"
+    },
+    "peak_rss_kib": {
+      "count": 6,
+      "max": 151444.0,
+      "mean": 150869.33333333334,
+      "min": 150328.0,
+      "scope": "process startup through formal measurement completion",
+      "unit": "KiB"
+    }
+  },
+  "round_ids": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "sample_count": 600,
+  "sampled_frequency_temperature": {
+    "cpu_frequency_khz": {
+      "field_present_in_samples": false,
+      "max": null,
+      "mean": null,
+      "min": null,
+      "null_sample_count": 0,
+      "numeric_sample_count": 0,
+      "status": "NOT_RECORDED_IN_SOURCE_CAMPAIGN",
+      "unit": "kHz"
+    },
+    "temperature_millicelsius": {
+      "field_present_in_samples": false,
+      "max": null,
+      "mean": null,
+      "min": null,
+      "null_sample_count": 0,
+      "numeric_sample_count": 0,
+      "status": "NOT_RECORDED_IN_SOURCE_CAMPAIGN",
+      "unit": "millicelsius"
+    }
+  },
+  "source_evidence": {
+    "path": "results/benchmarks/pc_three_backend_cpp_ort.json",
+    "sha256": "a047eee174b7ae355613c6f3f95bfac3c2d681467cd16333de1b8d3261bad085"
+  },
+  "stages": {
+    "inference": {
+      "count": 600,
+      "max_ms": 59.337732,
+      "mean_ms": 45.849136916666666,
+      "min_ms": 43.224541,
+      "p50_ms": 45.639122,
+      "p95_ms": 48.349684,
+      "sample_standard_deviation_ms": 1.4241305147365344
+    },
+    "pipeline": {
+      "count": 600,
+      "max_ms": 65.671301,
+      "mean_ms": 51.80298567333333,
+      "min_ms": 48.863992,
+      "p50_ms": 51.595426,
+      "p95_ms": 54.415443,
+      "sample_standard_deviation_ms": 1.503313251390902
+    },
+    "postprocess": {
+      "count": 600,
+      "max_ms": 5.334411,
+      "mean_ms": 4.1202788749999995,
+      "min_ms": 3.922701,
+      "p50_ms": 4.036812,
+      "p95_ms": 4.577968,
+      "sample_standard_deviation_ms": 0.20379326820985066
+    },
+    "preprocess": {
+      "count": 600,
+      "max_ms": 3.411278,
+      "mean_ms": 1.8335698816666666,
+      "min_ms": 1.637727,
+      "p50_ms": 1.790252,
+      "p95_ms": 2.082433,
+      "sample_standard_deviation_ms": 0.14205556511338724
+    }
+  },
+  "status": "BENCHMARKED_CORRECT",
+  "warmup_per_process": [
+    10
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "custom_op_audit": {
+    "alhardnpu_domain_or_op_in_onnx": false,
+    "alhardnpu_node_count": 0,
+    "conclusion": "ALHardNPU is synthesized by ArmNN/Alnpu optimization/fusion; it is not serialized as an ONNX domain/op_type in this model",
+    "source_classification": "source_code_fact plus real retained Task 028 board assignment evidence"
+  },
+  "model": {
+    "lfs_pointer_oid": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c",
+    "logical_path": "<vendor-root>/sdk/app/face_detection/inputs/yolo_face_uint8_15.onnx",
+    "sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c",
+    "size_bytes": 8709145,
+    "source": "SDK_2025.07-linux6.1 tag blob and dr1m90_npu LFS pointer OID"
+  },
+  "onnx_provenance": {
+    "custom_domains": [],
+    "domain": "",
+    "initializers": 113,
+    "input": {
+      "dtype": "FLOAT",
+      "name": "images",
+      "shape": [
+        1,
+        3,
+        416,
+        416
+      ]
+    },
+    "ir_version": 7,
+    "metadata_props": {
+      "names": "{0: 'face'}",
+      "stride": "32"
+    },
+    "model_version": 0,
+    "nodes": 124,
+    "operators": {
+      "Concat": 1,
+      "Conv": 13,
+      "DequantizeLinear": 59,
+      "MaxPool": 6,
+      "QuantizeLinear": 33,
+      "Relu": 11,
+      "Resize": 1
+    },
+    "opsets": [
+      {
+        "domain": "ai.onnx",
+        "version": 14
+      }
+    ],
+    "outputs": [
+      {
+        "dtype": "FLOAT",
+        "name": "output0",
+        "shape": [
+          1,
+          18,
+          26,
+          26
+        ]
+      },
+      {
+        "dtype": "FLOAT",
+        "name": "output1",
+        "shape": [
+          1,
+          18,
+          13,
+          13
+        ]
+      }
+    ],
+    "parse_command": "isolated vendor Python: onnx.load + graph metadata/operator walk",
+    "parse_status": "PASS",
+    "producer_name": "pytorch",
+    "producer_version": "1.13.0"
+  },
+  "schema_version": 1,
+  "task": "031"
+}

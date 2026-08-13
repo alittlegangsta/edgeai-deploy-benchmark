@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "task": "034",
+  "status": "ALREADY_OPTIMIZED",
+  "scope": "Frozen YOLOv5n v7.0 TorchScript-to-ncnn conversion path; no model replacement or new graph candidate was introduced.",
+  "provenance": {
+    "frozen_onnx_sha256": "78ac19bbec667f9a60e483c950f450e320e8efe3930a40edaa248fdce659c121",
+    "torchscript_sha256": "1ea5813fac07158ca4ff5eb98b273353b1bf5baafdd46f1ced4ab33835247892",
+    "ncnn_param_sha256": "72fe027e14584159bd44bb79c1603e99239c0e423f869b465dd7d337dbea1ad4",
+    "ncnn_bin_sha256": "658cc66df974d6c98bd4d82515b114146ba74a9bd18cdeaf68f8c3bcddde28f0",
+    "pnnx_version": "same-revision pnnx-linux-x64-20240410 / Torch 2.2.2 local",
+    "pnnx_optlevel": 2,
+    "pnnx_device": "cpu",
+    "pnnx_inputshape": "[1,3,640,640]f32",
+    "pnnx_fp16": 0,
+    "quantization": false,
+    "ncnnoptimize_used": false,
+    "customop": [],
+    "unsupported_operator_count": 0
+  },
+  "ncnn_graph": {
+    "magic": "7767517",
+    "declared_layer_count": 207,
+    "declared_blob_count": 237,
+    "custom_layer_count": 0,
+    "input_shape": [1, 3, 640, 640],
+    "output_shape": [1, 25200, 85],
+    "output_name": "out0",
+    "layer_type_counts": {
+      "BinaryOp": 16,
+      "Concat": 17,
+      "Convolution": 60,
+      "Eltwise": 3,
+      "Input": 1,
+      "Interp": 2,
+      "MemoryData": 6,
+      "Permute": 3,
+      "Pooling": 3,
+      "Reshape": 6,
+      "Sigmoid": 3,
+      "Slice": 3,
+      "Split": 24,
+      "Swish": 57,
+      "UnaryOp": 3
+    }
+  },
+  "optimization_evidence": {
+    "formal_conversion": "The frozen manifest records optlevel=2 and a zero unsupported-operator conversion log.",
+    "constant_folding": "Not separately quantified in the frozen manifest; no claim beyond the recorded pnnx optlevel is made.",
+    "dead_node_removal": "Not separately quantified in the frozen manifest; no claim beyond the recorded pnnx optlevel is made.",
+    "conv_bn_fusion": "Not separately quantified in the frozen manifest; no claim beyond the recorded pnnx optlevel is made.",
+    "packing_friendly_layout": "Runtime uses packing=on and the graph has no custom layers; this is a runtime validation fact, not a proof of every offline fusion."
+  },
+  "correctness_gate": {
+    "status": "PASS_TARGET",
+    "detection_count": 5,
+    "minimum_class_matched_iou": 0.9999855075776749,
+    "maximum_confidence_delta": 0.0000050067901611328125
+  },
+  "decision": "ALREADY_OPTIMIZED",
+  "next_action": "Do not create another FP32 graph candidate in Task 034; any future graph rewrite requires a separate correctness-gated task."
+}

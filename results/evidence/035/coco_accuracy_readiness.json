@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "task": "035",
+  "status": "EQ_INT8_ARM_BENCHMARK_CANDIDATE",
+  "model_contract": {
+    "model_manifest": "models/yolov5n-v7.0/manifest.json",
+    "model_manifest_sha256": "764f3e4980c1f6b18ea245262af99703d13e817fedc52bf97bbfc5a1389f06c2",
+    "class_count": 80,
+    "class_order_source": "frozen model manifest COCO80 labels",
+    "input_shape": [1, 3, 640, 640],
+    "input_dtype": "float32",
+    "output_shape": [1, 25200, 85],
+    "output_dtype": "float32",
+    "nms_in_graph": false
+  },
+  "provided_archives": [
+    {
+      "filename": "annotations_trainval2017.zip",
+      "size_bytes": 252907541,
+      "md5": "f4bbac642086de4f52a3fdda2de5fa2c",
+      "sha256": "113a836d90195ee1f884e704da6304dfaaecff1f023f49b6ca93c4aaae470268",
+      "role": "user-provided official COCO annotations archive",
+      "used": "instances_val2017.json"
+    },
+    {
+      "filename": "val2017.zip",
+      "size_bytes": 815585330,
+      "md5": "442b8da7639aecaf257c1dceb8ba8c80",
+      "sha256": "4f7e2ccb2866ec5041993c9cf2a952bbed69647b115d0f74da7ce8f4bef82f05",
+      "role": "user-provided official COCO val2017 image archive",
+      "used": "1000 disjoint images: 500 calibration and 500 held-out evaluation"
+    }
+  ],
+  "annotations": {
+    "file": "instances_val2017.json",
+    "sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+    "images": 5000,
+    "annotations": 36781,
+    "categories": 80,
+    "scope": "official COCO val2017 annotations; iscrowd records are excluded by the offline evaluator"
+  },
+  "selection": {
+    "source": "COCO val2017 fallback because train2017 image archive was not provided",
+    "seed": 35035,
+    "rule": "sort val2017 image IDs numerically, shuffle with random.Random(35035), take first 500 for calibration and next 500 for held-out evaluation",
+    "calibration_count": 500,
+    "evaluation_count": 500,
+    "overlap_count": 0,
+    "calibration_ids_sha256": "ad6bb7fe3315597c82f716864fc691d9539cc4a10af975379c1c8578075f78b8",
+    "evaluation_ids_sha256": "d2a9767fa4893848ddef397b82b05817dbfac91917b91933a2f9c9be917a21fc",
+    "calibration_manifest_sha256": "de490f890d82b40e0f66f17ed4289d2efd276e933b6e9f0935e4572c365c28f7",
+    "evaluation_manifest_sha256": "b98b81be7822bce89b10535e6806833b30ac56d706723ce1d88b80c0f2cc3f2d",
+    "calibration_image_list_sha256": "84c674119458d0ec8b47938c36ad559679be94d3b448228a892e43203cd86aa1",
+    "calibration_per_image_sha256_manifest": "50a1c78af18c9d3cf0c4722ba0fee1735a12a587473d83993bddee5824fa3244",
+    "evaluation_per_image_sha256_manifest": "8d1aacaf8545610e58aea4dfb06a3bd44689461a212c4bc100aeefb1371ddb27",
+    "external_workspace": "/tmp/task035-coco",
+    "train2017_images_present": false
+  },
+  "evaluation": {
+    "status": "SUPERSEDED_BY_CORRECTED_EVALUATOR",
+    "scope": "500-image held-out subset of COCO val2017, disjoint from calibration",
+    "metrics": [
+      "mAP50",
+      "mAP50-95",
+      "precision",
+      "recall",
+      "secondary FP32-reference regression"
+    ],
+    "confidence_threshold": 0.25,
+    "nms_iou_threshold": 0.45,
+    "evaluator": "superseded evaluator; it used fixed post-threshold detections and did not constrain the GT denominator to the held-out IDs",
+    "metrics_file_sha256": "e421e39bf80c5d0fd32dabeb35205bd784e2bfd8f37740838893448a5f5ca4ff",
+    "task_level_quantization_verdict": "EQ_INT8_ARM_BENCHMARK_CANDIDATE",
+    "note": "Retained only as an invalidated diagnostic: the prior code summed GT over all 5000 annotation images while predictions covered 500, and used the deployment threshold rather than a COCO AP confidence sweep."
+  },
+  "corrected_evaluation": {
+    "evidence": "results/evidence/035/coco_evaluator_audit.json",
+    "status": "EQ_INT8_ARM_BENCHMARK_CANDIDATE",
+    "scope": "500-image held-out subset with COCOeval imgIds exactly equal to the held-out manifest",
+    "confidence_threshold": 0.001,
+    "nms_iou_threshold": 0.6,
+    "models": {
+      "fp32": {"mAP50": 0.4973494284597922, "mAP50-95": 0.30971763324139717},
+      "aciq": {"mAP50": 0.4759858766452364, "mAP50-95": 0.2858129292490713, "delta_mAP50": -0.021363551814555792, "delta_mAP50-95": -0.02390470399232586},
+      "kl": {"mAP50": 0.4070404716208542, "mAP50-95": 0.24424187767824224, "delta_mAP50": -0.09030895683893797, "delta_mAP50-95": -0.06547575556315494},
+      "eq": {"mAP50": 0.4840712671411614, "mAP50-95": 0.29392531834074126, "delta_mAP50": -0.013278161318630799, "delta_mAP50-95": -0.015792314900655913}
+    },
+    "full_val_leaderboard_claim": false,
+    "task_level_quantization_verdict": "EQ_INT8_ARM_BENCHMARK_CANDIDATE"
+  },
+  "download": {
+    "attempted": false,
+    "attempted_by_agent": false,
+    "source": "user-provided local archives",
+    "train2017": "not provided; no 18GB archive was downloaded",
+    "network_or_data_action": "none"
+  }
+}

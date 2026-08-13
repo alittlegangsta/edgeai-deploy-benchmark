@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "task": "028",
+  "board": {"kernel": "Linux buildroot 6.1.111-rt42 #3 SMP PREEMPT Wed Aug 5 18:19:39 CST 2026 aarch64", "os": "Buildroot 2022.02.6", "cma_total_kib": 131072, "cma_free_kib_at_probe": 124436, "modules": ["cma_mem", "hard_npu", "soft_npu"], "devices": ["/dev/cma_mem", "/dev/hard_npu", "/dev/soft_npu"], "device_nodes_status": "present", "dmesg_probe_status": "no new oops, panic, DMA, IRQ or NPU error in before/after snapshots"},
+  "runtime_libraries": {"libarmnn.so.32.1": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce", "libarmnnOnnxParser.so.24.6": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99", "libprotobuf.so.23.0.0": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265"},
+  "runner_ldd": {"library_path": "/opt/face_detection/runtime-root/armnn_lib/lib:/opt/face_detection/runtime-root/ffmpeg_opencv4.7.0_aarch64/lib:/lib:/usr/lib", "not_found": [], "aarch64_loader": "/lib/ld-linux-aarch64.so.1"},
+  "probe_scope": "temporary /tmp/task028 only; no module load, system configuration, SD/eMMC write or reboot"
+}

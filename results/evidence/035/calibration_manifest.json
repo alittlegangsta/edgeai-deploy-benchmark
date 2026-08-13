@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "task": "035",
+  "role": "calibration_only",
+  "source": "official COCO val2017 fallback subset; train2017 image archive was not provided",
+  "count": 500,
+  "target_count": 500,
+  "manifest_path_external": "/tmp/task035-coco/calibration_manifest.tsv",
+  "manifest_sha256": "de490f890d82b40e0f66f17ed4289d2efd276e933b6e9f0935e4572c365c28f7",
+  "image_list_path_external": "/tmp/task035-coco/calibration_images.txt",
+  "image_list_sha256": "84c674119458d0ec8b47938c36ad559679be94d3b448228a892e43203cd86aa1",
+  "per_image_sha256_manifest_external": "/tmp/task035-coco/calibration_sha256.tsv",
+  "per_image_sha256_manifest_sha256": "50a1c78af18c9d3cf0c4722ba0fee1735a12a587473d83993bddee5824fa3244",
+  "ids_sha256": "ad6bb7fe3315597c82f716864fc691d9539cc4a10af975379c1c8578075f78b8",
+  "selection": {
+    "seed": 35035,
+    "rule": "sorted val2017 IDs shuffled with random.Random(35035), first 500",
+    "annotation_sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+    "archive_sha256": "4f7e2ccb2866ec5041993c9cf2a952bbed69647b115d0f74da7ce8f4bef82f05"
+  },
+  "preprocess": {
+    "source": "same fixed ncnn2table image preprocessing contract",
+    "resize": "640x640 letterbox, INTER_LINEAR, pad BGR 114",
+    "ncnn2table": "pixel=RGB, mean=[0,0,0], norm=[1/255,1/255,1/255]"
+  },
+  "evaluation_overlap": 0,
+  "source_image_sha256_count": 500,
+  "images_are_not_ground_truth": true,
+  "previous_bounded_manifest": {
+    "count": 22,
+    "manifest_sha256": "1d1ebb2c51a8cfff1745dce6ab4a2c6f44eb08bcbd0cf2d13bf68720e5bf7113",
+    "status": "RETAINED_EXTERNAL_EVIDENCE"
+  }
+}

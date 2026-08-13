@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "task": "036",
+  "status": "PASS_ALNPU_ONLY",
+  "project_runner": {
+    "name": "edgeai_armnn_face_image",
+    "sha256": "9306d119e556ca15f166d993356590e155ce537f8898aa6af85c51f6d95b184e",
+    "abi": "ELF64 AArch64, C++17 Release cross-build",
+    "build_identity": "task036-vendor-armnn32.1"
+  },
+  "external_model": {
+    "logical_path": "<board-root>/face_detection/runtime-root/inputs/yolo_face_uint8_15.onnx",
+    "source": "dr1m90_npu face_detection inputs",
+    "sha256": "5ed304f1cfd37a6c4ddc789a58a4c98e3472efe31eff62fc9e447163ea60668c"
+  },
+  "external_runtime": {
+    "logical_root": "<board-root>/face_detection/runtime-root/armnn_lib/lib",
+    "armnn_version": "32.1.0",
+    "libarmnn_sha256": "5def7ba75e4b59644be6f58deaf8b2bb3791c62ed38b52b6aea08b11a8f728ce",
+    "parser_sha256": "dcb43bc092ec283364806e563fa6aa8d2404eb7c005db44081821da405c5ce99",
+    "protobuf_sha256": "5d69d988c4b8309bb5dc9318c010bac6a16904549ffd38ce11f65a918376e265",
+    "library_search_path": "<board-root>/face_detection/runtime-root/armnn_lib/lib:<board-root>/face_detection/runtime-root/ffmpeg_opencv4.7.0_aarch64/lib:<board-root>/face_detection/runtime-root/lib"
+  },
+  "input": {
+    "logical_path": "<board-root>/task036/first_raw.png",
+    "sha256": "ca7ef6edbf64379d523f7bb902977a21a942543085473700a0d1c2bd855c5c26",
+    "shape_bgr": [480, 640, 3]
+  },
+  "derived_artifacts": {
+    "face_runner_result_sha256": "fcf1bdadb5e62f36faa45bc5abbb3b5fae7216fc1c92f153b965cb3ab4d7925a",
+    "face_runner_benchmark_sha256": "6b6963ed8c242ece25bef94da5461a86fc1e093f5224722133a18d8fd9e22f4a",
+    "board_stdout_sha256": "d0cffeacd0a790250327272cc7724fb5668334aee65990904a393b0dba9f58e2",
+    "board_stderr_sha256": "4a41f3c507760e1b25a2414169e1a27205036b26f3b790ab9920dd3abd640ed5",
+    "face_annotated_sha256": "efa1a0463bfa67f1e4c86280b0a4f1f32f694fa52f2203809b5b51813558899a",
+    "face_annotated_benchmark_sha256": "efa1a0463bfa67f1e4c86280b0a4f1f32f694fa52f2203809b5b51813558899a"
+  },
+  "source_code": {
+    "repository": "<vendor-root>/NPU_info/dr1m90_npu",
+    "revision": "199ef4d71f453bb9a000102ff39def09c4cf73f9",
+    "face_flow_files": {
+      "inputs/example_yolo_face.json": "58024aeaa57c7d4dd06b119e869dc2dc1fb9d777ef2f0c62846f291dcfb7282d",
+      "src/npu_flow/utils/executor.cpp": "5eca13e799b156708c2a1053569682cf0743531222dbd119718f29010e9a3267",
+      "src/npu_flow/utils/preprocess.cpp": "db5238fa25da9e23be34acc9312efb8a9b3d342c3b70eb53d4df7bae5f5e2ade",
+      "src/npu_flow/utils/postprocess.cpp": "1f5396b9d4ec1f297468dd0c98fa22adc09f8ca2ab7d0e4b146438462bc6ba2c",
+      "src/npu_flow/yolo_demo_hdmi_camera/solution.cpp": "e66a82c3f1d12298cb93ca5ed2e3b796622d44e80b171c078cc864a57847ade9",
+      "scripts/run_usbcam.sh": "4750d536ecbf295778c981dcf24436eb45632910818b5b6354c2790071814518"
+    }
+  },
+  "scope": {
+    "functional_control": "vendor face model only",
+    "yolov5n_comparison": "NOT_PERFORMED",
+    "formal_npu_performance_benchmark": "NOT_CLAIMED",
+    "cpu_fallback": "REJECTED"
+  }
+}

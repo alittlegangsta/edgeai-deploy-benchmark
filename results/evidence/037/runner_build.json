@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "task": "037",
+  "build": {
+    "source": "cpp/CMakeLists.txt",
+    "build_directory": "/tmp/task037-cmake",
+    "command": "cmake -S cpp -B /tmp/task037-cmake -DCMAKE_BUILD_TYPE=Release -DEDGEAI_ENABLE_TENSORRT=ON -DEDGEAI_ENABLE_ORT=OFF -DEDGEAI_ENABLE_NCNN=OFF -DEDGEAI_ENABLE_VIDEO=OFF && cmake --build /tmp/task037-cmake --target edgeai_tensorrt_image edgeai_tensorrt_coco -j2",
+    "exit_code": 0,
+    "binary": "/tmp/task037-cmake/edgeai_tensorrt_image",
+    "binary_sha256": "dd1d372e267b378327461fe7fa60d6eb83e4b2cfc5041e14114921e363cad8d9",
+    "binary_type": "ELF 64-bit LSB pie executable x86-64",
+    "build_id": "ed8d65967b482246da55993c0346b159b6f582fd",
+    "runtime_dependencies": {
+      "libnvinfer": "/usr/lib/x86_64-linux-gnu/libnvinfer.so.10",
+      "libcudart": "/usr/local/cuda-12.9/lib64/libcudart.so.12",
+      "rpath": ["/usr/lib/x86_64-linux-gnu", "/usr/local/cuda-12.9/lib64"],
+      "ldd_not_found": false
+    }
+  },
+  "runner_contract": {
+    "input": [1, 3, 640, 640],
+    "output": [1, 25200, 85],
+    "input_output_dtype": "FLOAT",
+    "backend": "TensorRT CUDA engine",
+    "golden_gate": "minimum IoU >= 0.99 and maximum confidence delta <= 0.001"
+  },
+  "implementation_scope": [
+    "runtime engine deserialization",
+    "CUDA H2D/inference/D2H event timing",
+    "common project preprocessing",
+    "common YOLOv5 decode/NMS",
+    "common visualization and JSON output",
+    "COCO subset prediction JSON with exact image/category/bbox contract"
+  ]
+}
