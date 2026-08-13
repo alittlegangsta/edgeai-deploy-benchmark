@@ -160,8 +160,17 @@ def validate() -> dict[str, Any]:
         changed.append(path)
         if path not in ALLOWED:
             fail(f"changed path outside Task043 allowed set: {path}")
-    if not all(str(path.relative_to(ROOT)) in changed for path in DOCS.values()):
-        fail("all five career documents must be visible as changed paths")
+    tracked = set(
+        subprocess.check_output(["git", "ls-files"], cwd=ROOT, text=True).splitlines()
+    )
+    missing_documents = [
+        str(path.relative_to(ROOT))
+        for path in DOCS.values()
+        if str(path.relative_to(ROOT)) not in changed
+        and str(path.relative_to(ROOT)) not in tracked
+    ]
+    if missing_documents:
+        fail(f"career documents are neither changed nor tracked: {missing_documents}")
 
     return {
         "status": "PASS",

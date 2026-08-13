@@ -60,6 +60,10 @@ CPU/GPU YOLOv5n, or reopen the vendor dependency.
   `177/177` using `PYTHONPATH=python .venv/bin/python`.  Python syntax, JSON
   parsing, career Markdown links, sensitive-material scan and `git diff --check`
   passed.
+- A clean-worktree rerun after the first local commit exposed a validator
+  assumption that career files were still dirty.  The validator now accepts
+  either changed or tracked career files; the focused `3/3` and full `177/177`
+  suites pass in the clean committed state.
 - No model, backend, benchmark, board, NPU or performance command was run.
 
 ## Final state
