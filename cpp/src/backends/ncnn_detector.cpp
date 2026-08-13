@@ -242,7 +242,8 @@ ManifestContract load_manifest(const edgeai::filesystem::path& path) {
     if (required_string(contract, "classification") !=
             "single decoded YOLOv5 candidate tensor" ||
         required_int(contract, "batch") != 1 ||
-        required_string(contract, "precision") != "FP32" ||
+        (required_string(contract, "precision") != "FP32" &&
+         required_string(contract, "precision") != "INT8") ||
         required_string(contract, "device") != "CPU" ||
         required_int(contract, "contains_graph_nms") != 0 ||
         required_int(contract, "class_count") != 80 ||

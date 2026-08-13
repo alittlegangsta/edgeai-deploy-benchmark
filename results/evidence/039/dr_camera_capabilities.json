@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "task": "039",
+  "source": "DR1 board read-only V4L2 ioctl/OpenCV audit",
+  "device": "/dev/video0",
+  "stable_id": "/dev/v4l/by-id/usb-Sonix_Technology_Co.__Ltd._USB_2.0_Camera_SN0001-video-index0",
+  "identity": {
+    "driver": "uvcvideo",
+    "card": "USB 2.0 Camera: USB Camera",
+    "vendor": "Sonix_Technology_Co.__Ltd.",
+    "model": "USB_2.0_Camera",
+    "model_id": "636b",
+    "serial": "SN0001",
+    "bus": "usb",
+    "id_path": "platform-f8180000.usb-usb-0:1.3:1.0"
+  },
+  "nodes": {
+    "video0": {"capture_capability": true, "path": "/dev/video0"},
+    "video1": {"capture_capability": false, "path": "/dev/video1"}
+  },
+  "enumeration": {
+    "method": "V4L2 ioctl enumeration through Task021 AArch64 probe",
+    "format_count": 2,
+    "formats": {
+      "MJPG": {
+        "description": "Motion-JPEG",
+        "sizes": ["1920x1080", "1280x960", "1280x720", "1024x576", "960x540", "848x480", "800x600", "640x480", "640x360", "352x288", "320x240", "176x144", "160x120"],
+        "fps_values": [5, 10, 15, 20, 25, 30]
+      },
+      "YUYV": {
+        "description": "YUYV 4:2:2",
+        "sizes": ["1920x1080", "1280x960", "1280x720", "1024x576", "960x540", "848x480", "800x600", "640x480", "640x360", "352x288", "320x240", "176x144", "160x120"],
+        "fps_values": [5, 10, 15, 20, 25]
+      }
+    }
+  },
+  "raw_probe": {
+    "sha256": "8ab2721aa51c08cc65338ee2d82f506a2053d28688c3f4189fe83aecde5eea67",
+    "retained_outside_git": true,
+    "path": "/tmp/task039-board-camera-capabilities.json"
+  },
+  "status": "PASS"
+}

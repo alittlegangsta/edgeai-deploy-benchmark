@@ -1,0 +1,194 @@
+{
+    "schema_version": 2,
+    "application": "edgeai_demo",
+    "mode": "camera",
+    "backend": {
+        "name": "ncnn",
+        "runtime": "1.0.20240410/openmp",
+        "model_identity": "param_sha256=b05bd424462f40d92792287cafdf463ec513ea1eb5d7a024cefd3f93b769a2c4,bin_sha256=9ae93520aa8fa9c235176e57c3146ac6a66115cddd0186c20f2637f7516c09f7",
+        "precision": "int8",
+        "input_dtype": "float32",
+        "output_dtype": "float32",
+        "input_shape": [
+            1,
+            3,
+            640,
+            640
+        ],
+        "output_shape": [
+            1,
+            25200,
+            85
+        ],
+        "fallback": "none"
+    },
+    "model": {
+        "path": "/tmp/ncnn_manifest_int8.json",
+        "manifest": "/tmp/ncnn_manifest_int8.json"
+    },
+    "source": {
+        "kind": "camera",
+        "path": "/dev/video0",
+        "metadata": {
+            "width": 640,
+            "height": 480,
+            "fps": 25.0,
+            "reported_frame_count": -1,
+            "fourcc": "YUYV",
+            "backend": "V4L2"
+        }
+    },
+    "configuration": {
+        "path": "/tmp/yolov5n_v7_inference.json",
+        "input_size": [
+            640,
+            640
+        ],
+        "confidence_threshold": 2.5000000000000000e-01,
+        "iou_threshold": 4.5000000000000001e-01,
+        "max_detections": 1000,
+        "threads": 2,
+        "packing": 1,
+        "warmup": 0,
+        "repeat": 1
+    },
+    "counts": {
+        "captured_frames": 3,
+        "processed_frames": 3,
+        "dropped_frames": 0,
+        "failed_frames": 0,
+        "written_frames": 3
+    },
+    "queue": {
+        "mode": "synchronous",
+        "capacity": 0,
+        "drop_policy": "none; capture and inference are serialized"
+    },
+    "input_video_metadata": {
+        "width": 640,
+        "height": 480,
+        "fps": 25.0,
+        "reported_frame_count": -1,
+        "fourcc": "YUYV",
+        "backend": "V4L2"
+    },
+    "output_video": {
+        "path": "/tmp/task039-edgeai-camera-final/result.avi",
+        "requested_codec": "MJPG",
+        "writer_backend": "FFMPEG",
+        "metadata": {
+            "width": 640,
+            "height": 480,
+            "fps": 25.0,
+            "reported_frame_count": 3,
+            "fourcc": "MJPG",
+            "backend": "OpenCV VideoWriter"
+        }
+    },
+    "timings_ms": {
+        "capture_read": {
+            "mean_ms": 1.6952341166666668e+02,
+            "p50_ms": 3.0260400000000001e+00,
+            "p95_ms": 5.0252604500000001e+02
+        },
+        "preprocess": {
+            "mean_ms": 3.4735419999999998e+01,
+            "p50_ms": 3.2002859999999998e+01,
+            "p95_ms": 4.0408079999999998e+01
+        },
+        "inference": {
+            "mean_ms": 1.3431847533333332e+03,
+            "p50_ms": 1.3220285230000000e+03,
+            "p95_ms": 1.3923659840000000e+03
+        },
+        "postprocess": {
+            "mean_ms": 6.0457650999999998e+01,
+            "p50_ms": 6.0433531000000002e+01,
+            "p95_ms": 6.0545551000000003e+01
+        },
+        "visualization": {
+            "mean_ms": 2.0534300000000001e+00,
+            "p50_ms": 1.9762500000000001e+00,
+            "p95_ms": 2.2422599999999999e+00
+        },
+        "video_write": {
+            "mean_ms": 1.1167113100000000e+02,
+            "p50_ms": 1.1135226100000000e+02,
+            "p95_ms": 1.1344833100000000e+02
+        },
+        "pipeline_end_to_end": {
+            "mean_ms": 1.7250766969999997e+03,
+            "p50_ms": 1.5337096050000000e+03,
+            "p95_ms": 2.1132758909999998e+03
+        },
+        "effective_processing_fps": 5.6486556072936467e-01,
+        "source_fps": 25.0,
+        "measurement": "synchronous; image decode and video encode are reported separately"
+    },
+    "first_frame_golden": {
+        "status": "NOT_REQUESTED",
+        "expected_count": 0,
+        "observed_count": 0,
+        "minimum_iou": 1.0,
+        "maximum_confidence_delta": 0.0
+    },
+    "frames": [
+        {
+            "frame_index": 0,
+            "timings_ms": {
+                "capture_read": 5.0252604500000001e+02,
+                "preprocess": 4.0408079999999998e+01,
+                "inference": 1.3923659840000000e+03,
+                "postprocess": 6.0545551000000003e+01,
+                "visualization": 2.2422599999999999e+00,
+                "video_write": 1.1344833100000000e+02,
+                "pipeline_total": 2.1132758909999998e+03
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+            ]
+        },
+        {
+            "frame_index": 1,
+            "timings_ms": {
+                "capture_read": 3.0181499999999999e+00,
+                "preprocess": 3.1795320000000000e+01,
+                "inference": 1.3220285230000000e+03,
+                "postprocess": 6.0393870999999997e+01,
+                "visualization": 1.9762500000000001e+00,
+                "video_write": 1.1021280100000000e+02,
+                "pipeline_total": 1.5337096050000000e+03
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+            ]
+        },
+        {
+            "frame_index": 2,
+            "timings_ms": {
+                "capture_read": 3.0260400000000001e+00,
+                "preprocess": 3.2002859999999998e+01,
+                "inference": 1.3151597529999999e+03,
+                "postprocess": 6.0433531000000002e+01,
+                "visualization": 1.9417800000000001e+00,
+                "video_write": 1.1135226100000000e+02,
+                "pipeline_total": 1.5282445949999999e+03
+            },
+            "raw_shape": [
+                1,
+                25200,
+                85
+            ],
+            "detections": [
+            ]
+        }
+    ]
+}

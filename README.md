@@ -9,7 +9,7 @@ single-image pipeline and correctness contract.
 
 ## Current status
 
-Tasks 001–037 are completed; Task 038 is the active unified C++ application
+Tasks 001–039 are completed; Task 039 is the completed dynamic-input
 integration. Task 021 ARM UVC camera inference passed its
 automated stage and received user representative-frame approval. Task 020 ARM video-file inference passed
 automated real-board validation and user playback review.
@@ -303,6 +303,63 @@ FP16 is runnable and retains Task 037's strict single-image diagnostic alongside
 its accepted COCO gate; that diagnostic is not silently promoted to a strict
 Golden pass. Reproducible run metadata and sample annotated images are under
 `results/evidence/038/`.
+
+## Unified dynamic vision input (Task 039)
+
+The same `edgeai_demo` now accepts a decoded image, a video file, or a bounded
+camera source. Video and camera frames use the Task 038 backend factory and the
+same shared letterbox, raw-output decode/NMS and drawing path; there is no
+backend-specific video implementation or fallback:
+
+```bash
+# video file; the output codec is an explicit fourcc
+./build/pc-acceptance-release/edgeai_demo \
+  --backend tensorrt \
+  --model build/reproduction/yolov5n_fp16.engine \
+  --source data/samples/videos/anlogic_arm_reference.avi \
+  --output-video build/reproduction/edgeai_tensorrt_video.avi \
+  --output-json build/reproduction/edgeai_tensorrt_video.json \
+  --precision fp16 --warmup 2 --output-codec MJPG
+
+# camera input must have an explicit bound; no unbounded capture queue is used
+./build/pc-acceptance-release/edgeai_demo \
+  --backend ncnn --model models/yolov5n-v7.0/ncnn_manifest.json \
+  --camera 0 --max-frames 10 --output-video build/reproduction/edgeai_camera.avi \
+  --output-json build/reproduction/edgeai_camera.json \
+  --precision fp32 --threads 2 --packing 1 --output-codec MJPG
+```
+
+The ARM `EQ` INT8 profile uses the same command only after supplying its
+external matching INT8 manifest and param/bin; the checked-in FP32 manifest is
+rejected rather than relabeled.
+
+The synchronous dynamic path records source metadata, captured/processed/
+dropped/failed/written counts, per-stage read/preprocess/inference/postprocess/
+visualization/write timings, end-to-end timing, effective processing FPS and
+per-frame detections. Its bounded semantics are explicit: capture and inference
+are serialized and `dropped_frames=0`; a future producer/consumer mode must use
+a bounded latest-frame policy rather than an infinite queue. The annotated
+`VideoWriter` output is reopened and its dimensions, frame count and frame type
+are checked. `source_fps` is kept separate from processing FPS, so a single
+inference timing is never reported as video throughput.
+
+Task 039's PC TensorRT FP16 integration was exercised on the lossless 30-frame
+FFV1 reference video; ORT and ncnn FP32 were also run as shared-pipeline
+controls. The TensorRT FP16 single-image strict diagnostic remains the Task 037
+secondary record, while its accepted COCO gate is not overwritten. The same
+application was then run on the DR1 board with the accepted external EQ INT8
+ncnn model and the real UVC camera at `/dev/video0` (Sonix USB 2.0 Camera
+SN0001, V4L2/YUYV 640x480@25 FPS). A bounded three-frame run captured,
+processed and wrote `3/3` frames with no invalid or dropped frames, and its
+JSON plus MJPEG output were re-read and validated. The command used the
+`recommended-dual-thread` ncnn profile (`threads=2`, OpenMP, packing on) and
+disabled fallback. This is a functional camera integration result: the
+synchronous implementation has `queue capacity=0`, so `dropped_frames=0` only
+describes that bounded serialized run; it does not mean every frame from a
+faster live source would be processed, nor does it claim realtime performance.
+The camera source rate (25 FPS) is kept separate from the measured effective
+processing rate (0.564866 FPS). Cross-platform performance remains reserved
+for a later task. See `results/evidence/039/`.
 
 ## PC architecture and model lineage
 
